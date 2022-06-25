@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libkdcraw-download-http "&kde-download-http;applications/&libkdcraw-version;/src/libkdcraw-&libkdcraw-version;.tar.xz">
+  <!ENTITY libkdcraw-download-ftp  " ">
+  <!ENTITY libkdcraw-md5sum        "ce2c520d99b0ff8108c6944e1ec287bd">
+  <!ENTITY libkdcraw-size          "100 KB">
+  <!ENTITY libkdcraw-buildsize     "2.9 MB">
+  <!ENTITY libkdcraw-time          "0.1 SBU">
+]>
+
+<sect1 id="libkdcraw" xreflabel="libkdcraw-&libkdcraw-version;">
+  <?dbhtml filename="libkdcraw.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>libkdcraw-&libkdcraw-version;</title>
+
+  <indexterm zone="libkdcraw">
+    <primary sortas="a-libkdcraw">libkdcraw</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libkdcraw</title>
+
+    <para>Libkdcraw er et C++ grensesnitt rundt LibRaw biblioteket som brukes til å dekode RAW
+     bildefiler.</para>
+
+    &lfs79_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&libkdcraw-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&libkdcraw-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &libkdcraw-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &libkdcraw-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &libkdcraw-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &libkdcraw-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Libkdcraw Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="kdelibs"/> og
+      <xref linkend="libraw"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="openssl"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/libkdcraw"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libkdcraw</title>
+
+    <para>Installer <application>libkdcraw</application> ved å kjøre
+    følgende kommandoer:</para>
+
+<screen><userinput>sed -e '/3/a add_definitions(${KDE4_ENABLE_EXCEPTIONS})' \
+        -i libkdcraw/CMakeLists.txt &amp;&amp;
+
+mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=&kde-dir;   \
+      -DCMAKE_BUILD_TYPE=Release           \
+      -DCMAKE_MINIMUM_REQUIRED_VERSION=3.0 \
+      -Wno-dev .. &amp;&amp;
+make</userinput></screen>
+
+    <para>Np, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+ <sect2 role="commands">
+    <title>Kommandoforklaringer</title>
+
+    <para>
+      <command>sed ... libkdcraw/CMakeLists.txt</command>: Tillat unntak fra C++
+       som er nødvendig for libraw-0.16.2 deklarasjonsfil.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>Ingen</seg>
+        <seg>libkdcraw.so</seg>
+        <seg>&kde-dir;/include/libkdcraw og &kde-dir;/share/apps/libkdcraw</seg>
+      </seglistitem>
+    </segmentedlist>
+<!--
+    <variablelist>
+      <bridgehead renderas="sect3">Korte beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libkdcraw-prog">
+        <term><command>libkdcraw</command></term>
+        <listitem>
+          <para>er KDE bildeviser.</para>
+          <indexterm zone="libkdcraw libkdcraw-prog">
+            <primary sortas="b-libkdcraw">libkdcraw</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+-->
+  </sect2>
+
+</sect1>
