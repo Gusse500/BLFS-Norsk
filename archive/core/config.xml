@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+]>
+
+<sect1 id="kde-core-config" xreflabel="Starting KDE4">
+  <?dbhtml filename="config.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Starte KDE4</title>
+
+  <bridgehead renderas="sect3">KDE4 Oppstartsavhengigheter</bridgehead>
+
+  <bridgehead renderas="sect4">Anbefalte Kjøretidsavhengigheter</bridgehead>
+  <para role="recommended">
+    <xref linkend="consolekit"/> og
+    <xref linkend="dbus"/>
+  </para>
+
+  <para>Etter at <application>Kde-workspace</application> er installert, den
+   første viktige milepæl er nådd. Nå må du konfigurere
+   systemet ditt for å starte KDE4.</para>
+
+  <sect2 role="content">
+  <title>Å starte KDE4 fra kommandolinjen</title>
+
+    <para>
+      Du kan starte <application>KDE4</application> fra kjørenivå 3, ved hjelp av
+      <xref linkend="xinit"/>, eller fra kjørenivå 5, ved å bruke en Skjermbehandler,
+       som for eksempel <xref linkend="sddm"/>.
+    </para>
+
+    <para>
+      For å starte <application>KDE4</application> med bruk av <xref linkend="xinit"/>,
+      kjør de følgend kommandoene:
+    </para>
+
+<screen><userinput>cat &gt; ~/.xinitrc &lt;&lt; "EOF"
+<literal>ck-launch-session dbus-launch --exit-with-session startkde</literal>
+EOF
+
+startx</userinput></screen>
+
+    <para>
+      X økten starter på den første ubrukte virtuelle terminalen, normalt vt7.
+       Du kan bytte til en annen vt<emphasis>n</emphasis> ved å
+       trykke samtidig på tastene Ctrl-Alt-F<emphasis>n</emphasis>
+      (<emphasis>n</emphasis>=1, 2, ...).  For å bytte tilbake til X økten,
+       vanligvis startet på vt7, bruk Ctrl-Alt-F7. Vt hvor kommandoen
+      <command>startx</command> ble utført vil vise mange meldinger,
+       inkludert X startmeldinger, applikasjoner startet automatisk med
+       økten, og til slutt noen advarsler og feilmeldinger. Du kan
+       omdirigere disse meldingene til en loggfil, som ikke bare vil beholde
+       den innledende vt ryddig, men kan også brukes til feilsøkingsformål. Dette
+       kan gjøres fra X med:
+    </para>
+
+    <screen><userinput>startx &amp;&gt; ~/.x-session-errors</userinput></screen>
+
+    <note>
+      <para>
+        Det kan være lurt å droppe consolekit og/eller dbus-launch, for eksempel bare ved å bruke
+         startkde i ~/.xinitrc. Men noen funksjoner som montering eller
+         avmontering av filsystemer fra en filbehandler vil ikke være mulig, eller
+         omstartsalternativet vil være fraværende eller ute av drift, blant andre problemer.
+      </para>
+    </note>
+
+    <para>
+      Når du slår av eller starter på nytt, vises avslutningsmeldingene på vt
+       hvor X kjører. Hvis du ønsker å se disse meldingene, trykk
+       samtidig på tastene Alt-F7 (forutsatt at X kjørte på vt7).
+    </para>
+
+  </sect2>
+
+    <sect2 role="content">
+    <title>Starte KDE4 ved oppstart</title>
+
+    <para>KDE4 kommer med et grafisk påloggingsgrensesnitt kalt KDM (KDE4 Display
+     Manager), som gir en tilpassbar grafisk pålogging ved oppstart. For å bruke KDM,
+     må du redigere din <filename>/etc/inittab</filename> fil (som
+    <systemitem class="username">root</systemitem> bruker).
+    Først konfigurerer du kjørenivå 5 for å starte KDM (juster
+     banen til kdm i henhold til systemet ditt):</para>
+
+<screen><userinput>cat &gt;&gt; /etc/inittab &lt;&lt; EOF
+<literal>kd:5:respawn:/opt/kde/bin/kdm</literal>
+EOF</userinput></screen>
+
+    <para>I tillegg må du endre standard kjørenivå fra 3 til 5:</para>
+
+<screen><userinput>sed -i 's#id:3:initdefault:#id:5:initdefault:#' /etc/inittab</userinput></screen>
+
+    <para>Du kan nå starte systemet på nytt og se KDE4
+     påloggingsskjerm.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Installerer flere språk (l10n)</title>
+
+    <para>Det kan være lurt å installere støtte for ditt lokale språk. l10n
+     pakker finner du på <ulink
+    url="&kde-download-http;applications/&kde-apps-version;/src/kde-l10n/">
+         &kde-download-http;applications/&kde-apps-version;/src/kde-l10n/</ulink>.
+    Se <xref linkend="kde-add-pkgs"/> for byggeinstruksjoner. Hvis du er i en
+     KDE4 økt når du installerer et nytt språk og konfigurerer KDE4 til å bruke det
+     må økten startes på nytt for å se effektene.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Installerer ytterligere KDE4 pakker</title>
+
+    <para>Hver påfølgende pakke kan bygges mens du har
+    <application>KDE4</application>oppe og går, men husk å holde
+    <envar>&kde-dir;</envar> og <envar>&qt4-dir;</envar> valgt.</para>
+
+  </sect2>
+
+</sect1>

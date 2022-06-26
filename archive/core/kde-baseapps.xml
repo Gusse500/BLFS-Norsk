@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY kde-baseapps-download-http "&kde-download-http;applications/&kde-apps-version;/src/kde-baseapps-&kde-apps-version;.tar.xz">
+  <!ENTITY kde-baseapps-download-ftp  " ">
+  <!ENTITY kde-baseapps-md5sum        "c2e47f4dacaded8118bbc7a3b975e7d4">
+  <!ENTITY kde-baseapps-size          "2.0 MB">
+  <!ENTITY kde-baseapps-buildsize     "85 MB">
+  <!ENTITY kde-baseapps-time          "4.2 SBU">
+]>
+
+<sect1 id="kde-baseapps" xreflabel="kde-baseapps-&kde-apps-version;">
+  <?dbhtml filename="kde-baseapps.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Kde-baseapps-&kde-apps-version;</title>
+
+  <indexterm zone="kde-baseapps">
+    <primary sortas="a-kde-baseapps">kde-baseapps</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Kde-baseapps</title>
+
+    <para>Denne pakken inneholder ulike applikasjoner, for eksempel Dolphin
+     (filbehandling) og Konqueror (nettleser). Infrastrukturfiler og
+     biblioteker er også tilgjengelig.</para>
+
+    &lfs79_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&kde-baseapps-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&kde-baseapps-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &kde-baseapps-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &kde-baseapps-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &kde-baseapps-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &kde-baseapps-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Kde-baseapps Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+    <xref linkend="kdelibs"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+    <xref linkend="kactivities"/>,
+    <xref linkend="kfilemetadata"/>,
+    <xref linkend="baloo"/>, og
+    <xref linkend="baloo-widgets"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+<!--    <xref linkend="tidy-html"/> and
+     NOt compatible with the latest tidy.
+-->
+    <xref linkend="glib2"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/kde-baseapps"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Kde-baseapps</title>
+
+    <para>Installer <application>Kde-baseapps</application> ved å kjøre følgende
+    kommandoer:</para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=&kde-dir;   \
+      -DCMAKE_BUILD_TYPE=Release           \
+      -DCMAKE_MINIMUM_REQUIRED_VERSION=3.0 \
+      -DWITH_LibTidy=OFF                   \
+      -Wno-dev .. &amp;&amp;
+make</userinput></screen>
+
+    <para>For å teste resultatene, kjør <command>make test</command>.</para>
+
+    <para> Nå, som <systemitem class="username">root</systemitem>
+    bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>dolphin, fsview, kbookmarkmerger, kdepasswd, kdialog, keditbookmarks, kfind,
+        kfmclient, konqueror, nspluginscan, nspluginviewer, servicemenudeinstallation og
+        servicemenuinstallation</seg>
+        <seg>libdolphinprivate.so, libkbookmarkmodel_private.so,
+        libkdeinit4_dolphin.so, libkdeinit4_keditbookmarks.so,
+        libkdeinit4_kfmclient.so, libkdeinit4_konqueror.so, libkonq.so,
+        libkonqsidebarplugin.so, libkonquerorprivate.so og flere i
+        &kde-dir;/lib/kde4</seg>
+        <seg>flere i &kde-dir;/share</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="kbookmarkmerger">
+        <term><command>kbookmarkmerger</command></term>
+        <listitem>
+          <para>
+            er et program for å slå sammen et gitt sett med bokmerker til
+             brukerens sett med bokmerker.
+          </para>
+          <indexterm zone="kde-baseapps kbookmarkmerger">
+            <primary sortas="b-kbookmarkmerger">kbookmarkmerger</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kfind">
+        <term><command>kfind</command></term>
+        <listitem>
+          <para>
+            er filsøkeverktøyet for KDE.
+          </para>
+          <indexterm zone="kde-baseapps kfind">
+            <primary sortas="b-kfind">kfind</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
