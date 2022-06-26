@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY akonadi-download-http "&kde-download-http;akonadi/src/akonadi-&akonadi-version;.tar.bz2">
+  <!ENTITY akonadi-download-ftp  " ">
+  <!ENTITY akonadi-md5sum        "84eb2e471bd6bdfe54a2a2f1d858c07d">
+  <!ENTITY akonadi-size          "287 KB">
+  <!ENTITY akonadi-buildsize     "82 MB">
+  <!ENTITY akonadi-time          "3.5 SBU, additional 1.5 SBU for tests">
+]>
+
+<sect1 id="akonadi" xreflabel="Akonadi-&akonadi-version;">
+  <?dbhtml filename="akonadi.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Akonadi-&akonadi-version;</title>
+
+  <indexterm zone="akonadi">
+    <primary sortas="a-Akonadi">Akonadi</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Akonadi</title>
+
+    <para><application>Akonadi</application> er en utvidbar
+     lagringstjeneste for PIM data og metadata som samtidig gir lesing, skriving,
+     og søketilgang på tvers av skrivebord. Det gir unik identifikasjon og henting av objekter på hele
+     skrivebordet.</para>
+
+    &lfs79_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&akonadi-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&akonadi-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &akonadi-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &akonadi-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &akonadi-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &akonadi-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Akonadi Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+    <xref linkend="shared-mime-info"/>,
+    <xref linkend="libxslt"/>,
+    <xref linkend="boost"/>, og en av:
+     <xref linkend="sqlite"/>,
+     <xref linkend="mariadb"/>,
+     <ulink url="http://www.mysql.com/">MySQL</ulink>, eller
+     <xref linkend="postgresql"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <ulink url="&sourceforge-repo;/soprano/">soprano</ulink>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/akonadi"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Akonadi</title>
+
+    <para>Installer <application>Akonadi</application> ved å kjøre følgende
+    kommandoer:</para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=&kde-dir;  \
+      -DCMAKE_BUILD_TYPE=Release          \
+      -DINSTALL_QSQLITE_IN_QT_PREFIX=TRUE \
+      -Wno-dev .. &amp;&amp;
+make</userinput></screen>
+
+    <para>For å teste resultatene, kjør <command>make test</command>.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Kommandoforklaringer</title>
+
+    <para><option>-DCMAKE_BUILD_TYPE=Release</option>: Denne bryteren brukes for å anvende
+     et høyere nivå av kompilatoroptimaliseringer.</para>
+
+    <para><option>-DINSTALL_QSQLITE_IN_QT_PREFIX=TRUE</option>: Denne bryteren sikrer
+     at <application>Akonadi</application> SQLite utvidelsen er installert i
+     <application>Qt</application> programtilleggsmappen.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>akonadi_agent_launcher, akonadi_agent_server, akonadi_control,
+        akonadi_rds, akonadictl, akonadiserver og asapcat</seg>
+        <seg>libakonadiprotocolinternals.so og libqsqlite3.so</seg>
+        <seg>&kde-dir;/include/akonadi, &kde-dir;/lib/cmake/Akonadi og
+        &kde-dir;/share/config/akonadi</seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
