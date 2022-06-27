@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY polkit-kde-agent-download-http "&kde-download-http;apps/KDE4.x/admin/polkit-kde-agent-1-&polkit-kde-agent-version;.tar.bz2">
+  <!ENTITY polkit-kde-agent-download-ftp  " ">
+  <!ENTITY polkit-kde-agent-md5sum        "a02d3fddc6270a88bceaf3ba604c92f8">
+  <!ENTITY polkit-kde-agent-size          "34 KB">
+  <!ENTITY polkit-kde-agent-buildsize     "6.8 MB">
+  <!ENTITY polkit-kde-agent-time          "0.1 SBU">
+]>
+
+<sect1 id="polkit-kde-agent" xreflabel="polkit-kde-agent-&polkit-kde-agent-version;">
+  <?dbhtml filename="polkit-kde-agent.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Polkit-kde-agent-&polkit-kde-agent-version;</title>
+
+  <indexterm zone="polkit-kde-agent">
+    <primary sortas="a-polkit-kde-agent">polkit-kde-agent</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Polkit-kde-agent</title>
+
+    <para><application>Polkit-kde-agent</application> gir en grafisk
+     autentiseringsspørring slik at ikke-privilegerte brukere kan autentisere seg selv
+     for å utføre administrative oppgaver i KDE.</para>
+
+    &lfs79_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&polkit-kde-agent-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&polkit-kde-agent-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &polkit-kde-agent-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &polkit-kde-agent-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &polkit-kde-agent-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &polkit-kde-agent-time;</para>
+      </listitem>
+    </itemizedlist>
+
+
+    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
+    <itemizedlist spacing='compact'>
+      <listitem>
+        <para>Valgfri oppdatering: <ulink
+        url="&patch-root;/polkit-kde-agent-1-&polkit-kde-agent-version;-remember_password-1.patch"/></para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Polkit-kde-agent Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+    <xref linkend="polkit-qt"/> og
+    <xref linkend="kdelibs"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/polkit-kde-agent"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Polkit-kde-agent</title>
+
+    <para>Installer <application>polkit-kde-agent</application> ved å kjøre følgende
+    kommandoer:</para>
+
+<screen><userinput>patch -Np1 -i ../polkit-kde-agent-1-&polkit-kde-agent-version;-remember_password-1.patch &amp;&amp;
+
+mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=&kde-dir;   \
+      -DCMAKE_MINIMUM_REQUIRED_VERSION=3.0 \
+      -Wno-dev .. &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>polkit-kde-authentication-agent-1</seg>
+        <seg>ingen</seg>
+        <seg>&kde-dir;/share/apps/policykit1-kde</seg>
+      </seglistitem>
+    </segmentedlist>
+<!--
+    <variablelist>
+      <bridgehead renderas="sect3">Korte beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="a-polkit-kde-agent">
+        <term><command>polkit-kde-agent</command></term>
+        <listitem>
+          <para>er et testverktøy for polkit-kde-agent-genererte byggetrær.</para>
+          <indexterm zone="a-polkit-kde-agent polkit-kde-agent">
+            <primary sortas="b-polkit-kde-agent">polkit-kde-agent</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+-->
+  </sect2>
+
+</sect1>
