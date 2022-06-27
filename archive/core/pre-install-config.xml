@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+]>
+
+<sect1 id="kde-pre-install-config">
+  <?dbhtml filename="pre-install-config.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>KDE4 Konfigurasjon før installasjon</title>
+
+  <note><para>Hvis du ikke installerte <application>Xorg</application> i
+  <filename class="directory">/usr</filename>, vil noen av
+  <application>CMake</application> modulene i <application>KDE</application>
+  se etter pakker på hardkodede steder. For å imøtekomme dette problemet,
+   lag følgende symbolske lenke (som root-bruker):</para>
+
+<screen role="root"><userinput>ln -sv $XORG_PREFIX /usr/X11R6</userinput></screen>
+  </note>
+
+  <sect2><title>Installer i /usr</title>
+
+    <para>Et alternativ er å legge <application>KDE</application> i
+    <filename class='directory'>/usr</filename> hierarkiet.  Dette skaper en
+     enklere oppsetting, men gjør det vanskeligere å prøve flere versjoner av
+    <application>KDE</application>.</para>
+
+<screen><userinput>export &kde-dir-var;=/usr</userinput></screen>
+  </sect2>
+
+  <sect2><title>Installer i /opt</title>
+
+    <para>En metode for å bygge installasjoner med flere
+    <application>KDE</application> versjoner i <filename
+    class='directory'>/opt</filename> hierarkiet:</para>
+
+<screen><userinput>export &kde-dir-var;=/opt/kde</userinput></screen>
+
+    <para>Hvis du ikke installerer <application>KDE</application> i
+    <filename class="directory">/usr</filename>, må du gjøre noen
+     ytterligere konfigurasjonsendringer. Beste praksis er å legge dem til
+     system (som <systemitem  class="username">root</systemitem>) eller personlig
+     profil:</para>
+
+<screen role="root"><userinput>cat &gt; /etc/profile.d/kde.sh &lt;&lt; 'EOF'
+<literal># Begin /etc/profile.d/kde.sh
+
+&kde-dir-var;=/opt/kde
+KDEDIR=&kde-dir;
+
+pathappend &kde-dir;/bin             PATH
+pathappend &kde-dir;/lib/pkgconfig   PKG_CONFIG_PATH
+pathappend &kde-dir;/share/pkgconfig PKG_CONFIG_PATH
+pathappend &kde-dir;/share           XDG_DATA_DIRS
+pathappend &kde-dir;/share/man       MANPATH
+pathappend /etc/kde/xdg                XDG_CONFIG_DIRS
+
+export &kde-dir-var; KDEDIR
+
+# End /etc/profile.d/kde.sh</literal>
+EOF
+</userinput></screen>
+
+    <para>Legg til i din <filename>/etc/ld.so.conf</filename>:</para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/ld.so.conf &lt;&lt; EOF
+<literal># Begin kde addition
+
+/opt/kde/lib
+
+# End kde addition</literal>
+EOF</userinput></screen>
+
+    <indexterm zone="kde-pre-install-config">
+      <primary sortas="e-etc-ld.so.conf">/etc/ld.so.conf</primary>
+    </indexterm>
+
+    <para>Flere KDE pakker installerer filer i D-Bus og polkit mappene.
+    Når du installerer KDE på et annet sted enn <filename class="directory">/usr</filename>,
+    må D-Bus og polkit finne disse filene. Den enkleste måten å oppnå dette på er å opprette
+     følgende symbolske lenker (som <systemitem class="username">root</systemitem> bruker):</para>
+
+<screen role="root"><userinput>install -d &kde-dir;/share &amp;&amp;
+ln -svf /usr/share/dbus-1 &kde-dir;/share &amp;&amp;
+ln -svf /usr/share/polkit-1 &kde-dir;/share</userinput></screen>
+
+    <tip>
+      <para>Noen ganger er installasjonsbanene kodet inn i installerte filer.
+      Dette er grunnen til at <filename class="directory">/opt/kde</filename>
+      brukes som installasjonsprefiks i stedet for <filename
+      class="directory">/opt/kde-&kde-version;</filename>.  Etter installasjon av
+      <application>KDE</application>, kan du gi nytt navn til mappen og opprette
+       en symbolsk lenke:</para>
+
+<screen role="root"><userinput>mv /opt/kde{,-&kde-version;} &amp;&amp;
+ln -svf kde-&kde-version; /opt/kde</userinput></screen>
+
+      <para>Senere kan du ønske å installere andre versjoner av
+      <application>KDE</application>.  For å gjøre det, bare fjern den symbolske lenken og
+       bruk <filename class="directory">/opt/kde</filename> som prefiks igjen
+      (<application>KDE</application> må ikke startes). Hvilken versjon av
+      <application>KDE</application> du bruker avhenger bare av hvor den symbolske lenken
+       peker. Ingen annen rekonfigurering vil være nødvendig.</para>
+
+    </tip>
+
+  </sect2>
+</sect1>
