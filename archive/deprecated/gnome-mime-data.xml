@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-mime-data-download-http "&gnome-download-http;/gnome-mime-data/2.18/gnome-mime-data-&gnome-mime-data-version;.tar.bz2">
+  <!ENTITY gnome-mime-data-download-ftp  "&gnome-download-ftp;/gnome-mime-data/2.18/gnome-mime-data-&gnome-mime-data-version;.tar.bz2">
+  <!ENTITY gnome-mime-data-md5sum        "541858188f80090d12a33b5a7c34d42c">
+  <!ENTITY gnome-mime-data-size          "593 KB">
+  <!ENTITY gnome-mime-data-buildsize     "12 MB">
+  <!ENTITY gnome-mime-data-time          "0.1 SBU">
+]>
+
+<sect1 id="gnome-mime-data" xreflabel="gnome-mime-data-&gnome-mime-data-version;">
+  <?dbhtml filename="gnome-mime-data.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-mime-data-&gnome-mime-data-version;</title>
+
+  <indexterm zone="gnome-mime-data">
+    <primary sortas="a-GNOME-MIME-Data">GNOME MIME Data</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GNOME MIME Data</title>
+
+    <para><application>GNOME MIME Data</application> pakken inneholder
+     basissettet med filtyper og applikasjoner for
+    <application>GNOME-2</application>.</para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&gnome-mime-data-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&gnome-mime-data-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &gnome-mime-data-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &gnome-mime-data-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &gnome-mime-data-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &gnome-mime-data-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GNOME MIME Data Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="perl-xml-parser"/></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/gnome-mime-data"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GNOME MIME Data</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/without-gnome.xml"/>
+
+    <para>Installer <application>GNOME MIME Data</application> ved å kjøre
+    følgende kommandoer:</para>
+
+<screen><userinput>ORBit_prefix=$(pkg-config --variable=prefix ORBit-2.0) &amp;&amp;
+
+./configure --prefix=$ORBit_prefix            \
+            --sysconfdir=&gnome-old-etc-dir;    \
+            --mandir=$$ORBit_prefix/share/man &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install &amp;&amp;
+install -v -m644 -D man/gnome-vfs-mime.5 \
+                    $ORBit_prefix/share/man/man5/gnome-vfs-mime.5</userinput></screen>
+
+  </sect2>
+<!--
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-sysconfdir.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-mandir.xml"/>
+
+  </sect2>
+-->
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
+        <seg><envar>$GNOME_PREFIX</envar>/share/{application-registry,
+        share/mime-info}</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry>
+        <term><filename class='directory'>application-registry</filename></term>
+        <listitem>
+          <para>inneholder mime applikasjonsdatabasen.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><filename class='directory'>mime-info</filename></term>
+        <listitem>
+          <para>inneholder mime beskrivelsesdatabasen.</para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
