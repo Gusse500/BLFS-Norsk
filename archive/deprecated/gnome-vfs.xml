@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-vfs-download-http "&gnome-download-http;/gnome-vfs/2.24/gnome-vfs-&gnome-vfs-version;.tar.bz2">
+  <!ENTITY gnome-vfs-download-ftp  "&gnome-download-ftp;/gnome-vfs/2.24/gnome-vfs-&gnome-vfs-version;.tar.bz2">
+  <!ENTITY gnome-vfs-md5sum        "a05fab03eeef10a47dd156b758982f2e">
+  <!ENTITY gnome-vfs-size          "1.8 MB">
+  <!ENTITY gnome-vfs-buildsize     "56 MB">
+  <!ENTITY gnome-vfs-time          "1.0 SBU">
+]>
+
+<sect1 id="gnome-vfs" xreflabel="gnome-vfs-&gnome-vfs-version;">
+  <?dbhtml filename="gnome-vfs.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-vfs-&gnome-vfs-version;</title>
+
+  <indexterm zone="gnome-vfs">
+    <primary sortas="a-GNOME-Virtual-File-System">GNOME Virtual File System</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GNOME Virtual File System</title>
+
+    <para><application>GNOME Virtual File System</application> pakken
+     inneholder virtuelle filsystembiblioteker. Denne brukes som en av
+     grunnlaget for <application>Nautilus</application> filbehandler.</para>
+
+    &lfs72_checked;
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome2.xml"/>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&gnome-vfs-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&gnome-vfs-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &gnome-vfs-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &gnome-vfs-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &gnome-vfs-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &gnome-vfs-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GNOME Virtual File System Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="dbus-glib"/>,
+    <xref linkend="GConf"/>, og
+    <xref linkend="gnome-mime-data"/></para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="samba"/>,
+    <xref linkend="gamin"/>,
+    <ulink url="http://www.freedesktop.org/wiki/Software/hal">Hal</ulink>,
+    <xref linkend="gtk-doc"/>,
+    <xref linkend="openssh"/>,
+    <xref linkend="openssl"/> eller <xref linkend="gnutls"/>,
+    <xref linkend="mitkrb"/>,
+    <xref linkend="avahi"/>,
+    <ulink url="http://www.openafs.org/">OpenAFS</ulink>, og
+    <xref linkend="cdparanoia"/> (ikke anbefalt)</para>
+
+    <para>Hvis du kjører <command>./configure --help</command> for den komplette listen
+     av avhengighetskrav og tilgjengelige parametere, legger du kanskje merke til en
+     melding om <ulink
+    url="http://hal.freedesktop.org/releases/">gnome-mount</ulink> pakken. Dette
+     pakken er ikke nødvendig ved byggetid, og er kun en kjøretidsavhengighet. Hvis
+    <application>gnome-mount</application> er tilgjengelig under kjøring,
+    <application>GNOME-VFS</application> vil bruke den. Hvis den ikke er tilgjengelig,
+    <application>GNOME-VFS</application> vil falle tilbake til å bruke annen en
+     monteringsmekanisme.</para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/gnome-vfs"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GNOME Virtual File System</title>
+
+    <para>Installer <application>GNOME Virtual File System</application>
+    ved å kjøre følgende kommandoer:</para>
+
+<screen><userinput>ORBit_prefix=$(pkg-config --variable=prefix ORBit-2.0)   &amp;&amp;
+
+./configure --prefix=$ORBit_prefix                       \
+            --sysconfdir=&gnome-old-etc-dir;               \
+            --libexecdir=$ORBit_prefix/lib/gnome-vfs-2.0 &amp;&amp;
+make</userinput></screen>
+
+    <para>For å teste resultatene, kjør: <command>make check</command>.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Kommandoforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-old-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-old-sysconfdir.xml"/>
+
+    <para><parameter>--libexecdir=$(pkg-config --variable=prefix
+    ORBit-2.0)/lib/gnome-vfs-2.0</parameter>: Denne parameteren gjør at libexec
+     filer blir installert på den foretrukne plasseringen
+    <filename class="directory">$GNOME_PREFIX/lib/gnome-vfs-2.0</filename>
+    i stedet for
+    <filename class="directory">$GNOME_PREFIX/libexec</filename>.</para>
+
+    <para><option>--with-dbus-service-dir=/usr/share/dbus-1/services</option>:
+    Bruk denne parameteren hvis du lenker <application>HAL</application> inn i
+     bygget og du vil ha <filename>gnome-vfs-daemon.service</filename> filen
+     installert i standard <application>D-Bus</application> plassering i stedet
+     for i <filename
+    class='directory'><envar>GNOME_PREFIX</envar>/share/dbus-1/services</filename>.
+    Se informasjonen i konfigurasjonsdelen nedenfor hvis du ikke bruker dette
+     parameteret.</para>
+
+    <para><option>--with-hal-eject=PROGRAM</option>: Denne parameteren trenger ikke
+     å sendes hvis du har <xref linkend="eject"/> eller <ulink
+    url="http://hal.freedesktop.org/releases/">gnome-mount</ulink> installert,
+     siden <command>eject</command> programmet brukes hvis
+    <application>gnome-mount</application> ikke er installert.</para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gtk-doc-rebuild.xml"/>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere Gnome Virtual File System</title>
+
+    <sect3 id="gnome-vfs-config">
+      <title>Konfigurasjonsinformasjon</title>
+
+      <para>Hvis <application>HAL</application> ble lenket inn i bygget og
+       GNOME blir installert på et annet sted enn
+      <filename class='directory'>/usr</filename>, bør du opprette en lokal
+      <application>D-Bus</application> sesjonskonfigurasjonsfilen slik at den
+       installerte <filename>gnome-vfs-daemon.service</filename> filen kan bli
+       oppdaget av <application>D-Bus</application>. Du bør referere
+       informasjonen på <application>D-Bus</application> siden for
+       instruksjoner om hvordan du oppretter en
+      <xref linkend="dbus-session-config"/>.</para>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>gnomevfs-cat, gnomevfs-copy, gnomevfs-df, gnomevfs-info,
+        gnomevfs-ls, gnomevfs-mkdir, gnomevfs-monitor, gnomevfs-mv, gnomevfs-rm,
+        og gnome-vfs-daemon</seg>
+        <seg>libbzip2.{so,a}, libcomputer.{so,a}, libdns-sd.{so,a},
+        libfile.{so,a}, libftp.{so,a}, libgzip.{so,a}, libhttp.{so,a},
+        libnetwork.{so,a}, libnntp.{so,a}, libsftp.{so,a}, libtar.{so,a},
+        libvfs-test.{so,a}, og libgnomevfs-2.{so,a}</seg>
+        <seg>&gnome-old-etc-dir;/gnome-vfs-2.0/modules,
+        <envar>$GNOME_PREFIX</envar>/{include/{gnome-vfs-2.0/libgnomevfs,
+        gnome-vfs-module-2.0/libgnomevfs},lib/gnome-vfs-2.0/{include,modules},
+        share/gtk-doc/html/gnome-vfs-2.0}</seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
