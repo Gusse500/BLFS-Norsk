@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libbonoboui-download-http
+    "&gnome-download-http;/libbonoboui/2.24/libbonoboui-&libbonoboui-version;.tar.bz2">
+  <!ENTITY libbonoboui-download-ftp
+    "&gnome-download-ftp;/libbonoboui/2.24/libbonoboui-&libbonoboui-version;.tar.bz2">
+  <!ENTITY libbonoboui-md5sum        "853be8e28aaa4ce48ba60be7d9046bf4">
+  <!ENTITY libbonoboui-size          "954 KB">
+  <!ENTITY libbonoboui-buildsize     "41 MB">
+  <!ENTITY libbonoboui-time          "0.9 SBU">
+]>
+
+<sect1 id="libbonoboui" xreflabel="LibBonoboUI-&libbonoboui-version;">
+  <?dbhtml filename="libbonoboui.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>LibBonoboUI-&libbonoboui-version;</title>
+
+  <indexterm zone="libbonoboui">
+    <primary sortas="a-Libbonoboui">LibBonoboUI</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til LibBonoboUI</title>
+
+    <para>
+      <application>Bonobo</application> Brukergrensesnittbiblioteket gir brukeren
+       grensesnittkode for <application>Bonobo</application>, rammeverket for
+      objektaktivering for <application>GNOME 2</application>.
+    </para>
+
+    &lfs72_checked;
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome2.xml"/>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libbonoboui-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&libbonoboui-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libbonoboui-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libbonoboui-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libbonoboui-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libbonoboui-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">LibBonoboUI Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="libglade"/>,
+      <xref linkend="libgnome"/> og
+      <xref linkend="libgnomecanvas"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="gtk-doc"/>
+    </para>
+
+    <para condition="html" role="usernotes">
+      Brukernotater: <ulink url="&blfs-wiki;/libbonoboui"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av LibBonoboUI</title>
+
+    <para>
+      Installer <application>LibBonoboUI</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) \
+  --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      For å teste resultatene, kjør: <command>make check</command>.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install &amp;&amp;
+
+install -v -m755 -d $(pkg-config \
+        --variable=prefix ORBit-2.0)/share/doc/libbonoboui-&libbonoboui-version; &amp;&amp;
+
+install -v -m644 doc/*.{dtd,txt,xml,html} $(pkg-config \
+        --variable=prefix ORBit-2.0)/share/doc/libbonoboui-&libbonoboui-version;</userinput></screen>
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-old-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/static-libraries.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gtk-doc-rebuild.xml"/>
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere LibBonoboUI</title>
+
+      <para>
+        Hvis du har installert gnome med et annet prefiks til
+        <application>LibGlade</application> (f.eks,
+        <application>LibGlade</application> er installert i
+        <filename class="directory">/usr</filename> og
+        <application>LibBonoboUI</application> er installert i
+        <filename class="directory">/opt/gnome</filename>) må du legge til
+         mappen som inneholder Glade filene til miljøvariabelen
+        <envar>${LIBGLADE_MODULE_PATH}</envar>. Som
+        <systemitem class="username">root</systemitem> bruker:
+      </para>
+
+<screen role="root"><userinput>echo export \
+   LIBGLADE_MODULE_PATH=$(pkg-config --variable=prefix ORBit-2.0)/lib/libglade/2.0 \
+   &gt;&gt; /etc/profile</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>bonobo-browser og test-moniker</seg>
+        <seg>libbonoboui-2.so og libbonobo.so Glade library</seg>
+        <seg>
+          /usr/include/libbonoboui-2.0/bonobo,
+          /usr/share/doc/libbonoboui-2.24.3,
+          /usr/share/gnome-2.0/ui og
+          /usr/share/gtk-doc/html/libbonoboui
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libbonoboui-2">
+        <term><filename class='libraryfile'>libbonoboui-2.so</filename></term>
+        <listitem>
+          <para>
+            er GUI delen av <application>Bonobo</application>
+            bibliotekene.
+          </para>
+          <indexterm zone="libbonoboui libbonoboui-2">
+            <primary sortas="c-libbonoboui">libbonoboui-2.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
