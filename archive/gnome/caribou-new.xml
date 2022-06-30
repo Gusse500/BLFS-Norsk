@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY caribou-download-http "&gnome-download-http;/caribou/0.4/caribou-&caribou-version;.tar.xz">
+  <!ENTITY caribou-download-ftp  "&gnome-download-ftp;/caribou/0.4/caribou-&caribou-version;.tar.xz">
+  <!ENTITY caribou-md5sum        "16b76cd7453b99e2871e8d4da88bf976">
+  <!ENTITY caribou-size          "420 KB">
+  <!ENTITY caribou-buildsize     "13 MB">
+  <!ENTITY caribou-time          "less than 0.1 SBU">
+]>
+
+<sect1 id="caribou" xreflabel="Caribou-&caribou-version;">
+  <?dbhtml filename="caribou.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Caribou-&caribou-version;</title>
+
+  <indexterm zone="caribou">
+    <primary sortas="a-Caribou">Caribou</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Caribou</title>
+
+    <para>
+      <application>Caribou</application> er en inndata hjelpeteknologi
+       beregnet på switch  og pointer brukere.
+    </para>
+
+    &lfs84_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&caribou-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&caribou-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &caribou-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &caribou-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &caribou-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &caribou-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Caribou Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="clutter"/>,
+      <xref linkend="gtk3"/>,
+      <xref linkend="libgee"/>,
+      <xref linkend="libxklavier"/>,
+      <xref linkend="pygobject2"/>, og
+      <xref linkend="pygobject3"/> (nødvendig uavhengig av hvilken versjon av GTK som er i bruk)
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="vala"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="gtk2"/> og
+      <xref linkend="vala"/> (med Valadoc installert)
+    </para>
+
+    <bridgehead renderas="sect4">Ytterligere kjøretidsavhengigheter</bridgehead>
+    <para role="optional">
+      For de fleste <application>GNOME</application> brukere, er denne pakken bare
+      nødvendig som en kompileringstidsavhengighet for andre pakker. Hvis
+       du har tenkt å bruke tastaturet trenger du
+      <xref role="runtime" linkend="dbus-python"/>,
+      <xref role="runtime" linkend="dconf"/> og
+      <xref role="runtime" linkend="pyatspi2"/> ved kjøretid.
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/caribou"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Caribou</title>
+
+    <para>
+      Installer <application>Caribou</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>PYTHON=python3 ./configure --prefix=/usr         \
+            --sysconfdir=/etc     \
+            --disable-gtk2-module \
+            --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>--disable-gtk2-module</parameter>: Fordi
+      <application>GNOME</application> nnå bruker
+      <application>GTK+-3</application>, er denne modulen ikke nødvendig
+      på <application>GNOME</application> skrivebordet. Fjern
+      denne bryteren hvis du fortsatt ønsker å bygge
+      <application>GTK+-2</application> modulen.
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          caribou (kjørbart bibliotek),
+          antler (kjørbart bibliotek),
+          og caribou-preferences
+        </seg>
+        <seg>
+          libcaribou.so
+        </seg>
+        <seg>
+          /usr/include/libcaribou,
+          /usr/lib/python&python2-majorver;/site-packages/caribou,
+          /usr/share/antler og
+          /usr/share/caribou
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libcaribou">
+        <term><filename class="libraryfile">libcaribou.so</filename></term>
+        <listitem>
+          <para>
+            inneholder <application>Caribou</application> API funksjoner.
+          </para>
+          <indexterm zone="caribou libcaribou">
+            <primary sortas="c-libcaribou">libcaribou.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
