@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-bluetooth-download-http
+           "&gnome-download-http;/gnome-bluetooth/3.6/gnome-bluetooth-&gnome-bluetooth-version;.tar.xz">
+  <!ENTITY gnome-bluetooth-download-ftp
+           "&gnome-download-ftp;/gnome-bluetooth/3.6/gnome-bluetooth-&gnome-bluetooth-version;.tar.xz">
+  <!ENTITY gnome-bluetooth-md5sum        "a3b0b6c2c542b3264cb0144a4efb3342">
+  <!ENTITY gnome-bluetooth-size          "1.3 MB">
+  <!ENTITY gnome-bluetooth-buildsize     "21 MB">
+  <!ENTITY gnome-bluetooth-time          "0.2 SBU">
+]>
+
+<sect1 id="gnome-bluetooth" xreflabel="gnome-bluetooth-&gnome-bluetooth-version;">
+  <?dbhtml filename="gnome-bluetooth.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-bluetooth-&gnome-bluetooth-version;</title>
+
+  <indexterm zone="gnome-bluetooth">
+    <primary sortas="a-gnome-bluetooth">gnome-bluetooth</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GNOME Bluetooth</title>
+
+    <para>
+      <application>GNOME Bluetooth</application> pakken inneholder verktøy
+       for å administrere og manipulere Bluetooth enheter ved hjelp av
+      <application>GNOME</application> Skrivebordet.
+    </para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&gnome-bluetooth-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&gnome-bluetooth-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &gnome-bluetooth-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &gnome-bluetooth-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &gnome-bluetooth-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &gnome-bluetooth-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GNOME Bluetooth Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="libnotify"/> og
+      <xref linkend="yelp-xsl"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="gobject-introspection"/> og
+      <xref linkend="nautilus-sendto"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="geoclue"/> og
+      <xref linkend="gtk-doc"/>
+    </para>
+
+    <bridgehead renderas="sect4">Påkrevd (Kjøretid)</bridgehead>
+    <para role="optional">
+      <xref linkend="bluez"/>,
+      <xref linkend="consolekit"/> og
+      <xref linkend="obexd"/>
+      (Nødvendig for at bluetooth-sendto skal fungere)
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/gnome-bluetooth"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GNOME Bluetooth</title>
+
+    <para>
+      Installer <application>GNOME Bluetooth</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      For at <application>GNOME Bluetooth</application> skal virke
+       som forventet må brukere få lov til å skrive til
+      <filename>/dev/rfkill</filename>. Lage en
+      <application>Udev</application> regel som vil tillate
+       vanlige brukere å skrive til <filename>/dev/rfkill</filename>
+      med følgende kommando som
+      <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>cat &gt; /lib/udev/rules.d/61-gnome-bluetooth.rules &lt;&lt; "EOF"
+<literal># Get access to /dev/rfkill for users
+# See https://bugzilla.redhat.com/show_bug.cgi?id=514798
+#
+# Updated for udev &gt;= 154
+# http://bugs.debian.org/582188
+# https://bugzilla.redhat.com/show_bug.cgi?id=588660
+
+ENV{ACL_MANAGE}=="0", GOTO="gnome_bluetooth_end"
+ACTION!="add|change", GOTO="gnome_bluetooth_end"
+KERNEL=="rfkill", TAG+="udev-acl"
+LABEL="gnome_bluetooth_end"</literal>
+EOF</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/gtk-doc-rebuild.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          bluetooth-applet, bluetooth-sendto og bluetooth-wizard
+        </seg>
+        <seg>
+          libgnome-bluetooth.so
+        </seg>
+        <seg>
+          /usr/include/gnome-bluetooth,
+          /usr/lib/gnome-bluetooth,
+          /usr/share/gnome-bluetooth,
+          /usr/share/gtk-doc/html/gnome-bluetooth og
+          /usr/share/help/*/gnome-bluetooth
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="bluetooth-applet">
+        <term><command>bluetooth-applet</command></term>
+        <listitem>
+          <para>
+            er en <application>GNOME</application> applet for å spørre
+             bruker for en Bluetooth nøkkel (PIN).
+          </para>
+          <indexterm zone="gnome-bluetooth bluetooth-applet">
+            <primary sortas="b-bluetooth-applet">bluetooth-applet</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="bluetooth-sendto">
+        <term><command>bluetooth-sendto</command></term>
+        <listitem>
+          <para>
+            er en <application>GTK+</application> applikasjon for å overføre
+             filer over Bluetooth.
+          </para>
+          <indexterm zone="gnome-bluetooth bluetooth-sendto">
+            <primary sortas="b-bluetooth-sendto">bluetooth-sendto</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="bluetooth-wizard">
+        <term><command>bluetooth-wizard</command></term>
+        <listitem>
+          <para>
+            er en <application>GTK+</application> veiviser for å sette opp
+             enheter med Linux Bluetooth stabelen.
+          </para>
+          <indexterm zone="gnome-bluetooth bluetooth-wizard">
+            <primary sortas="b-bluetooth-wizard">bluetooth-wizard</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libgnome-bluetooth">
+        <term><filename class="libraryfile">libgnome-bluetooth.so</filename></term>
+        <listitem>
+          <para>
+            inneholder <application>GNOME Bluetooth</application> API
+            funksjoner.
+          </para>
+          <indexterm zone="gnome-bluetooth libgnome-bluetooth">
+            <primary sortas="c-libgnome-bluetooth">libgnome-bluetooth.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
