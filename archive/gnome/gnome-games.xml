@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-games-download-http
+           "&gnome-download-http;/gnome-games/3.6/gnome-games-&gnome-games-version;.tar.xz">
+  <!ENTITY gnome-games-download-ftp
+           "&gnome-download-ftp;/gnome-games/3.6/gnome-games-&gnome-games-version;.tar.xz">
+  <!ENTITY gnome-games-md5sum                   "4f57151eefcb5de4349c2b5f570eff64">
+  <!ENTITY gnome-games-size                     "19 MB">
+  <!ENTITY gnome-games-buildsize                "170 MB">
+  <!ENTITY gnome-games-time                     "1.2 SBU">
+]>
+
+<sect1 id="gnome-games" xreflabel="gnome-games-&gnome-games-version;">
+  <?dbhtml filename="gnome-games.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-games-&gnome-games-version;</title>
+
+  <indexterm zone="gnome-games">
+    <primary sortas="a-gnome-ames">gnome-games</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GNOME Games</title>
+
+    <para>
+      <application>GNOME Games</application> er en samling
+       av enkle, men vanedannende spill fra
+      <application>GNOME</application> Skrivebordsprosjekt.
+      De representerer mange av de populære spillene og inkluderer kortspill,
+       puslespill og arkadespill.
+    </para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&gnome-games-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&gnome-games-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &gnome-games-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &gnome-games-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &gnome-games-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &gnome-games-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GNOME Games Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="clutter-gtk"/>,
+      <xref linkend="libcanberra"/>,
+      <xref linkend="librsvg"/>,
+      <xref linkend="pygobject3"/> og
+      <xref linkend="yelp-xsl"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="gobject-introspection"/> og
+      <xref linkend="vala"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/gnome-games"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GNOME Games</title>
+
+    <para>
+      Noen av <application>GNOME Games</application> binærfiler for spill
+       må sette setgid for å spore høye poengsummer. Opprett en egen bruker og gruppe
+       for spill ved å kjøre følgende kommando som
+      <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>install -v -m755 -d /var/games &amp;&amp;
+groupadd -g 60 games &amp;&amp;
+useradd -c "Games High Score Owner" -d /var/games \
+        -g games -s /bin/false -u 60 games &amp;&amp;
+chown -v games:games /var/games</userinput></screen>
+
+    <para>
+      Installer <application>GNOME Games</application> ved å
+      kjøre følgende kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr --localstatedir=/var &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <option>--disable-setgid</option>: Dette vil forhindre at setgid biten
+       på de kjørbare filene blir satt. Det gir systemadministratorer
+       muligheten til å deaktivere setgid på binærfiler, men det betyr også at
+       funksjonalitet for å lagre høye spillpoeng vil bli deaktivert..
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          glchess, glines, gnect, gnibbles, gnobots2, gnome-mahjongg,
+          gnome-sudoku, gnomine, gnotravex, gnotski, gtali, iagno,
+          lightsoff, quadrapassel og swell-foop
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          /usr/lib/python&python2-majorver;/site-packages/gnome_sudoku,
+          /usr/share/glchess,
+          /usr/share/glines,
+          /usr/share/gnect,
+          /usr/share/gnibbles,
+          /usr/share/gnobots2,
+          /usr/share/gnome-mahjongg,
+          /usr/share/gnome-sudoku,
+          /usr/share/gnomine,
+          /usr/share/gnotravex,
+          /usr/share/gnotski,
+          /usr/share/gtali,
+          /usr/share/help/*/glchess,
+          /usr/share/help/*/glines,
+          /usr/share/help/*/gnect,
+          /usr/share/help/*/gnibbles,
+          /usr/share/help/*/gnobots2,
+          /usr/share/help/*/gnome-mahjongg,
+          /usr/share/help/*/gnome-sudoku,
+          /usr/share/help/*/gnomine,
+          /usr/share/help/*/gnotravex,
+          /usr/share/help/*/gnotski,
+          /usr/share/help/*/gtali,
+          /usr/share/help/*/iagno,
+          /usr/share/help/*/lightsoff,
+          /usr/share/help/*/quadrapassel,
+          /usr/share/help/*/swell-foop,
+          /usr/share/iagno,
+          /usr/share/lightsoff,
+          /usr/share/quadrapassel,
+          /usr/share/swell-foop og
+          /var/games
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="glchess">
+        <term><command>glchess</command></term>
+        <listitem>
+          <para>
+            er et sjakkspill som støtter flere sjakkmotorer.
+          </para>
+          <indexterm zone="gnome-games glchess">
+            <primary sortas="b-glchess">glchess</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="glines">
+        <term><command>glines</command></term>
+        <listitem>
+          <para>
+            er et spill som involverer å flytte baller rundt rutenettet og prøve
+             og danner linjer med samme farge for å få dem til å forsvinne.
+          </para>
+          <indexterm zone="gnome-games glines">
+            <primary sortas="b-glines">glines</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnect">
+        <term><command>gnect</command></term>
+        <listitem>
+          <para>
+            er et klassisk spill hvor hver spiller prøver å lage en linje på fire
+             brikker før motstanderen klarer det.
+          </para>
+          <indexterm zone="gnome-games gnect">
+            <primary sortas="b-gnect">gnect</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnibbles">
+        <term><command>gnibbles</command></term>
+        <listitem>
+          <para>
+            er et "ormespill". Du fører en orm rundt en labyrint og prøver å
+             samle diamanter. Med hver diamant vokser ormen din og navigering
+             blir stadig vanskeligere.
+          </para>
+          <indexterm zone="gnome-games gnibbles">
+            <primary sortas="b-gnibbles">gnibbles</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnobots2">
+        <term><command>gnobots2</command></term>
+        <listitem>
+          <para>
+            er et klassisk BSD robotspill hvor du må unngå en haug med
+             roboter som prøver å drepe deg.
+          </para>
+          <indexterm zone="gnome-games gnobots2">
+            <primary sortas="b-gnobots2">gnobots2</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-mahjongg">
+        <term><command>gnome-mahjongg</command></term>
+        <listitem>
+          <para>
+            er en brikkebasert kabal med en orientalsk smak. Fjern
+             brikker i matchende par fra en haug for å prøve å demontere haugen.
+          </para>
+          <indexterm zone="gnome-games gnome-mahjongg">
+            <primary sortas="b-gnome-mahjongg">gnome-mahjongg</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-sudoku">
+        <term><command>gnome-sudoku</command></term>
+        <listitem>
+          <para>
+            er et logikkspill med et japansk navn som nylig har eksplodert
+             i popularitet.
+          </para>
+          <indexterm zone="gnome-games gnome-sudoku">
+            <primary sortas="b-gnome-sudoku">gnome-sudoku</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnomine">
+        <term><command>gnomine</command></term>
+        <listitem>
+          <para>
+            er et spill hvor du fjerner miner fra et brett ved å bruke hint fra
+             firkanter du allerede har avdekket.
+          </para>
+          <indexterm zone="gnome-games gnomine">
+            <primary sortas="b-gnomine">gnomine</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnotravex">
+        <term><command>gnotravex</command></term>
+        <listitem>
+          <para>
+            er et puslespill hvor du må matche et rutenett med brikker.
+          </para>
+          <indexterm zone="gnome-games gnotravex">
+            <primary sortas="b-gnotravex">gnotravex</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnotski">
+        <term><command>gnotski</command></term>
+        <listitem>
+          <para>
+            er en serie med skyveblokkoppgaver.
+          </para>
+          <indexterm zone="gnome-games gnotski">
+            <primary sortas="b-gnotski">gnotski</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gtali">
+        <term><command>gtali</command></term>
+        <listitem>
+          <para>
+            er et gammelt romersk spill.
+          </para>
+          <indexterm zone="gnome-games gtali">
+            <primary sortas="b-gtali">gtali</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="iagno">
+        <term><command>iagno</command></term>
+        <listitem>
+          <para>
+            er et spill der målet er å kontrollere alle brikkene på
+             bordet ved å fange motstanderens brikker mellom to av dine.
+          </para>
+          <indexterm zone="gnome-games iagno">
+            <primary sortas="b-iagno">iagno</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="quadrapassel">
+        <term><command>quadrapassel</command></term>
+        <listitem>
+          <para>
+            er et russisk spill for å tilpasse fallende geometriske former.
+          </para>
+          <indexterm zone="gnome-games quadrapassel">
+            <primary sortas="b-quadrapassel">quadrapassel</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
