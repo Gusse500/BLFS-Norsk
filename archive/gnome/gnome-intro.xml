@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE partintro PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../general.ent">
+  %general-entities;
+]>
+
+<partintro>
+
+  <title>Introduksjon til GNOME</title>
+
+  <!-- <warning id="gnome_broken" xreflabel="SVN GNOME is Broken">
+    <para><application>GLib</application>/<application>GTK+</application>
+    verktøystabelen i gjeldende SVN-bok er ikke kompatibel med denne versjonen
+     av GNOME. Hvis du vil bygge GNOME ved å bruke disse instruksjonene, bør du
+     følg den stabile BLFS 6.2.0 boken (<ulink url="../stable/gnome/gnome.html"/>),
+    inkludert å
+     bruke versjonene av pakkene som er oppført der. BLFS utviklingsteamet
+     jobber så hardt som mulig for å bringe boken opp til GNOME-2.18.x.</para>
+  </warning> -->
+
+  <!-- <para>Dette kapittelet presenterer instruksjonene for å installere en komplett
+  GNOME-&gnome-version;&gnome-minor-version; skrivebordsmiljø; og en begrenset
+  GNOME 1.4 bibliotekmiljø som er tilstrekkelig til å kjøre GNOME 1.4
+  applikasjoner inkludert i denne boken. Rekkefølgen på sidene følger
+   rekkefølgen definert av GNOME utviklingsteamet og dokumentert i <ulink
+  url="http://www.gnome.org/start/&gnome-version;/notes/en/rninstallation.html">
+  Utgivelsesnotater</ulink>.</para> -->
+
+  <para>Dette kapittelet presenterer instruksjonene for å installere en komplett
+  GNOME-&gnome-version;&gnome-minor-version; skrivebordsmiljø. Rekkefølgen på
+   de installerte pakkene følger byggerekkefølgen definert av GNOME
+   utviklingsteamet og har blitt grundig testet av BLFS teamet.</para>
+
+  <para>Installasjonen av GNOME-&gnome-version;&gnome-minor-version; er et
+   stort foretak og en vi gjerne vil se deg gjøre komplett med minst mulig
+   stress. Et av de første målene i denne installasjonen er å beskytte
+   din tidligere installerte programvare, spesielt hvis du tester GNOME på
+   maskinen din. GNOME-&gnome-version; pakkene bruker
+  <option>--prefix=option</option> gitt til <command>configure</command>,
+  så du vil bruke det og en miljøvariabel(<envar>GNOME_PREFIX</envar>)
+  for å legge til fleksibilitet til installasjonen.</para>
+
+  <para>For å installere GNOME som ditt foretrukne skrivebord, anbefales det at du
+   installere ved hjelp av <option>--prefix=/usr</option>. Hvis du ikke er sikker på at du
+   kommer til å beholde GNOME installasjonen, eller du tror du vil oppdatere til
+   nyeste utgivelse etter hvert som de blir tilgjengelige, bør du installere med
+  <option>--prefix=/opt/gnome-&gnome-version;&gnome-minor-version;</option>.
+  Innstilling av miljøvariabelen og tilleggsredigeringene som kreves av
+   det andre alternativet er dekket i Konfigurasjon før installasjon
+   seksjon.</para>
+
+  <para>Hvis du velger det andre alternativet, fjerning av
+  GNOME-&gnome-version;&gnome-minor-version; er like enkelt som å fjerne redigeringene
+   fra forhåndsinstallasjonssiden og utstede følgende kommando (du
+   trenger å være <systemitem class='username'>root</systemitem>
+  bruker):</para>
+
+<screen role="root"><userinput>rm -rf /opt/gnome-&gnome-version;&gnome-minor-version;</userinput></screen>
+
+  <para>Hvis systemet ditt ble fullstendig bygget i henhold til LFS- og BLFS-instruksjoner,
+   har du en veldig god sjanse til å bruke
+  GNOME-&gnome-version;&gnome-minor-version; etter din første installasjon. Hvis
+   du er en typisk LFS bruker, har du gjort endringer i instruksjonene
+   underveis må du ta hensyn til disse modifikasjonene
+   på fremtidige installasjoner. Du skal ikke ha noen problemer med å integrere
+  GNOME-&gnome-version;&gnome-minor-version; inn i ditt unike oppsett, men du
+   må installere godt over 50 pakker før du kan kjøre GNOME gjennom
+   enhver testing (forutsatt at vindussystemet ditt er forhåndsinstallert og testet). Du
+   bør forutse at du skal gjenoppbygge GNOME minst én gang for å gjøre
+   justeringer for oppsettet ditt.</para>
+
+  <!-- <para>Hvis du bygger GNOME 1.4 bibliotekmiljø, vil du installere
+   bare de bibliotekene i GNOME 1.4 kapittelet
+  <emphasis role='strong'>og</emphasis> eventuelle avhengigheter som er oppført på disse
+   sider, enten de er merket eller ikke. GNOME pakker uten sider i boken er
+   enkelt å installere med:</para>
+
+<screen><userinput>./configure -prefix=/opt/gnome-1.4 &amp;&amp;
+make</userinput></screen>
+
+  <para>Nå, som <systemitem class='username'>root</systemitem> bruker:</para>
+
+<screen role='root'><userinput>make install</userinput></screen>
+
+  <para>Disse instruksjonene er enkle for å lette fjerning av
+   GNOME 1.4 fra BLFS-systemer når det ikke lenger er nødvendig. Disse
+   instruksjoner kan forbedres senere for å overholde BLFS standarder for fil
+   steder, nærmere bestemt
+  <filename class='directory'>/opt/gnome/etc</filename> til
+  <filename class='directory'>/etc</filename> og
+  <filename class='directory'>/opt/gnome/var</filename> til
+  <filename class='directory'>/var</filename>. Du bør vurdere å bruke
+   GNOME 1.4 tipset som finnes på <ulink url="&hints-root;"/> hvis du ikke har
+   interesse for GNOME-&gnome-version;&gnome-minor-version;.</para> -->
+
+  <bridgehead renderas="sect3">Alternative installasjonsmetoder</bridgehead>
+  <para>Som tidligere nevnt, å bygge et GNOME skrivebord fra kilder er en
+   betydelig prosjekt. Noen kan synes det er for kjedelig eller tidkrevende å utføre
+   en full installasjon etter BLFS boken. Det kan være lurt å gjennomgå
+   automatiserte metoder nevnt i GNOME-&gnome-version; <ulink
+  url="http://www.gnome.org/start/&gnome-version;/notes/en/rninstallation.html">Utgivelsenotater
+   </ulink>. Merk at om du bruker en hvilken som helst annen metode for å installere
+  GNOME-&gnome-version;&gnome-minor-version; annet enn å bruke BLFS
+   instruksjoner kan ikke støttes av BLFS teamet. Alternative metoder er bare
+   nevnt som en høflighet til byggere som ønsker å bygge GNOME fra kilder
+   men har ikke tid/lyst/tålmodighet/hva som helst til å følge BLFS
+   boken.</para>
+
+
+</partintro>
