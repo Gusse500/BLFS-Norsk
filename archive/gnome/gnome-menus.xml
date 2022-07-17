@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-menus-download-http
+           "&gnome-download-http;/gnome-menus/3.6/gnome-menus-&gnome-menus-version;.tar.xz">
+  <!ENTITY gnome-menus-download-ftp
+           "&gnome-download-ftp;/gnome-menus/3.6/gnome-menus-&gnome-menus-version;.tar.xz">
+  <!ENTITY gnome-menus-md5sum        "c48775f704e7c542496d1fa1a84b2bfd">
+  <!ENTITY gnome-menus-size          "416 KB">
+  <!ENTITY gnome-menus-buildsize     "8.5 MB">
+  <!ENTITY gnome-menus-time          "less than 0.1 SBU">
+]>
+
+<sect1 id="gnome-menus" xreflabel="gnome-menus-&gnome-menus-version;">
+  <?dbhtml filename="gnome-menus.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-menus-&gnome-menus-version;</title>
+
+  <indexterm zone="gnome-menus">
+    <primary sortas="a-gnome-menus">gnome-menus</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GNOME Menus</title>
+
+    <para>
+      <application>GNOME Menus</application> pakken inneholder en
+       implementering av utkastet
+      <ulink url="http://www.freedesktop.org/Standards/menu-spec">
+      Desktop Menu Specification</ulink> fra freedesktop.org. Det inneholder
+       også <application>GNOME</application> filene for konfigurasjon av
+       menyoppsettet, <filename>.directory</filename> filer og et menyrelatert verktøy
+       program.
+    </para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&gnome-menus-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&gnome-menus-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &gnome-menus-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &gnome-menus-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &gnome-menus-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &gnome-menus-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GNOME Menus Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="glib2"/> og
+      <xref linkend="intltool"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="gobject-introspection"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/gnome-menus"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GNOME Menus</title>
+
+    <para>
+      Installer <application>GNOME Menus</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr \
+            --sysconfdir=/etc \
+            --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          gmenu-simple-editor
+        </seg>
+        <seg>
+          libgnome-menu.so
+        </seg>
+        <seg>
+          /etc/xdg/menus,
+          /usr/include/gnome-menus-3.0,
+          /usr/lib/python&python2-majorver;/site-packages/GMenuSimpleEditor og
+          /usr/share/gnome-menus
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="gmenu-simple-editor">
+        <term><command>gmenu-simple-editor</command></term>
+        <listitem>
+          <para>
+            brukes til å modifisere <application>GNOME</application> Menyoppsett.
+          </para>
+          <indexterm zone="gnome-menus gmenu-simple-editor">
+            <primary sortas="b-gmenu-simple-editor">gmenu-simple-editor</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libgnome-menu">
+        <term><filename class="libraryfile">libgnome-menu.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som kreves for å støtte
+            <application>GNOME</application>'s implementering av
+             Spesifikasjon for skrivebordsmeny.
+          </para>
+          <indexterm zone="gnome-menus libgnome-menu">
+            <primary sortas="c-libgnome-menu">libgnome-menu.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

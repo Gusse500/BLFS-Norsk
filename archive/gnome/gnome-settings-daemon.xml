@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-settings-daemon-download-http
+           "&gnome-download-http;/gnome-settings-daemon/3.6/gnome-settings-daemon-&gnome-settings-daemon-version;.tar.xz">
+  <!ENTITY gnome-settings-daemon-download-ftp
+           "&gnome-download-ftp;/gnome-settings-daemon/3.6/gnome-settings-daemon-&gnome-settings-daemon-version;.tar.xz">
+  <!ENTITY gnome-settings-daemon-md5sum        "362803ee1f1a0aa02e3c7df61ef82309">
+  <!ENTITY gnome-settings-daemon-size          "1.5 MB">
+  <!ENTITY gnome-settings-daemon-buildsize     "70 MB">
+  <!ENTITY gnome-settings-daemon-time          "0.7 SBU">
+]>
+
+<sect1 id="gnome-settings-daemon" xreflabel="gnome-settings-daemon-&gnome-settings-daemon-version;">
+  <?dbhtml filename="gnome-settings-daemon.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-settings-daemon-&gnome-settings-daemon-version;</title>
+
+  <indexterm zone="gnome-settings-daemon">
+    <primary sortas="a-gnome-settings-daemon">gnome-settings-daemon</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GNOME Settings Daemon</title>
+
+    <para>
+      <application>GNOME Settings Daemon</application> er ansvarlig
+       for å stille inn ulike parametere for en <application>GNOME Session</application>
+      og applikasjonene som kjører under den.
+    </para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&gnome-settings-daemon-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&gnome-settings-daemon-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &gnome-settings-daemon-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &gnome-settings-daemon-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &gnome-settings-daemon-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &gnome-settings-daemon-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GNOME Settings Daemon Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="colord"/>,
+      <xref linkend="gnome-desktop"/>,
+      <xref linkend="libcanberra"/>,
+      <xref linkend="libnotify"/>,
+      <xref linkend="libgnomekbd"/>,
+      <xref linkend="libwacom"/>,
+      <xref linkend="pulseaudio"/>,
+      <xref linkend="upower"/> og
+      <xref linkend="xorg-wacom-driver"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="cups"/>,
+      <xref linkend="ibus"/> og
+      <xref linkend="nss"/>
+    </para>
+
+    <note>
+      <para>
+        Anbefalte avhengigheter er ikke strengt nødvendig for at
+         denne pakken bygges og fungerer, men du får kanskje ikke
+         forventede resultater ved kjøring hvis du ikke installerer dem.
+      </para>
+    </note>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/gnome-settings-daemon"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GNOME Settings Daemon</title>
+
+    <para>
+      Installer <application>GNOME Settings Daemon</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr \
+            --sysconfdir=/etc \
+            --libexecdir=/usr/lib/gnome-settings-daemon \
+            --disable-packagekit \
+            --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      <!-- To test the results, issue <command>make check</command>. -->
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <option>--disable-packagekit</option>: Denne bryteren deaktiverer bruk
+       av PackageKit som ikke er egnet for BLFS.
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+    <para>
+      <option>--disable-cups</option>: Bruk denne bryteren hvis du ikke har
+       installert anbefalt avhengighet <application>Cups</application>.
+    </para>
+
+    <para>
+      <option>--disable-ibus</option>: Bruk denne bryteren hvis du ikke har
+       installert anbefalt avhengighet <application>IBus</application>.
+    </para>
+
+    <para>
+      <option>--disable-smartcard-support</option>: Bruk denne bryteren hvis du ikke har
+       installert anbefalt avhengighet
+      <application>NSS</application> og ønsker å deaktivere Smartkort
+       brukerstøtte.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          gnome-settings-daemon
+        </seg>
+       <seg>
+          Ingen
+        </seg>
+        <seg>
+          /etc/gnome-settings-daemon,
+          /usr/include/gnome-settings-daemon-3.0,
+          /usr/lib/gnome-settings-daemon,
+          /usr/lib/gnome-settings-daemon-3.0,
+          /usr/share/gnome-settings-daemon og
+          /usr/share/gnome-settings-daemon-3.0
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="gnome-settings-daemon-prog">
+        <term><command>gnome-settings-daemon</command></term>
+        <listitem>
+          <para>
+            er ansvarlig for å angi de ulike preferanseparametrene til
+             en <application>GNOME</application> økten og programmene
+             som kjører under den.
+          </para>
+          <indexterm zone="gnome-settings-daemon gnome-settings-daemon-prog">
+            <primary sortas="b-gnome-settings-daemon">gnome-settings-daemon</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

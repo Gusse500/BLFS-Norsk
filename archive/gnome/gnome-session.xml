@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-session-download-http
+           "&gnome-download-http;/gnome-session/3.6/gnome-session-&gnome-session-version;.tar.xz">
+  <!ENTITY gnome-session-download-ftp
+           "&gnome-download-ftp;/gnome-session/3.6/gnome-session-&gnome-session-version;.tar.xz">
+  <!ENTITY gnome-session-md5sum        "355730543dbcc166f331d806cd0da22d">
+  <!ENTITY gnome-session-size          "716 KB">
+  <!ENTITY gnome-session-buildsize     "20 MB">
+  <!ENTITY gnome-session-time          "0.3 SBU">
+]>
+
+<sect1 id="gnome-session" xreflabel="gnome-session-&gnome-session-version;">
+  <?dbhtml filename="gnome-session.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-session-&gnome-session-version;</title>
+
+  <indexterm zone="gnome-session">
+    <primary sortas="a-gnome-session">gnome-session</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GNOME Session</title>
+
+    <para>
+      <application>GNOME Session</application> pakken inneholder
+      <application>GNOME</application> sesjonsbehandler.
+    </para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&gnome-session-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&gnome-session-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &gnome-session-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &gnome-session-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &gnome-session-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &gnome-session-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GNOME Session Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="GConf"/>,
+      <xref linkend="gtk3"/>,
+      <xref linkend="json-glib"/> og
+      <xref linkend="upower"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="xmlto"/>
+    </para>
+
+    <bridgehead renderas="sect4">Kjøretidsavhengigheter</bridgehead>
+    <para role="required">
+      <xref linkend="consolekit"/> (hvis du har tenkt å bruke startx for å starte
+       <application>GNOME</application> skrivebordet ditt)
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/gnome-session"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GNOME Session</title>
+
+    <para>
+      Installer <application>GNOME Session</application> ved å
+      kjøre følgende kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr --libexecdir=/usr/lib/gnome-session &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <option>--enable-docbook-docs</option>: Denne bryteren brukes for å
+       muliggjøre bygging av dokumentasjonen.
+    </para>
+
+  </sect2>
+
+  <sect2 role="configuration" id="gnome-session-config">
+    <title>Konfigurere GNOME Session</title>
+
+    <sect3>
+      <title>Konfigurasjonsinformasjon</title>
+
+      <para>
+        Hvis du ikke bruker <application>GDM</application> for å starte
+        <application>GNOME</application> skrivebordet, må du starte
+        <command>gnome-session</command> <emphasis>i stedet for</emphasis> å starte
+         en vindusbehandler direkte. Alle pakkene i 'Desktop' delen av
+         dette kapittelet må installeres først, og noen av 'applikasjonene' -
+         særlig <application>GNOME Terminal</application>
+        (<application>xterm</application> installerer ikke en '.desktop' fil og
+         vises derfor ikke i menyene).
+      </para>
+
+      <para>
+        Når <command>gnome-session</command> kjøres, den starter de nødvendige
+         nisser og enten <application>Metacity</application> eller
+        <application>gnome-shell</application>.En skrivebordsbehandler som f.eks
+        <application>GDM</application> vil starte <application>ConsoleKit</application>
+        før vindusbehandleren, men hvis du bruker <command>startx</command> den første
+         starten etter oppstart kan mislykkes fordi nissen ikke allerede kjører,
+         så den startes først.
+      </para>
+
+      <para>
+        For å starte <application>gnome-session</application>
+        vindusbehandling automatisk når du kjører <command>startx</command> kommandoen,
+        sikkerhetskopier din nåværende <filename>~/.xinitrc</filename> før du fortsetter.
+         Merk at du vil kunne starte <application>GNOME Terminal</application>
+        fra menyen, så det er ingen grunn til å starte seg <command>xterm</command> her.
+        Lage en ny <filename>.xinitrc</filename> ved å bruke denne kommandoen:
+      </para>
+
+      <indexterm zone="metacity gnome-session-config">
+        <primary sortas="e-AA.xinitrc">~/.xinitrc</primary>
+      </indexterm>
+
+<screen><userinput>cat &gt;&gt; ~/.xinitrc &lt;&lt; "EOF"
+<literal>exec ck-launch-session dbus-launch --exit-with-session gnome-session</literal>
+EOF</userinput></screen>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          gnome-session, gnome-session-properties og gnome-session-quit
+        </seg>
+       <seg>
+          Ingen
+        </seg>
+        <seg>
+          /usr/lib/gnome-session,
+          /usr/share/doc/gnome-session og
+          /usr/share/gnome-session
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="gnome-session-prog">
+        <term><command>gnome-session</command></term>
+        <listitem>
+          <para>
+            brukes til å starte opp <application>GNOME</application>
+            Skrivebordsmiljø.
+          </para>
+          <indexterm zone="gnome-session gnome-session-prog">
+            <primary sortas="b-gnome-session">gnome-session</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-session-properties">
+        <term><command>gnome-session-properties</command></term>
+        <listitem>
+          <para>
+            lar brukerne konfigurere hvilke applikasjoner som skal være
+             startet ved pålogging.
+          </para>
+          <indexterm zone="gnome-session gnome-session-properties">
+            <primary sortas="b-gnome-session-properties">gnome-session-properties</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-session-quit">
+        <term><command>gnome-session-quit</command></term>
+        <listitem>
+          <para>
+            brukes til å avslutte <application>GNOME</application> Økten.
+          </para>
+          <indexterm zone="gnome-session gnome-session-quit">
+            <primary sortas="b-gnome-session-quit">gnome-session-quit</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
