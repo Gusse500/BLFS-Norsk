@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libpwquality-download-http
+           "https://fedorahosted.org/releases/l/i/libpwquality/libpwquality-&libpwquality-version;.tar.bz2">
+  <!ENTITY libpwquality-download-ftp  " ">
+  <!ENTITY libpwquality-md5sum        "beb56c9028a713d936e04cc3c50c541d">
+  <!ENTITY libpwquality-size          "352 KB">
+  <!ENTITY libpwquality-buildsize     "4.5 MB">
+  <!ENTITY libpwquality-time          "less than 0.1 SBU">
+]>
+
+<sect1 id="libpwquality" xreflabel="libpwquality-&libpwquality-version;">
+  <?dbhtml filename="libpwquality.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>libpwquality-&libpwquality-version;</title>
+
+  <indexterm zone="libpwquality">
+    <primary sortas="a-libpwquality">libpwquality</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libpwquality</title>
+
+    <para>
+      <application>libpwquality</application> pakken inneholder et bibliotek som
+       brukes til kvalitetskontroll av passord og generering av tilfeldige passord
+       som passerer kontrollene.
+    </para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libpwquality-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&libpwquality-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libpwquality-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libpwquality-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libpwquality-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libpwquality-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libpwquality Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="cracklib"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="linux-pam"/> og
+      <xref linkend="python2"/>
+    </para>
+
+    <para condition="html" role="usernotes">
+      Brukernotater: <ulink url="&blfs-wiki;/libpwquality"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libpwquality</title>
+
+    <para>
+      Installer <application>libpwquality</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr \
+            --sysconfdir=/etc \
+            --with-securedir=/lib/security \
+            --disable-python-bindings \
+            --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <option>--disable-python-bindings</option>: Denne bryteren deaktiverer
+       bygging av den valgfrie <application>Python</application>
+      bindinger. Fjern den hvis du har installert
+      <application>Python</application>.
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          pwmake og pwscore
+        </seg>
+        <seg>
+          libpwquality.so og pam_pwquality.so
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="pwmake">
+        <term><command>pwmake</command></term>
+        <listitem>
+          <para>
+            er et enkelt konfigurerbart verktøy for å generere tilfeldig
+             og relativt lett uttalbare passord.
+          </para>
+          <indexterm zone="libpwquality pwmake">
+            <primary sortas="b-pwmake">pwmake</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="pwscore">
+        <term><command>pwscore</command></term>
+        <listitem>
+          <para>
+            er et enkelt verktøy for å sjekke kvaliteten på et passord.
+          </para>
+          <indexterm zone="libpwquality pwscore">
+            <primary sortas="b-pwscore">pwscore</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libpwquality-lib">
+        <term><filename class="libraryfile">libpwquality.so</filename></term>
+        <listitem>
+          <para>
+            inneholder API funksjoner for å sjekke passordkvaliteten.
+          </para>
+          <indexterm zone="libpwquality libpwquality-lib">
+            <primary sortas="c-libpwquality">libpwquality.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="pam_pwquality">
+        <term><filename class="libraryfile">pam_pwquality.so</filename></term>
+        <listitem>
+          <para>
+            er en <application>Linux PAM</application> modul som brukes til å utføre
+             kvalitetskontroll av passord.
+          </para>
+          <indexterm zone="libpwquality pam_pwquality">
+            <primary sortas="c-pam_pwquality">pam_pwquality.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

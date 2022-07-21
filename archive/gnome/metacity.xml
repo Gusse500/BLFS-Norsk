@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY metacity-download-http "&gnome-download-http;/metacity/2.34/metacity-&metacity-version;.tar.xz">
+  <!ENTITY metacity-download-ftp  "&gnome-download-ftp;/metacity/2.34/metacity-&metacity-version;.tar.xz">
+  <!ENTITY metacity-md5sum        "6d89b71672d4fa49fc87f83d610d0ef6">
+  <!ENTITY metacity-size          "1.6 MB">
+  <!ENTITY metacity-buildsize     "45 MB">
+  <!ENTITY metacity-time          "0.4 SBU">
+
+]>
+
+<sect1 id="metacity" xreflabel="Metacity-&metacity-version;">
+  <?dbhtml filename="metacity.html" ?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Metacity-&metacity-version;</title>
+
+  <indexterm zone="metacity">
+    <primary sortas="a-metacity">Metacity</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Metacity</title>
+
+    <para>
+      <application>Metacity</application> er reservevindusbehandleren for
+      <application>GNOME</application>, brukes hvis videodriveren ikke gir
+       maskinvareakselerasjon. Det drives konvensjonelt fra <command>gnome-session</command>,
+      som vil starte de nødvendige <application>GNOME</application> nissene.
+    </para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&metacity-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&metacity-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &metacity-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &metacity-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &metacity-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &metacity-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Metacity Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="gtk2"/>,
+      <xref linkend="libcanberra"/>,
+      <xref linkend="yelp-xsl"/> og
+      <xref linkend="zenity"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="startup-notification"/>
+    </para>
+
+    <bridgehead renderas="sect4">Kjøretidsavhengigheter</bridgehead>
+    <para role="required">
+      <xref linkend="notification-daemon"/> og
+      <xref linkend="polkit-gnome"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/metacity"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Metacity</title>
+
+    <para>
+      Installer <application>Metacity</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          metacity, metacity-message, metacity-theme-viewer og
+          metacity-window-demo
+        </seg>
+        <seg>
+          libmetacity-private.so
+        </seg>
+        <seg>
+          /usr/include/metacity-1,
+          /usr/share/gnome/wm-properties,
+          /usr/share/help/*/creating-metacity-themes,
+          /usr/share/metacity,
+          /usr/share/themes/AgingGorilla/metacity-1,
+          /usr/share/themes/Atlanta/metacity-1,
+          /usr/share/themes/Bright/metacity-1,
+          /usr/share/themes/Crux/metacity-1,
+          /usr/share/themes/Esco/metacity-1,
+          /usr/share/themes/Metabox/metacity-1 og
+          /usr/share/themes/Simple/metacity-1
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="metacity-prog">
+        <term><command>metacity</command></term>
+        <listitem>
+          <para>
+            er <application>GNOME</application> reservevindusbehandler,
+             brukes når videodriveren ikke støtter akselerasjon.
+          </para>
+          <indexterm zone="metacity metacity-prog">
+            <primary sortas="b-metacity">metacity</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="metacity-theme-viewer">
+        <term><command>metacity-theme-viewer</command></term>
+        <listitem>
+          <para>
+            lar deg forhåndsvise alle installerte
+            <application>Metacity</application> temaer. Når du designer et nytt
+            <application>Metacity</application> tema, kan du bruke
+            <command>metacity-theme-viewer</command> å måle ytelsen
+             av et vindusrammealternativ, og for å forhåndsvise alternativet.
+          </para>
+          <indexterm zone="metacity metacity-theme-viewer">
+            <primary
+            sortas="b-metacity-theme-viewer">metacity-theme-viewer</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="metacity-window-demo">
+        <term><command>metacity-window-demo</command></term>
+        <listitem>
+          <para>
+            demonstrerer ulike typer vinduer som vindusbehandlere og
+             vindusbehandlertemaer bør håndtere.
+          </para>
+          <indexterm zone="metacity metacity-window-demo">
+            <primary sortas="b-metacity-window-demo">metacity-window-demo</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
