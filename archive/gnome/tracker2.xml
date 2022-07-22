@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY tracker-download-http
+           "&gnome-download-http;/tracker/2.3/tracker-&tracker-version;.tar.xz">
+  <!ENTITY tracker-download-ftp
+           "&gnome-download-ftp;/tracker/2.3/tracker-&tracker-version;.tar.xz">
+  <!ENTITY tracker-md5sum        "f3c8baac2a3089f1c7af1dcb00547c97">
+  <!ENTITY tracker-size          "1.5 MB">
+  <!ENTITY tracker-buildsize     "262 MB (with tests)">
+  <!ENTITY tracker-time          "1.3 SBU (with tests)">
+]>
+
+<!-- Tracker2 + Tracker-Miners2 is needed for Brasero.
+     For Brasero, look for BRASERO_SEARCH in the configure output. -->
+
+<sect1 id="tracker" xreflabel="Tracker-&tracker-version;">
+  <?dbhtml filename="tracker.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Tracker-&tracker-version;</title>
+
+  <indexterm zone="tracker">
+    <primary sortas="a-Tracker">Tracker</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Tracker</title>
+
+    <para>
+      <application>Tracker</application> er filindeksering og søke
+       leverandør som brukes i <application>GNOME</application> skrivebordsmiljø.
+    </para>
+
+    &lfs101_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&tracker-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&tracker-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &tracker-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &tracker-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &tracker-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &tracker-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Tracker Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="json-glib"/>,
+      <xref linkend="libseccomp"/>,
+      <xref linkend="libsoup"/>, og
+      <xref linkend="vala"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="gobject-introspection"/>,
+      <xref linkend="icu"/>,
+      <xref linkend="NetworkManager"/>,
+      <xref linkend="sqlite"/>, og
+      <xref linkend="upower"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="gtk-doc"/>,
+      <ulink url="https://github.com/scop/bash-completion/">bash-completion</ulink>, og
+      <ulink url="https://github.com/snowballstem/snowball/">libstemmer</ulink>
+      <!-- Python2 used to be a dependency until 2.2.1 -->
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/tracker"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Tracker</title>
+
+    <para>
+      Installer <application>Tracker</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson --prefix=/usr .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, kjør: <command>ninja test</command>. Testene
+       skal kjøres fra en grafisk sesjon. Testen kalt steroids kan
+       bli hoppet over og få Meson til å rapportere at testene mislyktes.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+<!--
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+    <para>
+      <command>glib-compile-schemas ...</command>:  Kompilerer innstillingsskjemaet
+       installert av denne pakken for å forhindre en kjøretidsfeil i
+       tracker-butikk.
+    </para>
+  </sect2>
+-->
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          tracker
+        </seg>
+        <seg>
+          libtracker-control-2.0.so, libtracker-miner-2.0.so, og 
+          libtracker-sparql-2.0.so
+        </seg>
+        <seg>
+          /usr/{include,lib}/tracker-2.0, /usr/share/tracker, og
+          /usr/share/gtk-doc/libtracker-{control,miner,sparql}
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="tracker-prog">
+        <term><command>tracker</command></term>
+        <listitem>
+          <para>
+            er et kontrollprogram for indeksereren
+          </para>
+          <indexterm zone="tracker tracker-prog">
+            <primary sortas="b-tracker">tracker</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libtracker-control">
+        <term><filename class="libraryfile">libtracker-control-2.0.so</filename></term>
+        <listitem>
+          <para>
+            inneholder kontroll og overvåkingsfunksjoner for miners
+          </para>
+          <indexterm zone="tracker libtracker-control">
+            <primary sortas="c-libtracker-control">libtracker-control-2.0.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libtracker-miner">
+        <term><filename class="libraryfile">libtracker-miner-2.0.so</filename></term>
+        <listitem>
+          <para>
+            inneholder data mining funksjoner
+          </para>
+          <indexterm zone="tracker libtracker-miner">
+            <primary sortas="c-libtracker-miner">libtracker-miner-2.0.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libtracker-sparql">
+        <term><filename class="libraryfile">libtracker-sparql-2.0.so</filename></term>
+        <listitem>
+          <para>
+            inneholder ressursstyring og databasefunksjoner
+          </para>
+          <indexterm zone="tracker libtracker-sparql">
+            <primary sortas="c-libtracker-sparql">libtracker-sparql-2.0.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
