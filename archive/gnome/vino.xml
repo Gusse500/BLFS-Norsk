@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY vino-download-http "&gnome-download-http;/vino/3.6/vino-&vino-version;.tar.xz">
+  <!ENTITY vino-download-ftp  "&gnome-download-ftp;/vino/3.6/vino-&vino-version;.tar.xz">
+  <!ENTITY vino-md5sum        "3054d9d0f9c70e0cd198f87ebcb61e3f">
+  <!ENTITY vino-size          "732 KB">
+  <!ENTITY vino-buildsize     "19 MB">
+  <!ENTITY vino-time          "0.2 SBU">
+]>
+
+<sect1 id="vino" xreflabel="Vino-&vino-version;">
+  <?dbhtml filename="vino.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Vino-&vino-version;</title>
+
+  <indexterm zone="vino">
+    <primary sortas="a-Vino">Vino</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Vino</title>
+
+    <para>
+      <application>Vino</application> pakken er en VNC server for
+      <application>GNOME</application>. VNC er en protokoll som tillater fjernvisning
+       av en brukers skrivebord.
+    </para>
+
+    &lfs72_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&vino-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&vino-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &vino-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &vino-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &vino-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &vino-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Vino Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="gtk3"/>,
+      <xref linkend="intltool"/> og
+      <xref linkend="libsoup"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="libnotify"/>,
+      <xref linkend="libsecret"/>,
+      <xref linkend="NetworkManager"/> og
+      <xref linkend="telepathy-glib"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="avahi"/>,
+      <xref linkend="gnutls"/> og
+      <xref linkend="libgcrypt"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/vino"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Vino</title>
+
+    <para>
+      Installer <application>Vino</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr \
+            --sysconfdir=/etc \
+            --libexecdir=/usr/lib/vino &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+
+      <seglistitem>
+        <seg>
+          vino-passwd, vino-preferences og vino-server
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          /usr/lib/vino og
+          /usr/share/vino
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="vino-passwd">
+        <term><command>vino-passwd</command></term>
+        <listitem>
+          <para>
+            brukes til å oppdatere <application>Vino</application> passord.
+          </para>
+          <indexterm zone="vino vino-passwd">
+            <primary sortas="b-vino-passwd">vino-passwd</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="vino-preferences">
+        <term><command>vino-preferences</command></term>
+        <listitem>
+          <para>
+            er et GUI verktøy som brukes til å konfigurere maskinen for
+             VNC tilgang.
+          </para>
+          <indexterm zone="vino vino-preferences">
+            <primary sortas="b-vino-preferences">vino-preferences</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="vino-server">
+        <term><command>vino-server</command></term>
+        <listitem>
+          <para>
+            er <application>Vino</application> VNC serveren.
+          </para>
+          <indexterm zone="vino vino-server">
+            <primary sortas="b-vino-server">vino-server</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
