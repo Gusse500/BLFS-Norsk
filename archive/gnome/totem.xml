@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY totem-download-http
+     "&gnome-download-http;/totem/&gnome-minor-16;/totem-&totem-version;.tar.xz">
+  <!ENTITY totem-download-ftp
+     "&gnome-download-ftp;/totem/&gnome-minor-16;/totem-&totem-version;.tar.xz">
+  <!ENTITY totem-md5sum        "e475febf5f4b709fcd1e90b47fae99d6">
+  <!ENTITY totem-size          "3.1 MB">
+  <!ENTITY totem-buildsize     "55 MB">
+  <!ENTITY totem-time          "0.6 SBU">
+]>
+
+<sect1 id="totem" xreflabel="Totem-&totem-version;">
+  <?dbhtml filename="totem.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Totem-&totem-version;</title>
+
+  <indexterm zone="totem">
+    <primary sortas="a-Totem">Totem</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Totem</title>
+
+    <para>
+      <application>Totem</application> pakken inneholder den offisielle
+       filmspilleren for <application>GNOME</application> Skrivebordet basert på
+      <application>GStreamer</application>. Den har en spilleliste, en fullskjerm
+       modus, søke- og volumkontroller, samt tastaturnavigering. Dette er
+       nyttig for å spille <application>GStreamer</application> støttet fil,
+       DVD, VCD eller digital CD.
+    </para>
+
+    &lfs77_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&totem-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&totem-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &totem-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &totem-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &totem-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &totem-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Totem Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="adwaita-icon-theme"/>,
+      <xref linkend="clutter-gst"/>,
+      <xref linkend="clutter-gtk"/>,
+      <xref linkend="gst10-plugins-bad"/>,
+      <xref linkend="gst10-plugins-good"/>,
+      <xref linkend="itstool"/>,
+      <xref linkend="libpeas"/>, og
+      <xref linkend="totem-pl-parser"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="appstream-glib"/>,
+      <xref linkend="dbus-glib"/>,
+      <xref linkend="grilo-plugins"/> (Kanaler),
+      <xref linkend="nautilus"/>,
+      <xref linkend="pygobject3"/>, og
+      <xref linkend="vala"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="avahi"/> (hvis installert på byggetidspunktet, sørg for
+       avahi-nissen kjører som en systemnisse, startet av
+       bootscript/systemd enheten),
+      <xref linkend="brasero"/>,
+      <xref linkend="gtk-doc"/>,
+      <ulink url="http://www.lirc.org">LIRC</ulink>,
+      <ulink url="http://pypi.python.org/pypi/pylint">pylint</ulink>, og
+      <ulink url="http://launchpad.net/zeitgeist">zeitgeist</ulink>,
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt (Kjøretid)</bridgehead>
+    <para role="recommended">
+      <xref linkend="gst10-libav"/>,
+      <xref linkend="gst10-plugins-ugly"/>, og
+      <xref linkend="libdvdcss"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+      <ulink url="&blfs-wiki;/totem"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Totem</title>
+
+    <para>
+      Installer <application>Totem</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <note><para>I motsetning til andre videospillere som <xref linkend="vlc"/>,
+    <application>Totem</application> krever at en DVD er montert for å kunne
+     bli gjenkjent. Ikke alle vindusbehandlere gjør dette automatisk. I dette
+     tilfellet <command>mount</command> kommandoen må normalt brukes. Et
+     alternativ til manuell montering er å bruke <xref linkend="autofs"/>.  For
+     eksempel, hvis du følger konfigurasjonsinstruksjonene i den pakken,
+     kommandoen <command>totem /media/auto/cd</command> kan brukes til å spille en
+     DVD.</para></note>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/gtk-doc-rebuild.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          totem, totem-audio-preview, og totem-video-thumbnailer
+        </seg>
+        <seg>
+          libtotem.so
+        </seg>
+        <seg>
+          /usr/include/totem,
+          /usr/lib/totem,
+          /usr/libexec/totem,
+          /usr/share/gtk-doc/html/totem,
+          /usr/share/help/*/totem, og
+          /usr/share/totem
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="totem-prog">
+        <term><command>totem</command></term>
+        <listitem>
+          <para>
+            er en <application>GNOME</application> Skrivebordsfilmspiller basert
+             på <application>GStreamer</application>.
+          </para>
+          <indexterm zone="totem totem-prog">
+            <primary sortas="b-totem">totem</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="totem-video-thumbnailer">
+        <term><command>totem-video-thumbnailer</command></term>
+        <listitem>
+          <para>
+            er en videominiatyrbilde for <application>GNOME</application>
+            Skrivebord brukt internt av <application>GNOME</application>
+            applikasjoner som f.eks <application>Nautilus</application> til å
+             generere PNG miniatyrbilder av videofiler. Mens det er mulig å
+             påkalle det manuelt, gjøres det vanligvis automatisk av
+            <application>Nautilus</application>.
+          </para>
+          <indexterm zone="totem totem-video-thumbnailer">
+            <primary sortas="b-totem-video-thumbnailer">totem-video-thumbnailer</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libtotem">
+        <term><filename class="libraryfile">libtotem.so</filename></term>
+        <listitem>
+          <para>
+            inneholder <application>Totem</application> API funksjoner.
+          </para>
+          <indexterm zone="totem libtotem">
+            <primary sortas="c-libtotem">libtotem.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
