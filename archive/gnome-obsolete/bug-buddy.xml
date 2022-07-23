@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY bug-buddy-download-http "&gnome-download-http;/bug-buddy/&gnome-version;/bug-buddy-&bug-buddy-version;.tar.bz2">
+  <!ENTITY bug-buddy-download-ftp  "&gnome-download-ftp;/bug-buddy/&gnome-version;/bug-buddy-&bug-buddy-version;.tar.bz2">
+  <!ENTITY bug-buddy-md5sum        "da34ace8a806cd1c901ae960184e2997">
+  <!ENTITY bug-buddy-size          "1.1 MB">
+  <!ENTITY bug-buddy-buildsize     "37 MB">
+  <!ENTITY bug-buddy-time          "0.4 SBU">
+]>
+
+<sect1 id="bug-buddy" xreflabel="bug-buddy-&bug-buddy-version;">
+  <?dbhtml filename="bug-buddy.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>bug-buddy-&bug-buddy-version;</title>
+
+  <indexterm zone="bug-buddy">
+    <primary sortas="a-Bug-buddy">Bug-buddy</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til bug-buddy</title>
+
+    <para><application>bug-buddy</application> pakken inneholder en grafisk
+     feilrapporteringsverktøy. Dette kan trekke ut feilsøkingsinformasjon fra en kjernefil
+     eller program som krasjet.</para>
+
+    &lfs65_built;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&bug-buddy-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&bug-buddy-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &bug-buddy-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &bug-buddy-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &bug-buddy-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &bug-buddy-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">bug-buddy Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="evolution-data-server"/>,
+    <xref linkend="gnome-doc-utils"/>,
+    <xref linkend="libelf"/>, og
+    <xref linkend="libgtop"/></para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended"><xref linkend="rarian"/></para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="openssl"/></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/bug-buddy"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av bug-buddy</title>
+
+    <para>Installer <application>bug-buddy</application> ved å kjøre følgende
+    kommandoer:</para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) \
+            --sysconfdir=&gnome-etc-dir; \
+            --localstatedir=/var/lib \
+            --mandir=$(pkg-config \
+                --variable=prefix ORBit-2.0)/share/man &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class='username'>root</systemitem> bruker:</para>
+
+<screen role='root'><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-sysconfdir.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/scrollkeeper-dir.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-mandir.xml"/>
+
+    <para><option>--disable-scrollkeeper</option>: Denne parameteren deaktiverer
+     oppdateringer til scrollkeeper databasen.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>bug-buddy, minidump_dump, og minidump_stackwalk</seg>
+        <seg>libbreakpad.{so,a} og libgnomebreakpad.so</seg>
+        <seg><envar>$GNOME_PREFIX</envar>/{lib/bug-buddy,share/bug-buddy}</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="bug-buddy-prog">
+        <term><command>bug-buddy</command></term>
+        <listitem>
+          <para>er et grafisk feilrapporteringssystem.</para>
+          <indexterm zone="bug-buddy bug-buddy-prog">
+            <primary sortas="b-bug-buddy">bug-buddy</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libbreakpad">
+        <term><filename class='libraryfile'>libbreakpad.{so,a}</filename></term>
+        <listitem>
+          <para>inneholder Google breakpad API funksjoner.</para>
+          <indexterm zone="bug-buddy libbreakpad">
+            <primary sortas="c-libbreakpad">libbreakpad.{so,a}</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libgnomebreakpad">
+        <term><filename class='libraryfile'>libgnomebreakpad.so</filename></term>
+        <listitem>
+          <para>er <application>GTK+</application> breakpad modul.</para>
+          <indexterm zone="bug-buddy libgnomebreakpad">
+            <primary sortas="c-libgnomebreakpad">libgnomebreakpad.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
