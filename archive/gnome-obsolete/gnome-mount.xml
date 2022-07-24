@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-mount-download-http "http://hal.freedesktop.org/releases/gnome-mount-&gnome-mount-version;.tar.gz">
+  <!ENTITY gnome-mount-download-ftp  " ">
+  <!ENTITY gnome-mount-md5sum        "562ec9d0196e5e000bdd249a04a3aa6a">
+  <!ENTITY gnome-mount-size          "494 KB">
+  <!ENTITY gnome-mount-buildsize     "5 MB">
+  <!ENTITY gnome-mount-time          "0.1 SBU">
+]>
+
+<sect1 id="gnome-mount" xreflabel="gnome-mount-&gnome-mount-version;">
+  <?dbhtml filename="gnome-mount.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-mount-&gnome-mount-version;</title>
+
+  <indexterm zone="gnome-mount">
+    <primary sortas="a-gnome-mount">gnome-mount</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til gnome-mount</title>
+
+    <para><application>gnome-mount</application> pakken inneholder programmer
+     for montering, avmontering og utløsing av lagringsenheter. Målet for
+    <application>gnome-mount</application> er å få riktig GNOME
+     programvare (som f.eks <application>gnome-volume-manager</application> og
+    <application>GNOME-VFS</application>) å bruke dette i stedet for å påkalle
+    <command>mount</command>/<command>umount</command>/<command>eject</command>
+    eller direkte <application>HAL</application> påkallings metoder.</para>
+
+    <para>Alle <application>gnome-mount</application> programmer bruker
+     metoder på <application>HAL</application> og som sådan kjører uprivilegert.
+     Begrunnelsen for <application>gnome-mount</application> er å ha en
+     sentralisert sted (i <application>GConf</application>) hvor innstillinger
+     (f.eks. monteringsalternativer og monteringsplasseringer) opprettholdes.</para>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&gnome-mount-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&gnome-mount-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &gnome-mount-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &gnome-mount-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &gnome-mount-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &gnome-mount-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">gnome-mount Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="gnome-keyring"/>,
+    <ulink url="http://www.freedesktop.org/wiki/Software/hal">Hal</ulink>,
+    <xref linkend="libglade"/>,
+    <xref linkend="libnotify"/></para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended"><xref linkend="nautilus"/></para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="intltool"/></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/gnome-mount"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av gnome-mount</title>
+
+    <para>Installer <application>gnome-mount</application> ved å
+    kjøre følgende kommandoer:</para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) \
+            --sysconfdir=&gnome-etc-dir; &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-sysconfdir.xml"/>
+
+    <para><option>--disable-nautilus-extension</option>: Bruk dette alternativet hvis du
+     ikke har <application>Nautilus</application> installert. Dette vil forhindre
+     at <application>Nautilus</application> utvidelsen blir bygget.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>gnome-eject, gnome-mount og gnome-umount</seg>
+        <seg>libgnome-mount.{so,a} Nautilus utvidelse</seg>
+        <seg><envar>$GNOME_PREFIX</envar>/share/gnome-mount</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="gnome-mount-prog">
+        <term><command>gnome-mount</command></term>
+        <listitem>
+          <para>brukes til å automatisk montere lagringsmedier og annet
+           flyttbare medier.</para>
+          <indexterm zone="gnome-mount gnome-mount-prog">
+            <primary sortas="b-gnome-mount">gnome-mount</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-umount">
+        <term><command>gnome-umount</command></term>
+        <listitem>
+          <para>er en symbolsk kobling til <command>gnome-mount</command> som brukes til å
+           automatisk demonter lagringsmedier og andre flyttbare medier.</para>
+          <indexterm zone="gnome-mount gnome-umount">
+            <primary sortas="g-gnome-umount">gnome-umount</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-eject">
+        <term><command>gnome-eject</command></term>
+        <listitem>
+          <para>er en symbolsk kobling til <command>gnome-mount</command> som brukes til å
+          åpne og lukke automatisk (hvis den støttes av stasjonen).
+           stasjonsdører og skuffen i CD/DVD-stasjoner.</para>
+          <indexterm zone="gnome-mount gnome-eject">
+            <primary sortas="b-gnome-eject">gnome-eject</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+  </sect2>
+
+</sect1>
