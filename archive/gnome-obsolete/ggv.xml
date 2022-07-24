@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY ggv-download-http "http://ftp.gnome.org/pub/GNOME/sources/ggv/&gnome-version;/ggv-&ggv-version;.tar.bz2">
+  <!ENTITY ggv-download-ftp  "ftp://ftp.gnome.org/pub/GNOME/sources/ggv/&gnome-version;/ggv-&ggv-version;.tar.bz2">
+  <!ENTITY ggv-md5sum        "418f0ef3f8b82bb0c423a2a1cf6769f7">
+  <!ENTITY ggv-size          "1.0 MB">
+  <!ENTITY ggv-buildsize     "17.8 MB">
+  <!ENTITY ggv-time          "0.3 SBU">
+]>
+
+<sect1 id="ggv" xreflabel="GGV-&ggv-version;">
+  <?dbhtml filename="ggv.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>GGV-&ggv-version;</title>
+
+  <indexterm zone="ggv">
+    <primary sortas="a-GGV">GGV</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GGV</title>
+
+    <para><application>GGV</application> pakken inneholder en PostScript
+     filviser.</para>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&ggv-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&ggv-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &ggv-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &ggv-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &ggv-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &ggv-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GGV Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="libgnomeui"/>, og
+    <!-- <xref linkend="espgs"/> or --><xref linkend="gs"/></para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="cups"/> eller <xref linkend="LPRng"/></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/ggv"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GGV</title>
+
+    <para>Installer <application>GGV</application> ved å kjøre
+    følgende kommandoer:</para>
+
+<screen><userinput>./configure --prefix=`pkg-config --variable=prefix ORBit-2.0` \
+    --libexecdir=`pkg-config --variable=prefix ORBit-2.0`/sbin \
+    --localstatedir=/var/lib --sysconfdir=&gnome-etc-dir; &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para><parameter>--libexecdir=`pkg-config --variable=prefix
+    ORBit-2.0`/sbin</parameter>: Denne bryteren lagrer libexec filer i
+    <filename class="directory">$GNOME_PREFIX/sbin</filename> i stedet for
+    <filename class="directory">$GNOME_PREFIX/libexec</filename>.</para>
+
+    <para><parameter>--localstatedir=/var/lib</parameter>: Denne bryteren
+     lagrer <application>ScrollKeeper</application> filer i
+    <filename class="directory">/var/lib/scrollkeeper</filename> i stedet for
+    <filename class="directory">$GNOME_PREFIX/var/scrollkeeper</filename>.</para>
+
+    <para><parameter>--sysconfdir=&gnome-etc-dir;</parameter>: Denne bryteren lagrer
+     konfigurasjonsfiler i <filename class="directory">&gnome-etc-dir;</filename>
+    i stedet for <filename class="directory">$GNOME_PREFIX/etc</filename>.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>ggv og ggv-postscript-viewer</seg>
+        <seg>Ingen</seg>
+        <seg>&gnome-etc-dir;/gconf/gconf.xml.defaults/apps/ggv,
+        &gnome-etc-dir;/gconf/gconf.xml.defaults/schemas/apps/ggv,
+        $GNOME_PREFIX/share/gnome/help/ggv,
+        $GNOME_PREFIX/share/omf/ggv, og
+        $GNOME_PREFIX/share/pixmaps/ggv</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="ggv-prog">
+        <term><command>ggv</command></term>
+        <listitem>
+          <para>er en <application>GNOME</application> basert PostScript
+           filviser.</para>
+          <indexterm zone="ggv ggv-prog">
+            <primary sortas="b-ggv">ggv</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

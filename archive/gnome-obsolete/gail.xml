@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gail-download-http "&gnome-download-http;/gail/1.22/gail-&gail-version;.tar.bz2">
+  <!ENTITY gail-download-ftp  "&gnome-download-ftp;/gail/1.22/gail-&gail-version;.tar.bz2">
+  <!ENTITY gail-md5sum        "d58ad8cc79d3cb6778bc015ef69fb499">
+  <!ENTITY gail-size          "659 KB">
+  <!ENTITY gail-buildsize     "26 MB">
+  <!ENTITY gail-time          "0.5 SBU">
+]>
+
+<sect1 id="gail" xreflabel="GAIL-&gail-version;">
+  <?dbhtml filename="gail.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>GAIL-&gail-version;</title>
+
+  <indexterm zone="gail">
+    <primary sortas="a-GAIL">GAIL</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til GAIL</title>
+
+    <para><application>GAIL</application> pakken gir tilgjengelighets
+     støtte for <application>GTK+</application> og
+    <application>libgnomecanvas</application> ved å implementere AtkObjects for
+    skjermelementer i <application>GTK+</application> og
+    <application>libgnomecanvas</application>. 
+    <application>GAIL</application> biblioteket er en
+    <application>GTK+</application> modul. Denne modulen brukes normalt med
+     atk-bridge <application>GTK+</application> modulen fra
+    <application>AT-SPI</application> å tillate et hjelpemiddel, f.eks
+     skjermleser, for å spørre eller kjøre programmet.</para>
+
+    <para>&lfssvn_built;20100803&lfssvn_built2;</para>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&gail-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&gail-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &gail-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &gail-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &gail-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &gail-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">GAIL Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="gtk2"/></para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="gtk-doc"/></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/gail"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av GAIL</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/without-gnome.xml"/>
+
+    <para>Installer <application>GAIL</application> ved å kjøre
+    følgende kommandoer:</para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install &amp;&amp;
+
+if [ $(pkg-config --variable=prefix ORBit-2.0) != "/usr" ]; then
+    ln -v -s $(pkg-config --variable=prefix \
+             ORBit-2.0)/lib/gtk-2.0/modules \
+         /usr/lib/gtk-2.0
+fi</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gtk-doc-rebuild.xml"/>
+
+    <para><command>if [ ... != "/usr" ]; then ...; fi</command>:
+    <application>GTK+</application> vil se etter
+    <application>GAIL</application> moduler i
+    <filename class='directory'>/usr/lib</filename> selv om
+    <envar>$GNOME_PREFIX</envar> IKKE er
+    <filename class='directory'>/usr</filename>. Denne kommandoen oppretter en
+     symbolsk lenke for å tilfredsstille dette kravet.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>Ingen</seg>
+        <seg>libgailutil.so og <application>GAIL</application>
+        <application>GTK+</application> moduler</seg>
+        <seg>Følgende undermapper til <envar>$GNOME_PREFIX</envar>/:
+        include/gail-1.0,
+        lib/gtk-2.0/modules og
+        share/gtk-doc/html/gail-libgail-util</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libgailutil">
+        <term><filename class='libraryfile'>libgailutil.so</filename></term>
+        <listitem>
+          <para>gir funksjonene som løser tilgjengelighetsproblemer
+           på en konsistent måte på tvers av <application>GNOME</application>.</para>
+          <indexterm zone="gail libgailutil">
+            <primary sortas="c-libgailutil">libgailutil.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
