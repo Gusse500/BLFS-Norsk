@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-system-tools-download-http "&gnome-download-http;/gnome-system-tools/&gnome-version;/gnome-system-tools-&gnome-system-tools-version;.tar.bz2">
+  <!ENTITY gnome-system-tools-download-ftp  "&gnome-download-ftp;/gnome-system-tools/&gnome-version;/gnome-system-tools-&gnome-system-tools-version;.tar.bz2">
+  <!ENTITY gnome-system-tools-md5sum        "9211516168aa171b34823d8c58c807d4">
+  <!ENTITY gnome-system-tools-size          "5.2 MB">
+  <!ENTITY gnome-system-tools-buildsize     "43 MB">
+  <!ENTITY gnome-system-tools-time          "0.4 SBU">
+]>
+
+<sect1 id="gnome-system-tools" xreflabel="gnome-system-tools-&gnome-system-tools-version;">
+  <?dbhtml filename="gnome-system-tools.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-system-tools-&gnome-system-tools-version;</title>
+
+  <indexterm zone="gnome-system-tools">
+    <primary sortas="a-gnome-system-tools">gnome-system-tools</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til gnome-system-tools</title>
+
+    <para><application>gnome-system-tools</application> pakken er en fullstendig
+     integrert sett med verktøy som tar sikte på å gjøre dataadministrasjon enkelt på en
+     Linux arbeidsstasjon.</para>
+
+    &lfs65_built;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&gnome-system-tools-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&gnome-system-tools-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &gnome-system-tools-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &gnome-system-tools-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &gnome-system-tools-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &gnome-system-tools-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">gnome-system-tools Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="liboobs"/> og
+    <xref linkend="nautilus"/></para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="polkit-gnome"/>,
+    <xref linkend="rarian"/>, og
+    <xref linkend="wireless_tools"/></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/gnome-system-tools"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av gnome-system-tools</title>
+
+    <para>Installer <application>gnome-system-tools</application> ved å kjøre følgende
+    kommandoer:</para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) \
+            --sysconfdir=&gnome-etc-dir; \
+            --enable-polkit-gtk=no &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-sysconfdir.xml"/>
+
+    <para><parameter>--enable-polkit-gtk=no</parameter>: Denne parameteren er
+     nødvendig hvis <application>polkit-gnome</application> ikke er installert. Fjern
+     det hvis <application>polkit-gnome</application> er installert.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>network-admin, services-admin, shares-admin, time-admin, og
+        users-admin</seg>
+        <seg>libnautilus-gst-shares.{so,a}</seg>
+        <seg>&gnome-etc-dir;/gnome-system-tools,
+        <envar>$GNOME_PREFIX</envar>/share/{gnome-system-tools/{pixmaps,ui},
+        gnome/help/{network-admin/*,services-admin/*,shares-admin/*,
+        time-admin/*,users-admin/*},omf/{gnome-system-tools,network-admin,
+        services-admin,shares-admin,time-admin,users-admin}}</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="network-admin">
+        <term><command>network-admin</command></term>
+        <listitem>
+          <para>er et nettverkskonfigurasjonsverktøy.</para>
+          <indexterm zone="gnome-system-tools network-admin">
+            <primary sortas="b-network-admin">network-admin</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="services-admin">
+        <term><command>services-admin</command></term>
+        <listitem>
+          <para>er et tjenestekonfigurasjonsverktøy.</para>
+          <indexterm zone="gnome-system-tools services-admin">
+            <primary sortas="b-services-admin">services-admin</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="shares-admin">
+        <term><command>shares-admin</command></term>
+        <listitem>
+          <para>er et delt administrasjonsverktøy.</para>
+          <indexterm zone="gnome-system-tools shares-admin">
+            <primary sortas="b-shares-admin">shares-admin</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="time-admin">
+        <term><command>time-admin</command></term>
+        <listitem>
+          <para>er et verktøy for konfigurasjon av dato og klokkeslett.</para>
+          <indexterm zone="gnome-system-tools time-admin">
+            <primary sortas="b-time-admin">time-admin</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="users-admin">
+        <term><command>users-admin</command></term>
+        <listitem>
+          <para>er et administrasjonsverktøy for brukere og grupper.</para>
+          <indexterm zone="gnome-system-tools users-admin">
+            <primary sortas="b-users-admin">users-admin</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libnautilus-gst-shares">
+        <term><filename class='libraryfile'>libnautilus-gst-shares.{so,a}</filename></term>
+        <listitem>
+          <para>er et <application>Nautilus</application> utvidelsesmodul.</para>
+          <indexterm zone="gnome-system-tools libnautilus-gst-shares">
+            <primary sortas="c-libnautilus-gst-shares">libnautilus-gst-shares.{so,a}</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
