@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY gnome-volume-manager-download-http "&gnome-download-http;/gnome-volume-manager/2.17/gnome-volume-manager-&gnome-volume-manager-version;.tar.bz2">
+  <!ENTITY gnome-volume-manager-download-ftp  "&gnome-download-ftp;/gnome-volume-manager/2.17/gnome-volume-manager-&gnome-volume-manager-version;.tar.bz2">
+  <!ENTITY gnome-volume-manager-md5sum        "104cec26e721e0bba69debd392367195">
+  <!ENTITY gnome-volume-manager-size          "341 KB">
+  <!ENTITY gnome-volume-manager-buildsize     "11 MB">
+  <!ENTITY gnome-volume-manager-time          "0.1 SBU">
+]>
+
+<sect1 id="gnome-volume-manager"
+       xreflabel="gnome-volume-manager-&gnome-volume-manager-version;">
+  <?dbhtml filename="gnome-volume-manager.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>gnome-volume-manager-&gnome-volume-manager-version;</title>
+
+  <indexterm zone="gnome-volume-manager">
+    <primary sortas="a-gnome-volume-manager">gnome-volume-manager</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til gnome-volume-manager</title>
+
+    <para><application>gnome-volume-manager</application> pakken inneholder
+     en volumbehandler for GNOME. Det er en nisse på skrivebordsnivå som håndhever
+     volumrelaterte retningslinjer som svar på hendelser mottatt fra
+    <application>HAL</application>. Dette er nyttig for automatisk montering av
+     disketter, CDROMer og flyttbare lagringsenheter. Det kan det
+     brukes til å kjøre et program automatisk som svar på andre hotplug-hendelser
+     som å koble til USB-skrivere eller kameraer, eller sette inn DVDer og
+     musikk-CDer. Målet med <application>gnome-volume-manager</application> er
+     å implementere all funksjonalitet som en tilstandsmaskin som svar på
+     asynkrone hendelser fra <application>HAL</application>. Det er en
+     komponent i en større plan for å fullt ut integrere alle nivåer av Linux
+     systemet, fra kjernen og opp gjennom skrivebordet og dets
+     applikasjoner.</para>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&gnome-volume-manager-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&gnome-volume-manager-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &gnome-volume-manager-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &gnome-volume-manager-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &gnome-volume-manager-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &gnome-volume-manager-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">gnome-volume-manager Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="libgnomeui"/> og
+    <ulink url="http://www.freedesktop.org/wiki/Software/hal">Hal</ulink>.
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="intltool"/>,
+    <xref linkend="nautilus"/>, og
+    <xref linkend="libnotify"/></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/gnome-volume-manager"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av gnome-volume-manager</title>
+
+    <para>Installer <application>gnome-volume-manager</application> ved å kjøre
+    følgende kommandoer:</para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) \
+            --sysconfdir=&gnome-etc-dir; \
+            --disable-multiuser &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-sysconfdir.xml"/>
+
+    <para><parameter>--disable-multiuser</parameter>: Uten denne parameteren,
+    <application>gnome-volume-manager</application> vil bare tillate brukeren
+     hvem som er på den aktive konsollen for å administrere volumer. Dette er bestemt
+     gjennom <xref linkend="linux-pam"/> module <ulink
+    url="&blfs-wiki;/linux-pam">pam_console</ulink>. Hvis systemet ditt er
+     konfigurert til bruke <ulink url="&blfs-wiki;/linux-pam">pam_console</ulink>,
+    du kan droppe denne parameteren.</para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere gnome-volume-manager</title>
+
+    <sect3 id="gnome-volume-manager-config">
+      <title>Konfigurasjonsinformasjon</title>
+
+      <para>Riktig drift av denne pakken er avhengig av at
+      <command>hald</command> nissen som kjører på systemet. Sørg for at
+      <command>hald</command> nissen kjører før du prøver å starte eller
+       konfigurere <command>gnome-volume-manager</command>. Konfigurasjon
+       gjøres ved hjelp av <quote>Removable Drives and Media</quote>
+      grafisk grensesnitt funnet på
+      <quote>Desktop</quote>&mdash;<quote>Preferences</quote>
+       hurtigmeny. Du kan også kjøre <command>gnome-volume-properties</command>
+      kommando fra kommandolinjen for å hente opp konfigurasjons
+       grensesnittet.</para>
+
+      <para>Merk at <command>gnome-volume-manager</command> nissen
+       programmet skal startes når GNOME-skrivebordsmiljøet startes.
+       Dette bør konfigureres automatisk under installasjonen av
+      <application>gnome-volume-manager</application>.</para>
+
+      <!--
+      Dette kan enkelt oppnås ved å legge til
+      <command>gnome-volume-manager</command> til
+      <quote>Startup Programs</quote>, funnet ved å velge
+      <quote>Desktop</quote>&mdash;<quote>Preferences</quote>&mdash;<quote>Sessions</quote>
+      hurtigmeny.</para>
+      -->
+
+      <para><quote>Disk Mounter</quote> miniprogram kan installeres i
+       kontrollpanel for visuell visning av status for flyttbare medier. Installerer
+       dette miniprogrammet i panelet er utført ved bruk av konvensjonelle
+       metoder.</para>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>gnome-volume-manager og gnome-volume-properties</seg>
+        <seg>Ingen</seg>
+        <seg><envar>$GNOME_PREFIX</envar>/share/gnome-volume-manager</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="gnome-volume-manager-prog">
+        <term><command>gnome-volume-manager</command></term>
+        <listitem>
+          <para>er managernisse, designet for å kjøres på skrivebordsnivå.
+           Det er en enkel retningslinjemotor som implementerer en tilstandssmaskin i
+           respons på hendelser fra <application>HAL</application>. Reagerer
+           til disse hendelsene implementerer den automount, autorun, autoplay,
+           automatisk bildebehandling og så videre.</para>
+          <indexterm zone="gnome-volume-manager gnome-volume-manager-prog">
+            <primary sortas="b-gnome-volume-manager">gnome-volume-manager</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-volume-properties">
+        <term><command>gnome-volume-properties</command></term>
+        <listitem>
+          <para>er en kontrollpanel miniprogram for
+          <application>gnome-volume-manager</application>. Den gir også
+           et grafisk konfigurasjonsgrensesnitt.</para>
+          <indexterm zone="gnome-volume-manager gnome-volume-properties">
+            <primary sortas="b-gnome-volume-properties">gnome-volume-properties</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
