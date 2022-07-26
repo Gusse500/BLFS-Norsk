@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY hamster-applet-download-http "&gnome-download-http;/hamster-applet/&gnome-version;/hamster-applet-&hamster-applet-version;.tar.bz2">
+  <!ENTITY hamster-applet-download-ftp  "&gnome-download-ftp;/hamster-applet/&gnome-version;/hamster-applet-&hamster-applet-version;.tar.bz2">
+  <!ENTITY hamster-applet-md5sum        "ad662fd81a09c5a0e19d1aa733e78588">
+  <!ENTITY hamster-applet-size          "600 KB">
+  <!ENTITY hamster-applet-buildsize     "10 MB">
+  <!ENTITY hamster-applet-time          "0.1 SBU">
+]>
+
+<sect1 id="hamster-applet" xreflabel="hamster-applet-&hamster-applet-version;">
+  <?dbhtml filename="hamster-applet.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>hamster-applet-&hamster-applet-version;</title>
+
+  <indexterm zone="hamster-applet">
+    <primary sortas="a-hamster-applet">hamster-applet</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til hamster-applet</title>
+
+    <para><application>hamster-applet</application> pakken er et panelprogram for
+    <application>GNOME</application> som lar deg følge med
+     hvor du tilbringer tiden din.</para>
+
+    &lfs65_built;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&hamster-applet-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&hamster-applet-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &hamster-applet-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &hamster-applet-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &hamster-applet-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &hamster-applet-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">hamster-applet Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="python2"/> med <xref linkend="sqlite"/>
+    <!-- FIXME:ken -->
+    og Gnome-Python-Desktop-2.30.2 (bare gnomepanelprogram modul)</para>
+    <!--
+    og <xref linkend="gnome-python-desktop"/> (bare gnomepanelprogram modul)</para>
+    -->
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/hamster-applet"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av hamster-applet</title>
+
+    <para>Installer <application>hamster-applet</application> ved å kjøre følgende
+    kommandoer:</para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) \
+            --sysconfdir=&gnome-etc-dir; &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-sysconfdir.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>gnome-time-tracker og hamster-standalone</seg>
+        <seg>_keybinder.so</seg>
+        <seg>/usr/lib/python&python2-majorver;/site-packages/hamster/{keybinder,
+        widgets},
+        <envar>$GNOME_PREFIX</envar>/{lib/hamster-applet,
+        share/{gnome/help/hamster-applet/*,hamster-applet/art}}</seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
