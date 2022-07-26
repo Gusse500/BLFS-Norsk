@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY java-access-bridge-download-http "&gnome-download-http;/java-access-bridge/1.26/java-access-bridge-&java-access-bridge-version;.tar.bz2">
+  <!ENTITY java-access-bridge-download-ftp  "&gnome-download-ftp;/java-access-bridge/1.26/java-access-bridge-&java-access-bridge-version;.tar.bz2">
+  <!ENTITY java-access-bridge-md5sum        "baeac0a4f26f66996f62ffa88d6cd19e">
+  <!ENTITY java-access-bridge-size          "304 KB">
+  <!ENTITY java-access-bridge-buildsize     "9 MB">
+  <!ENTITY java-access-bridge-time          "1.3 SBU">
+]>
+
+<sect1 id="java-access-bridge"
+xreflabel="Java Access Bridge-&java-access-bridge-version;">
+  <?dbhtml filename="java-access-bridge.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Java Access Bridge-&java-access-bridge-version;</title>
+
+  <indexterm zone="java-access-bridge">
+    <primary sortas="a-Java-Access-Bridge">Java Access Bridge</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Java Access Bridge</title>
+
+    <para><application>Java Access Bridge</application> pakken inneholder
+     Java komponenter som kobler den innebygde tilgjengelighetsstøtten i Java
+     Swing applikasjoner til <application>GNOME</application>
+    Tilgjengelighetsrammeverk, nærmere bestemt Assistive Technology Service
+    Provider Interface (AT-SPI).</para>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&java-access-bridge-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&java-access-bridge-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &java-access-bridge-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &java-access-bridge-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &java-access-bridge-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &java-access-bridge-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Java Access Bridge Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="at-spi"/> og
+    <!-- either --> <xref linkend="openjdk"/> <!-- or <xref linkend="jdk"/> --></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/java-access-bridge"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Java Access Bridge</title>
+
+    <para>Installer <application>Java Access Bridge</application> ved å kjøre
+    følgende kommandoer:</para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install &amp;&amp;
+
+cat $(pkg-config --variable=prefix \
+    ORBit-2.0)/share/jar/accessibility.properties \
+    &gt;&gt; $JAVA_HOME/jre/lib/accessibility.properties &amp;&amp;
+chmod -v 644 $JAVA_HOME/jre/lib/accessibility.properties &amp;&amp;
+
+ln -v -sf $(pkg-config --variable=prefix \
+    ORBit-2.0)/share/jar/gnome-java-bridge.jar \
+    $JAVA_HOME/jre/lib/ext</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <para><command>cat $(pkg-config ...</command>: Denne kommandoen legger til (eller
+     oppretter) Java-kjøretids <filename>accessibility.properties</filename>
+    filen nødvendig for <application>Java Access Bridge</application>.</para>
+
+    <para><command>ln -v -sf $(pkg-config ...</command>: Denne kommandoen oppretter
+     en lenke fra Access Bridge <filename class='extension'>jar</filename>
+    filen til Java runtime library extensions mappen.</para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere Java Access Bridge</title>
+
+    <sect3 id="java-access-bridge-config">
+      <title>Konfigurasjonsfiler</title>
+
+      <para><filename>~/.orbitrc</filename></para>
+
+      <indexterm zone="java-access-bridge java-access-bridge-config">
+        <primary sortas="e-AA.orbitrc">~/.orbitrc</primary>
+      </indexterm>
+
+    </sect3>
+
+    <sect3>
+      <title>Konfigurasjonsinformasjon</title>
+
+      <para>Før du kjører et Java program med <application>Java Access
+      Bridge</application>, bør du sørge for at
+      <application>GNOME</application> 2 installasjonen muliggjør CORBA trafikk
+       over IP fra <application>ORBit2</application> ORB. Gjør
+       dette ved å legge følgende linje til <filename>~/.orbitrc</filename>
+      ved å bruke følgende kommando:</para>
+
+<screen><userinput>cat &gt;&gt; ~/.orbitrc &lt;&lt; "EOF"
+<literal>ORBIIOPIPv4=1</literal>
+
+EOF</userinput></screen>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>Ingen</seg>
+        <seg>libjava-access-bridge-jni.{so,a}, gnome-java-bridge.jar, og JNav.jar</seg>
+        <seg><envar>$GNOME_PREFIX</envar>/share/jar</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libjava-access-bridge-jni">
+        <term><filename class='libraryfile'>libjava-access-bridge-jni.{so,a}</filename></term>
+        <listitem>
+          <para>er JNIvgrensesnittbiblioteket.</para>
+          <indexterm zone="java-access-bridge libjava-access-bridge-jni">
+            <primary sortas="c-libjava-access-bridge-jni">libjava-access-bridge-jni.{so,a}</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-java-bridge">
+        <term><filename class='libraryfile'>gnome-java-bridge.jar</filename></term>
+        <listitem>
+          <para>er <application>Java</application> kjøretids
+           miljøutvidelse som kobler den innebygde tilgjengelighetsstøtten i
+          <application>Java Swing</application> applikasjoner til
+          <application>GNOME</application> Tilgjengelighetsrammeverk.</para>
+          <indexterm zone="java-access-bridge gnome-java-bridge">
+            <primary sortas="c-gnome-java-bridge">gnome-java-bridge.jar</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
