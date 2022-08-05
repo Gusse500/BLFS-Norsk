@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY seahorse-plugins-download-http "&gnome-download-http;/seahorse-plugins/&gnome-version;/seahorse-plugins-&seahorse-plugins-version;.tar.bz2">
+  <!ENTITY seahorse-plugins-download-ftp  "&gnome-download-http;/seahorse-plugins/&gnome-version;/seahorse-plugins-&seahorse-plugins-version;.tar.bz2">
+  <!ENTITY seahorse-plugins-md5sum        "cb8a86a1039054b621f6419ac2219695">
+  <!ENTITY seahorse-plugins-size          "1.2 MB">
+  <!ENTITY seahorse-plugins-buildsize     "26 MB">
+  <!ENTITY seahorse-plugins-time          "1.0 SBU">
+]>
+
+<sect1 id="seahorse-plugins" xreflabel="seahorse-plugins-&seahorse-plugins-version;">
+  <?dbhtml filename="seahorse-plugins.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>seahorse-plugins-&seahorse-plugins-version;</title>
+
+  <indexterm zone="seahorse-plugins">
+    <primary sortas="a-seahorse-plugins">seahorse-plugins</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til seahorse-plugins</title>
+
+    <para><application>seahorse-plugins</application> pakken inneholder
+     programtillegg og verktøy for kryptering i
+    <application>GNOME</application>.</para>
+
+    &lfs65_built;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&seahorse-plugins-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&seahorse-plugins-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &seahorse-plugins-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &seahorse-plugins-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &seahorse-plugins-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &seahorse-plugins-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">seahorse-plugins Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required"><xref linkend="seahorse"/></para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="avahi"/>,
+    <xref linkend="epiphany"/>,
+    <xref linkend="libbonoboui"/>,
+    <xref linkend="libnotify"/>,
+    <xref linkend="gedit"/>,
+    <xref linkend="gnome-panel"/>,
+    <xref linkend="nautilus"/>,
+    <xref linkend="rarian"/>, og
+    <xref linkend="shared-mime-info"/></para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/seahorse-plugins"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av seahorse-plugins</title>
+
+    <para>Installer <application>seahorse-plugins</application> ved å kjøre følgende
+    kommandoer:</para>
+
+<screen><userinput>./configure --prefix=$(pkg-config --variable=prefix ORBit-2.0) \
+            --sysconfdir=&gnome-etc-dir; \
+            --disable-scrollkeeper \
+            --disable-update-mime-database &amp;&amp;
+make</userinput></screen>
+
+    <para>This package does not come with a test suite.</para>
+
+    <para>Now, as the <systemitem class="username">root</systemitem> user:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Denne pakken kommer ikke med en testpakke</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-prefix.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/gnome-sysconfdir.xml"/>
+
+    <para><parameter>--disable-scrollkeeper</parameter>: Ikke foreta oppdateringer til
+      <application>scrollkeeper</application> databasen. Fjern den hvis du har
+    <application>rarian</application> installert.</para>
+
+    <para><parameter>--disable-update-mime-database</parameter>: Ikke kjør
+    <application>update-mime-database</application> verktøyet. Fjern den hvis du
+     har <application>shared-mime-info</application> installert.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>seahorse-agent, seahorse-preferences, seahorse-tool, og
+        seahorse-applet</seg>
+        <seg>libseahorse-pgp.{so,a} og libnautilus-seahorse.{so,a}</seg>
+        <seg><envar>$GNOME_PREFIX</envar>/share/{gnome/help/{seahorse-applet/*,
+        seahorse-plugins/*},omf/{seahorse-applet,seahorse-plugins},
+        pixmaps/seahorse-plugins/{22x22,48x48,scalable},seahorse-plugins/ui}</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="seahorse-agent">
+        <term><command>seahorse-agent</command></term>
+        <listitem>
+          <para>er en <application>seahorse</application> agent for bufring av
+           passordfraser.</para>
+          <indexterm zone="seahorse-plugins seahorse-agent">
+            <primary sortas="b-seahorse-agent">seahorse-agent</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <!--<varlistentry id="seahorse-preferences">
+        <term><command>seahorse-preferences</command></term>
+        <listitem>
+          <para></para>
+          <indexterm zone="seahorse-plugins seahorse-preferences">
+            <primary sortas="b-seahorse-preferences">seahorse-preferences</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>-->
+
+      <varlistentry id="seahorse-tool">
+        <term><command>seahorse-tool</command></term>
+        <listitem>
+          <para>er en PGP/GnuPG filkryptering for <application>GNOME
+          Skrivebordet</application>.</para>
+          <indexterm zone="seahorse-plugins seahorse-tool">
+            <primary sortas="b-seahorse-tool">seahorse-tool</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <!--<varlistentry id="seahorse-applet">
+        <term><command>seahorse-applet</command></term>
+        <listitem>
+          <para></para>
+          <indexterm zone="seahorse-plugins seahorse-applet">
+            <primary sortas="b-seahorse-applet">seahorse-applet</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>-->
+
+      <varlistentry id="libseahorse-pgp">
+        <term><filename class='libraryfile'>libseahorse-pgp.{so,a}</filename></term>
+        <listitem>
+          <para>er et <application>gedit</application> programtillegg.</para>
+          <indexterm zone="seahorse-plugins libseahorse-pgp">
+            <primary sortas="c-libseahorse-pgp">libseahorse-pgp.{so,a}</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libnautilus-seahorse">
+        <term><filename class='libraryfile'>libnautilus-seahorse.{so,a}</filename></term>
+        <listitem>
+          <para>er en <application>Nautilus</application> utvidelse.</para>
+          <indexterm zone="seahorse-plugins libnautilus-seahorse">
+            <primary sortas="c-libnautilus-seahorse">libnautilus-seahorse.{so,a}</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
