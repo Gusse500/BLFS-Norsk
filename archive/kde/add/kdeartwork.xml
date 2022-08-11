@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+  <!ENTITY kdeartwork-download-http "&trinity-repo-http;/kdeartwork-&trinity-version;.tar.gz">
+  <!ENTITY kdeartwork-download-ftp  "&trinity-repo-ftp;/kdeartwork-&trinity-version;.tar.gz">
+  <!ENTITY kdeartwork-md5sum        "24f85eb3e5a9106de48a3e81d2575ffe">
+  <!ENTITY kdeartwork-size          "26.6 MB">
+  <!ENTITY kdeartwork-buildsize     "132 MB">
+  <!ENTITY kdeartwork-time          "0.5 SBU">
+]>
+
+<sect1 id="kdeartwork" xreflabel="kdeartwork-&trinity-version;">
+  <?dbhtml filename="kdeartwork.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Kdeartwork-&trinity-version;</title>
+
+  <indexterm zone="kdeartwork">
+    <primary sortas="a-kdeartwork">Kdeartwork</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Kdeartwork</title>
+
+    <para><application>Kdeartwork</application> gir ekstra
+    <application>KDE</application> temaer, skjermsparere, lyder, bakgrunnsbilder,
+     skjermelementstiler og vindusstiler.</para>
+
+    &lfs70_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing='compact'>
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&kdeartwork-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&kdeartwork-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &kdeartwork-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &kdeartwork-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &kdeartwork-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &kdeartwork-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Kdeartwork Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="kdebase"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libxml2"/>, og
+      <xref linkend="libart_lgpl"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="xscreensaver"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/kdeartwork"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Kdeartwork</title>
+
+    <para>Installer <application>kdeartwork</application> med:</para>
+
+<screen><userinput>MAKEDIR=/tmp/buildkdeart &amp;&amp;
+KDEART=`pwd`             &amp;&amp;
+rm -rf   $MAKEDIR        &amp;&amp;
+mkdir -p $MAKEDIR        &amp;&amp;
+cd       $MAKEDIR        &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=$TRINITY_PREFIX \
+      -DCMAKE_VERBOSE_MAKEFILE=ON            \
+      -DWITH_XSCREENSAVER=ON                 \
+      -DWITH_LIBART=ON                       \
+      -DWITH_OPENGL=ON                       \
+      -DWITH_ARTS=ON                         \
+      -DBUILD_ALL=ON                         \
+      $KDEART            &amp;&amp;
+
+unset KDEART MAKEDIR     &amp;&amp;
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Objekter</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>ekstra temaer, skjermsparere, lyder, bakgrunner og
+         skjermelement stiler for <application>KDE</application></seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <indexterm zone="kdeartwork">
+      <primary sortas="g-kdeartwork">KDE Artwork</primary>
+    </indexterm>
+
+  </sect2>
+
+</sect1>
