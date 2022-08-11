@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY akode-version       "2.0.2">
+  <!ENTITY akode-download-http "&trinity-repo-http;/akode-&akode-version;.tar.bz2">
+  <!ENTITY akode-download-ftp  "&trinity-repo-ftp;/akode-&akode-version;.tar.bz2">
+  <!ENTITY akode-md5sum        "659ced0c9c735cb3e55b9138ff02342c">
+  <!ENTITY akode-size          "468 KB">
+  <!ENTITY akode-buildsize     "6.6 MB">
+  <!ENTITY akode-time          "0.3 SBU">
+]>
+
+<sect1 id="kdeakode" xreflabel="kdeakode-&akode-version;">
+  <?dbhtml filename="kdeakode.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Akode-&akode-version;</title>
+
+  <indexterm zone="kdeakode">
+    <primary sortas="a-kdeakode">Akode</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Akode</title>
+
+    <para>I gjeldende versjon av <application>Kdemultimedia</application>, er noen
+     av funksjonaliteten som tilbys av pakken flyttet til et
+     eget prosjekt navngitt <application>Akode</application>. For at
+    <application>Kdemultimedia</application> skal gi de fjernede
+     funksjonalitetene, må du installere <application>Akode</application>
+    pakken først. </para>
+
+    &lfs70_checked;
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/kdemultimedia"/></para>
+
+  </sect2>
+
+  <sect2 role="package" id="akode" xreflabel="Akode-&akode-version;">
+    <title>Akode-&akode-version;</title>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing='compact'>
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&akode-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&akode-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &akode-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &akode-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &akode-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &akode-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Nødvendig oppdatering (for FFmpeg støtte): <ulink
+        url="&patch-root;/akode-&akode-version;-consolidated_fixes-1.patch"/></para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Akode Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+     <para role="optional">
+       <xref linkend="pkgconfig"/>
+       <xref linkend="flac"/>,
+       <xref linkend="speex"/>,
+       <xref linkend="libmad"/>,
+       <xref linkend="alsa"/>,
+       <xref linkend="libvorbis"/>,
+       <xref linkend="pulseaudio"/>,
+       <xref linkend="ffmpeg"/> (støtten er eksperimentell),
+       <ulink url="http://www.mega-nerd.com/libsamplerate/">Hemmelig Rabbit
+         kode</ulink> (a.k.a. libsamplerate), og
+       <ulink url="http://jackit.sourceforge.net/">JACK</ulink>
+    </para>
+
+    <bridgehead renderas="sect3">Installasjon av Akode</bridgehead>
+
+<screen><userinput>patch -Np1 -i ../akode-&akode-version;-consolidated_fixes-1.patch &amp;&amp;
+./configure --prefix=$TRINITY_PREFIX --without-ffmpeg   &amp;&amp;
+make</userinput></screen>
+
+      <para>Denne pakken kommer ikke med en testpakke.</para>
+
+      <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para><parameter>--without-ffmpeg</parameter>: Dette alternativet deaktiverer det
+     eksperimentelle <application>FFmpeg</application> støtten i
+    <application>Akode</application>, siden byggingen mislykkes hvis den er aktivert.
+     Du kan fjerne denne bryteren for å aktivere
+     det eksperimentelle <application>FFmpeg</application> støtten, imidlertid
+     funksjonalitet av <application>Akode</application> bygget med
+    <application>FFmpeg</application> støtte er ikke testet av
+     BLFS redaktører.</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>akode-config og akodeplay</seg>
+        <seg>libakode.so, libakode_alsa_sink.so, libakode_mpc_decoder.so,
+        libakode_mpeg_decoder.so, libakode_oss_sink.so, og libakode_xiph_decoder.so</seg>
+        <seg>include/akode</seg>
+      </seglistitem>
+    </segmentedlist>
+<!--
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="artsbuilder">
+        <term><command>artsbuilder</command></term>
+        <listitem>
+          <para>er et verktøy for å skape nye strukturer av små tilkoblede
+          <application>aRts</application> moduler.</para>
+          <indexterm zone="kdemultimedia artsbuilder">
+            <primary sortas="b-artsbuilder">artsbuilder</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+-->
+  </sect2>
+
+</sect1>
