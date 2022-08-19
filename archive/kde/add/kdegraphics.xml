@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+  <!ENTITY kdegraphics-download-http "&trinity-repo-http;/kdegraphics-&trinity-version;.tar.gz">
+  <!ENTITY kdegraphics-download-ftp  "&trinity-repo-ftp;/kdegraphics-&trinity-version;.tar.gz">
+  <!ENTITY kdegraphics-md5sum        "a75c254cd1060343cd04c6744bce6798">
+  <!ENTITY kdegraphics-size          "7.3 MB">
+  <!ENTITY kdegraphics-buildsize     "162 MB">
+  <!ENTITY kdegraphics-time          "2.7 SBU">
+]>
+
+<sect1 id="kdegraphics" xreflabel="kdegraphics-&trinity-version;">
+  <?dbhtml filename="kdegraphics.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Kdegraphics-&trinity-version;</title>
+
+  <indexterm zone="kdegraphics">
+    <primary sortas="a-kdegraphics">Kdegraphics</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Kdegraphics</title>
+
+    <para><application>Kdegraphics</application> gir
+    <application>KDE</application> programmer for å administrere videovisningen og
+     grafisk utgang. Applikasjoner inkluderer PDF-, DVI- og Postscript-lesere,
+     en applikasjon for å justere skjermens gammakorreksjon, en 3D-modellering
+     applikasjon for å generere POV-Ray-scener, og en skannerapplikasjon.</para>
+
+    &lfs70_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing='compact'>
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&kdegraphics-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&kdegraphics-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &kdegraphics-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &kdegraphics-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &kdegraphics-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &kdegraphics-time;</para>
+      </listitem>
+    </itemizedlist>
+
+<!--
+    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>Required Patch:
+          <ulink url=""/>
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
+
+    <bridgehead renderas="sect3">Kdegraphics Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="kdebase"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libxml2"/>, og
+      <xref linkend="libart_lgpl"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="libtiff"/>,
+      <ulink url="http://ftp.gnome.org/pub/gnome/sources/imlib/1.9/">Imlib</ulink>
+         (ikke anbefalt: foreldet, forlatt oppstrøms,
+         trengs kun for <command>kuickshow</command> bildeviser,
+      <xref linkend="lcms"/>,
+      <xref linkend="poppler-014"/>
+        (<filename class='libraryfile'>libpoppler-qt.so</filename> må ha
+         blitt bygget),
+      <xref linkend="sane"/>,
+      <!-- Det er en intern kopi av Xpdf og det er *ingen* kroker til noen
+            utvendig versjon. Kommenterer dette foreløpig <xref linkend="xpdf"/>, -->
+      <xref linkend="texlive"/>,
+      <xref linkend="fribidi"/>,
+      <ulink url="http://www.gphoto.org/">libgphoto2</ulink>,
+      <ulink url="http://www.sfr-fresh.com/linux/misc/t1lib">t1lib</ulink>,
+      <ulink url="http://www.openexr.com/">OpenEXR</ulink>,
+      <ulink url="http://packages.debian.org/unstable/source/libpaper">libpaper</ulink>,
+      <ulink url="http://www.rerecognition.com/">KADMOS</ulink> (en kommersiell
+         OCR motor),
+      <ulink url="http://pages.cs.wisc.edu/~ghost/gv/index.htm">Ghostview</ulink>,
+      <xref linkend="graphviz"/>, og
+      <xref linkend="doxygen"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/kdegraphics"/></para>
+
+  </sect2>
+
+  <sect2 id="kdegraphics-runtime-dependencies"
+         xreflabel="KDE Graphics Runtime Dependencies">
+    <title>Kjøretidsavhengigheter</title>
+
+    <para><command>kooka</command> utility er et skanne- og OCR-program.
+     For at <command>kooka</command> skal bruke OCR-mulighetene, må du
+     installere en OCR-motor. <command>kooka</command> gir full OCR
+     støtte ved å bruke <ulink url="http://www.rerecognition.com/">KADMOS</ulink>
+    og <ulink url="http://sourceforge.net/projects/jocr">GOCR</ulink> motorene
+    og delvis støtte ved hjelp av <ulink
+    url="https://savannah.gnu.org/projects/ocrad/">Ocrad</ulink> motoren.</para>
+
+    <para><command>kghostview</command> programmet krever et ghostscript
+     tolk fra <xref linkend="gs"/> for å behandle PS- eller PDF-filer.</para>
+
+    <para><command>kpovmodeler</command> programmet krever
+    <ulink url="http://www.povray.org/">POV-Ray</ulink> for å gjengi 3D-scener.</para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Kdegraphics</title>
+
+    <para>Installer <application>kdegraphics</application> med:</para>
+
+<screen><userinput>KDEGRAPHICS=`pwd`        &amp;&amp;
+MAKEDIR=/tmp/kdegraphics &amp;&amp;
+rm -rf   $MAKEDIR        &amp;&amp;
+mkdir -p $MAKEDIR        &amp;&amp;
+cd       $MAKEDIR        &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=$TRINITY_PREFIX \
+      -DCMAKE_VERBOSE_MAKEFILE=ON            \
+      -DQT_VERSION=3                         \
+      -DCMAKE_CXX_FLAGS="-fpermissive"       \
+      -DWITH_TIFF=ON                         \
+      -DWITH_PAM=ON                          \
+      -DBUILD_ALL=ON                         \
+      -DBUILD_KAMERA=OFF                     \
+      -DBUILD_KSVG=OFF                       \
+      -DBUILD_KUICKSHOW=OFF                  \
+      -DBUILD_LIBKSCAN=OFF                   \
+      -DBUILD_KOOKA=OFF                      \
+      -DBUILD_KGHOSTVIEW=OFF                 \
+      -DBUILD_KFILE_PLUGINS=OFF              \
+      $KDEGRAPHICS                          &amp;&amp;
+
+unset KDEGRAPHICS MAKEDIR &amp;&amp;
+make</userinput></screen>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/kde-apidocs.xml"/>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para><option>-DBUILD_KAMERA</option>: Krever libgphoto2.</para>
+    <para><option>-DBUILD_KSVG</option>: Krever fribidi.</para>
+    <para><option>-DBUILD_KUICKSHOW</option>: Krever imlib (Utdatert).</para>
+    <para><option>-DBUILD_LIBKSCAN</option>: Krever sane.</para>
+    <para><option>-DBUILD_KFILE_PLUGINS</option>: Krever poppler.</para>
+    <para><option>-DBUILD_KOOKA</option>: Krever LIBKSCAN.</para>
+    <para><option>-DWITH_LIBPAPER</option>: Krever libpaper (administrere papiregenskaper).</para>
+    <para><option>-DWITH_T1LIB</option>: Krever t1lib (generere glyfer fra Type 1-fonter).</para>
+    <para><option>-DWITH_OPENEXR</option>: Krever OpenEXR (Høydefinisjonsbildeformat).</para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>kcolorchooser, kcoloredit, kdvi, kfax, kfaxview, kghostview,
+        kiconedit, kolourpaint, kooka, kpdf, kpovmodeler, kruler, ksnapshot,
+        kuickshow, kview, kviewshell, mrmlsearch, printnodetest, svgdisplay,
+        og xf86gammacfg</seg>
+        <seg>kio_kamera og flere andre kdegraphics spesifikke biblioteker og
+         støttemoduler</seg>
+        <seg>Følgende undermapper i &kde-dir;: include/{svg,
+        kviewshell, libtext2path-0.1}, share/applnk/Graphics, share/apps/{for
+         mange å liste}, og share/config/magic</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="kcolorchooser">
+        <term><command>kcolorchooser</command></term>
+        <listitem>
+          <para>er en fargevelger for en gitt palett.</para>
+          <indexterm zone="kdegraphics kcolorchooser">
+            <primary sortas="b-kcolorchooser">kcolorchooser</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kcoloredit">
+        <term><command>kcoloredit</command></term>
+        <listitem>
+          <para>er en fargepalettredigerer.</para>
+          <indexterm zone="kdegraphics kcoloredit">
+            <primary sortas="b-kcoloredit">kcoloredit</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kdvi">
+        <term><command>kdvi</command></term>
+        <listitem>
+          <para>er en DVI viser.</para>
+          <indexterm zone="kdegraphics kdvi">
+            <primary sortas="b-kdvi">kdvi</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kfax">
+        <term><command>kfax</command></term>
+        <listitem>
+          <para>er en FAX viser.</para>
+          <indexterm zone="kdegraphics kfax">
+            <primary sortas="b-kfax">kfax</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kfaxview">
+        <term><command>kfaxview</command></term>
+        <listitem>
+          <para>er en FAX forhåndsviser brukt med
+          <command>kviewshell</command>.</para>
+          <indexterm zone="kdegraphics kfaxview">
+            <primary sortas="b-kfaxview">kfaxview</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kghostview">
+        <term><command>kghostview</command></term>
+        <listitem>
+          <para>er en PS/PDF viser.</para>
+          <indexterm zone="kdegraphics kghostview">
+            <primary sortas="b-kghostview">kghostview</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kiconedit">
+        <term><command>kiconedit</command></term>
+        <listitem>
+          <para>er en icon redigerer.</para>
+          <indexterm zone="kdegraphics kiconedit">
+            <primary sortas="b-kiconedit">kiconedit</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kolourpaint">
+        <term><command>kolourpaint</command></term>
+        <listitem>
+          <para>er et maleprogram.</para>
+          <indexterm zone="kdegraphics kolourpaint">
+            <primary sortas="b-kolourpaint">kolourpaint</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kooka">
+        <term><command>kooka</command></term>
+        <listitem>
+          <para>er et rasterbildeskanningsprogram.</para>
+          <indexterm zone="kdegraphics kooka">
+            <primary sortas="b-kooka">kooka</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kpdf">
+        <term><command>kpdf</command></term>
+        <listitem>
+          <para>er en PDF viser.</para>
+          <indexterm zone="kdegraphics kpdf">
+            <primary sortas="b-kpdf">kpdf</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kpovmodeler">
+        <term><command>kpovmodeler</command></term>
+        <listitem>
+          <para>er en grafisk 3D-modeller, som kan generere scener for
+          <ulink url="http://www.povray.org/">POV-Ray</ulink>.</para>
+          <indexterm zone="kdegraphics kpovmodeler">
+            <primary sortas="b-kpovmodeler">kpovmodeler</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kruler">
+        <term><command>kruler</command></term>
+        <listitem>
+          <para>er en skjermlinjal.</para>
+          <indexterm zone="kdegraphics kruler">
+            <primary sortas="b-kruler">kruler</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="ksnapshot">
+        <term><command>ksnapshot</command></term>
+        <listitem>
+          <para> er et skjermopptaksprogram.</para>
+          <indexterm zone="kdegraphics ksnapshot">
+            <primary sortas="b-ksnapshot">ksnapshot</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kuickshow">
+        <term><command>kuickshow</command></term>
+        <listitem>
+          <para>er en bildeviser.</para>
+          <indexterm zone="kdegraphics kuickshow">
+            <primary sortas="b-kuickshow">kuickshow</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kview">
+        <term><command>kview</command></term>
+        <listitem>
+          <para>en annen bildeviser.</para>
+          <indexterm zone="kdegraphics kview">
+            <primary sortas="b-kview">kview</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kviewshell">
+        <term><command>kviewshell</command></term>
+        <listitem>
+          <para>er et generisk rammeverk for KDE viser
+           applikasjoner.</para>
+          <indexterm zone="kdegraphics kviewshell">
+            <primary sortas="b-kviewshell">kviewshell</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="xf86gammacfg">
+        <term><command>xf86gammacfg</command></term>
+        <listitem>
+          <para>er et enkelt verktøy for monitor gammakorreksjon.</para>
+          <indexterm zone="kdegraphics xf86gammacfg">
+            <primary sortas="b-xf86gammacfg">xf86gammacfg</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kio_kamera">
+        <term><command>kio_kamera</command></term>
+        <listitem>
+          <para>er en ioslave som lar deg se og laste ned bilder fra en
+           digitalkamera som bruker <userinput>kamera:/</userinput> URL i
+          <command>konqueror</command>.</para>
+          <indexterm zone="kdegraphics kio_kamera">
+            <primary sortas="c-kio_kamera">kio_kamera</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
