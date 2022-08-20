@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+  <!ENTITY kdegames-download-http "&trinity-repo-http;/kdegames-&trinity-version;.tar.gz">
+  <!ENTITY kdegames-download-ftp  "&trinity-repo-ftp;/kdegames-&trinity-version;.tar.gz">
+  <!ENTITY kdegames-md5sum        "6c63e161050939f53921bfceb923a19e">
+  <!ENTITY kdegames-size          "10.3 MB">
+  <!ENTITY kdegames-buildsize     "412 MB">
+  <!ENTITY kdegames-time          "3.4 SBU">
+]>
+
+<sect1 id="kdegames" xreflabel="kdegames-&trinity-version;">
+  <?dbhtml filename="kdegames.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Kdegames-&trinity-version;</title>
+
+  <indexterm zone="kdegames">
+    <primary sortas="a-kdegames">Kdegames</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Kdegames</title>
+
+    <para><application>Kdegames</application> gir mange interessante
+     spill.</para>
+
+    &lfs70_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing='compact'>
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&kdegames-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&kdegames-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &kdegames-md5sum;</para>
+      </listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &kdegames-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &kdegames-buildsize;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert byggetid: &kdegames-time;</para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Kdegames Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="kdebase"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="libjpeg"/> og
+      <xref linkend="libxml2"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="graphviz"/> og
+      <xref linkend="doxygen"/>
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/kdegames"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Kdegames</title>
+
+    <para>Installer <application>kdegames</application> med:</para>
+
+<screen><userinput>cp -v /usr/share/aclocal/libtool.m4       admin/libtool.m4.in &amp;&amp;
+cp -v /usr/share/libtool/config/ltmain.sh admin/ltmain.sh     &amp;&amp;
+sed -i -e "s@/usr/include/tqt@$TRINITY_PREFIX/include/tqt@"   \
+          admin/acinclude.m4.in                               &amp;&amp;
+make -f admin/Makefile.common                                 &amp;&amp;
+
+./configure --prefix=$TRINITY_PREFIX                      \
+            --with-qt-dir=$QTDIR                          \
+            --enable-closure                              \
+            --with-extra-includes=$TRINITY_PREFIX/include \
+            --with-extra-libs=$TRINITY_PREFIX/lib         &amp;&amp;
+
+make</userinput></screen>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../../xincludes/kde-apidocs.xml"/>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>en samling av forskjellige spill</seg>
+        <seg>Støtte biblioteker for kdegames</seg>
+        <seg>Undermapper av $TRINITY_PREFIX/{include,share}</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <indexterm zone="kdegames">
+       <primary sortas="b-kdegames">KDE Games</primary>
+    </indexterm>
+
+  </sect2>
+
+</sect1>

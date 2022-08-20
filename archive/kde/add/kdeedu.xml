@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+  <!ENTITY kdeedu-download-http "&trinity-repo-http;/kdeedu-&trinity-version;.tar.gz">
+  <!ENTITY kdeedu-download-ftp  "&trinity-repo-ftp;/kdeedu-&trinity-version;.tar.gz">
+  <!ENTITY kdeedu-md5sum        "37a14a67c4d00babc3015c6a31698cb0">
+  <!ENTITY kdeedu-size          "29.6 MB">
+  <!ENTITY kdeedu-buildsize     "825 MB">
+  <!ENTITY kdeedu-time          "6.6 SBU">
+]>
+
+<sect1 id="kdeedu" xreflabel="kdeedu-&trinity-version;">
+  <?dbhtml filename="kdeedu.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>Kdeedu-&trinity-version;</title>
+
+  <indexterm zone="kdeedu">
+    <primary sortas="a-kdeedu">Kdeedu</primary>
+  </indexterm>
+
+  <sect2 role="package">
+  <title>Introduksjon til Kdeedu</title>
+
+    <para><application>Kdeedu</application> gir
+    <application>KDE</application> programmer som er nyttige for læring. Programmer
+     inkludere en berøringslærer, et program for å hjelpe med å revidere/undervise i latin, en
+     desktop planetarium, et program for å studere spanske verbformer, og
+     klassisk bøddelspill for barn.</para>
+
+    &lfs70_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing='compact'>
+      <listitem>
+        <para>Nedlasting (HTTP): <ulink url="&kdeedu-download-http;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting (FTP): <ulink url="&kdeedu-download-ftp;"/></para>
+      </listitem>
+      <listitem>
+        <para>Nedlasting MD5 sum: &kdeedu-md5sum;</para></listitem>
+      <listitem>
+        <para>Nedlastingsstørrelse: &kdeedu-size;</para>
+      </listitem>
+      <listitem>
+        <para>Estimert diskplass som kreves: &kdeedu-buildsize;</para>
+        </listitem>
+      <listitem>
+        <para>Estimert byggetid: &kdeedu-time;</para>
+      </listitem>
+    </itemizedlist>
+<!--
+    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
+    <itemizedlist spacing='compact'>
+       <listitem>
+         <para>Required patch: <ulink
+            url="ftp://ftp.kde.org/pub/kde/security_patches/post-3.4.2-kdeedu.diff"/></para>
+       </listitem>
+    </itemizedlist>
+-->
+    <bridgehead renderas="sect3">Kdeedu Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="kdebase"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="libjpeg"/> og
+      <xref linkend="libxml2"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="libusb-compat"/>,
+      <ulink url="http://www.boost.org/libs/python/doc/index.html">Boost.Python</ulink>,
+      <ulink url="http://pauillac.inria.fr/ocaml/">OCaml</ulink>, og
+      <ulink url="http://www.recherche.enac.fr/opti/facile/">FaCiLe module for OCaml</ulink>.
+    </para>
+
+    <para condition="html" role="usernotes">Brukernotater:
+    <ulink url="&blfs-wiki;/kdeedu"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Kdeedu</title>
+
+    <para>Installer <application>kdeedu</application> med:</para>
+
+<screen><userinput>cp -v /usr/share/aclocal/libtool.m4       admin/libtool.m4.in &amp;&amp;
+cp -v /usr/share/libtool/config/ltmain.sh admin/ltmain.sh     &amp;&amp;
+sed -i -e "s@/usr/include/tqt@$TRINITY_PREFIX/include/tqt@"   \
+          admin/acinclude.m4.in
+make -f admin/Makefile.common                                 &amp;&amp;
+
+export LIBRARY_PATH=$TRINITY_PREFIX/lib                       &amp;&amp;
+
+./configure --prefix=$TRINITY_PREFIX \
+            --enable-closure         \
+            --sysconfdir=/etc        \
+            --localstatedir=/var     \
+            --with-extra-libs=$TRINITY_PREFIX/lib             &amp;&amp;
+
+make</userinput></screen>
+
+    <para>Denne pakken kommer ikke med en testpakke.</para>
+
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>flashkard, kalzium, kbruch, keduca, khangman, kig, kiten,
+        klettres, kmathtool, kmessedwords, kmplot, kpercentage, kstars, ktouch,
+        kverbos, og kvoctrain</seg>
+        <seg>Flere kdeedu spesifikke biblioteker</seg>
+        <seg>Flere undermapper for $KDE_PREFIX/share</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="kalzium">
+        <term><command>kalzium</command></term>
+        <listitem>
+          <para>er et program som viser deg det periodiske systemet av grunnstoffer.</para>
+          <indexterm zone="kdeedu kalzium">
+            <primary sortas="b-kalzium">kalzium</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kbruch">
+        <term><command>kbruch</command></term>
+        <listitem>
+          <para>er et lite program for å generere oppgaver med brøker.</para>
+          <indexterm zone="kdeedu kbruch">
+            <primary sortas="b-kbruch">kbruch</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="keduca">
+        <term><command>keduca</command></term>
+        <listitem>
+          <para>er kortapplikasjon for flash, som lar deg lage
+           interaktive skjemabaserte tester..</para>
+          <indexterm zone="kdeedu keduca">
+            <primary sortas="b-keduca">keduca</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="khangman">
+        <term><command>khangman</command></term>
+        <listitem>
+          <para>er det klassiske bøddelspillet for barn, tilpasset
+          <application>KDE</application>.</para>
+          <indexterm zone="kdeedu khangman">
+            <primary sortas="b-khangman">khangman</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kig">
+        <term><command>kig</command></term>
+        <listitem>
+          <para>er en <application>KDE</application> søknad for
+           Interaktiv geometri.</para>
+          <indexterm zone="kdeedu kig">
+            <primary sortas="b-kig">kig</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kiten">
+        <term><command>kiten</command></term>
+        <listitem>
+          <para>er et japansk referanse-/studieverktøy for
+          <application>KDE</application>.</para>
+          <indexterm zone="kdeedu kiten">
+            <primary sortas="b-kiten">kiten</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="klettres">
+        <term><command>klettres</command></term>
+        <listitem>
+          <para>er en alfabetlærer (fransk).</para>
+          <indexterm zone="kdeedu klettres">
+            <primary sortas="b-klettres">klettres</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kmessedwords">
+        <term><command>kmessedwords</command></term>
+        <listitem>
+          <para>er et enkelt hjernetrenende ordspill.</para>
+          <indexterm zone="kdeedu kmessedwords">
+            <primary sortas="b-kmessedwords">kmessedwords</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kmplot">
+        <term><command>kmplot</command></term>
+        <listitem>
+          <para>er en matematisk funksjonsplotter for <application>KDE</application>.</para>
+          <indexterm zone="kdeedu kmplot">
+            <primary sortas="b-kmplot">kmplot</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kpercentage">
+        <term><command>kpercentage</command></term>
+        <listitem>
+          <para>er en liten matematikkapplikasjon som vil hjelpe elevene til å forbedre deres
+           ferdigheter i å beregne prosenter.</para>
+          <indexterm zone="kdeedu kpercentage">
+            <primary sortas="b-kpercentage">kpercentage</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kstars">
+        <term><command>kstars</command></term>
+        <listitem>
+          <para>er et skrivebordsplanetarium.</para>
+          <indexterm zone="kdeedu kstars">
+            <primary sortas="b-kstars">kstars</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="ktouch">
+        <term><command>ktouch</command></term>
+        <listitem>
+          <para>er en veileder for berøringsskriving.</para>
+          <indexterm zone="kdeedu ktouch">
+            <primary sortas="b-ktouch">ktouch</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kverbos">
+        <term><command>kverbos</command></term>
+        <listitem>
+          <para>er et program spesielt utviklet for å studere spanske
+           verbformer.</para>
+          <indexterm zone="kdeedu kverbos">
+            <primary sortas="b-kverbos">kverbos</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="kvoctrain">
+        <term><command>kvoctrain</command></term>
+        <listitem>
+          <para>er en ordforrådstrener.</para>
+          <indexterm zone="kdeedu kvoctrain">
+            <primary sortas="b-kvoctrain">kvoctrain</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
