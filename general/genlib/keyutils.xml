@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY keyutils-download-http "https://people.redhat.com/~dhowells/keyutils/keyutils-&keyutils-version;.tar.bz2">
+  <!ENTITY keyutils-download-ftp  " ">
+  <!ENTITY keyutils-md5sum        "919af7f33576816b423d537f8a8692e8">
+  <!ENTITY keyutils-size          "96 KB">
+  <!ENTITY keyutils-buildsize     "1.9 MB (with tests)">
+  <!ENTITY keyutils-time          "less than 0.1 SBU (add 0.6 SBU for tests)">
+]>
+
+<sect1 id="keyutils" xreflabel="keyutils-&keyutils-version;">
+  <?dbhtml filename="keyutils.html"?>
+
+
+  <title>keyutils-&keyutils-version;</title>
+
+  <indexterm zone="keyutils">
+    <primary sortas="a-keyutils">keyutils</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to keyutils</title>
+
+    <para>
+      <application>Keyutils</application> is a set of utilities for managing
+      the key retention facility in the kernel, which can be used by
+      filesystems, block devices and more to gain and retain the authorization
+      and encryption keys required to perform secure operations.
+    </para>
+
+    &lfs113_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&keyutils-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&keyutils-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &keyutils-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &keyutils-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &keyutils-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &keyutils-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">keyutils Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="mitkrb"/>
+      <!-- Without krb5 installed, a FTBFS occurs while trying to compile dns.afsdb.c.
+      It looks for profile.h, which is installed by krb5. -->
+    </para>
+
+    <para condition="html" role="usernotes">User Notes:
+    <ulink url="&blfs-wiki;/keyutils"/></para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of keyutils</title>
+
+    <para>
+      Install <application>keyutils</application> by running the following
+      commands:
+    </para>
+
+<screen><userinput>sed -i 's:$(LIBDIR)/$(PKGCONFIG_DIR):/usr/lib/pkgconfig:' Makefile &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      To test the results, issue, as the
+      <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root" remap="test"><userinput>make -k test</userinput></screen>
+
+    <para>
+      Note that several tests will fail if certain uncommon kernel options
+      were not used when the kernel was built.  These include CONFIG_BIG_KEYS,
+      CONFIG_KEY_DH_OPERATIONS, and CONFIG_CRYPTO_DH.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make NO_ARLIB=1 LIBDIR=/usr/lib BINDIR=/usr/bin SBINDIR=/usr/sbin install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Command Explanations</title>
+
+    <para>
+      <command>sed ... Makefile</command>: This command ensures the pkgconfig
+      file is placed in the correct directory.
+    </para>
+
+    <para>
+      <parameter>NO_ARLIB=1</parameter>: This make flag disables installing the
+      static library.
+    </para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Configuring keyutils</title>
+
+    <sect3 id="keyutils-config">
+      <title>Config Files</title>
+
+      <para>
+        <filename>/etc/request-key.conf</filename> and
+        <filename>/etc/request-key.d/*</filename>
+      </para>
+
+      <indexterm zone="keyutils keyutils-config">
+        <primary sortas="e-etc-request-key.conf">/etc/request-key.conf</primary>
+      </indexterm>
+
+      <indexterm zone="keyutils keyutils-config">
+        <primary sortas="e-etc-request-key.d">/etc/request-key.d/*</primary>
+      </indexterm>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Library</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+        <seg>keyctl, key.dns_resolver, and request-key</seg>
+        <seg>libkeyutils.so</seg>
+        <seg>/etc/request-key.d and /usr/share/keyutils</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="keyctl">
+        <term><command>keyctl</command></term>
+        <listitem>
+          <para>
+            controls the key management facility with a variety of subcommands
+          </para>
+          <indexterm zone="keyutils keyctl">
+            <primary sortas="b-keyctl">keyctl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="key.dns_resolver">
+        <term><command>key.dns_resolver</command></term>
+        <listitem>
+          <para>
+            is invoked by <command>request-key</command> on behalf of the
+            kernel when kernel services (such as NFS, CIFS and AFS) need to
+            perform a hostname lookup and the kernel does not have the key
+            cached.  It is not ordinarily intended to be called directly
+          </para>
+          <indexterm zone="keyutils key.dns_resolver">
+            <primary sortas="b-key.dns_resolver">key.dns_resolver</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="request-key">
+        <term><command>request-key</command></term>
+        <listitem>
+          <para>
+            is invoked by the kernel when the kernel is asked for a key that it
+            doesn't have immediately available. The kernel creates a temporary
+            key and then calls out to this program to instantiate it.  It is
+            not intended to be called directly
+          </para>
+          <indexterm zone="keyutils request-key">
+            <primary sortas="b-request-keyt-key">request-key</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libkeyutils">
+        <term><filename class="libraryfile">libkeyutils.so</filename></term>
+        <listitem>
+          <para>
+            contains the keyutils library API instantiation
+          </para>
+          <indexterm zone="keyutils libkeyutils">
+            <primary sortas="c-libkeyutils">libkeyutils.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

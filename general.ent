@@ -4,10 +4,10 @@
                                       set to IGNORE for release or rc -->
 <!ENTITY % release     "INCLUDE"> <!-- set to INCLUDE for release,
                                       set to IGNORE for development or rc -->
-<!ENTITY % relyear    "2022">
-<!ENTITY % relnum     "11.1">
-<!ENTITY % reldate    "March 1st, 2022">
-<!ENTITY % relpubdate "2022-03-01">
+<!ENTITY % relyear    "2023">
+<!ENTITY % relnum     "11.3">
+<!ENTITY % reldate    "March 1st, 2023">
+<!ENTITY % relpubdate "2023-03-01">
 <!-- ================================================================== -->
 <!-- Do not change anything below unless the www or book layouts change -->
 
@@ -20,23 +20,27 @@
 <!ENTITY % version-entities SYSTEM "version.ent">
 %version-entities;
 <![ %sysv; [
-<!ENTITY lfs-version  "development">
-<!ENTITY blfs-version "svn">
+<!ENTITY lfs-version   "development">
+<!ENTITY blfs-version  "svn">
+<!ENTITY patch-version "svn">
 ]]>
 <![ %systemd; [
-<!ENTITY lfs-version  "systemd">
-<!ENTITY blfs-version "systemd">
+<!ENTITY lfs-version   "systemd">
+<!ENTITY blfs-version  "systemd">
+<!ENTITY patch-version "svn">
 ]]>
 ]]><!-- End %development -->
 
 <![ %release; [
 <![ %sysv; [
-<!ENTITY lfs-version  "%relnum;">
-<!ENTITY blfs-version "%relnum;">
+<!ENTITY lfs-version   "%relnum;">
+<!ENTITY blfs-version  "%relnum;">
+<!ENTITY patch-version "%relnum;">
 ]]>
 <![ %systemd; [
-<!ENTITY lfs-version  "%relnum;-systemd">
-<!ENTITY blfs-version "%relnum;-systemd">
+<!ENTITY lfs-version   "%relnum;-systemd">
+<!ENTITY blfs-version  "%relnum;-systemd">
+<!ENTITY patch-version "%relnum;">
 ]]>
 
 <!ENTITY year           "%relyear;">
@@ -56,19 +60,19 @@
 
 <!ENTITY lfs-website          "https://www.&lfs-domainname;">
 <!-- downloads_root must have an entity because it is needed for scripts
-     change svn to x.y for release. Note:  s/_/-/ in comment to avoid grep error
-     Update 'downloads-root-systemd' to x.y-systemd
+     Note:  s/_/-/ in comment to avoid grep error
+     It is also needed for systemd units
      -->
-<!ENTITY downloads-root       "https://www.linuxfromscratch.org/blfs/downloads/svn">
-<!ENTITY downloads-root-systemd "https://www.linuxfromscratch.org/blfs/downloads/11.1-systemd">
-<!--<!ENTITY downloads-project    "https://downloads.&lfs-domainname;">-->
+<!ENTITY downloads-root       "&lfs-website;/blfs/downloads/&blfs-version;">
+<!--<!ENTITY downloads-root-systemd "https://www.linuxfromscratch.org/blfs/downloads/systemd">
+<!ENTITY downloads-project    "https://downloads.&lfs-domainname;">-->
 
 <!ENTITY sources-anduin-http  "https://anduin.linuxfromscratch.org/BLFS">
 <!ENTITY sources-anduin-ftp   "ftp://anduin.linuxfromscratch.org/BLFS">
 
 <!ENTITY hints-root           "https://www.&lfs-domainname;/hints">
 <!ENTITY patch-downloads      "https://www.linuxfromscratch.org/patches/downloads">
-<!ENTITY patch-root           "https://www.&lfs-domainname;/patches/blfs/11.1">
+<!ENTITY patch-root           "https://www.&lfs-domainname;/patches/blfs/&patch-version;">
 <!ENTITY errata               "https://www.&lfs-domainname;/blfs/errata/&blfs-version;/">
 <!ENTITY blfs-ticket-root     "https://wiki.&lfs-domainname;/blfs/ticket/">
 
@@ -99,66 +103,52 @@
 <!ENTITY elinks-url           "http://elinks.or.cz">
 <!ENTITY w3m-url              "http://w3m.sourceforge.net/">
 
+<!-- Convenience entities -->
+<!ENTITY root                 "<systemitem class='username'>root</systemitem>">
+<!ENTITY gi-docgen-url        "https://gnome.pages.gitlab.gnome.org/gi-docgen/">
+
 <!-- These entities are used to identify versions of LFS
      packages referenced throughout the BLFS book. -->
-<!ENTITY lfs-autoconf-version         "2.69">
-<!ENTITY lfs-coreutils-version        "8.23">
-<!ENTITY lfs-e2fsprogs-version        "1.42.11">
-<!ENTITY lfs-flex-version             "2.5.39">
-<!ENTITY lfs-gcc-version              "4.9.1">
-<!ENTITY lfs-gdbm-version             "1.11">
-<!ENTITY lfs-m4-version               "1.4.17">
-<!-- FIXME - please check the included version of
- List/Utils when upgrading the perl version.
- Scalar-List-Utils is in perl-deps because List-AllUtils
- needs a newer version at runtime than is in 5.34.0 -->
-<!ENTITY lfs-perl-version             "5.34"> <!-- used in git -->
-<!-- this was originally the perl version used by the corresponding
- version of lfs, in those days always for i686, but now BLFS is a rolling
- release. \-\->
-<!ENTITY lfs-perl-version             "&lt;5.x.y&gt;/&lt;arch-linux&gt;">-->
-<!ENTITY lfs-shadow-version           "4.2.1">
-<!ENTITY lfs-vim-version              "7.4">
+
+<!ENTITY lfs-perl-version             "5.36"> <!-- used in git -->
+
 <!-- End LFS versions -->
 
-<!ENTITY blfs-bootscripts-version     "20210826">
-<!ENTITY systemd-units-version        "20220227">
+<!ENTITY blfs-bootscripts-version     "20230101">
+<!ENTITY systemd-units-version        "20220720">
 
 <!ENTITY blfs-wiki                    "https://wiki.&lfs-domainname;/blfs/wiki">
 
 <!-- These entities are used to annotate the current status of a package as it
      relates to the version of LFS it will build/work against -->
 
-<!ENTITY lfs111_checked       "<para>Denne pakken er kjent for å bygges og fungere
-                               riktig ved å bruke LFS-11.1 som plattform.</para>">
-<!--
-<!ENTITY lfs110a_built         "<para>Denne pakken er kjent for å bygges ved hjelp av LFS
-                               11.0 som plattform, men har ikke blitt testet.</para>">
--->
+<!ENTITY lfs113_checked       "<para>This package is known to build and work properly
+                               using an LFS 11.3 platform.</para>">
+
 <!-- End special entities about LFS compatibility -->
 
-<!ENTITY as_root "<note><para>Når du installerer flere pakker i et skript,
-   må installasjonen gjøres som brukeren root. Det er tre generelle
-   alternativer som kan brukes til å gjøre dette:</para>
+<!ENTITY as_root "<note><para>When installing multiple packages in a script,
+  the installation needs to be done as the root user. There are three general
+  options that can be used to do this:</para>
 
   <orderedlist>
 
-  <listitem><para>Kjør hele skriptet som brukeren root (ikke
-   anbefalt).</para></listitem>
+  <listitem><para>Run the entire script as the root user (not
+  recommended).</para></listitem>
 
-  <listitem><para>Bruk kommandoen <command>sudo</command> fra <xref
-   linkend='sudo'/> pakken.</para></listitem>
+  <listitem><para>Use the <command>sudo</command> command from the <xref
+  linkend='sudo'/> package.</para></listitem>
 
-  <listitem><para>Bruk <command>su -c &quot;command arguments&quot;</command>
-   (anførselstegn kreves) som vil be om rootpassordet for hver iterasjon
-   av løkken.</para></listitem>
+  <listitem><para>Use <command>su -c &quot;command arguments&quot;</command>
+  (quotes required) which will ask for the root  password for every iteration
+  of the loop.</para></listitem>
 
   </orderedlist>
 
-  <para>En måte å håndtere denne situasjonen på er å lage en kort
-   <command>bash</command> funksjon som automatisk velger riktig
-   metode. Når kommandoen er satt i miljøet, trenger den ikke å
-   settes på nytt.</para>
+  <para>One way to handle this situation is to create a short
+  <command>bash</command> function that automatically selects the appropriate
+  method.  Once the command is set in the environment, it does not need to be
+  set again.</para>
 
   <screen><userinput>as_root()
 {
@@ -171,20 +161,24 @@
 export -f as_root</userinput></screen>
 </note>">
 
-<!ENTITY not-katamari         "<para>Denne pakken er ikke en del av Xorg
-                               katamari og leveres kun som en avhengighet til
-                               andre pakker eller for å teste den fullførte Xorg
-                               installasjon.</para>">
+<!ENTITY not-katamari         "<para>This package is provided for testing the
+                               completed Xorg installation.</para>">
 
 <!ENTITY % package-entities SYSTEM      "packages.ent">
 %package-entities;
 
-<!ENTITY parallel_issues "<note><para>Tpakken hans kan av og til mislykkes når
-                           det bygges med flere prosessorer. Se <xref
-                           linkend='parallel-builds'/> for mer informasjon.</para></note>">
+<!ENTITY parallel_issues "<note><para>This package may occasionally fail when
+                          building with multiple processors.  See <xref
+                          linkend='parallel-builds'/> for more information.</para></note>">
 
-<!ENTITY shell-env "<note><para>Hvis du installerer i chroot miljøet,
-                     sørg for å eksportere <envar>SHELL</envar> miljø
-                     variabelen ellers vil konfigurasjon av pakken
-                     mislykkes.</para></note>">
+<!ENTITY shell-env "<note><para>If installing in the chroot environment, be
+                    sure to export the <envar>SHELL</envar> environment
+                    variable or configuration of the package will
+                    fail.</para></note>">
 
+<!ENTITY gi-doc-disable
+         "Allow building this package without <xref linkend='gi-docgen'/>
+          installed.  If you have <xref linkend='gi-docgen'/> installed and
+          you wish to rebuild and install the API documentation, a
+          <command>meson configure</command> command will reset this
+          option.">

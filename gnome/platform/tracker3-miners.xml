@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY tracker3-miners-download-http "&gnome-download-http;/tracker-miners/3.4/tracker-miners-&tracker3-miners-version;.tar.xz">
+  <!ENTITY tracker3-miners-download-ftp  "&gnome-download-ftp;/tracker-miners/3.4/tracker-miners-&tracker3-miners-version;.tar.xz">
+  <!ENTITY tracker3-miners-md5sum        "12978674553320dc90c283dbd2605b1d">
+  <!ENTITY tracker3-miners-size          "6.9 MB">
+  <!ENTITY tracker3-miners-buildsize     "31 MB (with tests)">
+  <!ENTITY tracker3-miners-time          "0.4 SBU (with parallelism=4; add 1.0 SBU for tests, dependent on disk speed)">
+]>
+
+<sect1 id="tracker3-miners" xreflabel="tracker-miners-&tracker3-miners-version;">
+  <?dbhtml filename="tracker3-miners.html"?>
+
+
+  <title>Tracker-miners-&tracker3-miners-version;</title>
+
+  <indexterm zone="tracker3-miners">
+    <primary sortas="a-tracker3-miners">tracker3-miners</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to Tracker-miners</title>
+
+    <para>
+      The <application>Tracker-miners</application> package contains a set of
+      data extractors for Tracker.
+    </para>
+
+    &lfs113_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&tracker3-miners-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&tracker3-miners-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &tracker3-miners-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &tracker3-miners-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &tracker3-miners-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &tracker3-miners-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Tracker-miners Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="gst10-plugins-base"/>,
+      <xref linkend="tracker3"/>,
+      <xref linkend="exempi"/>, and
+      <xref linkend="gexiv2"/>
+    </para>
+
+    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <para role="recommended">
+      <xref linkend="giflib"/>,
+      <xref linkend="gst10-plugins-base"/>,
+      <xref role='runtime' linkend="gst10-plugins-good"/> (runtime),
+      <xref role='runtime' linkend="gst10-libav"/> (runtime),
+      <xref linkend="icu"/>,
+      <xref linkend="libexif"/>,
+      <xref linkend="libgrss"/>,
+      <xref linkend="libgxps"/>,
+      <xref linkend="libseccomp"/>, and
+      <xref linkend="poppler"/>
+    </para>
+
+    <bridgehead renderas="sect4">Optional</bridgehead>
+    <para role="optional">
+      <xref linkend="asciidoc"/>,
+      <xref linkend="cmake"/>,
+      <xref linkend="dconf"/>,
+      <xref linkend="ffmpeg"/>,
+      <xref linkend="libgsf"/>,
+      <xref linkend="taglib"/>,
+      <xref linkend="totem-pl-parser"/>,
+      <xref linkend="upower"/>,
+      <ulink url="https://github.com/lipnitsk/libcue">libcue</ulink>,
+      <ulink url="https://libiptcdata.sourceforge.net/">libitpcdata</ulink>,
+      <ulink url="https://libosinfo.org">libosinfo</ulink>, and
+      <ulink url="https://gitlab.gnome.org/GNOME/gupnp">gupnp</ulink>
+      <!--<ulink url="https://pypi.python.org/pypi/tap.py/">tap.py</ulink>
+      (for tests)-->
+    </para>
+
+    <para condition="html" role="usernotes">
+      User Notes: <ulink url="&blfs-wiki;/tracker-miners"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of Tracker-miners</title>
+
+<!--
+    <para>
+      First, as the <systemitem class="username">root</systemitem> user,
+      remove some files from tracker-2 which will conflict with
+      tracker-miners-3:
+    </para>
+
+<screen role="root"><userinput remap="pre">rm -fv /etc/xdg/autostart/tracker-miner-*</userinput></screen>
+-->
+
+    <note>
+      <para>
+        If you plan to run the tests, some timeouts are too short when
+        using spinning disks. There are two places where timeouts are
+        used: first, individual tests inside a group of tests have a
+        default timeout of 10s. This can be changed by setting the environment
+        variable <envar>TRACKER_TESTS_AWAIT_TIMEOUT</envar> to the desired
+        value when running the tests (see below). Second, a global timeout
+        for a group of tests is fixed at configuration time. The default value
+        in the <filename class="directory">functional-tests</filename>
+        directory (other directories have only short lived tests) may be
+        increased with the following command (replace 200 with a value
+        suitable for your machine):
+      </para>
+
+<screen remap="test"><userinput>sed -i s/120/<replaceable>200</replaceable>/ tests/functional-tests/meson.build</userinput></screen>
+    </note>
+
+    <para>
+      Install <application>Tracker-miners</application> by running the following
+      commands:
+    </para>
+
+
+<screen revision="systemd"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson --prefix=/usr --buildtype=release -Dman=false .. &amp;&amp;
+ninja</userinput></screen>
+
+<screen revision="sysv"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson --prefix=/usr                 \
+      --buildtype=release           \
+      -Dsystemd_user_services=false \
+      -Dman=false .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      To test the results, issue (adjust the individual test timeout to a
+      value suitable for your machine, see the note above):
+    </para>
+
+<screen remap="test"><userinput>dbus-run-session env TRACKER_TESTS_AWAIT_TIMEOUT=<replaceable>20</replaceable> ninja test &amp;&amp;
+rm -rf ~/tracker-tests</userinput></screen>
+
+    <note>
+      <para>
+        The tests create files in the user directory (up to 24 MB), so
+        they have to be removed afterwards.
+      </para>
+    </note>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Command Explanations</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-Dman=false</parameter>: This switch prevents the build process
+      from generating man pages. Omit this switch if you have
+      <xref linkend="asciidoc" role="nodep"/> installed and wish to generate and
+      install the man pages.
+    </para>
+
+    <para revision="sysv">
+      <parameter>-Dsystemd_user_services=false</parameter>: This switch prevents
+      the build process from installing systemd units since they are useless
+      on SysV systems.
+    </para>
+
+    <para>
+      <option>-Dseccomp=false</option>: This option disables the seccomp system
+      call filter. On some architectures, such as i686 and ARM, the functions
+      that tracker-miners uses are not guarded properly, and tracker-miners
+      will get killed with a SIGSYS as a result.
+    </para>
+
+    <para>
+      <option>-Dminer_rss=false</option>: Use this option if you have not
+      installed the recommended dependency libgrss.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directories</segtitle>
+
+      <seglistitem>
+        <seg>
+          None
+        </seg>
+        <seg>
+          Several modules under /usr/lib/tracker-miners-3.0
+        </seg>
+        <seg>
+          /usr/lib/tracker-miners-3.0,
+          /usr/libexec/tracker3, and
+          /usr/share/tracker3-miners
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+  </sect2>
+
+</sect1>

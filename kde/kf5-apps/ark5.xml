@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY ark5-download-http "&kf5apps-download-http;/ark-&kf5apps-version;.tar.xz">
+  <!ENTITY ark5-download-ftp  " ">
+  <!ENTITY ark5-md5sum        "eae848028bd866b6d1243a3d5c02d0e6">
+  <!ENTITY ark5-size          "2.7 MB">
+  <!ENTITY ark5-buildsize     "32 MB">
+  <!ENTITY ark5-time          "0.3 SBU (using parallelism=4)">
+]>
+
+<sect1 id="ark5" xreflabel="Ark-&kf5apps-version;">
+  <?dbhtml filename="ark5.html"?>
+
+
+  <title>Ark-&kf5apps-version;</title>
+
+  <indexterm zone="ark5">
+    <primary sortas="a-Ark">Ark</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to Ark</title>
+
+    <para>
+      The <application>Ark</application> package is a KF5 archive tool.
+      It is a graphical front end to tar and similar tools.
+    </para>
+
+    &lfs113_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&ark5-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&ark5-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &ark5-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &ark5-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &ark5-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &ark5-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+<!--
+    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Required patch:
+          <ulink url="&patch-root;/ark-&kf5apps-version;-upstream_fix-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
+
+    <bridgehead renderas="sect3">Ark Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="kf5-frameworks"/> and
+      <xref linkend="libarchive"/>
+    </para>
+
+
+    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <para role="recommended">
+       <!-- See README.packagers in the source tree -->
+       <xref linkend="cpio"/>,
+       <xref linkend="p7zip"/>,
+       <xref linkend="unrar"/>,
+       <xref linkend="unzip"/>, and
+       <xref linkend="zip"/>
+    </para>
+
+    <para condition="html" role="usernotes">
+      User Notes: <ulink url="&blfs-wiki;/ark5"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of Ark</title>
+<!--
+    <para>First, fix a problem identified upstream:</para>
+
+<screen><userinput>patch -Np1 -i ../ark-&kf5apps-version;-upstream_fix-1.patch</userinput></screen>
+-->
+    <para>
+      Install <application>Ark</application> by running the following
+      commands:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=$KF5_PREFIX \
+      -DCMAKE_BUILD_TYPE=Release         \
+      -DBUILD_TESTING=OFF                \
+      -Wno-dev .. &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directories</segtitle>
+
+      <seglistitem>
+        <seg>
+          ark
+        </seg>
+        <seg>
+          libkerfuffle.so
+        </seg>
+        <seg>
+          $KF5_PREFIX/lib/plugins/kerfuffle,
+          $KF5_PREFIX/share/doc/HTML/*/ark, and
+          $KF5_PREFIX/share/kxmlgui5/ark
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+     <varlistentry id="ark5-prog">
+        <term><command>ark</command></term>
+        <listitem>
+          <para>
+             is a KF5-based Archive Manager
+          </para>
+          <indexterm zone="ark5 ark5-prog">
+            <primary sortas="b-ark">ark</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+<!--
+     <varlistentry id="arkprofile5">
+        <term><command>arkprofile</command></term>
+        <listitem>
+          <para>
+            is a command-line tool to change the current tab's profile
+            options.
+          </para>
+          <indexterm zone="ark5 arkprofile5">
+            <primary sortas="b-arkprofile">arkprofile</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+-->
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

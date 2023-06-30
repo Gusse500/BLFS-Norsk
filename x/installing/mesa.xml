@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY mesa-download-http "https://mesa.freedesktop.org/archive/mesa-&mesa-version;.tar.xz">
+  <!ENTITY mesa-download-ftp  "ftp://ftp.freedesktop.org/pub/mesa/mesa-&mesa-version;.tar.xz">
+  <!ENTITY mesa-md5sum        "fdb35ae46968ce517702037710db6a3f">
+  <!ENTITY mesa-size          "17 MB">
+  <!ENTITY mesa-buildsize     "369 MB (with docs, add 203 MB for tests)">
+  <!ENTITY mesa-time          "2.2 SBU (Using parallelism=4; with docs, add 0.6 SBU for tests)">
+]>
+
+<sect1 id="mesa" xreflabel="Mesa-&mesa-version;">
+  <?dbhtml filename="mesa.html"?>
+
+
+  <title>Mesa-&mesa-version;</title>
+
+  <indexterm zone="mesa">
+    <primary sortas="a-Mesa">Mesa</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to Mesa</title>
+
+    <para>
+      <application>Mesa</application> is an OpenGL compatible 3D graphics
+      library.
+    </para>
+
+    <note>
+      <para>
+        <application>Mesa</application> is updated relatively often. You may
+        want to use the latest available &mesa-major-minor;.x mesa version.
+      </para>
+    </note>
+
+    &lfs113_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&mesa-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&mesa-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &mesa-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &mesa-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &mesa-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &mesa-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Recommended patch:
+          <ulink url="&patch-root;/mesa-&mesa-version;-add_xdemos-1.patch"/>
+          (installs 2 demo programs for testing Mesa - not needed if you
+          install the <ulink url="https://archive.mesa3d.org/demos/">
+          mesa-demos</ulink> package)
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Mesa Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="xorg7-lib"/>,
+      <xref linkend="libdrm"/>, and
+      <xref linkend="Mako"/>
+    </para>
+
+    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <para role="recommended">
+
+      <xref role="first" linkend="libva"/> (to provide VA-API support for some
+      gallium drivers, note that there is a circular dependency. You must
+      build <application>libva</application> first without EGL and GLX support,
+      install this package, and rebuild <application>libva</application>),
+
+      <xref linkend="libvdpau"/> (to build VDPAU drivers),
+
+      <xref linkend="llvm"/> (required for Gallium3D, nouveau, and radeonsi
+      drivers and for swrast, the software rasterizer which is sometimes referred
+      to as llvmpipe. See <ulink role="nodep"
+      url="https://docs.mesa3d.org/systems.html"/> for more information), and
+
+      <xref linkend="wayland-protocols"/> (required for
+        <xref role="nodep" linkend='plasma5-build'/>,
+        GNOME, and recommended for <xref role="nodep" linkend='gtk3'/>)
+    </para>
+
+    <bridgehead renderas="sect4">Optional</bridgehead>
+    <para role="optional">
+      <xref linkend="libgcrypt"/>,
+      <xref linkend="libunwind"/>,
+      <xref linkend="lm_sensors"/> <!-- for libsensors according to Meson -->,
+      <xref linkend="nettle"/>,
+      <xref linkend="valgrind"/>,
+      <ulink url="https://archive.mesa3d.org/demos/">mesa-demos</ulink>
+      (provides more than 300 extra demos to test
+      <application>Mesa</application>; this includes the same programs added by
+      the patch above),
+      <ulink url="https://omxil.sourceforge.net/">Bellagio OpenMAX Integration
+      Layer</ulink> (for mobile platforms),
+      <ulink url="https://github.com/KhronosGroup/glslang">glslang</ulink>
+      (for vulkan drivers),
+      <ulink url="https://github.com/tizonia/tizonia-openmax-il/wiki/Tizonia-OpenMAX-IL/">
+      libtizonia</ulink>,  and
+      <ulink url="https://www.vulkan.org/">libvulkan</ulink>
+    </para>
+<!--
+    <note>
+      <para>
+        The instructions below assume that
+        <application>LLVM</application> with the r600/amdgpu and host backends
+        and run-time type information (RTTI - needed for nouveau) are installed.
+        You will need to modify the instructions if you
+        choose not to install all of these. For an explanation of Gallium3D see
+        <ulink url="https://en.wikipedia.org/wiki/Gallium3D"/>.
+      </para>
+    </note>
+-->
+    <para condition="html" role="usernotes">User Notes:
+      <ulink url="&blfs-wiki;/mesalib"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of Mesa</title>
+
+    <para>
+      If you have downloaded the xdemos patch (needed if testing the Xorg
+      installation per BLFS instructions), apply it by running the following
+      command:
+    </para>
+
+<screen><userinput>patch -Np1 -i ../mesa-&mesa-version;-add_xdemos-1.patch</userinput></screen>
+
+   <!-- Note that freedreno, vc4, and virgl all need special support from
+        libdrm - renodr
+        For me, libdrm does not mention virgl, but mesa accepts it. AFAICS
+        freedreno is for qualcom hardware, libdrm will build for it on suitable
+        systems. VC4 is for the Broadcom VC4 used in the raspberry pi - ken -->
+<!--
+    <note>
+      <para>
+        The measurements above, and the Contents below, are for a full build.
+        Many people will not wish to install drivers they cannot use, so the
+        following paragraphs explain how to limit the drivers, and give an
+        example which can be be reduced or amended as necessary.
+      </para>
+    </note>
+
+    <para>
+      Now, select the drivers you wish to install. For the X86 architecture, the
+      available gallium drivers are auto (<emphasis>in 21.2.1 this does not select
+      crocus </emphasis>), <emphasis>or alternatively a choice from</emphasis>
+      crocus, i915, iris, nouveau, r300, r600, radeonsi, svga, swrast, and virgl.
+      The latter can provide acceleration in <xref linkend="qemu"/> if that has
+      been linked against
+      <ulink url="https://gitlab.freedesktop.org/virgl/virglrenderer/~/releases/">virglrenderer</ulink>
+      (you will need a freedesktop.org account to get to that page, you can
+      download the 0.9.1 release without an account from
+     <ulink url="https://gitlab.freedesktop.org/virgl/virglrenderer/-/archive/0.9.1/virglrenderer-0.9.1.tar.bz2">virglrenderer-0.9.1</ulink>).-->
+
+<!-- If you wish to build all available gallium drivers,
+      use 'auto'. FIXME : does not build crocus in 21.2.1 -->
+
+      <!-- crocus was added to the default x86/x86_64 drivers for meson in the
+      master branch on 2021-08-31, at some point it will appear in a stable release
+    </para>
+-->
+<!--
+    <para>
+      The (non-gallium) DRI drivers available in X86 are auto, <emphasis>or
+      alternatively a choice from</emphasis> i915, i965, nouveau, r100, r200,
+      and swrast. Use 'auto' to build all available DRI drivers, or use an
+      empty string (DRI_DRIVERS="") if you wish to only build gallium drivers.
+    </para>
+
+    <para>
+      The platforms ("window systems") available for X86 linux are x11, wayland,
+     drm, and surfaceless. By not specifying anything, the meson
+      build-system will build for all these platforms if you have the
+      dependencies, identical to if you had specified '-Dplatforms=auto'.
+    </para>
+
+    <para>
+      Modify the commands below for your desired drivers.  The drivers listed
+      below will cover most modern video cards and virtual machines.  For help in
+      selecting drivers see <ulink url="https://docs.mesa3d.org/systems.html"/>.
+-->
+      <!-- these two don't seem to be mentioned in that mesa link -->
+<!--
+      For intel drivers, specify crocus for i965 gen 4 through to haswell, iris
+      for broadwell and later.
+    </para>
+
+    <note>
+      <para>
+        Although the nouveau drivers can be built for both gallium and dri, the
+        i915 driver can only be built for one or the other.
+      </para>
+    </note>
+
+<screen><userinput>GALLIUM_DRV="crocus,i915,iris,nouveau,r600,radeonsi,svga,swrast,virgl"
+DRI_DRIVERS="i965,nouveau"</userinput></screen>
+-->
+
+    <para>
+      Install <application>Mesa</application> by running the following
+      commands:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup                   \
+      --prefix=$XORG_PREFIX   \
+      --buildtype=release     \
+      -Dplatforms=x11,wayland \
+      -Dgallium-drivers=auto  \
+      -Dvulkan-drivers=""     \
+      -Dvalgrind=disabled     \
+      -Dlibunwind=disabled    \
+      ..                      &amp;&amp;
+
+ninja</userinput></screen>
+
+    <para>
+      To test the results, issue:
+      <command>meson configure -Dbuild-tests=true &amp;&amp; ninja test</command>.
+    </para>
+<!-- All 88 tests passed for me for 22.3.3 [pierre]
+-->
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para>
+      If desired, install the optional documentation by running
+      the following commands as the
+      <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"
+        remap="doc"><userinput>install -v -dm755 /usr/share/doc/mesa-&mesa-version; &amp;&amp;
+cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Command Explanations</title>
+
+    <para>
+      <parameter>--buildtype=release</parameter>: This switch ensures a
+      fully-optimized build, and disables debug assertions which will
+      severely slow down the libraries in certain use-cases. Without this
+      switch, build sizes can span into the 2GB range.
+    </para>
+
+    <para>
+      <parameter>-Dgallium-drivers="..."</parameter>: This parameter
+      controls which Gallium3D drivers should be built.
+    </para>
+<!--
+    <para>
+      <parameter>-Dosmesa=true</parameter>: This switch enables building
+      the <filename class="libraryfile">libOSMesa</filename> library and
+      provides Gallium3D support in it. It requires the swrast gallium driver.
+    </para>
+-->
+
+    <para>
+      <parameter>-Dplatforms="..."</parameter>: This parameter
+      controls which windowing systems will be supported. Available
+      linux platforms are x11 and wayland.
+    </para>
+
+    <para>
+      <parameter>-Dvulkan-drivers=""</parameter>: This switch allows choosing
+      which Vulkan drivers are built. The default is auto, but this requires
+      the optional dependency <filename>glslang</filename>. So it is better
+      to pass an empty list, in order to remove the need for that
+      dependency.  Nothing in BLFS uses Vulkan anyway.
+    </para>
+
+    <para>
+      <parameter>-Dvalgrind=disabled</parameter>: This parameter disables
+      the usage of Valgrind during the build process. Remove this parameter
+      if you have Valgrind installed, and wish to check for memory leaks.
+    </para>
+
+    <para>
+      <parameter>-Dlibunwind=disabled</parameter>: This parameter disables
+      the usage of libunwind.
+    </para>
+
+    <para>
+      <command>meson configure -Dbuild-tests=true</command>: This command will
+      reconfigure the build to set <option>-Dbuild-tests=true</option>, but
+      keep the other options specified in the <command>meson setup</command>
+      command unchanged.  It allows <command>ninja test</command> to build and
+      run unit tests.
+    </para>
+
+    <para>
+      <option>-Degl-native-platform="..."</option>: This parameter
+      controls which Embedded Graphics Library support will be built. Available
+      linux options are auto (default), x11, wayland, surfaceless, and drm.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle><!-- in /usr/lib -->
+      <segtitle>Installed Drivers</segtitle><!-- in /usr/lib/<subdir> -->
+      <segtitle>Installed Directories</segtitle>
+
+      <seglistitem>
+        <seg>
+          glxgears and glxinfo
+        </seg>
+        <seg>
+          libEGL.so,
+          libGL.so,
+          libGLESv1_CM.so,
+          libGLESv2.so,
+<!--          libXvMCnouveau.so,
+          libXvMCr600.so,-->
+          libgbm.so,
+          libglapi.so, and
+          libxatracker.so
+        </seg>
+        <seg>
+          <!-- Begin gallium DRI drivers : this is the full set -->
+<!--          d3dadapter9.so (optional),   For Windows games. This is DirectX's
+                                          Direct3D -->
+          crocus_dri.so,
+          i915_dri.so,
+          iris_dri.so,
+          kms_swrast_dri.so,
+          nouveau_dri.so,
+          nouveau_drv_video.so,
+          r300_dri.so,
+          r600_dri.so,
+          r600_drv_video.so,
+          radeonsi_dri.so,
+          radeonsi_drv_video.so,
+          swrast_dri.so,
+          virtio_gpu_dri.so,
+          virtio_gpu_drv_video.so,
+          vmwgfx_dri.so,
+          <!-- End DRI Drivers -->
+          <!-- Begin VDPAU drivers -->
+          libvdpau_nouveau.so,
+          libvdpau_r300.so
+          libvdpau_r600.so, and
+          libvdpau_radeonsi.so
+          libvdpau_virtio_gpu.so
+          <!-- End VDPAU drivers -->
+          (Many of these drivers are hard-linked).
+        </seg>
+        <seg>
+          <!-- $XORG_PREFIX/include/GL is installed by xorg-protos -->
+          $XORG_PREFIX/{include/{EGL,GLES,GLES2,GLES3,KHR},
+          $XORG_PREFIX/lib/{dri,vdpau}},
+          $XORG_PREFIX/share/drirc.d (contains workarounds for various applications,
+          particularly browsers and games),
+          and /usr/share/doc/mesa-&mesa-version;
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="glxgears">
+        <term><command>glxgears</command></term>
+        <listitem>
+          <para>
+            is a GL demo useful for troubleshooting graphics
+            problems
+          </para>
+          <indexterm zone="mesa glxgears">
+            <primary sortas="b-glxgears">glxgears</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="glxinfo">
+        <term><command>glxinfo</command></term>
+        <listitem>
+          <para>
+            is a diagnostic program that displays information about the
+            graphics hardware and installed GL libraries
+          </para>
+          <indexterm zone="mesa glxinfo">
+            <primary sortas="b-glxinfo">glxinfo</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libEGL">
+        <term><filename class="libraryfile">libEGL.so</filename></term>
+        <listitem>
+          <para>
+            provides a native platform graphics interface as
+            defined by the EGL-1.4 specification
+          </para>
+          <indexterm zone="mesa libEGL">
+            <primary sortas="c-libGL">libEGL.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libgbm">
+        <term><filename class="libraryfile">libgbm.so</filename></term>
+        <listitem>
+          <para>
+            is the <application>Mesa</application> Graphics Buffer
+            Manager library
+          </para>
+          <indexterm zone="mesa libgbm">
+            <primary sortas="c-libgbm">libgbm.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libGLESv1_CM">
+        <term><filename class="libraryfile">libGLESv1_CM.so</filename></term>
+        <listitem>
+          <para>
+            is the <application>Mesa</application> OpenGL ES 1.1 library
+          </para>
+          <indexterm zone="mesa libGLESv1_CM">
+            <primary sortas="c-libGLESv1_CM">libGLESv1_CM.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libGLES2">
+        <term><filename class="libraryfile">libGLES2.so</filename></term>
+        <listitem>
+          <para>
+            is the <application>Mesa</application> OpenGL ES 2.0 library
+          </para>
+          <indexterm zone="mesa libGLES2">
+            <primary sortas="c-libGLES2">libGLES2.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libGL">
+        <term><filename class="libraryfile">libGL.so</filename></term>
+        <listitem>
+          <para>
+            is the main <application>Mesa</application> OpenGL library
+          </para>
+          <indexterm zone="mesa libGL">
+            <primary sortas="c-libGL">libGL.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

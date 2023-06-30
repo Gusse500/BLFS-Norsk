@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY kmix5-download-http "&kf5apps-download-http;/kmix-&kf5apps-version;.tar.xz">
+  <!ENTITY kmix5-download-ftp  " ">
+  <!ENTITY kmix5-md5sum        "9d5afe601502c550fa511c4fc720687a">
+  <!ENTITY kmix5-size          "1.1 MB">
+  <!ENTITY kmix5-buildsize     "18 MB">
+  <!ENTITY kmix5-time          "0.2 SBU (using parallelism=4)">
+]>
+
+<sect1 id="kmix5" xreflabel="KMix-&kf5apps-version;">
+  <?dbhtml filename="kmix5.html"?>
+
+
+  <title>KMix-&kf5apps-version;</title>
+
+  <indexterm zone="kmix5">
+    <primary sortas="a-KMix">KMix</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to KMix</title>
+
+    <para>
+      The <application>KMix</application> package contains a KF5 based Sound
+      Mixer application.
+    </para>
+
+    &lfs113_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&kmix5-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&kmix5-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &kmix5-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &kmix5-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &kmix5-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &kmix5-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">KMix Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="kf5-frameworks"/>
+    </para>
+
+    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <para role="recommended">
+      <xref linkend="alsa-lib"/>
+    </para>
+
+    <bridgehead renderas="sect4">Optional</bridgehead>
+    <para role="optional">
+      <xref linkend="libcanberra"/> and
+      <xref linkend="pulseaudio"/>
+    </para>
+
+    <para condition="html" role="usernotes">
+      User Notes: <ulink url="&blfs-wiki;/kmix5"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of KMix</title>
+
+    <para>
+      Install <application>KMix</application> by running the following
+      commands:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=$KF5_PREFIX \
+      -DCMAKE_BUILD_TYPE=Release         \
+      -DBUILD_TESTING=OFF                \
+      -Wno-dev .. &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+<!-- With 18.12.0, kmix now is kf5 only.
+  <sect2 role="commands">
+    <title>Command Explanations</title>
+
+    <para>
+      <parameter>-DKMIX_KF5_BUILD=1</parameter>: This switch is used to ensure
+      that <application>KDE Frameworks</application> 5 based application is
+      built.
+    </para>
+
+  </sect2>
+-->
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directories</segtitle>
+
+      <seglistitem>
+        <seg>
+          kmix, kmixctrl, and kmixremote
+        </seg>
+        <seg>
+          libkmixcore.so
+        </seg>
+        <seg>
+          $KF5_PREFIX/share/kmix,
+          $KF5_PREFIX/share/kxmlgui5/kmix, and
+          $KF5_PREFIX/share/doc/HTML/*/kmix
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+     <varlistentry id="kmix5-prog">
+        <term><command>kmix</command></term>
+        <listitem>
+          <para>
+            is a mini audio mixer for kde
+          </para>
+          <indexterm zone="kmix5 kmix5-prog">
+            <primary sortas="b-kmix">kmix</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="kmixctrl5">
+        <term><command>kmixctrl</command></term>
+        <listitem>
+          <para>
+            is used to save or restore the settings of
+            <command>kmix</command>
+          </para>
+          <indexterm zone="kmix5 kmixctrl5">
+            <primary sortas="b-kmixctrl">kmixctrl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="kmixremote">
+        <term><command>kmixremote</command></term>
+        <listitem>
+          <para>
+            is a utility to mute, get and set volume levels
+          </para>
+          <indexterm zone="kmix5 kmixremote">
+            <primary sortas="b-kmixremote">kmixremote</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+  </sect2>
+
+</sect1>

@@ -15,9 +15,6 @@
 <sect1 id="gdm" xreflabel="GDM-&gdm-version;">
   <?dbhtml filename="gdm.html"?>
 
-  <sect1info>
-    <date>$Date$</date>
-  </sect1info>
 
   <title>GDM-&gdm-version;</title>
 
@@ -26,95 +23,95 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduksjon til GDM</title>
+    <title>Introduction to GDM</title>
 
     <para>
-      <application>GDM</application> er en systemtjeneste som er
-       ansvarlig for å gi grafiske pålogginger og administrere lokale
-       og eksterne skjermer.
+      <application>GDM</application> is a system service that is
+      responsible for providing graphical logins and managing local
+      and remote displays.
     </para>
 
     &lfs72_checked;
 
-    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <bridgehead renderas="sect3">Package Information</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nedlasting (HTTP): <ulink url="&gdm-download-http;"/>
+          Download (HTTP): <ulink url="&gdm-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting (FTP): <ulink url="&gdm-download-ftp;"/>
+          Download (FTP): <ulink url="&gdm-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting MD5 sum: &gdm-md5sum;
+          Download MD5 sum: &gdm-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gdm-size;
+          Download size: &gdm-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert diskplass som kreves: &gdm-buildsize;
+          Estimated disk space required: &gdm-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert byggetid: &gdm-time;
+          Estimated build time: &gdm-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">GDM Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">GDM Dependencies</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
       <xref linkend="accountsservice"/>,
       <xref linkend="dconf"/>,
       <xref linkend="libcanberra"/>,
       <xref linkend="linux-pam"/>,
-      <xref linkend="nss"/> og
+      <xref linkend="nss"/> and
       <xref linkend="yelp-xsl"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <bridgehead renderas="sect4">Recommended</bridgehead>
     <para role="recommended">
       <xref linkend="gobject-introspection"/>,
-      <xref linkend="iso-codes"/> og
+      <xref linkend="iso-codes"/> and
       <xref linkend="upower"/>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <bridgehead renderas="sect4">Optional</bridgehead>
     <para role="optional">
       <xref linkend="check"/>
     </para>
 
-    <bridgehead renderas="sect4">Kjøretidsavhengigheter</bridgehead>
+    <bridgehead renderas="sect4">Runtime Dependencies</bridgehead>
     <para role="required">
       <xref linkend="consolekit"/>,
-      <xref linkend="gnome-session"/> og eller
-      <xref linkend="gnome-shell"/> eller
+      <xref linkend="gnome-session"/> and either
+      <xref linkend="gnome-shell"/> or
       <xref linkend="metacity"/>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
+    <para condition="html" role="usernotes">User Notes:
       <ulink url="&blfs-wiki;/gdm"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av GDM</title>
+    <title>Installation of GDM</title>
 
     <para>
-      Det anbefales å ha en dedikert bruker og gruppe for
-       kontroll av <command>gdm</command> nissen etter at den er
-       startet. Utfør følgende kommandoer som
-      <systemitem class="username">root</systemitem> bruker:
+      It is recommended to have a dedicated user and group to take
+      control of the <command>gdm</command> daemon after it is
+      started. Issue the following commands as the
+      <systemitem class="username">root</systemitem> user:
     </para>
 
 <screen role="root"><userinput>groupadd -g 21 gdm &amp;&amp;
@@ -124,8 +121,8 @@ usermod -a -G audio gdm &amp;&amp;
 usermod -a -G video gdm</userinput></screen>
 
     <para>
-      Installer <application>GDM</application> ved å kjøre følgende
-      kommandoer:
+      Install <application>GDM</application> by running the following
+      commands:
     </para>
 
 <screen><userinput>./configure --prefix=/usr \
@@ -141,12 +138,12 @@ usermod -a -G video gdm</userinput></screen>
 make</userinput></screen>
 
     <para>
-      Hvis du har installert <xref linkend="check"/> og du ønsker å kjøre
-       testpakken, kjør: <command>make check</command>.
+      If you have installed <xref linkend="check"/> and you wish to run
+      the testsuite, issue: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Now, as the <systemitem class="username">root</systemitem> user:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -155,36 +152,36 @@ chown -R -v gdm:gdm /var/lib/gdm /var/cache/gdm /var/log/gdm</userinput></screen
   </sect2>
 
   <sect2 role="commands">
-    <title>Parameterforklaringer</title>
+    <title>Command Explanations</title>
 
     <para>
-      <parameter>--with-initial-vt=7</parameter>: Denne bryteren
-       gjør at <application>GDM</application> starter på vt7
-      i stedet for den første frie VT.
+      <parameter>--with-initial-vt=7</parameter>: This switch
+      causes <application>GDM</application> to start on vt7
+      instead of the first free VT.
     </para>
 
     <para>
-      <parameter>--with-*-directory=...</parameter>: Disse bryterne
-       spesifiser plasseringen av programmer som brukes under kjøring.
+      <parameter>--with-*-directory=...</parameter>: These switches
+      specify the location of programs that are used at runtime.
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
 
     <para>
-      <parameter>--with-default-pam-config=lfs</parameter>: Bruk denne
-       bryteren hvis du ikke opprettet <filename>/etc/lfs-release</filename>
-      ellers vil automatisk gjenkjenning av distribusjon mislykkes, og du vil ikke være i stand til
-       å bruke <application>GDM</application>.
+      <parameter>--with-default-pam-config=lfs</parameter>: Use this
+      switch if you did not create <filename>/etc/lfs-release</filename>
+      or distribution auto detection will fail and you will be unable
+      to use <application>GDM</application>.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Konfigurere GDM</title>
+    <title>Configuring GDM</title>
 
     <sect3 id="gdm-config">
-      <title>Konfigurasjonsfiler</title>
+      <title>Config Files</title>
 
       <para>
         <filename>/etc/gdm/custom.conf</filename>
@@ -198,42 +195,42 @@ chown -R -v gdm:gdm /var/lib/gdm /var/cache/gdm /var/log/gdm</userinput></screen
     </sect3>
 
     <sect3>
-      <title>Konfigurasjonsinformasjon</title>
+      <title>Configuration Information</title>
 
       <para>
-        GDM nissen er konfigurert ved hjelp av
-        <filename>/etc/gdm/custom.conf</filename> filen.
-        Standardverdier er lagret i GSettings i
-        <filename>gdm.schemas</filename> filen. Det anbefales at sluttbrukere
-         endrer <filename>/etc/gdm/custom.conf</filename> filen
-        fordi skjemafilen kan bli overskrevet når brukeren oppdaterer
-         systemet for å ha en nyere versjon av GDM.
+        The GDM daemon is configured using the
+        <filename>/etc/gdm/custom.conf</filename> file.
+        Default values are stored in GSettings in the
+        <filename>gdm.schemas</filename> file. It is recommended that end-users
+        modify the <filename>/etc/gdm/custom.conf</filename> file
+        because the schemas file may be overwritten when the user updates their
+        system to have a newer version of GDM.
       </para>
 
       <important>
         <para>
-          Hvis systemets <application>D-BUS</application> nisse var
-           kjørende under installasjonen av <application>gdm</application>,
-          sørg for at du stopper og starter <application>D-BUS</application> nissen på nytt
-          før du prøver å starte <command>gdm</command>.
+          If the system-wide <application>D-BUS</application> daemon was
+          running during the installation of <application>gdm</application>,
+          ensure you stop and restart the <application>D-BUS</application>
+          daemon before attempting to start <command>gdm</command>.
         </para>
       </important>
 
       <para>
-        <command>gdm</command> kan testes ved å kjøre den som
-        <systemitem class="username">root</systemitem> bruker. Hvis du ønsker å stoppe
-         det må du gå til en annen tty og deretter drepe den.
+        <command>gdm</command> can be tested by executing it as the
+        <systemitem class="username">root</systemitem> user. If you wish to stop
+        it you will need to go to a different tty and then kill it.
       </para>
 
     </sect3>
 
     <sect3 id="gdm-init">
-      <title>Oppstartsskript</title>
+      <title>Boot Script</title>
 
       <para>
-        For å starte en grafisk pålogging når systemet startes opp, installer
-        <filename>/etc/rc.d/init.d/gdm</filename> init skriptet inkludert i
-        <xref linkend="bootscripts"/> pakken.
+        To start a graphical login when the system is booted, install the
+        <filename>/etc/rc.d/init.d/gdm</filename> init script included in the
+        <xref linkend="bootscripts"/> package.
       </para>
 
       <indexterm zone="gdm gdm-init">
@@ -243,8 +240,8 @@ chown -R -v gdm:gdm /var/lib/gdm /var/cache/gdm /var/log/gdm</userinput></screen
 <screen role="root"><userinput>make install-gdm</userinput></screen>
 
       <para>
-        Rediger nå <filename>/etc/inittab</filename> med følgende
-         kommando.
+        Now edit <filename>/etc/inittab</filename> with the following
+        command.
       </para>
 
 <screen role="root"><userinput>sed -i 's/id:3:initdefault:/id:5:initdefault:/' \
@@ -255,19 +252,19 @@ chown -R -v gdm:gdm /var/lib/gdm /var/cache/gdm /var/log/gdm</userinput></screen
   </sect2>
 
   <sect2 role="content">
-    <title>Innhold</title>
+    <title>Contents</title>
 
     <segmentedlist>
-      <segtitle>Installerte Programmer</segtitle>
-      <segtitle>Installerte Biblioteker</segtitle>
-      <segtitle>Installerte Mapper</segtitle>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directories</segtitle>
 
       <seglistitem>
         <seg>
-          gdm og gdm-screenshot
+          gdm and gdm-screenshot
         </seg>
         <seg>
-          libgdm.so og libgdmsimplegreeter.so
+          libgdm.so and libgdmsimplegreeter.so
         </seg>
         <seg>
           /etc/dconf/db/gdm.d,
@@ -279,14 +276,14 @@ chown -R -v gdm:gdm /var/lib/gdm /var/cache/gdm /var/log/gdm</userinput></screen
           /var/cache/gdm,
           /var/gdm,
           /var/lib/gdm,
-          /var/log/gdm og
+          /var/log/gdm and
           /var/run/gdm
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -294,7 +291,7 @@ chown -R -v gdm:gdm /var/lib/gdm /var/cache/gdm /var/log/gdm</userinput></screen
         <term><command>gdm</command></term>
         <listitem>
           <para>
-            er <application>GNOME</application> basert innloggingsforespørsel.
+            is the <application>GNOME</application> based login prompt.
           </para>
           <indexterm zone="gdm gdm-prog">
             <primary sortas="b-gdm">gdm</primary>
@@ -306,7 +303,7 @@ chown -R -v gdm:gdm /var/lib/gdm /var/cache/gdm /var/log/gdm</userinput></screen
         <term><command>gdm-screenshot</command></term>
         <listitem>
           <para>
-            er <application>GDM</application> skjermbildeverktøy.
+            is a <application>GDM</application> screenshot tool.
           </para>
           <indexterm zone="gdm gdm-screenshot">
             <primary sortas="b-gdm-screenshot">gdm-screenshot</primary>

@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY cups-filters-download-http
+  "https://www.openprinting.org/download/cups-filters/cups-filters-&cups-filters-version;.tar.xz">
+  <!ENTITY cups-filters-download-ftp  " ">
+  <!ENTITY cups-filters-md5sum        "24bed15110499fd652d65d6baab85ca6">
+  <!ENTITY cups-filters-size          "1.4 MB">
+  <!ENTITY cups-filters-buildsize     "56 MB (with tests), 16 MB installed">
+  <!ENTITY cups-filters-time          "0.2 SBU (Using parallelism=4; with tests)">
+]>
+
+<sect1 id="cups-filters" xreflabel="cups-filters-&cups-filters-version;">
+  <?dbhtml filename="cups-filters.html"?>
+
+
+  <title>cups-filters-&cups-filters-version;</title>
+
+  <indexterm zone="cups-filters">
+    <primary sortas="a-cups-filters">cups-filters</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to CUPS Filters</title>
+
+    <para>
+      The <application>CUPS Filters</application> package contains backends,
+      filters and other software that was once part of the core
+      <application>CUPS</application> distribution but is no longer
+      maintained by Apple Inc.
+    </para>
+
+    &lfs113_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&cups-filters-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&cups-filters-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &cups-filters-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &cups-filters-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &cups-filters-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &cups-filters-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">CUPS Filters Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="cups"/>,
+      <xref linkend="glib2"/>,
+      <xref linkend="gs"/>,
+      <xref linkend="lcms2"/>,
+      <xref linkend="poppler"/>, and
+      <xref linkend="qpdf"/>
+    </para>
+
+    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <para role="recommended">
+      <xref linkend="dejavu-fonts"/> (the build fails if they are not
+      installed, although they are only required for the tests),
+      <xref linkend="libexif"/>,
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libpng"/>,
+      <xref linkend="libtiff"/>, and
+      <xref linkend="mupdf"/> (mutool)
+    </para>
+
+    <bridgehead renderas="sect4">Optional</bridgehead>
+    <para role="optional">
+      <xref linkend="avahi"/> (required to build the DNSSD backend of the
+      <command>cups-browsed</command> daemon, which is needed for operating
+      some network printers),
+      <xref linkend="openldap"/>,
+      <xref linkend="php"/> (use of this might be broken),
+      <ulink url="https://liblouis.github.io/downloads/">Liblouis (Braille)</ulink>, and
+      <ulink url="https://liblouis.github.io/downloads/">Liblouisutdml (Braille)</ulink>
+    </para>
+
+    <bridgehead renderas="sect4">Optional printer drivers (runtime)</bridgehead>
+    <para role="optional">
+      <xref role="runtime" linkend="gutenprint"/> (for supported printers),
+      or other printer drivers, such as <ulink role="runtime"
+      url="https://sourceforge.net/projects/hplip/files/hplip/">hplip</ulink>
+    </para>
+
+    <para condition="html" role="usernotes">
+      User Notes: <ulink url="&blfs-wiki;/cups-filters"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of CUPS Filters</title>
+
+<!--
+    <para revision="systemd">
+      First, fix the systemd unit file to work with
+      <application>CUPS</application> 2.0 and later:
+    </para>
+
+<screen revision="systemd"><userinput>sed -i "s:cups.service:org.cups.cupsd.service:g" utils/cups-browsed.service</userinput></screen>
+-->
+
+    <para>
+      Install <application>CUPS Filters</application> by running the following
+      commands:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr        \
+            --sysconfdir=/etc    \
+            --localstatedir=/var \
+            --without-rcdir      \
+            --disable-static     \
+            --disable-avahi      \
+            --docdir=/usr/share/doc/cups-filters-&cups-filters-version; &amp;&amp;
+make</userinput></screen>
+
+<!-- The test suite still bombs out for me. I'll leave the instructions for it
+     here though. I didn't have the Dejavu font installed, but used one of the
+     ones installed by X.
+     Version 1.16.0: test worked for me with "make check >testlog 2>&1",
+     that is, the other way around. I have DejaVu fonts. Pierre L
+     With 1.17.2 (and DejaVu) the test output is clean, no need for a log. Ken
+
+     Tests are clean for version 1.21.0 (and version 1.21.5):  - Bruce
+     # TOTAL: 6
+     # PASS:  6
+     real    0m2.504s -->
+
+    <para>
+      To test the results, issue:
+      <!--<command>make check &gt;testlog 2&gt;&amp;1</command>.-->
+      <command>make check</command>. DejaVu fonts
+      are needed for the tests.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para revision="systemd">
+      Install the systemd unit by running the following command as the
+      <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root" revision="systemd"><userinput>install -v -m644 utils/cups-browsed.service /lib/systemd/system/cups-browsed.service</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Command Explanations</title>
+
+<!-- please comment this if no patches are currently needed -->
+<!--<para>
+      <parameter>patch -Np1 -i ../cups-filters-&cups-filters-version;-poppler71-1.patch</parameter>:
+      Conditionally apply changes for recent versions of poppler.
+    </para>
+    Poppler-0.72.0, cups-filters-1.21.5 - no longer needed.-->
+
+    <para>
+      <parameter>--disable-avahi</parameter>: This switch is needed
+      if the optional <xref linkend="avahi"/> is not installed. Remove
+      it if avahi is installed and you need network printer discovery
+      capabilities.
+    </para>
+
+    <para>
+      <parameter>--without-rcdir</parameter>: This switch disables
+      installation of the bundled bootscript which is not compatible
+      with BLFS.
+    </para>
+
+<!-- Those are hard dependencies now
+    <para>
+      <parameter>- -with-gs-path=/usr/bin/gs</parameter>: This switch
+      defines the path to the <application>GhostScript</application>
+      binary in case <xref linkend="gs"/> is not installed at build time.
+    </para>
+
+    <para>
+      <parameter>- -with-pdftops-path=/usr/bin/gs</parameter>: This switch
+      defines the path to the <application>GhostScript</application>
+      binary in case <xref linkend="gs"/> is not installed at build time.
+    </para>
+-->
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+    <!--
+    <para>
+      <option>- -enable-ijs</option>: This switch will allow the pdftoijs
+      filter, for sending PDFs to an HP InkJet Server, to be built.
+    </para>
+    -->
+
+    <para>
+      <option>--with-test-font-path=<replaceable>VALUE</replaceable></option>:
+      If you wish to run the tests, but
+      you do not have the default
+      <filename>/usr/share/fonts/dejavu/DejaVuSans.ttf</filename> use this
+      switch to specify where <filename>DejaVuSans.ttf</filename> (or perhaps
+      some other text TTF font - untested) is located.
+    </para>
+
+
+  </sect2>
+
+<!-- TODO: Write a bootscript for cups-browsed -->
+
+  <sect2 role="configuration" revision="systemd">
+    <title>Configuring CUPS Filters</title>
+
+    <sect3 id="cups-filters-init">
+      <title>Systemd Units</title>
+
+      <para>
+        To start the <command>cups-browsed</command> daemon at boot, enable
+        the previously installed systemd unit by running the following command
+        as the <systemitem class="username">root</systemitem> user:
+      </para>
+
+      <indexterm zone="cups-filters cups-filters-init">
+        <primary sortas="f-cups-browsed">cups-browsed</primary>
+      </indexterm>
+
+<screen role="root"><userinput>systemctl enable cups-browsed</userinput></screen>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directories</segtitle>
+
+      <seglistitem>
+        <seg>
+          cups-browsed, driverless, driverless-fax, and foomatic-rip
+          <!-- and ttfread -->
+        </seg>
+        <seg>
+          libcupsfilters.so and libfontembed.so
+        </seg>
+        <seg>
+          /usr/include/{cupsfilters,fontembed},
+           /usr/lib/cups/{backend,driver,filter},
+          /usr/share/cups/{braille,charsets},
+          /usr/share/doc/cups-filters-&cups-filters-version;, and
+          /usr/share/ppd/cupsfilters
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="cups-browsed">
+        <term><command>cups-browsed</command></term>
+        <listitem>
+          <para>
+            is a daemon for browsing the Bonjour and CUPS broadcasts of shared,
+            remote CUPS printers
+          </para>
+          <indexterm zone="cups-filters cups-browsed">
+            <primary sortas="b-cups-browsed">cups-browsed</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="driverless">
+        <term><command>driverless</command></term>
+        <listitem>
+          <para>
+            is a PPD generator utility for driverless printing
+          </para>
+          <indexterm zone="cups-filters driverless">
+            <primary sortas="b-driverless">driverless</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="driverless-fax">
+        <term><command>driverless-fax</command></term>
+        <listitem>
+          <para>
+            is a wrapper to <command>driverless</command> for FAX type devices
+          </para>
+          <indexterm zone="cups-filters driverless-fax">
+            <primary sortas="b-driverless-fax">driverless-fax</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="foomatic-rip">
+        <term><command>foomatic-rip</command></term>
+        <listitem>
+          <para>
+            is a universal print filter/RIP wrapper which can be used as CUPS
+            filter or stand-alone for spooler-less, direct printing
+          </para>
+          <indexterm zone="cups-filters foomatic-rip">
+            <primary sortas="b-foomatic-rip">foomatic-rip</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libcupsfilters">
+        <term><filename class="libraryfile">libcupsfilters.so</filename></term>
+        <listitem>
+          <para>
+            contains <application>CUPS Filters</application> API functions
+          </para>
+          <indexterm zone="cups-filters libcupsfilters">
+            <primary sortas="c-libcupsfilters">libcupsfilters.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
