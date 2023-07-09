@@ -5,36 +5,36 @@
   %general-entities;
 ]>
 
-<sect1 id="kde-core-config" xreflabel="Starting KDE4">
+<sect1 id="kde-core-config" xreflabel="Starte KDE4">
   <?dbhtml filename="config.html"?>
 
 
-  <title>Starting KDE4</title>
+  <title>Starte KDE4</title>
 
-  <bridgehead renderas="sect3">KDE4 Startup Dependencies</bridgehead>
+  <bridgehead renderas="sect3">KDE4 Oppstartsavhengigheter</bridgehead>
 
-  <bridgehead renderas="sect4">Recommended Runtime Dependencies</bridgehead>
+  <bridgehead renderas="sect4">Anbefalte Kjøretidsavhengigheter</bridgehead>
   <para role="recommended">
-    <xref linkend="consolekit"/> and
+    <xref linkend="consolekit"/> og
     <xref linkend="dbus"/>
   </para>
 
-  <para>After <application>Kde-workspace</application> has been installed, the
-  first important milestone has been reached. Now you need to configure your
-  system to start KDE4.</para>
+  <para>Etter at <application>Kde-workspace</application> er installert, den
+  første viktige milepæl er nådd. Nå må du konfigurere
+  systemet ditt for å starte KDE4.</para>
 
   <sect2 role="content">
-  <title>Starting KDE4 from the command prompt</title>
+  <title>Starte KDE4 fra kommandolinjen</title>
 
     <para>
-      You can start <application>KDE4</application> from runlevel 3, using
-      <xref linkend="xinit"/>, or from runlevel 5, using a Display Manager,
-      such as <xref linkend="sddm"/>.
+      Du kan starte <application>KDE4</application> fra kjørenivå 3, ved å bruke
+      <xref linkend="xinit"/>, eller fra kjørenivå 5, ved å bruke en Skjermbehandler,
+      som for eksempel <xref linkend="sddm"/>.
     </para>
 
     <para>
-      To start <application>KDE4</application> using <xref linkend="xinit"/>,
-      run the following commands:
+      For å starte <application>KDE4</application> med bruk av <xref linkend="xinit"/>,
+      kjør de følgende kommandoene:
     </para>
 
 <screen><userinput>cat &gt; ~/.xinitrc &lt;&lt; "EOF"
@@ -44,80 +44,80 @@ EOF
 startx</userinput></screen>
 
     <para>
-      The X session starts on the first unused virtual terminal, normally vt7.
-      You can switch to another vt<emphasis>n</emphasis> simultaneously
-      pressing the keys Ctrl-Alt-F<emphasis>n</emphasis>
-      (<emphasis>n</emphasis>=1, 2, ...).  To switch back to the X session,
-      normally started at vt7, use Ctrl-Alt-F7. The vt where the command
-      <command>startx</command> was executed will display many messages,
-      including X starting messages, applications automatically started with
-      the session, and eventually, some warning and error messages. You may
-      prefer to redirect those messages to a log file, which not only will keep
-      the initial vt uncluttered, but can also be used for debug purposes. This
-      can be done starting X with:
+      X økten starter på den første ubrukte virtuelle terminalen, normalt vt7.
+      Du kan bytte til en annen vt<emphasis>n</emphasis> ved å
+      trykke samtidig på tastene Ctrl-Alt-F<emphasis>n</emphasis>
+      (<emphasis>n</emphasis>=1, 2, ...).  For å bytte tilbake til X økten,
+      vanligvis startet på vt7, bruk Ctrl-Alt-F7. Vt hvor kommandoen
+      <command>startx</command> ble utført vil vise mange meldinger,
+      inkludert X startmeldinger, applikasjoner startet automatisk med
+      økten, og til slutt noen advarsler og feilmeldinger. Du kan
+      omdirigere disse meldingene til en loggfil, som ikke bare vil beholde
+      den innledende vt ryddig, men kan også brukes til feilsøkingsformål. Dette
+      kan gjøres fra X med:
     </para>
 
     <screen><userinput>startx &amp;&gt; ~/.x-session-errors</userinput></screen>
 
     <note>
       <para>
-        You may wish to drop consolekit and/or dbus-launch, e.g., just using
-        startkde in ~/.xinitrc. However some capabilities such as mounting or
-        umounting file systems from a file manager will not be possible, or the
-        reboot option will be absent or inoperative, among other problems.
+        Du ønsker kanskje å droppe consolekit og/eller dbus-launch, for eksempel bare ved å bruke
+        startkde i ~/.xinitrc. Men noen funksjoner som montering eller
+        avmontering av filsystemer fra en filbehandler vil ikke være mulig, eller
+        omstartsalternativet vil være fraværende eller ute av drift, blant andre problemer.
       </para>
     </note>
 
     <para>
-      When shutting down or rebooting, the shutdown messages appear on the vt
-      where X was running. If you wish to see those messages, simultaneously
-      press keys Alt-F7 (assuming that X was running on vt7).
+      Når du slår av eller starter på nytt, vises avslutningsmeldingene på vt
+      hvor X kjører. Hvis du ønsker å se disse meldingene, trykk
+      samtidig på tastene Alt-F7 (forutsatt at X kjørte på vt7).
     </para>
 
   </sect2>
 
     <sect2 role="content">
-    <title>Starting KDE4 at boot</title>
+    <title>Starte KDE4 ved oppstart</title>
 
-    <para>KDE4 comes with a graphical login interface called KDM (the KDE4 Display
-    Manager), which provides a customizable graphical login at boot. To use KDM,
-    you need to edit your <filename>/etc/inittab</filename> file (as the
-    <systemitem class="username">root</systemitem> user).
-    First, setup run-level 5 to start KDM (adjust
-    the path to kdm according to your system):</para>
+    <para>KDE4 kommer med et grafisk påloggingsgrensesnitt kalt KDM (KDE4 Display
+    Manager), som gir en tilpassbar grafisk pålogging ved oppstart. For å bruke KDM,
+    må du redigere din <filename>/etc/inittab</filename> fil (som
+    <systemitem class="username">root</systemitem> bruker).
+    Først konfigurerer du kjørenivå 5 for å starte KDM (juster
+    banen til kdm i henhold til systemet ditt):</para>
 
 <screen><userinput>cat &gt;&gt; /etc/inittab &lt;&lt; EOF
 <literal>kd:5:respawn:/opt/kde/bin/kdm</literal>
 EOF</userinput></screen>
 
-    <para>Additionally, you need to change the default run-level from 3 to 5:</para>
+    <para>I tillegg må du endre standard kjørenivå fra 3 til 5:</para>
 
 <screen><userinput>sed -i 's#id:3:initdefault:#id:5:initdefault:#' /etc/inittab</userinput></screen>
 
-    <para>You can now restart your system and see the KDE4 login
-    screen.</para>
+    <para>Du kan nå starte systemet på nytt og se KDE4
+    sin påloggingsskjerm.</para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Installing further languages (l10n)</title>
+    <title>Installerer flere språk (l10n)</title>
 
-    <para>You may want to install support for your locale language. The l10n
-    packages can be found at <ulink
+    <para>Det kan være lurt å installere støtte for ditt lokale språk. l10n
+    pakker finner du på <ulink
     url="&kde-download-http;applications/&kde-apps-version;/src/kde-l10n/">
          &kde-download-http;applications/&kde-apps-version;/src/kde-l10n/</ulink>.
-    See <xref linkend="kde-add-pkgs"/> for build instructions. If you are in a
-    KDE4 session when installing a new language and configure KDE4 to use it, the
-    session needs to be restarted, in order to see the effects.</para>
+    Se <xref linkend="kde-add-pkgs"/> for byggeinstruksjoner. Hvis du er i en
+    KDE4 økt når du installerer et nytt språk og konfigurerer KDE4 til å bruke det
+    må økten startes på nytt for å se effektene.</para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Installing further KDE4 packages</title>
+    <title>Installerer ytterligere KDE4 pakker</title>
 
-    <para>Every subsequent package can be built while having
-    <application>KDE4</application> up and running, but remember to keep
-    <envar>&kde-dir;</envar> and <envar>&qt4-dir;</envar> set.</para>
+    <para>Hver påfølgende pakke kan bygges mens du har
+    <application>KDE4</application> oppe og går, men husk å holde
+    <envar>&kde-dir;</envar> og <envar>&qt4-dir;</envar> satt.</para>
 
   </sect2>
 
