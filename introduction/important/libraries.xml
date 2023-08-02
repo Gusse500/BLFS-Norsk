@@ -5,138 +5,138 @@
   %general-entities;
 ]>
 
-<sect1 id="libraries" xreflabel="libraries">
+<sect1 id="libraries" xreflabel="biblioteker">
   <?dbhtml filename="libraries.html"?>
 
 
-  <title>Libraries: Static or shared?</title>
+  <title>Biblioteker: Statisk eller delt?</title>
 
   <!-- section g : 'Others' in longindex.html -->
   <indexterm zone="libraries">
-    <primary sortas="g-libraries">libraries: static or shared</primary>
+    <primary sortas="g-libraries">biblioteker: statisk eller delt</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Libraries: Static or shared?</title>
+    <title>Biblioteker: Statisk eller delt?</title>
 
     <para>
-      The original libraries were simply an archive of routines from which
-      the required routines were extracted and linked into the executable
-      program. These are described as static libraries, with names of the form
-      <filename>libfoo.a</filename> on UNIX-like operating systems.
-      On some old operating systems they are the only type available.
+      De originale bibliotekene var rett og slett et arkiv av rutiner som
+      de nødvendige rutinene ble trukket ut fra og koblet inn i det kjørbare
+      programmet. Disse beskrives som statiske biblioteker, med navn på formen
+      <filename>libfoo.a</filename> på UNIX lignende operativsystemer.
+      På noen gamle operativsystemer er de den eneste tilgjengelige typen.
     </para>
 
     <para>
-      On almost all Linux platforms there are also <quote>shared</quote>
-      (or equivalently <quote>dynamic</quote>)
-      libraries (with names of the form <filename>libfoo.so</filename>) &ndash;
-      one copy of the library is loaded into virtual memory, and shared by
-      all the programs which call any of its functions. This is space
-      efficient.
+      På nesten alle Linux plattformer er det også <quote>delte</quote>
+      (eller tilsvarende <quote>dynamiske</quote>)
+      biblioteker (med navn på formen <filename>libfoo.so</filename>) &ndash;
+      en kopi av biblioteket lastes inn i det virtuelle minnet, og deles av
+      alle programmene som kaller noen av funksjonene. Dette er plass
+      effektiv.
     </para>
 
     <para>
-      In the past, essential programs such as a shell were often linked
-      statically so that some form of minimal recovery system would exist even
-      if shared libraries, such as <filename>libc.so</filename>, became
-      damaged (e.g. moved to <filename class="directory">lost+found</filename>
-      after <command>fsck</command> following an unclean shutdown). Nowadays,
-      most people use an alternative system install or a USB stick if they
-      have to recover. Journaling filesystems also reduce the likelihood of
-      this sort of problem.
+      Tidligere ble essensielle programmer som et skall ofte koblet sammen
+      statisk slik at en form for minimalt gjenopprettingssystem til og med ville eksistere
+      hvis delte biblioteker, som f.eks <filename>libc.so</filename>, ble
+      skadet (f.eks. flyttet til <filename class="directory">lost+found</filename>
+      av <command>fsck</command> etter en uren nedstengning). Nå for tiden,
+      de fleste bruker en alternativ systeminstallasjon eller en USB pinne hvis de
+      må gjenopprette. Journalføring av filsystemer reduserer også sannsynligheten for
+      denne typen problem.
     </para>
 
 <!-- really?
     <para>
-      Developers, at least while they are developing, often prefer to use
-      static versions of the libraries which their code links to.
+      Utviklere, i det minste mens de utvikler, foretrekker ofte å bruke
+      statiske versjoner av bibliotekene som koden deres lenker til.
     </para>
 -->
     <para>
-      Within the book, there are various places where configure switches
-      such as <parameter>--disable-static</parameter> are employed, and
-      other places where the possibility of using system versions of
-      libraries instead of the versions included within another package is
-      discussed. The main reason for this is to simplify updates of libraries.
+      Inne i boken er det forskjellige steder hvor konfigureringsbrytere
+      som for eksempel <parameter>--disable-static</parameter> er brukt, og
+      andre steder hvor muligheten for å bruke systemversjoner av
+      biblioteker i stedet for versjonene som er inkludert i en annen pakke
+      er diskutert. Hovedgrunnen til dette er å forenkle oppdateringer av biblioteker.
     </para>
 
     <para>
-      If a package is linked to a dynamic library, updating to a newer
-      library version is automatic once the newer library is installed and the
-      program is (re)started (provided the library major version is unchanged,
-      e.g. going from <filename>libfoo.so.2.0</filename> to
-      <filename>libfoo.so.2.1</filename>. Going to
-      <filename>libfoo.so.3</filename> will require recompilation &ndash;
-      <command>ldd</command> can be used to find which programs use the old
-      version). If a program is linked to a static
-      library, the program always has to be recompiled. If you know which
-      programs are linked to a particular static library, this is merely an
-      annoyance. But usually you will <emphasis>not</emphasis> know which
-      programs to recompile.
+      Hvis en pakke er koblet til et dynamisk bibliotek, oppdatering til et nyere
+      bibliotekversjon er automatisk når det nyere biblioteket er installert og
+      programmet (på nytt) startes (forutsatt at bibliotekets hovedversjon er uendret,
+      f.eks. går fra <filename>libfoo.so.2.0</filename> til
+      <filename>libfoo.so.2.1</filename>. Gå til
+      <filename>libfoo.so.3</filename> vil kreve rekompilering &ndash;
+      <command>ldd</command> kan brukes til å finne hvilke programmer som bruker den gamle
+      versjonen). Hvis et program er knyttet til et statisk
+      biblioteket, må programmet alltid kompileres på nytt. Hvis du vet hvilke
+      programmer som er knyttet til et bestemt statisk bibliotek, er dette bare en
+      irritasjon. Men vanligvis vil du <emphasis>ikke</emphasis> vite hvilke
+      programmer å rekompilere.
     </para>
 <!-- obsolete with /usr merge
-    <para>Most libraries are shared, but if you do something unusual, such as
-    moving a shared library to <filename class="directory">/lib</filename>
-    accidentally breaking the <literal>.so</literal> symlink in
-    <filename class="directory">/usr/lib</filename> while keeping the static
-    library in <filename class="directory">/lib</filename>, the static library
-    will be silently linked into the programs which need it.</para>
+    <para>De fleste biblioteker er felles, men hvis du gjør noe uvanlig, som f.eks
+    flytte et delt bibliotek til <filename class="directory">/lib</filename>
+    ved et uhell bryter <literal>.so</literal> symbollinken i
+    <filename class="directory">/usr/lib</filename> mens du beholder det statiske
+    biblioteket i <filename class="directory">/lib</filename>, det statiske biblioteket
+    vil stille kobles inn i programmene som trenger det.</para>
 -->
     <para>
-      One way to identify when a static library is used, is to deal with
-      it at the end of the installation of every package.  Write a script
-      to find all the static libraries in <filename
-        class="directory">/usr/lib</filename> or wherever you are installing
-      to, and either move them to another directory so that they are no
-      longer found by the linker, or rename them so that
-      <filename>libfoo.a</filename> becomes
-      e.g. <filename>libfoo.a.hidden</filename>. The static library can then
-      be temporarily restored if it is ever needed, and the package needing
-      it can be identified. This shouldn't be done blindly since many
-      libraries only exist in a static version. For example, some libraries
-      from the <application>glibc</application> and
-      <application>gcc</application> packages should always be
-      present on the system (<filename>libc_nonshared.a, libg.a,
+      En måte å identifisere når et statisk bibliotek brukes, er å håndtere
+      det på slutten av installasjonen av hver pakke. Skriv et skript
+      for å finne alle de statiske bibliotekene i <filename
+        class="directory">/usr/lib</filename> eller hvor enn du installerer
+      til, og enten flytte dem til en annen mappe slik at de er ikke
+      lenger blir funnet av linkeren, eller gi dem nytt navn slik at
+      <filename>libfoo.a</filename> blir
+      f.eks. <filename>libfoo.a.hidden</filename>. Det statiske biblioteket kan da
+      midlertidig gjenopprettes hvis det noen gang er nødvendig, og pakken som trenger
+      det kan identifiseres. Dette bør ikke gjøres blindt siden mange
+      biblioteker eksisterer bare i en statisk versjon. For eksempel noen biblioteker
+      fra <application>glibc</application> og
+      <application>gcc</application> pakkene skal alltid være
+      presentert på systemet som (<filename>libc_nonshared.a, libg.a,
         libpthread_nonshared.a, libssp_nonshared.a, libsupc++.a</filename>
-      as of glibc-2.36 and gcc-12.2).
+      fra glibc-2.36 og gcc-12.2).
     </para>
 
 <!-- versions hardcoded in this para, it's a comment on those versions  -->
-    <para>If you use this approach, you may discover that more packages than
-    you were expecting use a static library. That was the case with
-    <application>nettle-2.4</application> in its default static-only
-    configuration: It was required by <application>GnuTLS-3.0.19</application>,
-    but also linked into package(s) which used
-    <application>GnuTLS</application>, such as
+    <para>Hvis du bruker denne tilnærmingen, kan du oppdage at flere pakker enn
+    du ventet bruker et statisk bibliotek. Det var tilfellet med
+    <application>nettle-2.4</application> i standard kun statisk
+    konfigurasjon: Det ble påkrevd av <application>GnuTLS-3.0.19</application>,
+    men også koblet til pakke(r) som bruker
+    <application>GnuTLS</application>, som for eksempel
     <application>glib-networking-2.32.3</application>.</para>
 
-    <para>Many packages put some of their common functions into a static
-    library which is only used by the programs within the package and,
-    crucially, the library is <emphasis>not</emphasis> installed as a
-    standalone library. These internal libraries are not a problem &ndash; if
-    the package has to be rebuilt to fix a bug or vulnerability, nothing else
-    is linked to them.</para>
+    <para>Mange pakker legger noen av sine vanlige funksjoner inn i et statisk
+    bibliotek som bare brukes av programmene i pakken og,
+    avgjørende, biblioteket er <emphasis>ikke</emphasis> installert som en
+    frittstående bibliotek. Disse interne bibliotekene er ikke et problem &ndash; hvis
+    pakken må bygges om for å fikse en feil eller sårbarhet, ingenting annet
+    er knyttet til dem.</para>
 
-    <para>When BLFS mentions system libraries, it means shared versions of
-    libraries. Some packages such as <xref linkend="firefox"/> and
-    <xref linkend="gs"/> bundle many other libraries in their build tree.
-    The version they ship is often older than the version used in the system,
-    so it may contain bugs &ndash; sometimes developers go to the trouble of
-    fixing bugs in their included libraries, other times they do not.</para>
+    <para>Når BLFS nevner systembiblioteker, betyr det delte versjoner av
+    biblioteker. Noen pakker som f.eks <xref linkend="firefox"/> og
+    <xref linkend="gs"/> samler mange andre biblioteker i byggetreet deres.
+    Versjonen de sender er ofte eldre enn versjonen som brukes i systemet,
+    så det kan inneholde feil &ndash; noen ganger tar utviklere bryet med
+    å fikse feil i de inkluderte bibliotekene, andre ganger gjør de det ikke.</para>
 
-    <para>Sometimes, deciding to use system libraries is an easy decision.
-    Other times it may require you to alter the system version (e.g. for
-    <xref linkend="libpng"/> if used for <xref linkend="firefox"/>).
-    Occasionally, a package ships an old library and can no longer link to
-    the current version, but can link to an older version. In this case, BLFS
-    will usually just use the shipped version. Sometimes the included library
-    is no longer developed separately, or its upstream is now the same as the
-    package&apos;s upstream and you have no other packages which will use it.
-    In those cases, you'll be lead to use the included library even if
-    you usually prefer to use system libraries.</para>
+    <para>Noen ganger er det en enkel avgjørelse å bestemme seg for å bruke systembiblioteker.
+    Andre ganger kan det kreve at du endrer systemversjonen (f.eks
+    <xref linkend="libpng"/> hvis det brukes til <xref linkend="firefox"/>).
+    Noen ganger sender en pakke et gammelt bibliotek og kan ikke lenger koble til
+    gjeldende versjon, men kan lenke til en eldre versjon. I dette tilfellet, BLFS
+    vil vanligvis bare bruke den leverte versjonen. Noen ganger det er det inkluderte
+    biblioteket ikke lenger utviklet separat, eller oppstrøms er nå det samme som
+    pakkens oppstrøms og du har ingen andre pakker som vil bruke den.
+    I slike tilfeller vil du bli ledet til å bruke det inkluderte biblioteket selv om
+    du vanligvis foretrekker å bruke systembiblioteker.</para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/libraries"/></para>
 
   </sect2>
