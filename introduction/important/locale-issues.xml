@@ -5,265 +5,265 @@
   %general-entities;
 ]>
 
-<sect1 id="locale-issues" xreflabel="Locale Related Issues">
+<sect1 id="locale-issues" xreflabel="Lokale Relaterte Problemer">
   <?dbhtml filename="locale-issues.html"?>
 
 
-  <title>Locale Related Issues</title>
+  <title>Lokale Relaterte Problemer</title>
 
-  <para>This page contains information about locale related problems and
-  issues. In the following paragraphs you'll find a generic overview of
-  things that can come up when configuring your system for various locales.
-  Many (but not all) existing locale related problems can be classified
-  and fall under one of the headings below. The severity ratings below use
-  the following criteria:</para>
+  <para>Denne siden inneholder informasjon om lokalitetsrelaterte problemer og
+   problemer. I de følgende avsnittene finner du en generisk oversikt over
+   ting som kan dukke opp når du konfigurerer systemet ditt for ulike steder.
+   Mange (men ikke alle) eksisterende lokalitetsrelaterte problemer kan klassifiseres
+   og faller inn under en av overskriftene nedenfor. Alvorlighetsgradene nedenfor bruker
+   følgende kriterier:</para>
 
   <itemizedlist>
     <listitem>
-      <para>Critical: The program doesn't perform its main function.
-      The fix would be very intrusive, it's better to search for a
-      replacement.</para>
+      <para>Kritisk: Programmet utfører ikke hovedfunksjonen sin.
+      Løsningen ville være veldig omfattende, det er bedre å søke etter en
+      erstatning.</para>
     </listitem>
     <listitem>
-      <para>High: Part of the functionality that the program provides
-      is not usable. If that functionality is required, it's better to
-      search for a replacement.</para>
+      <para>Høy: En del av funksjonaliteten som programmet gir
+      er ikke brukbar. Hvis den funksjonaliteten er nødvendig, er det bedre å
+      søke etter en erstatning.</para>
     </listitem>
     <listitem>
-      <para>Low: The program works in all typical use cases, but lacks
-      some functionality normally provided by its equivalents.</para>
+      <para>Lav: Programmet fungerer i alle typiske brukstilfeller, men mangler
+      noe funksjonalitet som normalt leveres av dets ekvivalenter.</para>
     </listitem>
   </itemizedlist>
 
-  <para>If there is a known workaround for a specific package, it will
-  appear on that package's page. For the most recent information
-  about locale related issues for individual packages, check the
-  <ulink url="&blfs-wiki;/BlfsNotes">User Notes</ulink> in the BLFS
+  <para>Hvis det er en kjent løsning for en bestemt pakke, vil den
+  vises på pakkens side. For den nyeste informasjonen
+  om lokalitetsrelaterte problemer for individuelle pakker, sjekk
+  <ulink url="&blfs-wiki;/BlfsNotes">Brukernotater</ulink> i BLFS
   Wiki.</para>
 
   <sect2 id="locale-not-valid-option"
-         xreflabel="Needed Encoding Not a Valid Option">
+         xreflabel="Den Nødvendige Kodingen er Ikke et Gyldig Alternativ">
 
-    <title>The Needed Encoding is Not a Valid Option in the Program</title>
+    <title>Den Nødvendige Kodingen er Ikke et Gyldig Alternativ i Programmet</title>
 
-    <para>Severity: Critical</para>
+    <para>Alvorlighet: Kritisk</para>
 
-    <para>Some programs require the user to specify the character encoding
-    for their input or output data and present only a limited choice of
-    encodings. This is the case for the <option>-X</option> option in
-<!--    <xref linkend="a2ps"/> and --><xref linkend="enscript"/>,
-    the <option>-input-charset</option> option in unpatched
-    <xref linkend="cdrtools"/>, and the character sets offered for display
-    in the menu of <xref linkend="Links"/>. If the required encoding is not
-    in the list, the program usually becomes completely unusable. For
-    non-interactive programs, it may be possible to work around this by
-    converting the document to a supported input character set before
-    submitting to the program.</para>
+    <para>Noen programmer krever at brukeren spesifiserer tegnkodingen
+    for deres inndata eller utdata og presenterer bare et begrenset utvalg av
+    kodinger. Dette er tilfellet for <option>-X</option> alternativet i
+<!--    <xref linkend="a2ps"/> og --><xref linkend="enscript"/>,
+    <option>-input-charset</option> alternativet i uoppdatert
+    <xref linkend="cdrtools"/>, og tegnsettene som tilbys for visning
+    i menyen til <xref linkend="Links"/>. Hvis den nødvendige kodingen ikke er
+    i listen blir programmet vanligvis helt ubrukelig. Til
+    ikke-interaktive programmer, kan det være mulig å omgå dette ved å
+    konvertere dokumentet til et støttet inndatategnsett før
+    innsending til programmet.</para>
 
-    <para>A solution to this type of problem is to implement the necessary
-    support for the missing encoding as a patch to the original program or to
-    find a replacement.</para>
+    <para>En løsning på denne typen problemer er å implementere den nødvendige
+    støtten for den manglende kodingen som en oppdatering til det originale programmet eller å
+    finne en erstatning.</para>
 
   </sect2>
 
   <sect2 id="locale-assumed-encoding"
-         xreflabel="Program Assumes Encoding">
+         xreflabel="Program Forutsetter Koding">
 
-    <title>The Program Assumes the Locale-Based Encoding of External
-    Documents</title>
+    <title>Programmet Forutsetter Lokalitetsbasert Koding av Eksterne
+    Dokumenter</title>
 
-    <para>Severity: High for non-text documents, low for text
-    documents</para>
+    <para>Alvorlighet: Høy for ikke-tekst dokumenter, lav for tekst
+    dokumenter</para>
 
-    <para>Some programs, <xref linkend="nano"/> or
-    <xref linkend="joe"/> for example, assume that documents are always
-    in the encoding implied by the current locale. While this assumption
-    may be valid for the user-created documents, it is not safe for
-    external ones. When this assumption fails, non-ASCII characters are
-    displayed incorrectly, and the document may become unreadable.</para>
+    <para>Noen programmer, <xref linkend="nano"/> eller
+    <xref linkend="joe"/> for eksempel, antar at dokumenter alltid er
+    i kodingen antydet av gjeldende lokalitet. Mens denne antakelsen
+    kan være gyldig for de brukeropprettede dokumentene, er det ikke trygt for
+    eksterne. Når denne antagelsen mislykkes, blir ikke-ASCII tegn
+    vist feil, og dokumentet kan bli uleselig.</para>
 
-    <para>If the external document is entirely text based, it can be
-    converted to the current locale encoding using the
-    <command>iconv</command> program.</para>
+    <para>Hvis det eksterne dokumentet er helt tekstbasert, kan det bli
+    konvertert til gjeldende lokalitetskoding ved hjelp av
+    <command>iconv</command> programmet.</para>
 
-    <para>For documents that are not text-based, this is not possible.
-    In fact, the assumption made in the program may be completely
-    invalid for documents where the Microsoft Windows operating system
-    has set de facto standards. An example of this problem is ID3v1 tags
-    in MP3 files (see the <ulink url="&blfs-wiki;/ID3v1Coding">BLFS Wiki
-    ID3v1Coding page</ulink>
-    for more details). For these cases, the only solution is to find a
-    replacement program that doesn't have the issue (e.g., one that
-    will allow you to specify the assumed document encoding).</para>
+    <para>For dokumenter som ikke er tekstbaserte er dette ikke mulig.
+    Faktisk kan forutsetningen i programmet være fullstendig
+    ugyldig for dokumenter der Microsoft Windows operativsystemet
+    har satt de facto standarder. Et eksempel på dette problemet er ID3v1 koder
+    i MP3-filer (se <ulink url="&blfs-wiki;/ID3v1Coding">BLFS Wiki
+    ID3v1Coding side</ulink>
+    for flere detaljer). For disse tilfellene er den eneste løsningen å finne et
+    erstatningsprogram som ikke har problemet (f.eks. et som
+    lar deg spesifisere den antatte dokumentkodingen).</para>
 
-    <para>Among BLFS packages, this problem applies to
-    <xref linkend="nano"/>, <xref linkend="joe"/>, and all media players
-    except <xref linkend="audacious"/>.</para>
+    <para>Blant BLFS pakker gjelder dette problemet
+    <xref linkend="nano"/>, <xref linkend="joe"/>, og alle mediespillere
+    unntatt <xref linkend="audacious"/>.</para>
 
-    <para>Another problem in this category is when someone cannot read
-    the documents you've sent them because their operating system is
-    set up to handle character encodings differently. This can happen
-    often when the other person is using Microsoft Windows, which only
-    provides one character encoding for a given country. For example,
-    this causes problems with UTF-8 encoded TeX documents created in
-    Linux. On Windows, most applications will assume that these documents
-    have been created using the default Windows 8-bit encoding.
+    <para>Et annet problem i denne kategorien er når noen ikke kan lese
+    dokumentene du har sendt dem fordi deres operativsystem er
+    satt opp til å håndtere tegnkodinger annerledes. Dette kan skje
+    ofte når den andre personen bruker Microsoft Windows, som kun
+    gir en tegnkoding for et gitt land. For eksempel,
+    dette forårsaker problemer med UTF-8 kodede TeX dokumenter opprettet i
+    Linux. På Windows vil de fleste applikasjoner anta at disse dokumentene
+    har blitt opprettet med standard Windows 8-bits koding.
     </para>
 
-    <para>In extreme cases, Windows encoding compatibility issues may be
-    solved only by running Windows programs under
+    <para>I ekstreme tilfeller kan problemer med Windows kodingskompatibilitet
+    kun løses ved å kjøre Windows programmer under
     <ulink url="https://www.winehq.com/">Wine</ulink>.</para>
 
   </sect2>
 
   <sect2 id="locale-wrong-filename-encoding"
-         xreflabel="Wrong Filename Encoding">
+         xreflabel="Feil Filnavn Koding">
 
-    <title>The Program Uses or Creates Filenames in the Wrong Encoding</title>
+    <title>Programmet Bruker eller Oppretter Filnavn med Feil Koding</title>
 
-    <para>Severity: Critical</para>
+    <para>Alvorlighet: Kritisk</para>
 
-    <para>The POSIX standard mandates that the filename encoding is
-    the encoding implied by the current LC_CTYPE locale category. This
-    information is well-hidden on the page which specifies the behavior
-    of <application>Tar</application> and <application>Cpio</application>
-    programs. Some programs get it wrong by default (or simply don't
-    have enough information to get it right). The result is that they
-    create filenames which are not subsequently shown correctly by
-    <command>ls</command>, or they refuse to accept filenames that
-    <command>ls</command> shows properly. For the <xref linkend="glib2"/>
-    library, the problem can be corrected by setting the
-    <envar>G_FILENAME_ENCODING</envar> environment variable to the special
-    "@locale" value. <application>Glib2</application> based programs that
-    don't respect that environment variable are buggy.</para>
+    <para>POSIX standarden krever at filnavnkodingen er
+     kodingen implisert av gjeldende LC_CTYPE lokalekategori. Denne
+    informasjon er godt skjult på siden som spesifiserer atferden
+    av <application>Tar</application> og <application>Cpio</application>
+    programmer. Noen programmer tar feil som standard (eller har rett og slett ikke
+    nok informasjon til å få det riktig). Resultatet er at de
+    oppretter filnavn som senere ikke vises riktig av
+    <command>ls</command>, eller de nekter å godta filnavn som
+    <command>ls</command> vises ordentlig. For <xref linkend="glib2"/>
+    biblioteket, kan problemet rettes ved å stille inn
+    <envar>G_FILENAME_ENCODING</envar> miljøvariabel til den spesielle
+    "@locale" verdien. <application>Glib2</application> baserte programmer som
+    ikke respekter den miljøvariabelen er buggy.</para>
 
-    <para>The <xref linkend="zip"/> and <xref linkend="unzip"/> have this
-    problem because they hard-code the expected filename encoding.
-    <application>UnZip</application> contains a hard-coded conversion table
-    between the CP850 (DOS) and ISO-8859-1 (UNIX) encodings and uses this table
-    when extracting archives created under DOS or Microsoft Windows. However,
-    this assumption only works for those in the US and not for anyone using a
-    UTF-8 locale. Non-ASCII characters will be mangled in the extracted
-    filenames.</para>
+    <para><xref linkend="zip"/> og <xref linkend="unzip"/> har dette
+    problemet fordi de hardkoder den forventede filnavnkodingen.
+    <application>UnZip</application> inneholder en hardkodet konverteringstabell
+    mellom kodingene CP850 (DOS) og ISO-8859-1 (UNIX) og bruker denne tabellen
+    når du trekker ut arkiver opprettet under DOS eller Microsoft Windows. Men,
+    denne antagelsen fungerer bare for de i USA og ikke for alle som bruker en
+    UTF-8 lokalitet. Ikke-ASCII tegn vil bli ødelagt i de utpakkede
+    filnavn.</para>
 
-    <!--<para>On the other hand,
-    <application>Nautilus CD Burner</application> checks names of
-    files added to its window for UTF-8 validity. This is wrong for
-    users of non-UTF-8 locales. Also,
-    <application>Nautilus CD Burner</application> unconditionally
-    calls <command>mkisofs</command> with the
-    <parameter>-input-charset UTF-8</parameter> parameter, which is
-    only correct in UTF-8 locales.</para>-->
+    <!--<para>På den andre siden,
+    <application>Nautilus CD Burner</application> sjekker navn på
+    filer lagt til vinduet for UTF-8 gyldighet. Dette er feil for
+    brukere av ikke-UTF-8 lokaliteter. Også,
+    <application>Nautilus CD Burner</application> betingelsesløst
+    kaller <command>mkisofs</command> med
+    <parameter>-input-charset UTF-8</parameter> parameter, som er
+    korrekt bare i UTF-8 lokaliteter.</para>-->
 
-    <para>The general rule for avoiding this class of problems is to
-    avoid installing broken programs. If this is impossible, the
+    <para>Den generelle regelen for å unngå denne klassen av problemer er å
+    unngå å installere ødelagte programmer. Hvis dette er umulig, vil
     <ulink url="https://j3e.de/linux/convmv/">convmv</ulink>
-    command-line tool can be used to fix filenames created by these
-    broken programs, or intentionally mangle the existing filenames
-    to meet the broken expectations of such programs.</para>
+    kommandolinjeverktøy kunne brukes til å fikse filnavn opprettet av disse
+    ødelagte programmene, eller med vilje mangle de eksisterende filnavnene
+    for å møte de brutte forventningene til slike programmer.</para>
 
-    <para>In other cases, a similar problem is caused by importing
-    filenames from a system using a different locale with a tool that
-    is not locale-aware (e.g., <!--<xref linkend="nfs-utils"/> or-->
-    <xref linkend="openssh"/>). In order to avoid mangling non-ASCII
-    characters when transferring files to a system with a different
-    locale, any of the following methods can be used:</para>
+    <para>I andre tilfeller er et lignende problem forårsaket av import
+    av filnavn fra et system som bruker en annen lokalitet med et verktøy som
+    er ikke lokalbevisst (f.eks., <!--<xref linkend="nfs-utils"/> eller-->
+    <xref linkend="openssh"/>). For å unngå mangling av ikke-ASCII
+    tegn når du overfører filer til et system med en annen
+    lokalitet, kan en av følgende metoder brukes:</para>
 
     <itemizedlist>
       <listitem>
-        <para>Transfer anyway, fix the damage with
+        <para>Overfør uansett, fiks skaden med
         <command>convmv</command>.</para>
       </listitem>
       <listitem>
-        <para>On the sending side, create a tar archive with the
-        <parameter>--format=posix</parameter> switch passed to
-        <command>tar</command> (this will be the default in a future
-        version of <command>tar</command>).</para>
+        <para>På avsendersiden oppretter du et tar arkiv med
+        <parameter>--format=posix</parameter> bryteren overført til
+        <command>tar</command> (dette vil være standard i fremtidige
+        versjoner av <command>tar</command>).</para>
       </listitem>
       <listitem>
-        <para>Mail the files as attachments. Mail clients specify the
-        encoding of attached filenames.</para>
+        <para>Send filene som vedlegg. E-postklienter spesifiserer
+        koding av vedlagte filnavn.</para>
       </listitem>
       <listitem>
-        <para>Write the files to a removable disk formatted with a FAT or
-        FAT32 filesystem.</para>
+        <para>Skriv filene til en flyttbar disk formatert med et FAT eller
+        FAT32 filsystem.</para>
       </listitem>
       <listitem>
-        <para>Transfer the files using Samba.</para>
+        <para>Overfør filene med Samba.</para>
       </listitem>
       <listitem>
-        <para>Transfer the files via FTP using RFC2640-aware server
-        (this currently means only wu-ftpd, which has bad security history)
-        and client (e.g., lftp).</para>
+        <para>Overfør filene via FTP ved å bruke en RFC2640-bevisst server
+        (dette betyr for øyeblikket bare wu-ftpd, som har dårlig sikkerhetshistorikk)
+        og klient (f.eks. lftp).</para>
       </listitem>
     </itemizedlist>
 
-    <para>The last four methods work because the filenames are automatically
-    converted from the sender's locale to UNICODE and stored or sent in this
-    form. They are then transparently converted from UNICODE to the
-    recipient's locale encoding.</para>
+    <para>De siste fire metodene fungerer fordi filnavnene blir automatisk
+    konvertert fra avsenderens lokalitet til UNICODE og lagret eller sendt i denne
+    formen. De blir deretter transparent konvertert fra UNICODE til
+    mottakerens lokalitetskoding.</para>
 
   </sect2>
 
   <sect2 id="locale-wrong-multibyte-characters"
-         xreflabel="Breaks Multibyte Characters">
+         xreflabel="Ødelegge Multibyte Tegn">
 
-    <title>The Program Breaks Multibyte Characters or Doesn't Count
-    Character Cells Correctly</title>
+    <title>Programmet Ødelegger Multibyte Tegn eller Teller Ikke
+     Karakterceller Riktig</title>
 
-    <para>Severity: High or critical</para>
+    <para>Alvorlighet: Høy eller kritisk</para>
 
-    <para>Many programs were written in an older era where multibyte
-    locales were not common. Such programs assume that C "char" data
-    type, which is one byte, can be used to store single characters.
-    Further, they assume that any sequence of characters is a valid
-    string and that every character occupies a single character cell.
-    Such assumptions completely break in UTF-8 locales. The visible
-    manifestation is that the program truncates strings prematurely
-    (i.e., at 80 bytes instead of 80 characters). Terminal-based
-    programs don't place the cursor correctly on the screen, don't react
-    to the "Backspace" key by erasing one character, and leave junk
-    characters around when updating the screen, usually turning the
-    screen into a complete mess.</para>
+    <para>Mange programmer ble skrevet i en eldre tid hvor multibyte
+    lokaliteter ikke var vanlige. Slike programmer antar at C "char" data
+    type, som er en byte, kan brukes til å lagre enkelttegn.
+    Videre antar de at enhver sekvens av tegn er en gyldig
+    streng og at hvert tegn opptar en enkelt tegncelle.
+    Slike forutsetninger bryter fullstendig i UTF-8 lokaliteter. Den synlige
+    manifestasjon er at programmet trunkerer strenger for tidlig
+    (dvs. ved 80 byte i stedet for 80 tegn). Terminalbaserte
+    programmer plasserer ikke markøren riktig på skjermen, reager ikke
+    på "Tilbake" tasten med å slette ett tegn, og lar søppeltegn stå igjen
+    rundt når du oppdaterer skjermen, som vanligvis gjør
+    skjermen til et komplett rot.</para>
 
-    <para>Fixing this kind of problems is a tedious task from a
-    programmer's point of view, like all other cases of retrofitting new
-    concepts into the old flawed design. In this case, one has to redesign
-    all data structures in order to accommodate to the fact that a complete
-    character may span a variable number of "char"s (or switch to wchar_t
-    and convert as needed). Also, for every call to the "strlen" and
-    similar functions, find out whether a number of bytes, a number of
-    characters, or the width of the string was really meant. Sometimes it
-    is faster to write a program with the same functionality from scratch.
+    <para>Å fikse denne typen problemer er en kjedelig oppgave fra en
+    programmerers synspunkt, som alle andre tilfeller av ombygging av nye
+    konsepter inn i det gamle feilaktige designet. I dette tilfellet må man redesigne
+    alle datastrukturer for å imøtekomme det faktum at en komplett
+    karakter kan spenne over et variabelt antall "char"-er (eller bytte til wchar_t
+    og konvertere etter behov). Også for hver kall til "strlen" og
+    lignende funksjoner, finne ut om et antall byte, et antall
+    tegn, eller bredden på strengen var egentlig ment. Noen ganger
+    er det raskere å skrive et program med samme funksjonalitet fra bunnen av.
     </para>
 
-    <para>Among BLFS packages, this problem applies to
-    <xref linkend="xine-ui"/> and all the shells.</para>
+    <para>Blant BLFS pakker gjelder dette problemet
+    <xref linkend="xine-ui"/> og alle skallene.</para>
 
   </sect2>
 
   <sect2 id="locale-wrong-manpage-encoding"
-         xreflabel="Incorrect Manual Page Encoding">
+         xreflabel="Feil Manualside Koding">
 
-    <title>The Package Installs Manual Pages in Incorrect or
-    Non-Displayable Encoding</title>
+    <title>Pakken Installerer Manualsider i Feil eller
+     Ikke-visbar Koding</title>
 
-    <para>Severity: Low</para>
+    <para>Alvorlighet: Lav</para>
 
-    <para>LFS expects that manual pages are in the language-specific (usually
-    8-bit) encoding, as specified on the <ulink
-    url="&lfs-root;/chapter08/man-db.html">LFS Man DB page</ulink>. However,
-    some packages install translated manual pages in UTF-8 encoding (e.g.,
-    Shadow, already dealt with), or manual pages in languages not in the table.
-    Not all BLFS packages have been audited for conformance with the
-    requirements put in LFS (the large majority have been checked, and fixes
-    placed in the book for packages known to install non-conforming manual
-    pages). If you find a manual page installed by any of BLFS packages that is
-    obviously in the wrong encoding, please remove or convert it as needed, and
-    report this to BLFS team as a bug.</para>
+    <para>LFS forventer at manuelle sider er på det språkspesifikke (vanligvis
+    8-bit) koding, som spesifisert på <ulink
+    url="&lfs-root;/chapter08/man-db.html">LFS Man DB side</ulink>. Men,
+    noen pakker installerer oversatte manualsider i UTF-8 koding (f.eks.
+    Shadow, allerede behandlet), eller manualsider på språk som ikke er i tabellen.
+    Ikke alle BLFS pakker har blitt revidert for samsvar med
+    krav satt i LFS (de aller fleste er sjekket, og fikser
+    plassert i boken for pakker som er kjent for å installere ikke-konform
+    manualsider). Hvis du finner en manualside installert av noen av BLFS pakkene, dvs
+    åpenbart i feil koding, vennligst fjern eller konverter den etter behov, og
+    rapporter dette til BLFS teamet som en feil.</para>
 
-    <para>You can easily check your system for any non-conforming manual pages
-    by copying the following short shell script to some accessible location,
+    <para>Du kan enkelt sjekke systemet for eventuelle ikke-konforme manualsider
+    ved å kopiere følgende korte shell skript til et tilgjengelig sted,
 
 <screen><literal>#!/bin/sh
 # Begin checkman.sh
@@ -282,16 +282,16 @@ done
 # End checkman.sh
 </literal></screen>
 
-    and then issuing the following command (modify the command below if the
-    <command>checkman.sh</command> script is not in your <envar>PATH</envar>
-    environment variable):</para>
+    og deretter utstede følgende kommando (endre kommandoen nedenfor hvis
+    <command>checkman.sh</command> skriptet ikke er i din <envar>PATH</envar>
+    miljøvariabel):</para>
 
 <screen><userinput>find /usr/share/man -type f | xargs checkman.sh</userinput></screen>
 
-    <para>Note that if you have manual pages installed in any location other
-    than <filename class='directory'>/usr/share/man</filename> (e.g.,
-    <filename class='directory'>/usr/local/share/man</filename>), you must
-    modify the above command to include this additional location.</para>
+    <para>Merk at hvis du har manualsider installert på et annet sted
+    enn <filename class='directory'>/usr/share/man</filename> (f.eks.,
+    <filename class='directory'>/usr/local/share/man</filename>), må du
+    endre kommandoen ovenfor for å inkludere denne ekstra plasseringen.</para>
 
   </sect2>
 
