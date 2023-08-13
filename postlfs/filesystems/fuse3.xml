@@ -23,78 +23,78 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Fuse</title>
+    <title>Introduksjon til Fuse</title>
 
     <para>
-      <application>FUSE</application> (Filesystem in Userspace) is a simple
-      interface for userspace programs to export a virtual filesystem to the
-      Linux kernel. <application>Fuse</application> also aims to provide a
-      secure method for non privileged users to create and mount their own
-      filesystem implementations.
+      <application>FUSE</application> (Filesystem in Userspace) er en enkel
+      grensesnitt for brukerromsprogrammer for å eksportere et virtuelt filsystem til
+      Linux kjernen. <application>Fuse</application> har også som mål å gi en
+      sikker metode for ikke-privilegerte brukere å lage og montere sine egne
+      filsystemimplementeringer.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&fuse3-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&fuse3-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&fuse3-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&fuse3-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &fuse3-md5sum;
+          Nedlasting MD5 sum: &fuse3-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &fuse3-size;
+          Nedlastingsstørrelse: &fuse3-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &fuse3-buildsize;
+          Estimert diskplass som kreves: &fuse3-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &fuse3-time;
+          Estimert byggetid: &fuse3-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Fuse Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Fuse Avhengigheter</bridgehead>
     <bridgehead renderas="sect4">Optional</bridgehead>
     <para role="optional">
-      <xref linkend="doxygen"/> (to rebuild the API documentation) and
-      <xref linkend="pytest"/> (required for tests)
+      <xref linkend="doxygen"/> (for å gjenoppbygge API dokumentasjonen) og
+      <xref linkend="pytest"/> (nødvendig for tester)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/fuse"/>
+      Brukernotater: <ulink url="&blfs-wiki;/fuse"/>
     </para>
   </sect2>
 
   <sect2 role="kernel" id="fuse-kernel">
-    <title>Kernel Configuration</title>
+    <title>Kjernekonfigurasjon</title>
 
     <para>
-      Enable the following options in the kernel configuration and recompile the
-      kernel if necessary:
+      Aktiver følgende alternativer i kjernekonfigurasjonen og kompiler kjernen på nytt
+      om nødvendig:
     </para>
 
 <screen><literal>File systems  ---&gt;
   &lt;*/M&gt; FUSE (Filesystem in Userspace) support [CONFIG_FUSE_FS]</literal></screen>
 
     <para>
-      Character devices in userspace should be enabled too for running the
-      tests:
+      Tegnenheter i brukerområdet bør også være aktivert for å kjøre
+      tester:
     </para>
 
 <screen><literal>File systems  ---&gt;
@@ -107,11 +107,11 @@
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Fuse</title>
+    <title>Installasjon av Fuse</title>
 
     <para>
-      Install <application>Fuse</application> by running the following
-      commands:
+      Installer <application>Fuse</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>sed -i '/^udev/,$ s/^/#/' util/meson.build &amp;&amp;
@@ -123,9 +123,9 @@ meson --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      The API documentation is included in the package, but
-      if you have <xref linkend="doxygen"/> installed and wish to rebuild
-      it, issue:
+      API dokumentasjonen er inkludert i pakken, men
+      hvis du har <xref linkend="doxygen"/> installert og ønsker å bygge det det
+      om, kjør:
     </para>
 
 <screen remap="doc"><userinput>pushd .. &amp;&amp;
@@ -133,8 +133,8 @@ ninja</userinput></screen>
 popd</userinput></screen>
 
     <para>
-      To test the results, run (as the <systemitem
-      role="username">root</systemitem> user):
+      For å teste resultatene, kjør (som <systemitem
+      role="username">root</systemitem> bruker):
     </para>
 
     <!-- EDITORS NOTE: To view the results of the tests, look for
@@ -145,18 +145,18 @@ popd</userinput></screen>
         remap="test"><userinput>python3 -m pytest test/</userinput></screen>
 
     <para>
-      The <xref linkend="pytest"/> Python
-      module is required for the tests.  One test named
-      <filename>test_cuse</filename> will fail if the
-      <parameter>CONFIG_CUSE</parameter> configuration item was not enabled
-      when the kernel was built.  Two tests,
-      <filename>test_ctests.py</filename> and
-      <filename>test_examples.py</filename> will produce a warning because a
-      deprecated Python module is used.
+      <xref linkend="pytest"/> Python
+      modulen er nødvendig for testene. En test navngitt
+      <filename>test_cuse</filename> vil mislykkes hvis
+      <parameter>CONFIG_CUSE</parameter> konfigurasjonselementet ikke ble aktivert
+      når kjernen ble bygget. To tester,
+      <filename>test_ctests.py</filename> og
+      <filename>test_examples.py</filename> vil gi en advarsel fordi en
+      utdatert Python modul brukes.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install                  &amp;&amp;
@@ -171,11 +171,11 @@ cp -Rv doc/html     /usr/share/doc/fuse-&fuse3-version;</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed ... util/meson.build</command>: This command disables the
-      installation of a boot script and udev rule that are not needed.
+      <command>sed ... util/meson.build</command>: Denne kommandoen deaktiverer
+      installasjonen av et oppstartsskript og en udev regel som ikke er nødvendig.
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -184,16 +184,16 @@ cp -Rv doc/html     /usr/share/doc/fuse-&fuse3-version;</userinput></screen>
   </sect2>
 
   <sect2 role="configuration" id="fuse-configuration">
-    <title>Configuring fuse</title>
+    <title>Konfigurere fuse</title>
 
     <sect3 id="fuse-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
-        Some options regarding mount policy can be set in the file
-        <filename>/etc/fuse.conf</filename>. To install the file run the
-        following command as the <systemitem class="username">root</systemitem>
-        user:
+        Noen alternativer angående monteringsregler kan angis i filen
+        <filename>/etc/fuse.conf</filename>. For å installere filen, kjør
+        følgende kommando som <systemitem class="username">root</systemitem>
+        bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/fuse.conf &lt;&lt; "EOF"
@@ -209,8 +209,8 @@ cp -Rv doc/html     /usr/share/doc/fuse-&fuse3-version;</userinput></screen>
 EOF</userinput></screen>
 
       <para>
-        Additional information about the meaning of the configuration
-        options are found in the man page.
+        Ytterligere informasjon om betydningen av konfigurasjonalternativene
+        finnes på man siden.
       </para>
 
     </sect3>
@@ -218,28 +218,28 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          fusermount3 and mount.fuse3
+          fusermount3 og mount.fuse3
         </seg>
         <seg>
           libfuse3.so
         </seg>
         <seg>
-          /usr/include/fuse3 and /usr/share/doc/fuse-&fuse3-version;
+          /usr/include/fuse3 og /usr/share/doc/fuse-&fuse3-version;
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -247,7 +247,7 @@ EOF</userinput></screen>
         <term><command>fusermount3</command></term>
         <listitem>
           <para>
-            is a suid root program to mount and unmount Fuse filesystems
+            er et suid root program for å montere og avmontere Fuse filsystemer
           </para>
           <indexterm zone="fuse3 fusermount3">
             <primary sortas="b-fusermount3">fusermount3</primary>
@@ -259,8 +259,8 @@ EOF</userinput></screen>
         <term><command>mount.fuse3</command></term>
         <listitem>
           <para>
-            is the command <command>mount</command> calls to mount a Fuse
-            filesystem
+            er kommandoen <command>mount</command> kaller å montere et Fuse
+            filsystem
           </para>
           <indexterm zone="fuse3 mount.fuse3">
             <primary sortas="b-mount.fuse3">mount.fuse3</primary>
@@ -272,7 +272,7 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">libfuse3.so</filename></term>
         <listitem>
           <para>
-            contains the <application>FUSE</application> API functions
+            inneholder <application>FUSE</application> API funksjoner
           </para>
           <indexterm zone="fuse3 libfuse3">
             <primary sortas="c-libfuse3">libfuse3.so</primary>
