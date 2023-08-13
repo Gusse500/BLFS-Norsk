@@ -31,149 +31,149 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to GRUB</title>
+    <title>Introduksjon til GRUB</title>
 
     <para>
-      The <application>GRUB</application> package provides GRand Unified
-      Bootloader.  In this page it will be built with UEFI support, which
-      is not enabled for GRUB built in LFS.
+      <application>GRUB</application> pakken gir GRand Unified
+      Bootloader. På denne siden vil den bygges med UEFI støtte, som
+      ikke er aktivert for GRUB innebygd i LFS.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&grub-efi-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&grub-efi-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&grub-efi-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&grub-efi-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &grub-efi-md5sum;
+          Nedlasting MD5 sum: &grub-efi-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &grub-efi-size;
+          Nedlastingsstørrelse: &grub-efi-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &grub-efi-buildsize;
+          Estimert diskplass som kreves: &grub-efi-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &grub-efi-time;
+          Estimert byggetid: &grub-efi-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
 
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/grub-&grub-version;-upstream_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
     <itemizedlist spacing="compact">
-      <title>Unicode font data used to display GRUB menu</title>
+      <title>Unicode skriftdata som brukes til å vise GRUB menyen</title>
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&unifont-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&unifont-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &unifont-md5sum;
+          Nedlasting MD5 sum: &unifont-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &unifont-size;
+          Nedlastingsstørrelse: &unifont-size;
         </para>
       </listitem>
     </itemizedlist>
 
     <itemizedlist spacing="compact">
-      <title>GCC (only needed if building on 32-bit LFS)</title>
+      <title>GCC (bare nødvendig hvis du bygger på 32-bits LFS)</title>
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&gcc-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&gcc-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &gcc-md5sum;
+          Nedlasting MD5 sum: &gcc-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &gcc-size;
+          Nedlastingsstørrelse: &gcc-size;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">GRUB Dependencies</bridgehead>
+    <bridgehead renderas="sect3">GRUB Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref role="runtime" linkend="efibootmgr"/> (runtime) and
+      <xref role="runtime" linkend="efibootmgr"/> (kjøretid) og
       <xref linkend="freetype2"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="lvm2"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/grub-efi"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of GRUB</title>
+    <title>Installasjon av GRUB</title>
 
     <para>
-      First, install font data as the
-      <systemitem class="username">root</systemitem> user:
+      Installer først skriftdata som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>mkdir -pv /usr/share/fonts/unifont &amp;&amp;
 gunzip -c ../unifont-&unifont-version;.pcf.gz > /usr/share/fonts/unifont/unifont.pcf</userinput></screen>
 
     <warning>
-      <para>Unset any environment variables which may affect the build:</para>
+      <para>Fjern eventuelle miljøvariabler som kan påvirke byggingen:</para>
 
       <screen><userinput>unset {C,CPP,CXX,LD}FLAGS</userinput></screen>
 
-      <para>Don't try <quote>tuning</quote> this package with custom
-      compilation flags: this package is a bootloader, with low-level
-      operations in the source code which is likely to be broken by some
-      aggressive optimizations.</para>
+      <para>Ikke prøv å <quote>tilpasse</quote> denne pakken med tilpassete
+      kompilasjonsflagg: denne pakken er en oppstartslaster, med lav nivå
+      operasjoner i kildekoden som sannsynligvis vil bli ødelagt av
+      aggressive optimaliseringer.</para>
     </warning>
 
     <para>
-      Fix an issue causing <command>grub-install</command> to fail when the
-      <filename class='directory'>/boot</filename> partition (or the root
-      partition if <filename class='directory'>/boot</filename> is not a
-      separate partition) is created by e2fsprogs-1.47.0 or later:
+      Løs et problem som forårsaker at <command>grub-install</command> feiler når
+      <filename class='directory'>/boot</filename> partisjonen (eller root
+      partisjonen <filename class='directory'>/boot</filename> ikke er en
+      separat partisjon) er opprettet av e2fsprogs-1.47.0 eller senere:
     </para>
 
 <screen><userinput>patch -Np1 -i ../grub-&grub-version;-upstream_fixes-1.patch</userinput></screen>
 
-    <para>If you are running a 32-bit LFS, prepare a 64-bit compiler:</para>
+    <para>Hvis du kjører en 32-bits LFS, klargjør en 64-bits kompilator:</para>
 
 <!-- 'literal' is used deliberately to show this is only for 32-bit LFS -->
 <screen><userinput>case $(uname -m) in i?86 )
@@ -192,7 +192,7 @@ gunzip -c ../unifont-&unifont-version;.pcf.gz > /usr/share/fonts/unifont/unifont
 esac</userinput></screen>
 
     <para>
-      Build <application>GRUB</application> with the following commands:
+      Bygg <application>GRUB</application> med følgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr        \
@@ -206,11 +206,11 @@ unset TARGET_CC &amp;&amp;
 make</userinput></screen>
 
     <para>
-      This package does not have a test suite providing meaningful results.
+      Denne pakken har ikke en testpakke som gir meningsfulle resultater.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -219,62 +219,62 @@ mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions</userin
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--enable-grub-mkfont</parameter>: Build the tool named
-      <command>grub-mkfont</command> to generate the font file for the boot
-      loader from the font data we've installed.
+      <parameter>--enable-grub-mkfont</parameter>: Bygg verktøyet som heter
+      <command>grub-mkfont</command> for å generere fontfilen for oppstartslasteren
+      fra fontdataene vi har installert.
     </para>
 
     <warning>
-      <para>If the recommended dependency <xref linkend="freetype2"/> is not
-      installed, it is possible to omit this option and build GRUB.  However,
-      if <command>grub-mkfont</command> is not built, or the unicode font
-      data is not available at the time GRUB is built, GRUB won't install
-      any font for the boot loader.  The GRUB boot menu will be displayed
-      using a coarse font and the early stage of kernel initialization will be
-      in <quote>blind mode</quote> &mdash; you can't see any kernel messages before
-      the graphics card driver is initialized.  It will be very difficult to
-      diagnose some boot issues, especially if the graphics driver is
-      built as module.</para>
+      <para>Hvis den anbefalte avhengigheten <xref linkend="freetype2"/> ikke er
+      installert, er det mulig å utelate dette alternativet og bygge GRUB. Derimot,
+      hvis <command>grub-mkfont</command> ikke er bygget, eller unicode fontdataen
+      ikke er tilgjengelig på det tidspunktet GRUB bygges, vil GRUB ikke installere
+      hvilken som helst font for oppstartslasteren. GRUB oppstartsmenyen vil vises
+      ved å bruke en grov skrifttype og det tidlige stadiet av kjerneinitialisering vil være
+      i <quote>blindmodus</quote> &mdash; kan du ikke se noen kjernemeldinger før
+      grafikkortdriveren er initialisert. Det vil være veldig vanskelig å
+      diagnostisere noen oppstartsproblemer, spesielt hvis grafikkdriveren er
+      bygget som modul.</para>
     </warning>
 
     <para>
-      <parameter>--with-platform=efi</parameter>: Ensures building GRUB with
-      EFI enabled.
+      <parameter>--with-platform=efi</parameter>: Sikrer å bygge GRUB med
+      EFI aktivert.
     </para>
 
     <para>
-      <parameter>--target=x86_64</parameter>: Ensures building GRUB for
-      x86_64 even if building on a 32-bit LFS system.  Most EFI firmwares
-      on x86_64 does not support 32-bit bootloaders.
+      <parameter>--target=x86_64</parameter>: Sikrer at GRUB bygges for
+      x86_64 selv om du bygger på et 32-bits LFS system. De fleste EFI fastvarene
+      på x86_64 støtter ikke 32-biters oppstartslastere.
     </para>
 
     <para>
-      <option>--target=i386</option>: A few 32-bit x86 platforms have EFI
-      support.  And, some x86_64 platforms have a 32-bit EFI implementation,
-      but they are very old and rare. Use this instead of
-      <parameter>--target=x86_64</parameter> if you are
-      <emphasis role='bold'>absolutely sure</emphasis> that LFS is running
-      on such a system.
+      <option>--target=i386</option>: Noen få 32-bits x86 plattformer har EFI
+      støtte. Og noen x86_64 plattformer har en 32-biters EFI implementering,
+      men de er veldig gamle og sjeldne. Bruk dette i stedet for
+      <parameter>--target=x86_64</parameter> hvis du er
+      <emphasis role='bold'>helt sikker</emphasis> på at LFS kjører
+      på et slikt system.
     </para>
 
   </sect2>
 
   <sect2>
-    <title>Configuring GRUB</title>
+    <title>Konfigurere GRUB</title>
 
     <para>
-      Using GRUB to make the LFS system bootable on UEFI platform will be
-      discussed in <xref linkend="grub-setup"/>.
+      Å bruke GRUB for å gjøre LFS systemet oppstartbart på UEFI plattformen vil bli
+      diskutert i <xref linkend="grub-setup"/>.
     </para>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
-    <para>See the page for GRUB in LFS book.</para>
+    <para>Se siden for GRUB i LFS boken.</para>
   </sect2>
 
 </sect1>
