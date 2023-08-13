@@ -23,110 +23,110 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to efivar</title>
+    <title>Introduksjon til efivar</title>
 
     <para>
-      The <application>efivar</application> package provides tools and
-      libraries to manipulate EFI variables.
+      <application>efivar</application> pakken gir verktøy og
+      biblioteker for å manipulere EFI variabler.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&efivar-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&efivar-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&efivar-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&efivar-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &efivar-md5sum;
+          Nedlasting MD5 sum: &efivar-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &efivar-size;
+          Nedlastingsstørrelse: &efivar-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &efivar-buildsize;
+          Estimert diskplass som kreves: &efivar-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &efivar-time;
+          Estimert byggetid: &efivar-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Optional patch (Required for 32-bit systems):
+          Valgfri oppdatering (påkrevd for 32-bits systemer):
           <ulink url="&patch-root;/efivar-&efivar-version;-i686-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">efivar Dependencies</bridgehead>
+    <bridgehead renderas="sect3">efivar Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="mandoc"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/efivar"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of efivar</title>
+    <title>Installasjon av</title>
 
     <para>
-      First, fix an issue in Makefile causing the package to be rebuilt
-      during installation:
+      Først, fiks et problem i Makefile som forårsaker at pakken gjenoppbygges
+      under installasjonen:
     </para>
 
 <screen><userinput>sed '/prep :/a\\ttouch prep' -i src/Makefile</userinput></screen>
 
     <note>
       <para>
-        This package cannot function properly on a 32-bit system with a
-        64-bit UEFI implementation.  Don't install this package (or
-        efibootmgr) on 32-bit system unless you are absolutely sure you have
-        a 32-bit UEFI implementation, which is very rare in practice.
+        Denne pakken kan ikke fungere ordentlig på et 32-bitssystem med en
+        64-biters UEFI implementering. Ikke installer denne pakken (eller
+        efibootmgr) på 32-bits system med mindre du er helt sikker på at du har
+        en 32-biters UEFI implementering, som er svært sjelden i praksis.
       </para>
     </note>
 
     <para>
-      If building this package on a 32-bit system, apply a patch:
+      Hvis du bygger denne pakken på et 32-bitssystem, bruk en oppdatering:
     </para>
 
 <screen><userinput>[ $(getconf LONG_BIT) = 64 ] || patch -Np1 -i ../efivar-&efivar-version;-i686-1.patch</userinput></screen>
 
     <para>
-      Build <application>efivar</application> with the following commands:
+      Bygg <application>efivar</application> med følgende kommandoer:
     </para>
 
 <screen><userinput>make</userinput></screen>
 
     <para>
-      The test suite of this package is dangerous.  Running it may trigger
-      firmware bugs and make your system unusable without using some special
-      hardware to reprogram the firmware.
+      Testpakken til denne pakken er farlig. Å kjøre den kan utløse
+      fastvarefeil og gjøre systemet ditt ubrukelig uten å bruke en spesielle
+      maskinvare for å omprogrammere fastvaren.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install LIBDIR=/usr/lib</userinput></screen>
@@ -134,31 +134,31 @@
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <parameter>LIBDIR=/usr/lib</parameter>:
-      This option overrides the default library directory of the package
-      (<filename class="directory">/usr/lib64</filename>, which is not used
-      by LFS.)
+      Dette alternativet overstyrer standard bibliotekmappe for pakken
+      (<filename class="directory">/usr/lib64</filename>, som ikke brukes
+      av LFS.)
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          efisecdb and efivar
+          efisecdb og efivar
         </seg>
         <seg>
-          libefiboot.so, libefisec.so, and libefivar.so
+          libefiboot.so, libefisec.so, og libefivar.so
         </seg>
         <seg>
           /usr/include/efivar
@@ -167,7 +167,7 @@
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -175,7 +175,7 @@
         <term><command>efisecdb</command></term>
         <listitem>
           <para>
-            is an utility for managing UEFI signature lists
+            er et verktøy for å administrere UEFI signaturlister
           </para>
           <indexterm zone="efivar efisecdb">
             <primary sortas="b-efisecdb">efisecdb</primary>
@@ -187,7 +187,7 @@
         <term><command>efivar</command></term>
         <listitem>
           <para>
-            is a tool to manipulate UEFI variables
+            er et verktøy for å manipulere UEFI variabler
           </para>
           <indexterm zone="efivar efivar-prog">
             <primary sortas="b-efivar">efivar</primary>
@@ -199,7 +199,7 @@
         <term><filename class="libraryfile">libefiboot.so</filename></term>
         <listitem>
           <para>
-            is a library used by <command>efibootmgr</command>
+            er et bibliotek som brukes av <command>efibootmgr</command>
           </para>
           <indexterm zone="efivar libefiboot">
             <primary sortas="c-libefiboot">libefiboot.so</primary>
@@ -211,7 +211,7 @@
         <term><filename class="libraryfile">libefisec.so</filename></term>
         <listitem>
           <para>
-            is a library for managing UEFI signature lists
+            er et bibliotek for å administrere UEFI signaturlister
           </para>
           <indexterm zone="efivar libefisec">
             <primary sortas="c-libefisec">libefisec.so</primary>
@@ -223,7 +223,7 @@
         <term><filename class="libraryfile">libefivar.so</filename></term>
         <listitem>
           <para>
-            is a library for the manipulation of EFI variables
+            er et bibliotek for manipulering av EFI variabler
           </para>
           <indexterm zone="efivar libefiboot">
             <primary sortas="c-libefiboot">libefiboot.so</primary>
