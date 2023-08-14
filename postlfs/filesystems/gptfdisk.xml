@@ -23,91 +23,91 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to gptfdisk</title>
+    <title>Introduksjon til gptfdisk</title>
 
     <para>
-      The <application>gptfdisk</application> package is a set of programs for
-      creation and maintenance of GUID Partition Table (GPT) disk drives.  A
-      GPT partitioned disk is required for drives greater than 2 TB and is a
-      modern replacement for legacy PC-BIOS partitioned disk drives that use a
-      Master Boot Record (MBR).  The main program, <command>gdisk</command>,
-      has an interface similar to the classic <command>fdisk</command> program.
+      <application>gptfdisk</application> pakken er et sett med programmer for
+      opprettelse og vedlikehold av GUID Partition Table (GPT) diskstasjoner. En
+      GPT partisjonert disk kreves for stasjoner større enn 2 TB og er en
+      moderne erstatning for eldre PC-BIOS partisjonerte diskstasjoner som bruker en
+      Master Boot Record (MBR). Hovedprogrammet, <command>gdisk</command>,
+      har et grensesnitt som ligner det klassiske <command>fdisk</command> programmet.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&gptfdisk-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&gptfdisk-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&gptfdisk-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&gptfdisk-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &gptfdisk-md5sum;
+          Nedlasting MD5 sum: &gptfdisk-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &gptfdisk-size;
+          Nedlastingsstørrelse: &gptfdisk-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &gptfdisk-buildsize;
+          Estimert diskplass som kreves: &gptfdisk-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &gptfdisk-time;
+          Estimert byggetid: &gptfdisk-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
         <para>
-          Recommended patch: <ulink url=
+          Anbefalt oppdatering: <ulink url=
             "&patch-root;/gptfdisk-&gptfdisk-version;-convenience-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">gptfdisk Dependencies</bridgehead>
+    <bridgehead renderas="sect3">gptfdisk Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="popt"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="icu"/>
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/gptdisk"/>
+      Brukernotater: <ulink url="&blfs-wiki;/gptdisk"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of gptfdisk</title>
+    <title>Installasjon av gptfdisk</title>
 
     <para>
-      The <application>gptfdisk</application> package comes with a
-      rudimentary <filename>Makefile</filename>.  First we update it
-      to provide a simple build and install interface and fix the
-      location of a header file as well fixing an issue introduced
-      by a recent version of <application>popt</application>.
-      Install <application>gptfdisk</application> by running the following
-      commands:
+      <application>gptfdisk</application> pakken kommer med en
+      grunnleggende <filename>Makefile</filename>.  Først oppdaterer vi den
+      for å gi et enkelt bygge- og installeringsgrensesnitt og fikse
+      plassering av en deklarasjonsfil samt fikse et problem som ble introdusert
+      av en nylig versjon av <application>popt</application>.
+      Installer <application>gptfdisk</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>patch -Np1 -i ../gptfdisk-&gptfdisk-version;-convenience-1.patch &amp;&amp;
@@ -119,42 +119,42 @@ sed -i "/device =/s/= \(.*\);/= strdup(\1);/" gptcl.cc &amp;&amp;
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make test</command>.
+      For å teste resultatene, kjør: <command>make test</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>patch -Np1 ...</command>: This patch modifies the
-      <filename>Makefile</filename> file so that it provides an
-      <quote>install</quote> target.
+      <command>patch -Np1 ...</command>: Denne oppdateringen endrer
+      <filename>Makefile</filename> filen slik at den gir et
+      <quote>install</quote> mål.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
 
       <seglistitem>
         <seg>
-          cgdisk, gdisk, fixparts, and sgdisk
+          cgdisk, gdisk, fixparts, og sgdisk
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -162,7 +162,7 @@ make</userinput></screen>
         <term><command>cgdisk</command></term>
         <listitem>
           <para>
-            is an ncurses-based tool for manipulating GPT partitions
+            er et ncurses basert verktøy for å manipulere GPT partisjoner
           </para>
           <indexterm zone="gptfdisk cgdisk">
             <primary sortas="b-cgdisk">cgdisk</primary>
@@ -174,7 +174,7 @@ make</userinput></screen>
         <term><command>gdisk</command></term>
         <listitem>
           <para>
-            is an interactive text-mode tool for manipulating GPT partitions
+            er et interaktivt tekstmodusverktøy for å manipulere GPT partisjoner
           </para>
           <indexterm zone="gptfdisk gdisk">
             <primary sortas="b-gdisk">gdisk</primary>
@@ -186,7 +186,7 @@ make</userinput></screen>
         <term><command>fixparts</command></term>
         <listitem>
           <para>
-            repairs mis-formatted MBR based disk partitions
+            reparerer feilformaterte MBR baserte diskpartisjoner
           </para>
           <indexterm zone="gptfdisk fixparts">
             <primary sortas="b-fixparts">fixparts</primary>
@@ -198,8 +198,8 @@ make</userinput></screen>
         <term><command>sgdisk</command></term>
         <listitem>
           <para>
-            is a partition manipulation program for
-            GPT partitions similar to <command>sfdisk</command>
+            er et partisjonsmanipuleringsprogram for
+            GPT partisjoner som ligner på <command>sfdisk</command>
           </para>
           <indexterm zone="gptfdisk sgdisk">
             <primary sortas="b-sgdisk">sgdisk</primary>
