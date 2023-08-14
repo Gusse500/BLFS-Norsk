@@ -9,57 +9,57 @@
   <?dbhtml filename="initramfs.html"?>
 
 
-  <title>About initramfs</title>
+  <title>Om initramfs</title>
 
   <para>
-    The only purpose of an initramfs is to mount the root filesystem.  The
-    initramfs is a complete set of directories that you would find on a normal
-    root filesystem.  It is bundled into a single cpio archive and compressed
-    with one of several compression algorithms.
+    Det eneste formålet med en initramfs er å montere root filsystemet.
+    initramfs er et komplett sett med mapper som du finner på et normalt
+    root filsystem. Den er samlet i et enkelt cpio arkiv og komprimert
+    med en av flere komprimeringsalgoritmer.
   </para>
 
   <para>
-    At boot time, the boot loader loads the kernel and the initramfs image
-    into memory and starts the kernel.  The kernel checks for the presence
-    of the initramfs and, if found, mounts it as / and runs /init. The init
-    program is typically a shell script.  Note that the boot process takes
-    longer, possibly significantly longer, if an initramfs is used.
+    Ved oppstart laster oppstartslasteren inn kjernen og initramfs bildet
+    inn i minnet og starter kjernen. Kjernen sjekker tilstedeværelsen
+    av initramfs og, hvis funnet, monterer den som / og kjører /init. Init
+    programmet er vanligvis et skallskript. Merk at oppstartsprosessen tar
+    lengre tid, muligens betydelig lengre, hvis en initramfs brukes.
   </para>
 
   <para>
-    For most distributions, kernel modules are the biggest reason to have
-    an initramfs.  In a general distribution, there are many unknowns such
-    as file system types and disk layouts.  In a way, this is the opposite
-    of LFS where the system capabilities and layout are known and a custom
-    kernel is normally built.  In this situation, an initramfs is rarely
-    needed.
+    For de fleste distribusjoner er kjernemoduler den største grunnen til å ha
+    en initramfs. I en generell distribusjon er det mange ukjente slikt
+    som filsystemtyper og diskoppsett. På en måte er dette det motsatte
+    av LFS hvor systemkapasiteten og oppsettet er kjent og en tilpasset
+    kjerne er normalt bygget. I denne situasjonen er det sjeldent
+    behov for initramfs.
   </para>
 
   <para>
-    There are only four primary reasons to have an initramfs in the LFS
-    environment: loading the rootfs from a network, loading it from an LVM
-    logical volume, having an encrypted rootfs where a password is required, or
-    for the convenience of specifying the rootfs as a LABEL or UUID.  Anything
-    else usually means that the kernel was not configured properly.
+    Det er bare fire primære grunner til å ha en initramfs i et LFS
+    miljø: laste rootfs fra et nettverk, laste det fra et LVM
+    logisk volum, ha en kryptert rootfs der et passord kreves, eller
+    for enkelhets skyld å spesifisere rootfs som en LABEL eller UUID. Hva som helst
+    annet betyr vanligvis at kjernen ikke var riktig konfigurert.
   </para>
 
   <sect2 id="initramfs-build">
-    <title>Building an initramfs</title>
+    <title>Bygge en initramfs</title>
 
     <para>
-      If you do decide to build an initramfs, the following scripts will
-      provide a basis to do it.  The scripts will allow specifying a rootfs
-      via partition UUID or partition LABEL or a rootfs on an LVM logical
-      volume.  They do not support an encrypted root file system or mounting
-      the rootfs over a network card.  For a more complete capability see
-      <ulink url="https://www.linuxfromscratch.org/hints/read.html"> the LFS
-      Hints</ulink> or <ulink
+      Hvis du bestemmer deg for å bygge en initramfs, vil følgende skript gi et
+      grunnlag for å gjøre det. Skriptene vil tillate å spesifisere en rootfs
+      via partisjon UUID eller partisjon LABEL eller en rootfs på en LVM logisk
+      volum. De støtter ikke et kryptert rootfilsystem eller montering
+      rootfs over et nettverkskort. For en mer fullstendig funksjon se
+      <ulink url="https://www.linuxfromscratch.org/hints/read.html"> LFS
+      Hint</ulink> eller <ulink
       url="https://fedoraproject.org/wiki/Dracut">dracut</ulink>.
     </para>
 
     <para>
-      To install these scripts, run the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      For å installere disse skriptene, kjør følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
     <screen role="root"><userinput>cat &gt; /usr/sbin/mkinitramfs &lt;&lt; "EOF"
@@ -428,61 +428,61 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 id="initramfs-install">
-    <title>Using an initramfs</title>
+    <title>Bruke en initramfs</title>
 
-    <bridgehead renderas="sect3">Required Runtime Dependency</bridgehead>
+    <bridgehead renderas="sect3">Påkrevde Kjøretids Avhengigheter</bridgehead>
 
     <para role="required">
       <xref role="runtime" linkend="cpio"/>
     </para>
 
-    <bridgehead renderas="sect3">Other Runtime Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Andre Kjøretids Avhengigheter</bridgehead>
 
     <para role="optional">
-      <xref role="runtime" linkend="lvm2"/> and/or
-      <xref role="runtime" linkend="mdadm"/> must be installed before
-      generating the initramfs, if the system partition uses them.
+      <xref role="runtime" linkend="lvm2"/> og/eller
+      <xref role="runtime" linkend="mdadm"/> må installeres før
+      generering av initramfs, hvis systempartisjonen bruker dem.
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/initramfs"/>
     </para>
 
 
     <para>
-      To build an initramfs, run the following as the  <systemitem
-      class="username">root</systemitem> user:
+      For å bygge en initramfs, kjør følgende som  <systemitem
+      class="username">root</systemitem> bruker:
     </para>
 
     <screen role="nodump"><userinput>mkinitramfs [KERNEL VERSION]</userinput></screen>
 
     <para>
-      The optional argument is the directory where the appropriate kernel
-      modules are located. This must be a subdirectory of <filename
-      class='directory'> /lib/modules</filename>.  If no modules are specified,
-      then the initramfs is named <emphasis>initrd.img-no-kmods</emphasis>.
-      If a kernel version is specified, the initrd is named
-      <emphasis>initrd.img-$KERNEL_VERSION</emphasis> and is only appropriate
-      for the specific kernel specified. The output file will be placed in the
-      current directory.
+      Det valgfrie argumentet er mappen der de aktuelle kjernenmodulene
+      er plassert. Dette må være en undermappe av <filename
+      class='directory'> /lib/modules</filename>.  Hvis ingen moduler er spesifisert,
+      så blir initramfs navngitt <emphasis>initrd.img-no-kmods</emphasis>.
+      Hvis en kjerneversjon er spesifisert, får initrd navnet
+      <emphasis>initrd.img-$KERNEL_VERSION</emphasis> og er bare passende
+      for den spesifiserte kjernen. Utdatafilen vil bli plassert i
+      gjeldende mappe.
     </para>
 
     <para>
-      If early loading of microcode is needed (see <xref
-      linkend="cpu-microcode"/>), you can install the appropriate blob or
-      container in <filename class="directory">/lib/firmware</filename>.
-      It will be automatically added to the initrd when running
-      <command>mkinitramfs</command>.
+      Hvis tidlig lasting av mikrokode er nødvendig (se <xref
+      linkend="cpu-microcode"/>), du kan installere passende blob eller
+      beholder i <filename class="directory">/lib/firmware</filename>.
+      Den blir automatisk lagt til initrd når
+       <command>mkinitramfs</command> kjøres.
     </para>
 
     <para>
-      After generating the initrd, copy it to the <filename
-      class='directory'>/boot</filename> directory.
+      Etter å ha generert initrd, kopier den til <filename
+      class='directory'>/boot</filename> mappen.
     </para>
 
     <para>
-      Now edit <filename>/boot/grub/grub.cfg</filename> and add a new
-      menuentry.  Below are several examples.
+      Rediger nå <filename>/boot/grub/grub.cfg</filename> og legg til en ny
+      menyinngang. Nedenfor er flere eksempler.
     </para>
 
      <screen role="nodump"><userinput># Generic initramfs and root fs identified by UUID
@@ -507,7 +507,7 @@ menuentry "LFS Dev (LFS-7.1-Feb20) initrd label, Linux 3.2.6"
 }</userinput></screen>
 
     <para>
-      Finally, reboot the system and select the desired system.
+      Til slutt starter du systemet på nytt og velger ønsket system.
     </para>
 
   </sect2>
