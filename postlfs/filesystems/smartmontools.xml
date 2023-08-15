@@ -23,72 +23,72 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to smartmontools</title>
+    <title>Introduksjon til smartmontools</title>
 
     <para>
-      The <application>smartmontools</application> package contains utility
-      programs (smartctl, smartd) to control/monitor storage systems using the
-      Self-Monitoring, Analysis and Reporting Technology System (S.M.A.R.T.)
-      built into most modern ATA and SCSI disks.
+      <application>smartmontools</application> pakken inneholder verktøyprogrammer
+      (smartctl, smartd) for å kontrollere/overvåke lagringssystemer ved hjelp av
+      System for selvovervåking, analyse og rapporteringsteknologi (S.M.A.R.T.)
+      innebygd i de fleste moderne ATA- og SCSI-disker.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&smartmontools-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&smartmontools-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&smartmontools-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&smartmontools-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &smartmontools-md5sum;
+          Nedlasting MD5 sum: &smartmontools-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &smartmontools-size;
+          Nedlastingsstørrelse: &smartmontools-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &smartmontools-buildsize;
+          Estimert diskplass som kreves: &smartmontools-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &smartmontools-time;
+          Estimert byggetid: &smartmontools-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">smartmontools Dependencies</bridgehead>
+    <bridgehead renderas="sect3">smartmontools Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional (runtime)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (kjøretid)</bridgehead>
     <para role="optional">
-      <xref role="runtime" linkend="curl"/> or
-      <xref role="runtime" linkend="lynx"/> or
-      <xref role="runtime" linkend="wget"/> (download tools), and
-      <xref role="runtime" linkend="gnupg2"/> (encrypted hard disks)
+      <xref role="runtime" linkend="curl"/> eller
+      <xref role="runtime" linkend="lynx"/> eller
+      <xref role="runtime" linkend="wget"/> (nedlastingsverktøy), og
+      <xref role="runtime" linkend="gnupg2"/> (krypterte harddisker)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/smartmontools"/>
+      Brukernotater: <ulink url="&blfs-wiki;/smartmontools"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of smartmontools</title>
+    <title>Installasjon av smartmontools</title>
 
     <para>
-      Install <application>smartmontools</application> by running the
-      following commands:
+      Installer <application>smartmontools</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>./configure --prefix=/usr           \
@@ -104,11 +104,11 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -116,25 +116,25 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands" revision="sysv">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--with-initscriptdir=no</parameter>: This switch suppresses
-      the default initialization script.  See below for the BLFS script.
+      <parameter>--with-initscriptdir=no</parameter>: Denne bryteren undertrykker
+      standard initialiseringsskript. Se nedenfor for BLFS skriptet.
     </para>
 
     <para>
-      <parameter>--with-libsystemd=no</parameter>: This switch disables support
-      for the sd-notify notification system provided by systemd.
+      <parameter>--with-libsystemd=no</parameter>: Denne bryteren deaktiverer støtte
+      for sd-notify varslingssystemet levert av systemd.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring smartmontools</title>
+    <title>Konfigurere smartmontools</title>
 
     <sect3 id="smartmontools-config">
-      <title>Config File</title>
+      <title>Konfigurasjonsfil</title>
       <para>
         <filename>/etc/smartd.conf</filename>
       </para>
@@ -145,34 +145,34 @@ make</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        See the embedded comments in <filename>/etc/smartd.conf</filename>
-        for detailed instructions on customizing the
-        <application>smartd</application> daemon.
+        Se de innebygde kommentarene i <filename>/etc/smartd.conf</filename>
+        for detaljerte instruksjoner om tilpasning av
+        <application>smartd</application> nissen.
       </para>
 
     </sect3>
 
     <sect3  id="smartmontoools-init">
-       <title><phrase revision="sysv">Boot Script</phrase>
-              <phrase revision="systemd">Systemd Unit</phrase></title>
+       <title><phrase revision="sysv">Oppstartsskript</phrase>
+              <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        If you want the <application>smartd</application> daemon to
-        start automatically when the system is booted, install the
-        <filename>/etc/rc.d/init.d/smartd</filename> init script included
-        in the <xref linkend="bootscripts"/> package.
+        Hvis du vil ha <application>smartd</application> nissen til å
+        starte automatisk når systemet startes opp, installer
+        <filename>/etc/rc.d/init.d/smartd</filename> init skript inkludert
+        i <xref linkend="bootscripts"/> pakken.
       </para>
 
 
       <para revision="systemd">
-        If you want the <application>smartd</application> daemon to
-        start automatically when the system is booted, enable the
-        systemd unit provided by the package by executing the
-        following command as the
-        <systemitem class="username">root</systemitem> user:
+        Hvis du vil ha <application>smartd</application> nissen til å
+        starte automatisk når systemet startes opp, aktiver
+        systemd enheten levert av pakken ved å kjøre
+        følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <indexterm zone="smartmontools smartmontoools-init">
@@ -187,25 +187,25 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          smartctl, smartd, and update-smart-drivedb
+          smartctl, smartd, og update-smart-drivedb
         </seg>
 
         <seg>
-          None
+          Ingen
         </seg>
 
         <seg>
           /usr/share/smartmontools,
-          /usr/share/doc/smartmontools-&smartmontools-version;, and
+          /usr/share/doc/smartmontools-&smartmontools-version;, og
           /etc/smartd_warning.d
         </seg>
 
@@ -213,7 +213,7 @@ make</userinput></screen>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -221,7 +221,7 @@ make</userinput></screen>
         <term><command>smartctl</command></term>
         <listitem>
           <para>
-            is the control and monitor utility for SMART Disks
+            er kontroll- og overvåkingsverktøyet for SMART disker
           </para>
           <indexterm zone="smartmontools smartctl">
             <primary sortas="b-smartctl">smartctl</primary>
@@ -233,7 +233,7 @@ make</userinput></screen>
         <term><command>smartd</command></term>
         <listitem>
           <para>
-            is the SMART disk monitoring daemon
+            er SMART diskovervåkingsnissen
           </para>
           <indexterm zone="smartmontools smartd">
             <primary sortas="b-smartd">smartd</primary>
@@ -245,7 +245,7 @@ make</userinput></screen>
         <term><command>update-smart-drivedb</command></term>
         <listitem>
           <para>
-            is the update tool for the smartmontools drive database
+            er oppdateringsverktøyet for smartmontools stasjonsdatabase
           </para>
           <indexterm zone="smartmontools update-smart-drivedb">
             <primary sortas="b-update-smart-drivedb">update-smart-drivedb</primary>
