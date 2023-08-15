@@ -10,7 +10,7 @@
   <!ENTITY sshfs-md5sum        "f704f0d1800bdb5214030a1603e8c6d6">
   <!ENTITY sshfs-size          "56 KB">
   <!ENTITY sshfs-buildsize     "0.9 MB">
-  <!ENTITY sshfs-time          "less than 0.1 SBU">
+  <!ENTITY sshfs-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="sshfs" xreflabel="sshfs-&sshfs-version;">
@@ -24,77 +24,77 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Sshfs</title>
+    <title>Introduksjon til Sshfs</title>
 
     <para>
-      The <application>Sshfs</application> package contains a filesystem
-      client based on the SSH File Transfer Protocol. This is useful for
-      mounting a remote computer that you have ssh access to as a local
-      filesystem. This allows you to drag and drop files or run shell commands
-      on the remote files as if they were on your local computer.
+      <application>Sshfs</application> pakken inneholder en filsystem
+      klient basert på SSH File Transfer Protocol. Dette er nyttig for
+      å montere en ekstern datamaskin som du har ssh tilgang til som et lokalt
+      filsystem. Dette lar deg dra og slippe filer eller kjøre skallkommandoer
+      på de eksterne filene som om de var på din lokale datamaskin.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&sshfs-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&sshfs-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&sshfs-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&sshfs-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &sshfs-md5sum;
+          Nedlasting MD5 sum: &sshfs-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &sshfs-size;
+          Nedlastingsstørrelse: &sshfs-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &sshfs-buildsize;
+          Estimert diskplass som kreves: &sshfs-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &sshfs-time;
+          Estimert byggetid: &sshfs-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Sshfs Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Sshfs Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="fuse3"/>,
-      <xref linkend="glib2"/>, and
+      <xref linkend="glib2"/>, og
       <xref linkend="openssh"/>.
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="docutils"/> (required to build the man page)
+      <xref linkend="docutils"/> (kreves for å bygge mansiden)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/sshfs"/>
+      Brukernotater: <ulink url="&blfs-wiki;/sshfs"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Sshfs</title>
+    <title>Installasjon av Sshfs</title>
 
     <para>
-      Install <application>Sshfs</application> by running the following
-      commands:
+      Installer <application>Sshfs</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
     <screen><userinput>mkdir build &amp;&amp;
@@ -104,71 +104,71 @@ meson --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
   </sect2>
 
   <sect2 role="using">
-    <title>Using Sshfs</title>
+    <title>Bruke Sshfs</title>
 
     <para>
-      To mount an ssh server you need to be able to log into the server. For
-      example, to mount your remote home folder to the local ~/examplepath (the
-      directory must exist and you must have permissions to write to it):
+      For å montere en ssh server må du kunne logge på serveren.
+      For eksempel for å montere den eksterne hjemmemappen til den lokale ~/eksempelsti (denne
+      mappen må eksistere og du må ha tillatelser for å skrive til den):
     </para>
 
-<screen><userinput>sshfs example.com:/home/userid ~/examplepath</userinput></screen>
+<screen><userinput>sshfs eksempel.no:/home/userid ~/eksempelsti</userinput></screen>
 
     <para>
-      When you've finished work and want to unmount it again:
+      Når du er ferdig med arbeidet og vil demontere den igjen:
     </para>
 
-<screen><userinput>fusermount3 -u ~/example</userinput></screen>
+<screen><userinput>fusermount3 -u ~/eksempel</userinput></screen>
 
     <para>
-      You can also mount an <application>sshfs</application> filesystem at boot
-      by adding an entry similar to the following in the
-      <filename>/etc/fstab</filename> file:
+      Du kan også montere et <application>sshfs</application> filsystem ved oppstart
+      ved å legge til en oppføring som ligner på følgende i
+      <filename>/etc/fstab</filename> filen:
     </para>
 
-    <screen><literal>userid@example.com:/path /media/path fuse.sshfs _netdev,IdentityFile=/home/userid/.ssh/id_rsa 0 0</literal></screen>
+    <screen><literal>userid@eksempel.no:/path /media/path fuse.sshfs _netdev,IdentityFile=/home/userid/.ssh/id_rsa 0 0</literal></screen>
 
     <para>
-      See <command>man 1 sshfs</command> and <command>man 8 mount.fuse3</command>
-      for all available mount options.
+      Se <command>man 1 sshfs</command> og <command>man 8 mount.fuse3</command>
+      for alle tilgjengelige monteringsalternativer.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
           sshfs
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -176,7 +176,7 @@ ninja</userinput></screen>
         <term><command>sshfs</command></term>
         <listitem>
           <para>
-            mounts an <command>ssh</command> server as a local file system
+            monterer en <command>ssh</command> server som et lokalt filsystem
           </para>
           <indexterm zone="sshfs sshfs-prog">
             <primary sortas="b-sshfs">sshfs</primary>
