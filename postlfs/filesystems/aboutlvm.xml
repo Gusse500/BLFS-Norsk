@@ -9,62 +9,62 @@
   <?dbhtml filename="aboutlvm.html"?>
 
 
-  <title>About Logical Volume Management (LVM)</title>
+  <title>Om Logisk Volumstyring (LVM)</title>
 
   <para>
-    LVM manages disk drives.  It allows multiple drives and partitions
-    to be combined into larger <emphasis>volume groups</emphasis>, assists in
-    making backups through a <emphasis>snapshot</emphasis>, and allows for
-    dynamic volume resizing. It can also provide mirroring similar to
-    a RAID 1 array.
+    LVM administrerer diskstasjoner. Den tillater at flere stasjoner og partisjoner
+    blir kombinert til større <emphasis>volumgrupper</emphasis>, bistår i å
+    lage sikkerhetskopier gjennom et <emphasis>øyeblikksbilde</emphasis>, og gir rom for
+    dynamisk volumendring. Det kan også gi speiling tilsvarende
+    et RAID 1 matrise.
   </para>
 
   <para>
-    A complete discussion of LVM is beyond the scope of this introduction,
-    but basic concepts are presented below.
+    En fullstendig diskusjon av LVM er utenfor rammen av denne introduksjonen,
+    men grunnleggende konsepter presenteres nedenfor.
   </para>
 
   <para>
-    To run any of the commands presented here, the <xref linkend='lvm2'/>
-    package must be installed.  All commands must be run as the <systemitem
-    class="username">root</systemitem> user.
+    For å kjøre noen av kommandoene som presenteres her, må <xref linkend='lvm2'/>
+    pakken installeres. Alle kommandoer må kjøres som <systemitem
+    class="username">root</systemitem> bruker.
   </para>
 
   <para>
-    Management of disks with lvm is accomplished using the following concepts:
+    Administrering av disker med lvm utføres ved å bruke følgende konsepter:
   </para>
 
   <variablelist>
     <varlistentry>
-      <term>physical volumes</term>
+      <term>fysiske volumer</term>
       <listitem>
         <para>
-          These are physical disks or partitions such as
-          /dev/sda3 or /dev/sdb.
+          Dette er fysiske disker eller partisjoner som f.eks
+          /dev/sda3 eller /dev/sdb.
         </para>
       </listitem>
     </varlistentry>
 
     <varlistentry>
-      <term>volume groups</term>
+      <term>volumgrupper</term>
       <listitem>
         <para>
-          These are named groups of physical volumes that
-          can be manipulated by the administrator.  The number of physical
-          volumes that make up a volume group is arbitrary.  Physical volumes
-          can be dynamically added or removed from a volume group.
+          Disse er navngitte grupper av fysiske volumer som
+          kan manipuleres av administratoren. Antall fysiske
+          volumer som utgjør en volumgruppe er vilkårlige. Fysiske volumer
+          kan dynamisk legges til eller fjernes fra en volumgruppe.
         </para>
       </listitem>
     </varlistentry>
 
     <varlistentry>
-      <term>logical volumes</term>
+      <term>logiske volumer</term>
       <listitem>
         <para>
-          Volume groups may be subdivided into logical volumes. Each logical
-          volume can then be individually formatted as if it were a regular
-          Linux partition. Logical volumes may be dynamically resized by
-          the administrator according to need.
+          Volumgrupper kan deles inn i logiske volumer. Hvert logisk
+          volum kan deretter formateres individuelt som om det var en vanlig
+          Linux partisjon. Logiske volumer kan endres dynamisk etter
+          administratorens behov.
         </para>
       </listitem>
 
@@ -72,10 +72,10 @@
   </variablelist>
 
   <para>
-    To give a concrete example, suppose that you have two 2 TB disks. Also
-    suppose a really large amount of space is required for a very large
-    database, mounted on <filename class='directory'>/srv/mysql</filename>.
-    This is what the initial set of partitions would look like:
+    For å gi et konkret eksempel, anta at du har to 2 TB disker. Også
+    anta at det kreves veldig mye plass for en veldig stor
+    database, montert på <filename class='directory'>/srv/mysql</filename>.
+    Slik vil det første settet med partisjoner se ut:
   </para>
 
   <screen><literal>Partition  Use    Size      Partition Type
@@ -87,40 +87,40 @@
 /dev/sdb2  LVM    remainder 8e (LVM)</literal></screen>
 
   <para>
-    First initialize the physical volumes:
+    Initialiser først de fysiske volumene:
   </para>
 
   <screen><userinput>pvcreate /dev/sda4 /dev/sdb2</userinput></screen>
 
   <note>
     <para>
-      A full disk can be used as part of a physical volume, but
-      beware that the <command>pvcreate</command> command will destroy any
-      partition information on that disk.
+      En full disk kan brukes som en del av et fysisk volum, men
+      pass på at <command>pvcreate</command> kommando vil ødelegge all
+      partisjonsinformasjon på den disken.
     </para>
   </note>
 
   <para>
-    Next create a volume group named lfs-lvm:
+    Deretter oppretter du en volumgruppe med navnet lfs-lvm:
   </para>
 
   <screen><userinput>vgcreate lfs-lvm /dev/sda4  /dev/sdb2</userinput></screen>
 
   <para>
-    The status of the volume group can be checked by running the command
-    <command>vgscan</command>. Now create the logical volumes.  Since there
-    is about 3900 GB available, leave about 900 GB free for expansion. Note
-    that the logical volume named <emphasis>mysql</emphasis> is larger than
-    any physical disk.
+    Statusen til volumgruppen kan kontrolleres ved å kjøre kommandoen
+    <command>vgscan</command>. Lag nå de logiske volumene. Siden det
+    er ca 3900 GB tilgjengelig, la ca 900 GB være ledig for utvidelse. Merk
+    at det logiske volumet som heter <emphasis>mysql</emphasis> er større enn
+    hvilken som helst fysisk disk.
   </para>
 
   <screen><userinput>lvcreate --name mysql --size 2500G lfs-lvm
 lvcreate --name home  --size  500G lfs-lvm</userinput></screen>
 
   <para>
-    Finally the logical volumes can be formatted and mounted.  In this
-    example, the jfs file system (<xref linkend='jfsutils'/>) is used for
-    demonstration purposes.
+    Til slutt kan de logiske volumene formateres og monteres. I dette
+    eksempel filsystemet jfs (<xref linkend='jfsutils'/>) brukes for
+    demonstrasjonsformål.
   </para>
 
   <screen><userinput>mkfs -t ext4 /dev/lfs-lvm/home
@@ -130,35 +130,35 @@ mkdir -p /srv/mysql
 mount /dev/lfs-lvm/mysql /srv/mysql</userinput></screen>
 
   <para>
-    It may be needed to activate those logical volumes, for them to
-    appear in <filename class="directory">/dev</filename>. They can all
-    be activated at the same time by issuing, as the
-    <systemitem class="username">root</systemitem> user:
+    Det kan være nødvendig å aktivere de logiske volumene, for at de skal
+    vises i <filename class="directory">/dev</filename>. De kan alle
+    aktiveres samtidig ved å kjøre, som
+    <systemitem class="username">root</systemitem> bruker:
   </para>
 
 <screen role="root"><userinput>vgchange -a y</userinput></screen>
 
   <para revision="sysv">
-    The LFS boot scripts automatically make these logical volumes available to
-    the system in the <command>udev</command> script. Edit the
-    <filename>/etc/fstab</filename> file as required to automatically mount
-    them.
+    LFS oppstartsskriptene gjør disse logiske volumene tilgjengelige for
+    systemet i <command>udev</command> skriptet automatisk. Rediger
+    <filename>/etc/fstab</filename> filen etter behov for å montere dem
+    automatisk.
   </para>
 
   <para>
-    A LVM logical volume can host a root filesystem, but requires the use
-    of an initramfs (initial RAM file system). The initramfs proposed in
-    <xref linkend="initramfs"/> allows to pass the lvm volume in
-    the <parameter>root=</parameter> switch of the kernel command line.
+    Et LVM logisk volum kan være vert for et rootfilsystem, men krever bruk
+    av initramfs (opprinnelig RAM filsystem). Initramfs foreslått i
+    <xref linkend="initramfs"/> lar lvm volumet sende inn
+    <parameter>root=</parameter> bryteren til kjernekommandolinjen.
   </para>
 
   <para revision="systemd">
-    If not using an initramfs, there is a race condition in <application>
-    systemd</application> preventing mounting logical volumes through
-    <filename>/etc/fstab</filename>. You must create a <quote>mount</quote>
-    unit (see systemd.mount(5)) as in the following example, which mounts
-    the <filename class="directory">/home</filename> directory automatically
-    at boot:
+    Hvis du ikke bruker initramfs, er det en rasetilstand i <application>
+    systemd</application> som forhindrer montering av logiske volumer gjennom
+    <filename>/etc/fstab</filename>. Du må opprette en <quote>mount</quote>
+    enhet (se systemd.mount(5)) som i følgende eksempel, som monterer
+    <filename class="directory">/home</filename> mappen automatisk
+    ved oppstart:
   </para>
 
 <screen role="root" revision="systemd"><userinput>cat &gt; /etc/systemd/system/home.mount &lt;&lt; EOF
@@ -177,24 +177,24 @@ EOF</userinput></screen>
 
   <note revision="systemd">
     <para>
-    The name of the unit must be the name of the mount point with the
-    `/' character replaced by `-', omitting the leading one.
+    Navnet på enheten må være navnet på monteringspunktet med
+     `/'-tegnet erstattet av `-', og utelate den innledende.
     </para>
   </note>
 
   <para revision="systemd">
-    Next the unit must be enabled with:
+    Deretter må enheten aktiveres med:
   </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable home.mount</userinput></screen>
 
   <para>
-    For more information about LVM, see the <ulink
-    url="https://tldp.org/HOWTO/LVM-HOWTO/">LVM HOWTO</ulink> and
-    the lvm man pages. A good in-depth
+    For mer informasjon om LVM, se <ulink
+    url="https://tldp.org/HOWTO/LVM-HOWTO/">LVM HOWTO</ulink> og
+    lvm mansidene. En god dybde
     <ulink url="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/logical_volume_manager_administration/index">
-    guide</ulink> is available from RedHat<superscript>&reg;</superscript>,
-    although it makes sometimes reference to proprietary tools.
+    veiledning</ulink> er tilgjengelig fra RedHat<superscript>&reg;</superscript>,
+    selv om det noen ganger refererer til proprietære verktøy.
   </para>
 
 </sect1>
