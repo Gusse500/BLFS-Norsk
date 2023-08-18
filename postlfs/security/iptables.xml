@@ -23,77 +23,77 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to iptables</title>
+    <title>Introduksjon til iptables</title>
 
     <para>
-      <application>iptables</application> is a userspace command line program
-      used to configure the Linux 2.4 and later kernel packet filtering ruleset.
+      <application>iptables</application> er et kommandolinjeprogram for brukerområdet
+      som brukes til å konfigurere Linux 2.4 og nyere regelsett for kjernepakkefiltrering.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&iptables-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&iptables-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&iptables-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&iptables-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &iptables-md5sum;
+          Nedlasting MD5 sum: &iptables-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &iptables-size;
+          Nedlastingsstørrelse: &iptables-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &iptables-buildsize;
+          Estimert diskplass som kreves: &iptables-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &iptables-time;
+          Estimert byggetid: &iptables-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">iptables Dependencies</bridgehead>
+    <bridgehead renderas="sect3">iptables Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
 <!--      <xref linkend="nftables"/>, -->
-      <xref linkend="libpcap"/> (required for nfsypproxy support),
+      <xref linkend="libpcap"/> (nødvendig for nfsypproxy støtte),
       <ulink url="https://github.com/tadamdam/bpf-utils">bpf-utils</ulink>
-      (required for Berkeley Packet Filter support),
+      (kreves for støtte for Berkeley Packet Filter),
       <ulink url="https://netfilter.org/projects/libnfnetlink/">libnfnetlink</ulink>
-      (required for connlabel support),
+      (kreves for connlabel støtte),
       <ulink url="https://netfilter.org/projects/libnetfilter_conntrack/">libnetfilter_conntrack</ulink>
-      (required for connlabel support), and
+      (kreves for connlabel støtte), og
       <ulink url="https://netfilter.org/projects/nftables/">nftables</ulink>
     </para>
 
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/iptables"/>
     </para>
   </sect2>
 
   <sect2 role="kernel" id="iptables-kernel">
-    <title>Kernel Configuration</title>
+    <title>Kjernekonfigurasjon</title>
 
     <para>
-      A firewall in Linux is accomplished through the netfilter interface. To
-      use <application>iptables</application> to configure netfilter, the
-      following kernel configuration parameters are required:
+      En brannmur i Linux oppnås gjennom netfilter grensesnittet. For
+      å bruke <application>iptables</application> til å konfigurere netfilter
+      Følgende kjernekonfigurasjonsparametere kreves:
     </para>
 
 <screen><literal>[*] Networking support  ---&gt;                                          [CONFIG_NET]
@@ -108,10 +108,10 @@
             &lt;*/M&gt; IP tables support (required for filtering/masq/NAT) [CONFIG_IP_NF_IPTABLES]</literal></screen>
 
     <para>
-      Include any connection tracking protocols that will be used, as well as
-      any protocols that you wish to use for match support under the
-      "Core Netfilter Configuration" section. The above options are enough
-      for running <xref linkend="fw-persFw-ipt"/> below.
+      Inkluder eventuelle tilkoblingssporingsprotokoller som vil bli brukt, så vel som
+      eventuelle protokoller du ønsker å bruke for matchende støtte under
+       "Core Netfilter Configuration" delen. Alternativene ovenfor er nok
+      for kjøre <xref linkend="fw-persFw-ipt"/> under.
     </para>
 
     <indexterm zone="iptables iptables-kernel">
@@ -121,26 +121,26 @@
   </sect2>
 
     <sect2 role="installation">
-      <title>Installation of iptables</title>
+      <title>Installasjon av iptables</title>
 
     <note>
       <para>
-        The installation below does not include building some specialized
-        extension libraries which require the raw headers in the
-        <application>Linux</application> source code. If you wish to build the
-        additional extensions (if you aren't sure, then you probably don't), you
-        can look at the <filename>INSTALL</filename> file to see an example of
-        how to change the <parameter>KERNEL_DIR=</parameter> parameter to point
-        at the <application>Linux</application> source code. Note that if you
-        upgrade the kernel version, you may also need to recompile
-        <application>iptables</application> and that the BLFS team has not
-        tested using the raw kernel headers.
+        Installasjonen nedenfor inkluderer ikke å bygge noen spesialiserte
+        utvidelsesbiblioteker som krever de rå deklarasjonene i
+        <application>Linux</application> kildekoden. Hvis du ønsker å bygge
+        ekstra utvidelser (hvis du ikke er sikker, så trenger du sannsynligvis ikke det), du
+        kan se på <filename>INSTALL</filename> filen for å se et eksempel på
+        hvordan å endre <parameter>KERNEL_DIR=</parameter> parameteren til å peke
+        på <application>Linux</application> kildekoden. Merk at hvis du
+        oppgradere kjerneversjonen, kan det hende at du også må kompilere
+        <application>iptables</application> på nytt og at BLFS teamet ikke har
+        testet ved hjelp av rå kjernedeklarasjoner.
       </para>
     </note>
 
     <para>
-      Install <application>iptables</application> by running the following
-      commands:
+      Installer <application>iptables</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr      \
@@ -154,11 +154,11 @@ make</userinput></screen>
       to be clarified how to use and which prerequisites are required
       to run to 100%. Contacted Shekhar Sharma for that (Dec'19),
       waiting for answer (thomas). -->
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -166,66 +166,66 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--disable-nftables</parameter>: This switch disables building
-      nftables compatibility. <!--Omit this switch if you have installed
+      <parameter>--disable-nftables</parameter>: Denne bryteren deaktiverer bygging
+      av nftables kompatibilitet. <!--Omit this switch if you have installed
       <xref linkend="nftables"/>.-->
     </para>
 
     <para>
-      <parameter>--enable-libipq</parameter>: This switch enables building
-      of <filename class="libraryfile">libipq.so</filename> which
-      can be used by some packages outside of BLFS.
+      <parameter>--enable-libipq</parameter>: Denne bryteren gjør det mulig å bygge
+      <filename class="libraryfile">libipq.so</filename> som
+      kan brukes av noen pakker utenfor BLFS.
     </para>
 
     <para>
-      <option>--enable-nfsynproxy</option>: This switch enables installation
-      of <application>nfsynproxy</application> SYNPROXY configuration tool.
+      <option>--enable-nfsynproxy</option>: Denne bryteren muliggjør installasjon
+      av <application>nfsynproxy</application> SYNPROXY konfigurasjonsverktøy.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring iptables</title>
+    <title>Konfigurere iptables</title>
 <!--
     <note>
       <para>
-        If you intend to use <xref linkend="firewalld"/> to configure your
-        firewall rules, you should not use the example configurations provided
-        here, nor should you enable the
+        Hvis du har tenkt å bruke <xref linkend="firewalld"/> for å konfigurere din
+        brannmurregler, bør du ikke bruke eksempelkonfigurasjonene
+        her, og du bør heller ikke aktivere
         <phrase revision="sysv">bootscript.</phrase>
-        <phrase revision="systemd">systemd unit.</phrase>
+        <phrase revision="systemd">systemd enheten.</phrase>
       </para>
     </note>
 -->
     <note>
       <para>
-        In the following example configurations, <emphasis
-        role="strong">LAN1</emphasis> is used for the internal LAN interface,
-        and <emphasis role="strong">WAN1</emphasis> is used for the external
-        interface connected to the Internet. You will need to replace these
-        values with appropriate interface names for your system.
+        I følgende eksempelkonfigurasjoner, <emphasis
+        role="strong">LAN1</emphasis> brukes for det interne LAN grensesnittet,
+        og <emphasis role="strong">WAN1</emphasis> brukes til det ytre
+        grensesnittet koblet til Internett. Du må erstatte disse
+        verdiene med passende grensesnittnavn for systemet ditt.
       </para>
     </note>
 
     <sect3 id="fw-persFw-ipt"
-    xreflabel="Creating a Personal Firewall With iptables">
-      <title>Personal Firewall</title>
+    xreflabel="Opprette en Personlig Brannmur med iptables">
+      <title>Personlig Brannmur</title>
 
       <para>
-        A Personal Firewall is designed to let you access all the
-        services offered on the Internet while keeping your computer secure and
-        your data private.
+        En Personlig Brannmur er designet for å gi deg tilgang til alle
+        tjenester som tilbys på Internett mens du holder datamaskinen sikker og
+        dataene dine private.
       </para>
 
       <para>
-        Below is a slightly modified version of Rusty Russell's
-        recommendation from the <ulink
+        Nedenfor er en litt modifisert versjon av Rusty Russells
+        anbefaling fra <ulink
         url="https://www.netfilter.org/documentation/HOWTO/packet-filtering-HOWTO.html">
-        Linux 2.4 Packet Filtering HOWTO</ulink>. It is still applicable
-        to the Linux 5.x kernels.
+        Linux 2.4 Packet Filtering HOWTO</ulink>. Det gjelder fortsatt
+        for Linux 5.x kjernene.
       </para>
 
 <screen role="root" revision="sysv"><?dbfo keep-together="auto"?><userinput>cat &gt; /etc/rc.d/rc.iptables &lt;&lt; "EOF"
@@ -383,42 +383,42 @@ EOF
 chmod 700 /etc/systemd/scripts/iptables</userinput></screen>
 
       <para>
-        This script is quite simple, it drops all traffic coming
-        into your computer that wasn't initiated from your computer, but
-        as long as you are simply surfing the Internet you are unlikely
-        to exceed its limits.
+        Dette skriptet er ganske enkelt, det dropper all trafikk som kommer
+        inn til datamaskinen din som ikke ble startet fra datamaskinen din, men
+        så lenge du bare surfer på Internett er det usannsynlig at
+        du overskride sine grenser.
       </para>
 
       <para>
-        If you frequently encounter certain delays at accessing
-        FTP servers, take a look at <xref linkend="fw-BB-4-ipt"/>.
+        Hvis du ofte møter visse forsinkelser ved tilgang til
+        FTP servere, ta en titt på <xref linkend="fw-BB-4-ipt"/>.
       </para>
 
       <para>
-        Even if you have daemons or services running on your system,
-        these will be inaccessible everywhere but from your computer itself.
-        If you want to allow access to services on your machine, such as
-        <command>ssh</command> or <command>ping</command>, take a look at
+        Selv om du har nisser eller tjenester som kjører på systemet ditt,
+        vil disse være utilgjengelige overalt bortsett fra datamaskinen selv.
+        Hvis du vil tillate tilgang til tjenester på maskinen din, som f.eks
+        <command>ssh</command> eller <command>ping</command>, se på
         <xref linkend="fw-busybox-ipt"/>.
       </para>
 
     </sect3>
 
     <sect3 id="fw-masqRouter-ipt"
-     xreflabel="Creating a Masquerading Router With iptables">
-      <title>Masquerading Router</title>
+     xreflabel="Opprette Maskering av Ruter med iptables">
+      <title>Maskering av Ruter</title>
 
       <para>
-        A Network Firewall has two interfaces, one connected to an
-        intranet, in this example <emphasis role="strong">LAN1</emphasis>,
-        and one connected to the Internet, here <emphasis
-        role="strong">WAN1</emphasis>. To provide the maximum security
-        for the firewall itself, make sure that there are no unnecessary
-        servers running on it such as <application>X11</application>.
-        As a general principle, the firewall itself should not access
-        any untrusted service (think of a remote server giving answers that
-        makes a daemon on your system crash, or even worse, that implements
-        a worm via a buffer-overflow).
+        En nettverksbrannmur har to grensesnitt, ett koblet til et
+        intranett, i dette eksemplet <emphasis role="strong">LAN1</emphasis>,
+        og en koblet til Internett, her <emphasis
+        role="strong">WAN1</emphasis>. For å gi maksimal sikkerhet
+        for selve brannmuren, sørg for at det ikke er unødvendige
+        servere som kjører på den, f.eks <application>X11</application>.
+        Som et generelt prinsipp skal selve brannmuren ikke ha tilgang
+        til enhver upålitelig tjeneste (tenk på en ekstern server som gir et svar
+        som får en nisse på systemet til å krasjer, eller enda verre, som implementerer
+        en orm via et buffer-overflow.
       </para>
 
 <screen role="root" revision="sysv"><?dbfo keep-together="auto"?><userinput>cat &gt; /etc/rc.d/rc.iptables &lt;&lt; "EOF"
@@ -625,59 +625,59 @@ EOF
 chmod 700 /etc/systemd/scripts/iptables</userinput></screen>
 
       <para>
-        With this script your intranet should be reasonably secure
-        against external attacks. No one should be able to setup a new
-        connection to any internal service and, if it's masqueraded,
-        makes your intranet invisible to the Internet. Furthermore, your
-        firewall should be relatively safe because there are no services
-        running that a cracker could attack.
+        Med dette skriptet skal intranettet ditt være rimelig sikkert
+        mot ytre angrep. Ingen skal kunne sette opp en ny
+        tilkobling til en hvilken som helst intern tjeneste, og hvis den er maskert,
+        gjør intranettet ditt usynlig for Internett. Videre, brannmuren
+        din skal være relativt trygg fordi det ikke finnes noen tjenester
+        som kjører som en angriper kunne angripe.
       </para>
 
     </sect3>
 
-    <sect3 id="fw-busybox-ipt" xreflabel="Creating a BusyBox With iptables">
+    <sect3 id="fw-busybox-ipt" xreflabel="Opprette BusyBox med iptables">
       <title>BusyBox</title>
 
       <para>
-        This scenario isn't too different from the <xref
-        linkend="fw-masqRouter-ipt"/>, but additionally offers some
-        services to your intranet. Examples of this can be when
-        you want to administer your firewall from another host on
-        your intranet or use it as a proxy or a name server.
+        Dette scenariet er ikke så forskjellig fra <xref
+        linkend="fw-masqRouter-ipt"/>, men tilbyr i tillegg noen
+        tjenester til intranettet ditt. Eksempler på dette kan være når
+        du ønsker å administrere brannmuren fra en annen vert
+        på intranettet ditt eller bruke det som en proxy eller en navneserver.
       </para>
 
       <note>
         <para>
-          Outlining specifically how to protect a server that
-          offers services on the Internet goes far beyond the scope of
-          this document. See the references in <xref linkend="fw-extra-info"/>
-          for more information.
+          Å skisserer spesifikt hvordan du beskytter en server som
+          tilbyr tjenester på Internett går langt utover omfanget av
+          dette dokumentet. Se referansene i <xref linkend="fw-extra-info"/>
+          for mer informasjon.
         </para>
       </note>
 
       <para>
-        Be cautious. Every service you have enabled makes your
-        setup more complex and your firewall less secure. You are
-        exposed to the risks of misconfigured services or running
-        a service with an exploitable bug. A firewall should generally
-        not run any extra services.  See the introduction to the
-        <xref linkend="fw-masqRouter-ipt"/> for some more details.
+        Vær forsiktig. Hver tjeneste du har aktivert gjør
+        oppsettet ditt mer komplekst og brannmuren din mindre sikker. Du er
+        utsatt for risikoen for feilkonfigurerte tjenester eller kjører
+        en tjeneste med en utnyttbar feil. En brannmur bør generelt
+        ikke kjøre noen ekstra tjenester. Se introduksjonen til
+        <xref linkend="fw-masqRouter-ipt"/> for flere detaljer.
       </para>
 
       <para>
-        If you want to add services such as internal Samba or
-        name servers that do not need to access the Internet themselves,
-        the additional statements are quite simple and should still be
-        acceptable from a security standpoint. Just add the following lines
-        into the script <emphasis>before</emphasis> the logging rules.
+        Hvis du ønsker å legge til tjenester som intern Samba eller
+        navneservere som ikke trenger tilgang til Internett selv,
+        tilleggsutsagnene er ganske enkle og bør fortsatt være
+        akseptabelt fra et sikkerhetssynspunkt. Bare legg til følgende linjer
+        inn i skriptet <emphasis>før</emphasis> loggingsreglene.
       </para>
 
 <screen><literal>iptables -A INPUT  -i ! WAN1  -j ACCEPT
 iptables -A OUTPUT -o ! WAN1  -j ACCEPT</literal></screen>
 
       <para>
-        If daemons, such as squid, have to access the Internet
-        themselves, you could open OUTPUT generally and restrict
+        Hvis nisser, for eksempel squid, må få tilgang til Internett,
+        kan du åpne OUTPUT generelt og begrense
         INPUT.
       </para>
 
@@ -685,26 +685,26 @@ iptables -A OUTPUT -o ! WAN1  -j ACCEPT</literal></screen>
 iptables -A OUTPUT -j ACCEPT</literal></screen>
 
       <para>
-        However, it is generally not advisable to leave OUTPUT
-        unrestricted. You lose any control over trojans who would like
-        to "call home", and a bit of redundancy in case you've
-        (mis-)configured a service so that it broadcasts its existence
-        to the world.
+        Det er imidlertid generelt ikke tilrådelig å forlate OUTPUT
+        ubegrenset. Du mister all kontroll over trojanere som vil
+        "ringe hjem", og litt redundans i tilfelle du har
+        (feil-)konfigurert en tjeneste slik at den kringkaster dens eksistens
+        til verden.
       </para>
 
       <para>
-        To accomplish this, you should restrict INPUT and OUTPUT
-        on all ports except those that it's absolutely necessary to have
-        open. Which ports you have to open depends on your needs: mostly
-        you will find them by looking for failed accesses in your log
-        files.
+        For å oppnå dette bør du begrense INPUT og OUTPUT
+        på alle porter unntatt de som er absolutt nødvendig å ha
+        åpen. Hvilke porter du må åpne avhenger av dine behov: stort sett
+        finner du dem ved å se etter mislykkede tilganger i loggfilene
+        dine.
       </para>
 
       <itemizedlist spacing="compact" role='iptables'>
-        <title>Have a Look at the Following Examples:</title>
+        <title>Ta en Titt på Følgende Eksempler:</title>
         <listitem>
           <para>
-            Squid is caching the web:
+            Squid mellomlagrer nettet:
           </para>
 
 <screen><literal>iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
@@ -714,7 +714,7 @@ iptables -A INPUT  -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED \
         </listitem>
         <listitem>
           <para>
-            Your caching name server (e.g., named) does its lookups via UDP:
+            Din mellomlagrings navneserver (f.eks. named) gjør sine oppslag via UDP:
           </para>
 
 <screen><literal>iptables -A OUTPUT -p udp --dport 53 -j ACCEPT</literal></screen>
@@ -722,8 +722,8 @@ iptables -A INPUT  -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED \
         </listitem>
         <listitem>
           <para>
-            You want to be able to ping your computer to ensure it's still
-            alive:
+            Du vil ha mulighet å pinge datamaskinen for å sikre at den fortsatt er
+            i live:
           </para>
 
 <screen><literal>iptables -A INPUT  -p icmp -m icmp --icmp-type echo-request -j ACCEPT
@@ -732,17 +732,17 @@ iptables -A OUTPUT -p icmp -m icmp --icmp-type echo-reply   -j ACCEPT</literal><
         </listitem>
         <listitem>
           <para id='fw-BB-4-ipt' xreflabel="BusyBox with iptables example number 4">
-            If you are frequently accessing FTP servers or enjoy chatting, you
-            might notice delays because some implementations of these daemons
-            query an identd daemon on your system to obtain usernames. Although
-            there's really little harm in this, having an identd running is not
-            recommended because many security experts feel the service gives
-            out too much additional information.
+            Hvis du ofte bruker FTP servere eller liker å chatte, kan du
+            merke forsinkelser fordi noen implementeringer av disse nissene
+            spør en identd nisse på systemet ditt for å få brukernavn. Selv om
+            det egentlig er lite skade i dette, å ha en identd kjørende er ikke
+            anbefalt fordi mange sikkerhetseksperter føler tjenesten gir
+            ut for mye tilleggsinformasjon.
           </para>
 
           <para>
-            To avoid these delays you could reject the requests with a
-            'tcp-reset' response:
+            For å unngå disse forsinkelsene kan du avvise forespørslene med et
+            'tcp-reset' svar:
           </para>
 
 <screen><literal>iptables -A INPUT  -p tcp --dport 113 -j REJECT --reject-with tcp-reset</literal></screen>
@@ -750,9 +750,9 @@ iptables -A OUTPUT -p icmp -m icmp --icmp-type echo-reply   -j ACCEPT</literal><
         </listitem>
         <listitem>
           <para>
-            To log and drop invalid packets (packets
-            that came in after netfilter's timeout or some types of
-            network scans) insert these rules at the top of the chain:
+            For å logge og droppe ugyldige pakker (pakker
+            som kom inn etter netfilters tidsavbrudd eller noen typer
+            nettverksskanninger) sett inn disse reglene øverst i kjeden:
           </para>
 
 <screen><literal>iptables -I INPUT 0 -p tcp -m conntrack --ctstate INVALID \
@@ -762,8 +762,8 @@ iptables -I INPUT 1 -p tcp -m conntrack --ctstate INVALID -j DROP</literal></scr
         </listitem>
         <listitem>
           <para>
-            Anything coming from the outside should not have a
-            private address, this is a common attack called IP-spoofing:
+            Alt som kommer utenfra skal ikke ha en
+            privat adresse, dette er et vanlig angrep kalt IP-spoofing:
           </para>
 
 <screen><literal>iptables -A INPUT -i WAN1 -s 10.0.0.0/8     -j DROP
@@ -771,15 +771,15 @@ iptables -A INPUT -i WAN1 -s 172.16.0.0/12  -j DROP
 iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
 
           <para>
-            There are other addresses that you may also want to drop:
-            0.0.0.0/8, 127.0.0.0/8, 224.0.0.0/3 (multicast and
-            experimental), 169.254.0.0/16 (Link Local Networks), and
-            192.0.2.0/24 (IANA defined test network).
+            Det er andre adresser du kanskje også vil droppe:
+            0.0.0.0/8, 127.0.0.0/8, 224.0.0.0/3 (multicast og
+            eksperimentell), 169.254.0.0/16 (Koble til lokale nettverk), og
+            192.0.2.0/24 (IANA definert testnettverk).
           </para>
         </listitem>
         <listitem>
           <para>
-            If your firewall is a DHCP client, you need to allow those packets:
+            Hvis brannmuren din er en DHCP klient, må du tillate disse pakkene:
           </para>
 
 <screen><literal>iptables -A INPUT  -i WAN1 -p udp -s 0.0.0.0 --sport 67 \
@@ -788,14 +788,14 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         </listitem>
         <listitem>
           <para>
-            To simplify debugging and be fair to anyone who'd like
-            to access a service you have disabled, purposely or by mistake,
-            you could REJECT those packets that are dropped.
+            For å forenkle feilsøking og være rettferdig mot alle som vil
+            ha tilgang til en tjeneste du har deaktivert, med vilje eller ved en feiltakelse,
+            du kan AVVISE (REJECT) de pakkene som blir droppet.
           </para>
 
           <para>
-            Obviously this must be done directly after logging as the very
-            last lines before the packets are dropped by policy:
+            Åpenbart må dette gjøres direkte etter logging
+            på siste linjer før pakkene droppes av retningslinjer::
           </para>
 
 <screen><literal>iptables -A INPUT -j REJECT</literal></screen>
@@ -804,29 +804,29 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
       </itemizedlist>
 
       <para>
-        These are only examples to show you some of the capabilities
-        of the firewall code in Linux. Have a look at the man page of iptables.
-        There you will find much more information. The port numbers needed for
-        this can be found in <filename>/etc/services</filename>, in case you
-        didn't find them by trial and error in your log file.
+        Dette er bare eksempler for å vise deg noen av egenskapene
+        til brannmurkoden i Linux. Ta en titt på mansiden til iptables.
+        Der finner du mye mer informasjon. Portnumrene som trengs for
+        dette finner du i <filename>/etc/services</filename>, i tilfelle du
+        ikke fant dem ved prøving og feiling i loggfilen din.
       </para>
 
     </sect3>
 
     <sect3  id="iptables-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        To set up the iptables firewall at boot, install the
-        <filename>/etc/rc.d/init.d/iptables</filename> init script included
-        in the <xref linkend="bootscripts"/> package.
+        For å sette opp iptables brannmuren ved oppstart, installer
+        <filename>/etc/rc.d/init.d/iptables</filename> init skriptet inkludert
+        i <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        To set up the iptables firewall at boot, install the
-        <filename>iptables.service</filename> unit included in the
-        <xref linkend="systemd-units"/> package.
+        For å sette opp iptables brannmuren ved oppstart, installer
+        <filename>iptables.service</filename> enheten inkludert i
+        <xref linkend="systemd-units"/> pakken.
       </para>
 
       <indexterm zone="iptables iptables-init">
@@ -840,12 +840,12 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
@@ -864,25 +864,25 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
           iptables-restore,
           iptables-save,
           iptables-xml,
-          nfsynproxy (optional),
-          and xtables-multi
+          nfsynproxy (valgfri),
+          og xtables-multi
         </seg>
         <seg>
           libip4tc.so,
           libip6tc.so,
           libipq.so,
           libiptc.so,
-          and libxtables.so
+          og libxtables.so
         </seg>
         <seg>
-          /lib/xtables and
+          /lib/xtables og
           /usr/include/libiptc
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -890,8 +890,8 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>iptables</command></term>
         <listitem>
           <para>
-            is used to set up, maintain, and inspect the tables of
-            IP packet filter rules in the Linux kernel
+            brukes til å sette opp, vedlikeholde og inspisere tabellene til
+            IP pakkefilterregler i Linux kjernen
           </para>
           <indexterm zone="iptables iptables-prog">
             <primary sortas="b-iptables">iptables</primary>
@@ -903,7 +903,7 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>iptables-apply</command></term>
         <listitem>
           <para>
-            is a safer way to update iptables remotely
+            er en tryggere måte å oppdatere iptables eksternt
           </para>
           <indexterm zone="iptables iptables-apply">
             <primary sortas="b-iptables-apply">iptables-apply</primary>
@@ -915,7 +915,7 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>iptables-legacy</command></term>
         <listitem>
           <para>
-            is used to interact with iptables using the legacy command set
+            brukes til å samhandle med iptables ved å bruke det gamle kommandosettet
           </para>
           <indexterm zone="iptables iptables-legacy">
             <primary sortas="b-iptables-legacy">iptables-legacy</primary>
@@ -927,7 +927,7 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>iptables-legacy-restore</command></term>
         <listitem>
           <para>
-            is used to restore a set of legacy iptables rules
+            brukes til å gjenopprette et sett med eldre iptables regler
           </para>
           <indexterm zone="iptables iptables-legacy-restore">
             <primary sortas="b-iptables-legacy-restore">iptables-legacy-restore</primary>
@@ -939,7 +939,7 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>iptables-legacy-save</command></term>
         <listitem>
           <para>
-            is used to save a set of legacy iptables rules
+            brukes til å lagre et sett med eldre iptables regler
           </para>
           <indexterm zone="iptables iptables-legacy-save">
             <primary sortas="b-iptables-legacy-save">iptables-legacy-save</primary>
@@ -951,9 +951,9 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>iptables-restore</command></term>
         <listitem>
           <para>
-            is used to restore IP Tables from data specified on
-            STDIN. Use I/O redirection provided by your
-            shell to read from a file
+            brukes til å gjenopprette IP-tabeller fra data spesifisert på
+            STDIN. Bruk I/O omdirigering levert av ditt
+            skall for å lese fra en filen
           </para>
           <indexterm zone="iptables iptables-restore">
             <primary sortas="b-iptables-restore">iptables-restore</primary>
@@ -965,9 +965,9 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>iptables-save</command></term>
         <listitem>
           <para>
-            is used to dump the contents of an IP Table in easily
-            parseable format to STDOUT. Use I/O-redirection
-            provided by your shell to write to a file
+            brukes til å enkelt dumpe innholdet i en IP tabell
+            parsebart format til STDOUT. Bruk I/O omdirigering
+            levert av skallet ditt for å skrive til en fil
           </para>
           <indexterm zone="iptables iptables-save">
             <primary sortas="b-iptables-save">iptables-save</primary>
@@ -979,10 +979,10 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>iptables-xml</command></term>
         <listitem>
           <para>
-            is used to convert the output of
-            <command>iptables-save</command> to an XML format. Using the
-            <filename>iptables.xslt</filename> stylesheet converts the XML
-            back to the format of <command>iptables-restore</command>
+            brukes til å konvertere utdataene til
+            <command>iptables-save</command> til et XML format. Å bruke
+            <filename>iptables.xslt</filename> stilark konverterer XML
+             tilbake til formatet til <command>iptables-restore</command>
           </para>
           <indexterm zone="iptables iptables-xml">
             <primary sortas="b-iptables-xml">iptables-xml</primary>
@@ -994,8 +994,8 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>ip6tables*</command></term>
         <listitem>
           <para>
-            are a set of commands for IPV6 that parallel the iptables
-            commands above
+            er et sett med kommandoer for IPV6 som er parallelle med iptables
+            kommandoene ovenfor
           </para>
           <indexterm zone="iptables ip6tables">
             <primary sortas="b-ip6tables">ip6tables</primary>
@@ -1007,9 +1007,9 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>nfsynproxy</command></term>
         <listitem>
           <para>
-            (optional) configuration tool. SYNPROXY target makes handling of
-            large SYN floods possible without the large performance penalties
-            imposed by the connection tracking in such cases
+            (valgfritt) konfigurasjonsverktøy. SYNPROXY mål gjør håndtering av
+            store SYN flommer mulig uten de store ytelsesstraffene
+            pålagt av tilkoblingssporingen i slike tilfeller
           </para>
           <indexterm zone="iptables nfsynproxy">
             <primary sortas="b-nfsynproxy">nfsynproxy</primary>
@@ -1021,7 +1021,7 @@ iptables -A INPUT -i WAN1 -s 192.168.0.0/16 -j DROP</literal></screen>
         <term><command>xtables-multi</command></term>
         <listitem>
           <para>
-            is a binary that behaves according to the name it is called by
+            er en binær som oppfører seg i henhold til navnet sitt
           </para>
           <indexterm zone="iptables xtables-multi">
             <primary sortas="b-xtables-multi">xtables-multi</primary>
