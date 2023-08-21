@@ -9,8 +9,8 @@
   <!ENTITY gpgme-download-ftp  " ">
   <!ENTITY gpgme-md5sum        "98f25a7e494d294c4b2c1a769113510e">
   <!ENTITY gpgme-size          "1.7 MB">
-  <!ENTITY gpgme-buildsize     "168 MB (Add 33 MB for tests)">
-  <!ENTITY gpgme-time          "0.7 SBU (with all bindings, add 0.8 SBU for tests; all with parallelism=4)">
+  <!ENTITY gpgme-buildsize     "168 MB (legg til 33 MB for tester)">
+  <!ENTITY gpgme-time          "0.7 SBU (med alle bindinger, legg til 0,8 SBU for tester; alle med parallellitet=4)">
 ]>
 
 <sect1 id="gpgme" xreflabel="GPGME-&gpgme-version;">
@@ -24,95 +24,95 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to GPGME</title>
+    <title>Introduksjon til GPGME</title>
 
     <para>
-      The <application>GPGME</application> package is a C library
-      that allows cryptography support to be added to a
-      program. It is designed to make access to public key crypto
-      engines like <application>GnuPG</application> or GpgSM easier
-      for applications. <application>GPGME</application> provides
-      a high-level crypto API for encryption, decryption, signing,
-      signature verification and key management.
+      <application>GPGME</application> pakken er et C bibliotek
+      som lar kryptografistøtte legges til et
+      program. Den er designet for å gi tilgang til offentlig nøkkelkrypto
+      motorer som <application>GnuPG</application> eller GpgSM lettere
+      for applikasjoner. <application>GPGME</application> gir
+      et høyt nivå krypto API for kryptering, dekryptering, signering,
+      signaturverifisering og nøkkelhåndtering.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&gpgme-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&gpgme-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&gpgme-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&gpgme-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &gpgme-md5sum;
+          Nedlasting MD5 sum: &gpgme-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &gpgme-size;
+          Nedlastingsstørrelse: &gpgme-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &gpgme-buildsize;
+          Estimert diskplass som kreves: &gpgme-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &gpgme-time;
+          Estimert byggetid: &gpgme-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Recommended patch (required if SWIG is installed):
+          Anbefalt oppdatering (påkrevd hvis SWIG er installert):
           <ulink url="&patch-root;/gpgme-&gpgme-version;-gpg_error_1_46-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">GPGME Dependencies</bridgehead>
+    <bridgehead renderas="sect3">GPGME Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="libassuan"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="doxygen"/> and
-      <xref linkend="graphviz"/> (for API documentation),
-      <xref linkend="gnupg2"/> (required if Qt or SWIG are installed;
-        used during the test suite),
+      <xref linkend="doxygen"/> og
+      <xref linkend="graphviz"/> (for API dokumentasjon),
+      <xref linkend="gnupg2"/> (nødvendig hvis Qt eller SWIG er installert;
+        brukt under testpakken),
       <xref linkend="clisp"/>,<!--
 gpgme can still use python 2.7, but can use python3 as well,
 so do not advertise python2
       <xref linkend="python2"/>,-->
-      <xref linkend="qt5"/>, and/or
-      <xref linkend="swig"/> (for language bindings)
+      <xref linkend="qt5"/>, og/eller
+      <xref linkend="swig"/> (for språkbindinger)
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/gpgme"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of GPGME</title>
+    <title>Installasjon av GPGME</title>
 
     <para>
-      First, fix an issue building with Python &python3-majorver; installed:
+      Først, fikse et problem med Python &python3-majorver; installert:
     </para>
 
 <screen><userinput remap="pre">sed -e 's/3\.9/&python3-majorver;/'                    \
@@ -120,28 +120,28 @@ so do not advertise python2
     -i configure</userinput></screen>
 
     <para>
-      Apply a patch to fix build failure with SWIG and libgpg-error-1.46
-      or later:
+      Bruk en oppdatering for å fikse byggefeil med SWIG og libgpg-error-1.46
+      eller senere:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../gpgme-&gpgme-version;-gpg_error_1_46-1.patch</userinput></screen>
 
     <para>
-      Install <application>GPGME</application> by running the following
-      commands:
+      Installer <application>GPGME</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr --disable-gpg-test &amp;&amp;
 make</userinput></screen>
 
     <para>
-      To test the results, you should have <xref linkend="gnupg2"/> installed
-      and remove the <command>--disable-gpg-test</command> above. Issue:
+      For å teste resultatene, bør du ha <xref linkend="gnupg2"/> installert
+      og fjerne <command>--disable-gpg-test</command> ovenfor. Kjør:
       <command>make -k check</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -149,43 +149,43 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--disable-gpg-test</parameter>: if this parameter is not
-      passed to configure, the test programs are built during
-      <command>make</command> stage, which requires <xref linkend="gnupg2"/>.
-      This parameter is not needed if <xref linkend="gnupg2"/> is installed.
+      <parameter>--disable-gpg-test</parameter>: hvis denne parameteren ikke er
+      sendt til configure, bygges testprogrammene under
+      <command>make</command> steget, som krever <xref linkend="gnupg2"/>.
+      Denne parameteren er ikke nødvendig hvis <xref linkend="gnupg2"/> er installert.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          gpgme-json, and gpgme-tool
+          gpgme-json, og gpgme-tool
         </seg>
         <seg>
-          libgpgme, libgpgmepp.so, and libqgpgme.so
+          libgpgme, libgpgmepp.so, og libqgpgme.so
         </seg>
         <seg>
           /usr/include/{gpgme++,qgpgme,QGpgME},
           /usr/lib/cmake/{Gpgmepp,QGpgme}.
-          /usr/lib/python{2.7,3.9}/site-packages/gpg, and
+          /usr/lib/python{2.7,3.9}/site-packages/gpg, og
           /usr/share/common-lisp/source/gpgme
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -193,7 +193,7 @@ make</userinput></screen>
         <term><command>gpgme-json</command></term>
         <listitem>
           <para>
-            outputs <application>GPGME</application> commands in JSON format
+            sender <application>GPGME</application> kommandoer i JSON format
           </para>
           <indexterm zone="gpgme gpgme-json">
             <primary sortas="b-gpgme-json">gpgme-json</primary>
@@ -205,9 +205,9 @@ make</userinput></screen>
         <term><command>gpgme-tool</command></term>
         <listitem>
           <para>
-            is an assuan server exposing <application>GPGME</application>
-            operations, such as printing fingerprints and keyids with
-            keyservers
+            er en assuan server som avslører <application>GPGME</application>
+            operasjoner, slik som å skrive ut fingeravtrykk og nøkkelkoder med
+            nøkkelservere
           </para>
           <indexterm zone="gpgme gpgme-tool">
             <primary sortas="b-gpgme-tool">gpgme-tool</primary>
@@ -220,8 +220,8 @@ make</userinput></screen>
         <term><filename class="libraryfile">libgpgme-pthread.so</filename></term>
         <listitem>
           <para>
-            contains the <application>GPGME</application> API functions for
-            applications using pthread.
+            inneholder <application>GPGME</application> API funksjon for
+            applikasjoner som bruker pthread.
           </para>
           <indexterm zone="gpgme libgpgme-pthread">
             <primary sortas="c-libgpgme-pthread">libgpgme-pthread.so</primary>
@@ -234,7 +234,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libgpgme.so</filename></term>
         <listitem>
           <para>
-            contains the <application>GPGME</application> API functions
+            inneholder <application>GPGME</application> API funksjoner
           </para>
           <indexterm zone="gpgme libgpgme">
             <primary sortas="c-libgpgme">libgpgme.so</primary>
@@ -246,7 +246,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libgpgmepp.so</filename></term>
         <listitem>
           <para>
-            contains the C++ <application>GPGME</application> API functions
+            inneholder C++ <application>GPGME</application> API funksjoner
           </para>
           <indexterm zone="gpgme libgpgmepp">
             <primary sortas="c-libgpgmepp">libgpgmepp.so</primary>
@@ -258,8 +258,8 @@ make</userinput></screen>
         <term><filename class="libraryfile">libqgpgme.so</filename></term>
         <listitem>
           <para>
-            contains API functions for handling GPG operations in
-            <application>Qt</application> applications
+            inneholder API funksjoner for å håndtere GPG operasjoner i
+            <application>Qt</application> applikasjoner
           </para>
           <indexterm zone="gpgme libqgpgme">
             <primary sortas="c-libqgpgme">libqgpgme.so</primary>
