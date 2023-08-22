@@ -9,7 +9,7 @@
   <!ENTITY tripwire-md5sum        "a5cf1bc2f235f5d8ca458f00548db6ee">
   <!ENTITY tripwire-size          "980 KB">
   <!ENTITY tripwire-buildsize     "29 MB">
-  <!ENTITY tripwire-time          "1.6 SBU (scripting install)">
+  <!ENTITY tripwire-time          "1.6 SBU (skriptinstallasjon)">
 ]>
 
 <sect1 id="tripwire" xreflabel="Tripwire-&tripwire-version;">
@@ -23,73 +23,73 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Tripwire</title>
+    <title>Introduksjon til Tripwire</title>
 
     <para>
-      The <application>Tripwire</application> package contains programs
-      used to verify the integrity of the files on a given system.
+      <application>Tripwire</application> pakken inneholder programmer som
+      brukes til å verifisere integriteten til filene på et gitt system.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&tripwire-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&tripwire-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&tripwire-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&tripwire-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &tripwire-md5sum;
+          Nedlasting MD5 sum: &tripwire-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &tripwire-size;
+          Nedlastingsstørrelse: &tripwire-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &tripwire-buildsize;
+          Estimert diskplass som kreves: &tripwire-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &tripwire-time;
+          Estimert byggetid: &tripwire-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Tripwire Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Tripwire Avhengigheter</bridgehead>
 <!--
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="openssl"/>
     </para>
 -->
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      An <xref linkend="server-mail"/>
+      Og <xref linkend="server-mail"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/tripwire"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Tripwire</title>
+    <title>Installasjon av</title>
 
     <para>
-      Compile <application>Tripwire</application> by running the following
-      commands:
+      Kompilere <application>Tripwire</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>sed -e '/^CLOBBER/s/false/true/'         \
@@ -109,19 +109,19 @@ make CPPFLAGS=-std=c++11</userinput></screen>
 
     <note>
       <para>
-        The default configuration is to use a local MTA. If
-        you don't have an MTA installed and have no wish to install
-        one, modify <filename>install/install.cfg</filename> to use an SMTP
-        server instead.  Otherwise the install will fail.
+        Standardkonfigurasjonen er å bruke en lokal MTA. Hvis
+        du ikke har en MTA installert og ikke ønsker å installere
+        en, endre <filename>install/install.cfg</filename> å bruke en SMTP
+        server i stedet. Ellers vil installasjonen mislykkes.
       </para>
     </note>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -129,23 +129,23 @@ cp -v policy/*.txt /usr/share/doc/tripwire-&tripwire-version;</userinput></scree
 
     <note>
       <para>
-        During <command>make install</command>, several questions
-        are asked, including passwords. If you want to make a script, you have
-        to apply a <application>sed</application> before running
+        I løpet av <command>make install</command>, flere spørsmål
+        blir spurt, inkludert passord. Hvis du vil lage et skript, må du
+        anvende en <application>sed</application> før du kjører
         <command>make install</command>:
       </para>
 
 <screen><userinput>sed -i -e 's@installer/install.sh@&amp; -n -s <replaceable>&lt;site-password&gt;</replaceable> -l <replaceable>&lt;local-password&gt;</replaceable>@' Makefile</userinput></screen>
 
       <para>
-        Of course, you should do this with dummy passwords and change them
-        later.
+        Selvfølgelig bør du gjøre dette med dummy passord og endre dem
+        seinere.
       </para>
 
       <para>
-        Another issue when scripting is that the installer exits when the
-        standard input is not a terminal. You may disable this behavior
-        with the following sed:
+        Et annet problem ved skripting er at installasjonsprogrammet avsluttes når
+        standard inngang ikke er en terminal. Du kan deaktivere denne oppførselen
+        med følgende sed:
       </para>
 
 <screen><userinput>sed '/-t 0/,+3d' -i installer/install.sh</userinput></screen>
@@ -155,48 +155,48 @@ cp -v policy/*.txt /usr/share/doc/tripwire-&tripwire-version;</userinput></scree
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed ... installer/install.cfg</command>: This command tells
-      the package to install the program database and reports in
-      <filename class="directory">/var/lib/tripwire</filename> and sets the
-      proper location for man pages and documentation.
+      <command>sed ... installer/install.cfg</command>: Denne kommandoen forteller
+      pakken å installere programdatabasen og rapporter i
+      <filename class="directory">/var/lib/tripwire</filename> og setter inn
+      riktig plassering for mansider og dokumentasjon.
     </para>
 
     <para>
-      <command>find ...</command>, <command>sed ...</command>, and
-      <command>autoreconf -fi</command>: The build system is unusable as is, and
-      has to be modified for the build to succeed.
+      <command>find ...</command>, <command>sed ...</command>, og
+      <command>autoreconf -fi</command>: Byggesystemet er ubrukelig som det er, og
+      må endres for at byggingen skal lykkes.
     </para>
 
     <para>
-      <option>CPPFLAGS=-std=c++11</option>: Setting the C++ preprocessor
-      flags to version 11 is necessary to prevent a conflict with the
-      default version which is c++17 in recent version of gcc.
+      <option>CPPFLAGS=-std=c++11</option>: Innstilling av C++ forprosessorens
+      flagg til versjon 11 er nødvendig for å forhindre konflikt med
+      standardversjon som er c++17 i nyere versjon av gcc.
     </para>
 
     <para>
-      <command>make install</command>: This command creates the
-      <application>Tripwire</application> security keys as well as installing
-      the binaries. There are two keys: a site key and a local key which are
-      stored in <filename class="directory">/etc/tripwire/</filename>.
+      <command>make install</command>: Denne kommandoen oppretter
+      <application>Tripwire</application> sikkerhetsnøkler samt installerer
+      binærfilene. Det er to nøkler: en stedsnøkkel og en lokal nøkkel som er
+      lagret i <filename class="directory">/etc/tripwire/</filename>.
     </para>
 
     <para>
       <command>cp -v policy/*.txt /usr/doc/tripwire-&tripwire-version;</command>:
-      This command installs the <application>tripwire</application> sample
-      policy files with the other <application>tripwire</application>
-      documentation.i
+      Denne kommandoen installerer <application>tripwire</application> eksempel
+      regelfiler med den andre <application>tripwire</application>
+      dokumentasjonen.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Tripwire</title>
+    <title>Konfigurere Tripwire</title>
 
     <sect3 id="tripwire-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/tripwire/*</filename>
@@ -209,40 +209,40 @@ cp -v policy/*.txt /usr/share/doc/tripwire-&tripwire-version;</userinput></scree
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        <application>Tripwire</application> uses a policy file to
-        determine which files are integrity checked. The default policy
-        file (<filename>/etc/tripwire/twpol.txt</filename>) is for a
-        default installation and will need to be updated for your
+        <application>Tripwire</application> bruker en regelfil til
+        å finne ut hvilke filer som er integritetssjekket. Standard
+        regelfil (<filename>/etc/tripwire/twpol.txt</filename>) er for en
+        standardinstallasjon og må oppdateres for ditt
         system.
       </para>
 
       <para>
-        Policy files should be tailored to each individual distribution and/or
-        installation. Some example policy files can be found in <filename
+        Regelfiler bør skreddersys til hver enkelt distribusjon og/eller
+        installasjon. Noen eksempler på regelfiler kan finnes i <filename
         class="directory">/usr/share/doc/tripwire/</filename>.
       </para>
 
       <para>
-        If desired, copy the policy file you'd like to try into <filename
-        class="directory">/etc/tripwire/</filename> instead of using the
-        default policy file, <filename>twpol.txt</filename>.  It is, however,
-        recommended that you edit your policy file. Get ideas from the
-        examples above and read
+        Hvis ønskelig, kopier regelfilen du vil prøve til <filename
+        class="directory">/etc/tripwire/</filename> i stedet for å bruke
+        standard regelfil, <filename>twpol.txt</filename>.  Det er imidlertid
+        anbefalt at du redigerer regelfilen. Få ideer fra
+        eksempler ovenfor og les
         <filename>/usr/share/doc/tripwire/policyguide.txt</filename> for
-        additional information. <filename>twpol.txt</filename> is a good
-        policy file for learning about <application>Tripwire</application>
-        as it will note any changes to the file system and can even be used
-        as an annoying way of keeping track of changes for uninstallation of
-        software.
+        tilleggsinformasjon. <filename>twpol.txt</filename> er en god
+        regelfil for å lære om <application>Tripwire</application>
+        da den vil merke eventuelle endringer i filsystemet og til og med kan brukes
+        som en irriterende måte å holde styr på endringer for avinstallering av
+        programvare.
       </para>
 
       <para>
-        After your policy file has been edited to your satisfaction you may
-        begin the configuration steps (perform as the <systemitem
-        class='username'>root</systemitem>) user:
+        Etter at regelfilen din er redigert til din tilfredshet kan du
+        starte konfigurasjonstrinnene (kjør som <systemitem
+        class='username'>root</systemitem>) bruker:
       </para>
 
 <screen role="root"><userinput>twadmin --create-polfile --site-keyfile /etc/tripwire/site.key \
@@ -250,80 +250,80 @@ cp -v policy/*.txt /usr/share/doc/tripwire-&tripwire-version;</userinput></scree
 tripwire --init</userinput></screen>
 
       <para>
-        Depending on your system and the contents of the policy file, the
-        initialization phase above can take a relatively long time.
+        Avhengig av systemet ditt og innholdet i regelfilen, vil
+        initialiseringsfasen ovenfor kan ta relativt lang tid.
       </para>
 
     </sect3>
 
     <sect3>
-      <title>Usage Information</title>
+      <title>Bruksinformasjon</title>
 
       <para>
-        <application>Tripwire</application> will identify file changes in
-        the critical system files specified in the policy file.  Using
-        <application>Tripwire</application> while making frequent changes to
-        these directories will flag all these changes.  It is most useful
-        after a system has reached a configuration that the user considers
-        stable.
+        <application>Tripwire</application> vil identifisere filendringer i
+        de kritiske systemfilene som er spesifisert i regelfilen. Bruk av
+        <application>Tripwire</application> mens du gjør hyppige endringer i
+        disse mappene vil flagge alle disse endringene. Det er mest nyttig
+        etter at et system har nådd en konfigurasjon som brukeren vurderer
+        stabil.
       </para>
 
       <para>
-        To use <application>Tripwire</application> after creating a policy
-        file to run a report, use the following command:
+        Å bruke <application>Tripwire</application> etter å ha opprettet en
+        regelfil for å kjøre en rapport, bruk følgende kommando:
       </para>
 
 <screen role="root"><userinput>tripwire --check &gt; /etc/tripwire/report.txt</userinput></screen>
 
       <para>
-        View the output to check the integrity of your files. An automatic
-        integrity report can be produced by using a cron facility to schedule
-        the runs.
+        Se utdataene for å sjekke integriteten til filene dine. En automatisk
+        integritetsrapport kan produseres ved å bruke en cron fasilitet for å planlegge
+        kjøringene.
       </para>
 
       <para>
-        Reports are stored in binary and, if desired, encrypted.  View reports,
-        as the <systemitem class="username">root</systemitem> user, with:
+        Rapporter lagres binært og om ønskelig kryptert. Se rapporter,
+        som <systemitem class="username">root</systemitem> bruker, med:
       </para>
 
 <screen role="nodump"><userinput>twprint --print-report -r /var/lib/tripwire/report/<replaceable>&lt;report-name.twr&gt;</replaceable></userinput></screen>
 
       <para>
-        After you run an integrity check, you should examine the report (or
-        email) and then modify the <application>Tripwire</application> database
-        to reflect the changed files on your system. This is so that
-        <application>Tripwire</application> will not continually notify you
-        hat files you intentionally changed are a security violation. To do
-        this you must first <command>ls -l /var/lib/tripwire/report/</command>
-        and note the name of the newest file which starts with your system
-        name as presented by the command <userinput>uname -n</userinput> and
-        ends in <filename>.twr</filename>. These files were created during
-        report creation and the most current one is needed to update the
-        <application>Tripwire</application> database of your system. As the
-        <systemitem class='username'>root</systemitem> user, type in the
-        following command making the appropriate report name:
+        Etter at du har kjørt en integritetssjekk, bør du undersøke rapporten (eller
+        e-posten) og endre deretter <application>Tripwire</application> database
+        for å gjenspeile de endrede filene på systemet ditt. Dette er for at
+        <application>Tripwire</application> vil ikke varsle deg kontinuerlig
+        om filer du har endret med vilje er et sikkerhetsbrudd. Å gjøre
+        dette må du først <command>ls -l /var/lib/tripwire/report/</command>
+        og legg merke til navnet på den nyeste filen som starter med systemnavnet ditt
+        som presentert av kommandoen <userinput>uname -n</userinput> og
+        ender med <filename>.twr</filename>. Disse filene ble opprettet under
+        rapportoppretting og den nyeste er nødvendig for å oppdatere
+        <application>Tripwire</application> databasen til systemet ditt. Som
+        <systemitem class='username'>root</systemitem> bruker, skriv inn
+        følgende kommando og bruk det riktige rapportnavnet:
       </para>
 
 <screen role="nodump"><userinput>tripwire --update --twrfile /var/lib/tripwire/report/<replaceable>&lt;report-name.twr&gt;</replaceable></userinput></screen>
 
       <para>
-        You will be placed into <application>Vim</application> with a copy
-        of the report in front of you. If all the changes were good, then just
-        type <command>:wq</command> and after entering your local key, the
-        database will be updated. If there are files which you still want to
-        be warned about, remove the 'x' before the filename in the report and
-        type <command>:wq</command>.
+        Du vil bli plassert i <application>Vim</application> med en kopi
+        av rapporten foran deg. Hvis alle endringene var gode, så bare
+        skriv <command>:wq</command> og etter å ha tastet inn din lokale nøkkel,
+        databasen vil bli oppdatert. Hvis det er filer du fortsatt vil
+        bli advart om, fjern 'x' før filnavnet i rapporten og
+        skriv <command>:wq</command>.
       </para>
 
     </sect3>
 
     <sect3>
-      <title>Changing the Policy File</title>
+      <title>Endre regelfilen</title>
 
       <para>
-        If you are unhappy with your policy file and would like to modify it
-        or use a new one, modify the policy file and then execute the following
-        commands as the <systemitem class='username'>root</systemitem> user:
+        Hvis du er misfornøyd med regelfilen din og ønsker å endre den
+        eller bruke en ny, endre regelfilen og utfør deretter følgende
+        kommandoer som <systemitem class='username'>root</systemitem> bruker:
       </para>
 
 <screen role="nodump"><userinput>twadmin --create-polfile /etc/tripwire/twpol.txt &amp;&amp;
@@ -334,23 +334,23 @@ tripwire --init</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>siggen, tripwire, twadmin, and twprint</seg>
-        <seg>None</seg>
+        <seg>siggen, tripwire, twadmin, og twprint</seg>
+        <seg>Ingen</seg>
         <seg>/etc/tripwire, /var/lib/tripwire,
-        and /usr/share/doc/tripwire-&tripwire-version;</seg>
+        og /usr/share/doc/tripwire-&tripwire-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -358,8 +358,8 @@ tripwire --init</userinput></screen>
         <term><command>siggen</command></term>
         <listitem>
           <para>
-            is a signature gathering utility that displays
-            the hash function values for the specified files
+            er et signaturinnsamlingsverktøy som viser
+            hash funksjonsverdiene for de angitte filene
           </para>
           <indexterm zone="tripwire siggen">
             <primary sortas="b-siggen">siggen</primary>
@@ -371,7 +371,7 @@ tripwire --init</userinput></screen>
         <term><command>tripwire</command></term>
         <listitem>
           <para>
-            is the main file integrity checking program
+            er hovedprogrammet for kontroll av filintegritet
           </para>
           <indexterm zone="tripwire tripwire">
             <primary sortas="b-tripwire">tripwire</primary>
@@ -383,10 +383,10 @@ tripwire --init</userinput></screen>
         <term><command>twadmin</command></term>
         <listitem>
           <para>
-            administrative and utility tool used to perform
-            certain administrative functions related to
-            <application>Tripwire</application> files and configuration
-            options
+            administrativt og verktøy som brukes til å utføre
+            visse administrative funksjoner knyttet til
+            <application>Tripwire</application> filer og konfigurasjons
+            alternativer
           </para>
           <indexterm zone="tripwire twadmin">
             <primary sortas="b-twadmin">twadmin</primary>
@@ -398,8 +398,8 @@ tripwire --init</userinput></screen>
         <term><command>twprint</command></term>
         <listitem>
           <para>
-            prints <application>Tripwire</application>
-            database and report files in clear text format
+            printer <application>Tripwire</application>
+            database- og rapportfiler i klartekstformat
           </para>
           <indexterm zone="tripwire twprint">
             <primary sortas="b-twprint">twprint</primary>
