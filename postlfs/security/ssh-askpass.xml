@@ -11,7 +11,7 @@
   <!ENTITY ssh-askpass-md5sum        "&openssh-md5sum;">
   <!ENTITY ssh-askpass-size          "1.8 MB">
   <!ENTITY ssh-askpass-buildsize     "10 MB">
-  <!ENTITY ssh-askpass-time          "less than 0.1 SBU">
+  <!ENTITY ssh-askpass-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="ssh-askpass" xreflabel="ssh-askpass-&ssh-askpass-version;">
@@ -25,80 +25,80 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to ssh-askpass</title>
+    <title>Introduksjon til ssh-askpass</title>
 
   <para>
-    The <application>ssh-askpass</application> is a generic executable name for
-    many packages, with similar names, that provide a interactive X service to
-    grab password for packages requiring administrative privileges to be run.
-    It prompts the user with a window box where the necessary password can be
-    inserted. Here, we choose Damien Miller's package distributed in the
+    <application>ssh-askpass</application> er et generisk kjørbart navn for
+    mange pakker, med lignende navn, som gir en interaktiv X-tjeneste til å
+    hente passord for pakker som krever administrative rettigheter for å kjøres.
+    Den spør brukeren med en vindusboks hvor det nødvendige passordet kan bli
+    satt inn. Her velger vi Damien Millers pakke distribuert i
     <application>OpenSSH</application> tarball.</para>
 
   &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&ssh-askpass-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&ssh-askpass-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&ssh-askpass-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&ssh-askpass-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &ssh-askpass-md5sum;
+          Nedlasting MD5 sum: &ssh-askpass-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &ssh-askpass-size;
+          Nedlastingsstørrelse: &ssh-askpass-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &ssh-askpass-buildsize;
+          Estimert diskplass som kreves: &ssh-askpass-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &ssh-askpass-time;
+          Estimert byggetid: &ssh-askpass-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">ssh-askpass Dependencies</bridgehead>
+    <bridgehead renderas="sect3">ssh-askpass Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="gtk3"/>,
-      <xref role="runtime" linkend="sudo"/> (runtime),
-      <xref linkend="xorg7-lib"/>, and
-      <xref role="runtime" linkend="x-window-system"/> (runtime)
+      <xref role="runtime" linkend="sudo"/> (kjøretid),
+      <xref linkend="xorg7-lib"/>, og
+      <xref role="runtime" linkend="x-window-system"/> (kjøretid)
     </para>
 
     <para condition="html" role="usernotes">
-        User Notes: <ulink url='&blfs-wiki;/ssh-askpass'/>
+        Brukernotater: <ulink url='&blfs-wiki;/ssh-askpass'/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of ssh-askpass</title>
+    <title>Installasjon av ssh-askpass</title>
 
     <para>
-      Install <application>ssh-askpass</application> by running the following
-      commands:
+      Installer <application>ssh-askpass</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>cd contrib &amp;&amp;
 make gnome-ssh-askpass3</userinput></screen>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -v -d -m755                    /usr/libexec/openssh/contrib  &amp;&amp;
@@ -106,21 +106,21 @@ install -v -m755    gnome-ssh-askpass3 /usr/libexec/openssh/contrib  &amp;&amp;
 ln -sv -f contrib/gnome-ssh-askpass3   /usr/libexec/openssh/ssh-askpass</userinput></screen>
 
     <para>
-     The use of /usr/libexec/openssh/contrib and a symlink is justified by the
-     eventual necessity of a different program for that service.
+     Bruken av /usr/libexec/openssh/contrib og en symbolkobling er rettferdiggjort av
+     eventuell nødvendighet av et annet program for den tjenesten.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring ssh-askpass</title>
+    <title>Konfigurere ssh-askpass</title>
 
     <sect3 id="ssh-askpass-config">
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
         <para>
-          As the <systemitem class="username">root</systemitem> user, configure
-          <xref linkend="sudo"/> to use <application>ssh-askpass</application>:
+          Som <systemitem class="username">root</systemitem> bruker, konfigurer
+          <xref linkend="sudo"/> til å bruke <application>ssh-askpass</application>:
         </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/sudo.conf &lt;&lt; "EOF" &amp;&amp;
@@ -130,12 +130,12 @@ EOF
 chmod -v 0644 /etc/sudo.conf</userinput></screen>
 
         <para>
-          If a given graphical &lt;application&gt; requires administrative
-          privileges, use <command>sudo -A &lt;application&gt;</command> from an
-          x-terminal, from a Window Manager menu and/or replace
-          "Exec=&lt;application&gt; ..." by
-          "Exec=sudo -A &lt;application&gt; ..." in the
-          &lt;application&gt;.desktop file.
+          Dersom en gitt grafisk &lt;applikasjon&gt; krever administrative
+          privilegier, bruk <command>sudo -A &lt;application&gt;</command> fra en
+           x-terminal, fra en Vindusbehandler meny og/eller erstatt
+          "Exec=&lt;application&gt; ..." med
+          "Exec=sudo -A &lt;application&gt; ..." i
+          &lt;application&gt;.skrivebordsfilen.
         </para>
 
     </sect3>
@@ -143,20 +143,20 @@ chmod -v 0644 /etc/sudo.conf</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
-          gnome-ssh-askpass3, ssh-askpass (symlink to
+          gnome-ssh-askpass3, ssh-askpass (symbolkobling til
           <filename>gnome-ssh-askpass3</filename>)
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
           /usr/libexec/openssh/contrib
