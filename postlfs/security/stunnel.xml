@@ -26,81 +26,81 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to stunnel</title>
+    <title>Introduksjon til stunnel</title>
 
     <para>
-      The <application>stunnel</application> package contains a program
-      that allows you to encrypt arbitrary TCP connections inside SSL (Secure
-      Sockets Layer) so you can easily communicate with clients over secure
-      channels. <!--<application>stunnel</application> can be used to add SSL
-      functionality to commonly used <application>Inetd</application> daemons
-      such as POP-2, POP-3, and IMAP servers, along with standalone daemons
-      such as NNTP, SMTP, and HTTP.--> <application>stunnel</application> can
-      also be used to tunnel PPP over network sockets without changes to the
-      server package source code.
+      <application>stunnel</application> pakken inneholder et program
+      som lar deg kryptere vilkårlige TCP tilkoblinger i SSL (Secure
+      Sockets Layer) slik at du enkelt kan kommunisere med klienter over en sikker
+      kanal. <!--<application>stunnel</application> kan brukes til å legge til SSL
+      funksjonalitet til vanlig brukt <application>Inetd</application> nisser
+      som POP-2, POP-3, og IMAP servers, sammen med frittstående nisser
+      som for eksempel NNTP, SMTP, og HTTP.--> <application>stunnel</application> kan
+      også brukes til å tunnelere PPP over nettverkskontakter uten endringer i
+      serverpakkens kildekode.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&stunnel-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&stunnel-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&stunnel-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&stunnel-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &stunnel-md5sum;
+          Nedlasting MD5 sum: &stunnel-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &stunnel-size;
+          Nedlastingsstørrelse: &stunnel-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &stunnel-buildsize;
+          Estimert diskplass som kreves: &stunnel-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &stunnel-time;
+          Estimert byggetid: &stunnel-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">stunnel Dependencies</bridgehead>
+    <bridgehead renderas="sect3">stunnel Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="libnsl"/>,
       <ulink url="https://netcat.sourceforge.net/">netcat</ulink>
-      (required for tests),
+      (nødvendig for tester),
       <ulink url="http://ftp.porcupine.org/pub/security/index.html">tcpwrappers</ulink>,
-      and
+      og
       <ulink url="https://dist.torproject.org/">TOR</ulink>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/stunnel"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of stunnel</title>
+    <title>Installasjon av stunnel</title>
 
     <para>
-      The <command>stunnel</command> daemon will be run in a
-      <command>chroot</command> jail by an unprivileged user. Create the
-      new user and group using the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      <command>stunnel</command> nissen vil bli kjørt i et
+      <command>chroot</command> fengsel av en uprivilegert bruker. Opprett
+      en ny bruker og gruppe ved å bruke følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>groupadd -g 51 stunnel &amp;&amp;
@@ -109,14 +109,14 @@ useradd -c "stunnel Daemon" -d /var/lib/stunnel \
 
     <note>
       <para>
-        A signed SSL Certificate and a Private Key is necessary to run the
-        <command>stunnel</command> daemon. After the package is installed,
-        there are instructions to generate them. However, if you own or have
-        already created a signed SSL Certificate you wish to use, copy it to
-        <filename>/etc/stunnel/stunnel.pem</filename> before starting the
-        build (ensure only <systemitem class="username">root</systemitem> has
-        read and write access). The <filename class="extension">.pem</filename>
-        file must be formatted as shown below:
+        Et signert SSL sertifikat og en privat nøkkel er nødvendig for å kjøre
+        <command>stunnel</command> nissen. Etter at pakken er installert,
+        er det instruksjoner for å generere dem. Men hvis du eier eller
+        allerede har opprettet et signert SSL sertifikat du ønsker å bruke, kopier det til
+        <filename>/etc/stunnel/stunnel.pem</filename> før du starter
+        å bygge (bare sikre at <systemitem class="username">root</systemitem> har
+        lese- og skrivetilgang). <filename class="extension">.pem</filename>
+        filen må formateres som vist nedenfor:
       </para>
 
 <screen><literal>-----BEGIN PRIVATE KEY-----
@@ -132,24 +132,24 @@ useradd -c "stunnel Daemon" -d /var/lib/stunnel \
     </note>
 
     <para>
-      Install <application>stunnel</application> by running the following
-      commands:
+      Installer <application>stunnel</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <!-- Not needed, we're 10+ versions ahead of this now
     <note>
       <para>
-        For some systems with <application>binutils</application>
-        versions prior to 2.25, <command>configure</command> may fail.  If
-        necessary, fix it either with:
+        For noen systemer med <application>binutils</application>
+        versjoner før 2.25, <command>configure</command> kan mislykkes. Hvis
+        nødvendig, fiks det enten med:
       </para>
 
 <screen><userinput>sed -i '/LDFLAGS.*static_flag/ s/^/#/' configure</userinput></screen>
 
       <para>
-        or, if <xref linkend="llvm"/> with Clang is installed, you can
-        replace <command>./configure ...</command> with <command>CC=clang
-        ./configure ...</command> in the first command below.
+        eller, hvis <xref linkend="llvm"/> med Clang er installert, kan du
+        erstatte <command>./configure ...</command> with <command>CC=clang
+        ./configure ...</command> i den første kommandoen nedenfor.
       </para>
     </note>
 -->
@@ -166,41 +166,41 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      If you have installed the optional netcat application, the
-      regression tests can be run with <command>make check</command>.
+      Hvis du har installert den valgfrie netcat applikasjonen,
+      regresjonstester kan kjøres med <command>make check</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make docdir=/usr/share/doc/stunnel-&stunnel-version; install</userinput></screen>
 
     <para revision="systemd">
-      Install the included systemd unit by running the following command as the
-      <systemitem class="username">root</systemitem> user:
+      Installer den medfølgende systemd enheten ved å kjøre følgende kommando som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="systemd"><userinput>install -v -m644 tools/stunnel.service /usr/lib/systemd/system</userinput></screen>
 
     <para>
-      If you do not already have a signed SSL Certificate and Private Key,
-      create the <filename>stunnel.pem</filename> file in the
-      <filename class="directory">/etc/stunnel</filename> directory using the
-      command below. You will be prompted to enter the necessary
-      information. Ensure you reply to the
+      Hvis du ikke allerede har et signert SSL sertifikat og privat nøkkel,
+      opprett <filename>stunnel.pem</filename> filen i
+      <filename class="directory">/etc/stunnel</filename> mappen ved å bruke
+      kommandoen nedenfor. Du vil bli bedt om å angi nødvendig
+      informasjon. Sørg for at du svarer på
     </para>
 
 <screen><prompt>Common Name (FQDN of your server) [localhost]:</prompt></screen>
 
     <para>
-      prompt with the name or IP address you will be using
-      to access the service(s).
+      ledeteksten med navnet eller IP adressen du skal bruke
+      for å få tilgang til tjenesten(e).
     </para>
 
     <para>
-      To generate a certificate, as the
-      <systemitem class="username">root</systemitem> user, issue:
+      For å generere et sertifikat, som
+      <systemitem class="username">root</systemitem> bruker, kjør:
     </para>
 
 <screen role="root"><userinput>make cert</userinput></screen>
@@ -208,26 +208,26 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para revision="sysv">
-      <parameter>--disable-systemd</parameter>: This switch disables systemd
-      socket activation support which is not available in BLFS.
+      <parameter>--disable-systemd</parameter>: Denne bryteren deaktiverer systemd
+      socket aktiveringsstøtte som ikke er tilgjengelig i BLFS.
     </para>
 
     <para>
-      <command>make docdir=... install</command>: This command installs the
-      package and changes the documentation installation directory to standard
-      naming conventions.
+      <command>make docdir=... install</command>: Denne kommandoen installerer
+      pakken og endrer dokumentasjonsinstallasjonsmappen til standard
+      navnekonvensjoner.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring stunnel</title>
+    <title>Konfigurere stunnel</title>
 
     <sect3 id="stunnel-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/stunnel/stunnel.conf</filename>
@@ -240,22 +240,22 @@ make</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        As the <systemitem class="username">root</systemitem> user,
-        create the directory used for the
-        <filename class="extension">.pid</filename> file created
-        when the <application>stunnel</application> daemon starts:
+        Som <systemitem class="username">root</systemitem> bruker,
+        opprett mappen som brukes til
+        <filename class="extension">.pid</filename> fil opprettet
+        når <application>stunnel</application> nissen startet:
       </para>
 
 <screen role="root"><userinput>install -v -m750 -o stunnel -g stunnel -d /var/lib/stunnel/run &amp;&amp;
 chown stunnel:stunnel /var/lib/stunnel</userinput></screen>
 
       <para>
-        Next, create a basic <filename>/etc/stunnel/stunnel.conf</filename>
-        configuration file using the following commands as the
-        <systemitem class="username">root</systemitem> user:
+        Deretter lager du en grunnleggende <filename>/etc/stunnel/stunnel.conf</filename>
+        konfigurasjonsfil ved å bruke følgende kommandoer som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/stunnel/stunnel.conf &lt;&lt; "EOF"
@@ -284,8 +284,8 @@ cert   = /etc/stunnel/stunnel.pem
 EOF</userinput></screen>
 
       <para>
-        Finally, add the service(s) you wish to encrypt to the
-        configuration file. The format is as follows:
+        Til slutt legger du til tjenesten(e) du ønsker å kryptere til
+        konfigurasjonsfilen. Formatet er som følger:
       </para>
 
 <screen><literal>[<replaceable>&lt;service&gt;</replaceable>]
@@ -294,38 +294,38 @@ connect = <replaceable>&lt;hostname:portnumber&gt;</replaceable></literal></scre
 
 <!--
       <para>
-        If you use <application>stunnel</application> to encrypt a daemon
-        started from <command>[x]inetd</command>, you may need to disable that
-        daemon in the <filename>/etc/[x]inetd.conf</filename> file and enable a
-        corresponding <replaceable>&lt;service&gt;</replaceable>_stunnel
-        service. You may have to add an appropriate entry in
-        <filename>/etc/services</filename> as well.
+        Hvis du bruker <application>stunnel</application> å kryptere en nisse
+        startet fra <command>[x]inetd</command>, må du kanskje deaktivere
+        nissen i <filename>/etc/[x]inetd.conf</filename> fil og aktiver en
+        tilsvarende <replaceable>&lt;service&gt;</replaceable>_stunnel
+        service. Du må kanskje legge til en passende oppføring i
+        <filename>/etc/services</filename> også.
       </para>
 -->
 
       <para>
-        For a full explanation of the commands and syntax used in the
-        configuration file, issue <command>man stunnel</command>.
+        For en fullstendig forklaring av kommandoene og syntaksen som brukes i
+        konfigurasjonsfilen, kjør <command>man stunnel</command>.
       </para>
 
     </sect3>
 
     <sect3  id="stunnel-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        To automatically start the <command>stunnel</command> daemon when the
-        system is booted, install the
-        <filename>/etc/rc.d/init.d/stunnel</filename> bootscript from the
-        <xref linkend="bootscripts"/> package.
+        For å starte automatisk <command>stunnel</command> nissen når
+        systemet startet opp, installer
+        <filename>/etc/rc.d/init.d/stunnel</filename> oppstartsskript fra
+        <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        To start the <command>stunnel</command>
-        daemon at boot, enable the previously installed
-        <application>systemd</application> unit by running the following
-        command as the <systemitem class="username">root</systemitem> user:
+        For å starte <command>stunnel</command>
+        nissen ved oppstart, aktivere den tidligere installerte
+        <application>systemd</application> enheten ved å kjøre følgende
+        kommando som <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <indexterm zone="stunnel stunnel-init">
@@ -341,29 +341,29 @@ connect = <replaceable>&lt;hostname:portnumber&gt;</replaceable></literal></scre
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          stunnel and stunnel3
+          stunnel og stunnel3
         </seg>
         <seg>
           libstunnel.so
         </seg>
         <seg>
-          /{etc,lib,var/lib}/stunnel and
+          /{etc,lib,var/lib}/stunnel og
           /usr/share/doc/stunnel-&stunnel-version;
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -371,9 +371,9 @@ connect = <replaceable>&lt;hostname:portnumber&gt;</replaceable></literal></scre
         <term><command>stunnel</command></term>
         <listitem>
           <para>
-            is a program designed to work as an SSL
-            encryption wrapper between remote clients and local
-            or remote servers
+            er et program utviklet for å fungere som en SSL
+            krypteringsinnpakning mellom eksterne klienter og lokale
+            eller eksterne servere
           </para>
           <indexterm zone="stunnel stunnel-prog">
             <primary sortas="b-stunnel">stunnel</primary>
@@ -385,9 +385,9 @@ connect = <replaceable>&lt;hostname:portnumber&gt;</replaceable></literal></scre
         <term><command>stunnel3</command></term>
         <listitem>
           <para>
-            is a <application>Perl</application> wrapper script to use
-            <command>stunnel</command> 3.x syntax with
-            <command>stunnel</command> 4.05 or later
+            er et <application>Perl</application> innpakningsskript for å bruke
+            <command>stunnel</command> 3.x syntaks med
+            <command>stunnel</command> 4.05 eller senere
           </para>
           <indexterm zone="stunnel stunnel3">
             <primary sortas="b-stunnel3">stunnel3</primary>
@@ -399,7 +399,7 @@ connect = <replaceable>&lt;hostname:portnumber&gt;</replaceable></literal></scre
         <term><filename class="libraryfile">libstunnel.so</filename></term>
         <listitem>
           <para>
-            contains the API functions required by
+            inneholder API funksjonene som kreves av
             <application>stunnel</application>
           </para>
           <indexterm zone="stunnel libstunnel">
