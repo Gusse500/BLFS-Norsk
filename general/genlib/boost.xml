@@ -8,8 +8,8 @@
   <!ENTITY boost-download-ftp  " ">
   <!ENTITY boost-md5sum        "3276c0637d1be8687740c550237ef999">
   <!ENTITY boost-size          "113 MB">
-  <!ENTITY boost-buildsize     "1.1 GB (195 MB installed)">
-  <!ENTITY boost-time          "1.4 SBU (Using parallelism=4; add 1.2 SBU for tests)">
+  <!ENTITY boost-buildsize     "1.1 GB (195 MB installert)">
+  <!ENTITY boost-time          "1.4 SBU (Bruker parallellisme=4; legge til 1,2 SBU for tester)">
 ]>
 
 <!-- Editors: Check test failures with python-3.11 -->
@@ -25,99 +25,99 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Boost</title>
+    <title>Introduksjon til Boost</title>
 
     <para>
-      <application>Boost</application> provides a set of free peer-reviewed
-      portable C++ source libraries. It includes libraries for linear algebra,
-      pseudorandom number generation, multithreading, image processing, regular
-      expressions and unit testing.
+      <application>Boost</application> gir et sett med gratis fagfellevurderte
+      flyttbare C++ kildebiblioteker. Det inkluderer biblioteker for lineær algebra,
+      generering av pseudorandom, flertråding, bildebehandling, vanlige
+      uttrykk og enhetstesting.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&boost-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&boost-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&boost-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&boost-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &boost-md5sum;
+          Nedlasting MD5 sum: &boost-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &boost-size;
+          Nedlastingsstørrelse: &boost-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &boost-buildsize;
+          Estimert diskplass som kreves: &boost-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &boost-time;
+          Estimert byggetid: &boost-time;
         </para>
       </listitem>
     </itemizedlist>
     <!--
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Recommended patch, required to build <xref linkend="libreoffice"/>:
+          Anbefalt oppdatering, nødvendig for å bygge <xref linkend="libreoffice"/>:
           <ulink url="&patch-root;/boost-&boost-version;-gcc_10-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
     -->
 
-    <bridgehead renderas="sect3">Boost Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Boost Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="which"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="icu"/> and
+      <xref linkend="icu"/> og
       <ulink url="https://www.open-mpi.org/">Open MPI</ulink>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/boost"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Boost</title>
+    <title>Installasjon av Boost</title>
 
     <para>
-      A change in this version of <application>boost</application> breaks
-      the few packages which use the <application>phoenix</application>
-      module when compiled with current <application>GCC</application>. In BLFS,
-      that affects <xref linkend="libreoffice"/>. Fix this with the following
-      command:
+      En endring i denne versjonen av <application>boost</application> ødelegger
+      de få pakkene som bruker <application>phoenix</application>
+      modul når den er kompilert med nåværende <application>GCC</application>. I BLFS,
+      påvirker det <xref linkend="libreoffice"/>. Fiks dette med følgende
+      kommando:
     </para>
 
 <screen><userinput>sed -i '/#include.*phoenix.*tuple.hpp.*/d' \
   boost/phoenix/stl.hpp</userinput></screen>
 
     <para>
-      This package can be built with several jobs running in parallel. In
-      the instructions below, <parameter>&lt;N&gt;</parameter> stands for the
-      number of jobs. Install <application>Boost</application> by running the
-      following commands:
+      Denne pakken kan bygges med flere jobber som kjører parallelt. I
+      instruksjonene nedenfor, <parameter>&lt;N&gt;</parameter> står for
+      antall jobber. Installer <application>Boost</application> ved å kjøre
+      følgende kommandoer:
     </para>
 
 
@@ -125,38 +125,38 @@
 ./b2 stage -j<replaceable>&lt;N&gt;</replaceable> threading=multi link=shared</userinput></screen>
 
     <para>
-      To run the Boost.Build's regression test, issue
+      For å kjøre Boost.Builds regresjonstest, kjør
       <command>pushd tools/build/test; python3 test_all.py; popd</command>.
-      With python-3.10.x all 168 tests should pass.  With
-      <xref linkend='python3'/>, 20 tests fail for undetermined reasons.
+      Med python-3.10.x skal alle 168 tester bestå. Med
+      <xref linkend='python3'/>, 20 tester mislykkes av ubestemte årsaker.
     </para>
 
     <para>
-      To run every library's regression tests, issue <command>pushd status;
-      ../b2; popd</command>.  A few tests may fail. They take a very long time
-      (over 119 SBU at -j4) and use a very large amount of disk space
-      (46 GB). You should use the <parameter>-jN</parameter> switch to
-      speed them up.
+      For å kjøre hvert biblioteks regresjonstester, kjør <command>pushd status;
+      ../b2; popd</command>.  Noen få tester kan mislykkes. De tar veldig lang tid
+      (over 119 SBU ved -j4) og bruker en veldig stor mengde diskplass
+      (46 GB). Du bør bruke <parameter>-jN</parameter> bryteren til å
+      få fart på dem.
     </para>
 
     <note>
       <para>
-        Boost installs many versioned directories in /usr/lib/cmake.
-        If a new version of <application>Boost</application> is installed over a
-        previous version, the older cmake directories need to be
-        explicitly removed.  To do this, run as the
-        <systemitem class="username">root</systemitem> user:
+        Boost installerer mange versjonsmapper i /usr/lib/cmake.
+        Hvis en ny versjon av <application>Boost</application> er installert over en
+        tidligere versjon, må de eldre cmake mappene bli
+        eksplisitt fjernet. For å gjøre dette, kjør som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>rm -rf /usr/lib/cmake/[Bb]oost*</userinput></screen>
 
       <para>
-        before installing the new version.
+        før du installerer den nye versjonen.
       </para>
     </note>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <!-- dev note: ./b2 - -prefix=<DESTDIR>/usr install threading=multi link=shared -->
@@ -166,53 +166,53 @@
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>sed -i '/#include ...</parameter>: This removes the inclusion
-      of <filename>boost/phoenix/stl/tuple.hpp</filename> from this header-only
-      library, allowing applications which use it to link using recent C++.
+      <parameter>sed -i '/#include ...</parameter>: Dette fjerner inkluderingen
+      av <filename>boost/phoenix/stl/tuple.hpp</filename> kun fra denne deklarasjons
+      biblioteket, slik at applikasjoner som bruker det kan koble til ved hjelp av nylige C++.
       <!-- FIXME: remove before 11.3 is we still use 1.81.0 and LO-7.4,
       this alternative is only for people working through the development book.-->
-      An alternative is to edit
-      <filename>/usr/include/boost/phoenix/stl.hpp</filename> if this version of
-      boost has already been installed without this <command>sed</command>.
+      Et alternativ er å redigere
+      <filename>/usr/include/boost/phoenix/stl.hpp</filename> hvis denne versjonen av
+      boost allerede er installert uten denne <command>sed</command>.
     </para>
 
     <para>
-      <parameter>threading=multi</parameter>: This parameter ensures that
-      <application>Boost</application> is built with multithreading support.
+      <parameter>threading=multi</parameter>: Denne parameteren sikrer at
+      <application>Boost</application> er bygget med støtte for flertråding.
     </para>
 
     <para>
-      <parameter>link=shared</parameter>: This parameter ensures that only
-      shared libraries are created, except for libboost_exception and
-      libboost_test_exec_monitor which are created as static. Most people
-      will not need the static libraries, and most programs using
-      <application>Boost</application> only use the headers. Omit
-      this parameter if you do need static libraries.
+      <parameter>link=shared</parameter>: Denne parameteren sikrer at bare
+      delte biblioteker opprettes, bortsett fra libboost_exception og
+      libboost_test_exec_monitor som er opprettet som statiske. Folk flest
+      vil ikke trenge de statiske bibliotekene, og de fleste programmer som bruker
+      <application>Boost</application> bruk kun deklarasjonene. Utelate
+      denne parameteren hvis du trenger statiske biblioteker.
     </para>
 
     <para>
-      <parameter>--with-python=python3</parameter>: This switch ensures Python3
-      is used if Python2 is installed.
+      <parameter>--with-python=python3</parameter>: Denne bryteren sikrer at Python3
+      brukes hvis Python2 er installert.
     </para>
 
     <para>
-       <option>-jN</option>: This switch may be added to the
-       <command>b2</command> command lines, to run up to N processes in
-       parallel.
+       <option>-jN</option>: Denne bryteren kan legges til
+       <command>b2</command> kommandolinjer, for å kjøre opp til N prosesser i
+       parallell.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
@@ -235,7 +235,7 @@
           libboost_stacktrace_noop.so, libboost_system.so,
           libboost_test_exec_monitor.a, libboost_thread.so, libboost_timer.so,
           libboost_type_erasure.so, libboost_unit_test_framework.so,
-          libboost_wave.so, and libboost_wserialization.so
+          libboost_wave.so, og libboost_wserialization.so
         </seg>
         <seg>
           /usr/include/boost
