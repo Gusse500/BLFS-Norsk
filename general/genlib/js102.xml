@@ -15,8 +15,8 @@
   <!ENTITY js102-download-ftp  " ">
   <!ENTITY js102-md5sum        "&firefox-md5;">
   <!ENTITY js102-size          "457 MB">
-  <!ENTITY js102-buildsize     "3.3 GB (38 MB installed after removing 34MB static lib)">
-  <!ENTITY js102-time          "1.8 SBU (with parallelism=4)">
+  <!ENTITY js102-buildsize     "3.3 GB (38 MB installert etter fjerning av 34 MB statisk lib)">
+  <!ENTITY js102-time          "1.8 SBU (med parallellitet=4)">
 ]>
 
 <sect1 id="js102" xreflabel="JS-&JS102-version;">
@@ -30,109 +30,109 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to JS</title>
+    <title>Introduksjon til JS</title>
 
     <para>
-      <application>JS</application> (also referred as
-      <application>SpiderMonkey</application>) is Mozilla's JavaScript and
-      WebAssembly Engine, written in C++ and Rust.
-      In BLFS, the source code of JS is taken from Firefox.
+      <application>JS</application> (også referert til som
+      <application>SpiderMonkey</application>) er Mozillas JavaScript og
+      WebAssembly Engine, skrevet i C++ og Rust.
+      I BLFS er kildekoden til JS hentet fra Firefox.
     </para>
 
     <!-- To editors: make sure polkit work with mozjs before
          tagging mozjs.  -->
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&js102-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&js102-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&js102-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&js102-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &js102-md5sum;
+          Nedlasting MD5 sum: &js102-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &js102-size;
+          Nedlastingsstørrelse: &js102-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &js102-buildsize;
+          Estimert diskplass som kreves: &js102-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &js102-time;
+          Estimert byggetid: &js102-time;
         </para>
       </listitem>
     </itemizedlist>
 <!--
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/js-&JS91-version;-python_3_10-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
-    <bridgehead renderas="sect3">JS102 Dependencies</bridgehead>
+    <bridgehead renderas="sect3">JS102 Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="icu"/>,
-      <xref linkend="rust"/>, and
+      <xref linkend="rust"/>, og
       <xref linkend="which"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <!-- If clang is installed, it will be used instead of gcc.
            gcc does not work for 32-bit system w/o -msse2 -mfpmath=sse:
            https://bugzilla.mozilla.org/show_bug.cgi?id=1729459 -->
-      <xref linkend="llvm"/> (with <application>Clang</application>,
-      required for 32-bit systems without SSE2 capabilities)
+      <xref linkend="llvm"/> (med <application>Clang</application>,
+      kreves for 32-bits systemer uten SSE2 funksjoner)
     </para>
 
     <!-- It seems nasm is only used for aarch64-win64. -->
-    <!--bridgehead renderas="sect4">Optional</bridgehead>
+    <!--bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="nasm"/>
     </para-->
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/js102"/>
+      Brukernotater: <ulink url="&blfs-wiki;/js102"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of JS</title>
+    <title>Installasjon av JS</title>
 
     <note>
       <para>
-        Unlike most other packages in BLFS, the instructions below require you
-        to untar <filename>firefox-&JS102-version;esr.tar.xz</filename> and
-        change into the <filename>firefox-&JS102-version;</filename> folder.
+        I motsetning til de fleste andre pakker i BLFS, krever instruksjonene nedenfor at du
+        untarer <filename>firefox-&JS102-version;esr.tar.xz</filename> og
+        endre til <filename>firefox-&JS102-version;</filename> mappen.
       </para>
 
       <para>
-        Extracting the tarball
-        will reset the permissions of the current directory to 0755 if you
-        have permission to do that. If you do this in a directory where
-        the sticky bit is set, such
-        as <filename class="directory">/tmp</filename> it will end with error
-        messages:
+        Å pakke ut tarballen
+        vil tilbakestille tillatelsene til gjeldende mappe til 0755 hvis du
+        har tillatelse til å gjøre det. Hvis du gjør dette i en mappe hvor
+        den klebrige biten er satt, slik
+        som <filename class="directory">/tmp</filename> vil det ende med en
+        feilmelding:
       </para>
 
 <literallayout>tar: .: Cannot utime: Operation not permitted
@@ -141,10 +141,10 @@ tar: Exiting with failure status due to previous errors
 </literallayout>
 
       <para>
-        This does finish with non-zero status, but it does
-        <emphasis>NOT</emphasis> mean there is a real problem.
-        Do not untar as the <systemitem class="username">root</systemitem> user
-        in a directory where the sticky bit is set - that will unset it.
+        Dette avsluttes med ikke-null status, men det betyr
+        <emphasis>IKKE</emphasis> at det er et reelt problem.
+        Ikke untar som <systemitem class="username">root</systemitem> bruker
+        i en mappe der den klebrige biten er satt - det vil deaktivere den.
       </para>
 
     </note>
@@ -152,8 +152,8 @@ tar: Exiting with failure status due to previous errors
      https://bugzilla.mozilla.org/show_bug.cgi?id=1729459
 
     <para>
-      If building on a 32 bit machine, the following sed works around an issue
-      with an incompatible <quote>double</quote> type in one header file:
+      Hvis du bygger på en 32-bits maskin, løser følgende sed et problem
+      med en inkompatibel <quote>dobbel</quote> type i en deklarasjonsfil:
     </para>
 
 <screen><userinput>case "$(uname -m)" in
@@ -162,8 +162,8 @@ tar: Exiting with failure status due to previous errors
 esac</userinput></screen>
 -->
     <para>
-      Install <application>JS</application> by running the following
-      commands:
+      Installer <application>JS</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
     <note>
@@ -174,20 +174,20 @@ esac</userinput></screen>
          href="../../xincludes/mozconfigure.xml"/>
 
       <para>
-        Compiling the C++ code respects $MAKEFLAGS and defaults to 'j1',
-        the rust code will use all processors.
+        Å kompilere C++-koden respekterer $MAKEFLAGS og er standard til 'j1',
+        rustkoden vil bruke alle prosessorer.
       </para>
     </note>
 
     <para>
-      First remove an obsolete flag in python code, that has been removed
-      in python-3.11:
+      Fjern først et foreldet flagg i python koden, som har blitt fjernet
+      i python-3.11:
     </para>
 
 <screen><userinput>grep -rl \"rU\" | xargs sed -i 's/"rU"/"r"/'</userinput></screen>
 
     <para>
-      Then run:
+      Så kjør:
     </para>
 
 <screen><userinput>mkdir obj &amp;&amp;
@@ -203,34 +203,34 @@ sh ../js/src/configure.in --prefix=/usr            \
 make</userinput></screen>
 
     <para>
-      To run the JS test suite, issue:
+      For å kjøre JS testpakken, kjør:
       <command>make -C js/src check-jstests
       JSTESTS_EXTRA_ARGS="--timeout 300 --wpt=disabled"</command>.
-      It's recommended to redirect the output into a log.
+      Det anbefales å omdirigere utdataene til en logg.
       <!-- recheck when ICU gets upgraded -->
       <!-- Still true with 102 -renodr -->
-      Because we are building with system ICU, more than one hundred tests
-      (out of a total of more than 50,000) are known to fail.
+      Fordi vi bygger med system ICU, mer enn hundre tester
+      (av totalt mer enn 50 000) er kjent for å mislykkes.
     </para>
     <para>
-      To run the JIT test suite, issue:
+      For å kjøre JIT testpakken, kjør:
       <command>make -C js/src check-jit-test
       JITTEST_EXTRA_ARGS="--timeout 300"</command>.
     </para>
 
     <caution>
       <para>
-        An issue in the installation process causes any running program which
-        links to JS102 shared library (for example, GNOME Shell) to crash if
-        JS102 is upgraded or reinstalled.  To work around this issue, remove
-        the old version of the JS102 shared library before installation:
+        Et problem i installasjonsprosessen forårsaker at ethvert kjørende program som
+        lenker til JS102 delt bibliotek (for eksempel GNOME Shell) å krasje hvis
+        JS102 oppgraderes eller installeres på nytt. For å omgå dette problemet, fjern
+        den gamle versjonen av JS102 delte bibliotek før installasjon:
       </para>
 
 <screen role="root"><userinput>rm -fv /usr/lib/libmozjs-102.so</userinput></screen>
     </caution>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -240,95 +240,95 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <command>sh ../js/src/configure.in</command>:
-      <filename>configure.in</filename> is actually a shell script, but
-      the executable bit is not set in its permission mode so it's needed
-      to explicitly run it with <command>sh</command>.
+      <filename>configure.in</filename> er egentlig et skallskript, men
+      den kjørbare biten er ikke satt i tillatelsesmodus, så det er nødvendig
+      å eksplisitt kjøre den med <command>sh</command>.
     </para>
 
     <para>
-      <parameter>--with-intl-api</parameter>: This enables the
-      internationalization functions required by
+      <parameter>--with-intl-api</parameter>: Dette muliggjør
+      internasjonaliseringsfunksjoner som kreves av
       <application>Gjs</application>.
     </para>
 
     <para>
-      <parameter>--with-system-*</parameter>: These parameters allow the build system
-      to use system versions of the above libraries. These are required for
-      stability.
+      <parameter>--with-system-*</parameter>: Disse parameterne tillater byggesystemet
+      å bruke systemversjoner av bibliotekene ovenfor. Dette kreves for
+      stabilitet.
     </para>
 
     <para>
-      <parameter>--enable-readline</parameter>: This switch enables Readline
-      support in the JS shell.
+      <parameter>--enable-readline</parameter>: Denne bryteren aktiverer Readline
+      støtte i JS skallet.
     </para>
 
     <para>
-      <parameter>--disable-jemalloc</parameter>: This switch disables the
-      internal memory allocator used in JS102. jemalloc is only intended for
-      the Firefox browser environment. For other applications using JS102,
-      the application may crash as items allocated in the jemalloc allocator
-      are freed on the system (glibc) allocator.
+      <parameter>--disable-jemalloc</parameter>: Denne bryteren deaktiverer
+      intern minneallokator brukt i JS102. jemalloc er kun beregnet på
+      Firefox nettlesermiljøet. For andre applikasjoner som bruker JS102,
+      applikasjonen kan krasje som elementer tildelt i jemalloc allokatoren
+      er frigjort på system (glibc) allokator.
     </para>
 
     <para>
-      <parameter>--disable-debug-symbols</parameter>: Don't generate debug
-      symbols since they are very large and most users won't need it. Remove
-      it if you want to debug JS102.
+      <parameter>--disable-debug-symbols</parameter>: Ikke generer feilsøkings
+      symboler siden de er veldig store og de fleste brukere ikke trenger det. Fjern
+      det hvis du vil feilsøke JS102.
     </para>
 
     <para>
-      <command>rm -v /usr/lib/libjs_static.ajs</command>: Remove a large
-      static library which is not used by any BLFS package.
+      <command>rm -v /usr/lib/libjs_static.ajs</command>: Fjern et stort
+      statisk bibliotek som ikke brukes av noen BLFS pakke.
     </para>
 
     <para>
       <command>sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</command>:
-      Prevent <command>js102-config</command> from using buggy CFLAGS.
+      Forhindrer <command>js102-config</command> fra å bruke buggy CFLAGS.
     </para>
 
     <para>
-      <option><envar>CC=gcc CXX=g++</envar></option>: BLFS used to
-      prefer to use gcc and g++ instead of upstream's defaults of the
-      <application>clang</application> programs. With the release of
-      gcc-12 the build takes longer with gcc and g++, primarily because
-      of extra warnings, and is bigger. Pass these environment variables
-      to the configure script if you wish to continue to use gcc, g++
-      (by exporting them and unset them after the installation, or simply
-      prepending them before the
-      <command>sh ../js/src/configure.in</command> command).  If you are
-      building on a 32-bit system, also see below.
+      <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide å
+      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstillinger for
+      <application>clang</application> programmer. Med utgivelsen av
+      gcc-12 bygget tar lengre tid med gcc og g++, først og fremst fordi
+      ekstra advarsler, og er større. Send disse miljøvariablene
+      til konfigureringsskriptet hvis du ønsker å fortsette å bruke gcc, g++
+      (ved å eksportere dem og deaktivere dem etter installasjonen, eller ganske enkelt
+      forberede dem før
+      <command>sh ../js/src/configure.in</command> kommandoen).  Hvis du
+      bygger på et 32-bits system, se også nedenfor.
     </para>
 
     <para>
       <option><envar>CXXFLAGS="-msse2 -mfpmath=sse"</envar></option>:
-      Use SSE2 instead of 387 for double-precision floating-point
-      operations.  It's needed by GCC to satisfy the expectations of
-      upstream (Mozilla) developers with floating-point arithmetic.
-      Use it if you are building this package on a 32-bit system with
-      GCC (if Clang is not installed or GCC is explicitly specified).
-      Note that this will cause JS to crash on a processor without SSE2
-      capability.  If you are running the system on such an old processor,
-      Clang is strictly needed.  This setting is not needed on 64-bit
-      systems because all 64-bit x86 processors support SSE2 and the 64-bit
-      compilers (both Clang and GCC) use SSE2 by default.
+      Bruk SSE2 i stedet for 387 for flytende komma med dobbel presisjon
+      operasjoner. Det er nødvendig av GCC for å tilfredsstille forventningene til
+      oppstrøms (Mozilla) utviklere med flytende komma-aritmetikk.
+      Bruk den hvis du bygger denne pakken på et 32-bits system med
+      GCC (hvis Clang ikke er installert eller GCC er eksplisitt spesifisert).
+      Merk at dette vil føre til at JS krasjer på en prosessor uten SSE2
+      evne. Hvis du kjører systemet på en så gammel prosessor,
+      Clang er strengt nødvendig. Denne innstillingen er ikke nødvendig på 64-bit
+      systemer fordi alle 64-bit x86-prosessorer støtter SSE2 og 64-bit
+      kompilatorer (både Clang og GCC) bruker SSE2 som standard.
     </para>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          js102 and js102-config
+          js102 og js102-config
         </seg>
         <seg>
           libmozjs-102.so
@@ -340,7 +340,7 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -348,8 +348,8 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
         <term><command>js102</command></term>
         <listitem>
           <para>
-            provides a command line interface to the
-            <application>JavaScript</application> engine
+            gir et kommandolinjegrensesnitt til
+            <application>JavaScript</application> motoren
           </para>
           <indexterm zone="js102 js102">
             <primary sortas="b-js102">js102</primary>
@@ -361,7 +361,7 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
         <term><command>js102-config</command></term>
         <listitem>
           <para>
-            is used to find the JS compiler and linker flags
+            brukes til å finne JS kompilatoren og linkerflaggene
           </para>
           <indexterm zone="js102 js102-config">
             <primary sortas="b-js102-config">js102-config</primary>
@@ -373,7 +373,7 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
         <term><filename class="libraryfile">libmozjs-102.so</filename></term>
         <listitem>
           <para>
-            contains the Mozilla JavaScript API functions
+            inneholder Mozilla JavaScript API funksjonene
           </para>
           <indexterm zone="js102 libmozjs-102">
             <primary sortas="c-libmozjs102">libmozjs-102.so</primary>
