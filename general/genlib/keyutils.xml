@@ -8,8 +8,8 @@
   <!ENTITY keyutils-download-ftp  " ">
   <!ENTITY keyutils-md5sum        "919af7f33576816b423d537f8a8692e8">
   <!ENTITY keyutils-size          "96 KB">
-  <!ENTITY keyutils-buildsize     "1.9 MB (with tests)">
-  <!ENTITY keyutils-time          "less than 0.1 SBU (add 0.6 SBU for tests)">
+  <!ENTITY keyutils-buildsize     "1.9 MB (med tester)">
+  <!ENTITY keyutils-time          "less than 0.1 SBU (legg til 0.6 SBU for tester)">
 ]>
 
 <sect1 id="keyutils" xreflabel="keyutils-&keyutils-version;">
@@ -23,91 +23,91 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to keyutils</title>
+    <title>Introduksjon til keyutils</title>
 
     <para>
-      <application>Keyutils</application> is a set of utilities for managing
-      the key retention facility in the kernel, which can be used by
-      filesystems, block devices and more to gain and retain the authorization
-      and encryption keys required to perform secure operations.
+      <application>Keyutils</application> er et sett med verktøy for å administrere
+      nøkkeloppbevaringsfunksjonen i kjernen, som kan brukes av
+      filsystemer, blokkenheter og mer for å få og beholde autorisasjonen
+      og krypteringsnøkler som kreves for å utføre sikre operasjoner.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&keyutils-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&keyutils-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&keyutils-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&keyutils-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &keyutils-md5sum;
+          Nedlasting MD5 sum: &keyutils-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &keyutils-size;
+          Nedlastingsstørrelse: &keyutils-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &keyutils-buildsize;
+          Estimert diskplass som kreves: &keyutils-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &keyutils-time;
+          Estimert byggetid: &keyutils-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">keyutils Dependencies</bridgehead>
+    <bridgehead renderas="sect3">keyutils Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="mitkrb"/>
       <!-- Without krb5 installed, a FTBFS occurs while trying to compile dns.afsdb.c.
       It looks for profile.h, which is installed by krb5. -->
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/keyutils"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of keyutils</title>
+    <title>Installasjon av keyutils</title>
 
     <para>
-      Install <application>keyutils</application> by running the following
-      commands:
+      Installer <application>keyutils</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>sed -i 's:$(LIBDIR)/$(PKGCONFIG_DIR):/usr/lib/pkgconfig:' Makefile &amp;&amp;
 make</userinput></screen>
 
     <para>
-      To test the results, issue, as the
-      <systemitem class="username">root</systemitem> user:
+      For å teste resultatene, kjør, som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" remap="test"><userinput>make -k test</userinput></screen>
 
     <para>
-      Note that several tests will fail if certain uncommon kernel options
-      were not used when the kernel was built.  These include CONFIG_BIG_KEYS,
-      CONFIG_KEY_DH_OPERATIONS, and CONFIG_CRYPTO_DH.
+      Merk at flere tester vil mislykkes hvis visse uvanlige kjernealternativer
+      ikke ble brukt da kjernen ble bygget. Disse inkluderer CONFIG_BIG_KEYS,
+      CONFIG_KEY_DH_OPERATIONS, og CONFIG_CRYPTO_DH.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make NO_ARLIB=1 LIBDIR=/usr/lib BINDIR=/usr/bin SBINDIR=/usr/sbin install</userinput></screen>
@@ -115,28 +115,28 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed ... Makefile</command>: This command ensures the pkgconfig
-      file is placed in the correct directory.
+      <command>sed ... Makefile</command>: Denne kommandoen sikrer at pkgconfig
+      filen er plassert i riktig mappe.
     </para>
 
     <para>
-      <parameter>NO_ARLIB=1</parameter>: This make flag disables installing the
-      static library.
+      <parameter>NO_ARLIB=1</parameter>: Dette make flagget deaktiverer installasjonen av
+      det statiske biblioteket.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring keyutils</title>
+    <title>Konfigurere keyutils</title>
 
     <sect3 id="keyutils-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
-        <filename>/etc/request-key.conf</filename> and
+        <filename>/etc/request-key.conf</filename> og
         <filename>/etc/request-key.d/*</filename>
       </para>
 
@@ -153,22 +153,22 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
-        <seg>keyctl, key.dns_resolver, and request-key</seg>
+        <seg>keyctl, key.dns_resolver, og request-key</seg>
         <seg>libkeyutils.so</seg>
-        <seg>/etc/request-key.d and /usr/share/keyutils</seg>
+        <seg>/etc/request-key.d og /usr/share/keyutils</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -176,7 +176,7 @@ make</userinput></screen>
         <term><command>keyctl</command></term>
         <listitem>
           <para>
-            controls the key management facility with a variety of subcommands
+            kontrollerer nøkkeladministrasjonsanlegget med en rekke underkommandoer
           </para>
           <indexterm zone="keyutils keyctl">
             <primary sortas="b-keyctl">keyctl</primary>
@@ -188,10 +188,10 @@ make</userinput></screen>
         <term><command>key.dns_resolver</command></term>
         <listitem>
           <para>
-            is invoked by <command>request-key</command> on behalf of the
-            kernel when kernel services (such as NFS, CIFS and AFS) need to
-            perform a hostname lookup and the kernel does not have the key
-            cached.  It is not ordinarily intended to be called directly
+            påkalles av <command>request-key</command> på vegne av
+            kjernen når kjernetjenester (som NFS, CIFS og AFS) trenger å
+            utføre et vertsnavnoppslag og kjernen ikke har nøkkelen
+            bufret. Den er vanligvis ikke ment å bli påkalt direkte
           </para>
           <indexterm zone="keyutils key.dns_resolver">
             <primary sortas="b-key.dns_resolver">key.dns_resolver</primary>
@@ -203,10 +203,10 @@ make</userinput></screen>
         <term><command>request-key</command></term>
         <listitem>
           <para>
-            is invoked by the kernel when the kernel is asked for a key that it
-            doesn't have immediately available. The kernel creates a temporary
-            key and then calls out to this program to instantiate it.  It is
-            not intended to be called directly
+            påkalles av kjernen når kjernen blir bedt om en nøkkel som den
+            ikke har umiddelbart tilgjengelig. Kjernen oppretter en midlertidig
+            nøkkel og roper deretter til dette programmet for å instansiere det. Den er
+            ikke ment å bli påkalt direkte
           </para>
           <indexterm zone="keyutils request-key">
             <primary sortas="b-request-keyt-key">request-key</primary>
@@ -218,7 +218,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libkeyutils.so</filename></term>
         <listitem>
           <para>
-            contains the keyutils library API instantiation
+            inneholder keyutils bibliotek API instansiering
           </para>
           <indexterm zone="keyutils libkeyutils">
             <primary sortas="c-libkeyutils">libkeyutils.so</primary>
