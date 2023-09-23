@@ -8,8 +8,8 @@
   <!ENTITY libarchive-download-ftp  " ">
   <!ENTITY libarchive-md5sum        "72cbb3c085624c825f627bfc8f52ce53">
   <!ENTITY libarchive-size          "4.9 MB">
-  <!ENTITY libarchive-buildsize     "41 MB (add 29 MB for tests)">
-  <!ENTITY libarchive-time          "0.3 SBU (add 0.7 SBU for tests)">
+  <!ENTITY libarchive-buildsize     "41 MB (legg til 29 MB for tester)">
+  <!ENTITY libarchive-time          "0.3 SBU (legg til 0.7 SBU for tester)">
 ]>
 
 <sect1 id="libarchive" xreflabel="libarchive-&libarchive-version;">
@@ -23,106 +23,106 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to libarchive</title>
+    <title>Introduksjon til libarchive</title>
 
     <para>
-      The <application>libarchive</application> library provides a single
-      interface for reading/writing various compression formats.
+      <application>libarchive</application> biblioteket gir et enkelt
+      grensesnitt for lesing/skriving av ulike komprimeringsformater.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&libarchive-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&libarchive-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&libarchive-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&libarchive-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &libarchive-md5sum;
+          Nedlasting MD5 sum: &libarchive-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &libarchive-size;
+          Nedlastingsstørrelse: &libarchive-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &libarchive-buildsize;
+          Estimert diskplass som kreves: &libarchive-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &libarchive-time;
+          Estimert byggetid: &libarchive-time;
         </para>
       </listitem>
     </itemizedlist>
 
 <!--
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/libarchive-&libarchive-version;-testsuite_fix-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
-    <bridgehead renderas="sect3">libarchive Dependencies</bridgehead>
+    <bridgehead renderas="sect3">libarchive Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="libxml2"/>,
-      <xref linkend="lzo"/>, and
+      <xref linkend="lzo"/>, og
       <xref linkend="nettle"/>
       <!-- <ulink url="https://facebook.github.io/zstd/">zstd</ulink> Now in LFS -->
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/libarchive"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of libarchive</title>
+    <title>Installasjon av libarchive</title>
 
 <!-- no longer required in 3.6.2.
     <para>
-      First, adapt the package to changes in glibc-2.36:
+      Tilpass først pakken til endringer i glibc-2.36:
     </para>
 
 <screen><userinput remap="pre">sed '/linux\/fs\.h/d' -i libarchive/archive_read_disk_posix.c</userinput></screen>
 -->
 
     <para>
-      Install <application>libarchive</application> by running the following
-      commands:
+      Installer <application>libarchive</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>LC_ALL=C make check</command>.
+      For å teste resultatene, kjør: <command>LC_ALL=C make check</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      Remove an invalid entry in <filename>/usr/lib/pkgconfig/libarchive.pc</filename>:
+      Fjern en ugyldig oppføring i <filename>/usr/lib/pkgconfig/libarchive.pc</filename>:
     </para>
 
 <screen role="root"><userinput>sed -i "s/iconv //" /usr/lib/pkgconfig/libarchive.pc</userinput></screen>
@@ -130,46 +130,46 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
 
     <para>
-      <option>--without-xml2</option>: This switch sets expat for xar archive
-      format support instead of preferred libxml2 if both packages are installed.
+      <option>--without-xml2</option>: Denne bryteren setter expat for xar arkiv
+      formatstøtte i stedet for foretrukket libxml2 hvis begge pakkene er installert.
     </para>
 
     <para>
-      <option>--without-nettle</option>: This switch sets OpenSSL for crypto
-      support instead of preferred Nettle if both packages are installed.
+      <option>--without-nettle</option>: Denne bryteren setter OpenSSL for krypto
+      støtte i stedet for foretrukket Nettle hvis begge pakkene er installert.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          bsdcat, bsdcpio, and bsdtar
+          bsdcat, bsdcpio, og bsdtar
         </seg>
         <seg>
           libarchive.so
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -177,7 +177,7 @@ make</userinput></screen>
         <term><command>bsdcat</command></term>
         <listitem>
           <para>
-            expands files to standard output
+            utvider filer til standard utdata
           </para>
           <indexterm zone="libarchive bsdcat">
             <primary sortas="b-bsdcat">bsdcat</primary>
@@ -189,7 +189,7 @@ make</userinput></screen>
         <term><command>bsdcpio</command></term>
         <listitem>
           <para>
-            is a tool similar to <command>cpio</command>
+            er et verktøy som ligner på <command>cpio</command>
           </para>
           <indexterm zone="libarchive bsdcpio">
             <primary sortas="b-bsdcpio">bsdcpio</primary>
@@ -201,7 +201,7 @@ make</userinput></screen>
         <term><command>bsdtar</command></term>
         <listitem>
           <para>
-            is a tool similar to GNU <command>tar</command>
+            er et verktøy som ligner på GNU <command>tar</command>
           </para>
           <indexterm zone="libarchive bsdtar">
             <primary sortas="b-bsdtar">bsdtar</primary>
@@ -213,8 +213,8 @@ make</userinput></screen>
         <term><filename class="libraryfile">libarchive.so</filename></term>
         <listitem>
           <para>
-            is a library that can create and read several streaming
-            archive formats
+            er et bibliotek som kan opprette og lese flere dataflyt
+            arkivformater
           </para>
           <indexterm zone="libarchive libarchive-lib">
             <primary sortas="c-libarchive">libarchive.so</primary>
