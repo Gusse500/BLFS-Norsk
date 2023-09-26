@@ -8,8 +8,8 @@
   <!ENTITY libical-download-ftp  " ">
   <!ENTITY libical-md5sum        "3799f9dde1db6f7eb0cb112b5e14ab60">
   <!ENTITY libical-size          "900 KB">
-  <!ENTITY libical-buildsize     "24 MB (with tests and API documentation)">
-  <!ENTITY libical-time          "0.3 SBU (with tests and documentation)">
+  <!ENTITY libical-buildsize     "24 MB (med tester og API dokumentasjon)">
+  <!ENTITY libical-time          "0.3 SBU (med tester og dokumentasjon)">
 <!-- run at -j1 because it fails at -j4 -->
 ]>
 
@@ -24,83 +24,83 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to libical</title>
+    <title>Introduksjon til libical</title>
 
     <para>
-      The <application>libical</application> package contains an implementation
-      of the iCalendar protocols and data formats.
+      <application>libical</application> pakken inneholder en implementering
+      av iCalendar protokollene og dataformatene.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
 
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&libical-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&libical-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&libical-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&libical-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &libical-md5sum;
+          Nedlasting MD5 sum: &libical-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &libical-size;
+          Nedlastingsstørrelse: &libical-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &libical-buildsize;
+          Estimert diskplass som kreves: &libical-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &libical-time;
+          Estimert byggetid: &libical-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">libical Dependencies</bridgehead>
+    <bridgehead renderas="sect3">libical Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="gobject-introspection"/> and
-      <xref linkend="vala"/> (both required for GNOME)
+      <xref linkend="gobject-introspection"/> og
+      <xref linkend="vala"/> (begge kreves for GNOME)
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="db"/>,
-      <xref linkend="doxygen"/> (for the API documentation),
-      <xref linkend="graphviz"/> (for the API documentation),
-      <xref linkend="gtk-doc"/> (for the API documentation),
-      <xref linkend="icu"/>, and
-      <xref linkend="pygobject3"/> (for some tests)
+      <xref linkend="doxygen"/> (for API dokumentasjon),
+      <xref linkend="graphviz"/> (for API dokumentasjon),
+      <xref linkend="gtk-doc"/> (for API dokumentasjon),
+      <xref linkend="icu"/>, og
+      <xref linkend="pygobject3"/> (for noen tester)
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/libical"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of libical</title>
+    <title>Installasjon av libical</title>
 
 <!-- Not needed with 3.0.9
-    <para>First make some fixes for the latest versions of icu and Python:</para>
+    <para>Gjør først noen rettelser for de nyeste versjonene av icu og Python:</para>
 
 <screen><userinput>sed -i '/define LEAP_MONTH/a #define FALSE 0' src/libical/icalrecur.c &amp;&amp;
 sed -i 's/array/arraytest/'       src/test/libical-glib/CMakeLists.txt &amp;&amp;
@@ -108,8 +108,8 @@ mv src/test/libical-glib/array.py src/test/libical-glib/arraytest.py</userinput>
 -->
 
     <para>
-      Install <application>libical</application> by running the
-      following commands:
+      Installer <application>libical</application> ved å kjøre
+      følgende kommandoer:
     </para>
 
   <!-- Needs confirmation, but I got a race condition at -j8,
@@ -129,17 +129,17 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr  \
 make -j1</userinput></screen>
 
     <para>
-      If you have <xref linkend="doxygen"/>, <xref linkend="graphviz"/>,
-      and <xref linkend="gtk-doc"/>
-      installed and wish to build the API documentation,  you should
-      remove the <parameter>-DICAL_BUILD_DOCS=false</parameter> switch
-      and issue:
+      Hvis du har <xref linkend="doxygen"/>, <xref linkend="graphviz"/>,
+      og <xref linkend="gtk-doc"/>
+      installert og ønsker å bygge API dokumentasjonen, bør du
+      fjerne <parameter>-DICAL_BUILD_DOCS=false</parameter> bryteren
+      og kjøre:
     </para>
 
 <screen remap="doc"><userinput>make docs</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make test</command>.
+      For å teste resultatene, kjør: <command>make test</command>.
       <!-- One test, timezones, is known to fail on SysV systems. -->
       <!-- On systemd, we symlink the current timezone to
            /etc/localtime, which is what libical expects.
@@ -147,14 +147,14 @@ make -j1</userinput></screen>
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      If you have built the API documentation, install by issuing, as
-      <systemitem class="username">root</systemitem> user:
+      Hvis du har bygget API dokumentasjonen, installer ved å kjøre, som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"
@@ -164,63 +164,63 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: This switch is used
-      to apply higher level of the compiler optimizations.
+      <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren brukes
+      for å bruke høyere nivå av kompilatoroptimaliseringer.
     </para>
 
     <para>
-      <parameter>-DSHARED_ONLY=yes</parameter>: This switch is used
-      in order to only build the shared libraries.
+      <parameter>-DSHARED_ONLY=yes</parameter>: Denne bryteren brukes
+      for å kun bygge de delte bibliotekene.
     </para>
 
     <para>
-      <parameter>-DICAL_BUILD_DOCS=false</parameter>: This switch prevents
-      building the <application>GTK</application> documentation. Remove
-      if you want to build the documentation.
+      <parameter>-DICAL_BUILD_DOCS=false</parameter>: Denne bryteren forhindrer
+      byggingen av <application>GTK</application> dokumentasjonen. Fjern
+      hvis du vil bygge dokumentasjonen.
     </para>
 
     <para>
-      <parameter>-DGOBJECT_INTROSPECTION=true</parameter>: This switch is used
-      to generate GObject metadata bindings.
+      <parameter>-DGOBJECT_INTROSPECTION=true</parameter>: Denne bryteren brukes
+      for å generere GObject metadatabindinger.
     </para>
 
     <para>
-      <parameter>-DICAL_GLIB_VAPI=true</parameter>: This switch is used
-      in order to build bindings for <xref linkend="vala"/>.
+      <parameter>-DICAL_GLIB_VAPI=true</parameter>: Denne bryteren brukes
+      for å bygge bindinger for <xref linkend="vala"/>.
     </para>
 
     <para>
-      <option>-DUSE_BUILTIN_TZDATA=yes</option>: This switch is used
-      in order to build using your own timezone data.
+      <option>-DUSE_BUILTIN_TZDATA=yes</option>: Denne bryteren brukes
+      for å bygge med dine egne tidssonedata.
     </para>
 
     <!-- No CMake equivalents
     <para>
-      <parameter>- -enable-cxx</parameter>: This switch enables
-      <application>libical</application> C++ library.
+      <parameter>- -enable-cxx</parameter>: Denne bryteren aktiverer
+      <application>libical</application> C++ biblioteket.
     </para>
 
     <para>
-      <option>- -enable-python</option>: This switch enables
-      <application>libical</application> Python bindings.
+      <option>- -enable-python</option>: Denne bryteren aktiverer
+      <application>libical</application> Python bindinger.
     </para> -->
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
           libical_cxx.so,
@@ -228,21 +228,21 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
           libical-glib.so,
           libicalss_cxx.so,
           libicalss.so,
-          and libicalvcal.so
+          og libicalvcal.so
         </seg>
         <seg>
           /usr/include/libical,
           /usr/include/libical-glib,
           /usr/lib/cmake/LibIcal,
           /usr/libexec/libical,
-          /usr/share/gtk-doc/html/libical-glib (optional),
+          /usr/share/gtk-doc/html/libical-glib (valgfri),
           and /usr/share/doc/libical-&libical-version;/html
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -250,8 +250,8 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <term><filename class="libraryfile">libical.so</filename></term>
         <listitem>
           <para>
-            contains the <application>libical</application> API
-            functions
+            inneholder <application>libical</application> API
+            funksjoner
           </para>
           <indexterm zone="libical libical-lib">
             <primary sortas="c-libical">libical.so</primary>
@@ -263,7 +263,7 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <term><filename class="libraryfile">libical_cxx.so</filename></term>
         <listitem>
           <para>
-            contains the <application>libical</application> C++ bindings
+            inneholder <application>libical</application> C++ bindinger
           </para>
           <indexterm zone="libical libical_cxx-lib">
             <primary sortas="c-libical_cxx">libical_cxx.so</primary>
@@ -275,7 +275,7 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <term><filename class="libraryfile">libical-glib.so</filename></term>
         <listitem>
           <para>
-            contains the <application>libical</application> glib bindings
+            inneholder <application>libical</application> glib bindinger
           </para>
           <indexterm zone="libical libical-glib">
             <primary sortas="c-libical-glib">libical-glib.so</primary>
@@ -287,8 +287,8 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <term><filename class="libraryfile">libicalss.so</filename></term>
         <listitem>
           <para>
-            is a library that allows you to store iCal component data
-            to disk in a variety of ways
+            er et bibliotek som lar deg lagre iCal komponentdata
+            til disk på en rekke måter
           </para>
           <indexterm zone="libical libicalss">
             <primary sortas="c-libicalss">libicalss.so</primary>
@@ -300,8 +300,8 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <term><filename class="libraryfile">libicalss_cxx.so</filename></term>
         <listitem>
           <para>
-            contains the <application>libicalss</application> C++
-            bindings
+            inneholder <application>libicalss</application> C++
+            bindinger
           </para>
           <indexterm zone="libical libicalss_cxx">
             <primary sortas="c-libicalss_cxx">libicalss_cxx.so</primary>
@@ -313,7 +313,7 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <term><filename class="libraryfile">libicalvcal.so</filename></term>
         <listitem>
           <para>
-            is a vCard/vCalendar C interface
+            er et vCard/vCalendar C grensesnitt
           </para>
           <indexterm zone="libical libicalvcal">
             <primary sortas="c-libicalvcal">libicalvcal.so</primary>
