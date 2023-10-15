@@ -9,8 +9,8 @@
   <!ENTITY fontconfig-download-ftp  " ">
   <!ENTITY fontconfig-md5sum        "95261910ea727b5dd116b06fbfd84b1f">
   <!ENTITY fontconfig-size          "1.4 MB">
-  <!ENTITY fontconfig-buildsize     "17 MB (with tests)">
-  <!ENTITY fontconfig-time          "0.3 SBU (with tests)">
+  <!ENTITY fontconfig-buildsize     "17 MB (med tester)">
+  <!ENTITY fontconfig-time          "0.3 SBU (med tester)">
 ]>
 
 <sect1 id="fontconfig" xreflabel="Fontconfig-&fontconfig-version;">
@@ -24,98 +24,98 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Fontconfig</title>
+    <title>Introduksjon til Fontconfig</title>
 
     <para>
-      The <application>Fontconfig</application> package contains
-      a library and support programs used for configuring and
-      customizing font access.
+      <application>Fontconfig</application> pakken inneholder
+      et bibliotek og støtteprogrammer som brukes til å konfigurere og
+      tilpasse skrifttilgang.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&fontconfig-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&fontconfig-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&fontconfig-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&fontconfig-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &fontconfig-md5sum;
+          Nedlasting MD5 sum: &fontconfig-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &fontconfig-size;
+          Nedlastingsstørrelse: &fontconfig-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &fontconfig-buildsize;
+          Estimert diskplass som kreves: &fontconfig-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &fontconfig-time;
+          Estimert byggetid: &fontconfig-time;
         </para>
       </listitem>
     </itemizedlist>
 <!--
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/fontconfig-&fontconfig-version;-gperf-3.1-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
-    <bridgehead renderas="sect3">Fontconfig Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Fontconfig Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="freetype2"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="curl"/> and <xref linkend="unzip"/>
-      (both used by some tests for downloading and extracting test files),
+      <xref linkend="curl"/> og <xref linkend="unzip"/>
+      (begge brukt av noen tester for å laste ned og trekke ut testfiler),
       <xref linkend="json-c"/>,
-      <xref linkend="docbook-utils"/> and
+      <xref linkend="docbook-utils"/> og
       <xref linkend="libxml2"/>,
-      <xref linkend="texlive"/> (or <xref linkend="tl-installer"/>)
+      <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>)
     </para>
 
     <note>
       <para>
-        If you have <application>DocBook Utils</application> installed and
-        you remove the <parameter>--disable-docs</parameter> parameter from
-        the <command>configure</command> command below, you must have
-        <xref linkend="perl-sgmlspm"/> and <xref linkend="texlive"/> installed
-        also, or the <application>Fontconfig</application> build will fail.
+        Hvis du har <application>DocBook Utils</application> installert og
+        du fjerner <parameter>--disable-docs</parameter> parameteren fra
+        <command>configure</command> kommandoen nedenfor, må du ha
+        <xref linkend="perl-sgmlspm"/> og <xref linkend="texlive"/> installert
+         også, ellers <application>Fontconfig</application> bygge vil mislykkes.
       </para>
     </note>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url='&blfs-wiki;/Fontconfig'/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Fontconfig</title>
+    <title>Installasjon av Fontconfig</title>
 
     <para>
-      Install <application>Fontconfig</application> by running the following
-      commands:
+      Installer <application>Fontconfig</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr        \
@@ -126,22 +126,22 @@
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make check</command>.  One test
-      is known to fail if the kernel does not support user namespaces.  Some
-      tests will download some font files via Internet.
+      For å teste resultatene, kjør: <command>make check</command>.  En test
+      er kjent for å mislykkes hvis kjernen ikke støtter brukernavneområder. Noen
+      tester vil laste ned noen fontfiler via Internett.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      If you did not remove the <parameter>--disable-docs</parameter>
-      parameter from the <command>configure</command> command, you can install
-      the pre-generated documentation by using the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Hvis du ikke fjernet <parameter>--disable-docs</parameter>
+      parameteren fra <command>configure</command> kommandoen, kan du installere
+      den forhåndsgenererte dokumentasjonen ved å bruke følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -v -dm755 \
@@ -157,21 +157,21 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--disable-docs</parameter>: This switch avoids building the
-      documentation (the release tarball includes pre-generated
-      documentation).
+      <parameter>--disable-docs</parameter>: Denne bryteren unngår å bygge
+      dokumentasjon (utgivelsens tarball inkluderer forhåndsgenerert
+      dokumentasjon).
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Fontconfig</title>
+    <title>Konfigurere Fontconfig</title>
 
     <sect3 id="fontconfig-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>
@@ -196,18 +196,18 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        The main configuration file for <application>Fontconfig</application> is
-        <filename>/etc/fonts/fonts.conf</filename>. Generally you do not want
-        to edit this file. It will also read <filename>/etc/fonts/local.conf</filename>
-        and any files in <filename class="directory">/etc/fonts/conf.d</filename>.
-        To put a new font directory in the configuration, create
-        (or update) the <filename>/etc/fonts/local.conf</filename> file with your
-        local information or add a new file in
-        <filename class="directory">/etc/fonts/conf.d</filename>. The default
-        location of fonts in <application>Fontconfig</application> is:
+        Hovedkonfigurasjonsfilen for <application>Fontconfig</application> er
+        <filename>/etc/fonts/fonts.conf</filename>. Vanligvis vil du ikke
+        redigere denne filen. Den vil også lese <filename>/etc/fonts/local.conf</filename>
+        og eventuelle filer i <filename class="directory">/etc/fonts/conf.d</filename>.
+        For å sette en ny fontmappe i konfigurasjonen, opprett
+        (eller oppdater) <filename>/etc/fonts/local.conf</filename> filen med din
+        lokale informasjon eller legg til en ny fil
+        <filename class="directory">/etc/fonts/conf.d</filename>. Standard
+        plassering av fonter i <application>Fontconfig</application> er:
       </para>
 
       <itemizedlist spacing="compact">
@@ -223,21 +223,21 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         </listitem>
         <listitem>
           <para>
-            ~/.fonts <emphasis>(this is now deprecated, but for the moment
-            it still works)</emphasis>
+            ~/.fonts <emphasis>(dette er nå foreldet, men for øyeblikket
+            fungerer det fortsatt)</emphasis>
           </para>
         </listitem>
       </itemizedlist>
 
       <para>
-        <application>Fontconfig</application> also ships many example
-        configuration files in the
+        <application>Fontconfig</application> sender også mange eksempel
+        konfigurasjonsfiler i
         <filename class="directory">/usr/share/fontconfig/conf.avail</filename>
-        directory. Symlinking specific files to
+        mappen. Symlinking spesifikke filer til
         <filename class="directory">/etc/fonts/conf.d</filename>
-        will enable them. The default setup is generally good enough for
-        most users. See <filename>/etc/fonts/conf.d/README</filename>
-        for a description of the configuration files.
+        vil aktivere dem. Standardoppsettet er generelt godt nok for
+        de fleste brukere. Se <filename>/etc/fonts/conf.d/README</filename>
+        for en beskrivelse av konfigurasjonsfilene.
       </para>
 
       <indexterm zone="fontconfig fontconfig-config">
@@ -249,8 +249,8 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
       </indexterm>
 
       <para>
-        More information about configuring <application>Fontconfig</application>
-        can be found in the user's manual in <ulink
+        Mer informasjon om konfigurering <application>Fontconfig</application>
+        finnes i brukermanualen i <ulink
         url="file:///usr/share/doc/fontconfig-&fontconfig-version;/fontconfig-user.html"/>.
       </para>
 
@@ -259,17 +259,17 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
           fc-cache, fc-cat, fc-conflist, fc-list, fc-match, fc-pattern,
-          fc-query, fc-scan, and fc-validate
+          fc-query, fc-scan, og fc-validate
         </seg>
         <seg>
           libfontconfig.so
@@ -279,14 +279,14 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
           /usr/include/fontconfig,
           /usr/share/doc/fontconfig-&fontconfig-version;,
           /usr/share/fontconfig,
-          /usr/share/xml/fontconfig, and
+          /usr/share/xml/fontconfig, og
           /var/cache/fontconfig
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -294,7 +294,7 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-cache</command></term>
         <listitem>
           <para>
-            is used to create font information caches
+            brukes til å lage hurtiglager for fontinformasjon
           </para>
           <indexterm zone="fontconfig fc-cache">
             <primary sortas="b-fc-cache">fc-cache</primary>
@@ -306,7 +306,7 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-cat</command></term>
         <listitem>
           <para>
-            is used to read font information caches
+            brukes til å lese hurtiglageret for fontinformasjon
           </para>
           <indexterm zone="fontconfig fc-cat">
             <primary sortas="b-fc-cat">fc-cat</primary>
@@ -318,7 +318,7 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-conflist</command></term>
         <listitem>
           <para>
-            shows the ruleset files' information on the system
+            viser regelsettfilenes informasjon om systemet
           </para>
           <indexterm zone="fontconfig fc-conflist">
             <primary sortas="b-fc-conflist">fc-conflist</primary>
@@ -330,7 +330,7 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-list</command></term>
         <listitem>
           <para>
-            is used to create font lists
+            brukes til å lage fontlister
           </para>
           <indexterm zone="fontconfig fc-list">
             <primary sortas="b-fc-list">fc-list</primary>
@@ -342,8 +342,8 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-match</command></term>
         <listitem>
           <para>
-            is used to match available fonts, or find fonts that match
-            a given pattern
+            brukes til å matche tilgjengelige fonter, eller finne fonter som matcher
+            et gitt mønster
           </para>
           <indexterm zone="fontconfig fc-match">
             <primary sortas="b-fc-match">fc-match</primary>
@@ -355,8 +355,8 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-pattern</command></term>
         <listitem>
           <para>
-            is used to parse pattern (empty pattern by default) and show
-            the parsed result
+            brukes til å analysere mønster (tomt mønster som standard) og vise
+            det analyserte resultatet
           </para>
           <indexterm zone="fontconfig fc-pattern">
             <primary sortas="b-fc-pattern">fc-pattern</primary>
@@ -368,7 +368,7 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-query</command></term>
         <listitem>
           <para>
-            is used to query fonts files and print resulting patterns
+            brukes til å søke etter skriftfiler og skrive ut resulterende mønstre
           </para>
           <indexterm zone="fontconfig fc-query">
             <primary sortas="b-fc-query">fc-query</primary>
@@ -380,8 +380,8 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-scan</command></term>
         <listitem>
           <para>
-            is used to scan font files and directories, and print resulting
-            patterns
+            brukes til å skanne skriftfiler og mapper, og skrive ut resultatets
+            mønstre
           </para>
           <indexterm zone="fontconfig fc-scan">
             <primary sortas="b-fc-scan">fc-scan</primary>
@@ -393,7 +393,7 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><command>fc-validate</command></term>
         <listitem>
           <para>
-            is used to validate font files
+            brukes til å validere fontfiler
           </para>
           <indexterm zone="fontconfig fc-validate">
             <primary sortas="b-fc-validate">fc-validate</primary>
@@ -405,9 +405,9 @@ install -v -m644 doc/*.{pdf,sgml,txt,html} \
         <term><filename class="libraryfile">libfontconfig.so</filename></term>
         <listitem>
           <para>
-            contains functions used by the <application>Fontconfig</application>
-            programs and also by other programs to configure or customize font
-            access
+            inneholder funksjoner som brukes av <application>Fontconfig</application>
+            programmer og også av andre programmer for å konfigurere eller tilpasse font
+            adgang
           </para>
           <indexterm zone="fontconfig libfontconfig">
             <primary sortas="c-libfontconfig">libfontconfig.so</primary>
