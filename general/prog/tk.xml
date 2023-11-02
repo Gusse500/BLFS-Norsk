@@ -9,7 +9,7 @@
   <!ENTITY tk-md5sum        "95adc33d55a133ee29bc9f81efdf31b2">
   <!ENTITY tk-size          "4.3 MB">
   <!ENTITY tk-buildsize     "25 MB">
-  <!ENTITY tk-time          "0.3 SBU (add 2.0 SBU for tests)">
+  <!ENTITY tk-time          "0.3 SBU (legg til 2.0 SBU for tester)">
 
   <!-- Ensure this is updated when Tk moves from the 8.6.x branch -->
   <!ENTITY tk-ver           "8.6">
@@ -26,68 +26,68 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Tk</title>
+    <title>Introduksjon til Tk</title>
 
     <para>
-      The <application>Tk</application> package contains a
-      TCL GUI Toolkit.
+      <application>Tk</application> pakken inneholder en
+      TCL GUI Verktøysett.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&tk-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&tk-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&tk-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&tk-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &tk-md5sum;
+          Nedlasting MD5 sum: &tk-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &tk-size;
+          Nedlastingsstørrelse: &tk-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &tk-buildsize;
+          Estimert diskplass som kreves: &tk-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &tk-time;
+          Estimert byggetid: &tk-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Tk Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Tk Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <!-- <xref linkend="tcl"/> and -->
       <xref linkend="xorg7-lib"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/tk"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Tk</title>
+    <title>Installasjon av Tk</title>
 
     <para>
-      Install <application>Tk</application> by running the following
-      commands:
+      Installer <application>Tk</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>cd unix &amp;&amp;
@@ -102,13 +102,13 @@ sed -e "s@^\(TK_SRC_DIR='\).*@\1/usr/include'@" \
     -i tkConfig.sh</userinput></screen>
 
     <para>
-      Running the tests is not recommended. Failures will be reported during the
-      tests, depending on the screen resolution/capabilities, fonts installed
-      and other X related parameters, but the end report can show 0 failures.
-      Some tests will steal focus and some might crash your X Server. To test
-      the results anyway, issue: <command>make test</command>. Ensure you run
-      it from an X Window display device with the GLX extensions loaded, but
-      even so, tests might hang.
+      Det anbefales ikke å kjøre testene. Feil vil bli rapportert i løpet av
+      tester, avhengig av skjermoppløsningen/funksjonene, installerte fonter
+      og andre X relaterte parametere, men sluttrapporten kan vise 0 feil.
+      Noen tester vil stjele fokus, og noen kan krasje X serveren. Å teste
+      resultatene uansett, kjør: <command>make test</command>. Sørg for å kjøre
+      det fra en X Window skjermenhet med GLX utvidelsene lastet, men
+      likevel kan testene henge.
       <!-- Test Statistics (tk8.6.9 - renodr):
       Total: 466
       Passed: 447
@@ -126,7 +126,7 @@ sed -e "s@^\(TK_SRC_DIR='\).*@\1/usr/include'@" \
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -137,53 +137,53 @@ chmod -v 755 /usr/lib/libtk&tk-ver;.so</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <parameter>$([ $(uname -m) = x86_64 ] &amp;&amp; echo
-      --enable-64bit)</parameter>: This switch is used to enable 64 bit
-      support in <application>Tk</application> on 64 bit operating
-      systems.
+      --enable-64bit)</parameter>: Denne bryteren brukes til å aktivere 64 bit
+      støtte i <application>Tk</application> på 64 bit
+      systemer.
     </para>
 
     <para>
-      <command>make install-private-headers</command>: This command is
-      used to install the <application>Tk</application> library interface
-      headers used by other packages if they link to the
-      <application>Tk</application> library.
+      <command>make install-private-headers</command>: Denne kommandoen
+      brukes til å installere <application>Tk</application> bibliotekgrensesnitt
+      deklarasjoner som brukes av andre pakker hvis de lenker til
+      <application>Tk</application> biblioteket.
     </para>
 
     <para>
-      <command>ln -v -sf wish&tk-ver; /usr/bin/wish</command>: This
-      command is used to create a compatibility symbolic link to the
-      <command>wish&tk-ver;</command> file as many packages expect a file
-      named <command>wish</command>.
+      <command>ln -v -sf wish&tk-ver; /usr/bin/wish</command>: Dette
+      kommandoen brukes til å lage en symbolsk kompatibilitetskobling til
+      <command>wish&tk-ver;</command> filen siden mange pakker forventer en fil
+      navngitt <command>wish</command>.
     </para>
 
     <para>
-      <command>sed -e ... tkConfig.sh</command>: The
-      <application>Tk</application> package expects that its source tree is
-      preserved so that packages depending on it for their compilation
-      can utilize it. This <command>sed</command> removes the references to the
-      build directory and replaces them with saner system-wide locations.
+      <command>sed -e ... tkConfig.sh</command>: 
+      <application>Tk</application> pakken forventer at kildetreet er
+      bevart slik at pakker avhengig av det for deres kompilering
+      kan bruke det. Denne <command>sed</command> fjerner referansene til
+      byggemappen og erstatter dem med sunnere systemomfattende plasseringer.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
-          wish and wish&tk-ver;
+          wish og wish&tk-ver;
         </seg>
         <seg>
-          libtk&tk-ver;.so and libtkstub&tk-ver;.a
+          libtk&tk-ver;.so og libtkstub&tk-ver;.a
         </seg>
         <seg>
           /usr/lib/tk&tk-ver;
@@ -192,7 +192,7 @@ chmod -v 755 /usr/lib/libtk&tk-ver;.so</userinput></screen>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -200,7 +200,7 @@ chmod -v 755 /usr/lib/libtk&tk-ver;.so</userinput></screen>
         <term><command>wish</command></term>
         <listitem>
           <para>
-            is a symlink to the <command>wish&tk-ver;</command> program
+            er en symbolkobling til <command>wish&tk-ver;</command> programmet
           </para>
           <indexterm zone="tk wish">
             <primary sortas="b-wish">wish</primary>
@@ -212,9 +212,9 @@ chmod -v 755 /usr/lib/libtk&tk-ver;.so</userinput></screen>
         <term><command>wish&tk-ver;</command></term>
         <listitem>
           <para>
-            is a simple shell containing the
-            <application>Tk</application> toolkit that creates a main window and
-            then processes <application>Tcl</application> commands
+            er et enkelt skall som inneholder
+            <application>Tk</application> verktøysett som lager et hovedvindu og
+            deretter prosesserer <application>Tcl</application> kommandoer
           </para>
           <indexterm zone="tk wish-eight">
             <primary sortas="b-wish&tk-ver;">wish&tk-ver;</primary>
@@ -226,8 +226,8 @@ chmod -v 755 /usr/lib/libtk&tk-ver;.so</userinput></screen>
         <term><filename class="libraryfile">libtk&tk-ver;.so</filename></term>
         <listitem>
           <para>
-            contains the API functions required
-            by <application>Tk</application>
+            inneholder de nødvendige API funksjonene
+            av <application>Tk</application>
           </para>
           <indexterm zone="tk libtk">
             <primary sortas="c-libtk">libtk&tk-ver;.so</primary>
