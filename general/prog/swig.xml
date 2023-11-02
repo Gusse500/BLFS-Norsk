@@ -8,8 +8,8 @@
   <!ENTITY swig-download-ftp  " ">
   <!ENTITY swig-md5sum        "c7d55a1bca26752f3846c85b43c1a69c">
   <!ENTITY swig-size          "8.2 MB">
-  <!ENTITY swig-buildsize     "82 MB (2.1 GB with tests)">
-  <!ENTITY swig-time          "0.1 SBU (add 7.8 SBU for tests; both using parallelism=4)">
+  <!ENTITY swig-buildsize     "82 MB (2.1 GB med tester)">
+  <!ENTITY swig-time          "0.1 SBU (legg til 7,8 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="swig" xreflabel="SWIG-&swig-version;">
@@ -23,12 +23,12 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to SWIG</title>
+    <title>Introduksjon til SWIG</title>
 
     <para>
        <application>SWIG</application> (Simplified Wrapper and Interface
-       Generator) is a compiler that integrates <application>C</application>
-       and <application>C++</application> with languages including
+       Generator) er en kompilator som integrerer <application>C</application>
+       og <application>C++</application> med språk inkludert
        <application>Perl</application>,
        <application>Python</application>,
        <application>Tcl</application>,
@@ -41,81 +41,81 @@
        <application>Lua</application>,
        <application>Octave</application>,
        <application>R</application>,
-       <application>Scheme</application>, and
+       <application>Scheme</application>, og
        <application>Ocaml</application>.
-       <application>SWIG</application> can
-       also export its parse tree into <application>Lisp</application>
-       s-expressions and <application>XML</application>.
+       <application>SWIG</application> kan
+       også eksportere parsetreet til <application>Lisp</application>
+       s-expressions og <application>XML</application>.
     </para>
     <para>
-       <application>SWIG</application> reads annotated
-       <application>C/C++</application> header files and creates wrapper
-       code (glue code) in order to make the corresponding
-       <application>C/C++</application> libraries available to the listed
-       languages, or to extend <application>C/C++</application> programs
-       with a scripting language.
+       <application>SWIG</application> leser kommentert
+       <application>C/C++</application> deklarasjonsfiler og lager innpakningskode
+       (glue kode) for å lage den tilsvarende
+       <application>C/C++</application> bibliotekene som er tilgjengelige for de oppførte
+       språk, eller for å utvide <application>C/C++</application> programmer
+       med et skriptspråk.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&swig-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&swig-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&swig-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&swig-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &swig-md5sum;
+          Nedlasting MD5 sum: &swig-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &swig-size;
+          Nedlastingsstørrelse: &swig-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &swig-buildsize;
+          Estimert diskplass som kreves: &swig-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &swig-time;
+          Estimert byggetid: &swig-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">SWIG Dependencies</bridgehead>
+    <bridgehead renderas="sect3">SWIG Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="pcre2"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="boost"/> for tests, and any of the languages mentioned
-      in the introduction, as run-time dependencies
+      <xref linkend="boost"/> for tester, og alle de nevnte språkene
+      i innledningen, som kjøretidsavhengigheter
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/swig"/>
+      Brukernotater: <ulink url="&blfs-wiki;/swig"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of SWIG</title>
+    <title>Installasjon av SWIG</title>
 
     <para>
-      Install <application>SWIG</application> by running the following
-      commands:
+      Installer <application>SWIG</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr                      \
@@ -124,24 +124,24 @@
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>PY3=1 make -k check TCL_INCLUDE=</command>.
-      The unsetting of the variable <envar>TCL_INCLUDE</envar> is
-      necessary since it is not correctly set by
-      <emphasis>configure</emphasis>. The tests are only executed for the
-      languages installed on your machine, so the disk space and SBU values
-      given for the tests may vary, and should be considered as mere orders of
-      magnitude. <!-- Phase out P2 support
-      If you have <xref linkend="python2"/> installed, the Python-3
-      tests are not run.  You can run tests for Python-3 by issuing
-      <command>PY3=1 make check-python-examples</command> followed by
-      <command>PY3=1 make check-python-test-suite</command>. --> According to
-      <application>SWIG</application>'s documentation, the failure of some
-      tests should not be considered harmful. The go tests are buggy and may
-      generate a lot of meaningless output.
+      For å teste resultatene, kjør: <command>PY3=1 make -k check TCL_INCLUDE=</command>.
+      Deaktiveringen av variabelen <envar>TCL_INCLUDE</envar> er
+      nødvendig siden den ikke er riktig satt av
+      <emphasis>configure</emphasis>. Testene utføres kun for
+      språk installert på maskinen din, så diskplass og SBU-verdier
+      gitt for testene kan variere, og bør betraktes som bare antakelser av 
+      størrelser. <!-- Phase out P2 support
+      Hvis du har <xref linkend="python2"/> installert, Python-3
+      tester kjøres ikke. Du kan kjøre tester for Python-3 ved å utstede
+      <command>PY3=1 make check-python-examples</command> etterfulgt av
+      <command>PY3=1 make check-python-test-suite</command>. --> I følge
+      <application>SWIG</application> sin dokumentasjon, svikt hos noen
+      tester bør ikke anses som skadelige. Go testene er buggy og kan
+      generere mye meningsløst utdata.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -150,19 +150,19 @@ cp -v -R Doc/* /usr/share/doc/swig-&swig-version;</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--without-maximum-compile-warnings</parameter>: disables
-      compiler ansi conformance enforcement, which triggers errors in
-      the <application>Lua</application> headers (starting with Lua 5.3).
+      <parameter>--without-maximum-compile-warnings</parameter>: deaktiverer
+      kompilator ansi samsvarshåndhevelse, som utløser feil i
+      <application>Lua</application> deklarasjonsfiler (startet med Lua 5.3).
     </para>
 
     <para>
-      <option>--without-&lt;language&gt;</option>: allows disabling the
-      building of tests and examples for &lt;language&gt;, but all the
-      languages capabilities of <application>SWIG</application> are always
-      built. <!--We use it for <application>Clisp</application>, because the
+      <option>--without-&lt;language&gt;</option>: gjør det mulig å deaktivere
+      oppbygging av tester og eksempler for &lt;language&gt;, men alle
+      språk evner til <application>SWIG</application> er alltid
+      bygget. <!--We use it for <application>Clisp</application>, because the
       SWIG implementation is very incomplete and a lot of tests fail. -->
       <!-- Now used for JavaScript because of node CLI changes -->
     </para>
@@ -170,29 +170,29 @@ cp -v -R Doc/* /usr/share/doc/swig-&swig-version;</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          swig and ccache-swig
+          swig og ccache-swig
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          /usr/share/doc/swig-&swig-version; and
+          /usr/share/doc/swig-&swig-version; og
           /usr/share/swig
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -200,9 +200,9 @@ cp -v -R Doc/* /usr/share/doc/swig-&swig-version;</userinput></screen>
         <term><command>swig</command></term>
         <listitem>
           <para>
-            takes an interface file containing C/C++ declarations and
-            SWIG special instructions, and generates the corresponding
-            wrapper code needed to build extension modules
+            tar en grensesnittfil som inneholder C/C++ deklarasjoner og
+            SWIG spesielle instruksjoner, og genererer tilsvarende
+            innpakningskode nødvendig for å bygge utvidelsesmoduler
           </para>
           <indexterm zone="swig swig-prog">
             <primary sortas="b-swig">swig</primary>
@@ -214,8 +214,8 @@ cp -v -R Doc/* /usr/share/doc/swig-&swig-version;</userinput></screen>
         <term><command>ccache-swig</command></term>
         <listitem>
           <para>
-            is a compiler cache, which speeds up re-compilation of
-            C/C++/SWIG code
+            er en kompilatorhurtiglager, som øker hastigheten på re-kompilering av
+            C/C++/SWIG kode
           </para>
           <indexterm zone="swig ccache-swig">
             <primary sortas="b-ccache-swig">ccache-swig</primary>
