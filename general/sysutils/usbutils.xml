@@ -23,90 +23,90 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to USB Utils</title>
+    <title>Introduksjon til USB Utils</title>
 
     <para>
-      The <application>USB Utils</application> package contains utilities
-      used to display information about USB buses in the system and the
-      devices connected to them.
+      <application>USB Utils</application> pakken inneholder verktøy
+      som brukes til å vise informasjon om USB busser i systemet og
+      enheter koblet til dem.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&usbutils-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&usbutils-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&usbutils-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&usbutils-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &usbutils-md5sum;
+          Nedlasting MD5 sum: &usbutils-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &usbutils-size;
+          Nedlastingsstørrelse: &usbutils-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &usbutils-buildsize;
+          Estimert diskplass som kreves: &usbutils-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &usbutils-time;
+          Estimert byggetid: &usbutils-time;
         </para>
       </listitem>
     </itemizedlist>
 <!--
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/usbutils-&usbutils-version;-lsusb_bugfixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
-    <bridgehead renderas="sect3">USB Utils Dependencies</bridgehead>
+    <bridgehead renderas="sect3">USB Utils Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="libusb"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
 <!-- git is required by autogen.sh. If using the tarball on kernel.org,
      autogen.sh does not need to be run. If using the github source,
      autogen.sh needs to be run, and git is used to pull the usbhid-dump
      submodule. -->
-      <xref linkend="git"/> and
+      <xref linkend="git"/> og
       <xref linkend="wget"/>
 <!-- In the systemd book, a unit/timer is installed to update the
      usb.ids file automatically. wget is used in the instructions below. -->
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/usbutils"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of USB Utils</title>
+    <title>Installasjon av USB Utils</title>
 
     <para>
-      Install <application>USB Utils</application> by
-      running the following commands:
+      Installer <application>USB Utils</application> ved å
+      kjøre følgende kommandoer:
     </para>
 
 <screen><userinput>autoreconf -fiv &amp;&amp;
@@ -115,63 +115,63 @@
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      To install the <filename>usb.ids</filename> data file, using
-      <xref linkend="wget"/>, run, as the
-      <systemitem class="username">root</systemitem> user:
+      For å installere <filename>usb.ids</filename> datafilen, ved hjelp av
+      <xref linkend="wget"/>, kjør, som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -dm755 /usr/share/hwdata/ &amp;&amp;
 wget http://www.linux-usb.org/usb.ids -O /usr/share/hwdata/usb.ids</userinput></screen>
 
     <para>
-      The script <command>lsusb.py</command> displays information in a more
-      easily readable form than <command>lsusb</command>. To find the options,
-      use <command>lsusb.py -h</command>. One form of use recommended by the
-      developer is <command>lsusb.py -ciu</command>.
+      Skriptet <command>lsusb.py</command> viser informasjon i en mer
+      lettlest form enn <command>lsusb</command>. For å finne alternativene,
+      bruk <command>lsusb.py -h</command>. En bruksform anbefalt av
+      utviklere er <command>lsusb.py -ciu</command>.
     </para>
 
   </sect2>
 <!-- No longer needed
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed ... lsusb.py</command>: Instructs lsusb.py where to search
+      <command>sed ... lsusb.py</command>: Instruerer lsusb.py hvor den skal søke
       <filename>usb.ids</filename>.
     </para>
 
   </sect2>
 -->
   <sect2 role="configuration">
-    <title>Configuring USB Utils</title>
+    <title>Konfigurere USB Utils</title>
 
     <para revision="sysv">
-      The <filename>usb.ids</filename> data file is constantly being updated.
-      To get a current version of this file, using <xref linkend="wget"/>,
-      periodically run again, as the
-      <systemitem class="username">root</systemitem> user:
+      <filename>usb.ids</filename> datafilen oppdateres kontinuerlig.
+      For å få en gjeldende versjon av denne filen ved å bruke <xref linkend="wget"/>,
+      kjør jevnlig, som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="sysv"><userinput>wget http://www.linux-usb.org/usb.ids -O /usr/share/hwdata/usb.ids</userinput></screen>
 
     <para>
-      You should update the <filename>/usr/share/hwdata/usb.ids</filename> file
-      periodically. <phrase revision="sysv">If you've installed
-      <xref linkend="fcron"/> and completed the section on periodic jobs,
-      execute</phrase><phrase revision="systemd">Execute</phrase> the following       commands, as the  <systemitem class="username">root</systemitem> user,
-      to create a <phrase revision="sysv">weekly cron job:</phrase>
-      <phrase revision="systemd">systemd timer to update it weekly on Sundays
-      at 2:30 A.M. (local time):</phrase>
+      Du bør oppdatere <filename>/usr/share/hwdata/usb.ids</filename> filen
+      jevnlig. <phrase revision="sysv">Hvis du har installert
+      <xref linkend="fcron"/> og fullførte delen om periodiske jobber,
+      kjør</phrase><phrase revision="systemd">Kjør</phrase> følgende       kommandoer, som  <systemitem class="username">root</systemitem> bruker,
+      for å opprette en <phrase revision="sysv">ukentlig cron jobb:</phrase>
+      <phrase revision="systemd">systemd timer for å oppdatere det ukentlig på søndager
+      klokken 02.30 (lokal tid):</phrase>
     </para>
 
 <screen role="nodump" revision="sysv"><userinput>cat &gt; /etc/cron.weekly/update-usbids.sh &lt;&lt; "EOF" &amp;&amp;
@@ -209,28 +209,28 @@ systemctl enable update-usbids.timer</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          lsusb, lsusb.py, usb-devices, and usbhid-dump
+          lsusb, lsusb.py, usb-devices, og usbhid-dump
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -238,9 +238,9 @@ systemctl enable update-usbids.timer</userinput></screen>
         <term><command>lsusb</command></term>
         <listitem>
           <para>
-            is a utility for displaying information about all USB buses
-            in the system and all devices connected to them, but not in human
-            friendly form
+            er et verktøy for å vise informasjon om alle USB busser
+            i systemet og alle enheter koblet til dem, men ikke i lesbar
+            vennlig form
           </para>
           <indexterm zone="usbutils lsusb">
             <primary sortas="b-lsusb">lsusb</primary>
@@ -252,8 +252,8 @@ systemctl enable update-usbids.timer</userinput></screen>
         <term><command>lsusb.py</command></term>
         <listitem>
           <para>
-            displays information about all USB buses in the system and all
-            devices connected to them in reasonable human friendly form
+            viser informasjon om alle USB busser i systemet og alle
+            enheter koblet til dem i rimelig lesbar form
           </para>
           <indexterm zone="usbutils lsusb.py">
             <primary sortas="b-lsusb.py">lsusb.py</primary>
@@ -265,9 +265,9 @@ systemctl enable update-usbids.timer</userinput></screen>
         <term><command>usb-devices</command></term>
         <listitem>
           <para>
-            is a shell script that displays details of USB buses and devices
-            connected to them. It is designed to be used if /proc/bus/usb/devices
-            is not available on your system
+            er et skallskript som viser detaljer om USB busser og enheter
+            koblet til dem. Den er designet for å brukes hvis /proc/bus/usb/devices
+            ikke er tilgjengelig på systemet ditt
           </para>
           <indexterm zone="usbutils usb-devices">
             <primary sortas="b-usb-devices">usb-devices</primary>
@@ -279,8 +279,8 @@ systemctl enable update-usbids.timer</userinput></screen>
         <term><command>usbhid-dump</command></term>
         <listitem>
           <para>
-            is used to dump report descriptors and streams from HID
-            (human interface device) interfaces of USB devices
+            brukes til å dumpe rapportbeskrivelser og strømmer fra HID
+            (human interface device) grensesnitt for USB enheter
           </para>
           <indexterm zone="usbutils usbhid-dump">
             <primary sortas="b-usbhid-dump">usbhid-dump</primary>
