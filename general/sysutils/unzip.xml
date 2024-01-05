@@ -9,7 +9,7 @@
   <!ENTITY unzip-md5sum        "62b490407489521db863b523a7f86375">
   <!ENTITY unzip-size          "1.3 MB">
   <!ENTITY unzip-buildsize     "9 MB">
-  <!ENTITY unzip-time          "less than 0.1 SBU">
+  <!ENTITY unzip-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="unzip" xreflabel="UnZip-&unzip-version;">
@@ -23,191 +23,191 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to UnZip</title>
+    <title>Introduksjon til UnZip</title>
 
     <para>
-      The <application>UnZip</application> package contains
-      <filename>ZIP</filename> extraction utilities. These are useful for
-      extracting files from <filename>ZIP</filename> archives.
-      <filename>ZIP</filename> archives are created with
-      <application>PKZIP</application> or <application>Info-ZIP</application>
-      utilities, primarily in a DOS environment.
+      <application>UnZip</application> pakken inneholder
+      <filename>ZIP</filename> utpakningsverktøy. Disse er nyttige for
+      å pakke ut filer fra <filename>ZIP</filename> arkiver.
+      <filename>ZIP</filename> arkiver opprettes med
+      <application>PKZIP</application> eller <application>Info-ZIP</application>
+      verktøy, primært i et DOS miljø.
     </para>
 
     &lfs113_checked;
 
     <caution>
       <para>
-        The previous version of the <application>UnZip</application>
-        package had some locale related issues. Currently there are no BLFS
-        editors capable of testing these locale issues. Therefore, the
-        locale related information is left on this page, but has not been
-        tested. A more general discussion of these problems can be found in
-        the <xref linkend="locale-assumed-encoding"/> section of the <xref
-        linkend="locale-issues"/> page.
+        Den forrige versjonen av <application>UnZip</application>
+        pakken hadde noen lokalitetsproblemene. For øyeblikket er det ingen BLFS
+        redaktører som er i stand til å teste disse lokalitetsproblemene. derfor
+        lokalitetsrelatert informasjon er igjen på denne siden, men har ikke vært blitt
+        testet. En mer generell diskusjon om disse problemene finnes i
+        <xref linkend="locale-assumed-encoding"/> delen av <xref
+        linkend="locale-issues"/> siden.
       </para>
     </caution>
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&unzip-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&unzip-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&unzip-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&unzip-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &unzip-md5sum;
+          Nedlasting MD5 sum: &unzip-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &unzip-size;
+          Nedlastingsstørrelse: &unzip-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &unzip-buildsize;
+          Estimert diskplass som kreves: &unzip-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &unzip-time;
+          Estimert byggetid: &unzip-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
         <para>
-          Required patch: <ulink
+          Nødvendig oppdatering: <ulink
           url="&patch-root;/unzip-&unzip-version;-consolidated_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/unzip"/></para>
 
   </sect2>
 
   <sect2 id="unzip-locale-issues">
-    <title>UnZip Locale Issues</title>
+    <title>UnZip Lokalitetsproblemer</title>
 
     <note>
       <para>
-        Use of <application>UnZip</application> in the
+        Bruk av <application>UnZip</application> i
         <application>JDK</application>, <application>Mozilla</application>,
-        <application>DocBook</application> or any other BLFS package
-        installation is not a problem, as BLFS instructions never use
-        <application>UnZip</application> to extract a file with non-ASCII
-        characters in the file's name.
+        <application>DocBook</application> eller en hvilken som helst annen BLFS
+        pakkeinstallasjon er ikke et problem, siden BLFS instruksjoner aldri bruker
+        <application>UnZip</application> for å pakke ut en fil med ikke-ASCII
+        tegn i filnavnet.
       </para>
     </note>
 
     <para>
-      These issues are thought to be fixed in the patch. But since none
-      of the editors have data to test this, the following workarounds are
-      retained in case they might still be needed.
+      Disse problemene antas å være løst i oppdateringen. Men siden ingen
+      av redaktørene har data for å teste dette, er følgende løsninger
+      beholdt i tilfelle de fortsatt kan være nødvendige.
     </para>
 
     <para>
-      The <application>UnZip</application> package assumes that filenames
-      stored in the ZIP archives created on non-Unix systems are encoded in
-      CP850, and that they should be converted to ISO-8859-1 when writing files
-      onto the filesystem. Such assumptions are not always valid. In fact,
-      inside the ZIP archive, filenames are encoded in the DOS codepage that is
-      in use in the relevant country, and the filenames on disk should be in
-      the locale encoding. In MS Windows, the OemToChar() C function (from
-      <filename>User32.DLL</filename>) does the correct conversion (which is
-      indeed the conversion from CP850 to a superset of ISO-8859-1 if MS
-      Windows is set up to use the US English language), but there is no
-      equivalent in Linux.
+      <application>UnZip</application> pakken antar at filnavn
+      lagret i ZIP arkivene som er opprettet på ikke-Unix-systemer, er kodet i
+      CP850, og at de skal konverteres til ISO-8859-1 ved skriving av filer
+      til filsystemet. Slike forutsetninger er ikke alltid gyldige. Faktisk,
+      inne i ZIP arkivet er filnavn kodet i DOS kodesiden som er
+      i bruk i det aktuelle landet, og filnavnene på disken skal være i
+      lokalitetskodingen. I MS Windows, OemToChar() C-funksjonen (fra
+      <filename>User32.DLL</filename>) gjør den riktige konverteringen (som er
+      faktisk konverteringen fra CP850 til et supersett av ISO-8859-1 hvis MS
+      Windows er satt opp til å bruke amerikansk engelsk språk), men det er ingen
+      tilsvarende i Linux.
     </para>
 
     <para>
-      When using <command>unzip</command> to unpack a ZIP archive
-      containing non-ASCII filenames, the filenames are damaged because
-      <command>unzip</command> uses improper conversion when any of its
-      encoding assumptions are incorrect. For example, in the ru_RU.KOI8-R
-      locale, conversion of filenames from CP866 to KOI8-R is required, but
-      conversion from CP850 to ISO-8859-1 is done, which produces filenames
-      consisting of undecipherable characters instead of words (the closest
-      equivalent understandable example for English-only users is rot13). There
-      are several ways around this limitation:
+      Når det brukes <command>unzip</command> for å pakke ut et ZIP arkiv
+      som inneholder ikke-ASCII filnavn, er filnavnene skadet fordi
+      <command>unzip</command> bruker feil konvertering når noen av disse
+      kodingsforutsetninger er feil. For eksempel i ru_RU.KOI8-R
+      locale, kreves konvertering av filnavn fra CP866 til KOI8-R, men
+      konvertering fra CP850 til ISO-8859-1 er utført, noe som produserer filnavn
+      som består av utydelige tegn i stedet for ord (den nærmeste
+      tilsvarende forståelig eksempel for brukere som bare bruker engelsk er rot13). Det
+      er flere måter rundt denne begrensningen:
     </para>
 
     <para>
-      1) For unpacking ZIP archives with filenames containing non-ASCII
-      characters, use <ulink url="https://www.winzip.com/">WinZip</ulink> while
-      running the <ulink url="https://www.winehq.com/">Wine</ulink> Windows
+      1) For utpakking av ZIP arkiver med filnavn som inneholder ikke-ASCII
+      tegn, bruk <ulink url="https://www.winzip.com/">WinZip</ulink> mens
+      det kjøres <ulink url="https://www.winehq.com/">Wine</ulink> Windows
       emulator.
     </para>
 
     <para>
-      2) Use <command>bsdtar -xf</command> from
+      2) Bruk <command>bsdtar -xf</command> fra
       <xref role="nodep" linkend="libarchive"/> to unpack the ZIP archive.
-      Then fix the damage made to
-      the filenames using the <command>convmv</command> tool
-      (<ulink url="https://j3e.de/linux/convmv/"/>). The following is an example
-      for the zh_CN.UTF-8 locale:
+      Deretter fiks skaden på
+      filnavnene ved hjelp av <command>convmv</command> verktøyet
+      (<ulink url="https://j3e.de/linux/convmv/"/>). Følgende er et eksempel
+      for lokaliteten zh_CN.UTF-8:
     </para>
 
 <screen><userinput>convmv -f cp936 -t utf-8 -r --nosmart --notest \
     <replaceable>&lt;/path/to/unzipped/files&gt;</replaceable></userinput></screen>
 <!--
     <para>
-      3) Apply the optional
-      <filename>unzip-5.50-alt-iconv-v1.1.patch</filename> patch to
-      <application>UnZip</application>. It will apply with some offsets.
+      3) Bruk den valgfrie
+      <filename>unzip-5.50-alt-iconv-v1.1.patch</filename> oppdateringen til
+      <application>UnZip</application>. Det vil gjelde med noen forskyvninger.
     </para>
 
     <para>
-      It allows to specify the assumed filename encoding in the ZIP
-      archive using the <option>-O charset_name</option> option and the
-      on-disk filename encoding using the <option>-I charset_name</option>
-      option. Defaults: the on-disk filename encoding is the locale encoding,
-      the encoding inside the ZIP archive is guessed according to the builtin
-      table based on the locale encoding. For US English users, this still
-      means that unzip converts from CP850 to ISO-8859-1 by default.
+      Den lar deg spesifisere antatt filnavnkoding i ZIP
+      arkiv ved hjelp av <option>-O charset_name</option> alternativet og
+      på disk filnavnkoding ved hjelp av <option>-I charset_name</option>
+      alternativ. Standarder: filnavnkodingen på disken er lokalkodingen,
+      kodingen inne i ZIP-arkivet er gjettet i henhold til den innebygde
+      tabell basert på lokalkodingen. For brukere av amerikansk engelsk, dette fortsatt
+      betyr at unzip konverterer fra CP850 til ISO-8859-1 som standard.
     </para>
 
     <para>
-      Caveat: this method works only with 8-bit locale encodings, not
-      with UTF-8. Attempting to use a patched <command>unzip</command> in UTF-8
-      locales may result in a segmentation fault and is probably a security
-      risk.
+      Caveat: denne metoden fungerer bare med 8-biters lokalkoding, ikke
+      med UTF-8. Forsøker å bruke en oppdatering <command>unzip</command> i UTF-8
+      lokaliteter kan resultere i en segmenteringsfeil og er sannsynligvis en
+      sikkerhetsrisiko.
     </para>
 -->
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of UnZip</title>
+    <title>Installasjon av UnZip</title>
 
     <para>
-      First apply the patch:
+      Først anvend oppdateringen:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../unzip-&unzip-version;-consolidated_fixes-1.patch</userinput></screen>
 
     <para>
-      Now compile the package:
+      Nå kompiler pakken:
     </para>
 
 <screen><userinput>make -f unix/Makefile generic</userinput></screen>
 
     <para>
-      The test suite does not work for target <quote>generic</quote>.
+      Testpakken fungerer ikke for målet <quote>generic</quote>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make prefix=/usr MANDIR=/usr/share/man/man1 \
@@ -216,36 +216,36 @@
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <command>make -f unix/Makefile generic</command>:
-      This target begins by running a configure script (unlike the older
-      targets such as linux and linux_noasm) which creates a flags file that
-      is then used in the build. This ensures that the 32-bit x86 build
-      receives the right flags to unzip files which which are larger than 2GB
-      when extracted.
+      Dette målet begynner med å kjøre et konfigureringsskript (i motsetning til eldre
+      mål som linux og linux_noasm) som lager en flaggfil som
+      deretter brukes i bygget. Dette sikrer at 32-bit x86 bygget
+      mottar de riktige flaggene for å pakke ut filer som er større enn 2 GB
+      når den pakkes ut.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>funzip, unzip, unzipfsx, zipgrep, and zipinfo</seg>
-        <seg>None</seg>
-        <seg>None</seg>
+        <seg>funzip, unzip, unzipfsx, zipgrep, og zipinfo</seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -253,8 +253,8 @@
         <term><command>funzip</command></term>
         <listitem>
           <para>
-            allows the output of <command>unzip</command> commands to be
-            redirected
+            tillater utdata fra <command>unzip</command> kommandoer å bli
+            omdirigert
           </para>
           <indexterm zone="unzip funzip">
             <primary sortas="b-funzip">funzip</primary>
@@ -266,8 +266,8 @@
         <term><command>unzip</command></term>
         <listitem>
           <para>
-            lists, tests or extracts files from a <filename>ZIP</filename>
-            archive
+            lister, tester eller pakker ut filer fra et <filename>ZIP</filename>
+            arkiv
           </para>
           <indexterm zone="unzip unzip-prog">
             <primary sortas="b-unzip">unzip</primary>
@@ -279,9 +279,9 @@
         <term><command>unzipfsx</command></term>
         <listitem>
           <para>
-            is a self-extracting stub that can be prepended to a
-            <filename>ZIP</filename> archive.  Files in this format allow the
-            recipient to decompress the archive without installing
+            er en selvutpakkende stub som kan settes foran et
+            <filename>ZIP</filename> arkiv.  Filer i dette formatet tillater
+            mottakeren for å pakke ut arkivet uten å installere
             <application>UnZip</application>
           </para>
           <indexterm zone="unzip unzipfsx">
@@ -294,8 +294,8 @@
         <term><command>zipgrep</command></term>
         <listitem>
           <para>
-            searches files in a <filename>ZIP</filename> archive for
-            lines matching a pattern
+            søker etter filer i et <filename>ZIP</filename> arkiv for
+            linjer som samsvarer med et mønster
           </para>
           <indexterm zone="unzip zipgrep">
             <primary sortas="b-zipgrep">zipgrep</primary>
@@ -307,9 +307,9 @@
         <term><command>zipinfo</command></term>
         <listitem>
           <para>
-            produces technical information about the files in a
-            <filename>ZIP</filename> archive, including file access permissions,
-            encryption status, type of compression, etc
+            produserer teknisk informasjon om filene i et
+            <filename>ZIP</filename> arkiv, inkludert filtilgangstillatelser,
+            krypteringsstatus, type komprimering osv
           </para>
           <indexterm zone="unzip zipinfo">
             <primary sortas="b-zipinfo">zipinfo</primary>
@@ -321,7 +321,7 @@
         <term><filename class='libraryfile'>libunzip.so</filename></term>
         <listitem>
           <para>
-            contains the API functions required by the
+            inneholder API funksjoner som kreves av
             <application>UnZip</application> programs.
           </para>
           <indexterm zone="unzip libunzip">
