@@ -8,8 +8,8 @@
   <!ENTITY at-download-ftp  " ">
   <!ENTITY at-md5sum        "ca3657a1c90d7c3d252e0bc17feddc6e">
   <!ENTITY at-size          "130 KB">
-  <!ENTITY at-buildsize     "1.9 MB (including tests)">
-  <!ENTITY at-time          "less than 0.1 SBU">
+  <!ENTITY at-buildsize     "1.9 MB (inkludert tester)">
+  <!ENTITY at-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="at" xreflabel="At-&at-version;">
@@ -23,83 +23,83 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to at</title>
+    <title>Introduksjon til at</title>
 
     <para>
-      The <application>at</application> package provide delayed job execution
-      and batch processing. It is required for Linux Standards Base (LSB)
-      conformance.
+      <application>at</application> pakken gir forsinket jobbutførelse
+      og skriptbehandling. Det kreves for Linux Standards Base (LSB)
+      samsvar.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&at-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&at-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&at-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&at-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &at-md5sum;
+          Nedlasting MD5 sum: &at-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &at-size;
+          Nedlastingsstørrelse: &at-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &at-buildsize;
+          Estimert diskplass som kreves: &at-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &at-time;
+          Estimert byggetid: &at-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">at Dependencies</bridgehead>
+    <bridgehead renderas="sect3">at Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      An <xref linkend="server-mail"/>
+      En <xref linkend="server-mail"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="linux-pam"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/at"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of at</title>
+    <title>Installasjon av at</title>
 
     <para>
-      Before building <application>at</application>, as the
-      <systemitem class="username">root</systemitem> user you should create
-      the group and user <systemitem class="username">atd</systemitem> which
-      will run the <command>atd</command> daemon:
+      Før bygging <application>at</application>, som
+      <systemitem class="username">root</systemitem> bruker du bør opprette
+      gruppen og brukeren <systemitem class="username">atd</systemitem> som
+      vil kjøre <command>atd</command> nissen:
     </para>
 
 <screen role="root"><userinput>groupadd -g 17 atd                                                  &amp;&amp;
 useradd -d /dev/null -c "atd daemon" -g atd -s /bin/false -u 17 atd</userinput></screen>
 
     <para>
-      Install <application>at</application> with the following
-      commands:
+      Installer <application>at</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
     <screen revision="sysv"><userinput>./configure --with-daemon_username=atd        \
@@ -118,12 +118,12 @@ make -j1</userinput></screen>
 make -j1</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make test</command>.
+      For å teste resultatene, kjør: <command>make test</command>.
     </para>
 
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install docdir=/usr/share/doc/at-&at-version; \
@@ -132,15 +132,15 @@ make -j1</userinput></screen>
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring at</title>
+    <title>Konfigurere at</title>
 
     <sect3 id="at-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
-        <filename>/etc/at.allow</filename> and
-        <filename>/etc/at.deny</filename> determines who can submit jobs via at
-        or batch.
+        <filename>/etc/at.allow</filename> og
+        <filename>/etc/at.deny</filename> bestemmer hvem som kan sende inn jobber via at
+        eller skript.
       </para>
 
       <indexterm zone="at at-config">
@@ -154,19 +154,19 @@ make -j1</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Linux PAM Configuration</title>
+      <title>Linux PAM Konfigurering</title>
 
       <para>
-        If <application>At</application> has been built with
-        <application>Linux PAM</application> support, you need to create a
-        <application>PAM</application> configuration file, to get it working
-        correctly with BLFS.
+        Hvis <application>At</application> er bygget med
+        <application>Linux PAM</application> støtte, må du opprette en
+        <application>PAM</application> konfigurasjonsfil for å få den til å fungere
+        riktig med BLFS.
       </para>
 
       <para>
-        Issue the following commands as the <systemitem
-        class="username">root</systemitem> user to create the configuration
-        file for <application>Linux PAM</application>:
+        Utfør følgende kommandoer som <systemitem
+        class="username">root</systemitem> bruker for å opprette konfigurasjonenfilen
+        for <application>Linux PAM</application>:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/pam.d/atd &lt;&lt; "EOF"
@@ -183,19 +183,19 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3  id="at-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        Install the <filename>/etc/init.d/atd</filename>
-        init script from the <xref linkend="bootscripts"/> package.
+        Installer <filename>/etc/init.d/atd</filename>
+        init skriptet fra <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        To start the <command>atd</command> daemon at boot,
-        enable the previously installed systemd unit by
-        running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        For å starte <command>atd</command> nissen ved oppstart,
+        aktiver den tidligere installerte systemd enheten ved å
+        kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <indexterm zone="at at-init">
@@ -211,19 +211,19 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          at, atd, atq (symlink), atrm (symlink), atrun, and batch
+          at, atd, atq (symbolkobling), atrm (symbolkobling), atrun, and batch
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
           /usr/share/doc/at-&at-version;
@@ -232,7 +232,7 @@ EOF</userinput></screen>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -240,7 +240,7 @@ EOF</userinput></screen>
         <term><command>at</command></term>
         <listitem>
           <para>
-            queues, examines or deletes jobs for later execution
+            setter i kø, undersøker eller sletter jobber for senere utførelse
           </para>
           <indexterm zone="at at-prog">
             <primary sortas="b-at">at</primary>
@@ -252,7 +252,7 @@ EOF</userinput></screen>
         <term><command>atd</command></term>
         <listitem>
           <para>
-            is the daemon that runs jobs queued for later execution
+            er nissen som kjører jobber i kø for senere kjøring
           </para>
           <indexterm zone="at atd">
             <primary sortas="b-atd">atd</primary>
@@ -264,7 +264,7 @@ EOF</userinput></screen>
         <term><command>atq</command></term>
         <listitem>
           <para>
-            lists the user's pending jobs, or all jobs, if superuser
+            viser brukerens ventende jobber, eller alle jobber, hvis superbruker
           </para>
           <indexterm zone="at atq">
             <primary sortas="b-atq">atq</primary>
@@ -276,7 +276,7 @@ EOF</userinput></screen>
         <term><command>atrm</command></term>
         <listitem>
           <para>
-            deletes jobs, identified by their job number
+            sletter jobber, identifisert med jobbnummeret deres
           </para>
           <indexterm zone="at atrm">
             <primary sortas="b-atrm">atrm</primary>
@@ -288,7 +288,7 @@ EOF</userinput></screen>
         <term><command>atrun</command></term>
         <listitem>
           <para>
-            runs jobs queued for later execution
+            kjører jobber i kø for senere utførelse
           </para>
           <indexterm zone="at atrun">
             <primary sortas="b-atrun">atrun</primary>
@@ -300,7 +300,7 @@ EOF</userinput></screen>
         <term><command>batch</command></term>
         <listitem>
           <para>
-            is a script that executes commands when system load levels permit
+            er et skript som utfører kommandoer når systembelastningsnivåene tillater det
           </para>
           <indexterm zone="at batch">
             <primary sortas="b-batch">batch</primary>
