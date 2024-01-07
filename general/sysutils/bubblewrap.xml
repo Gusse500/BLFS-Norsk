@@ -8,8 +8,8 @@
   <!ENTITY bubblewrap-download-ftp  " ">
   <!ENTITY bubblewrap-md5sum        "37892167cbc3bd2a54b396033892e2ae">
   <!ENTITY bubblewrap-size          "148 KB">
-  <!ENTITY bubblewrap-buildsize     "3.1 MB (with tests)">
-  <!ENTITY bubblewrap-time          "less than 0.1 SBU (with tests)">
+  <!ENTITY bubblewrap-buildsize     "3.1 MB (med tester)">
+  <!ENTITY bubblewrap-time          "mindre enn 0.1 SBU (med tester)">
 ]>
 
 <sect1 id="bubblewrap" xreflabel="bubblewrap-&bubblewrap-version;">
@@ -23,62 +23,62 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Bubblewrap</title>
+    <title>Introduksjon til Bubblewrap</title>
 
     <para>
-      <application>Bubblewrap</application> is a setuid implementation of user
-      namespaces, or sandboxing, that provides access to a subset of kernel
-      user namespace features. Bubblewrap allows user owned processes to run in
-      an isolated environment with limited access to the underlying filesystem.
+      <application>Bubblewrap</application> er en setuid implementering av bruker
+      navneområder, eller sandboxing, som gir tilgang til et undersett av kjernefunksjoner
+      for brukernavn. Bubblewrap lar brukereide prosesser kjøre i
+      et isolert miljø med begrenset tilgang til det underliggende filsystemet.
       <!-- Thanks for the reword DJ -->
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&bubblewrap-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&bubblewrap-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&bubblewrap-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&bubblewrap-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &bubblewrap-md5sum;
+          Nedlasting MD5 sum: &bubblewrap-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &bubblewrap-size;
+          Nedlastingsstørrelse: &bubblewrap-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &bubblewrap-buildsize;
+          Estimert diskplass som kreves: &bubblewrap-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &bubblewrap-time;
+          Estimert byggetid: &bubblewrap-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Bubblewrap Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Bubblewrap Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="libxslt"/> (to generate manual pages) and
-      <xref linkend="libseccomp"/> (built with python bindings, for tests)
+      <xref linkend="libxslt"/> (for å generere manualsider) og
+      <xref linkend="libseccomp"/> (bygget med python bindinger, for tester)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/bubblewrap"/>
+      Brukernotater: <ulink url="&blfs-wiki;/bubblewrap"/>
     </para>
   </sect2>
 
@@ -86,11 +86,11 @@
   So far, I have not observed this, but that doesn't mean that it still might not be needed in practice. -->
 
   <sect2 role="installation">
-    <title>Installation of Bubblewrap</title>
+    <title>Installasjon av Bubblewrap</title>
 
     <para>
-      Install <application>Bubblewrap</application> by running the following
-      commands:
+      Installer <application>Bubblewrap</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -100,53 +100,53 @@ meson --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Next, if you desire to run the test suite, fix an issue caused by the
-      merged-/usr configuration in LFS:
+      Deretter, hvis du ønsker å kjøre testpakken, fiks et problem forårsaket av
+      merged-/usr konfigurasjon i LFS:
     </para>
 
 <screen remap="test"><userinput>sed 's@symlink usr/lib64@ro-bind-try /lib64@' -i ../tests/libtest.sh</userinput></screen>
 
     <para>
-      To test the results, issue: <command>ninja test</command>
+      For å teste resultatene, kjør: <command>ninja test</command>
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
           bwrap
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -154,7 +154,7 @@ ninja</userinput></screen>
         <term><command>bwrap</command></term>
         <listitem>
           <para>
-            generates a sandbox for a program to run in
+            genererer en sandbox for et program å kjøre i
           </para>
           <indexterm zone="bubblewrap bwrap">
             <primary sortas="b-bwrap">bwrap</primary>
