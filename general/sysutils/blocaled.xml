@@ -8,8 +8,8 @@
   <!ENTITY blocaled-download-ftp  " ">
   <!ENTITY blocaled-md5sum        "07796cf62fc1e2b743ee6f805183146d">
   <!ENTITY blocaled-size          "258 KB">
-  <!ENTITY blocaled-buildsize     "4.1 MB (with tests)">
-  <!ENTITY blocaled-time          "0.1 SBU (with tests)">
+  <!ENTITY blocaled-buildsize     "4.1 MB (med tester)">
+  <!ENTITY blocaled-time          "0.1 SBU (med tester)">
 ]>
 
 <sect1 id="blocaled" revision="sysv" xreflabel="blocaled-&blocaled-version;">
@@ -24,91 +24,91 @@
 
   <!--Required section-->
   <sect2 role="package">
-    <title>Introduction to blocaled</title>
+    <title>Introduksjon til blocaled</title>
 
     <para>
-      <application>blocaled</application> is an implementation of the
-      <emphasis>org.freedesktop.locale1</emphasis> D-Bus protocol,
-      which normally comes with <application>systemd</application>. It is
-      needed by the <application>GNOME</application> desktop.
+      <application>blocaled</application> er en implementering av
+      <emphasis>org.freedesktop.locale1</emphasis> D-Bus protokollen,
+      som vanligvis leveres med <application>systemd</application>.Den er
+      nødvendig for <application>GNOME</application> skrivebordet.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&blocaled-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&blocaled-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&blocaled-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&blocaled-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &blocaled-md5sum;
+          Nedlasting MD5 sum: &blocaled-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &blocaled-size;
+          Nedlastingsstørrelse: &blocaled-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &blocaled-buildsize;
+          Estimert diskplass som kreves: &blocaled-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &blocaled-time;
+          Estimert byggetid: &blocaled-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">blocaled Dependencies</bridgehead>
+    <bridgehead renderas="sect3">blocaled Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="polkit"/> and
+      <xref linkend="polkit"/> og
       <xref linkend="libdaemon"/>
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/blocaled"/>
+      Brukernotater: <ulink url="&blfs-wiki;/blocaled"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of blocaled</title>
+    <title>Installasjon av blocaled</title>
 
     <para>
-      Install <application>blocaled</application> by running the following
-      commands:
+      Installer <application>blocaled</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make check</command>.
+      For å teste resultatene, kjør: <command>make check</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring blocaled</title>
+    <title>Konfigurere blocaled</title>
 
     <sect3 id="blocaled-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
       <para>
         <filename>/etc/blocaled.conf</filename>
       </para>
@@ -119,21 +119,21 @@ make</userinput></screen>
       </indexterm>
     </sect3>
 
-    <sect3><title>Configuration Information</title>
+    <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        <filename>/etc/blocaled.conf</filename> contains the location of
-        the settings files used by <application>blocaled</application>. The
-        defaults are suitable for BLFS. Information about the entries is
-        available as comments in the file.
+        <filename>/etc/blocaled.conf</filename> inneholder plasseringen av
+        innstillingsfilene som brukes av <application>blocaled</application>. 
+        Standarder passer for BLFS. Informasjon om oppføringene er
+        tilgjengelig som kommentarer i filen.
       </para>
 
       <para>
-        The <emphasis>org.freedesktop.locale1</emphasis> protocol is
-        unable to export locale variables. Locale settings are stored
-        by default in <filename>/etc/locale.conf</filename>. We need to
-        retrieve them in the bash profile. As the <systemitem class="username">
-        root</systemitem> user, issue:
+        <emphasis>org.freedesktop.locale1</emphasis> protokoll
+        kan ikke eksportere lokalitetsvariabler. Lokale innstillinger lagres
+        som standard i <filename>/etc/locale.conf</filename>. Vi må
+        hente dem i bash profilen. Som <systemitem class="username">
+        root</systemitem> bruker, kjør:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/profile.d/i18n.sh &lt;&lt; "EOF"
@@ -159,8 +159,8 @@ if [ -n "$LC_IDENTIFICATION" ]; then export LC_IDENTIFICATION; fi
 EOF</userinput></screen>
 
       <para>
-        Then the <filename>/etc/locale</filename> file should be generated,
-        as the <systemitem class="username">root</systemitem> user:
+        Så blir <filename>/etc/locale</filename> filen generert,
+        som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/locale.conf &lt;&lt; EOF
@@ -172,11 +172,11 @@ LANG=$LANG
 EOF</userinput></screen>
 
       <para>
-        If you plan to run an X (or Wayland) Window system, you may want to
-        set up your X keyboard. The best way to do it is to retrieve the
-        settings from <filename>/etc/sysconfig/console</filename>, and feed
-        them to the <application>blocaled</application> daemon. As the
-        <systemitem class="username">root</systemitem> user:
+        Hvis du planlegger å kjøre et X (eller Wayland) Window system, kan det være lurt
+        å sette opp X tastaturet. Den beste måten å gjøre det på er å hente
+        innstillinger fra <filename>/etc/sysconfig/console</filename>, og sende
+        dem til <application>blocaled</application> nissen. Som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>source /etc/sysconfig/console &amp;&amp;
@@ -189,9 +189,9 @@ gdbus call --system                                             \
            "$KEYMAP" "$KEYMAP_CORRECTIONS" true true</userinput></screen>
 
       <para>
-        This should create or modify the Xorg configuration file (default is
-        <filename>/etc/X11/xorg.conf.d/30-keyboard.conf</filename>) to match
-        the keyboard settings set in <envar>KEYMAP</envar>.
+        Dette bør opprette eller endre Xorg konfigurasjonsfilen (standard er
+        <filename>/etc/X11/xorg.conf.d/30-keyboard.conf</filename>) å samsvare
+        med tastaturinnstillingene satt i <envar>KEYMAP</envar>.
       </para>
 
     </sect3>
@@ -199,19 +199,19 @@ gdbus call --system                                             \
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
-          blocaled (in <filename class="directory">/usr/libexec</filename>)
+          blocaled (i <filename class="directory">/usr/libexec</filename>)
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
           /usr/share/blocaled
@@ -220,7 +220,7 @@ gdbus call --system                                             \
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -228,8 +228,8 @@ gdbus call --system                                             \
         <term><command>blocaled</command></term>
         <listitem>
           <para>
-            is the daemon implementing the
-            <emphasis>org.freedesktop.locale1</emphasis> D-Bus protocol
+            er nissen som implementerer
+            <emphasis>org.freedesktop.locale1</emphasis> D-Bus protokollen
           </para>
           <indexterm zone="blocaled blocaled-prog">
             <primary sortas="b-blocaled">blocaled</primary>
