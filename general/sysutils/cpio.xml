@@ -8,8 +8,8 @@
   <!ENTITY cpio-download-ftp  "&gnu-ftp;/cpio/cpio-&cpio-version;.tar.bz2">
   <!ENTITY cpio-md5sum        "f3438e672e3fa273a7dc26339dd1eed6">
   <!ENTITY cpio-size          "1.3 MB">
-  <!ENTITY cpio-buildsize     "17 MB (with tests and docs)">
-  <!ENTITY cpio-time          "0.3 SBU (with tests and docs)">
+  <!ENTITY cpio-buildsize     "17 MB (med tester og dokumenter)">
+  <!ENTITY cpio-time          "0.3 SBU (med tester og dokumenter)">
 ]>
 
 <sect1 id="cpio" xreflabel="cpio-&cpio-version;">
@@ -23,73 +23,73 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to cpio</title>
+    <title>Introduksjon til cpio</title>
 
     <para>
-      The <application>cpio</application> package contains
-      tools for archiving.
+      <application>cpio</application> pakken inneholder
+      verktøy for arkivering.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&cpio-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&cpio-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&cpio-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&cpio-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &cpio-md5sum;
+          Nedlasting MD5 sum: &cpio-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &cpio-size;
+          Nedlastingsstørrelse: &cpio-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &cpio-buildsize;
+          Estimert diskplass som kreves: &cpio-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &cpio-time;
+          Estimert byggetid: &cpio-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">CPIO Dependencies</bridgehead>
+    <bridgehead renderas="sect3">CPIO Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="texlive"/> (or <xref linkend="tl-installer"/>)
+      <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>)
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/cpio"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of cpio</title>
+    <title>Installasjon av cpio</title>
 
     <para>
-      First, fix a build issue when using GCC-10 and higher:
+      Først, fiks et byggeproblem når du bruker GCC-10 og høyere:
     </para>
 
 <screen><userinput>sed -i '/The name/,+2 d' src/global.c</userinput></screen>
 
     <para>
-      Install <application>cpio</application> by running the following
-      commands:
+      Installer <application>cpio</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr \
@@ -101,19 +101,19 @@ makeinfo --html --no-split -o doc/cpio.html doc/cpio.texi &amp;&amp;
 makeinfo --plaintext       -o doc/cpio.txt  doc/cpio.texi</userinput></screen>
 
     <para>
-      If you have <xref linkend="texlive"/> installed and wish to create PDF
-      or Postscript documentation, issue one or both of the following commands:
+      Hvis du har <xref linkend="texlive"/> installert og ønsker å lage PDF
+      eller Postscript dokumentasjon, utsted en eller begge av følgende kommandoer:
     </para>
 
 <screen remap="doc"><userinput>make -C doc pdf &amp;&amp;
 make -C doc ps</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make check</command>.
+      For å teste resultatene, kjør: <command>make check</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -124,9 +124,9 @@ install -v -m644    doc/cpio.{html,txt} \
                     /usr/share/doc/cpio-&cpio-version;</userinput></screen>
 
     <para>
-      If you built PDF or Postscript documentation, install it
-      by issuing the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Hvis du har laget PDF eller Postscript dokumentasjon, installer den
+      ved å utstede følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"
@@ -136,7 +136,7 @@ install -v -m644    doc/cpio.{html,txt} \
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <!-- FIXME: Removed due to merged-/usr transition
     <para>
@@ -148,35 +148,35 @@ install -v -m644    doc/cpio.{html,txt} \
     -->
 
     <para>
-      <parameter>--enable-mt</parameter>: This parameter forces the
-      building and installation of the <command>mt</command> program.
+      <parameter>--enable-mt</parameter>: Denne parameteren tvinger
+      bygging og installasjon av <command>mt</command> programmet.
     </para>
 
     <para>
-      <parameter>--with-rmt=/usr/libexec/rmt</parameter>: This parameter
-      inhibits building the <command>rmt</command> program as it is already
-      installed by the <application>Tar</application> package in LFS.
+      <parameter>--with-rmt=/usr/libexec/rmt</parameter>: Denne parameteren
+      hemmer å bygge <command>rmt</command> programmet fordi det allerede er
+      installert av <application>Tar</application> pakke i LFS.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>cpio and mt</seg>
-        <seg>None</seg>
+        <seg>cpio og mt</seg>
+        <seg>Ingen</seg>
         <seg>/usr/share/doc/cpio-&cpio-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -184,7 +184,7 @@ install -v -m644    doc/cpio.{html,txt} \
         <term><command>cpio</command></term>
         <listitem>
           <para>
-            copies files to and from archives
+            kopierer filer til og fra arkiver
           </para>
           <indexterm zone="cpio cpio-prog">
             <primary sortas="b-cpio">cpio</primary>
@@ -196,7 +196,7 @@ install -v -m644    doc/cpio.{html,txt} \
         <term><command>mt</command></term>
         <listitem>
           <para>
-            controls magnetic tape drive operations
+            kontrollerer magnetbåndstasjonens operasjoner
           </para>
           <indexterm zone="cpio mt">
             <primary sortas="b-mt">mt</primary>
