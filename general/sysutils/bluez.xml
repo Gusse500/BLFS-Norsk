@@ -8,8 +8,8 @@
   <!ENTITY bluez-download-ftp  " ">
   <!ENTITY bluez-md5sum        "3f9496fedf878fba985e56713ed7752e">
   <!ENTITY bluez-size          "2.2 MB">
-  <!ENTITY bluez-buildsize     "149 MB (with tests)">
-  <!ENTITY bluez-time          "0.4 SBU (using parallelism=4; with tests)">
+  <!ENTITY bluez-buildsize     "149 MB (med tester)">
+  <!ENTITY bluez-time          "0.4 SBU (bruker parallellisme=4; med tester)">
 ]>
 
 <sect1 id="bluez" xreflabel="BlueZ-&bluez-version;">
@@ -23,87 +23,87 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to BlueZ</title>
+    <title>Introduksjon til BlueZ</title>
 
     <para>
-      The <application>BlueZ</application> package contains the
-      Bluetooth protocol stack for Linux.
+      <application>BlueZ</application> pakken inneholder
+      Bluetooth protokollstabel for Linux.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&bluez-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&bluez-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&bluez-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&bluez-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &bluez-md5sum;
+          Nedlasting MD5 sum: &bluez-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &bluez-size;
+          Nedlastingsstørrelse: &bluez-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &bluez-buildsize;
+          Estimert diskplass som kreves: &bluez-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &bluez-time;
+          Estimert byggetid: &bluez-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3" revision="sysv">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3" revision="sysv">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact" revision="sysv">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/bluez-&bluez-version;-obexd_without_systemd-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">BlueZ Dependencies</bridgehead>
+    <bridgehead renderas="sect3">BlueZ Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="dbus"/>,
-      <xref linkend="glib2"/>, and
+      <xref linkend="glib2"/>, og
       <xref linkend="libical"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="docutils"/> (to generate man pages)
+      <xref linkend="docutils"/> (for å generere man sider)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/bluez"/>
+      Brukernotater: <ulink url="&blfs-wiki;/bluez"/>
     </para>
   </sect2>
 
 
   <sect2 role="kernel" id="bluez-kernel">
-    <title>Kernel Configuration</title>
+    <title>Kjernekonfigurasjon</title>
 
     <para>
-      If you are building this package to use bluetooth devices (rather than as a
-      build dependency), enable the following options in the kernel configuration,
-      also the options in the <quote>Cryptographic API</quote> section if
-      you intend to run the tests, and recompile the kernel if necessary:
+      Hvis du bygger denne pakken for å bruke bluetooth enheter (i stedet for som en
+      byggeavhengighet), aktiverer følgende alternativer i kjernekonfigurasjonen,
+      også alternativene i <quote>Cryptographic API</quote> seksjonen hvis
+      du har tenkt å kjøre testene, og kompilere kjernen på nytt om nødvendig:
     </para>
 
 <screen><literal>General Setup ---&gt;
@@ -143,9 +143,9 @@
 
 <!--
     <para>
-      If you wish to run the test suite (even if treating this package as a build
-      dependency), you will need to enable the following options in the kernel
-      configuration and recompile the kernel if necessary:
+      Hvis du ønsker å kjøre testpakken (selv om du behandler denne pakken som en bygge
+      avhengighet), må du aktivere følgende alternativer i kjerne
+      konfigurasjonen og kompiler kjernen på nytt om nødvendig:
     </para>
 
 <screen><literal>-*- Cryptographic API - - -&gt;                                      [CONFIG_CRYPTO]
@@ -158,23 +158,23 @@
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of BlueZ</title>
+    <title>Installasjon av BlueZ</title>
 
 <!--
     <para>
-      At first, fix an issue building the package with Glibc-2.34 or later:
+      Først, fiks et problem med å bygge pakken med Glibc-2.34 eller nyere:
     </para>
 
 <screen><userinput>sed 's/pause(/bluez_&amp;/' -i profiles/audio/media.c</userinput></screen>
 -->
 
-    <para revision="sysv">Now, make some changes needed for SystemV systems:</para>
+    <para revision="sysv">Gjør nå noen endringer som trengs for SystemV systemer:</para>
 
 <screen revision="sysv"><userinput>patch -Np1 -i ../bluez-&bluez-version;-obexd_without_systemd-1.patch</userinput></screen>
 
     <para>
-      Install <application>BlueZ</application> by running the following
-      commands:
+      Installer <application>BlueZ</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>./configure --prefix=/usr         \
@@ -193,27 +193,27 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <userinput>make check</userinput>.
+      For å teste resultatene, kjør: <userinput>make check</userinput>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
 ln -svf ../libexec/bluetooth/bluetoothd /usr/sbin</userinput></screen>
 
     <para>
-      Install the main configuration file as the
-      <systemitem class="username">root</systemitem> user:
+      Installer hovedkonfigurasjonsfilen som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -v -dm755 /etc/bluetooth &amp;&amp;
 install -v -m644 src/main.conf /etc/bluetooth/main.conf</userinput></screen>
 
     <para>
-      If desired, install the API documentation as the
-      <systemitem class="username">root</systemitem> user:
+      Hvis ønskelig, installer API dokumentasjonen som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -v -dm755 /usr/share/doc/bluez-&bluez-version; &amp;&amp;
@@ -223,52 +223,52 @@ install -v -m644 doc/*.txt /usr/share/doc/bluez-&bluez-version;</userinput></scr
 
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--disable-manpages</parameter>: This switch disables generating
-      the manual pages because of the reliance on 'rst2man' in docutils. Remove
-      this switch if you have <xref role="nodep" linkend="docutils"/> installed
-      and wish to generate the manual pages.
+      <parameter>--disable-manpages</parameter>: Denne bryteren deaktiverer generering
+      av manualsidene på grunn av avhengigheten av 'rst2man' i docutils. Fjern
+      denne bryteren hvis du har <xref role="nodep" linkend="docutils"/> installert
+      og ønsker å generere manualsidene.
     </para>
 
     <para>
-      <parameter>--enable-library</parameter>: This switch enables building the
-      <application>BlueZ</application> 4 compatibility library which is required by
-      some applications.
+      <parameter>--enable-library</parameter>: Denne bryteren gjør det mulig å bygge
+      <application>BlueZ</application> 4 kompatibilitetsbibliotek som kreves av
+      noen applikasjoner.
     </para>
 
     <para revision="sysv">
-      <parameter>--disable-systemd</parameter>: This switch is needed because
-      <application>systemd</application> is not part of LFS/BLFS. If you are
-      using systemd, remove this switch.
+      <parameter>--disable-systemd</parameter>: Denne bryteren er nødvendig pga at
+      <application>systemd</application> ikke er en del av LFS/BLFS. Hvis du
+      bruker systemd, fjern denne bryteren.
     </para>
 
     <para>
       <command>ln -svf ../libexec/bluetooth/bluetoothd /usr/sbin</command>:
-      This command makes access to the bluetooth daemon more convenient.
+      Denne kommandoen gjør tilgangen til bluetooth nissen mer praktisk.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring BlueZ</title>
+    <title>Konfigurere BlueZ</title>
 
     <sect3 id="bluez-config">
-      <title>Configuration Files</title>
+      <title>Konfigurasjonsfiler</title>
       <para revision="sysv">
-        <filename>/etc/bluetooth/main.conf</filename> is installed automatically
-        during the install.  Additionally, there are three supplementary
-        configuration files.  /etc/sysconfig/bluetooth is installed as a part
-        of the boot script below.  In addition, you optionally can install the
-        following, as the <systemitem class="username">root</systemitem> user:
+        <filename>/etc/bluetooth/main.conf</filename> installeres automatisk
+        under installasjonen. I tillegg er det tre tilleggs
+        konfigurasjonsfiler.  /etc/sysconfig/bluetooth er installert som en del
+        av oppstartsskriptet nedenfor. I tillegg kan du eventuelt installere
+        følgende, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <para revision="systemd">
-        <filename>/etc/bluetooth/main.conf</filename> is installed automatically
-        during the installation. Additionally, there are two supplementary
-        configuration files. You can optionally install the following files
-        as the <systemitem class="username">root</systemitem> user:
+        <filename>/etc/bluetooth/main.conf</filename> installeres automatisk
+        under installasjonen. I tillegg er det to tilleggs
+        konfigurasjonsfiler. Du kan eventuelt installere følgende filer
+        som <systemitem class="username">root</systemitem> bruker:
      </para>
 
 <screen role="root"><userinput>cat > /etc/bluetooth/rfcomm.conf &lt;&lt; "EOF"</userinput>
@@ -298,30 +298,30 @@ EOF</screen>
     </sect3>
 
     <sect3  id="bluez-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Bluez Services</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Bluez Tjenester</phrase></title>
 
       <para revision="sysv">
-        To automatically start the <command>bluetoothd</command> daemon when the
-        system is rebooted, install the
-        <filename>/etc/rc.d/init.d/bluetooth</filename> bootscript from the
-        <xref linkend="bootscripts"/> package.
+        For å starte <command>bluetoothd</command> nissen automatisk når
+        systemet startes på nytt, installer
+        <filename>/etc/rc.d/init.d/bluetooth</filename> oppstartsskript fra
+        <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        To start the <command>bluetoothd</command> daemon at boot,
-        enable the previously installed systemd unit by
-        running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        For å starte <command>bluetoothd</command> nissen ved oppstart,
+        aktiver den tidligere installerte systemd enheten ved å
+        kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable bluetooth</userinput></screen>
 
       <para revision="systemd">
-         To start the <command>obexd</command> daemon for a user session (to
-         support some Bluetooth programs using it), enable the previously
-         installed systemd unit for all users by running the following command
-         as the <systemitem class="username">root</systemitem> user:
+         For å starte <command>obexd</command> nissen for en brukerøkt (for å
+         støtte noen Bluetooth programmer som bruker det), aktiverer den tidligere
+         installerte systemd enheten for alle brukere ved å kjøre følgende kommando
+         som <systemitem class="username">root</systemitem> bruker:
        </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable --global obex</userinput></screen>
@@ -335,8 +335,8 @@ EOF</screen>
 
       <note revision="systemd">
         <para>
-          <application>Systemd</application> will start the Bluetooth daemon
-          only when a bluetooth device is detected on the system.
+          <application>Systemd</application> vil starte Bluetooth nissen
+          bare når en bluetooth enhet oppdages på systemet.
         </para>
       </note>
 
@@ -345,12 +345,12 @@ EOF</screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
@@ -363,7 +363,7 @@ EOF</screen>
           hex2hcd,
           l2ping,
           l2test,
-          mpris-proxy, and
+          mpris-proxy, og
           rctest
         </seg>
         <seg>
@@ -371,14 +371,14 @@ EOF</screen>
         </seg>
         <seg>
           /etc/bluetooth,
-          /usr/{include,libexec}/bluetooth, and
+          /usr/{include,libexec}/bluetooth, og
           /usr/share/doc/bluez-&bluez-version;
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -387,8 +387,8 @@ EOF</screen>
         <term><command>bccmd</command></term>
         <listitem>
           <para>
-            is used to issue BlueCore commands to Cambridge Silicon
-            Radio devices
+            brukes til å utstede BlueCore kommandoer til Cambridge Silicon
+            Radioenheter
           </para>
           <indexterm zone="bluez bccmd">
             <primary sortas="b-bccmd">bccmd</primary>
@@ -401,7 +401,7 @@ EOF</screen>
         <term><command>bluemoon</command></term>
         <listitem>
           <para>
-            is a Bluemoon configuration utility
+            er et Bluemoon konfigurasjonsverktøy
           </para>
           <indexterm zone="bluez bluemoon">
             <primary sortas="b-bluemoon">bluemoon</primary>
@@ -413,7 +413,7 @@ EOF</screen>
         <term><command>bluetoothctl</command></term>
         <listitem>
           <para>
-            is the interactive Bluetooth control program
+            er det interaktive Bluetooth kontrollprogrammet
           </para>
           <indexterm zone="bluez bluetoothctl">
             <primary sortas="b-bluetoothctl">bluetoothctl</primary>
@@ -425,7 +425,7 @@ EOF</screen>
         <term><command>bluetoothd</command></term>
         <listitem>
           <para>
-            is the Bluetooth daemon
+            er Bluetooth nissen
           </para>
           <indexterm zone="bluez bluetoothd">
             <primary sortas="b-bluetoothd">bluetoothd</primary>
@@ -437,8 +437,8 @@ EOF</screen>
         <term><command>btmon</command></term>
         <listitem>
           <para>
-            provides access to the Bluetooth subsystem monitor
-            infrastructure for reading HCI traces
+            gir tilgang til Bluetooth undersystemmonitoren
+            infrastruktur for lesing av HCI spor
           </para>
           <indexterm zone="bluez btmon">
             <primary sortas="b-btmon">btmon</primary>
@@ -451,8 +451,8 @@ EOF</screen>
         <term><command>hex2hcd</command></term>
         <listitem>
           <para>
-            is used to convert a file needed by Broadcom devices
-            to hcd (Broadcom bluetooth firmware) format
+            brukes til å konvertere en fil som trengs av Broadcom enheter
+            til hcd format (Broadcom bluetooth firmware).
           </para>
           <indexterm zone="bluez hex2hcd">
             <primary sortas="b-hex2hcd">hex2hcd</primary>
@@ -464,8 +464,8 @@ EOF</screen>
         <term><command>l2ping</command></term>
         <listitem>
           <para>
-            is used to send a L2CAP echo request to the Bluetooth MAC
-            address given in dotted hex notation
+            brukes til å sende en L2CAP ekkoforespørsel til Bluetooth MAC
+            adresse oppgitt i stiplet sekskantet notasjon
           </para>
           <indexterm zone="bluez l2ping">
             <primary sortas="b-l2ping">l2ping</primary>
@@ -477,7 +477,7 @@ EOF</screen>
         <term><command>l2test</command></term>
         <listitem>
           <para>
-            is a L2CAP testing program
+            er et L2CAP testprogram
           </para>
           <indexterm zone="bluez l2test">
             <primary sortas="b-l2test">l2test</primary>
@@ -489,8 +489,8 @@ EOF</screen>
         <term><command>rctest</command></term>
         <listitem>
           <para>
-            is used to test RFCOMM communications on the
-            Bluetooth stack
+            brukes til å teste RFCOMM kommunikasjon på
+            Bluetooth stabelen
           </para>
           <indexterm zone="bluez rctest">
             <primary sortas="b-rctest">rctest</primary>
@@ -502,7 +502,7 @@ EOF</screen>
         <term><filename class="libraryfile">libbluetooth.so</filename></term>
         <listitem>
           <para>
-            contains the <application>BlueZ</application> 4 API functions
+            inneholder <application>BlueZ</application> 4 API funksjoner
           </para>
           <indexterm zone="bluez libbluetooth">
             <primary sortas="c-libbluetooth">libbluetooth.so</primary>
