@@ -23,90 +23,90 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Autofs</title>
+    <title>Introduksjon til Autofs</title>
 
     <para>
-      <application>Autofs</application> controls the operation of the automount
-      daemons. The automount daemons automatically mount filesystems when they
-      are accessed and unmount them after a period of inactivity. This is done
-      based on a set of pre-configured maps.
+      <application>Autofs</application> kontrollerer driften av automontering
+      nissen. Automount nissen monterer automatisk filsystemer når de
+      åpnes og demonterer dem etter en periode med inaktivitet. Dette blir gjort
+      basert på et sett med forhåndskonfigurerte kart.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&autofs-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&autofs-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&autofs-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&autofs-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &autofs-md5sum;
+          Nedlasting MD5 sum: &autofs-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &autofs-size;
+          Nedlastingsstørrelse: &autofs-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &autofs-buildsize;
+          Estimert diskplass som kreves: &autofs-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &autofs-time;
+          Estimert byggetid: &autofs-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Autofs Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Autofs Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="libtirpc"/> and
+      <xref linkend="libtirpc"/> og
       <xref linkend="rpcsvc-proto"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="nfs-utils"/>,
       <xref linkend="libnsl"/>,
       <xref linkend="libxml2"/>,
       <xref linkend="mitkrb"/>,
-      <xref linkend="openldap"/> (client only), and
+      <xref linkend="openldap"/> (kun klient), og
       <xref linkend="cyrus-sasl"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/autofs"/></para>
 
   </sect2>
 
   <sect2 role="kernel" id="autofs-kernel">
-    <title>Kernel Configuration</title>
+    <title>Kjernekonfigurasjon</title>
 
     <indexterm zone="autofs autofs-kernel">
       <primary sortas="d-Automounter">Automounter</primary>
     </indexterm>
 
     <para>
-      Verify that automounter kernel support has been enabled:
+      Bekreft at automounter kjernestøtte er aktivert:
     </para>
 
 <screen><literal>File systems ---&gt;
   &lt;*/M&gt; Kernel automounter support (supports v3, v4, and v5) [CONFIG_AUTOFS_FS]</literal></screen>
 
     <para>
-      Optionally, enable the following options in the kernel configuration:
+      Aktiver eventuelt følgende alternativer i kjernekonfigurasjonen:
     </para>
 
 <screen><literal>File systems  ---&gt;
@@ -115,24 +115,24 @@
     &lt;*/M&gt; SMB3 and CIFS support (advanced network filesystem)         [CONFIG_CIFS]</literal></screen>
 
     <para>
-      Recompile and install the new kernel, if necessary.
+      Rekompiler og installer den nye kjernen, om nødvendig.
     </para>
 
   </sect2>
 
   <sect2 role="installation">
 
-    <title>Installation of Autofs</title>
+    <title>Installasjon av Autofs</title>
 
     <para>
-      First fix an issue introduced by glibc-2.36:
+      Løs først et problem introdusert av glibc-2.36:
     </para>
 
     <screen><userinput>grep -rl linux/fs modules | xargs sed -i "/linux\/fs/d"</userinput></screen>
 
     <para>
-      Install <application>Autofs</application> by running the following
-      commands:
+      Installer <application>Autofs</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>./configure --prefix=/usr             \
@@ -151,11 +151,11 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -163,15 +163,15 @@ make</userinput></screen>
 <!-- As of version 5.1.5, the configuration files are not installed anymore -->
     <caution>
       <para>
-        If <application>autofs</application> is already installed on your
-        system, be sure to backup your configuration files. They'll be
-        overwritten by the following command.
+        Hvis <application>autofs</application> allerede er installert på ditt
+        system, sørg for å sikkerhetskopiere konfigurasjonsfilene dine. De blir
+        overskrevet av følgende kommando.
       </para>
     </caution>
 
     <para>
-      Install the default configuration files, still as the
-      <systemitem class="username">root</systemitem> user:
+      Installer standard konfigurasjonsfil, fortsatt som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install_samples</userinput></screen>
@@ -179,37 +179,37 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--with-libtirpc</parameter>: This switch forces the package to
-      use libtirpc for RPC functionality instead of relying on implementation
-      from Glibc, which was removed in LFS 8.1.
+      <parameter>--with-libtirpc</parameter>: Denne bryteren tvinger pakken til
+      å bruke libtirpc for RPC funksjonalitet i stedet for å stole på implementering
+      fra Glibc, som ble fjernet i LFS 8.1.
     </para>
 
     <para revision="systemd">
-      <parameter>--with-systemd</parameter>: This switch enables installation
-      of the bundled systemd units.
+      <parameter>--with-systemd</parameter>: Denne bryteren muliggjør installasjon
+      av de medfølgende systemd enhetene.
     </para>
 
     <para>
-      <parameter>--without-openldap</parameter>: This switch disables openldap
-      if found.  If openldap is desired, omit this switch.  Note that openldap
-      support in autofs requires <xref linkend="mitkrb"/>.
+      <parameter>--without-openldap</parameter>: Denne bryteren deaktiverer openldap
+      hvis funnet. Hvis openldap er ønsket, utelat denne bryteren. Merk at openldap
+      støtte i autofs krever <xref linkend="mitkrb"/>.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Autofs</title>
+    <title>Konfigurere Autofs</title>
 
     <sect3 id="autofs-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/sysconfig/autofs.conf</filename>,
         <filename>/etc/autofs/auto.master</filename>,
-        <filename>/etc/autofs/auto.misc</filename>, and
+        <filename>/etc/autofs/auto.misc</filename>, og
         <filename>/etc/autofs/auto.net</filename>
       </para>
 
@@ -232,14 +232,14 @@ make</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        The installation process creates <filename>auto.master</filename>,
-        <filename>auto.misc</filename>,  <filename>auto.smb</filename>, and
-        <filename>auto.net</filename>. Replace the
-        <filename>auto.master</filename> file with the following commands
-        as the <systemitem class="username">root</systemitem> user:
+        Installasjonsprosessen oppretter <filename>auto.master</filename>,
+        <filename>auto.misc</filename>,  <filename>auto.smb</filename>, og
+        <filename>auto.net</filename>. Bytt ut
+        <filename>auto.master</filename> filen med følgende kommandoer
+        som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>mv /etc/autofs/auto.master /etc/autofs/auto.master.bak &amp;&amp;
@@ -253,94 +253,94 @@ cat &gt; /etc/autofs/auto.master &lt;&lt; "EOF"
 EOF</userinput></screen>
 
       <para>
-        This file creates a new media directory,
-        <filename>/media/auto</filename> that will overlay any existing
-        directory of the same name.  In this example, the file,
-        <filename>/etc/autofs/auto.misc</filename>, has a line:
+        Denne filen oppretter en ny mediemappe,
+        <filename>/media/auto</filename> som vil overlegge alle eksisterende
+        mapper med samme navn. I dette eksemplet filen
+        <filename>/etc/autofs/auto.misc</filename>, har linjen:
       </para>
 
 <screen>cd   -fstype=iso9660,ro,nosuid,nodev :/dev/cdrom</screen>
 
       <para>
-        that will mount a cdrom as <filename>/media/auto/cd</filename> if
-        that directory is accessed.  The <option>--ghost</option> option tells
-        the automounter to create <quote>ghost</quote> versions (i.e. empty
-        directories) of all the mount points listed in the configuration file
-        regardless whether any of the file systems are actually mounted or not.
-        This is very convenient and highly recommended, because it will show
-        you the available auto-mountable file systems as existing directories,
-        even when their file systems aren't currently mounted. Without the
-        <option>--ghost</option> option, you'll have to remember the names of
-        the directories. As soon as you try to access one of them, the
-        directory will be created and the file system will be mounted. When
-        the file system gets unmounted again, the directory is destroyed too,
-        unless the <option>--ghost</option> option was given.
+        som vil montere en cdrom som <filename>/media/auto/cd</filename> hvis
+        den mappen er lest. <option>--ghost</option> alternativet forteller
+        automounter å lage <quote>ghost</quote> versjoner (dvs. tomme
+        mapper) for alle monteringspunktene som er oppført i konfigurasjonsfilen
+        uavhengig av om noen av filsystemene faktisk er montert eller ikke.
+        Dette er veldig praktisk og anbefales på det sterkeste, fordi det vil vise
+        de tilgjengelige automonterbare filsystemene som eksisterende mapper,
+        selv når filsystemene deres for øyeblikket ikke er montert. Uten
+        <option>--ghost</option> alternativet, må du huske navnene på
+        mappene. Så snart du prøver å få tilgang til en av dem, vil
+        mappen bli opprettet og filsystemet vil bli montert. Når
+        filsystemet demonteres igjen, vil mappen også bli ødelagt,
+        med mindre <option>--ghost</option> alternativet ble gitt.
       </para>
 
       <note>
         <para>
-          An alternative method would be to specify another automount
-          location such as <filename
-          class='directory'>/var/lib/auto/cdrom</filename> and create a
-          symbolic link from <filename
-          class='directory'>/media/cdrom</filename> to the automount location.
+          En alternativ metode ville være å spesifisere en annen automontering
+          plassering som f.eks <filename
+          class='directory'>/var/lib/auto/cdrom</filename> og lage en
+          symbolsk lenke fra <filename
+          class='directory'>/media/cdrom</filename> til automonteringsstedet.
         </para>
       </note>
 
       <para>
-        The <filename>auto.misc</filename> file must be configured to your
-        working hardware. The loaded configuration file should load your cdrom
-        if <filename>/dev/cdrom</filename> is active or it can be edited to
-        match your device setup.  Examples for floppies are available in the
-        file and easily activated. Documentation for this file is available
-        using the <command>man 5 autofs</command> command.
+        <filename>auto.misc</filename> filen må konfigureres til din
+        fungerende maskinvare. Den innlastede konfigurasjonsfilen skal laste inn cdrom
+        hvis <filename>/dev/cdrom</filename> er aktiv eller den kan redigeres til
+        å samsvare med enhetsoppsettet ditt. Eksempler på disketter er tilgjengelige i
+        filen og enkelt aktivert. Dokumentasjon for denne filen er tilgjengelig
+        ved bruk av <command>man 5 autofs</command> kommandoen.
       </para>
 
       <para>
-        In the second line, if enabled, a user's home directory would be
-        mounted via NFS upon login.  The <filename>/etc/home.auto</filename>
-        would need to exist and have an entry similar to:
+        På den andre linjen, hvis aktivert, vil en brukers hjemmemappe bli
+        montert via NFS ved innlogging.  <filename>/etc/home.auto</filename>
+        må eksistere og ha en oppføring som ligner på:
       </para>
 
 <screen>joe  example.org:/export/home/joe</screen>
 
       <para>
-        where the directory <filename>/export/home/joe</filename> is
-        exported via NFS from the system example.org.  NFS shares
-        are covered on the next page.
+        hvor mappen <filename>/export/home/joe</filename> er
+        eksportert via NFS fra systemets example.org. NFS deling
+        er dekket på neste side.
       </para>
 
       <para>
-        This package could also be used to mount SMB shares, however that
-        feature is not configured in these instructions.  For additional
-        configuration information, see the man pages for auto.master(5). There
-        are also web resources such as this <ulink
+        Denne pakken kan også brukes til å montere SMB delinger, men den
+        funksjonen er ikke konfigurert i disse instruksjonene. For ytterligere
+        konfigurasjonsinformasjon, se man sidene for auto.master(5). Det
+        er også nettressurser som dette <ulink
         url='https://wiki.gentoo.org/wiki/AutoFS'>AUTOFS
-        HOWTO</ulink> available.
+        HOWTO</ulink> tilgjengelig.
       </para>
 
     </sect3>
 
     <sect3  id="autofs-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        <application>autofs</application> installs its own
-        boot script, but it has no capability for logging or visual conformance
-        with other BLFS scripts. It will be replaced by an enhanced version.
+        <application>autofs</application> installerer sitt eget
+        oppstartsskript, men det har ingen mulighet for logging eller visuell samsvar
+        med andre BLFS skript. Den vil bli erstattet av en forbedret versjon.
       </para>
 
       <para revision="sysv">
-        Install the <filename>/etc/init.d/autofs</filename>
-        mount script included with the <xref linkend="bootscripts"/>
-        package.
+        Installer <filename>/etc/init.d/autofs</filename>
+        monteringsskript som følger med <xref linkend="bootscripts"/>
+        pakken.
       </para>
 
       <para revision="systemd">
-        To start <application>Autofs</application> at boot, enable the
-        previously installed systemd unit by running the following command as
-        the <systemitem class="username">root</systemitem> user:
+        For å starte <application>Autofs</application> ved oppstart, aktiver
+        den tidligere installerte systemd enhet ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <indexterm zone="autofs autofs-init">
@@ -352,18 +352,18 @@ EOF</userinput></screen>
 <screen role="root" revision="systemd"><userinput>systemctl enable autofs</userinput></screen>
 
       <para revision="sysv">
-        The time-out variable is set in
-        <filename>/etc/sysconfig/autofs.conf</filename>. The installed file sets
-        a default of 60 seconds of inactivity before unmounting the device.  A
-        much shorter time may be necessary to protect buffer writing to a floppy
-        if users tend to remove the media prior to the timeout setting.
+        Time-out variabelen er satt i
+        <filename>/etc/sysconfig/autofs.conf</filename>. De installerte filene setter
+        er standard på 60 sekunders inaktivitet før enheten demonteres. En
+        mye kortere tid kan være nødvendig for å beskytte bufferskriving til en diskett
+        hvis brukere har en tendens til å fjerne mediet før tidsavbruddsinnstillingen.
       </para>
 
       <note revision="systemd">
         <para>
-          You can also specify <envar>OPTIONS</envar> variable in the
-          <filename>/etc/sysconfig/autofs</filename> file with any additional
-          parameters that you might want to pass to the automount daemon.
+          Du kan også spesifisere <envar>OPTIONS</envar> variabelen i
+          <filename>/etc/sysconfig/autofs</filename> filen med eventuelle tilleggsparametere
+          som du kanskje vil sende til automount nissen.
         </para>
       </note>
 
@@ -372,12 +372,12 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>automount</seg>
@@ -387,14 +387,14 @@ EOF</userinput></screen>
           lookup_program.so, lookup_userhome.so, lookup_yp.so, mount_afs.so,
           mount_autofs.so, mount_bind.so, mount_changer.so, mount_ext2.so,
           mount_ext3.so, mount_ext4.so, mount_generic.so, mount_nfs.so,
-          mount_nfs4.so, parse_amd.so, and parse_sun.so
+          mount_nfs4.so, parse_amd.so, og parse_sun.so
            </seg>
-        <seg>/usr/lib/autofs and /etc/autofs</seg>
+        <seg>/usr/lib/autofs og /etc/autofs</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -402,8 +402,8 @@ EOF</userinput></screen>
         <term><command>automount</command></term>
         <listitem>
           <para>
-            is the daemon that performs the mounting when a request is
-            made for the device
+            er nissen som utfører monteringen når en forespørsel blir
+            gjort for enheten
           </para>
           <indexterm zone="autofs automount">
             <primary sortas="b-automount">automount</primary>
