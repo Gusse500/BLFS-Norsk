@@ -24,87 +24,87 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Fcron</title>
+    <title>Introduksjon til Fcron</title>
 
     <para>
-      The <application>Fcron</application> package contains a periodical
-      command scheduler which aims at replacing <application>Vixie
+      <application>Fcron</application> pakken inneholder en periodisk
+      kommandoplanlegger som tar sikte på å erstatte <application>Vixie
       Cron</application>.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&fcron-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&fcron-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&fcron-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&fcron-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &fcron-md5sum;
+          Nedlasting MD5 sum: &fcron-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &fcron-size;
+          Nedlastingsstørrelse: &fcron-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &fcron-buildsize;
+          Estimert diskplass som kreves: &fcron-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &fcron-time;
+          Estimert byggetid: &fcron-time;
         </para>
       </listitem>
     </itemizedlist>
 <!--
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/fcron-&fcron-version;-sendmail_upstream-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
-    <bridgehead renderas="sect3">Fcron Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Fcron Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      An <xref linkend="server-mail"/>,
-      <ulink url="../postlfs/editors.html">text editor</ulink> (default is
-      <command>vi</command> from the <xref linkend="vim"/> package),
-      <xref linkend="linux-pam"/>, and
+      En <xref linkend="server-mail"/>,
+      <ulink url="../postlfs/editors.html">text editor</ulink> (standard er
+      <command>vi</command> fra <xref linkend="vim"/> pakken),
+      <xref linkend="linux-pam"/>, og
       <xref linkend="docbook-utils"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/fcron"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Fcron</title>
+    <title>Installasjon av Fcron</title>
 
     <para id="fcron-syslog" revision="sysv">
       <application>Fcron</application>
-      uses the cron facility of <command>syslog</command> to log all messages.
-      Since LFS does not set up this facility in
-      <filename>/etc/syslog.conf</filename>, it needs to be done prior to
-      installing <application>Fcron</application>. This command will append the
-      necessary line to the current <filename>/etc/syslog.conf</filename>
-      (perform as the <systemitem class='username'>root</systemitem> user):
+      bruker cron innretningen til <command>syslog</command> for å logge alle meldinger.
+      Siden LFS ikke setter opp denne innretningen i
+      <filename>/etc/syslog.conf</filename>, det må gjøres før
+      installeringen av <application>Fcron</application>. Denne kommandoen vil legge til den
+      nødvendig linjen til nåværende <filename>/etc/syslog.conf</filename>
+      (utfør som <systemitem class='username'>root</systemitem> bruker):
     </para>
 
     <indexterm zone="fcron fcron-syslog" revision="sysv">
@@ -120,30 +120,30 @@ cron.* -/var/log/cron.log
 EOF</userinput></screen>
 
     <para revision="sysv">
-      The configuration file has been modified, so reloading the
-      <command>sysklogd</command> daemon will activate the changes (again as
-      the <systemitem class='username'>root</systemitem> user).
+      Konfigurasjonsfilen har blitt endret, så å laste inn på nytt
+      <command>sysklogd</command> nissen vil aktivere endringene (igjen som
+      <systemitem class='username'>root</systemitem> bruker).
     </para>
 
 <screen role="root" revision="sysv"><userinput>/etc/rc.d/init.d/sysklogd reload</userinput></screen>
 
     <para>
-      For security reasons, an unprivileged user and group for
-      <application>Fcron</application> should be created (perform as the
-      <systemitem class='username'>root</systemitem> user):
+      Av sikkerhetsgrunner, en uprivilegert bruker og gruppe for
+      <application>Fcron</application> skal opprettes (utfør som
+      <systemitem class='username'>root</systemitem> bruker):
     </para>
 
 <screen role="root"><userinput>groupadd -g 22 fcron &amp;&amp;
 useradd -d /dev/null -c "Fcron User" -g fcron -s /bin/false -u 22 fcron</userinput></screen>
 
     <para>
-      Now fix some locations hard coded in the documentation:
+      Fiks nå noen lokaliteter som er hardkodet i dokumentasjonen:
     </para>
 
 <screen><userinput>find doc -type f -exec sed -i 's:/usr/local::g' {} \;</userinput></screen>
     <para>
-      Install <application>Fcron</application> by running the following
-      commands:
+      Installer <application>Fcron</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>./configure --prefix=/usr          \
@@ -163,84 +163,84 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      DESTDIR install must be done as <systemitem
-      class="username">root</systemitem> user. Furthermore, if PAM
-      configuration files should be installed in <filename class="directory">
-      /etc/pam.d</filename>, you have to create this directory in the
-      DESTDIR before doing the install.
+      DESTDIR installasjon må gjøres som <systemitem
+      class="username">root</systemitem> bruker. Videre, hvis PAM
+      konfigurasjonsfiler skal installeres i <filename class="directory">
+      /etc/pam.d</filename>, du må opprette denne mappen i
+      DESTDIR før du installerer.
     </para>
 
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 <!--
     <para>
-      <command>autoconf</command>: This command is required to rebuild
-      <filename>configure</filename> using the fixed input file.
+      <command>autoconf</command>: Denne kommandoen er nødvendig for å gjenoppbygge
+      <filename>configure</filename> ved å bruke den faste inndatafilen.
     </para>-->
 
     <para>
-      <parameter>--without-sendmail</parameter>: By default,
-      <application>Fcron</application> will attempt to use the
-      <command>sendmail</command> command from an <xref linkend="server-mail"/>
-      package to email you the results of the <command>fcron</command> script.
-      This switch is used to disable default email notification. Omit the
-      switch to enable the default. Alternatively, you can use the
+      <parameter>--without-sendmail</parameter>: Som standard,
+      <application>Fcron</application> vil prøve å bruke
+      <command>sendmail</command> kommandoen fra en <xref linkend="server-mail"/>
+      pakken for å sende deg på e-post resultatene fra <command>fcron</command> skriptet.
+      Denne bryteren brukes til å deaktivere standard e-postvarsling. Utelat
+      bryteren for å aktivere standarden. Alternativt kan du bruke
       <option>--with-sendmail=<replaceable>&lt;/path/to/MTA
-      command&gt;</replaceable></option> to use a different mailer command.
+      command&gt;</replaceable></option> for å bruke en annen mailer kommando.
     </para>
 
     <para>
-      <parameter>--with-boot-install=no</parameter>: This prevents
-      installation of the bootscript included with the package.
+      <parameter>--with-boot-install=no</parameter>: Dette forhindrer
+      installasjon av oppstartskriptet som følger med pakken.
     </para>
 
     <para revision="systemd">
       <parameter>--with-piddir=/run</parameter>:
-      This fixes the systemd unit to use the proper directory for PID files so
-      that systemctl does not hang and the unit starts correctly.
+      Dette fikser systemd enheten til å bruke den riktige mappen for PID filer
+      så systemctl ikke henger og enheten starter riktig.
     </para>
 
     <para revision="sysv">
       <parameter>--with-systemdsystemunitdir=no</parameter>:
-      This prevents building the <application>systemd</application> units,
-      which are not needed for a <application>SYS V</application> system.
+      Dette hindrer bygging av <application>systemd</application> enhetene,
+      som ikke er nødvendig for et <application>SYS V</application> system.
     </para>
 
     <para>
       <option>--with-editor=<replaceable>&lt;/path/to/editor&gt;</replaceable></option>:
-      This switch allows you to set the default text editor.
+      Denne bryteren lar deg angi standard tekstredigerer.
     </para>
 
     <para>
       <option>--with-dsssl-dir=<replaceable>&lt;/path/to/dsssl-stylesheets&gt;</replaceable></option>:
-      May be used if you have <xref linkend="docbook-utils"/> installed.
-      Currently, the dsssl stylesheets are located at
+      Kan brukes hvis du har <xref linkend="docbook-utils"/> installert.
+      For øyeblikket er dsssl stilarkene plassert på
     <filename class="directory">/usr/share/sgml/docbook/dsssl-stylesheets-1.79</filename>.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Fcron</title>
+    <title>Konfigurere Fcron</title>
 
     <sect3 id="fcron-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/fcron.conf</filename>,
-        <filename>/etc/fcron.allow</filename>, and
+        <filename>/etc/fcron.allow</filename>, og
         <filename>/etc/fcron.deny</filename>
       </para>
 
@@ -259,28 +259,28 @@ make</userinput></screen>
     </sect3>
 
     <sect3 id="run-parts" xreflabel="Fcron Configuration Information">
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        There are no required changes in any of the config files.
-        Configuration information can be found in the man page for
+        Det er ingen nødvendige endringer i noen av konfigurasjonsfilene.
+        Konfigurasjonsinformasjon finner du på man siden for
         <filename>fcron.conf</filename>.
       </para>
 
       <para>
-        <command>fcron</command> scripts are written using
-        <command>fcrontab</command>. Refer to the <command>fcrontab</command>
-        man page for proper parameters to address your situation.
+        <command>fcron</command> skript er skrevet ved hjelp av
+        <command>fcrontab</command>. Referere til <command>fcrontab</command>
+        man siden for riktige parametere for å håndtere situasjonen din.
       </para>
 
       <para id="fcron-pam">
-        If <application>Linux-PAM</application> is installed, two PAM
-        configuration files are installed in <filename class='directory'>
-        etc/pam.d</filename>. Alternatively if <filename class='directory'>
-        etc/pam.d</filename> is not used, the installation will append two
-        configuration sections to the existing <filename>/etc/pam.conf
-        </filename> file. You should ensure the files match your preferences.
-        Modify them as required to suit your needs.
+        Hvis <application>Linux-PAM</application> er installert, to PAM
+        konfigurasjonsfiler er installert i <filename class='directory'>
+        etc/pam.d</filename>.Alternativt hvis <filename class='directory'>
+        etc/pam.d</filename> ikke brukes, vil installasjonen legge til to
+        konfigurasjonsseksjoner til eksisterende <filename>/etc/pam.conf
+        </filename> fil. Du bør sørge for at filene samsvarer med dine preferanser.
+        Endre dem etter behov for å passe dine behov.
       </para>
 
       <indexterm zone="fcron fcron-pam">
@@ -291,13 +291,13 @@ make</userinput></screen>
         <primary sortas="e-etc-pam.conf">/etc/pam.conf</primary>
       </indexterm>
 
-      <bridgehead renderas="sect4">Periodic Jobs</bridgehead>
+      <bridgehead renderas="sect4">Periodiske jobber</bridgehead>
 
       <para>
-        If you would like to set up a periodic hierarchy for the root user,
-        first issue the following commands (as the
-        <systemitem class="username">root</systemitem> user) to create the
-        <filename>/usr/bin/run-parts</filename> script:
+        Hvis du ønsker å sette opp et periodisk hierarki for root brukeren,
+        utfør først følgende kommandoer (som
+        <systemitem class="username">root</systemitem> bruker) for å opprette
+        <filename>/usr/bin/run-parts</filename> skriptet:
       </para>
 
 <screen role="root"><userinput>cat &gt; /usr/bin/run-parts &lt;&lt; "EOF" &amp;&amp;
@@ -353,15 +353,15 @@ EOF
 chmod -v 755 /usr/bin/run-parts</userinput></screen>
 
       <para>
-        Next, create the directory layout for the periodic jobs (again as the
-        <systemitem class="username">root</systemitem> user):
+        Deretter oppretter du mappeoppsettet for de periodiske jobbene (igjen som
+        <systemitem class="username">root</systemitem> bruker):
       </para>
 
 <screen role="root"><userinput>install -vdm754 /etc/cron.{hourly,daily,weekly,monthly}</userinput></screen>
 
       <para>
-        Finally, add the <command>run-parts</command> to the system fcrontab
-        (while still the <systemitem class="username">root</systemitem> user):
+        Til slutt legger du til <command>run-parts</command> til systemets fcrontab
+        (fortsatt som <systemitem class="username">root</systemitem> bruker):
       </para>
 
 <screen role="root"><userinput>cat &gt; /var/spool/fcron/systab.orig &lt;&lt; "EOF"
@@ -374,18 +374,18 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3  id="fcron-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        Install the
-        <filename>/etc/rc.d/init.d/fcron</filename> init script from the
-        <xref linkend="bootscripts"/> package.
+        Installer
+        <filename>/etc/rc.d/init.d/fcron</filename> init skriptet fra
+        <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        Enable <application>fcron</application> to start
-        at boot using the previously installed systemd unit.
+        Aktiver <application>fcron</application> å starte
+        ved oppstart med den tidligere installerte systemd enheten.
       </para>
 
       <indexterm zone="fcron fcron-init">
@@ -397,9 +397,9 @@ EOF</userinput></screen>
 <screen role="root" revision="systemd"><userinput>systemctl enable fcron</userinput></screen>
 
       <para>
-        Finally, again as the <systemitem class="username">root</systemitem>
-        user, start fcron and generate the
-        <filename>/var/spool/fcron/systab</filename> file:
+        Til slutt, igjen som <systemitem class="username">root</systemitem>
+        bruker, start fcron og generer
+        <filename>/var/spool/fcron/systab</filename> filen:
       </para>
 
 <screen role="root" revision="sysv"><userinput>/etc/rc.d/init.d/fcron start &amp;&amp;
@@ -412,22 +412,22 @@ fcrontab -z -u systab</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>fcron, fcrondyn, fcronsighup, and fcrontab</seg>
-        <seg>None</seg>
-        <seg>/usr/share/doc/fcron-&fcron-version; and /var/spool/fcron</seg>
+        <seg>fcron, fcrondyn, fcronsighup, og fcrontab</seg>
+        <seg>Ingen</seg>
+        <seg>/usr/share/doc/fcron-&fcron-version; og /var/spool/fcron</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -435,7 +435,7 @@ fcrontab -z -u systab</userinput></screen>
         <term><command>fcron</command></term>
         <listitem>
           <para>
-            is the scheduling daemon
+            er planleggingsnissen
           </para>
           <indexterm zone="fcron fcron-prog">
             <primary sortas="b-fcron">fcron</primary>
@@ -447,8 +447,8 @@ fcrontab -z -u systab</userinput></screen>
         <term><command>fcrondyn</command></term>
         <listitem>
           <para>
-            is a user tool intended to interact with a running
-            <command>fcron</command> daemon
+            er et brukerverktøy beregnet på å samhandle med en kjørende
+            <command>fcron</command> nisse
           </para>
           <indexterm zone="fcron fcrondyn">
             <primary sortas="b-fcrondyn">fcrondyn</primary>
@@ -460,8 +460,8 @@ fcrontab -z -u systab</userinput></screen>
         <term><command>fcronsighup</command></term>
         <listitem>
           <para>
-            instructs <command>fcron</command> to reread the
-            <application>Fcron</application> tables
+            instruerer <command>fcron</command> å lese på nytt
+            <application>Fcron</application> tabeller
           </para>
           <indexterm zone="fcron fcronsighup">
             <primary sortas="b-fcronsighup">fcronsighup</primary>
@@ -473,8 +473,8 @@ fcrontab -z -u systab</userinput></screen>
         <term><command>fcrontab</command></term>
         <listitem>
           <para>
-            is a program used to install, edit, list and remove the
-            tables used by <command>fcron</command>
+            er et program som brukes til å installere, redigere, liste og fjerne
+            tabeller brukt av <command>fcron</command>
           </para>
           <indexterm zone="fcron fcrontab">
             <primary sortas="b-fcrontab">fcrontab</primary>
