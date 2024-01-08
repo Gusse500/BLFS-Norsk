@@ -8,8 +8,8 @@
   <!ENTITY logrotate-download-ftp  " ">
   <!ENTITY logrotate-md5sum        "6c15f45efc3475a576c4f7e6cc481b2c">
   <!ENTITY logrotate-size          "164.5 KB">
-  <!ENTITY logrotate-buildsize     "2.9 MB (add 38 MB for tests)">
-  <!ENTITY logrotate-time          "less than 0.1 SBU (add 0.2 SBU for tests)">
+  <!ENTITY logrotate-buildsize     "2.9 MB (legg til 38 MB for tester)">
+  <!ENTITY logrotate-time          "mindre enn 0.1 SBU (legg til 0.2 SBU for tester)">
 ]>
 
 <sect1 id="logrotate" xreflabel="logrotate-&logrotate-version;">
@@ -23,90 +23,90 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Logrotate</title>
+    <title>Introduksjon til Logrotate</title>
 
     <para>
-      The <application>logrotate</application> package allows automatic
-      rotation, compression, removal, and mailing of log files.
+      <application>logrotate</application> pakken tillater automatisk
+      rotasjon, komprimering, fjerning og utsendelse av loggfiler.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&logrotate-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&logrotate-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&logrotate-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&logrotate-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &logrotate-md5sum;
+          Nedlasting MD5 sum: &logrotate-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &logrotate-size;
+          Nedlastingsstørrelse: &logrotate-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &logrotate-buildsize;
+          Estimert diskplass som kreves: &logrotate-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &logrotate-time;
+          Estimert byggetid: &logrotate-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Logrotate Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Logrotate Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="popt"/>
     </para>
 
-    <bridgehead renderas="sect4" revision="sysv">Recommended</bridgehead>
+    <bridgehead renderas="sect4" revision="sysv">Anbefalt</bridgehead>
     <para role="recommended" revision="sysv">
-      <xref role="runtime" linkend="fcron"/> (runtime)
+      <xref role="runtime" linkend="fcron"/> (kjøretid)
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      An <xref role="runtime" linkend="server-mail"/> (runtime)
+      En <xref role="runtime" linkend="server-mail"/> (kjøretid)
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/logrotate"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Logrotate</title>
+    <title>Installasjon av Logrotate</title>
 
     <para>
-      Install <application>logrotate</application> by running the following
-      command:
+      Installer <application>logrotate</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr &amp;&amp;
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make test</command>.  One test
-      fails because the very old <command>compress</command> is not
-      present and two tests fail if an MTA is not installed.
+      For å teste resultatene, kjør: <command>make test</command>.  En test
+      mislykkes fordi den svært gamle <command>compress</command> ikke er
+      tilstede og to tester mislykkes hvis en MTA ikke er installert.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -114,12 +114,12 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Logrotate</title>
+    <title>Konfigurere Logrotate</title>
 
     <para>
-      <application>Logrotate</application> needs a configuration file,
-      which must be passed as an argument to the command when executed.  Create
-      the file as the <systemitem class="username">root</systemitem> user:
+      <application>Logrotate</application> trenger en konfigurasjonsfil,
+      som må sendes som et argument til kommandoen når den utføres. Opprett
+      filen som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>cat &gt; /etc/logrotate.conf &lt;&lt; EOF
@@ -168,16 +168,16 @@ EOF
 chmod -v 0644 /etc/logrotate.conf</userinput></screen>
 
     <para>
-      Now create the <filename class='directory'>/etc/logrotate.d</filename>
-      directory as the  <systemitem class="username">root</systemitem> user:
+      Nå opprett <filename class='directory'>/etc/logrotate.d</filename>
+      mappen som  <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>mkdir -p /etc/logrotate.d</userinput></screen>
 
     <para>
-      At this point additional log rotation commands can be entered, typically
-      in the <filename class='directory'>/etc/logrotate.d</filename> directory.
-      For example:
+      På dette tidspunktet kan det vanligvis legges inn ekstra loggrotasjonskommandoer
+      i <filename class='directory'>/etc/logrotate.d</filename> mappen.
+      For eksempel:
     </para>
 
 <screen role="nodump"><userinput>cat &gt; /etc/logrotate.d/sys.log &lt;&lt; EOF
@@ -195,7 +195,7 @@ EOF
 chmod -v 0644 /etc/logrotate.d/sys.log</userinput></screen>
 
     <para>
-      You can designate multiple files in one entry:
+      Du kan angi flere filer i en oppføring:
     </para>
 
 <screen role="nodump"><userinput>cat &gt; /etc/logrotate.d/example.log &lt;&lt; EOF
@@ -212,34 +212,34 @@ EOF
 chmod -v 0644 /etc/logrotate.d/example.log</userinput></screen>
 
     <para>
-      You can use in the same line the list of files: file1 file2 file3.
-      See the logrotate man page or <ulink
+      Du kan bruke listen over filer på samme linje: fil1 fil2 fil3.
+      Se logrotate man siden eller <ulink
       url='https://www.techrepublic.com/article/manage-linux-log-files-with-logrotate/'/>
-      for more examples.
+      for flere eksempler.
     </para>
 
     <para>
-      The command <command>logrotate /etc/logrotate.conf</command> can be
-      run manually, however, the command should be run daily.
-      Other useful commands are <command>logrotate -d
-      /etc/logrotate.conf</command> for debugging purposes and
-      <command>logrotate -f /etc/logrotate.conf</command> forcing the
-      logrotate commands to be run immediately. Combining the previous options
-      <option>-df</option>, you can debug the effect of the force command.
-      When debugging, the commands are only simulated and are not actually run.
-      As a result, errors about files not existing will eventually appear because
-      the files are not actually created.
+      Kommandoen <command>logrotate /etc/logrotate.conf</command> kan bli
+      kjørt manuelt, men kommandoen bør kjøres daglig.
+      Andre nyttige kommandoer er <command>logrotate -d
+      /etc/logrotate.conf</command> for feilsøkingsformål og
+      <command>logrotate -f /etc/logrotate.conf</command> for å tvinge
+      logrotate kommandoer som skal kjøres umiddelbart. Kombiner de tidligere alternativene
+      <option>-df</option>, du kan feilsøke effekten av tvangkommandoen.
+      Ved feilsøking simuleres kommandoene bare og kjøres faktisk ikke.
+      Som et resultat vil feil om filer som ikke eksisterer til slutt vises fordi
+      filene faktisk ikke er opprettet.
     </para>
 
     <para>
-      To run the <command>logrotate</command> command daily,
-      <phrase revision="sysv">if you've installed
-      <xref linkend="fcron"/> and completed the section on periodic jobs,
-      execute</phrase><phrase revision="systemd">execute</phrase> the following
-      commands, as the  <systemitem class="username">root</systemitem> user,
-      to create a <phrase revision="sysv">daily cron job:</phrase>
-      <phrase revision="systemd">systemd timer to run daily at 3:00 A.M.
-     (local time):</phrase>
+      For å kjøre <command>logrotate</command> kommandoen daglig,
+      <phrase revision="sysv">hvis du har installert
+      <xref linkend="fcron"/> og fullførte delen om periodiske jobber,
+      kjør</phrase><phrase revision="systemd">kjør</phrase> følgende
+      kommandoer, som  <systemitem class="username">root</systemitem> bruker,
+      for å opprette en <phrase revision="sysv">daglig cron jobb:</phrase>
+      <phrase revision="systemd">systemd tidtaker som går daglig kl. 03.00.
+     (lokal tid):</phrase>
     </para>
 
 <screen role="root" revision="sysv"><userinput>cat &gt; /etc/cron.daily/logrotate.sh &lt;&lt; "EOF" &amp;&amp;
@@ -277,22 +277,22 @@ systemctl enable logrotate.timer</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg> logrotate </seg>
-        <seg> None </seg>
-        <seg> None </seg>
+        <seg> Ingen </seg>
+        <seg> Ingen </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -300,8 +300,8 @@ systemctl enable logrotate.timer</userinput></screen>
         <term><command>logrotate</command></term>
         <listitem>
           <para>
-            performs the log maintenance functions defined in the
-            configuration files
+            utfører loggvedlikeholdsfunksjonene definert i
+            konfigurasjonsfiler
           </para>
           <indexterm zone="logrotate logrotate-prog">
             <primary sortas="b-logrotate-prog">logrotate</primary>
