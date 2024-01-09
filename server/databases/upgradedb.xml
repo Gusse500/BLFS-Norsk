@@ -5,21 +5,21 @@
   %general-entities;
 ]>
 
-<sect1 id="upgradedb" xreflabel="Upgrade Database">
+<sect1 id="upgradedb" xreflabel="Oppgradere databasen">
   <?dbhtml filename="upgradedb.html"?>
 
 
-  <title>Important Notes About Upgrading Database Server Software</title>
+  <title>Viktige Merknader om Oppgradering av Databaseserverprogramvare</title>
 
-    <note><para>This section is about reinstalling database software
-    when an existing database is in use.  It is not applicable for
-    initial installations or if there is no existing database for
-    the package being updated, but users should read through it
-    to become aware of issues that can arise in the future.</para></note>
+    <note><para>Denne delen handler om å installere databaseprogramvare på nytt
+    når en eksisterende database er i bruk. Det gjelder ikke for
+    innledende installasjoner eller hvis det ikke finnes en eksisterende database for
+    pakken som oppdateres, men brukere bør lese gjennom den
+    for å bli bevisst på problemer som kan oppstå i fremtiden.</para></note>
 
-    <para>Let's start this chapter with a dramatic screenshot of an error that
-    really happened.  This error will not occur if you are installing database
-    software for the first time:</para>
+    <para>La oss starte dette kapittelet med et dramatisk skjermbilde av en feil som
+    virkelig skjedde. Denne feilen vil ikke oppstå hvis du installerer databaseprogramvaren
+    for første gang:</para>
 
 <screen>$ sudo systemctl status postgresql
 -- postgresql.service - PostgreSQL database server
@@ -41,164 +41,164 @@ Oct 26 17:11:53 SRVNAME systemd[1]: postgresql.service: Failed with result 'exit
 Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.</screen>
 
   <para>
-    To avoid situations like this (i.e., your database server
-    software refuses to start), read the following discussion of the best way to
-    upgrade a DBMS (Database Management System).
+    For å unngå situasjoner som dette (dvs. databaseserverprogramvaren din
+    nekter å starte), les følgende diskusjon om den beste måten å
+    oppgradere en DBMS (Databasestyringssystem).
   </para>
 
   <para>
-    The root cause of the error shown above was an upgrade
-    of the server software to a newer major version which left the
-    data files untouched. In this case, the administrator was able to recover
-    the DBMS without any loss of data.
+    Grunnårsaken til feilen vist ovenfor var en oppgradering
+    av serverprogramvaren til en nyere hovedversjon som forlot
+    datafiler urørt. I dette tilfellet var administratoren i stand til å gjenopprette
+    DBMS uten tap av data.
   </para>
 
   <para>
-    Even if you are doing an initial DBMS install, read through this
-    section. It provides information about implementing backup
-    and restore procedures (or at least a strategy for creating
-    them) which will satisfy your needs and guarantee the safety
-    of your data.
+    Selv om du gjør en innledende DBMS installasjon, les gjennom denne
+    seksjonen. Den gir informasjon om implementering av sikkerhetskopiering
+    og gjenopprettings prosedyrer (eller i det minste en strategi for å lage
+    dem) som vil tilfredsstille dine behov og garantere sikkerheten
+    av dataene dine.
   </para>
 
   <sect2>
-    <title>Upgrade Database Server Packages</title>
+    <title>Oppgrader Databaseserverpakker</title>
 
     <para>
-      Database systems work on files which hold the database metadata and the
-      data itself. The internal structure of these files is optimized for use
-      by the server software. When such server software is upgraded,
-      the new software may utilize a different file format than
-      had previously been used. Sometimes the new software can
-      work with the old format as well as the new one&mdash;but without the
-      performance improvements the new format provides.
-      Other times, the new server software will
-      reformat the data files automatically after the upgrade.
+      Databasesystemer fungerer på filer som inneholder databasens metadata og
+      data. Den interne strukturen til disse filene er optimalisert for bruk
+      av serverprogramvaren. Når slik serverprogramvare oppgraderes,
+      den nye programvaren kan bruke et annet filformat enn som
+      tidligere var brukt. Noen ganger kan den nye programvaren
+      arbeide med det gamle formatet så vel som det nye&mdash;men uten
+      ytelsesforbedringer det nye formatet gir.
+      Andre ganger vil den nye serverprogramvaren
+      formatere datafilene automatisk etter oppgraderingen.
     </para>
 
     <para>
-      Unfortunately, the most likely case is that the new server software
-      complains about out of date file formats and exits.  When this happens,
-      and you have overwritten the old server software, you may end up
-      with a broken system and lost data.
+      Dessverre er det mest sannsynlige tilfellet at den nye serverprogramvaren
+      klager på utdaterte filformater og utdataer. Når dette skjer,
+      og du har overskrevet den gamle serverprogramvaren, kan du ende opp
+      med et ødelagt system og tapte data.
     </para>
 
     <para>
-       Changes in data file formats usually happen at major version changes, but
-       they can also occur at other times.  Before upgrading any DBMS
-       software, check the documentation to see if this upgrade makes changes which
-       require reformatting the database.
+       Endringer i datafilformater skjer vanligvis ved større versjonsendringer, men
+       de kan også forekomme på andre tidspunkter. Før du oppgraderer noen DBMS
+       programvare, sjekk dokumentasjonen for å se om denne oppgraderingen gjør endringer som
+       krever omformatering av databasen.
     </para>
 
     <para>
-      Of course, if you have databases with content that is not easily
-      rebuilt, it is always a good idea to create backups of the database from
-      time to time. Before upgrading the server software, you should run
-      another backup.
+      Selvfølgelig, hvis du har databaser med innhold som ikke er lett
+      gjenoppbygd, er det alltid en god idé å lage sikkerhetskopier av databasen fra
+      fra tid til annen. Før du oppgraderer serverprogramvaren, bør du kjøre
+      en annen sikkerhetskopi.
     </para>
 
     <sect3>
-      <title>Upgrade by Backup and Restore</title>
+      <title>Oppgrader med Sikkerhetskopiering og Gjenoppretting</title>
 
       <note>
         <para>
-          A backup is useless if there is no verified process
-          to restore the data from this backup. When running a
-          database server, you should not only create backups; you
-          should also verify that the restore process
-          really works. The time to test the restore procedure
-          is <emphasis>before</emphasis> you urgently need
-          to recover lost data.
+          En sikkerhetskopi er ubrukelig hvis det ikke er noen bekreftet prosess
+          for å gjenopprette dataene fra denne sikkerhetskopien. Når du kjører en
+          databaseserver, bør du ikke bare lage sikkerhetskopier; du
+          bør også bekrefte at gjenopprettingsprosessen virkelig
+          fungerer. Tiden for å teste gjenopprettingsprosedyren
+          er <emphasis>før</emphasis> du som snarest trenger
+          å gjenopprette tapte data.
         </para>
       </note>
 
       <para>
-        Most database server software provides some basic
-        tools to create backups of your data. Usually the backups created with
-        those tools can be read by newer versions of the software (via a
-        restore tool). Using older restore tools with newer backup data is
-        a bad idea; you should <emphasis>never</emphasis> blindly assume that
-        it will work. It might, but usually it doesn't.
+        De fleste databaseserverprogramvare gir noen grunnleggende
+        verktøy for å lage sikkerhetskopier av dataene dine. Vanligvis sikkerhetskopiene opprettet med
+        disse verktøyene kan leses av nyere versjoner av programvaren (via en
+        gjenopprettingsverktøy). Bruk av eldre gjenopprettingsverktøy med nyere sikkerhetskopieringsdata er
+        en dårlig idé; du burde <emphasis>aldri</emphasis> blindt anta det
+        vil fungere. Det kan det, men vanligvis gjør det ikke det.
       </para>
 
       <para>
-        The easiest way to upgrade your database files is to
+        Den enkleste måten å oppgradere databasefilene på er å
       </para>
 
       <itemizedlist>
         <listitem>
-          <para>Create a full database backup using the old tools.</para>
+          <para>Lag en fullstendig sikkerhetskopi av databasen ved å bruke de gamle verktøyene.</para>
 
-          <para>This step creates an offline copy of the database files&mdash;for
-          long term archiving, for disaster recovery, or as
-          preparation for an upgrade. This offline backup consists of either (1) a full
-          one-to-one copy of the current database files, or (2) a full backup of the
-          database files from a certain point in time, plus all the journal data (that is
-          Oracle&reg; terminology, it is called "Continuous Archiving" or
-          "write ahead log (WAL)" in Postgresql) describing the
-          changes made after that point in time. This second form takes less time to create
-          (if the DB software provides this type of journaling) because you only have
-          to save the data that have changed since the last full backup was created.</para>
+          <para>Dette trinnet oppretter en frakoblet kopi av databasefilene&mdash;for
+          langsiktig arkivering, for katastrofegjenoppretting, eller som
+          forberedelse til en oppgradering. Denne offline sikkerhetskopien består av enten (1) en full
+          en-til-en kopi av gjeldende databasefiler, eller (2) en fullstendig sikkerhetskopi av
+          databasefiler for et bestemt tidspunkt, pluss alle journaldataene (det vil si
+          Oracle&reg; terminologi, kalles det "Kontinuerlig arkivering" eller
+          "write ahead log (WAL)" i Postgresql) som beskriver
+          endringer gjort etter dette tidspunktet. Denne andre formen tar mindre tid å lage
+          (hvis DB programvaren gir denne typen journalføring) fordi du bare har
+          å lagre dataene som er endret siden siste fullstendige sikkerhetskopi ble opprettet.</para>
 
-          <para>When upgrading database server software, a full backup
-          (which can be used for subsequent incremental backups) should be
-          created; but if there is a lot of data, an incremental backup will
-          suffice. The best strategy for you depends on
-          the amount of data stored in your database (is it a few hundred table
-          rows, or is it hundreds of terabytes?). A full backup in the latter case
-          can't be done quickly.  To
-          fully protect your data, create a backup of the old
-          programs (and/or their sources) and save it, along with the data
-          files, to be certain there is a fallback solution if
-          the new software cannot read the old data.</para>
+          <para>Ved oppgradering av databaseserverprogramvare, en fullstendig sikkerhetskopi
+          (som kan brukes til påfølgende inkrementelle sikkerhetskopier) bør være
+          opprettet; men hvis det er mye data, vil en inkrementell sikkerhetskopi være
+          nok. Den beste strategien for deg avhenger av
+          mengden data som er lagret i databasen din (er det noen hundre tabeller
+          rader, eller er det hundrevis av terabyte?). En full backup i sistnevnte tilfelle
+          kan ikke gjøres raskt. For å
+          fullstendig beskytte dataene dine, lag en sikkerhetskopi av de gamle
+          programmene (og/eller deres kilder) og lagre det sammen med datafilene,
+          for å være sikker på at det finnes en reserveløsning hvis
+          den nye programvaren ikke kan lese de gamle dataene.</para>
           </listitem>
 
           <listitem>
-            <para>Upgrade the server software</para>
+            <para>Oppgrader serverprogramvaren</para>
 
-            <para>In this step, instructions to build the database server
-            software are executed just as they are shown in subsequent sections
-            talking about the DBMs like MariaDB or Postgresql. That is, build
-            the software as usual using BLFS instructions.</para>
+            <para>I dette trinnet, instruksjoner for å bygge databaseserverprogramvaren
+            kjøres akkurat slik de er vist i påfølgende avsnitt
+            om DBM-ene som MariaDB eller Postgresql. Det vil si å bygge
+            programvaren som vanlig ved å bruke BLFS instruksjoner.</para>
           </listitem>
 
           <listitem>
-            <para>Restore the database by using the new tools.</para>
+            <para>Gjenopprett databasen ved å bruke de nye verktøyene.</para>
 
-            <para>To restore the data, the tools of the newly installed server
-            software should be used. During the restoration process, the new
-            tools will create and/or upgrade the data files in the format the
-            new software requires. It is assumed that newer software is capable of
-            reading old data.</para>
+            <para>For å gjenopprette dataene, verktøyene til den nylig installerte serverprogramvaren
+            skal brukes. Under restaureringsprosessen, den nye
+            verktøyet vil opprette og/eller oppgradere datafilene i formatet
+            som ny programvare krever. Det antas at nyere programvare er i stand til
+            lese gamle data.</para>
           </listitem>
           </itemizedlist>
 
       <para>
-        Since you already have a backup procedure in place (and you
-        have tested your restore procedure, right?), this might
-        be the easiest way to upgrade as you can use your well known
-        processes to upgrade just as you always do&mdash;at least in terms
-        of the backup and restore.
+        Siden du allerede har en sikkerhetskopiprosedyre på plass (og du
+        har testet gjenopprettingsprosedyren din, ikke sant?), kan dette
+        være den enkleste måten å oppgradere siden du kan bruke dine velkjente
+        prosesser for å oppgradere akkurat som du alltid gjør&mdash;i det minste når det gjelder
+        sikkerhetskopieringen og gjenopprettingen.
       </para>
 
     </sect3>
 
     <sect3>
-      <title>Upgrade the Database Files by Using System Tools</title>
+      <title>Oppgrader Databasefilene ved å Bruke Systemverktøy</title>
 
       <para>
-        Some database systems (for instance Postgresql) provide
-        a tool which can reformat (upgrade) the existing database
-        files to the new format.
-        If you need to restore from a backup (for example, running
-        the upgrade tool failed) you will have to reinstall the old software
-        to recover your data.
+        Noen databasesystemer (for eksempel Postgresql) gir
+        et verktøy som kan omformatere (oppgradere) de eksisterende databasefilene
+        til det nye formatet.
+        Hvis du trenger å gjenopprette fra en sikkerhetskopi (for eksempel kjøring av
+        oppgraderingsverktøyet mislyktes) må du installere den gamle programvaren på nytt
+        for å gjenopprette dataene dine.
       </para>
 
       <para>
-        Even though the reformatting tools might work as advertised,
-        you should create a full backup before running them. A failure
-        could cause serious damage to the database.
+        Selv om omformateringsverktøyene kan fungere som annonsert,
+        bør du lage en fullstendig sikkerhetskopi før du kjører dem. En feil
+        kan forårsake alvorlig skade på databasen.
       </para>
 
     </sect3>
@@ -206,14 +206,14 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
   </sect2>
 
   <sect2>
-    <title>Notes for Specific DBMS</title>
+    <title>Merknader for spesifikke DBMS</title>
 
     <sect3>
       <title>PostgreSQL</title>
 
       <!-- might add some advanced notes for the DBMS here -->
 
-      <para>Upstream documentation for Backup/Restore:
+      <para>Oppstrøms dokumentasjon for sikkerhetskopiering/gjenoppretting:
         <ulink url="https://www.postgresql.org/docs/current/backup.html"/>
       </para>
 
@@ -224,7 +224,7 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
 
       <!-- might add some advanced notes for the DBMS here -->
 
-      <para>Upstream documentation for Backup/Restore:
+      <para>Oppstrøms dokumentasjon for sikkerhetskopiering/gjenoppretting:
         <ulink url="https://mariadb.com/kb/en/backup-and-restore-overview/"/>
       </para>
 
@@ -235,30 +235,30 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
 
       <!-- might add some advanced notes for the DBMS here -->
 
-      <para>Do not underestimate <application>Sqlite</application>. It is a
-      feature-rich DBMS. The main difference from the two big players above is
-      that Sqlite does not provide access via a network API. Sqlite databases
-      are always stored on the machine running the program which
-      uses the database. The manipulation of data content is done via API calls
-      to library functions directly within the program.</para>
+      <para>Ikke undervurder <application>Sqlite</application>. Det er en
+      funksjonsrikt DBMS. Hovedforskjellen fra de to store aktørene ovenfor er
+      at Sqlite ikke gir tilgang via en nettverks API. SQLite databaser
+      er alltid lagret på maskinen som kjører programmet som
+      bruker databasen. Manipulering av datainnhold gjøres via API kall
+      til bibliotekfunksjoner direkte i programmet.</para>
 
-      <para>In the upstream documentation you may find the following
-      useful:</para>
+      <para>I oppstrømsdokumentasjonen kan du finne følgende
+      nyttig:</para>
 
-      <para>Documentation of the sqlite3 command line tool:
+      <para>Dokumentasjon av kommandolinjeverktøyet sqlite3:
         <ulink url="https://www.sqlite.org/cli.html"/>
       </para>
 
-      <para>Documentation of backup API calls:
+      <para>Dokumentasjon av sikkerhetskopiering API kall:
         <ulink url="https://www.sqlite.org/backup.html"/>
       </para>
 
-      <para>Unfortunately, there is no dedicated chapter in the
-      upstream documentation talking about backup/restore, but
-      there are several articles about it on the
-      Internet. Here is an example.</para>
+      <para>Dessverre er det ikke noe dedikert kapittel i
+      oppstrøms dokumentasjon som snakker om sikkerhetskopiering/gjenoppretting, men
+      det er flere artikler om det på
+      Internett. Her er et eksempel.</para>
 
-      <para>Documentation for Backup/Restore:
+      <para>Dokumentasjon for sikkerhetskopiering/gjenoppretting:
         <ulink url="https://database.guide/backup-sqlite-database/"/>
       </para>
 
@@ -269,13 +269,13 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
 
       <!-- might add some advanced notes for the DBMS here -->
 
-      <para>Like <application>Sqlite</application>, this
-      software acts on local database files; there is no
-      network interface.</para>
+      <para>Som <application>Sqlite</application>, denne
+      programvaren virker på lokale databasefiler; det er ingen
+      nettverksgrensesnitt.</para>
 
-      <para>The relevant resources to back up/restore a Berkeley database
-      are the man pages for <filename>db_dump</filename> and its
-      counterpart <filename>db_load</filename>.</para>
+      <para>De relevante ressursene for å sikkerhetskopiere/gjenopprette en Berkeley database
+      er man sidene for <filename>db_dump</filename> og dets
+      motpart <filename>db_load</filename>.</para>
 
     </sect3>
   </sect2>
