@@ -28,114 +28,114 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Exim</title>
+    <title>Introduksjon til Exim</title>
 
     <para>
-      The <application>Exim</application> package contains a Mail
-      Transport Agent written by the University of Cambridge, released
-      under the GNU Public License.
+      <application>Exim</application> pakken inneholder en Mail
+      Transport Agent skrevet av University of Cambridge, utgitt
+      under GNU Public License.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&exim-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&exim-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&exim-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&exim-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &exim-md5sum;
+          Nedlasting MD5 sum: &exim-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &exim-size;
+          Nedlastingsstørrelse: &exim-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &exim-buildsize;
+          Estimert diskplass som kreves: &exim-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &exim-time;
+          Estimert byggetid: &exim-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Additional formats of the documentation (text-based docs are
-          shipped with the sources) can be downloaded by following the links
-          shown at <ulink url="https://exim.org/docs.html"/>.
+          Ytterligere formater for dokumentasjonen (tekstbaserte dokumenter er
+          levert med kildene) kan lastes ned ved å følge lenkene
+          vist på <ulink url="https://exim.org/docs.html"/>.
         </para>
       </listitem>
 <!-- Applied in 4.96
       <listitem>
         <para>
-          Required patch when building with <application>PAM</application> support:
+          Nødvendig oppdatering ved bygging med <application>PAM</application> støtte:
           <ulink url="&patch-root;/exim-&exim-version;-call_pam-1.patch"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Required patch to build with openssl-3:
+          Nødvendig oppdatering ved bygging med openssl-3:
           <ulink url="&patch-root;/exim-&exim-version;-openssl3_fix-1.patch"/>
         </para>
       </listitem>
 -->
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Exim Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Exim Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="libnsl"/> and
+      <xref linkend="libnsl"/> og
       <xref linkend="pcre"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <ulink url="https://sourceforge.net/projects/tdb">TDB</ulink>
-      (alternative to GDBM, built in LFS),
+      (alternativ til GDBM, bygget i LFS),
       <xref linkend="cyrus-sasl"/>,
       <xref linkend="libidn"/>,
       <xref linkend="linux-pam"/>,
-      <xref linkend="mariadb"/> or
+      <xref linkend="mariadb"/> eller
       <ulink url="https://www.mysql.com/">MySQL</ulink>,
       <xref linkend="openldap"/>,
       <xref linkend="gnutls"/>,
       <xref linkend="postgresql"/>,
       <xref linkend="sqlite"/>,
       <xref linkend="x-window-system"/>,
-      <ulink url="https://github.com/heimdal/heimdal">Heimdal GSSAPI</ulink>, and
+      <ulink url="https://github.com/heimdal/heimdal">Heimdal GSSAPI</ulink>, og
       <ulink url="http://www.trusteddomain.org/opendmarc/">OpenDMARC</ulink>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/exim"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Exim</title>
+    <title>Installasjon av Exim</title>
 
     <para>
-      Before building <application>Exim</application>, as the
-      <systemitem class="username">root</systemitem> user you should create
-      the group and user <systemitem class="username">exim</systemitem> which
-      will run the <command>exim</command> daemon:
+      Før bygging av <application>Exim</application>, som
+      <systemitem class="username">root</systemitem> bruker du bør opprette
+      gruppen og brukeren <systemitem class="username">exim</systemitem> som
+      vil kjøre <command>exim</command> nissen:
     </para>
 
 <screen role="root"><userinput>groupadd -g 31 exim &amp;&amp;
@@ -143,20 +143,20 @@ useradd -d /dev/null -c "Exim Daemon" -g exim -s /bin/false -u 31 exim</userinpu
 
 <!-- Applied in 4.96
     <para>
-      If you want to build with <application>PAM</application> support, apply the following patch:
+      Hvis du vil bygge med <application>PAM</application> støtte, bruk følgende oppdatering:
     </para>
 
 <screen><userinput>patch -Np2 -i ../exim-&exim-version;-call_pam-1.patch</userinput></screen>
 
     <para>
-      Apply a patch required for building against openssl version 3:
+      Anvend en oppdatering nødvendig for å bygge mot openssl version 3:
     </para>
 
 <screen><userinput>patch -Np2 -i ../exim-&exim-version;-openssl3_fix-1.patch</userinput></screen>
 -->
 
     <para>
-      Configure <application>Exim</application> with the following commands:
+      Konfigure <application>Exim</application> med følgende kommandoer:
     </para>
 
 <screen><userinput>sed -e 's,^BIN_DIR.*$,BIN_DIRECTORY=/usr/sbin,'    \
@@ -170,7 +170,7 @@ printf "USE_GDBM = yes\nDBMLIB = -lgdbm\n" >> Local/Makefile &amp;&amp;
 </userinput></screen>
 
     <para>
-      If you want to add <application>Linux PAM</application> support, also run the following commands:
+      Hvis du vil legge til <application>Linux PAM</application> støtte, kjør også følgende kommandoer:
     </para>
 
 <screen role="nodump"><userinput>sed -i '/# SUPPORT_PAM=yes/s,^#,,' Local/Makefile
@@ -178,18 +178,18 @@ echo "EXTRALIBS=-lpam" >> Local/Makefile
 </userinput></screen>
 
     <para>
-      Build <application>Exim</application> with the following command:
+      Bygg <application>Exim</application> med følgende kommando:
     </para>
 
 <screen><userinput>make</userinput></screen>
 
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <!-- dev note: make INSTALL_ARG=-no_chown DESTDIR=<DESTDIR> install -->
@@ -206,184 +206,184 @@ install -v -d -m750 -o exim -g exim /var/spool/exim</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -e ... > Local/Makefile</command>: Most of
-      <application>Exim</application>'s configuration options are defined
-      in <filename>Local/Makefile</filename>, which is created from
-      the <filename>src/EDITME</filename> file. This command specifies the
-      minimum set of options. Descriptions for the options are listed below.
+      <command>sed -e ... > Local/Makefile</command>: Mesteparten av
+      <application>Exim</application> sine konfigurasjonsalternativer er definert
+      i <filename>Local/Makefile</filename>, som er skapt fra
+      <filename>src/EDITME</filename> filen. Denne kommandoen spesifiserer
+      minimumssett med alternativer. Beskrivelser for alternativene er oppført nedenfor.
     </para>
 
     <para>
-      <command>printf ... > Local/Makefile</command>: Setting those
-      variables allows to use GDBM instead of the default Berkeley DB. Remove
-      this command if you have installed <xref linkend="db"/>.
+      <command>printf ... > Local/Makefile</command>: Å sette de
+      variablene lar deg bruke GDBM i stedet for standard Berkeley DB. Fjern
+      denne kommandoen hvis du har installert <xref linkend="db"/>.
     </para>
 
     <para>
-      <parameter>BIN_DIRECTORY=/usr/sbin</parameter>: This installs all of
-      <application>Exim</application>'s binaries and scripts in
+      <parameter>BIN_DIRECTORY=/usr/sbin</parameter>: Dette installerer alle
+      <application>Exim</application> sine binærfiler og skript i
       <filename class='directory'>/usr/sbin</filename>.
     </para>
 
     <para>
-      <parameter>CONFIGURE_FILE=/etc/exim.conf</parameter>: This installs
-      <application>Exim</application>'s main configuration file in
+      <parameter>CONFIGURE_FILE=/etc/exim.conf</parameter>: Dette installerer
+      <application>Exim</application> sin hovedkonfigurasjonsfil i
       <filename class='directory'>/etc</filename>.
     </para>
 
     <para>
-      <parameter>EXIM_USER=exim</parameter>: This tells
-      <application>Exim</application> that after the daemon no longer needs
-      <systemitem class="username">root</systemitem> privileges, the process
-      needs to hand off the daemon to the <systemitem
-      class="username">exim</systemitem> user.
+      <parameter>EXIM_USER=exim</parameter>: Dette forteller
+      <application>Exim</application> at etter at nissen ikke lenger trenger
+      <systemitem class="username">root</systemitem> privilegier, prosessen
+      må overlevere nissen til <systemitem
+      class="username">exim</systemitem> brukeren.
     </para>
 
     <para>
-      <parameter>SUPPORT_TLS=yes</parameter>: This allows to support
-      STARTTLS connections. If you use this option, you need to select
-      whether <application>OpenSSL</application> or
-      <application>GnuTLS</application> is used (see
+      <parameter>SUPPORT_TLS=yes</parameter>: Dette gjør det mulig å støtte
+      STARTTLS tilkoblinger. Hvis du bruker dette alternativet, må du velge
+      om <application>OpenSSL</application> eller
+      <application>GnuTLS</application> benyttes (se
       <filename>src/EDITME</filename>).
     </para>
 
     <para>
-      <parameter>USE_OPENSSL_PC=openssl</parameter>: This tells the
-      build system to use <application>OpenSSL</application>, and to
-      find the needed libraries with <application>pkg-config</application>.
+      <parameter>USE_OPENSSL_PC=openssl</parameter>: Dette forteller
+      byggesystemet å bruke <application>OpenSSL</application>, og å
+      finne de nødvendige bibliotekene med <application>pkg-config</application>.
     </para>
 
     <para>
-      <parameter>#EXIM_MONITOR</parameter>: This defers building the
-      <application>Exim</application> monitor program, as it requires
-      <application>X Window System</application> support, by commenting out the
-      <parameter>EXIM_MONITOR</parameter> line in the
-      <filename>Makefile</filename>. If you wish to build the monitor program,
-      omit this <command>sed</command> command and issue the following command
-      before building the package (modify
-      <filename>Local/eximon.conf</filename>, if necessary):
+      <parameter>#EXIM_MONITOR</parameter>: Dette utsetter byggingen av
+      <application>Exim</application> overvåkingsprogrammet, siden det krever
+      <application>X Window System</application> støtte, ved å kommentere ut
+      <parameter>EXIM_MONITOR</parameter> linjen i
+      <filename>Makefile</filename>. Hvis du ønsker å bygge overvåkingsprogrammet,
+      utelate denne <command>sed</command> kommandoen og gi følgende kommando
+      før du bygger pakken (endre
+      <filename>Local/eximon.conf</filename>, hvis nødvendig):
       <command>cp exim_monitor/EDITME Local/eximon.conf</command>.
     </para>
 
     <para>
-      <command>ln -sfv exim /usr/sbin/sendmail</command>: Creates a link to
-      <command>sendmail</command> for applications which need it.
-      <application>Exim</application> will accept most
-      <application>Sendmail</application> command-line options.
+      <command>ln -sfv exim /usr/sbin/sendmail</command>: Oppretter en link til
+      <command>sendmail</command> for applikasjoner som trenger det.
+      <application>Exim</application> vil godta de fleste
+      <application>Sendmail</application> kommandolinjealternativer.
     </para>
 
     <para>
       <command>install -v -m750 -o exim -g exim /var/spool/exim</command>:
-      Since /var/spool is owned by root and this version of
-      <command>exim</command> drops
-      <systemitem class="username">root</systemitem> privileges early, to run
-      as user <systemitem class="username">exim</systemitem>, it cannot create
-      the <filename class="directory">/var/spool/exim</filename> directory. As
-      a work around, it is created manually.
+      Siden /var/spool eies av root og denne versjonen av
+      <command>exim</command> dropper
+      <systemitem class="username">root</systemitem> privilegier tidlig, å kjøre
+      som bruker <systemitem class="username">exim</systemitem>, det kan ikke lage
+      <filename class="directory">/var/spool/exim</filename> mappen. Som
+      en omgåing, er det opprettet manuelt.
     </para>
 
   </sect2>
 
   <sect2 role="commands">
-    <title>Adding Additional Functionality</title>
+    <title>Legge til Ekstra Funksjonalitet</title>
 
     <para>
-      To utilize some or all of the dependency packages, you'll need to
-      modify <filename>Local/Makefile</filename> to include the appropriate
-      directives and parameters to link additional libraries before you build
-      <application>Exim</application>. <filename>Local/Makefile</filename> is
-      heavily commented with instructions on how to do this. Listed below is
-      additional information to help you link these dependency packages or
-      add additional functionality.
+      For å bruke noen eller alle avhengighetspakkene, må du
+      endre <filename>Local/Makefile</filename> til å inkludere passende
+      direktiver og parametere for å koble til flere biblioteker før du bygger
+      <application>Exim</application>. <filename>Local/Makefile</filename> er
+      sterkt kommentert med instruksjoner om hvordan du gjør dette. Oppført nedenfor er
+      tilleggsinformasjon for å hjelpe deg med å koble disse avhengighetspakkene eller
+      legge til ekstra funksjonalitet.
     </para>
 
     <para>
-      If you wish to build and install the
-      <filename class='extension'>.info</filename> documentation, refer to
+      Hvis du ønsker å bygge og installere
+      <filename class='extension'>.info</filename> dokumentasjon, se
       <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch04.html#SECTinsinfdoc"/>.
     </para>
 
     <para>
-      If you wish to build in Exim's interfaces for calling virus and spam
-      scanning software directly from access control lists, uncomment the
-      <option>WITH_CONTENT_SCAN=yes</option> parameter and review the
-      information found at <ulink url=
+      Hvis du ønsker å bygge i Exim sitt grensesnitt for å kalle virus og spam
+      skanningsprogramvare direkte fra tilgangskontrolllister, avkommenter
+      <option>WITH_CONTENT_SCAN=yes</option> parameteren og se gjennom
+      informasjon funnet på <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch45.html"/>.
     </para>
 
     <para>
-      To use a backend database other than <application>GDBM
-      </application>, see the instructions at <ulink url=
+      For å bruke en annen bakstykke database enn <application>GDBM
+      </application>, se instruksjonene på <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch04.html#SECTdb"/>.
     </para>
 
     <para>
-      For SSL functionality, see the instructions at <ulink url=
+      For SSL funksjonalitet, se instruksjonene på <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch04.html#SECTinctlsssl"/>
-      and <ulink url="
+      og <ulink url="
       https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch42.html"/>.
     </para>
 
     <para>
-      For <application>tcpwrappers</application> functionality, see the
-      instructions at <ulink url=
+      For <application>tcpwrappers</application> funksjonalitet, se
+      instruksjoner på <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch04.html#SECID27"/>.
     </para>
 
     <para>
-      For information about adding authentication mechanisms to the
-      build, see chapters 33&mdash;41 of <ulink url=
+      For informasjon om å legge til autentiseringsmekanismer til
+      bygget, se kapitler 33&mdash;41 av <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/index.html"/>.
     </para>
 
     <para>
-      For information about linking <application>Linux-PAM</application>,
-      refer to the instructions <ulink url=
+      For informasjon om å koble <application>Linux-PAM</application>,
+      se instruksjonene <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch11.html#SECTexpcond"/>.
     </para>
 
     <para>
-      For information about linking database engine libraries used for
-      <application>Exim</application> name lookups, see the instructions at
+      For informasjon om kobling av databasemotorbiblioteker som brukes til
+      <application>Exim</application> navneoppslag, se instruksjonene på
       <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch09.html"/>.
     </para>
 
     <para>
-      If you wish to add <application>Readline</application> support to
-      <application>Exim</application> when invoked in <quote>test
-      expansion</quote> (<option>-be</option>) mode, see the information in
-      the <option>-be</option> section of <ulink url=
+      Hvis du ønsker å legge til <application>Readline</application> støtte til
+      <application>Exim</application> når det påkalles <quote>test
+      expansion</quote> (<option>-be</option>) modus, se informasjonen i
+      <option>-be</option> delen av <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch05.html#id2525974"/>.
     </para>
 
     <para>
-      You may wish to modify the default configuration and send log files to
-      syslog instead of the default
-      <filename class='directory'>/var/spool/exim/log</filename> directory. See
-      the information at <ulink url=
+      Det kan være lurt å endre standardkonfigurasjonen og sende loggfiler til
+      syslog i stedet for standard
+      <filename class='directory'>/var/spool/exim/log</filename> mappen. Se
+      informasjonen på <ulink url=
       "https://exim.org/exim-html-&exim-version;/doc/html/spec_html/ch-log_files.html"/>.
     </para>
 
     <para>
-      A wealth of information can be also found at the <ulink url=
+      Et vell av informasjon kan også finnes på <ulink url=
       "https://github.com/Exim/exim/wiki">Exim Wiki</ulink>.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Exim</title>
+    <title>Konfigurere Exim</title>
 
     <sect3 id="exim-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
-        <filename>/etc/exim.conf</filename> and
+        <filename>/etc/exim.conf</filename> og
         <filename>/etc/aliases</filename>
       </para>
 
@@ -398,24 +398,24 @@ install -v -d -m750 -o exim -g exim /var/spool/exim</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Review the file <filename>/etc/exim.conf</filename>, and modify any
-        settings to suit your needs. Note that the default configuration
-        assumes that the <filename class="directory">/var/mail</filename>
-        directory is world writable, but has the sticky bit set. If you want
-        to use the default configuration, issue as the <systemitem
-        class="username">root</systemitem> user:
+        Se gjennom filen <filename>/etc/exim.conf</filename>, og endre
+        innstillinger til å passe dine behov. Merk at standardkonfigurasjonen
+        antar at <filename class="directory">/var/mail</filename>
+        mappen er skrivbar for alle, men har den klebrige biten satt. Hvis du vil
+        bruke standardkonfigurasjonen, kjør som <systemitem
+        class="username">root</systemitem> bruker:
      </para>
 
 <screen role="root"><userinput>chmod -v a+wt /var/mail</userinput></screen>
 
       <para>
-        A default (nothing but comments) <filename>/etc/aliases</filename>
-        file is installed during the package installation if this file did not
-        exist on your system. Create the necessary aliases and start the
-        <application>Exim</application> daemon using the following commands:
+        En standard (ingenting annet enn kommentarer) <filename>/etc/aliases</filename>
+        fil installeres under pakkeinstallasjonen hvis denne filen ikke
+        finnes på systemet ditt. Opprett de nødvendige aliasene og start
+        <application>Exim</application> nissen ved å bruke følgende kommandoer:
       </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/aliases &lt;&lt; "EOF"
@@ -426,34 +426,34 @@ EOF
 
       <note>
         <para>
-          To protect an existing <filename>/etc/aliases</filename> file,
-          the command above appends these aliases to it. This file should be
-          checked and duplicate aliases removed, if present.
+          For å beskytte en eksisterende <filename>/etc/aliases</filename> fil,
+          kommandoen ovenfor legger til disse aliasene til den. Denne filen bør
+          sjekkes og dupliserte aliaser fjernes, hvis de finnes.
         </para>
       </note>
 
       <para>
-        The <command>/usr/sbin/exim -bd -q15m</command> command starts
-        the <application>Exim</application> daemon with a 15 minute interval
-        in processing the mail queue. Adjust this parameter to suit your
-        desires.
+        <command>/usr/sbin/exim -bd -q15m</command> kommandoen starter
+        <application>Exim</application> nissen med 15 minutters intervall
+        i behandling av postkøen. Juster denne parameteren for å passe dine
+        ønsker.
       </para>
     </sect3>
 
     <sect3>
-      <title>Linux PAM Configuration</title>
+      <title>Linux PAM Konfigurasjon</title>
 
       <para>
-        If you have built <application>Exim</application> with
-        <application>Linux PAM</application> support, you need to create a
-        <application>PAM</application> configuration file to get it working
-        correctly with BLFS.
+        Hvis du har bygget <application>Exim</application> med
+        <application>Linux PAM</application> støtte, må du opprette en
+        <application>PAM</application> konfigurasjonsfil for å få den til å fungere
+        riktig med BLFS.
       </para>
 
       <para>
-        Issue the following command as the <systemitem
-        class="username">root</systemitem> user to create the configuration
-        file for <application>Linux PAM</application>:
+        Utfør følgende kommando som <systemitem
+        class="username">root</systemitem> bruker for å opprette konfigurasjonsfilen
+        for <application>Linux PAM</application>:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/pam.d/exim &lt;&lt; "EOF"
@@ -469,17 +469,17 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3  id="exim-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para>
-        To automatically start <command>exim</command> at boot, install the
+        For å automatisk starte <command>exim</command> ved oppstart, installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/exim</filename>
-        init script</phrase>
+        init skriptet</phrase>
         <phrase revision="systemd"><filename>exim.service</filename>
-        unit</phrase>
-        included in the <xref linkend="bootscripts" revision="sysv"/>
-        <xref linkend="systemd-units" revision="systemd"/> package:
+        enheten</phrase>
+        inkludert i <xref linkend="bootscripts" revision="sysv"/>
+        <xref linkend="systemd-units" revision="systemd"/> pakken:
       </para>
 
       <indexterm zone="exim exim-init">
@@ -489,11 +489,11 @@ EOF</userinput></screen>
 <screen role="root"><userinput>make install-exim</userinput></screen>
 
       <para revision="sysv">
-        The bootscript also starts the <application>Exim</application> daemon
-        and dispatches a queue runner process every 15 minutes. Modify the
+        Oppstartsskriptet starter også <application>Exim</application> nissen
+        og sender en køkjøreprosess hvert 15. minutt. Endre
         <option>-q<replaceable>&lt;time interval&gt;</replaceable></option>
-        parameter in <filename>/etc/rc.d/init.d/exim</filename>, if necessary
-        for your installation.
+        parameteren i <filename>/etc/rc.d/init.d/exim</filename>, hvis nødvendig
+        for din installasjon.
       </para>
 
     </sect3>
@@ -501,25 +501,25 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>exicyclog, exigrep, exim, exim-&exim-daemon-version;, exim_checkaccess,
         exim_dbmbuild, exim_dumpdb, exim_fixdb, exim_lock, exim_tidydb,
-        eximstats, exinext, exipick, exiqgrep, exiqsumm, exiwhat, and
-        optionally, eximon, eximon.bin, and sendmail (symlink)</seg>
-        <seg>None</seg>
-        <seg>/usr/share/doc/exim-&exim-version; and /var/spool/exim</seg>
+        eximstats, exinext, exipick, exiqgrep, exiqsumm, exiwhat, og
+        valgfritt, eximon, eximon.bin, og sendmail (symbollenke)</seg>
+        <seg>Ingen</seg>
+        <seg>/usr/share/doc/exim-&exim-version; og /var/spool/exim</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -527,7 +527,7 @@ EOF</userinput></screen>
         <term><command>exicyclog</command></term>
         <listitem>
           <para>
-            cycles <application>Exim</application> log files
+            sirkulerer <application>Exim</application> loggfiler
           </para>
           <indexterm zone="exim exicyclog">
             <primary sortas="b-exicyclog">exicyclog</primary>
@@ -539,7 +539,7 @@ EOF</userinput></screen>
         <term><command>exigrep</command></term>
         <listitem>
           <para>
-            searches <application>Exim</application> log files
+            søker <application>Exim</application> loggfiler
           </para>
           <indexterm zone="exim exigrep">
             <primary sortas="b-exigrep">exigrep</primary>
@@ -551,8 +551,8 @@ EOF</userinput></screen>
         <term><command>exim</command></term>
         <listitem>
           <para>
-            is a symlink to the <command>exim-&exim-daemon-version;</command>
-            MTA daemon
+            er en symbolkobling til <command>exim-&exim-daemon-version;</command>
+            MTA nissen
           </para>
           <indexterm zone="exim exim-prog">
             <primary sortas="b-exim">exim</primary>
@@ -564,7 +564,7 @@ EOF</userinput></screen>
         <term><command>exim-&exim-daemon-version;</command></term>
         <listitem>
           <para>
-            is the <application>Exim</application> mail transport agent daemon
+            er <application>Exim</application> posttransportagent nissen
           </para>
           <indexterm zone="exim exim-current_version">
             <primary sortas="b-exim-&exim-daemon-version;">exim-&exim-daemon-version;</primary>
@@ -576,8 +576,8 @@ EOF</userinput></screen>
         <term><command>exim_checkaccess</command></term>
         <listitem>
           <para>
-            states whether a given recipient address from a given host is
-            acceptable or not
+            angir om en gitt mottakeradresse fra en gitt vert er
+            akseptabelt eller ikke
           </para>
           <indexterm zone="exim exim_checkaccess">
             <primary sortas="b-exim_checkaccess">exim_checkaccess</primary>
@@ -589,7 +589,7 @@ EOF</userinput></screen>
         <term><command>exim_dbmbuild</command></term>
         <listitem>
           <para>
-            creates and rebuilds <application>Exim</application> databases
+            oppretter og bygger om <application>Exim</application> databaser
           </para>
           <indexterm zone="exim exim_dbmbuild">
             <primary sortas="b-exim_dbmbuild">exim_dbmbuild</primary>
@@ -601,8 +601,8 @@ EOF</userinput></screen>
         <term><command>exim_dumpdb</command></term>
         <listitem>
           <para>
-            writes the contents of <application>Exim</application>
-            databases to the standard output
+            skriver innholdet i <application>Exim</application>
+            databaser til standardutgangen
           </para>
           <indexterm zone="exim exim_dumpdb">
             <primary sortas="b-exim_dumpdb">exim_dumpdb</primary>
@@ -614,7 +614,7 @@ EOF</userinput></screen>
         <term><command>exim_fixdb</command></term>
         <listitem>
           <para>
-            modifies data in <application>Exim</application> databases
+            modifiserer data i <application>Exim</application> databaser
           </para>
           <indexterm zone="exim exim_fixdb">
             <primary sortas="b-exim_fixdb">exim_fixdb</primary>
@@ -626,7 +626,7 @@ EOF</userinput></screen>
         <term><command>exim_lock</command></term>
         <listitem>
           <para>
-            locks a mailbox file
+            låser en postboksfil
           </para>
           <indexterm zone="exim exim_lock">
             <primary sortas="b-exim_lock">exim_lock</primary>
@@ -638,8 +638,8 @@ EOF</userinput></screen>
         <term><command>exim_tidydb</command></term>
         <listitem>
           <para>
-            removes old records from <application>Exim</application>
-            databases
+            fjerner gamle poster fra <application>Exim</application>
+            databaser
           </para>
           <indexterm zone="exim exim_tidydb">
             <primary sortas="b-exim_tidydb">exim_tidydb</primary>
@@ -651,8 +651,8 @@ EOF</userinput></screen>
         <term><command>eximstats</command></term>
         <listitem>
           <para>
-            generates mail statistics from <application>Exim</application>
-            log files
+            genererer poststatistikk fra <application>Exim</application>
+            loggfiler
           </para>
           <indexterm zone="exim eximstats">
             <primary sortas="b-eximstats">eximstats</primary>
@@ -664,7 +664,7 @@ EOF</userinput></screen>
         <term><command>exinext</command></term>
         <listitem>
           <para>
-            queries remote host retry times
+            spør om prøvetider for ekstern vert
           </para>
           <indexterm zone="exim exinext">
             <primary sortas="b-exinext">exinext</primary>
@@ -676,7 +676,7 @@ EOF</userinput></screen>
         <term><command>exipick</command></term>
         <listitem>
           <para>
-            selects messages based on various criteria
+            velger meldinger basert på ulike kriterier
           </para>
           <indexterm zone="exim exipick">
             <primary sortas="b-exipick">exipick</primary>
@@ -688,7 +688,7 @@ EOF</userinput></screen>
         <term><command>exiqgrep</command></term>
         <listitem>
           <para>
-            is a utility for selective queue listing
+            er et verktøy for selektiv køoppføring
           </para>
           <indexterm zone="exim exiqgrep">
             <primary sortas="b-exiqgrep">exiqgrep</primary>
@@ -700,7 +700,7 @@ EOF</userinput></screen>
         <term><command>exiqsumm</command></term>
         <listitem>
           <para>
-            produces a summary of the messages in the mail queue
+            produserer et sammendrag av meldingene i postkøen
           </para>
           <indexterm zone="exim exiqsumm">
             <primary sortas="b-exiqsumm">exiqsumm</primary>
@@ -712,8 +712,8 @@ EOF</userinput></screen>
         <term><command>exiwhat</command></term>
         <listitem>
           <para>
-            queries running <application>Exim</application>
-          processes
+            spørrer kjørende <application>Exim</application>
+          prosesser
           </para>
           <indexterm zone="exim exiwhat">
             <primary sortas="b-exiwhat">exiwhat</primary>
@@ -725,9 +725,9 @@ EOF</userinput></screen>
         <term><command>eximon</command></term>
         <listitem>
           <para>
-            is a start-up shell script for <command>eximon.bin</command>
-            used to set the required environment variables before running the
-            program
+            er et oppstarts skallskript for <command>eximon.bin</command>
+            brukes til å angi de nødvendige miljøvariablene før du kjører
+            programmet
           </para>
           <indexterm zone="exim eximon">
             <primary sortas="b-eximon">eximon</primary>
@@ -739,10 +739,10 @@ EOF</userinput></screen>
         <term><command>eximon.bin</command></term>
         <listitem>
           <para>
-            is a monitor program which displays current information in an
-            <application>X</application> window, and also contains a menu
-            interface to <application>Exim</application>'s command line
-            administration options
+            er et monitorprogram som viser gjeldende informasjon i et
+            <application>X</application> vindu, og inneholder også en meny
+            grensesnitt til <application>Exim</application> sin kommandolinje
+            administrasjonsmuligheter
           </para>
           <indexterm zone="exim eximon.bin">
             <primary sortas="b-eximon.bin">eximon.bin</primary>
