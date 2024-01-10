@@ -12,7 +12,7 @@
   <!ENTITY postfix-md5sum        "2442d1e53d58e61842d99fb5978fec4a">
   <!ENTITY postfix-size          "4.6 MB">
   <!ENTITY postfix-buildsize     "148 MB">
-  <!ENTITY postfix-time          "0.2 SBU (Using parallelism=4)">
+  <!ENTITY postfix-time          "0.2 SBU (Bruke parallellisme=4)">
 ]>
 
 <sect1 id="postfix" xreflabel="Postfix-&postfix-version;">
@@ -26,106 +26,106 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Postfix</title>
+    <title>Introduksjon til Postfix</title>
 
     <para>
-      The <application>Postfix</application> package contains a Mail Transport
-      Agent (MTA). This is useful for sending email to other users of your host
-      machine.  It can also be configured to be a central mail server for your
-      domain, a mail relay agent or simply a mail delivery agent to your local
-      Internet Service Provider.
+      <application>Postfix</application> pakken inneholder en posttransport
+      agent (MTA). Dette er nyttig for å sende e-post til andre brukere av vertsnmaskinen
+      din. Den kan også konfigureres til å være en sentral e-postserver for ditt
+      domene, en e-postreléagent eller ganske enkelt en e-postleveringsagent til din lokale
+      internett leverandør.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&postfix-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&postfix-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&postfix-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&postfix-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &postfix-md5sum;
+          Nedlasting MD5 sum: &postfix-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &postfix-size;
+          Nedlastingsstørrelse: &postfix-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &postfix-buildsize;
+          Estimert diskplass som kreves: &postfix-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &postfix-time;
+          Estimert byggetid: &postfix-time;
         </para>
       </listitem>
     </itemizedlist>
 <!--
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/postfix-&postfix-version;-glibc230_fix-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
-    <bridgehead renderas="sect3">Postfix Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Postfix Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="db"/>,
-      <xref linkend="cyrus-sasl"/>, and
+      <xref linkend="cyrus-sasl"/>, og
       <xref linkend="libnsl"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="icu"/> for Email Address Internationalization (SMTPUTF8) support,
+      <xref linkend="icu"/> for internasjonalisering av e-postadresser (SMTPUTF8) støtte,
       <xref linkend="mariadb"/> or <ulink url="https://www.mysql.com/">MySQL</ulink>,
       <xref linkend="openldap"/>,
       <xref linkend="pcre"/>,
       <xref linkend="postgresql"/>,
-      <xref linkend="sqlite"/>, and
-      <ulink url="https://cr.yp.to/cdb.html">CDB</ulink> or
+      <xref linkend="sqlite"/>, og
+      <ulink url="https://cr.yp.to/cdb.html">CDB</ulink> eller
       <ulink url="https://www.corpit.ru/mjt/tinycdb.html">TinyCDB</ulink>
     </para>
 
     <para>
-      Note that <application>SQLite</application>,
+      Merk at <application>SQLite</application>,
       <application>MySQL</application>, <application>PostgreSQL</application>
-      and <application>CDB</application> are only useful if there is a known
-      need for them.
+      og <application>CDB</application> er bare nyttige hvis det er et kjent
+      behov for dem.
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/postfix"/>
+      Brukernotater: <ulink url="&blfs-wiki;/postfix"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Postfix</title>
+    <title>Installasjon av Postfix</title>
 
     <sect3>
-      <title>Adding Users and Groups</title>
+      <title>Legge til Brukere og Grupper</title>
 
       <para>
-        Before you compile the program, you need to create users and groups that
-        will be expected to be in place during the installation. Add the users
-        and groups with the following commands issued by the
-        <systemitem class="username">root</systemitem> user:
+        Før du kompilerer programmet, må du opprette brukere og grupper som
+        forventes å være på plass under installasjonen. Legg til brukerne
+        og grupper med følgende kommandoer utstedt av
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>groupadd -g 32 postfix &amp;&amp;
@@ -136,30 +136,30 @@ chown -v postfix:postfix /var/mail</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuring the Build</title>
+      <title>Konfigurering av Bygget</title>
 
       <para>
-        The README files are formatted to be read with a pager like
-        <application>Less</application> or <application>More</application>.
-        If you want to use a text editor, make them legible with the
-        following sed:
+        README filer er formatert for å kunne leses med en leser som
+        <application>Less</application> eller <application>More</application>.
+        Hvis du vil bruke et tekstredigeringsprogram, gjør du det lesbart med
+        følgende sed:
       </para>
 
 <screen><userinput>sed -i 's/.\x08//g' README_FILES/*</userinput></screen>
 <!--
       <para>
-        Make an adjustment to allow <application>Postfix</application> to compile
-        on <application>Glibc-2.34</application> and later:
+        Gjør en justering for å tillate <application>Postfix</application> å kompilere
+        på <application>Glibc-2.34</application> og senere:
       </para>
 
 <screen><userinput>sed -i '/&lt;linux/i #define HAS_CLOSEFROM' src/util/sys_defs.h</userinput></screen>
 -->
       <para>
-        The <filename>Makefile</filename> looks at the running kernel to
-        decide how to set various things. It does not recognize Linux-6 and
-        fails to make the definitions. After that is fixed, the build
-        references the newly defined version in a header, which also breaks
-        the build. Fix both of these with the following commands:
+        <filename>Makefile</filename> ser på kjernen som kjører for å
+        bestemme hvordan du setter forskjellige ting. Den gjenkjenner ikke Linux-6 og
+        klarer ikke å lage definisjonene. Etter at det er fikset, bygget
+        refererer til den nylig definerte versjonen i en deklarasjon, som også bryter
+        bygget. Fiks begge disse med følgende kommandoer:
       </para>
 
 <!-- '&&' on a sed only fails if the file is not present,
@@ -169,32 +169,32 @@ sed -i 's/LINUX2/LINUX6/' src/util/sys_defs.h</userinput></screen>
 
 
       <para>
-        The <application>Postfix</application> source tree does not contain a
-        <filename>configure</filename> script, rather the makefile in the
-        top-level directory contains a <option>makefiles</option> target that
-        regenerates all the other makefiles in the build tree. If you wish to
-        use additional software such as a database back-end for virtual users,
-        or TLS/SSL authentication, you will need to regenerate the makefiles
-        using one or more of the appropriate <envar>CCARGS</envar> and
-        <envar>AUXLIBS</envar> settings listed below.
+        <application>Postfix</application> kildetreet inneholder ikke et
+        <filename>configure</filename> skript, snarere makefilen i
+        toppnivåmappen inneholder en <option>makefiles</option> mål som
+        regenererer alle de andre makefilene i byggetreet. Hvis du ønsker å
+        bruke tilleggsprogramvare som en databasebackend for virtuelle brukere,
+        eller TLS/SSL autentisering, må du regenerere makefilene
+        ved å bruke en eller flere av de passende <envar>CCARGS</envar> og
+        <envar>AUXLIBS</envar> innstillingene oppført nedenfor.
       </para>
 
       <note>
         <para>
-          For all variants of the CCARGS you should ensure that -DNO_NIS is
-          specified so that the build does not attempt to access an rpcsvc header
-          which does not exist in BLFS.
+          For alle varianter av CCARGS bør du sørge for at -DNO_NIS er
+          spesifisert slik at byggingen ikke prøver å få tilgang til en rpcsvc deklarasjon
+          som ikke finnes i BLFS.
         </para>
       </note>
 
       <para>
-        For more details read the readme files.
+        Les readme filene for mer informasjon.
       </para>
 <!-- We reverted to Berkeley DB-5.3.28 and that is handled
        <para>
-         The current version of <xref linkend="db"/> is not recognised by a
-         hard-coded test for known versions. To build with this version use the
-         following sed:
+         Den nåværende versjonen av <xref linkend="db"/> er ikke gjenkjent av en
+         hardkodet test for kjente versjoner. For å bygge med denne versjonen, bruk
+         følgende sed:
       </para>
 
 <screen><userinput>sed -i 's/DB_VERSION_MAJOR == 6 .*||/DB_VERSION_MAJOR &gt; 4 ||/' \
@@ -204,8 +204,8 @@ sed -i 's/LINUX2/LINUX6/' src/util/sys_defs.h</userinput></screen>
         <title>Cyrus-SASL</title>
 
         <para>
-          To use <application>Cyrus-SASL</application> with
-          <application>Postfix</application>, use the following arguments:
+          For å bruke <application>Cyrus-SASL</application> med
+          <application>Postfix</application>, bruk følgende argumenter:
         </para>
 
 <screen><literal>CCARGS='-DNO_NIS -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl'
@@ -217,8 +217,8 @@ AUXLIBS='-lsasl2'</literal></screen>
         <title>OpenLDAP</title>
 
         <para>
-          To use <application>OpenLDAP</application> with
-          <application>Postfix</application>, use the following arguments:
+          For å bruke <application>OpenLDAP</application> med
+          <application>Postfix</application>, bruk følgende argumenter:
         </para>
 
 <screen><literal>CCARGS='-DNO_NIS -DHAS_LDAP'
@@ -230,8 +230,8 @@ AUXLIBS='-lldap -llber'</literal></screen>
         <title>Sqlite</title>
 
         <para>
-          To use <application>Sqlite</application> with
-          <application>Postfix</application>, use the following arguments:
+          For å bruke <application>Sqlite</application> med
+          <application>Postfix</application>, bruk følgende argumenter:
         </para>
 
 <screen><literal>CCARGS='-DNO_NIS -DHAS_SQLITE'
@@ -243,8 +243,8 @@ AUXLIBS='-lsqlite3 -lpthread'</literal></screen>
         <title>MySQL</title>
 
         <para>
-          To use <application>MySQL</application> with
-          <application>Postfix</application>, use the following arguments:
+          For å bruke <application>MySQL</application> med
+          <application>Postfix</application>, bruk følgende argumenter:
         </para>
 
 <screen><literal>CCARGS='-DNO_NIS -DHAS_MYSQL -I/usr/include/mysql'
@@ -256,8 +256,8 @@ AUXLIBS='-lmysqlclient -lz -lm'</literal></screen>
         <title>PostgreSQL</title>
 
         <para>
-          To use <application>PostgreSQL</application> with
-          <application>Postfix</application>, use the following arguments:
+          For å bruke <application>PostgreSQL</application> med
+          <application>Postfix</application>, bruk følgende argumenter:
         </para>
 
 <screen><literal>CCARGS='-DNO_NIS -DHAS_PGSQL -I/usr/include/postgresql'
@@ -269,9 +269,9 @@ AUXLIBS='-lpq -lz -lm'</literal></screen>
         <title>CDB/TinyCDB</title>
 
         <para>
-          To use <application>CDB</application> or
-          <application>TinyCDB</application> with
-          <application>Postfix</application>, use the following arguments:
+          For å bruke <application>CDB</application> eller
+          <application>TinyCDB</application> med
+          <application>Postfix</application>, bruk følgende argumenter:
         </para>
 
 <screen><literal>CCARGS='-DNO_NIS -DHAS_CDB'
@@ -283,8 +283,8 @@ AUXLIBS='<replaceable>&lt;/path/to/CDB&gt;</replaceable>/libcdb.a'</literal></sc
         <title>StartTLS Authentication</title>
 
         <para>
-          To use <application>OpenSSL</application> with
-          <application>Postfix</application>, use the following arguments:
+          For å bruke <application>OpenSSL</application> med
+          <application>Postfix</application>, bruk følgende argumenter:
         </para>
 
 <screen><literal>CCARGS='-DNO_NIS -DUSE_TLS -I/usr/include/openssl/'
@@ -294,13 +294,13 @@ AUXLIBS='-lssl -lcrypto'</literal></screen>
     </sect3>
 
     <sect3>
-      <title>Installing Postfix</title>
+      <title>Installere Postfix</title>
 
       <para>
-        Adjust the following according to your needs. For example,
-        if you have <application>Cyrus SASL</application>,
-        install <application>Postfix</application> by running the following
-        commands:
+        Juster følgende i henhold til dine behov. For eksempel,
+        hvis du har <application>Cyrus SASL</application>,
+        installere <application>Postfix</application> ved å kjøre følgende
+        kommandoer:
       </para>
 
 <screen><userinput>make CCARGS="-DNO_NIS -DUSE_TLS -I/usr/include/openssl/            \
@@ -313,11 +313,11 @@ make</userinput></screen>
          the host to be specifically setup for the tests.
          Run with `make tests' and `make root_tests' -->
     <para>
-      This package does not come with a useful test suite.
+      Denne pakken kommer ikke med en nyttig testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <!-- dev note: sh postfix-install -non-interactive install_root=<DESTDIR> ... -->
@@ -333,39 +333,39 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>make makefiles</command>: This command rebuilds the makefiles
-      throughout the source tree to use the options contained in the
-      <envar>CCARGS</envar> and <envar>AUXLIBS</envar> variables.
+      <command>make makefiles</command>: Denne kommandoen gjenoppbygger makefilene
+      gjennom kildetreet for å bruke alternativene i
+      <envar>CCARGS</envar> og <envar>AUXLIBS</envar> variablene.
     </para>
 
     <para>
-      <command>sh postfix-install -non-interactive</command>: This keeps the
-      install script from asking any questions, thereby accepting default
-      destination directories in all but the few cases. If the
-      <option>html_directory</option> and <option>readme_directory</option>
-      options are not set then the documentation will not be installed.
+      <command>sh postfix-install -non-interactive</command>: Dette holder
+      installer skriptet fra å stille spørsmål, og aksepterer dermed standard
+      destinasjonsmapper i alle unntatt noen få tilfeller. Hvis
+      <option>html_directory</option> og <option>readme_directory</option>
+      alternativer ikke er angitt, vil ikke dokumentasjonen bli installert.
     </para>
 
     <para>
-      <option>CCARGS="-DNO_EAI ..."</option>: this will turn off SMTPUTF8
-      support, for example  if the rest of your email address infrastructure
-      cannot handle UTF-8 email addresses and message header values.
+      <option>CCARGS="-DNO_EAI ..."</option>: dette vil slå av SMTPUTF8
+      støtte, for eksempel hvis resten av e-postadressens infrastruktur
+      ikke kan håndtere UTF-8-e-postadresser og meldingsdeklarasjonsverdier.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Postfix</title>
+    <title>Konfigurere Postfix</title>
 
     <sect3 id="postfix-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/aliases</filename>,
-        <filename>/etc/postfix/main.cf</filename>, and
+        <filename>/etc/postfix/main.cf</filename>, og
         <filename>/etc/postfix/master.cf</filename>
       </para>
 
@@ -380,15 +380,15 @@ make</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Create (or append to an existing) <filename>/etc/aliases</filename>
-        with the following command. Change
-        <replaceable>&lt;LOGIN&gt;</replaceable> to your non-root login
-        identity so mail addressed to
-        <systemitem class="username">root</systemitem> can be forwarded to you.
-        As the <systemitem class="username">root</systemitem> user:
+        Opprett (eller legg til en eksisterende) <filename>/etc/aliases</filename>
+        med følgende kommando. Endre
+        <replaceable>&lt;LOGIN&gt;</replaceable> til din ikke-root påloggings
+        identitet så e-post adressert til
+        <systemitem class="username">root</systemitem> kan videresendes til deg.
+        Som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/aliases &lt;&lt; "EOF"
@@ -402,44 +402,44 @@ root:             <replaceable>&lt;LOGIN&gt;</replaceable>
 EOF</userinput></screen>
 
       <para>
-        To protect an existing <filename>/etc/aliases</filename> file,
-        the above command appends these aliases to it if it exists. This file
-        should be checked and duplicate aliases removed, if present.
+        For å beskytte en eksisterende <filename>/etc/aliases</filename> fil,
+        kommandoen ovenfor legger til disse aliasene til den hvis den eksisterer. Denne filen
+        bør kontrolleres og dupliserte aliaser fjernes, hvis de finnes.
       </para>
 
       <note>
         <para>
-          The <filename>/etc/postfix/main.cf</filename> and
-          <filename>/etc/postfix/master.cf</filename> files must be personalized
-          for your system. The <filename>main.cf</filename> file needs your
-          fully qualified hostname. You will find that
-          <filename>main.cf</filename> is self documenting, so load it into your
-          editor to make the changes you need for your situation.
+          <filename>/etc/postfix/main.cf</filename> og
+          <filename>/etc/postfix/master.cf</filename> filene må tilpasses
+          for systemet ditt. <filename>main.cf</filename> filen trenger din
+          fullt kvalifiserte vertsnavn. Du vil se at
+          <filename>main.cf</filename> er selvdokumenterende, så last den inn i ditt
+          redigeringsprogram for å gjøre endringene du trenger for din situasjon.
         </para>
       </note>
 
       <note>
         <para>
-          <application>Postfix</application> can also be set up to
-          run in a chroot jail. See the file in the source
-          <filename>examples/chroot-setup/LINUX2</filename> for details.
+          <application>Postfix</application> kan også settes opp til
+          kjøre i et chroot fengsel. Se filen i kilden
+          <filename>examples/chroot-setup/LINUX2</filename> for detaljer.
         </para>
       </note>
 
       <para>
-        If you have an existing configuration, you can run the
-        <command>postfix</command> utility to add any necessary definitions to
-        your existing files. As the
-        <systemitem class="username">root</systemitem> user:
+        Hvis du har en eksisterende konfigurasjon, kan du kjøre
+        <command>postfix</command> verktøy for å legge til nødvendige definisjoner
+        i dine eksisterende filer. Som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="nodump"><userinput>/usr/sbin/postfix upgrade-configuration</userinput></screen>
 
       <para>
-        Before starting <application>Postfix</application>, you should check
-        that your configuration and file permissions will work properly. Run the
-        following commands as the <systemitem class="username">root</systemitem>
-        user to check and start your <application>Postfix</application> server:
+        Før start av <application>Postfix</application>, bør  du sjekke
+        at konfigurasjonen og filtillatelsene vil fungere som de skal. Kjør
+        følgende kommandoer som <systemitem class="username">root</systemitem>
+        bruker for å sjekke og starte din <application>Postfix</application> server:
       </para>
 
 <screen role="nodump"><userinput>/usr/sbin/postfix check &amp;&amp;
@@ -448,17 +448,17 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3 id="postfix-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para>
-        To automate the running of Postfix at startup, install the
+        For å automatisere kjøringen av Postfix ved oppstart, installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/postfix</filename>
-        init script</phrase>
+        init skriptet</phrase>
         <phrase revision="systemd"><filename>postfix.service</filename>
-        unit</phrase> included in the
+        enheten</phrase> inkludert i
         <xref linkend="bootscripts" revision="sysv"/>
-        <xref linkend="systemd-units" revision="systemd"/> package:
+        <xref linkend="systemd-units" revision="systemd"/> pakken:
       </para>
 
       <indexterm zone="postfix postfix-init">
@@ -472,32 +472,32 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          mailq (symlink), newaliases (symlink), postalias, postcat, postconf,
+          mailq (symbolkobling), newaliases (symbolkobling), postalias, postcat, postconf,
           postdrop, postfix, postkick, postlock, postlog, postmap, postmulti,
-          postqueue, postsuper, and sendmail
+          postqueue, postsuper, og sendmail
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
           /{etc,usr/lib}/postfix,
-          /usr/share/doc/postfix-&postfix-version; and
+          /usr/share/doc/postfix-&postfix-version; og
           /var/{lib,spool}/postfix
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -505,7 +505,7 @@ EOF</userinput></screen>
         <term><command>mailq</command></term>
         <listitem>
           <para>
-            A symlink to <filename>sendmail</filename>
+            En symbolkobling til <filename>sendmail</filename>
           </para>
           <indexterm zone="postfix mailq">
             <primary sortas="b-mailq">mailq</primary>
@@ -517,7 +517,7 @@ EOF</userinput></screen>
         <term><command>newaliases</command></term>
         <listitem>
           <para>
-            A symlink to <filename>sendmail</filename>
+            En symbolkobling til <filename>sendmail</filename>
           </para>
           <indexterm zone="postfix newaliases">
             <primary sortas="b-newaliases">newaliases</primary>
@@ -529,8 +529,8 @@ EOF</userinput></screen>
         <term><command>postalias</command></term>
         <listitem>
           <para>
-            is a utility for <application>Postfix</application> alias database
-            maintenance
+            er et verktøy for <application>Postfix</application> alias database
+            vedlikehold
           </para>
           <indexterm zone="postfix postalias">
             <primary sortas="b-postalias">postalias</primary>
@@ -542,8 +542,8 @@ EOF</userinput></screen>
         <term><command>postcat</command></term>
         <listitem>
           <para>
-            Prints the contents of files from the
-            <application>Postfix</application> queue in human readable format
+            Skriver ut innholdet i filene fra
+            <application>Postfix</application> køen i lesbart format
           </para>
           <indexterm zone="postfix postcat">
             <primary sortas="b-postcat">postcat</primary>
@@ -555,8 +555,8 @@ EOF</userinput></screen>
         <term><command>postconf</command></term>
         <listitem>
           <para>
-            Displays or changes the value of
-            <application>Postfix</application> configuration parameters
+            Viser eller endrer verdien av
+            <application>Postfix</application> konfigurasjonsparametere
           </para>
           <indexterm zone="postfix postconf">
             <primary sortas="b-postconf">postconf</primary>
@@ -568,8 +568,8 @@ EOF</userinput></screen>
         <term><command>postdrop</command></term>
         <listitem>
           <para>
-            Creates a file in the maildrop directory and copies its standard
-            input to the file
+            Oppretter en fil i maildrop mappen og kopierer standard
+            inndata til filen
           </para>
           <indexterm zone="postfix postdrop">
             <primary sortas="b-postdrop">postdrop</primary>
@@ -581,7 +581,7 @@ EOF</userinput></screen>
         <term><command>postfix</command></term>
         <listitem>
           <para>
-            is the <application>Postfix</application> control program
+            er <application>Postfix</application> kontrollprogram
           </para>
           <indexterm zone="postfix postfix-bin">
             <primary sortas="b-postfix">postfix</primary>
@@ -593,8 +593,8 @@ EOF</userinput></screen>
         <term><command>postkick</command></term>
         <listitem>
           <para>
-            Sends requests to the specified service over a local transport
-            channel
+            Sender forespørsler til den angitte tjenesten over en lokal
+            transportkanal
           </para>
           <indexterm zone="postfix postkick">
             <primary sortas="b-postkick">postkick</primary>
@@ -606,8 +606,8 @@ EOF</userinput></screen>
         <term><command>postlock</command></term>
         <listitem>
           <para>
-            Locks a mail folder for exclusive use, and executes commands passed
-            to it
+            Låser en e-postmappe for eksklusivt bruk, og utfører beståtte kommandoer
+            til det
           </para>
           <indexterm zone="postfix postlock">
             <primary sortas="b-postlock">postlock</primary>
@@ -619,8 +619,8 @@ EOF</userinput></screen>
         <term><command>postlog</command></term>
         <listitem>
           <para>
-            A <application>Postfix</application>-compatible logging interface
-            for use in, for example, shell scripts
+            En <application>Postfix</application> kompatibelt loggingsgrensesnitt
+            for bruk i for eksempel skallskript
           </para>
           <indexterm zone="postfix postlog">
             <primary sortas="b-postlog">postlog</primary>
@@ -632,8 +632,8 @@ EOF</userinput></screen>
         <term><command>postmap</command></term>
         <listitem>
           <para>
-            Creates or queries one or more Postfix lookup tables, or updates an
-            existing one
+            Oppretter eller spør etter en eller flere Postfix oppslagstabeller, eller oppdaterer en
+            eksisterende
           </para>
           <indexterm zone="postfix postmap">
             <primary sortas="b-postmap">postmap</primary>
@@ -645,9 +645,9 @@ EOF</userinput></screen>
         <term><command>postmulti</command></term>
         <listitem>
           <para>
-            is the <application>Postfix</application> multi-instance manager.
-            It allows a system administrator to manage multiple
-            <application>Postfix</application> instances on a single host
+            er <application>Postfix</application> multi-instans manager.
+            Det lar en systemadministrator administrere flere
+            <application>Postfix</application> forekomster på en enkelt vert
           </para>
           <indexterm zone="postfix postmulti">
             <primary sortas="b-postmulti">postmulti</primary>
@@ -659,8 +659,8 @@ EOF</userinput></screen>
         <term><command>postqueue</command></term>
         <listitem>
           <para>
-            The <application>Postfix</application> user interface for
-            queue management
+            <application>Postfix</application> brukergrensesnitt for
+            køhåndtering
           </para>
           <indexterm zone="postfix postqueue">
             <primary sortas="b-postqueue">postqueue</primary>
@@ -672,8 +672,8 @@ EOF</userinput></screen>
         <term><command>postsuper</command></term>
         <listitem>
           <para>
-            The <application>Postfix</application> user interface for
-            superuser queue management
+            <application>Postfix</application> brukergrensesnitt for
+            superbruker køhåndtering
           </para>
           <indexterm zone="postfix postsuper">
             <primary sortas="b-postsuper">postsuper</primary>
@@ -685,8 +685,8 @@ EOF</userinput></screen>
         <term><command>sendmail</command></term>
         <listitem>
           <para>
-            is the <application>Postfix</application> to
-            <application>Sendmail</application> compatibility interface
+            er <application>Postfix</application> til
+            <application>Sendmail</application> kompatibilitetsgrensesnitt
           </para>
           <indexterm zone="postfix sendmail-postfix">
             <primary sortas="b-sendmail">sendmail</primary>
