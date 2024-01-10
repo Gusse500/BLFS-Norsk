@@ -23,45 +23,45 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to sendmail</title>
+    <title>Introduksjon til sendmail</title>
 
     <para>
-      The <application>sendmail</application> package contains a Mail
-      Transport Agent (MTA).
+      <application>sendmail</application> pakken inneholder en post
+      transportagent (MTA).
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&sendmail-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&sendmail-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&sendmail-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&sendmail-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &sendmail-md5sum;
+          Nedlasting MD5 sum: &sendmail-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &sendmail-size;
+          Nedlastingsstørrelse: &sendmail-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &sendmail-buildsize;
+          Estimert diskplass som kreves: &sendmail-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &sendmail-time;
+          Estimert byggetid: &sendmail-time;
         </para>
       </listitem>
     </itemizedlist>
@@ -70,45 +70,45 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/sendmail.&sendmail-version;-openssl-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
 
-    <bridgehead renderas="sect3">sendmail Dependencies</bridgehead>
+    <bridgehead renderas="sect3">sendmail Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="openldap"/> (client)
+      <xref linkend="openldap"/> (klient)
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="cyrus-sasl"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gs"/> (for creating PDF documentation),
-      <xref linkend="procmail"/> (the configuration proposed below requires
-      that <command>procmail</command> be present at run-time), and
+      <xref linkend="gs"/> (for å lage PDF dokumentasjon),
+      <xref linkend="procmail"/> (konfigurasjonen foreslått nedenfor krever
+      at <command>procmail</command> er tilstede ved kjøretid), og
       <ulink url="https://github.com/chaos/nph">nph</ulink>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/sendmail"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of sendmail</title>
+    <title>Installasjon av sendmail</title>
 
     <para>
-      Before building <application>sendmail</application>, create the
-      required user, group and directory with the following commands issued as
-      the <systemitem class="username">root</systemitem> user:
+      Før bygging av <application>sendmail</application>, opprette
+      nødvendig bruker, gruppe og mappe med følgende kommandoer utstedt som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>groupadd -g 26 smmsp                               &amp;&amp;
@@ -119,12 +119,12 @@ install -v -m700 -d /var/spool/mqueue</userinput></screen>
 
     <note>
       <para>
-        See the source tree <filename>sendmail/README</filename> file
-        for information on linking optional packages into the build. Use the
-        example below, which adds support for SASL, StartTLS
-        (<application>OpenSSL</application>) and
-        <application>OpenLDAP</application>, as a starting point.  Of course,
-        modify it to suit your particular needs.
+        Se kildetreet sin <filename>sendmail/README</filename> fil
+        for informasjon om kobling av valgfrie pakker til bygget. Bruke
+        eksempelet nedenfor, som legger til støtte for SASL, StartTLS
+        (<application>OpenSSL</application>) og
+        <application>OpenLDAP</application>, som utgangspunkt. Selvfølgelig,
+        endre den for å passe dine spesielle behov.
       </para>
     </note>
 
@@ -135,7 +135,7 @@ APPENDDEF(`confINCDIRS', `-I/usr/include/sasl')</literal>
 EOF</userinput></screen>
 
     <para>
-      Install <application>sendmail</application> with the following commands:
+      Installer <application>sendmail</application> med følgende kommandoer:
     </para>
 
 <screen><userinput>cat &gt;&gt; devtools/Site/site.config.m4 &lt;&lt; "EOF"
@@ -156,7 +156,7 @@ cp generic-linux.mc sendmail.mc &amp;&amp;
 sh Build sendmail.cf</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
 <!-- When doing a DESTDIR= build, for example, for an update to check for new
@@ -164,7 +164,7 @@ sh Build sendmail.cf</userinput></screen>
      first. "sh Build" is a wrapper for Make, so it will accept DESTDIR=
      as an argument. -->
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -v -d -m755 /etc/mail &amp;&amp;
@@ -197,15 +197,15 @@ install -v -m644 sendmail/newaliases.1 /usr/share/man/man1 &amp;&amp;
 install -v -m644 vacation/vacation.1   /usr/share/man/man1</userinput></screen>
 
     <para>
-      Install the <application>sendmail</application> Installation and
-      Operations Guide with the following commands:
+      Installer <application>sendmail</application> Installasjon og
+      Driftsveiledning med følgende kommandoer:
     </para>
 
     <note>
       <para>
-        Remove <filename>op.pdf</filename> from the <command>make</command>
-        and <command>install</command> commands below if
-        you don't have <application>Ghostscript</application> installed.
+        Fjern <filename>op.pdf</filename> fra <command>make</command>
+        og <command>install</command> kommandoer nedenfor hvis
+        du ikke har <application>Ghostscript</application> installert.
       </para>
     </note>
 
@@ -214,7 +214,7 @@ sed -i 's/groff/GROFF_NO_SGR=1 groff/' Makefile &amp;&amp;
 make op.txt op.pdf</userinput></screen>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"
@@ -225,48 +225,48 @@ cd ../..</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <command>cat &gt; devtools/Site/site.config.m4 &lt;&lt; "EOF"</command>:
-      This creates a configuration file changing some of the default settings.
+      Dette oppretter en konfigurasjonsfil som endrer noen av standardinnstillingene.
     </para>
 
     <para>
-      <command>sed ... devtools/OS/Linux</command>: The site.config.m4
-      does not honor a change to the man directory, so fix it in the OS
-      definitions.
+      <command>sed ... devtools/OS/Linux</command>: site.config.m4
+      respekterer ikke en endring i man mappen, så fiks det i OS
+      definisjoner.
     </para>
 
 <!-- No longer valid with 8.16.1
     <para>
-      <command>sed ... include/sm/bdb.h</command>: This allows sendmail to
-      build properly with <xref linkend='db'/> versions 5 and above.
+      <command>sed ... include/sm/bdb.h</command>: Dette tillater sendmail å
+      bygge riktig med <xref linkend='db'/> versjon 5 og nyere.
     </para>
 -->
 
     <para>
       <command>sh Build; sh Build sendmail.cf; sh Build install-cf;
-      sh Build install</command>: <application>sendmail</application> uses an
-      <application>m4</application> based build script to create the various
-      <filename>Makefile</filename>s. These commands build and install the
-      package.
+      sh Build install</command>: <application>sendmail</application> bruker en
+      <application>m4</application> basert byggeskript for å lage de forskjellige
+      <filename>Makefile</filename>ene. Disse kommandoene bygger og installerer
+      pakken.
     </para>
 
     <para>
-      <command>for manpage in...;do...;done; install ...</command>: The man
-      pages are installed already formatted and <command>man</command> displays
-      them somewhat garbled. These commands replace the formatted pages with
-      pages <command>man</command> can display properly.
+      <command>for manpage in...;do...;done; install ...</command>: man
+      sidene er allerede installert formatert og <command>man</command> viser
+      dem noe forvrengt. Disse kommandoene erstatter de formaterte sidene med
+      sider <command>man</command> kan vise riktig.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring sendmail</title>
+    <title>Konfigurere sendmail</title>
 
     <sect3 id="sendmail-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/mail/*</filename>
@@ -279,19 +279,19 @@ cd ../..</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <note>
         <para>
-          Ensure you have a fully qualified domain name defined
-          in <filename>/etc/hosts</filename> for your system before proceeding.
+          Sørg for at du har et fullstendig kvalifisert domenenavn definert
+          i <filename>/etc/hosts</filename> for systemet ditt før du fortsetter.
         </para>
       </note>
 
       <para>
-        Create the <filename>/etc/mail/local-host-names</filename> and
-        <filename>/etc/mail/aliases</filename> files using the following
-        commands as the <systemitem class="username">root</systemitem> user:
+        Opprett <filename>/etc/mail/local-host-names</filename> og
+        <filename>/etc/mail/aliases</filename> filene ved hjelp av følgende
+        kommandoer som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>echo $(hostname) > /etc/mail/local-host-names
@@ -303,38 +303,38 @@ EOF
 newaliases</userinput></screen>
 
       <para>
-        <application>sendmail</application>'s primary configuration file,
-        <filename>/etc/mail/sendmail.cf</filename>, is complex and not meant to
-        be directly edited. The recommended method for changing it is to modify
-        <filename>/etc/mail/sendmail.mc</filename> and various
-        <application>m4</application> files, then run the <command>m4</command>
-        macro processor from within
-        <filename class='directory'>/etc/mail</filename> as follows:
+        <application>sendmail</application> sin primære konfigurasjonsfil,
+        <filename>/etc/mail/sendmail.cf</filename>, er komplisert og ikke ment
+        å redigeres direkte. Den anbefalte metoden for å endre den er å modifisere
+        <filename>/etc/mail/sendmail.mc</filename> og ulike
+        <application>m4</application> filer, kjør deretter <command>m4</command>
+        makroprosessor fra
+        <filename class='directory'>/etc/mail</filename> som følgende:
       </para>
 
 <screen role="root"><userinput>cd /etc/mail &amp;&amp;
 m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
 
       <para>
-        A full explanation of the files to modify, and the available
-        parameters can be found in <filename>/etc/mail/README</filename>.
+        En fullstendig forklaring på filene som skal endres, og de tilgjengelige
+        parametere finner du i <filename>/etc/mail/README</filename>.
       </para>
 
     </sect3>
 
     <sect3  id="sendmail-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para>
-        To automate the running of <application>sendmail</application>
-        at startup, install the
+        For å automatisere kjøringen av <application>sendmail</application>
+        ved oppstart, installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/sendmail</filename>
-        init script</phrase>
+        init skriptet</phrase>
         <phrase revision="systemd"><filename>sendmail.service</filename>
-        unit</phrase> included in the
+        enheten</phrase> inkludert i
         <xref linkend="bootscripts" revision="sysv"/>
-        <xref linkend="systemd-units" revision="systemd"/> package:
+        <xref linkend="systemd-units" revision="systemd"/> pakken:
       </para>
 
       <indexterm zone="sendmail sendmail-init">
@@ -345,13 +345,13 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
 
       <note>
         <para>
-          The -qNm option to <command>sendmail</command>, where N is number
-          of minutes, controls how often <application>sendmail</application>
-          will process the mail queue. A default of 5 minutes is used in the
-          <phrase revision="sysv">init script.</phrase>
-          <phrase revision="systemd">systemd unit.</phrase> Individual
-          workstation users may want to set this as low as 1 minute, large
-          installations handling more mail may want to set it higher.
+          -qNm alternativet til <command>sendmail</command>, hvor N er antall
+          minutter, kontrollerer hvor ofte <application>sendmail</application>
+          vil behandle postkøen. En standard på 5 minutter brukes i
+          <phrase revision="sysv">init skriptet.</phrase>
+          <phrase revision="systemd">systemd enheten.</phrase> Individuelle
+          arbeidsstasjonsbrukere vil kanskje sette dette så lavt som 1 minutt, større
+          installasjoner som håndterer mer post vil kanskje sette den høyere.
         </para>
       </note>
 
@@ -360,25 +360,25 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>editmap, mailstats, makemap, praliases, sendmail, smrsh,
-        and vacation; symlinks to /usr/sbin/sendmail: hoststat, mailq,
-        newaliases, and purgestat</seg>
-        <seg>None</seg>
+        og vacation; symbolkoblinger til /usr/sbin/sendmail: hoststat, mailq,
+        newaliases, og purgestat</seg>
+        <seg>Ingen</seg>
         <seg>/etc/mail, /usr/share/doc/sendmail-&sendmail-version;,
-        and /var/spool/clientmqueue</seg>
+        og /var/spool/clientmqueue</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -386,7 +386,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>editmap</command></term>
         <listitem>
           <para>
-            queries and edits <application>sendmail</application> map files
+            spørrer og redigerer <application>sendmail</application> kartfiler
           </para>
           <indexterm zone="sendmail editmap">
             <primary sortas="b-editmap">editmap</primary>
@@ -398,7 +398,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>hoststat</command></term>
         <listitem>
           <para>
-            prints <application>sendmail</application>'s persistent host status
+            skriver ut <application>sendmail</application> sin vedvarende vertsstatus
           </para>
           <indexterm zone="sendmail hoststat">
             <primary sortas="b-hoststat">hoststat</primary>
@@ -410,7 +410,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>mailstats</command></term>
         <listitem>
           <para>
-            displays <application>sendmail</application> statistics
+            viser <application>sendmail</application> statistikk
           </para>
           <indexterm zone="sendmail mailstats">
             <primary sortas="b-mailstats">mailstats</primary>
@@ -422,7 +422,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>mailq</command></term>
         <listitem>
           <para>
-            prints a summary of outbound mail messages waiting for delivery
+            skriver ut et sammendrag av utgående e-postmeldinger som venter på levering
           </para>
           <indexterm zone="sendmail mailq-sendmail">
             <primary sortas="b-mailq">mailq</primary>
@@ -434,7 +434,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>makemap</command></term>
         <listitem>
           <para>
-            creates <application>sendmail</application> map files
+            oppretter <application>sendmail</application> kartfiler
           </para>
           <indexterm zone="sendmail makemap">
             <primary sortas="b-makemap">makemap</primary>
@@ -446,8 +446,8 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>newaliases</command></term>
         <listitem>
           <para>
-            rebuilds <filename>/etc/mail/aliases.db</filename> from the
-            contents of <filename>/etc/mail/aliases</filename>
+            bygger om <filename>/etc/mail/aliases.db</filename> fra
+            innholdet i <filename>/etc/mail/aliases</filename>
           </para>
           <indexterm zone="sendmail newaliases-sendmail">
             <primary sortas="b-newaliases">newaliases</primary>
@@ -459,7 +459,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>praliases</command></term>
         <listitem>
           <para>
-            displays current <application>sendmail</application> aliases
+            viser gjeldende <application>sendmail</application> aliaser
           </para>
           <indexterm zone="sendmail praliases">
             <primary sortas="b-praliases">praliases</primary>
@@ -471,8 +471,8 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>purgestat</command></term>
         <listitem>
           <para>
-            causes <application>sendmail</application> to clear (purge)
-            all its host-status information
+            fører til at <application>sendmail</application> å rydde (rense)
+            all vertsstatusinformasjonen
           </para>
           <indexterm zone="sendmail purgestat">
             <primary sortas="b-purgestat">purgestat</primary>
@@ -484,7 +484,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>sendmail</command></term>
         <listitem>
           <para>
-            is the <application>sendmail</application> mail transport agent
+            er <application>sendmail</application> posttransportagent
           </para>
           <indexterm zone="sendmail sendmail-prog-sendmail">
             <primary sortas="b-sendmail">sendmail</primary>
@@ -496,7 +496,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>smrsh</command></term>
         <listitem>
           <para>
-            is a restricted shell for <application>sendmail</application>
+            er et begrenset skall for <application>sendmail</application>
           </para>
           <indexterm zone="sendmail smrsh">
             <primary sortas="b-smrsh">smrsh</primary>
@@ -508,7 +508,7 @@ m4 m4/cf.m4 sendmail.mc > sendmail.cf</userinput></screen>
         <term><command>vacation</command></term>
         <listitem>
           <para>
-            is an email auto responder
+            er en autosvar på e-post
           </para>
           <indexterm zone="sendmail vacation-sendmail">
             <primary sortas="b-vacation">vacation</primary>
