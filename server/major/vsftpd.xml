@@ -9,7 +9,7 @@
   <!ENTITY vsftpd-md5sum        "efbf362a65bec771bc15ad311f5a982e">
   <!ENTITY vsftpd-size          "210 KB">
   <!ENTITY vsftpd-buildsize     "1.9 MB">
-  <!ENTITY vsftpd-time          "less than 0.1 SBU">
+  <!ENTITY vsftpd-time          "mindre enn 0.1 SBU">
   <!ENTITY vsftpd-empty         "/usr/share/vsftpd/empty">
 ]>
 
@@ -24,81 +24,81 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to vsftpd</title>
+    <title>Introduksjon til vsftpd</title>
 
     <para>
-      The <application>vsftpd</application> package contains a very
-      secure and very small FTP daemon. This is useful for serving files
-      over a network.
+      <application>vsftpd</application> pakken inneholder en veldig
+      sikker og veldig liten FTP nisse. Dette er nyttig for å betjene filer
+      over et nettverk.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&vsftpd-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&vsftpd-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&vsftpd-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&vsftpd-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &vsftpd-md5sum;
+          Nedlasting MD5 sum: &vsftpd-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &vsftpd-size;
+          Nedlastingsstørrelse: &vsftpd-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &vsftpd-buildsize;
+          Estimert diskplass som kreves: &vsftpd-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &vsftpd-time;
+          Estimert byggetid: &vsftpd-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">vsftpd Dependencies</bridgehead>
+    <bridgehead renderas="sect3">vsftpd Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="libnsl"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="linux-pam"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="libcap-pam"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/vsftpd"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of vsftpd</title>
+    <title>Installasjon av vsftpd</title>
 
     <para>
-      For security reasons, running <application>vsftpd</application>
-      as an unprivileged user and group is encouraged. Also, a user should be
-      created to map anonymous users. As the <systemitem
-      class="username">root</systemitem> user, create the needed directories,
-      users, and groups with the following commands:
+      Av sikkerhetsgrunner, å kjøre <application>vsftpd</application>
+      som en uprivilegert bruker og gruppe oppmuntres. Det bør også være en bruker
+      opprettet for å kartlegge anonyme brukere. Som <systemitem
+      class="username">root</systemitem> bruker, opprette de nødvendige mappene,
+      brukere og grupper med følgende kommandoer:
     </para>
 
 <screen role="root"><userinput>install -v -d -m 0755 &vsftpd-empty; &amp;&amp;
@@ -110,27 +110,27 @@ useradd -c "vsftpd User"  -d /dev/null -g vsftpd -s /bin/false -u 47 vsftpd &amp
 useradd -c anonymous_user -d /home/ftp -g ftp    -s /bin/false -u 45 ftp</userinput></screen>
 
     <para>
-      Gcc-10 and later flags an error for an implicit type cast. Make it
-      explicit:
+      Gcc-10 og senere flagger en feil for en implisitt type cast. Gjør det
+      eksplisitt:
     </para>
 
 <screen><userinput>sed -e "s/kVSFSysStrOpenUnknown;/(enum EVSFSysUtilOpenMode)&amp;/" -i sysstr.c</userinput></screen>
 
     <para>
-      Build <application>vsftpd</application> as an unprivileged user
-      using the following command:
+      Bygg <application>vsftpd</application> som en uprivilegert bruker
+      ved å bruke følgende kommando:
     </para>
 
 <screen><userinput>make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Once again, become the <systemitem class="username">root</systemitem>
-      user and install <application>vsftpd</application> with the following
-      commands:
+      Igjen, bli <systemitem class="username">root</systemitem>
+      bruker og installere <application>vsftpd</application> med følgende
+      kommandoer:
     </para>
 
 <screen role="root"><userinput>install -v -m 755 vsftpd        /usr/sbin/vsftpd    &amp;&amp;
@@ -141,50 +141,50 @@ install -v -m 644 vsftpd.conf   /etc</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>install -v -d ...</command>: This creates the
-      directory that anonymous users will use (<filename
+      <command>install -v -d ...</command>: Dette oppretter
+      mappen som anonyme brukere vil bruke (<filename
       class='directory'>/home/ftp</filename>)
-      and the directory the daemon will chroot into
+      og mappen nissen vil chroot inn i
       (<filename class='directory'>&vsftpd-empty;</filename>).
     </para>
 
     <note>
       <para>
-        <filename class="directory">/home/ftp</filename> should not be
-        owned by the user <systemitem class="username">vsftpd</systemitem>,
-        or the user <systemitem class="username">ftp</systemitem>.
+        <filename class="directory">/home/ftp</filename> bør ikke være
+        eid av brukeren <systemitem class="username">vsftpd</systemitem>,
+        eller brukeren <systemitem class="username">ftp</systemitem>.
       </para>
     </note>
 
     <para>
       <command>echo "#define VSF_BUILD_TCPWRAPPERS" >>builddefs.h</command>:
-      Use this prior to <command>make</command> to add support for
+      Bruk denne før <command>make</command> for å legge til støtte for
       <application>tcpwrappers</application>.
     </para>
 
     <para>
       <command>echo "#define VSF_BUILD_SSL" >>builddefs.h</command>:
-      Use this prior to <command>make</command> to add support for SSL.
+      Bruk denne før <command>make</command> for å legge til støtte for SSL.
     </para>
 
     <para>
       <command>install -v -m ...</command>:
-      The <filename>Makefile</filename> uses non-standard installation paths.
-      These commands install the files in
-      <filename class='directory'>/usr</filename> and
+      <filename>Makefile</filename> bruker ikke-standard installasjonsstier.
+      Disse kommandoene installerer filene i
+      <filename class='directory'>/usr</filename> og
       <filename class='directory'>/etc</filename>.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring vsftpd</title>
+    <title>Konfigurere vsftpd</title>
 
     <sect3 id="vsftpd-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/vsftpd.conf</filename>
@@ -197,18 +197,18 @@ install -v -m 644 vsftpd.conf   /etc</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        <application>vsftpd</application> comes with a basic
-        anonymous-only configuration file that was copied to
-        <filename class='directory'>/etc</filename> above. While still as
-        <systemitem class="username">root</systemitem>, this file should be
-        modified because it is now recommended to run <command>vsftpd</command>
-        in standalone mode. Also, you
-        should specify the privilege separation user created above. Finally,
-        you should specify the <command>chroot</command> directory.
-        <command>man vsftpd.conf</command> will give you all the details.
+        <application>vsftpd</application> kommer med en grunnleggende
+        kun anonym konfigurasjonsfil som ble kopiert til
+        <filename class='directory'>/etc</filename> ovenfor. Mens fortsatt som
+        <systemitem class="username">root</systemitem>, denne filen burde bli
+        endret fordi det nå anbefales å kjøre <command>vsftpd</command>
+        i frittstående modus. Også bør du
+        spesifisere rettighetsseparasjonsbrukeren opprettet ovenfor. Endelig,
+        bør du spesifisere <command>chroot</command> mappen.
+        <command>man vsftpd.conf</command> vil gi deg alle detaljene.
       </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/vsftpd.conf &lt;&lt; "EOF"
@@ -219,12 +219,12 @@ EOF</userinput></screen>
 
       <!-- recheck this issue when vsftpd is updated -->
       <para>
-        The vsftpd daemon uses seccomp to improve security by default.
-        But it's known to cause vsftpd unable to handle ftp
-        <literal>LIST</literal> command with recent kernel versions.  Append
-        a line to <filename>/etc/vsftpd.conf</filename> (as the
-        <systemitem class="username">root</systemitem> user) to disable
-        seccomp and workaround this issue:
+        vsftpd nissen bruker seccomp for å forbedre sikkerheten som standard.
+        Men det er kjent å forårsake at vsftpd ikke kan håndtere ftp
+        <literal>LIST</literal> kommandoen med nyere kjerneversjoner. Legg til
+        en linje til <filename>/etc/vsftpd.conf</filename> (som
+        <systemitem class="username">root</systemitem> bruker) å deaktivere
+        seccomp og omgå dette problemet:
       </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/vsftpd.conf &lt;&lt; "EOF"
@@ -232,9 +232,9 @@ EOF</userinput></screen>
 EOF</userinput></screen>
 
       <para>
-        To enable local logins, append the following to the
-        <filename>/etc/vsftpd.conf</filename> file (as the
-        <systemitem class="username">root</systemitem> user):
+        For å aktivere lokale pålogginger, legg til følgende til
+        <filename>/etc/vsftpd.conf</filename> filen (som
+        <systemitem class="username">root</systemitem> bruker):
       </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/vsftpd.conf &lt;&lt; "EOF"
@@ -242,13 +242,13 @@ EOF</userinput></screen>
 EOF</userinput></screen>
 
       <para>
-        In addition, if using <application>Linux-PAM</application> and
-        <application>vsftpd</application> with local user logins, you will need
-        a <application>Linux-PAM</application> configuration file. As the
-        <systemitem class="username">root</systemitem> user, create the
-        <filename>/etc/pam.d/vsftpd</filename> file, and add the needed
-        configuration changes for <application>Linux-PAM</application> session
-        support using the following commands:
+        I tillegg, hvis du bruker <application>Linux-PAM</application> og
+        <application>vsftpd</application> med lokale brukerpålogginger, trenger du
+        a <application>Linux-PAM</application> konfigurasjonsfilen. Som
+        <systemitem class="username">root</systemitem> bruker, opprett
+        <filename>/etc/pam.d/vsftpd</filename> filen, og legg til de nødvendige
+        konfigurasjonsendringer for <application>Linux-PAM</application> øktstøtte
+        ved å bruke følgende kommandoer:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/pam.d/vsftpd &lt;&lt; "EOF" &amp;&amp;
@@ -270,17 +270,17 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3  id="vsftpd-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para>
-        Install the
+        Installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/vsftpd</filename>
-        init script</phrase>
+        init skriptet</phrase>
         <phrase revision="systemd"><filename>vsftpd.service</filename>
-        unit</phrase> included in the
+        enheten</phrase> inkludert i
         <xref linkend="bootscripts" revision="sysv"/>
-        <xref linkend="systemd-units" revision="systemd"/> package:
+        <xref linkend="systemd-units" revision="systemd"/> pakken:
       </para>
 
 <screen role="root"><userinput>make install-vsftpd</userinput></screen>
@@ -290,22 +290,22 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>vsftpd</seg>
-        <seg>None</seg>
+        <seg>Ingen</seg>
         <seg>/usr/share/vsftpd, /home/ftp</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -313,7 +313,7 @@ EOF</userinput></screen>
         <term><command>vsftpd</command></term>
         <listitem>
           <para>
-            is the FTP daemon
+            er FTP nissen
           </para>
           <indexterm zone="vsftpd vsftpd-prog">
             <primary sortas="b-vsftpd">vsftpd</primary>
