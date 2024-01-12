@@ -9,8 +9,8 @@
   <!ENTITY dhcpcd-download-ftp  " ">
   <!ENTITY dhcpcd-md5sum        "2b2f46648bc96979f96127f0e0e07d9b">
   <!ENTITY dhcpcd-size          "251 KB">
-  <!ENTITY dhcpcd-buildsize     "3.6 MB (with tests)">
-  <!ENTITY dhcpcd-time          "less than 0.1 SBU (with tests)">
+  <!ENTITY dhcpcd-buildsize     "3.6 MB (med tester)">
+  <!ENTITY dhcpcd-time          "mindre enn 0.1 SBU (med tester)">
 ]>
 <!--
   Use this URL as ChangeLog:
@@ -30,81 +30,81 @@ pierre: seems that it now returns Error 404 (November 2021).
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to dhcpcd</title>
+    <title>Introduksjon til dhcpcd</title>
 
     <para>
-      <application>dhcpcd</application> is an implementation of the
-      DHCP client specified in RFC2131. A DHCP client is useful for connecting
-      your computer to a network which uses DHCP to assign network
-      addresses. dhcpcd strives to be a fully featured, yet very lightweight
-      DHCP client.
+      <application>dhcpcd</application> er en implementering av en
+      DHCP klient spesifisert i RFC2131. En DHCP klient er nyttig for å tilkoble
+      datamaskinen til et nettverk som bruker DHCP for å tilordne 
+      nettverksadresser. dhcpcd streber etter å være en fullt utstyrt, men likevel veldig lett
+      DHCP klient.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&dhcpcd-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&dhcpcd-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&dhcpcd-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&dhcpcd-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &dhcpcd-md5sum;
+          Nedlasting MD5 sum: &dhcpcd-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &dhcpcd-size;
+          Nedlastingsstørrelse: &dhcpcd-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &dhcpcd-buildsize;
+          Estimert diskplass som kreves: &dhcpcd-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &dhcpcd-time;
+          Estimert byggetid: &dhcpcd-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">dhcpcd Dependencies</bridgehead>
+    <bridgehead renderas="sect3">dhcpcd Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="llvm"/> (with Clang),
+      <xref linkend="llvm"/> (med Clang),
       <xref linkend="ntp"/>,
-      <ulink url="https://chrony.tuxfamily.org/">chronyd</ulink>, and
+      <ulink url="https://chrony.tuxfamily.org/">chronyd</ulink>, og
       <ulink url="https://github.com/thkukuk/ypbind-mt/">ypbind</ulink>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/dhcpcd"/></para>
 
   </sect2>
 
   <sect2 id='dhcpcd-privsep'>
-    <title>Privilege separation</title>
+    <title>Privilegeseparasjon</title>
 
     <para>
-      Recent releases of <application>dhcpcd</application> optionally support
-      privilege separation. As the practical security benefits of this are
-      unclear for a program like <application>dhcpcd</application> and the
-      setup is more complicated, the book currently defaults to disable it.
+      Nylige utgivelser av <application>dhcpcd</application> støtter valgfritt
+      rettighetsseparasjon. Siden de praktiske sikkerhetsfordelene ved dette er
+      uklart for et program som <application>dhcpcd</application> og
+      oppsettet er mer komplisert, deaktiverer boken det for øyeblikket som standard.
     </para>
     <para>
-      If you however would like to use privilege separation, additional
-      installation steps are necessary to set up the proper environment. Issue
-      the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Hvis du imidlertid ønsker å bruke rettighetsseparasjon, tilleggs
+       installasjonstrinn er nødvendig for å sette opp det riktige miljøet. Kjør
+       følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install  -v -m700 -d /var/lib/dhcpcd &amp;&amp;
@@ -120,16 +120,16 @@ chown    -v dhcpcd:dhcpcd /var/lib/dhcpcd </userinput></screen>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of dhcpcd</title>
+    <title>Installasjon av dhcpcd</title>
 
-    <para>Fix a runtime error caused by a change in glibc-2.36:</para>
+    <para>Rett opp en kjøretidsfeil forårsaket av en endring i glibc-2.36:</para>
 
 <screen><userinput>sed '/Deny everything else/i SECCOMP_ALLOW(__NR_getrandom),' \
     -i src/privsep-linux.c</userinput></screen>
 
     <para>
-      Build <application>dhcpcd</application> without privilege separation
-      by running the following command:
+      Bygg <application>dhcpcd</application> uten rettighetsseparasjon
+      ved å kjøre følgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr                \
@@ -141,8 +141,8 @@ chown    -v dhcpcd:dhcpcd /var/lib/dhcpcd </userinput></screen>
 make</userinput></screen>
 
     <para>
-      Build <application>dhcpcd</application> with privilege separation
-      by running the following commands:
+      Bygg <application>dhcpcd</application> med rettighetsseparasjon
+      ved å kjøre følgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr                \
@@ -154,21 +154,21 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make test</command>.
+      For å teste resultatene, kjør: <command>make test</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role='root'><userinput>make install</userinput></screen>
 
 <!--
     <para>
-      By default, a plain text lease info file isn't created but the
-      <application>dhcpcd</application> provides a hook which can be used for
-      creating such a file. Install the hook by running the following commands
-      as the <systemitem class="username">root</systemitem> user:
+      Som standard opprettes ikke en leie infofil med ren tekst, men
+      <application>dhcpcd</application> gir en krok som kan brukes til
+      å opprette en slik fil. Installer kroken ved å kjøre følgende kommandoer
+      som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role='root'><userinput>sed -i "s;/var/lib;/run;g" dhcpcd-hooks/50-dhcpcd-compat &amp;&amp;
@@ -178,56 +178,56 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--libexecdir=/usr/lib/dhcpcd</parameter>: Set a more proper
-      location for dhcpcd internal libraries.
+      <parameter>--libexecdir=/usr/lib/dhcpcd</parameter>: Sett en mer riktig
+      plassering for interne dhcpcd biblioteker.
     </para>
 
     <para>
-      <parameter>--dbdir=/var/lib/dhcpcd</parameter>: The default
-      <filename class="directory">/var/db</filename> is not FHS-compliant
+      <parameter>--dbdir=/var/lib/dhcpcd</parameter>: Standard
+      <filename class="directory">/var/db</filename> er ikke FHS kompatibel
     </para>
 
     <para>
-      <parameter>--runstatedir=/run</parameter>: The default
-      <filename class="directory">/var/run</filename> is a symbolic
-      link to <filename class="directory">/run</filename>.
+      <parameter>--runstatedir=/run</parameter>: Standard
+      <filename class="directory">/var/run</filename> er en symbolsk
+      link til <filename class="directory">/run</filename>.
     </para>
 
     <para>
-      <option>--with-hook=...</option>: You can optionally install more hooks,
-      for example to install some configuration files such as
-      <filename>ntp.conf</filename>. The set of hooks is in the
-      <filename class="directory">dhcpcd-hooks</filename> directory in the
-      build tree.
+      <option>--with-hook=...</option>: Du kan eventuelt installere flere kroker,
+      for eksempel å installere noen konfigurasjonsfiler som f.eks
+      <filename>ntp.conf</filename>. Settet med kroker er i
+      <filename class="directory">dhcpcd-hooks</filename> mappen i
+      byggetreet.
     </para>
 
     <para>
-      <parameter>--disable-privsep</parameter>: Do not use privilege separation,
-      which is the default.
+      <parameter>--disable-privsep</parameter>: Ikke bruk rettighetsseparasjon,
+      som er standard.
     </para>
 
     <para>
-      <parameter>--privsepuser=dhcpcd</parameter>: Use this unprivileged user
-      in a privilege separation setup.
+      <parameter>--privsepuser=dhcpcd</parameter>: Bruk denne uprivilegerte brukeren
+      i et rettighetsseparasjonsoppsett.
     </para>
 
     <para>
-      <option>--with-hook=...</option>: You can optionally install more hooks,
-      for example to install some configuration files such as
-      <filename>ntp.conf</filename>. The set of hooks is in the
-      <filename class="directory">dhcpcd-hooks</filename> directory in the
-      build tree.
+      <option>--with-hook=...</option>: Du kan eventuelt installere flere kroker,
+      for eksempel å installere noen konfigurasjonsfiler som f.eks
+      <filename>ntp.conf</filename>. Settet med kroker er i
+      <filename class="directory">dhcpcd-hooks</filename> mappen i
+      byggetreet.
     </para>
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring dhcpcd</title>
+    <title>Konfigurere dhcpcd</title>
 
     <sect3 id="dhcpcd-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/dhcpcd.conf</filename>
@@ -240,14 +240,14 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
     </sect3>
 
     <sect3 id="dhcpcd-init" revision="sysv">
-      <title>General Configuration Information</title>
+      <title>Generell Konfigurasjonsinformasjon</title>
 
       <para>
-        To configure <command>dhcpcd</command>, you need to first install
-        the network service script,
+        For å konfigurere <command>dhcpcd</command>, må du først installere
+        nettverkstjenesteskriptet,
         <filename>/usr/lib/services/dhcpcd</filename>
-        included in the <xref linkend="bootscripts"/> package
-        (as user <systemitem class="username">root</systemitem>):
+        inkludert i <xref linkend="bootscripts"/> pakken
+        (som bruker <systemitem class="username">root</systemitem>):
       </para>
 
       <indexterm zone="dhcpcd dhcpcd-init">
@@ -258,11 +258,11 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
 
       <note>
         <para id="dhcpcd-config6">
-          the network service script <filename>/usr/lib/services/dhcpcd</filename>
-          contained in bootscripts up to blfs-bootscripts-20191204 is
-          not compatible with latest dhcpcd, as the location of the pidfile
-          changed.
-          To work around this, issue the following command:
+          nettverkstjenesteskriptet <filename>/usr/lib/services/dhcpcd</filename>
+          med i bootscripts opp til blfs-bootscripts-20191204 er
+          ikke kompatibel med nyeste dhcpcd, siden plasseringen av pidfilen
+          er endret.
+          For å omgå dette, utfør følgende kommando:
 
 <screen role='root'><userinput>sed -i "s;/run/dhcpcd-;/run/dhcpcd/;g" /lib/services/dhcpcd</userinput></screen>
         </para>
@@ -270,24 +270,24 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
 
       <note>
         <para id="dhcpcd-config3">
-          The default for <command>dhcpcd</command> is to set the hostname
-          and mtu. It also overwrites <filename>/etc/resolv.conf </filename>
-          and <filename>/etc/ntp.conf</filename>. These
-          modifications to system files are done by hooks which are stored in
+          Standard for <command>dhcpcd</command> er å angi vertsnavnet
+          og mtu. Den overskriver også <filename>/etc/resolv.conf </filename>
+          og <filename>/etc/ntp.conf</filename>. Disse
+          modifikasjonene av systemfiler gjøres av kroker som er lagret i
           <filename class="directory">/usr/lib/dhcpcd/dhcpcd-hooks</filename>.
-          Set up <command>dhcpcd</command> by removing or adding hooks from/to
-          that directory.  The execution of hooks can be disabled by using
-          the <option>--nohook</option> (<option>-C</option>) command line
-          option or by the <option>nohook</option> option in the
-          <filename>/etc/dhcpcd.conf</filename> file.
+          Sett opp <command>dhcpcd</command> ved å fjerne eller legge til kroker fra/til
+          den mappen. Utførelsen av kroker kan deaktiveres ved å bruke
+          <option>--nohook</option> (<option>-C</option>) kommandolinjealternativ
+          eller av <option>nohook</option> alternativet i
+          <filename>/etc/dhcpcd.conf</filename> filen.
         </para>
       </note>
 
       <para id="dhcpcd-config2">
-        Finally, as the <systemitem class="username">root</systemitem> user
-        create the <filename>/etc/sysconfig/ifconfig.eth0</filename>
-        configuration file using the following commands. Adjust appropriately
-        for additional interfaces:
+        Til slutt, som <systemitem class="username">root</systemitem> bruker
+        opprett <filename>/etc/sysconfig/ifconfig.eth0</filename>
+        konfigurasjonsfil ved hjelp av følgende kommandoer. Juster riktig
+        for ekstra grensesnitt:
       </para>
 
       <indexterm zone="dhcpcd dhcpcd-config2">
@@ -303,8 +303,8 @@ DHCP_STOP="-k <replaceable>&lt;insert additional stop options here&gt;</replacea
 EOF</userinput></screen>
 
       <para>
-        For more information on the appropriate <envar>DHCP_START</envar> and
-        <envar>DHCP_STOP</envar> values, examine the man page for
+        For mer informasjon om passende <envar>DHCP_START</envar> og
+        <envar>DHCP_STOP</envar> verdier, undersøk man siden for
         <command>dhcpcd</command>.
       </para>
 
@@ -314,16 +314,16 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3 id="dhcpcd-init2" revision="sysv">
-      <title>Configuration Information: fixed ip</title>
+      <title>Konfigurasjonsinformasjon: fast ip</title>
 
       <para id="dhcpcd-config4">
-        Although not usual, it is possible that you need
-        to configure <application>dhcpcd</application> to use a fixed ip. Here,
-        we give an example. As the
-        <systemitem class="username">root</systemitem> user create the
-        <filename>/etc/sysconfig/ifconfig.eth0</filename> configuration file
-        using the following commands.  Adjust appropriately for additional
-        interfaces and for the actual ip and router you need:
+        Selv om det ikke er vanlig, er det mulig at du trenger
+        å konfigurere <application>dhcpcd</application> til å bruke en fast ip. Her,
+        gir vi et eksempel. Som
+        <systemitem class="username">root</systemitem> bruker opprett
+        <filename>/etc/sysconfig/ifconfig.eth0</filename> konfigurasjonsfilen
+        ved å bruke følgende kommandoer. Juster passende for ytterligere
+        grensesnitt og for den faktiske ip og ruteren du trenger:
       </para>
 
       <indexterm zone="dhcpcd dhcpcd-config4">
@@ -339,10 +339,10 @@ DHCP_STOP="-k"</literal>
 EOF</userinput></screen>
 
       <para>
-        You can either use DNS servers in
-        <filename>/etc/resolv.conf</filename> from another system, your
-        preferred servers, or just the example
-        <filename>/etc/resolv.conf.head</filename> file below as is:
+        Du kan enten bruke DNS servere i
+        <filename>/etc/resolv.conf</filename> fra et annet system, dine
+        foretrukne servere, eller bare eksempelet
+        <filename>/etc/resolv.conf.head</filename> filen nedenfor som den er:
       </para>
 
 <screen role='nodump'><userinput>cat &gt; /etc/resolv.conf.head &lt;&lt; "EOF"
@@ -354,14 +354,14 @@ EOF</userinput></screen>
     </sect3>
 
    <sect3 id="dhcpcd-init3" revision="systemd">
-      <title>General Configuration Information</title>
+      <title>Generell Konfigurasjonsinformasjon</title>
 
       <para>
-        If you want to configure network interfaces at boot using
-        <command>dhcpcd</command>, you need to install the
-        systemd unit included in <xref linkend="systemd-units"/>
-        package by running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        Hvis du vil konfigurere nettverksgrensesnitt ved oppstart ved hjelp av
+        <command>dhcpcd</command>, må du installere
+        systemd enheten inkludert i <xref linkend="systemd-units"/>
+        pakken ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>make install-dhcpcd</userinput></screen>
@@ -372,17 +372,17 @@ EOF</userinput></screen>
 
       <note>
         <para id="dhcpcd-config5">
-          The default behavior of <command>dhcpcd</command> is to set the
-          hostname and the mtu. It also overwrites <filename>/etc/resolv.conf
-          </filename> and <filename>/etc/ntp.conf</filename>. These
-          modifications to system configuration files are done by hooks which
-          are stored in <filename class="directory">
-          /lib/dhcpcd/dhcpcd-hooks</filename>. Set up <command>dhcpcd</command>
-          by removing or adding hooks from/to that directory. The execution
-          of hooks can be disabled by using the <option>--nohook</option>
-          (<option>-C</option>) command line option or by the
-          <option>nohook</option> option in the <filename>/etc/dhcpcd.conf
-          </filename> file.
+          Standardoppførselen til <command>dhcpcd</command> er å stille inn
+          vertsnavn og mtu. Den overskriver også <filename>/etc/resolv.conf
+          </filename> og <filename>/etc/ntp.conf</filename>. Disse
+          endringer i systemkonfigurasjonsfiler gjøres av kroker som
+          er lagret i <filename class="directory">
+          /lib/dhcpcd/dhcpcd-hooks</filename>. Sett opp <command>dhcpcd</command>
+          ved å fjerne eller legge til kroker fra/til den mappem. Utførelsen
+          av kroker kan deaktiveres ved å bruke <option>--nohook</option>
+          (<option>-C</option>) kommandolinjealternativet eller ved hjelp av
+          <option>nohook</option> alternativet i <filename>/etc/dhcpcd.conf
+          </filename> filen.
         </para>
       </note>
 
@@ -392,31 +392,31 @@ EOF</userinput></screen>
 
       <note>
         <para>
-          Make sure that you disable the <command>systemd-networkd</command>
-          service or configure it not to manage the interfaces you want to
-          manage with <application>dhcpcd</application>.
+          Pass på at du deaktiverer <command>systemd-networkd</command>
+          tjenesten eller konfigurer den til ikke å administrere grensesnittene du ønsker
+          å administrere med <application>dhcpcd</application>.
         </para>
       </note>
 
       <para>
-        At this point you can test if <command>dhcpcd</command> is
-        behaving as expected by running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        På dette tidspunktet kan du teste om <command>dhcpcd</command> 
+        oppfører seg som forventet ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>systemctl start dhcpcd@<replaceable>eth0</replaceable></userinput></screen>
 
       <para>
-        To start <command>dhcpcd</command> on a specific interface
-        at boot, enable the previously installed systemd unit by
-        running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        For å starte <command>dhcpcd</command> på et spesifikt grensesnitt
+        ved oppstart, aktiver den tidligere installerte systemd enheten ved å
+        kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>systemctl enable dhcpcd@<replaceable>eth0</replaceable></userinput></screen>
 
       <para>
-        Replace <replaceable>eth0</replaceable> with the actual interface name.
+        Erstatt <replaceable>eth0</replaceable> med det faktiske grensesnittnavnet.
       </para>
 
     </sect3>
@@ -424,12 +424,12 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>dhcpcd</seg>
@@ -439,7 +439,7 @@ EOF</userinput></screen>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -447,7 +447,7 @@ EOF</userinput></screen>
         <term><command>dhcpcd</command></term>
         <listitem>
           <para>
-            is an implementation of the DHCP client specified in RFC2131
+            er en implementering av DHCP klienten spesifisert i RFC2131
           </para>
           <indexterm zone="dhcpcd dhcpcd-prog">
             <primary sortas="b-dhcpcd">dhcpcd</primary>
@@ -459,9 +459,9 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">udev.so</filename></term>
         <listitem>
           <para>
-            adds udev support for interface arrival and departure; this is
-            because udev likes to rename the interface, which it can't do if
-            dhcpcd grabs it first
+            legger til udev støtte for grensesnitt ankomst og avgang; dette er
+            fordi udev liker å gi nytt navn til grensesnittet, noe det ikke kan gjøre hvis
+            dhcpcd tar det først
           </para>
           <indexterm zone="dhcpcd dhcpcd-udev">
             <primary sortas="c-dhcpcd-udev">udev.so</primary>
