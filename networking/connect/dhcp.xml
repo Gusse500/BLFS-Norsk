@@ -23,78 +23,78 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to ISC DHCP</title>
+    <title>Introduksjon til ISC DHCP</title>
 
     <para>
-      The <application>ISC DHCP</application> package contains both the client
-      and server programs for DHCP. <command>dhclient</command> (the client) is
-      used for connecting to a network which uses DHCP to assign network
-      addresses. <command>dhcpd</command> (the server) is used for assigning
-      network addresses on private networks.
+      <application>ISC DHCP</application> pakken inneholder både klient
+      og server programmer for DHCP. <command>dhclient</command> (klienten) is
+      brukes til å koble til et nettverk som bruker DHCP for å tildele
+      nettverksadresser. <command>dhcpd</command> (serveren) brukes til å tildele
+      nettverksadresser på private nettverk.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&dhcp-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&dhcp-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&dhcp-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&dhcp-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &dhcp-md5sum;
+          Nedlasting MD5 sum: &dhcp-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &dhcp-size;
+          Nedlastingsstørrelse: &dhcp-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &dhcp-buildsize;
+          Estimert diskplass som kreves: &dhcp-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &dhcp-time;
+          Estimert byggetid: &dhcp-time;
         </para>
       </listitem>
     </itemizedlist>
 <!--
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/dhcp-&dhcp-version;-client_script-1.patch"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Optional patch:
+          Valgfri oppdatering:
           <ulink url="&patch-root;/dhcp-&dhcp-version;-missing_ipv6-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/dhcp"/>
     </para>
   </sect2>
 
   <sect2 role="kernel" id="dhcp-kernel">
-    <title>Kernel Configuration</title>
+    <title>Kjernekonfigurasjon</title>
 
     <para>
-      You must have Packet Socket support.  IPv6 support is optional.
+      Du må ha Packet Socket støtte. IPv6 støtte er valgfritt.
     </para>
 
 <screen><literal>[*] Networking support ---&gt;        [CONFIG_NET]
@@ -103,7 +103,7 @@
         &lt;*&gt; The IPv6 Protocol ---&gt; [CONFIG_IPV6]</literal></screen>
 <!--
     <para>
-      If you do not have IPv6 support:
+      Hvis du ikke har IPv6 støtte:
     </para>
 
 <screen><literal>[*] Networking support - - -&gt;          [CONFIG_NET]
@@ -111,7 +111,7 @@
         &lt;*&gt; The IPv6 Protocol - - -&gt;   [CONFIG_IPV6]</literal></screen>
 
     <para>
-       compiled in, then you must use the <quote>missing_ipv6</quote> patch.
+       kompilert inn, så må du bruke <quote>missing_ipv6</quote> oppdatering.
     </para>
 -->
     <indexterm zone="dhcp dhcp-kernel">
@@ -121,11 +121,11 @@
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of ISC DHCP</title>
+    <title>Installasjon av ISC DHCP</title>
 
 <!-- Not needed when building DHCP-4.4.3.
     <para>
-      First, fix a build issue with GCC 10 and later:
+      Først må du fikse et byggeproblem med GCC 10 og nyere:
     </para>
 
 <screen><userinput>sed -i '/o.*dhcp_type/d' server/mdb.c &amp;&amp;
@@ -135,28 +135,28 @@ sed -r '/u.*(local|remote)_port/d'    \
 -->
     <note>
       <para>
-        This package does not support parallel build.
+        Denne pakken støtter ikke parallellbygging.
       </para>
     </note>
 <!--  This should not be needed any more.  Visual check appears to handle it.
     <para>
-      If you have not compiled IPv6 support into the kernel, apply the
-      missing_ipv6 patch:
+      Hvis du ikke har kompilert IPv6 støtte i kjernen, bruk
+      missing_ipv6 oppdateringen:
     </para>
 
 <screen><userinput>patch -Np1 -i ../dhcp-&dhcp-version;-missing_ipv6-1.patch</userinput></screen>
 -->
     <note>
       <para>
-        Be careful with the instructions below. The single and
-        double quotes are important because the defined
-        variables are used verbatim in the code.
+        Vær forsiktig med instruksjonene nedenfor. Singel og
+        doble anførselstegn er viktig fordi de definerte
+        variablene brukes ordrett i koden.
       </para>
     </note>
 
     <para>
-      Install <application>ISC DHCP</application> by running
-      the following commands:
+      Installer <application>ISC DHCP</application> ved å kjøre
+      følgende kommandoer:
     </para>
 
 <!--
@@ -180,40 +180,40 @@ make -j1</userinput></screen>
 
     <para>
       <!-- Note: make check builds a library, but otherwise does nothing. -->
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      If you only want to install the <application>ISC DHCP</application> client,
-      issue the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Hvis du bare vil installere <application>ISC DHCP</application> klienten,
+      utsted følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make -C client install             &amp;&amp;
 install -v -m755 client/scripts/linux /usr/sbin/dhclient-script</userinput></screen>
 
     <para>
-      Skip to <xref linkend="dhclient-config"/> in order to configure the
-      client
+      Hopp til <xref linkend="dhclient-config"/> for å konfigurere
+      klienten
     </para>
 
     <para>
-      If you only want to install the <application>ISC DHCP</application> server,
-      issue the following command as the
-      <systemitem class="username">root</systemitem> user:
+      Hvis du bare vil installere <application>ISC DHCP</application> serveren,
+      utsted følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make -C server install</userinput></screen>
 
     <para>
-      Skip to <xref linkend="dhcpd-config"/> in order to configure the server.
+      Hopp til <xref linkend="dhcpd-config"/> for å konfigurere serveren.
     </para>
 
     <para>
-      Alternatively, you can install whole package which includes the client,
-      server, relay, static libraries and development headers by running the
-      following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Alternativt kan du installere hele pakken som inkluderer klienten,
+      serveren, relé, statiske biblioteker og utviklingsdeklarasjoner ved å kjøre
+      følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -222,13 +222,13 @@ install -v -m755 client/scripts/linux /usr/sbin/dhclient-script</userinput></scr
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring ISC DHCP</title>
+    <title>Konfigurere ISC DHCP</title>
 
     <sect3 id="dhcp-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
-        <filename>/etc/dhcp/dhclient.conf</filename> and
+        <filename>/etc/dhcp/dhclient.conf</filename> og
         <filename>/etc/dhcp/dhcpd.conf</filename>
       </para>
 
@@ -243,12 +243,12 @@ install -v -m755 client/scripts/linux /usr/sbin/dhclient-script</userinput></scr
     </sect3>
 
     <sect3 id="dhclient-config">
-      <title>Client Configuration</title>
+      <title>Klientkonfigurasjon</title>
 
       <para>
-        Create a basic <filename>/etc/dhcp/dhclient.conf</filename>
-        by running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        Opprett en grunnleggende <filename>/etc/dhcp/dhclient.conf</filename>
+        ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>install -vdm755 /etc/dhcp &amp;&amp;
@@ -273,23 +273,23 @@ require subnet-mask, domain-name-servers;
 EOF</userinput></screen>
 
       <para>
-        See <command>man 5 dhclient.conf</command> for additional options.
+        Se <command>man 5 dhclient.conf</command> for flere alternativer.
       </para>
 
       <para>
-        Now create the <filename class="directory">/var/lib/dhclient</filename>
-        directory which will contain DHCP Client leases by running the following
-        command as the <systemitem class="username">root</systemitem> user:
+        Opprett nå <filename class="directory">/var/lib/dhclient</filename>
+        mappen som vil inneholde DHCP klientleieavtaler ved å kjøre følgende
+        kommando som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>install -v -dm 755 /var/lib/dhclient</userinput></screen>
 
       <para id="dhclient-service-sysd" revision="systemd">
-        If you want to configure network interfaces at boot using
-        <command>dhclient</command>, you need to install the
-        <filename>dhclient@.service</filename> unit included in the
-        <xref linkend="systemd-units"/> package by running the following
-        command as the <systemitem class="username">root</systemitem> user:
+        Hvis du vil konfigurere nettverksgrensesnitt ved oppstart ved hjelp av
+        <command>dhclient</command>, må du installere
+        <filename>dhclient@.service</filename> enheten inkludert i
+        <xref linkend="systemd-units"/> pakke ved å kjøre følgende
+        kommando som <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <indexterm zone="dhcp dhclient-service-sysd" revision="systemd">
@@ -300,16 +300,16 @@ EOF</userinput></screen>
 
       <note revision="systemd">
         <para>
-          Make sure that you disable the <command>systemd-networkd</command>
-          service or configure it not to manage the interfaces you want to
-          manage with <command>dhclient</command>.
+          Pass på at du deaktiverer <command>systemd-networkd</command>
+          tjenesten eller konfigurer den til ikke å administrere grensesnittene du ønsker
+          å administrere med <command>dhclient</command>.
         </para>
       </note>
 
       <para>
-        At this point you can test if <command>dhclient</command> is
-        behaving as expected by running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        På dette tidspunktet kan du teste om <command>dhclient</command> 
+        oppfører seg som forventet ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"
@@ -321,16 +321,16 @@ EOF</userinput></screen>
         revision="systemd"><userinput>systemctl start dhclient@<replaceable>eth0</replaceable></userinput></screen>
 
       <para revision="sysv">
-        Replace <replaceable>&lt;eth0&gt;</replaceable> with your
-        desired interface. If you want more verbose output, add the
-        <command>-v</command> parameter to the command above.
+        Erstatt <replaceable>&lt;eth0&gt;</replaceable> med ditt
+        ønskede grensesnitt. Hvis du vil ha mer detaljert utdata, legg til
+        <command>-v</command> parameter til kommandoen ovenfor.
       </para>
 
       <para id="dhclient-service" revision="sysv">
-        If you want to configure network interfaces at boot using
-        <command>dhclient</command>, you need to install the
-        <filename>/lib/services/dhclient</filename> script
-        included in <xref linkend="bootscripts"/> package:
+        Hvis du vil konfigurere nettverksgrensesnitt ved oppstart ved hjelp av
+        <command>dhclient</command>, må du installere
+        <filename>/lib/services/dhclient</filename> skriptet
+        inkludert i <xref linkend="bootscripts"/> pakken:
       </para>
 
 <screen role="root" revision="sysv"><userinput>make install-service-dhclient</userinput></screen>
@@ -340,9 +340,9 @@ EOF</userinput></screen>
       </indexterm>
 
       <para id="dhclient-ifconfig" revision="sysv">
-        Next, create the <filename>/etc/sysconfig/ifconfig.eth0</filename>
-        configuration file with the following commands as the
-        <systemitem class="username">root</systemitem> user:
+        Deretter oppretter du <filename>/etc/sysconfig/ifconfig.eth0</filename>
+        konfigurasjonsfilen med følgende kommandoer som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root" revision="sysv"><userinput>cat &gt; /etc/sysconfig/ifconfig.eth0 &lt;&lt; "EOF"
@@ -366,43 +366,43 @@ EOF</userinput></screen>
       </indexterm>
 
       <para revision="sysv">
-        Adjust the file to suit your needs.
+        Juster filen for å passe dine behov.
       </para>
 
       <para revision="sysv">
-        For more information on the appropriate <envar>DHCP_START</envar>
-        and <envar>DHCP_STOP</envar> values see
+        For mer informasjon om passende <envar>DHCP_START</envar>
+        og <envar>DHCP_STOP</envar> verdier se
         <command>man 8 dhclient</command>.
       </para>
 
       <para revision="systemd">
-        To start <command>dhclient</command> on a specific interface
-        at boot, enable the previously installed systemd unit by
-        running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        For å starte <command>dhclient</command> på et spesifikt grensesnitt
+        ved oppstart, aktiver den tidligere installerte systemd enheten ved å
+        kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable dhclient@<replaceable>eth0</replaceable></userinput></screen>
 
       <para revision="systemd">
-        Replace <replaceable>eth0</replaceable> with the actual interface name.
+        Erstatt <replaceable>eth0</replaceable> med det faktiske grensesnittnavnet.
       </para>
 
     </sect3>
 
     <sect3 id="dhcpd-config">
-      <title>Server Configuration</title>
+      <title>Serverkonfigurasjon</title>
 
       <para>
-        Note that you only need the DHCP server if you want to issue
-        LAN addresses over your network. The DHCP client doesn't need
-        the server in order to function properly.
+        Merk at du bare trenger DHCP serveren hvis du vil utstede
+        LAN adresser over nettverket ditt. DHCP klienten trenger ikke
+        serveren for å fungere skikkelig.
       </para>
 
       <para>
-        Start with creating <filename>/etc/dhcp/dhcpd.conf</filename>
-        by running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        Start med å opprette <filename>/etc/dhcp/dhcpd.conf</filename>
+        ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/dhcp/dhcpd.conf &lt;&lt; "EOF"
@@ -430,29 +430,29 @@ subnet 10.254.239.0 netmask 255.255.255.224 {
 EOF</userinput></screen>
 
       <para>
-        Adjust the file to suit your needs. See
-        <command>man 5 dhcpd.conf</command> for additional options.
+        Juster filen for å passe dine behov. Se
+        <command>man 5 dhcpd.conf</command> for flere alternativer.
       </para>
 
 <!-- the "touch..." is needed according to dhcpd.leases(5) -->
       <para>
-        Now create the <filename>/var/lib/dhcpd/dhcpd.leases</filename>
-        directory which will contain DHCP Server leases by running the following
-        commands as the <systemitem class="username">root</systemitem> user:
+        Opprett nå <filename>/var/lib/dhcpd/dhcpd.leases</filename>
+        mappen som vil inneholde DHCP Serverleieavtaler ved å kjøre følgende
+        kommandoer som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>install -v -dm 755 /var/lib/dhcpd &amp;&amp;
 touch /var/lib/dhcpd/dhcpd.leases</userinput></screen>
 
        <para>
-        If you want to start the DHCP Server at boot, install the
+        Hvis du vil starte DHCP serveren ved oppstart, installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/dhcpd</filename>
-        init script</phrase>
+        init skriptet</phrase>
         <phrase revision="systemd"><filename>dhcpd.service</filename>
-        unit</phrase> included in the
+        enheten</phrase> inkludert i
         <xref linkend="bootscripts" revision="sysv"/>
         <xref linkend="systemd-units" revision="systemd"/>
-        package:
+        pakken:
       </para>
 
 <screen role="root"><userinput>make install-dhcpd</userinput></screen>
@@ -462,11 +462,11 @@ touch /var/lib/dhcpd/dhcpd.leases</userinput></screen>
       </indexterm>
 
       <para>
-        You will need to edit the
+        Du må redigere
         <phrase revision="sysv"><filename>/etc/sysconfig/dhcpd</filename></phrase>
         <phrase revision="systemd"><filename>/etc/default/dhcpd</filename></phrase>
-        in order to set the interface on which <command>dhcpd</command>
-        will serve the DHCP requests.
+        for å angi grensesnittet som <command>dhcpd</command>
+        vil betjene DHCP forespørslene.
       </para>
 
     </sect3>
@@ -474,33 +474,33 @@ touch /var/lib/dhcpd/dhcpd.leases</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          dhclient, dhclient-script, dhcpd, dhcrelay and omshell
+          dhclient, dhclient-script, dhcpd, dhcrelay og omshell
         </seg>
         <seg>
-          libdhcpctl.a and libomapi.a
+          libdhcpctl.a og libomapi.a
         </seg>
         <seg>
           /etc/dhcp,
           /usr/include/dhcpctl,
           /usr/include/isc-dhcp,
           /usr/include/omapip,
-          /var/lib/dhclient and
+          /var/lib/dhclient og
           /var/lib/dhcpd
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -508,7 +508,7 @@ touch /var/lib/dhcpd/dhcpd.leases</userinput></screen>
         <term><command>dhclient</command></term>
         <listitem>
           <para>
-            is the implementation of the DHCP client
+            er implementeringen av DHCP klienten
           </para>
           <indexterm zone="dhcp dhclient">
             <primary sortas="b-dhclient">dhclient</primary>
@@ -520,8 +520,8 @@ touch /var/lib/dhcpd/dhcpd.leases</userinput></screen>
         <term><command>dhclient-script</command></term>
         <listitem>
           <para>
-            is used by dhclient to (re)configure interfaces. It can make
-            extra changes by invoking custom dhclient-{entry,exit}-hooks
+            brukes av dhclient til å (re)konfigurere grensesnitt. Det kan lage
+            ekstra endringer ved å påkalle tilpassede dhclient-{entry,exit}-hooks
           </para>
           <indexterm zone="dhcp dhclient-script">
             <primary sortas="b-dhclient-script">dhclient-script</primary>
@@ -533,9 +533,9 @@ touch /var/lib/dhcpd/dhcpd.leases</userinput></screen>
         <term><command>dhcpd</command></term>
         <listitem>
           <para>
-            implements Dynamic Host Configuration Protocol (DHCP) and
-            Internet Bootstrap Protocol (BOOTP) requests for network
-            addresses
+            implementerer Dynamic Host Configuration Protocol (DHCP) og
+            Internet Bootstrap Protocol (BOOTP) forespørsler for 
+            nettverksadresser
           </para>
           <indexterm zone="dhcp dhcpd">
             <primary sortas="b-dhcpd">dhcpd</primary>
@@ -547,9 +547,9 @@ touch /var/lib/dhcpd/dhcpd.leases</userinput></screen>
         <term><command>dhcrelay</command></term>
         <listitem>
           <para>
-            provides a means to accept DHCP and BOOTP requests on a subnet
-            without a DHCP server and relay them to a DHCP server on another
-            subnet
+            gir en måte å akseptere DHCP og BOOTP forespørsler på et subnett
+            uten en DHCP server og videresende dem til en DHCP server på en annet
+            subnett
           </para>
           <indexterm zone="dhcp dhcrelay">
             <primary sortas="b-dhcrelay">dhcrelay</primary>
@@ -561,8 +561,8 @@ touch /var/lib/dhcpd/dhcpd.leases</userinput></screen>
         <term><command>omshell</command></term>
         <listitem>
           <para>
-            provides an interactive way to connect to, query and
-            possibly change the ISC DHCP Server's state via OMAPI, the
+            gir en interaktiv måte å koble til, spørre og
+            muligens endre ISC DHCP serverens tilstand via OMAPI,
             Object Management API
           </para>
           <indexterm zone="dhcp omshell">
