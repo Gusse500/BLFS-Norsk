@@ -9,17 +9,17 @@
   <?dbhtml filename="advanced-network.html"?>
 
 
-  <title>Advanced Network Setup</title>
+  <title>Avansert nettverksoppsett</title>
 
   <sect2 id="network-bridge">
-    <title>Network Bridge</title>
+    <title>Nettverksbro</title>
 
     <sect3 role="kernel" id="advanced-network-bridge-kernel">
-      <title>Kernel Configuration</title>
+      <title>Kjernekonfigurasjon</title>
 
       <para>
-        Enable the following options in the kernel configuration
-        and recompile the kernel if necessary:
+        Aktiver følgende alternativer i kjernekonfigurasjonen
+        og kompiler kjernen på nytt om nødvendig:
       </para>
 
 <screen><literal>Networking support: Y
@@ -27,26 +27,26 @@
     802.1d Ethernet Bridging: M or Y</literal></screen>
 
       <indexterm zone="advanced-network advanced-network-bridge-kernel">
-        <primary sortas="d-advanced-network-bridge">Advanced Network Bridge</primary>
+        <primary sortas="d-advanced-network-bridge">Avansert Nettverksbro</primary>
       </indexterm>
 
     </sect3>
 
     <sect3>
-      <title>Setting up a Network Bridge</title>
+      <title>Sette opp en Nettverksbro</title>
 
       <para>
-        In this section we are are going to discuss how to set up a network
-        bridge using <command>systemd-networkd</command>. In the examples
-        below, <replaceable>eth0</replaceable> represents the external
-        interface that is being bridged, while <replaceable>br0</replaceable>
-        represents the bridge interface.
+        I denne delen skal vi diskutere hvordan du setter opp en nettverksbro
+        ved hjelp av <command>systemd-networkd</command>. I eksemplene
+        under, <replaceable>eth0</replaceable> representerer det ytre
+        grensesnittet som blir brokoblet, mens <replaceable>br0</replaceable>
+        representerer brogrensesnittet.
       </para>
 
       <para>
-        To create a bridge interface, create the following configuration file
-        by running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        For å lage et brogrensesnitt, lag følgende konfigurasjonsfil
+        ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/systemd/network/50-br0.netdev &lt;&lt; EOF
@@ -56,9 +56,9 @@ Kind=bridge</literal>
 EOF</userinput></screen>
 
       <para>
-        To assign a network interface to a bridge, create the following
-        configuration file by running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        For å tilordne et nettverksgrensesnitt til en bro, opprett følgende
+        konfigurasjonsfil ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/systemd/network/51-eth0.network &lt;&lt; EOF
@@ -70,17 +70,17 @@ Bridge=<replaceable>br0</replaceable></literal>
 EOF</userinput></screen>
 
       <para>
-        Repeat the process for any other interfaces that need to be bridged.
-        Note that it is important that nothing assigns any addresses to the
-        bridged interfaces. If you are using <xref linkend="NetworkManager"/>,
-        <!--or <xref linkend="wicd"/>i,--> make sure you configure them to ignore
-        the bridged interfaces, as well as the bridge interface itself.
+        Gjenta prosessen for andre grensesnitt som må brokobles.
+        Merk at det er viktig at ingenting tildeler noen adresser til
+        brokoblede grensesnitt. Hvis du bruker <xref linkend="NetworkManager"/>,
+        <!--or <xref linkend="wicd"/>i,--> sørg for at du konfigurerer dem til å ignorere
+        de brokoblede grensesnittene, så vel som selve brogrensesnittet.
       </para>
 
       <para>
-        If you are on a network which uses DHCP for assigning ip addresses,
-        create the following configuration file by running the following
-        command as the <systemitem class="username">root</systemitem> user:
+        Hvis du er på et nettverk som bruker DHCP for å tildele ip adresser,
+        opprett følgende konfigurasjonsfil ved å kjøre følgende
+        kommando som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/systemd/network/60-br0.network &lt;&lt; EOF
@@ -92,9 +92,9 @@ DHCP=yes</literal>
 EOF</userinput></screen>
 
       <para>
-        Alternatively, if using a static ip setup, create the following
-        configuration file by running the following command as the
-        <systemitem class="username">root</systemitem> user:
+        Alternativt, hvis du bruker et statisk ip oppsett, opprett følgende
+        konfigurasjonsfil ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/systemd/network/60-br0.network &lt;&lt; EOF
@@ -108,9 +108,9 @@ DNS=192.168.0.1</literal>
 EOF</userinput></screen>
 
       <para>
-        To bring up the bridge interface, simply restart the
-        <command>systemd-networkd</command> daemon by running the following
-        command as the  <systemitem class="username">root</systemitem> user:
+        For å få frem brogrensesnittet, ganske enkelt start på nytt
+        <command>systemd-networkd</command> nissen ved å kjøre følgende
+        kommando som  <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>systemctl restart systemd-networkd</userinput></screen>
@@ -120,14 +120,14 @@ EOF</userinput></screen>
   </sect2>
 
   <!-- <sect2 id="network-interface-bonding">
-    <title>Network Interface Bonding</title>
+    <title>Nettverksgrensesnittbinding</title>
 
     <sect3 role="kernel" id="advanced-network-bonding-kernel">
-      <title>Kernel Configuration</title>
+      <title>Kjernekonfigurasjon</title>
 
       <para>
-        Enable the following options in the kernel configuration
-        and recompile the kernel if necessary:
+        Aktiver følgende alternativer i kjernekonfigurasjonen
+        og kompiler kjernen på nytt om nødvendig:
       </para>
 
 <screen><literal>Device Drivers:
@@ -141,7 +141,7 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Setting up Network Interface Bonding</title>
+      <title>Sette opp Nettverksgrensesnittbinding</title>
 
     </sect3>
 
