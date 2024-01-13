@@ -8,8 +8,8 @@
   <!ENTITY fetchmail-download-ftp  " ">
   <!ENTITY fetchmail-md5sum        "8bfdc96f0241f328b17ef04666b2f155">
   <!ENTITY fetchmail-size          "1.1 MB">
-  <!ENTITY fetchmail-buildsize     "12 MB including tests">
-  <!ENTITY fetchmail-time          "0.1 SBU including tests">
+  <!ENTITY fetchmail-buildsize     "12 MB inkludert tester">
+  <!ENTITY fetchmail-time          "0.1 SBU inkludert tester">
 ]>
 
 <sect1 id="fetchmail" xreflabel="fetchmail-&fetchmail-version;">
@@ -23,94 +23,94 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Fetchmail</title>
+    <title>Introduksjon til Fetchmail</title>
 
     <para>
-      The <application>Fetchmail</application> package contains a mail
-      retrieval program. It retrieves mail from remote mail servers and
-      forwards it to the local (client) machine's delivery system, so it can
-      then be read by normal mail user agents.
+      <application>Fetchmail</application> pakken inneholder en e-post
+      henteprogram. Den henter e-post fra eksterne e-postservere og
+      videresender den til den lokale (klient) maskinens leveringssystem, slik at den kan
+      deretter leses av vanlige e-postbrukeragenter.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&fetchmail-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&fetchmail-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&fetchmail-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&fetchmail-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &fetchmail-md5sum;
+          Nedlasting MD5 sum: &fetchmail-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &fetchmail-size;
+          Nedlastingsstørrelse: &fetchmail-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &fetchmail-buildsize;
+          Estimert diskplass som kreves: &fetchmail-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &fetchmail-time;
+          Estimert byggetid: &fetchmail-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Fetchmail Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Fetchmail Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      a local MDA (<xref linkend="procmail"/>)
+      en lokal MDA (<xref linkend="procmail"/>)
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <!-- hesiod was at ftp://athena-dist.mit.edu/pub/ATHENA/hesiod/ but that
       is dead. Debian had 3.2.1, git hub has a very old 3.1.
       libintl is part of gettext so enabled by default on LFS -->
-      <xref linkend="mitkrb"/> and
+      <xref linkend="mitkrb"/> og
       <ulink url="http://www.citi.umich.edu/projects/nfsv4/linux/">libgssapi</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Optional (for running fetchmailconf)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (for kjøring av fetchmailconf)</bridgehead>
     <para role="optional">
-      <xref linkend="python3"/>, built after
-      <xref linkend="tk"/>, with the
-      <ulink url="https://python-future.org/">py-future</ulink> package
+      <xref linkend="python3"/>, bygget etter
+      <xref linkend="tk"/>, med
+      <ulink url="https://python-future.org/">py-future</ulink> pakken
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/fetchmail"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Fetchmail</title>
+    <title>Installasjon av Fetchmail</title>
 
     <para>
-      Create a dedicated user for the fetchmail program.
-      Issue the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Opprett en dedikert bruker for fetchmail programmet.
+      Utfør følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>useradd -c "Fetchmail User" -d /dev/null -g nogroup \
         -s /bin/false -u 38 fetchmail</userinput></screen>
 
     <para>
-      Install <application>Fetchmail</application> by running the following
-      commands:
+      Installer <application>Fetchmail</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>PYTHON=python3 \
@@ -119,12 +119,12 @@
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make check</command>.
+      For å teste resultatene, kjør: <command>make check</command>.
     </para>
 
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role='root'><userinput>make install                                  &amp;&amp;
@@ -133,29 +133,29 @@ chown -v fetchmail:nogroup /usr/bin/fetchmail</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>PYTHON=python3</parameter>: a version of Python is
-      <emphasis>required</emphasis>, but only used to install a module to allow
-      fetchmailconf to be run. That module is unmaintained and should not be
-      used.
+      <parameter>PYTHON=python3</parameter>: en versjon av Python er
+      <emphasis>påkrevd</emphasis>, men bare brukt til å installere en modul for å tillate
+      fetchmailconf å kjøre. Den modulen er ikke vedlikeholdt og bør ikke bli
+      brukt.
     </para>
 
     <para>
-      <parameter>--enable-fallback=procmail</parameter>: This tells
-      <application>Fetchmail</application> to hand incoming mail to
-      <application>Procmail</application> for delivery, if the port 25 mail
-      server is not present or not responding.
+      <parameter>--enable-fallback=procmail</parameter>: Dette forteller
+      <application>Fetchmail</application> å levere innkommende post til
+      <application>Procmail</application> for levering, dersom port 25 
+      postserveren ikke er til stede eller ikke svarer.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Fetchmail</title>
+    <title>Konfigurere Fetchmail</title>
 
     <sect3 id="fetchmail-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>~/.fetchmailrc</filename>
@@ -168,14 +168,14 @@ chown -v fetchmail:nogroup /usr/bin/fetchmail</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <note>
         <para>
-          If you are connecting to a mailserver that supports SSL/TLS-wrapped
-          or "implicit" mode on a dedicated port (default 993) you should use
-          <command>fetchmail --ssl</command> or add the option 'ssl' in an
-          rcfile.
+          Hvis du kobler til en e-postserver som støtter SSL/TLS-innpakket
+          eller "implisitt" modus på en dedikert port (standard 993) bør du bruke
+          <command>fetchmail --ssl</command> eller legg til alternativet 'ssl' i en
+          rcfil.
         </para>
       </note>
 
@@ -198,24 +198,24 @@ touch ~/fetchmail.log       &amp;&amp;
 chmod -v 0600 ~/.fetchmailrc</userinput></screen>
 
       <para>
-        This is an example configuration that should suffice for most people.
-        You can add as many users and servers as you need using the same syntax.
+        Dette er en eksempelkonfigurasjon som burde være tilstrekkelig for de fleste.
+        Du kan legge til så mange brukere og servere du trenger ved å bruke samme syntaks.
       </para>
 
       <para>
-        <command>man fetchmail</command>: Look for the section near the bottom
-        named <emphasis>CONFIGURATION EXAMPLES</emphasis>. It gives some quick
-        examples. There are countless other configuration options once you get
-        used to it.
+        <command>man fetchmail</command>: Se etter delen nær bunnen
+        navngitt <emphasis>CONFIGURATION EXAMPLES</emphasis>. Det gir noen raske
+        eksempler. Det er utallige andre konfigurasjonsalternativer når du blir
+        vant til det.
       </para>
 
       <para>
-        If you expect to receive very little mail you can invoke fetchmail
-        when you wish to receive any incoming mail. More commonly, it is either
-        invoked in daemon mode with the <literal>-d</literal> option either on
-        the command line, or in <filename>.fetchmailrc</filename> (see 'DAEMON
-        MODE' in man fetchmailconf), or alternatively it is invoked from a
-        cron job.
+        Hvis du forventer å motta svært lite e-post, kan du påkalle fetchmail
+        når du ønsker å motta innkommende post. Mer vanlig er den enten
+        påkalt i nisse-modus med <literal>-d</literal> alternativet enten på
+        kommandolinjen, eller i <filename>.fetchmailrc</filename> (se 'DAEMON
+        MODE' i man fetchmailconf), eller alternativt påkalles den fra en
+        cron jobb.
       </para>
 
     </sect3>
@@ -223,22 +223,22 @@ chmod -v 0600 ~/.fetchmailrc</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>fetchmail and fetchmailconf</seg>
-        <seg>None</seg>
-        <seg>None</seg>
+        <seg>fetchmail og fetchmailconf</seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -246,9 +246,9 @@ chmod -v 0600 ~/.fetchmailrc</userinput></screen>
         <term><command>fetchmail</command></term>
         <listitem>
           <para>
-            when executed as a user, this will source
-            <filename>~/.fetchmailrc</filename> and download the appropriate
-            mail
+            når det kjøres som bruker, vil dette starte
+            <filename>~/.fetchmailrc</filename> og laste ned den aktuelle
+            e-posten
           </para>
           <indexterm zone="fetchmail fetchmail-prog">
             <primary sortas="b-fetchmail">fetchmail</primary>
@@ -260,20 +260,20 @@ chmod -v 0600 ~/.fetchmailrc</userinput></screen>
         <term><command>fetchmailconf</command></term>
         <listitem>
           <para>
-            is intended to assist you in setting up and editing a
-            <filename>~/.fetchmailrc</filename> configuration file, by using
-            a <application>Tk</application> GUI interface. It is written for
-            <application>Python</application> and the Tkinter module but is
-            labelled with a WARNING that it needs to be updated
-            for fetchmail 6.4's SSL options and other recent new options
+            er ment å hjelpe deg med å sette opp og redigere en
+            <filename>~/.fetchmailrc</filename> konfigurasjonsfil, ved å bruke
+            en <application>Tk</application> GUI grensesnitt. Den er skrevet for
+            <application>Python</application> og Tkinter modulen, men er
+            merket med en ADVARSEL om at den må oppdateres
+            for fetchmail 6.4s SSL alternativer og andre nyere alternativer
           </para>
           <!-- keep this description commented but fetchmailconf
                has been updated in the last months (June 2020). It can use
                Python 3, with the help of the "past" module.
           <para>
-            is an unmaintained GUI command to assist in creating a
-            <filename>~/.fetchmailrc</filename> configuration file and
-            should not be used.
+            er en uvedlikeholdt GUI-kommando for å hjelpe til med å lage en
+            <filename>~/.fetchmailrc</filename> konfigurasjonsfil og
+            skal ikke brukes.
           </para>-->
           <indexterm zone="fetchmail fetchmailconf">
             <primary sortas="b-fetchmailconf">fetchmailconf</primary>
