@@ -24,104 +24,104 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to NFS Utilities</title>
+    <title>Introduksjon til NFS Utilities</title>
 
     <para>
-      The <application>NFS Utilities</application> package contains the
-      userspace server and client tools necessary to use the kernel's NFS
-      abilities. NFS is a protocol that allows sharing file systems over the
-      network.
+      <application>NFS Utilities</application> pakken inneholder
+      brukerrom server og klient verktøy som er nødvendige for å bruke kjernens NFS
+      egenskaper. NFS er en protokoll som tillater deling av filsystemer over
+      nettverk.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&nfs-utils-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&nfs-utils-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&nfs-utils-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&nfs-utils-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &nfs-utils-md5sum;
+          Nedlasting MD5 sum: &nfs-utils-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &nfs-utils-size;
+          Nedlastingsstørrelse: &nfs-utils-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &nfs-utils-buildsize;
+          Estimert diskplass som kreves: &nfs-utils-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &nfs-utils-time;
+          Estimert byggetid: &nfs-utils-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">NFS Utilities Dependencies</bridgehead>
+    <bridgehead renderas="sect3">NFS Utilities Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="libtirpc"/> and
+      <xref linkend="libtirpc"/> og
       <xref linkend="rpcsvc-proto"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="cyrus-sasl"/> (for SASL authentication),
-      <xref linkend="lvm2"/> (libdevmapper for NFSv4 support),
+      <xref linkend="cyrus-sasl"/> (for SASL autentisering),
+      <xref linkend="lvm2"/> (libdevmapper for NFSv4 støtte),
       <!--<xref linkend="libnfsidmap"/> (for NFSv4 support),
       This is now built in, as of 2.2.1-->
-      <xref linkend="libnsl"/> (for NIS client support),
-      <xref linkend="openldap"/> (for LDAP authentication),
+      <xref linkend="libnsl"/> (for NIS klient støtte),
+      <xref linkend="openldap"/> (for LDAP autentisering),
       <xref linkend="sqlite"/>,
-      <xref linkend="mitkrb"/> or
+      <xref linkend="mitkrb"/> eller
       <ulink url="http://www.citi.umich.edu/projects/nfsv4/linux/">
         libgssapi
-      </ulink>, and
+      </ulink>, og
       <ulink url="http://www.citi.umich.edu/projects/nfsv4/linux/">
         librpcsecgss
-      </ulink> (for GSS and RPC security support), and
+      </ulink> (for GSS og RPC sikkerhetsstøtte), og
       <xref linkend="libcap-pam"/>
     </para>
 
-    <bridgehead renderas="sect4">Required (runtime)</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd (kjøretid)</bridgehead>
     <para role="required">
       <xref role="runtime" linkend="rpcbind"/>
     </para>
 
 <!-- NSS configuration isn't directly related to NFS, but left here in case
-    <bridgehead renderas="sect4">Optional (runtime for NIS clients)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (kjøretid for NIS klienter)</bridgehead>
     <para role="optional">
     <ulink url="https://github.com/thkukuk/libnss_compat">libnss_compat</ulink>,
-    <ulink url="https://github.com/thkukuk/libnss_nis">libnss_nis</ulink>, and
+    <ulink url="https://github.com/thkukuk/libnss_nis">libnss_nis</ulink>, og
     <ulink url="https://github.com/thkukuk/libnss_nisplus">libnss_nisplus</ulink>
     </para>
 -->
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/nfs-utils"/></para>
 
   </sect2>
 
   <sect2 role="kernel" id='nfs-utils-kernel'>
-    <title>Kernel Configuration</title>
+    <title>Kjernekonfigurasjon</title>
 
     <para>
-      Enable the following options in the kernel configuration
-      (choose client and/or server support as appropriate) and recompile the
-      kernel if necessary:
+      Aktiver følgende alternativer i kjernekonfigurasjonen
+      (velg klient og/eller server støtte etter behov) og kompiler kjernen på nytt
+      om nødvendig:
     </para>
 
 <screen><literal>File systems  ---&gt;
@@ -130,24 +130,24 @@
     &lt;*/M&gt; NFS server support             [CONFIG_NFSD]</literal></screen>
 
     <para>
-      Select the appropriate sub-options that appear when the above options
-      are selected.
+      Velg de aktuelle underalternativene som vises når alternativene ovenfor
+      er valgt.
     </para>
 
     <note>
       <para>
-        In BLFS we assume that nfs v3 will be used. If the
-        <emphasis>server</emphasis> offers nfs v4 (for linux, CONFIG_NFSD_V4)
-        then auto-negotiation for v3 will fail and you will need to add
-        <literal>nfsver=3</literal> to the mount options. This also applies
-        if that option is enabled in the <emphasis>client's</emphasis> kernel,
-        for example in a distro trying to mount from a BLFS v3 server.
+        I BLFS antar vi at nfs v3 vil bli brukt. Hvis
+        <emphasis>serveren</emphasis> tilbyr nfs v4 (for linux, CONFIG_NFSD_V4)
+        da vil auto-forhandling for v3 mislykkes, og du må legge til
+        <literal>nfsver=3</literal> til monteringsalternativene. Dette gjelder også
+        hvis det alternativet er aktivert i <emphasis>klientens</emphasis> kjerne,
+        for eksempel i en distro som prøver å montere fra en BLFS v3 server.
       </para>
       <para>
-        Even if neither end of the connection supports nfs v4, adding
-        <literal>nfsver=3</literal> is still beneficial because it prevents an
-        error message "NFS: bad mount option value specified: minorversion=1"
-        being logged on every mount.
+        Selv om ingen i endene av tilkoblingen støtter nfs v4, å legge til
+        <literal>nfsver=3</literal> er fortsatt gunstig fordi det forhindrer en
+        feilmelding "NFS: bad mount option value specified: minorversion=1"
+        å bli logget ved hver montering.
       </para>
     </note>
 
@@ -159,14 +159,14 @@
 
   <sect2 role="installation" id='nfs-utils-install'
          xreflabel='NFS Utilities Installation'>
-    <title>Installation of NFS Utilities</title>
+    <title>Installasjon av NFS Utilities</title>
 <!--
     <para>
-      Before you compile the program, ensure that the <systemitem
-      class="username">nobody</systemitem> user and <systemitem
-      class="groupname">nogroup</systemitem> group have been created as done in
-      the current LFS book.  You can add them by running the following commands
-      as the <systemitem class="username">root</systemitem> user:
+      Før du kompilerer programmet, sørg for at <systemitem
+      class="username">nobody</systemitem> brukeren og <systemitem
+      class="groupname">nogroup</systemitem> gruppen har blitt opprettet som gjort i
+      gjeldende LFS bok. Du kan legge dem til ved å kjøre følgende kommandoer
+      som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="nodump"><userinput>groupadd -g 99 nogroup &amp;&amp;
@@ -175,23 +175,23 @@ useradd -c "Unprivileged Nobody" -d /dev/null -g nogroup \
 
     <note>
       <para>
-        The classic uid and gid values are 65534 which is also -2 when
-        interpreted as a signed 16-bit number.  These values impact other files
-        on some filesystems that do not have support for sparse files.  The
-        <systemitem class="username">nobody</systemitem> and <systemitem
-        class="groupname">nogroup</systemitem> values are relatively arbitrary.
-        The impact on a server is nil if the <filename>exports</filename> file
-        is configured correctly. If it is misconfigured, an
-        <command>ls -l</command> or <command>ps</command> listing will show a
-        uid or gid number of 65534 instead of a name. The client uses
-        <systemitem class="username">nobody</systemitem> only as the user
-        running <command>rpc.statd</command>.
+        De klassiske uid og gid verdiene er 65534 som også er -2 når
+        tolket som et signert 16-bits tall. Disse verdiene påvirker andre filer
+        på enkelte filsystemer som ikke har støtte for sparsomme filer.
+        <systemitem class="username">nobody</systemitem> og <systemitem
+        class="groupname">nogroup</systemitem> verdiene er relativt vilkårlige.
+        Virkningen på en server er null hvis <filename>exports</filename> filen
+        er riktig konfigurert. Hvis den er feilkonfigurert, en
+        <command>ls -l</command> eller <command>ps</command> oppføringen vil vise en
+        uid eller gid nummer på 65534 i stedet for et navn. Klienten bruker
+        <systemitem class="username">nobody</systemitem> kun som bruker
+        som kjører <command>rpc.statd</command>.
       </para>
     </note>
 -->
     <para>
-      Install <application>NFS Utilities</application> by running
-      the following commands:
+      Installer <application>NFS Utilities</application> ved å kjøre
+      følgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr          \
@@ -204,11 +204,11 @@ make</userinput></screen>
     <!-- Test breakage: see
     http://lists.linuxfromscratch.org/pipermail/blfs-book/2017-December/071861.html -->
     <para>
-      This package does not come with a working test suite.
+      Denne pakken kommer ikke med en fungerende testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <!-- dev note: make statduser=$(whoami) DESTDIR=<DESTDIR> install -->
@@ -219,59 +219,59 @@ chown nobody.nogroup /var/lib/nfs</userinput></screen>
 
     <!-- commented, in case the tests get fixed
     <para>
-      The tests for this package require that the package be installed and
-      configured as specified below.  In addition, the daemon from <xref
-      linkend="rpcbind"/> needs to be running and the tests need to be run as
-      the <systemitem class="username">root</systemitem> user.
+      Testene for denne pakken krever at pakken er installert og
+      konfigurert som spesifisert nedenfor. I tillegg nissen fra <xref
+      linkend="rpcbind"/> må kjøres og testene må kjøres som
+      <systemitem class="username">root</systemitem> bruker.
     </para>
 
     <para>
-      To test the results, issue, as root: <command>make check</command>.
+      For å teste resultatene, utsted, som root: <command>make check</command>.
     </para>-->
 
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 <!--
     <para>
-      <command>sed ... support/nsm/rpc.c</command>: This sed it required
-      to fix a build issue with glibc-2.26 and later.
+      <command>sed ... support/nsm/rpc.c</command>: Dette sed kreves
+      for å fikse et byggeproblem med glibc-2.26 og nyere.
     </para>
 
     <para>
-      <parameter>- -disable-nfsv4</parameter>: This allows the package to be
-      built when libnfsidmap has not been installed.
+      <parameter>- -disable-nfsv4</parameter>: Dette gjør at pakken kan være
+      bygget når libnfsidmap ikke er installert.
     </para>
     nfs-utils now carries libnfsidmap
 -->
     <para>
-      <parameter>--disable-gss</parameter>: Disables support for
-      RPCSEC GSS (RPC Security).
+      <parameter>--disable-gss</parameter>: Deaktiverer støtte for
+      RPCSEC GSS (RPC Sikkerhet).
     </para>
 
     <para>
-      <command>chown nobody.nogroup /var/lib/nfs</command>: The
-      rpc.statd program uses the ownership of this directory to set
-      it's UID and GID.  This command sets those to unprivileged entries.
+      <command>chown nobody.nogroup /var/lib/nfs</command>: 
+      rpc.statd-programmet bruker eierskapet til denne mappen til å angi
+      sitt UID og GID. Denne kommandoen setter dem til uprivilegerte oppføringer.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring NFS Utilities</title>
+    <title>Konfigurere NFS Utilities</title>
 
     <sect3 id='nfs-utils-server-config'>
-      <title>Server Configuration</title>
+      <title>Server Konfigurering</title>
 
       <para>
-        <filename>/etc/exports</filename> contains the exported directories
-        on NFS servers. Refer to the <filename>exports.5</filename> manual page
-        for the syntax of this file. Also refer to the "NFS HowTo" available at
-        <ulink url="https://nfs.sourceforge.net/nfs-howto/"/> for information on
-        how to configure the servers and clients in a secure manner. For
-        example, for sharing the <filename class="directory">/home</filename>
-        directory over the local network, the following line may be added:
+        <filename>/etc/exports</filename> inneholder de eksporterte mappene
+        på NFS servere. Referere til <filename>exports.5</filename> manualside
+        for syntaksen til denne filen. Se også "NFS HowTo" tilgjengelig på
+        <ulink url="https://nfs.sourceforge.net/nfs-howto/"/> for informasjon om
+        hvordan konfigurere servere og klienter på en sikker måte. Som
+        for eksempel for å dele <filename class="directory">/home</filename>
+        mappen over det lokale nettverket, kan følgende linje legges til:
       </para>
 
 <screen role="nodump"><userinput>cat &gt;&gt; /etc/exports &lt;&lt; EOF
@@ -280,9 +280,9 @@ EOF</userinput></screen>
 
       <note>
         <para>
-          Be sure to replace the directory, network address. and prefix above
-          to match your network.  The only space in the line above should be
-          between the directory and the network address.
+          Pass på å erstatte mappen, nettverksadressen. og prefikset ovenfor
+          for å matche nettverket ditt. Det eneste mellomrommet i linjen over skal være
+          mellom mappen og nettverksadressen.
         </para>
       </note>
 
@@ -291,27 +291,27 @@ EOF</userinput></screen>
       </indexterm>
 
       <sect4 id="nfs-utils-server-init">
-        <title><phrase revision="sysv">Boot Script</phrase>
-               <phrase revision="systemd">Systemd Units</phrase></title>
+        <title><phrase revision="sysv">Oppstartsskript</phrase>
+               <phrase revision="systemd">Systemd Enheter</phrase></title>
 
         <para>
-          Install the
+          Installer
           <phrase revision="sysv">
             <filename>/etc/rc.d/init.d/nfs-server</filename>
-            init script
+            init skriptet
           </phrase>
-          <phrase revision="systemd">NFSv4 server units</phrase>
-          included in the <xref linkend="bootscripts" revision="sysv"/>
-          <xref linkend="systemd-units" revision="systemd"/> package
-          to start the server at boot.
+          <phrase revision="systemd">NFSv4 server enheter</phrase>
+          inkludert i <xref linkend="bootscripts" revision="sysv"/>
+          <xref linkend="systemd-units" revision="systemd"/> pakken
+          for å starte serveren ved oppstart.
         </para>
 
 <screen role="root" revision="systemd"><userinput>make install-nfsv4-server</userinput></screen>
 
         <para revision="systemd">
-          If you have disabled NFSv4 support, run the following command as the
-          <systemitem class="username">root</systemitem> user to omit the NFSv4
-          specific systemd units:
+          Hvis du har deaktivert NFSv4 støtte, kjør følgende kommando som
+          <systemitem class="username">root</systemitem> bruker for å utelate NFSv4
+          spesifikke systemenheter:
         </para>
 
 <!-- both -->
@@ -322,8 +322,8 @@ EOF</userinput></screen>
         </indexterm>
 
         <para revision="sysv">
-          Now create the
-          <filename>/etc/sysconfig/nfs-server</filename> configuration file:
+          Nå oppretter du
+          <filename>/etc/sysconfig/nfs-server</filename> konfigurasjonsfilen:
         </para>
 
 <screen role="root" revision="sysv"><userinput>cat &gt; /etc/sysconfig/nfs-server &lt;&lt; "EOF"
@@ -334,7 +334,7 @@ EOF</userinput></screen>
 
         <note revision="sysv">
           <para>
-            The above parameters may be optionally placed in
+            Parametrene ovenfor kan eventuelt plasseres i
             <filename>/etc/sysconfig/rc.site</filename>.
           </para>
         </note>
@@ -345,9 +345,9 @@ EOF</userinput></screen>
         </indexterm>
 
         <para revision="systemd">
-          You can edit the <filename>/etc/default/nfs-utils</filename>
-          file to change the startup options for NFS daemons. Defaults
-          should be fine for most use cases.
+          Du kan redigere <filename>/etc/default/nfs-utils</filename>
+          filen for å endre oppstartsalternativene for NFS nisser. Standarder
+          bør være greit for de fleste brukstilfeller.
         </para>
 
         <indexterm zone="nfs-utils nfs-utils-server-init" revision="systemd">
@@ -359,42 +359,42 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3 id='nfs-utils-client-config'>
-      <title>Client Configuration</title>
+      <title>Klient Konfigurering</title>
 
       <para>
-        <filename>/etc/fstab</filename> contains the directories that
-        are to be mounted on the client. Alternately the partitions can be
-        mounted by using the <command>mount</command> command with the proper
-        options. To mount the <filename class="directory">/home</filename>
-        and <filename class="directory">/usr</filename> partitions, add the
-        following to the <filename>/etc/fstab</filename>:
+        <filename>/etc/fstab</filename> inneholder mappene som
+        skal monteres på klienten. Alternativt kan partisjonene bli
+        montert ved å bruke <command>mount</command> kommandoen med riktige
+        alternativer. For å montere <filename class="directory">/home</filename>
+        og <filename class="directory">/usr</filename> partisjoner, legg til
+        følgende til <filename>/etc/fstab</filename>:
       </para>
 
 <screen role="nodump"><userinput><replaceable>&lt;server-name&gt;</replaceable>:/home  /home nfs   rw,_netdev 0 0
 <replaceable>&lt;server-name&gt;</replaceable>:/usr   /usr  nfs   ro,_netdev 0 0</userinput></screen>
 
       <para>
-        The options which can be used are specified in <command>man 5 nfs
-        </command>. If both the client and server are running recent versions
-        of linux, most of the options will be negotiated (but see the Note
-        above on nfsver=3). You can specify either <literal>rw</literal> or
-        <literal>ro</literal>, <literal>_netdev</literal> if the filesystem is
-        to be automatically mounted at boot, or <literal>noauto</literal> (and
-        perhaps <literal>user</literal>) for other filesystems.
+        Alternativene som kan brukes er spesifisert i <command>man 5 nfs
+        </command>. Hvis både klienten og serveren kjører nyere versjoner
+        av linux, vil de fleste alternativene bli forhandlet (men se merknaden
+        ovenfor på nfsver=3). Du kan spesifisere enten <literal>rw</literal> eller
+        <literal>ro</literal>, <literal>_netdev</literal> hvis filsystemet
+        skal automatisk monteres ved oppstart, eller <literal>noauto</literal> (og
+        kanskje <literal>user</literal>) for andre filsystemer.
       </para>
 
       <para>
-        If the fileserver is not running a recent version of linux, you may
-        need to specify other options.
+        Hvis filserveren ikke kjører en nyere versjon av linux, må du
+        kanskje spesifisere andre alternativer.
       </para>
 
       <para revision="systemd">
-        You may need to enable autofs v4 in your kernel, and add the option
-        <literal>comment=systemd.automount</literal>. Some machines may need
-        this because systemd tries to mount the external filesystems before
-        the network is up. An alternative is to run <command>mount -a</command>
-        as the <systemitem class="username">root</systemitem> user after the
-        system has started.
+        Du må kanskje aktivere autofs v4 i kjernen din, og legge til alternativet
+        <literal>comment=systemd.automount</literal>. Noen maskiner kan trenge
+        dette fordi systemd prøver å montere de eksterne filsystemene før
+        nettverket er oppe. Et alternativ er å kjøre <command>mount -a</command>
+        som <systemitem class="username">root</systemitem> bruker etter
+        at systemet har startet.
       </para>
 
       <indexterm zone="nfs-utils nfs-utils-client-config">
@@ -402,27 +402,27 @@ EOF</userinput></screen>
       </indexterm>
 
       <sect4  id="nfs-utils-client-init">
-        <title><phrase revision="sysv">Boot Script</phrase>
-               <phrase revision="systemd">Systemd Units</phrase></title>
+        <title><phrase revision="sysv">Oppstartsskript</phrase>
+               <phrase revision="systemd">Systemd Enheter</phrase></title>
 
         <note>
           <para>
-            The following <phrase revision="sysv">boot script is</phrase>
-            <phrase revision="systemd">systemd units are</phrase> not required
-            if the nfs-server <phrase revision="sysv">script is</phrase>
-            <phrase revision="systemd">units are</phrase> installed.
+            Følgende <phrase revision="sysv">oppstartsskript er</phrase>
+            <phrase revision="systemd">systemd enheter er</phrase> ikke obligatorisk
+            hvis nfs-server <phrase revision="sysv">skriptet er</phrase>
+            <phrase revision="systemd">enheter er</phrase> installert.
           </para>
         </note>
 
         <para>
-          Install the
+          Installer
           <phrase revision="sysv">
-            <filename>/etc/rc.d/init.d/nfs-client</filename> init script
+            <filename>/etc/rc.d/init.d/nfs-client</filename> init skriptet
           </phrase>
-          <phrase revision="systemd">units</phrase> included in the
+          <phrase revision="systemd">enheter</phrase> inkludert i
           <xref linkend="bootscripts" revision="sysv"/>
-          <xref linkend="systemd-units" revision="systemd"/> package to start
-          the client services at boot.
+          <xref linkend="systemd-units" revision="systemd"/> pakken for å starte
+          klienttjenestene ved oppstart.
         </para>
 
 <screen role="root"><userinput>make install-nfs-client</userinput></screen>
@@ -432,9 +432,9 @@ EOF</userinput></screen>
         </indexterm>
 
         <para revision="sysv">
-          To automatically mount <systemitem class="filesystem">nfs
-          </systemitem> filesystems, clients will also need to install the
-          <filename>netfs</filename> bootscript as described in <xref
+          For å montere <systemitem class="filesystem">nfs
+          </systemitem> filsystemer automatisk, klienter må også installere
+          <filename>netfs</filename> oppstartsskript som beskrevet i <xref
           linkend="postlfs-config-netfs"/>.
         </para>
 
@@ -449,24 +449,24 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>exportfs, mountstats, mount.nfs, mount.nfs4 (link to mount.nfs),
         nfsconf, nfsdclnts, nfsiostat, nfsstat, rpc.mountd, rpc.nfsd, rpc.statd,
         rpcdebug, showmount, sm-notify, start-statd,
-        umount.nfs (link to mount.nfs), and umount.nfs4 (link to mount.nfs)</seg>
+        umount.nfs (link til mount.nfs), og umount.nfs4 (link til mount.nfs)</seg>
         <seg>None</seg>
         <seg>/var/lib/nfs</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -474,7 +474,7 @@ EOF</userinput></screen>
         <term><command>exportfs</command></term>
         <listitem>
           <para>
-            maintains a list of NFS exported file systems
+            opprettholder en liste over NFS eksporterte filsystemer
           </para>
           <indexterm zone="nfs-utils exportfs">
             <primary sortas="b-exportfs">exportfs</primary>
@@ -486,7 +486,7 @@ EOF</userinput></screen>
         <term><command>mountstats</command></term>
         <listitem>
           <para>
-            displays NFS client per-mount statistics
+            viser statistikk for NFS klient per montering
           </para>
           <indexterm zone="nfs-utils mountstats">
             <primary sortas="b-mountstats">mountstats</primary>
@@ -498,7 +498,7 @@ EOF</userinput></screen>
         <term><command>mount.nfs</command></term>
         <listitem>
           <para>
-            is used to mount a network share using NFS
+            brukes til å montere en nettverksressurs brukt av NFS
           </para>
           <indexterm zone="nfs-utils mount.nfs">
             <primary sortas="b-mount.nfs">mount.nfs</primary>
@@ -510,7 +510,7 @@ EOF</userinput></screen>
         <term><command>mount.nfs4</command></term>
         <listitem>
           <para>
-            is used to mount a network share using NFSv4
+            brukes til å montere en nettverksressurs brukt av NFSv4
           </para>
           <indexterm zone="nfs-utils mount.nfs4">
             <primary sortas="b-mount.nfs4">mount.nfs4</primary>
@@ -522,8 +522,8 @@ EOF</userinput></screen>
         <term><command>nfsconf</command></term>
         <listitem>
           <para>
-            can be used to test for and retrieve configuration settings from
-            a range of nfs-utils configuration files
+            kan brukes til å teste og hente konfigurasjonsinnstillinger fra
+            en rekke nfs-utils konfigurasjonsfiler
           </para>
           <indexterm zone="nfs-utils nfsconf">
             <primary sortas="b-nfsconf">nfsconf</primary>
@@ -535,7 +535,7 @@ EOF</userinput></screen>
         <term><command>nfsdclnts</command></term>
         <listitem>
           <para>
-            prints information about NFS clients
+            skriver ut informasjon om NFS klienter
           </para>
           <indexterm zone="nfs-utils nfsdclnts">
             <primary sortas="b-nfsdclnts">nfsdclnts</primary>
@@ -547,7 +547,7 @@ EOF</userinput></screen>
         <term><command>nfsiostat</command></term>
         <listitem>
           <para>
-            reports input/output statistics for network filesystems
+            rapporterer inn-/utdata statistikk for nettverksfilsystemer
           </para>
           <indexterm zone="nfs-utils nfsiostat-nfs-utils">
             <primary sortas="b-nfsiostat-nfs-utils">nfsiostat</primary>
@@ -559,7 +559,7 @@ EOF</userinput></screen>
         <term><command>nfsstat</command></term>
         <listitem>
           <para>
-            displays statistics kept about NFS client and server activity
+            viser statistikk holdt om NFS klienter og server aktivitet
           </para>
           <indexterm zone="nfs-utils nfsstat">
             <primary sortas="b-nfsstat">nfsstat</primary>
@@ -572,8 +572,8 @@ EOF</userinput></screen>
         <term><command>osd_login</command></term>
         <listitem>
           <para>
-            is a script that is a part of the autologin feature
-            mandated by the pnfs-objects standard.
+            er et skript som er en del av autologin funksjonen
+            mandat av pnfs-objects-standarden.
           </para>
           <indexterm zone="nfs-utils osd_login">
             <primary sortas="b-osd_login">osd_login</primary>
@@ -586,7 +586,7 @@ EOF</userinput></screen>
         <term><command>rpc.mountd</command></term>
         <listitem>
           <para>
-            implements the NFS mount protocol on an NFS server
+            implementerer NFS monteringsprotokollen på en NFS server
           </para>
           <indexterm zone="nfs-utils rpc.mountd">
             <primary sortas="b-rpc.mountd">rpc.mountd</primary>
@@ -598,8 +598,8 @@ EOF</userinput></screen>
         <term><command>rpc.nfsd</command></term>
         <listitem>
           <para>
-            implements the user level part of the NFS
-            service on the server
+            implementerer brukernivådelen av NFS
+            tjeneste på serveren
           </para>
           <indexterm zone="nfs-utils rpc.nfsd">
             <primary sortas="b-rpc.nfsd">rpc.nfsd</primary>
@@ -611,8 +611,8 @@ EOF</userinput></screen>
         <term><command>rpc.statd</command></term>
         <listitem>
           <para>
-            is used by the NFS file locking service. Run on both sides,
-            client as well as server, when you want file locking enabled
+            brukes av NFS fillåsetjeneste. Kjør på begge sider,
+            klient så vel som server, når du ønsker fillåsing aktivert
           </para>
           <indexterm zone="nfs-utils rpc.statd">
             <primary sortas="b-rpc.statd">rpc.statd</primary>
@@ -624,7 +624,7 @@ EOF</userinput></screen>
         <term><command>rpcdebug</command></term>
         <listitem>
           <para>
-            sets or clears the kernel's NFS client and server debug flags
+            setter eller sletter kjernens NFS klient og server feilsøkingsflagg
           </para>
           <indexterm zone="nfs-utils rpcdebug">
             <primary sortas="b-rpcdebug">rpcdebug</primary>
@@ -636,7 +636,7 @@ EOF</userinput></screen>
         <term><command>showmount</command></term>
         <listitem>
           <para>
-            displays mount information for an NFS server
+            viser monteringsinformasjon for en NFS server
           </para>
           <indexterm zone="nfs-utils showmount">
             <primary sortas="b-showmount">showmount</primary>
@@ -648,7 +648,7 @@ EOF</userinput></screen>
         <term><command>sm-notify</command></term>
         <listitem>
           <para>
-            is used to send Network Status Monitor reboot messages
+            brukes til å sende meldinger om omstart av Network Status Monitor
           </para>
           <indexterm zone="nfs-utils sm-notify">
             <primary sortas="b-sm-notify">sm-notify</primary>
@@ -660,9 +660,9 @@ EOF</userinput></screen>
         <term><command>start-statd</command></term>
         <listitem>
           <para>
-            is a script called by nfsmount when mounting a filesystem with
-            locking enabled, if statd does not appear to be running. It can be
-            customised with whatever flags are appropriate for the site
+            er et skript kalt av nfsmount når du monterer et filsystem med
+            låsing aktivert, hvis statd ikke ser ut til å kjøre. Det kan bli
+            tilpasset med hvilke flagg som passer for nettstedet
           </para>
           <indexterm zone="nfs-utils start-statd">
             <primary sortas="b-start-statd">start-statd</primary>
@@ -674,7 +674,7 @@ EOF</userinput></screen>
         <term><command>umount.nfs</command></term>
         <listitem>
           <para>
-            is used to unmount a network share using NFS
+            brukes til å demontere en nettverksressurs brukt av NFS
           </para>
           <indexterm zone="nfs-utils umount.nfs">
             <primary sortas="b-umount.nfs">umount.nfs</primary>
@@ -686,7 +686,7 @@ EOF</userinput></screen>
         <term><command>umount.nfs4</command></term>
         <listitem>
           <para>
-            is used to unmount a network share using NFSv4
+            brukes til å demontere en nettverksressurs brukt av NFSv4
           </para>
           <indexterm zone="nfs-utils umount.nfs4">
             <primary sortas="b-umount.nfs4">umount.nfs4</primary>
