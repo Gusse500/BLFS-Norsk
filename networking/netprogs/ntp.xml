@@ -8,8 +8,8 @@
   <!ENTITY ntp-download-ftp  " ">
   <!ENTITY ntp-md5sum        "e1e6b23d2fc75cced41801dbcd6c2561">
   <!ENTITY ntp-size          "6.7 MB">
-  <!ENTITY ntp-buildsize     "108 MB (with tests)">
-  <!ENTITY ntp-time          "0.4 SBU (Using parallelism=4; with tests)">
+  <!ENTITY ntp-buildsize     "108 MB (med tester)">
+  <!ENTITY ntp-time          "0.4 SBU (Bruker parallellisme=4; med tester)">
 ]>
 
 <sect1 id="ntp" xreflabel="ntp-&ntp-version;">
@@ -23,89 +23,89 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to ntp</title>
+    <title>Introduksjon til ntp</title>
 
     <para>
-      The <application>ntp</application> package contains a client and server
-      to keep the time synchronized between various computers over
-      a network. This package is the official reference implementation of the
-      NTP protocol.
+      <application>ntp</application> pakken inneholder en klient og server
+      for å holde tiden synkronisert mellom ulike datamaskiner over
+      et nettverk. Denne pakken er den offisielle referanseimplementeringen av
+      NTP protokollen.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&ntp-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&ntp-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&ntp-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&ntp-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &ntp-md5sum;
+          Nedlasting MD5 sum: &ntp-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &ntp-size;
+          Nedlastingsstørrelse: &ntp-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &ntp-buildsize;
+          Estimert diskplass som kreves: &ntp-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &ntp-time;
+          Estimert byggetid: &ntp-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">ntp Dependencies</bridgehead>
+    <bridgehead renderas="sect3">ntp Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="perl-io-socket-ssl"/>
     </para>
 
 <!-- Tested 4.2.8p11 with neither wget nor lynx on system: Not required.
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref role="runtime" linkend="wget"/> (runtime, for
+      <xref role="runtime" linkend="wget"/> (kjøretid, for
       <command>update-leap</command>)
 <!- - The download code for update-leap uses the File::Fetch perl module,
       which may use wget, or lynx, or some core perl modules, so maybe move
       to optional - ->
     </para>
 -->
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="libcap-pam"/>,
       <xref linkend="libevent"/>,
-      <ulink url="https://www.thrysoee.dk/editline/">libedit</ulink>, and
-      <ulink url="https://www.gnu.org/software/autogen/">libopts from AutoGen</ulink>
+      <ulink url="https://www.thrysoee.dk/editline/">libedit</ulink>, og
+      <ulink url="https://www.gnu.org/software/autogen/">libopts fra AutoGen</ulink>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/ntp"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of ntp</title>
+    <title>Installasjon av ntp</title>
 
     <para>
-      There should be a dedicated user and group to take control
-      of the <command>ntpd</command> daemon after it is
-      started. Issue the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Det bør være en dedikert bruker og gruppe til å ta kontroll
+      over <command>ntpd</command> nissen etter den er
+      startet. Utfør følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>groupadd -g 87 ntp &amp;&amp;
@@ -115,23 +115,23 @@ useradd -c "Network Time Protocol" -d /var/lib/ntp -u 87 \
 <!-- At least one of the issues has been reported upstream. The next para
      is valid for 4.8.2p10 -->
     <para>
-      The <command>update-leap</command> command needs to be fixed in order
-      to run properly:
+      <command>update-leap</command> kommandoen må fikses i
+      for å kjøre skikkelig:
     </para>
 
 <screen><userinput>sed -e 's/"(\\S+)"/"?([^\\s"]+)"?/' \
     -i scripts/update-leap/update-leap.in</userinput></screen>
 
     <para>
-      Now fix an issue introduced with glibc-2.34:
+      Løs nå et problem introdusert med glibc-2.34:
     </para>
 
 <screen><userinput>sed -e 's/#ifndef __sun/#if !defined(__sun) \&amp;\&amp; !defined(__GLIBC__)/' \
     -i libntp/work_thread.c</userinput></screen>
 
     <para>
-      Install <application>ntp</application> by running
-      the following commands:
+      Installer <application>ntp</application> ved å kjøre
+      følgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr         \
@@ -144,7 +144,7 @@ make</userinput></screen>
 
     <!-- https://bugs.ntp.org/show_bug.cgi?id=3688
          It should be fixed in the next ntp release. -->
-    <para>The test suite of this package is broken with GCC 10 or later.</para>
+    <para>Testpakken til denne pakken er ødelagt med GCC 10 eller nyere.</para>
 
 <!--
     <para>
@@ -153,7 +153,7 @@ make</userinput></screen>
 -->
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -162,40 +162,40 @@ install -v -o ntp -g ntp -d /var/lib/ntp</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <envar>CFLAGS="-O2 -g -fPIC"</envar>: This environment variable
-      is necessary to generate Position Independent Code needed for
-      use in the package libraries.
+      <envar>CFLAGS="-O2 -g -fPIC"</envar>: Denne miljøvariabelen
+      er nødvendig for å generere posisjonsuavhengig kode nødvendig for
+      bruk i pakkebibliotekene.
     </para>
 
     <para>
-      <parameter>--bindir=/usr/sbin</parameter>: This parameter places
-      the administrative programs in <filename
+      <parameter>--bindir=/usr/sbin</parameter>: Denne parameteren plasserer
+      de administrative programmene i <filename
       class="directory">/usr/sbin</filename>.
     </para>
 
     <para>
-      <parameter>--enable-linuxcaps</parameter>: ntpd is run as user
-      ntp, so use Linux capabilities for non-root clock control.
+      <parameter>--enable-linuxcaps</parameter>: ntpd kjøres som bruker
+      ntp, så bruk Linux-funksjoner for ikke-root klokkekontroll.
     </para>
 
     <para>
-      <parameter>--with-lineeditlibs=readline</parameter>: This switch
-      enables <application>Readline</application> support for
-      <command>ntpdc</command> and <command>ntpq</command> programs. If omitted,
-      <application>libedit</application> will be used if installed, otherwise no
-      readline capabilities will be compiled.
+      <parameter>--with-lineeditlibs=readline</parameter>: Denne bryteren
+      aktiverer <application>Readline</application> støtte for
+      <command>ntpdc</command> og <command>ntpq</command> programmer. Hvis utelatt,
+      <application>libedit</application> brukes hvis den er installert, ellers ingen
+      readline funksjoner vil bli kompilert.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring ntp</title>
+    <title>Konfigurere ntp</title>
 
     <sect3 id="ntp-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/ntp.conf</filename>
@@ -208,23 +208,23 @@ install -v -o ntp -g ntp -d /var/lib/ntp</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        The following configuration file first defines various ntp
-        servers with open access from different continents. Second, it
-        creates a drift file where <command>ntpd</command> stores the
-        frequency offset and a pid file to store the
-        <command>ntpd</command> process ID. Third, it defines the location
-        for the leap-second definition file
-        <filename>/etc/ntp.leapseconds</filename>, that the
-        <command>update-leap</command> script checks and updates, when
-        necessary. This script can be run as a cron job and the
-        <application>ntp</application> developers recommend a frequency of
-        about three weeks for the updates. Since the documentation included
-        with the package is sparse, visit the ntp website at
-        <ulink url="https://www.ntp.org/"/> and
-        <ulink url="https://www.ntppool.org/"/> for more information.
+        Følgende konfigurasjonsfil definerer først forskjellige ntp
+        servere med åpen tilgang fra forskjellige kontinenter. For det andre, den
+        oppretter en drift fil hvor <command>ntpd</command> lagrer
+        frekvensforskyvning og en pid-fil for å lagre
+        <command>ntpd</command> prosess-ID. For det tredje definerer den plasseringen
+        for sprangsekund definisjonsfilen
+        <filename>/etc/ntp.leapseconds</filename>, som
+        <command>update-leap</command> skript sjekker og oppdateringer, når
+        nødvendig. Dette skriptet kan kjøres som en cron jobb og
+        <application>ntp</application> utviklere anbefaler en frekvens på
+        ca tre uker for oppdateringene. Siden dokumentasjonen inkludert
+        med pakken er sparsom, besøk ntp nettstedet på
+        <ulink url="https://www.ntp.org/"/> og
+        <ulink url="https://www.ntppool.org/"/> for mer informasjon.
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/ntp.conf &lt;&lt; "EOF"
@@ -250,8 +250,8 @@ leapfile  /var/lib/ntp/ntp.leapseconds</literal>
 EOF</userinput></screen>
 
       <para>
-        You may wish to add a <quote>Security session</quote>. For
-        explanations, see <ulink url=
+        Det kan være lurt å legge til en <quote>Security session</quote>. For
+        forklaringer, se <ulink url=
         "https://www.eecis.udel.edu/~mills/ntp/html/accopt.html#restrict"/>.
       </para>
 
@@ -267,25 +267,25 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3  id="ntp-init">
-      <title>Synchronizing the Time</title>
+      <title>Synkronisering av tiden</title>
 
       <para>
-        There are two options. Option one is to run <command>ntpd</command>
-        continuously and allow it to synchronize the time in a gradual manner.
-        The other option is to run <command>ntpd</command> periodically (using
-        cron) and update the time each time <command>ntpd</command> is
-        scheduled.
+        Det er to alternativer. Alternativ en er å kjøre <command>ntpd</command>
+        kontinuerlig og la den synkronisere tiden på en gradvis måte.
+        Det andre alternativet er å kjøre <command>ntpd</command> med jevne mellomrom (ved hjelp av
+        cron) og oppdater tiden hver gang <command>ntpd</command> er
+        planlagt.
       </para>
 
       <para>
-        If you choose Option one, then install the
+        Hvis du velger alternativ en, installer da
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/ntp</filename>
-        init script</phrase>
+        init skriptet</phrase>
         <phrase revision="systemd"><filename>ntpd.service</filename>
-        unit</phrase>
-        included in the
+        enheten</phrase>
+        inkludert i
         <xref linkend="bootscripts" revision="sysv"/>
-        <xref linkend="systemd-units" revision="systemd"/> package.
+        <xref linkend="systemd-units" revision="systemd"/> pakken.
       </para>
 
       <indexterm zone="ntp ntp-init" revision="sysv">
@@ -299,23 +299,23 @@ EOF</userinput></screen>
 <screen role="root"><userinput>make install-ntpd</userinput></screen>
 
       <para>
-        If you prefer to run <command>ntpd</command> periodically, add the
-        following command to <systemitem class="username">root</systemitem>'s
+        Hvis du foretrekker å kjøre <command>ntpd</command> med jevne mellomrom, legg til
+        følgende kommando til <systemitem class="username">root</systemitem> sin
         <filename>crontab</filename>:
       </para>
 
 <screen><literal>ntpd -q</literal></screen>
 
       <para revision="sysv">
-        Execute the following command if you would like to set the hardware
-        clock to the current system time at shutdown and reboot:
+        Utfør følgende kommando hvis du vil angi maskinvareklokke
+        til gjeldende systemtid ved avslutning og omstart:
       </para>
 
 <screen role="root" revision="sysv"><userinput>ln -v -sf ../init.d/setclock /etc/rc.d/rc0.d/K46setclock &amp;&amp;
 ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
 
       <para revision="sysv">
-        The other way around is already set up by LFS.
+        Omvendt er allerede satt opp av LFS.
       </para>
 
     </sect3>
@@ -323,25 +323,25 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>calc_tickadj, ntp-keygen, ntp-wait, ntpd, ntpdate, ntpdc, ntpq,
-        ntptime, ntptrace, sntp, tickadj and update-leap</seg>
+        ntptime, ntptrace, sntp, tickadj og update-leap</seg>
         <seg>None</seg>
         <seg>/usr/share/ntp,
-        /usr/share/doc/ntp-4.2.8 and
+        /usr/share/doc/ntp-4.2.8 og
         /var/lib/ntp</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -349,7 +349,7 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>calc_tickadj</command></term>
         <listitem>
           <para>
-            calculates optimal value for tick given ntp drift file
+            beregner optimal verdi for tick gitt ntp drift fil
           </para>
           <indexterm zone="ntp calc_tickadj">
             <primary sortas="b-calc_tickadj">calc_tickadj</primary>
@@ -361,8 +361,8 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>ntp-keygen</command></term>
         <listitem>
           <para>
-            generates cryptographic data files used by the NTPv4 authentication
-            and identification schemes
+            genererer kryptografiske datafiler som brukes av NTPv4 autentiseringen
+            og identifiseringsordninger
           </para>
           <indexterm zone="ntp ntp-keygen">
             <primary sortas="b-ntp-keygen">ntp-keygen</primary>
@@ -374,8 +374,8 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>ntp-wait</command></term>
         <listitem>
           <para>
-            is useful at boot time, to delay the boot sequence until
-            <command>ntpd</command> has set the time
+            er nyttig ved oppstart, for å utsette oppstartssekvensen til
+            <command>ntpd</command> har satt tiden
           </para>
           <indexterm zone="ntp ntp-wait">
             <primary sortas="b-ntp-wait">ntp-wait</primary>
@@ -387,9 +387,9 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>ntpd</command></term>
         <listitem>
           <para>
-            is a ntp daemon that runs in the background and keeps
-            the date and time synchronized based on response from configured
-            ntp servers. It also functions as a ntp server
+            er en ntp nisse som kjører i bakgrunnen og beholder
+            dato og klokkeslett synkronisert basert på svar fra konfigurerte
+            ntp servere. Den fungerer også som en ntp server
           </para>
           <indexterm zone="ntp ntpd">
             <primary sortas="b-ntpd">ntpd</primary>
@@ -401,8 +401,8 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>ntpdate</command></term>
         <listitem>
           <para>
-            is a client program that sets the date and time based on
-            the response from an ntp server. This command is deprecated
+            er et klientprogram som setter dato og klokkeslett basert på
+            svaret fra en ntp server. Denne kommandoen er utdatert
           </para>
           <indexterm zone="ntp ntpdate">
             <primary sortas="b-ntpdate">ntpdate</primary>
@@ -414,8 +414,8 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>ntpdc</command></term>
         <listitem>
           <para>
-            is used to query the ntp daemon about its current state
-            and to request changes in that state
+            brukes til å spørre ntp nissen om dens nåværende tilstand
+            og å be om endringer i den tilstanden
           </para>
           <indexterm zone="ntp ntpdc">
             <primary sortas="b-ntpdc">ntpdc</primary>
@@ -427,8 +427,8 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>ntpq</command></term>
         <listitem>
           <para>
-            is a utility program used to monitor <command>ntpd</command>
-            operations and determine performance
+            er et hjelpeprogram som brukes til å overvåke <command>ntpd</command>
+            operasjoner og bestemme ytelse
           </para>
           <indexterm zone="ntp ntpq">
             <primary sortas="b-ntpq">ntpq</primary>
@@ -440,7 +440,7 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>ntptime</command></term>
         <listitem>
           <para>
-            reads and displays time-related kernel variables
+            leser og viser tidsrelaterte kjernevariabler
           </para>
           <indexterm zone="ntp ntptime">
             <primary sortas="b-ntptime">ntptime</primary>
@@ -452,7 +452,7 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>ntptrace</command></term>
         <listitem>
           <para>
-            traces a chain of ntp servers back to the primary source
+            sporer en kjede av ntp servere tilbake til primærkilden
           </para>
           <indexterm zone="ntp ntptrace">
             <primary sortas="b-ntptrace">ntptrace</primary>
@@ -464,7 +464,7 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>sntp</command></term>
         <listitem>
           <para>
-            is a Simple Network Time Protocol (SNTP) client
+            er en Simple Network Time Protocol (SNTP) klient
           </para>
           <indexterm zone="ntp sntp">
             <primary sortas="b-sntp">sntp</primary>
@@ -476,9 +476,9 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>tickadj</command></term>
         <listitem>
           <para>
-            reads, and optionally modifies, several timekeeping-related
-            variables in older kernels that do not have support for precision
-            timekeeping
+            leser, og eventuelt modifiserer, flere tidtakingsrelaterte
+            variabler i eldre kjerner som ikke har støtte for presisjon
+            tidtaking
           </para>
           <indexterm zone="ntp tickadj">
             <primary sortas="b-tickadj">tickadj</primary>
@@ -490,8 +490,8 @@ ln -v -sf ../init.d/setclock /etc/rc.d/rc6.d/K46setclock</userinput></screen>
         <term><command>update-leap</command></term>
         <listitem>
           <para>
-            is a script to verify and, if necessary, update the leap-second
-            definition file
+            er et skript for å bekrefte og, om nødvendig, oppdatere sprangsekundet
+            sin definisjonsfil
           </para>
           <indexterm zone="ntp update-leap">
             <primary sortas="b-update-leap">update-leap</primary>
