@@ -8,8 +8,8 @@
   <!ENTITY rsync-download-ftp  " ">
   <!ENTITY rsync-md5sum        "f216f350ef56b9ba61bc313cb6ec2ed6">
   <!ENTITY rsync-size          "1.1 MB">
-  <!ENTITY rsync-buildsize     "9.6 MB (with tests; add 24 MB for HTML API documentation)">
-  <!ENTITY rsync-time          "0.7 SBU (with tests)">
+  <!ENTITY rsync-buildsize     "9.6 MB (med tester; legg til 24 MB for HTML API dokumentasjon)">
+  <!ENTITY rsync-time          "0.7 SBU (med tester)">
 ]>
 
 <sect1 id="rsync" xreflabel="rsync-&rsync-version;">
@@ -23,80 +23,80 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to rsync</title>
+    <title>Introduksjon til rsync</title>
 
     <para>
-      The <application>rsync</application> package contains the
-      <command>rsync</command> utility. This is useful for synchronizing large
-      file archives over a network.
+      <application>rsync</application> pakken inneholder
+      <command>rsync</command> verktøyet. Dette er nyttig for synkronisering av store
+      filarkiver over et nettverk.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&rsync-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&rsync-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&rsync-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&rsync-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &rsync-md5sum;
+          Nedlasting MD5 sum: &rsync-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &rsync-size;
+          Nedlastingsstørrelse: &rsync-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &rsync-buildsize;
+          Estimert diskplass som kreves: &rsync-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &rsync-time;
+          Estimert byggetid: &rsync-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">rsync Dependencies</bridgehead>
+    <bridgehead renderas="sect3">rsync Avhengigheter</bridgehead>
 
     <!-- This does now use OpenSSL and zstd from LFS. -->
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="popt"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="doxygen"/>,
-      <ulink url="https://lz4.github.io/lz4/">lz4</ulink>, and
+      <ulink url="https://lz4.github.io/lz4/">lz4</ulink>, og
       <ulink url="https://cyan4973.github.io/xxHash/">xxhash</ulink>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/rsync"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of rsync</title>
+    <title>Installasjon av rsync</title>
 
     <para>
-      For security reasons, running the <application>rsync</application>
-      server as an unprivileged user and group is encouraged. If you intend to
-      run <command>rsync</command> as a daemon, create the
-      <systemitem class="username">rsyncd</systemitem> user and group
-      with the following commands issued by the
-      <systemitem class="username">root</systemitem> user:
+      Av sikkerhetsgrunner å kjøre <application>rsync</application>
+      server som en uprivilegert bruker og gruppe oppfordres. Hvis du har tenkt å
+      kjøre <command>rsync</command> som en nisse, opprett
+      <systemitem class="username">rsyncd</systemitem> bruker og gruppe
+      med følgende kommandoer utstedt av
+      <systemitem class="username">root</systemitem> brukeren:
     </para>
 
 <screen role="root"><userinput>groupadd -g 48 rsyncd &amp;&amp;
@@ -104,8 +104,8 @@ useradd -c "rsyncd Daemon" -m -d /home/rsync -g rsyncd \
     -s /bin/false -u 48 rsyncd</userinput></screen>
 
     <para>
-      Install <application>rsync</application> by running the following
-      commands:
+      Installer <application>rsync</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr    \
@@ -115,25 +115,25 @@ useradd -c "rsyncd Daemon" -m -d /home/rsync -g rsyncd \
 make</userinput></screen>
 
     <para>
-      If you have <xref linkend="doxygen"/> installed and wish to
-      build HTML API documentation, issue:
+      Hvis du har <xref linkend="doxygen"/> installert og ønsker å
+      bygge HTML API dokumentasjon, kjør:
     </para>
 
 <screen remap="doc"><userinput>doxygen</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make check</command>.
+      For å teste resultatene, kjør: <command>make check</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role='root'><userinput>make install</userinput></screen>
 
     <para>
-      If you built the documentation, install it using the following
-      commands as the <systemitem class="username">root</systemitem> user:
+      Hvis du har laget dokumentasjonen, installer den ved å bruke følgende
+      kommandoer som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role='root'
@@ -143,32 +143,32 @@ install -v -m644 dox/html/*  /usr/share/doc/rsync-&rsync-version;/api</userinput
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--disable-lz4</parameter>: This switch disables LZ4 compression
-      support. Note that it uses the superior 'zstd' algorithm when this switch
-      is in use, and zstd is provided in LFS.
+      <parameter>--disable-lz4</parameter>: Denne bryteren deaktiverer LZ4 komprimerings
+      støtte. Merk at den bruker den overlegne 'zstd' algoritmen når denne bryteren
+       er i bruk, og zstd er gitt i LFS.
     </para>
 
     <para>
-      <parameter>--disable-xxhash</parameter>: This switch disables advanced
-      xxhash checksum support. Remove this switch if you have installed
+      <parameter>--disable-xxhash</parameter>: Denne bryteren deaktiverer avansert
+      xxhash kontrollsum støtte. Fjern denne bryteren hvis du har installert
       <ulink url="https://cyan4973.github.io/xxHash/">xxhash</ulink>.
     </para>
 
     <para>
-      <parameter>--without-included-zlib</parameter>: This switch enables
-      compilation with the system-installed zlib library.
+      <parameter>--without-included-zlib</parameter>: Denne bryteren aktiverer
+      kompilering med det systeminstallerte zlib biblioteket.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring rsync</title>
+    <title>Konfigurere rsync</title>
 
     <sect3 id="rsync-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/rsyncd.conf</filename>
@@ -181,17 +181,17 @@ install -v -m644 dox/html/*  /usr/share/doc/rsync-&rsync-version;/api</userinput
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        For client access to remote files, you may need to install the
-        <xref linkend="openssh"/> package to connect to the remote server.
+        For klienttilgang til eksterne filer, må du kanskje installere
+        <xref linkend="openssh"/> pakken for å koble til den eksterne serveren.
       </para>
 
       <para>
-        This is a simple download-only configuration to set up running
-        <command>rsync</command> as a server. See the rsyncd.conf(5)
-        man-page for additional options (i.e., user authentication).
+        Dette er en enkel nedlastingskonfigurasjon for å sette opp kjørende
+        <command>rsync</command> som en server. Se rsyncd.conf(5)
+        manside for flere alternativer (dvs. brukerautentisering).
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/rsyncd.conf &lt;&lt; "EOF"
@@ -212,56 +212,56 @@ use chroot = yes
 EOF</userinput></screen>
 
       <para>
-        You can find additional configuration information and general
-        documentation about <command>rsync</command> at
+        Du kan finne ytterligere konfigurasjonsinformasjon og generell
+        dokumentasjon om <command>rsync</command> på
         <ulink url="https://rsync.samba.org/documentation.html"/>.
       </para>
 
     </sect3>
 
     <sect3 id="rsync-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para>
-        Note that you only need to start the
-        <application>rsync</application> server if you want to provide an
-        <application>rsync</application> archive on your local machine.
-        You don't need this <phrase revision="sysv">script</phrase>
-        <phrase revision="systemd">unit</phrase> to run the
-        <application>rsync</application> client.
+        Merk at du bare trenger å starte
+        <application>rsync</application> server hvis du vil tilby et
+        <application>rsync</application> arkiv på din lokale maskin.
+        Du trenger ikke dette <phrase revision="sysv">skriptet</phrase>
+        <phrase revision="systemd">enheten</phrase> for å kjøre
+        <application>rsync</application> klienten.
       </para>
 
       <para>
-        Install the
+        Installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/rsyncd</filename>
-        init script</phrase>
+        init skriptet</phrase>
         <phrase revision="systemd"><filename>rsyncd.service</filename>
-        unit</phrase> included in the
+        enheten</phrase> inkludert i
         <xref linkend="bootscripts" revision="sysv"/>
-        <xref linkend="systemd-units" revision="systemd"/> package.
+        <xref linkend="systemd-units" revision="systemd"/> pakken.
       </para>
 
 <screen role="root"><userinput>make install-rsyncd</userinput></screen>
 
       <note revision="systemd">
         <para>
-          This package comes with two types of units: A service file and a
-          socket file. The service file will start rsync daemon once at boot
-          and it will keep running until the system shuts down. The socket file
-          will make systemd listen on rsync port (Default 873, needs to be
-          edited for anything else) and will start rsync daemon when something
-          tries to connect to that port and stop the daemon when the connection
-          is terminated. This is called socket activation and is analogous to
-          using <application>{,x}inetd</application> on a SysVinit based
+          Denne pakken kommer med to typer enheter: En tjenestefil og en
+          socket fil. Tjenestefilen vil starte rsync nissen en gang ved oppstart
+          og den vil fortsette å kjøre til systemet slår seg av. Socket filen
+          vil få systemd til å lytte på rsync porten (standard 873, må
+          redigeres for noe annet) og vil starte rsync nissen når noe
+          prøver å koble til den porten og stoppe nissen når tilkoblingen
+          er avsluttet. Dette kalles socket aktivering og er analogt med
+          å bruke <application>{,x}inetd</application> på et SysVinit basert
           system.
         </para>
 
         <para>
-          By default, the first method is used - rsync daemon is started
-          at boot and stopped at shutdown. If the socket method is desired, you
-          need to run as the
-          <systemitem class="username">root</systemitem> user:
+          Som standard brukes den første metoden - rsync nissen startes
+          ved oppstart og stoppet ved avstengning. Hvis socket metoden er ønsket,
+          trenger du å kjøre som
+          <systemitem class="username">root</systemitem> bruker:
         </para>
 
 <screen role="nodump"><userinput>systemctl stop rsyncd &amp;&amp;
@@ -270,8 +270,8 @@ systemctl enable rsyncd.socket &amp;&amp;
 systemctl start rsyncd.socket</userinput></screen>
 
         <para>
-          Note that socket method is only useful for remote backups. For
-          local backups you'll need the service method.
+          Merk at socket metoden bare er nyttig for ekstern sikkerhetskopiering. Til
+          lokale sikkerhetskopier trenger du tjenestemetoden.
         </para>
       </note>
 
@@ -280,22 +280,22 @@ systemctl start rsyncd.socket</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>rsync and rsync-ssl</seg>
-        <seg>None</seg>
-        <seg>Optionally, /usr/share/doc/rsync-&rsync-version;</seg>
+        <seg>rsync og rsync-ssl</seg>
+        <seg>Ingen</seg>
+        <seg>Valgfritt, /usr/share/doc/rsync-&rsync-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -303,12 +303,12 @@ systemctl start rsyncd.socket</userinput></screen>
         <term><command>rsync</command></term>
         <listitem>
           <para>
-            is a replacement for <command>rcp</command> (and
-            <command>scp</command>) that has many more features. It uses the
-            <quote>rsync algorithm</quote> which provides a very fast method of
-            syncing remote files. It does this by sending just the differences
-            in the files across the link, without requiring that both sets of
-            files are present at one end of the link beforehand
+            er en erstatning for <command>rcp</command> (og
+            <command>scp</command>) som har mange flere funksjoner. Den bruker
+            <quote>rsync algoritme</quote> som gir en veldig rask metode for
+            synkronisering av eksterne filer. Den gjør dette ved å sende bare forskjellene
+            i filene på tvers av lenken, uten at det kreves at begge sett med
+            filer er tilstede i den ene enden av lenken på forhånd
           </para>
           <indexterm zone="rsync rsync-prog">
             <primary sortas="b-rsync">rsync</primary>
@@ -320,8 +320,8 @@ systemctl start rsyncd.socket</userinput></screen>
         <term><command>rsync-ssl</command></term>
         <listitem>
           <para>
-            is a helper script used when connecting to an rsync daemon that
-            has SSL support built in
+            er et hjelpeskript som brukes når du kobler til en rsync nissen som
+            har SSL støtte innebygd
           </para>
           <indexterm zone="rsync rsync-ssl">
             <primary sortas="b-rsync-ssl">rsync-ssl</primary>
