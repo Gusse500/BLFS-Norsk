@@ -9,7 +9,7 @@
   <!ENTITY rpcbind-md5sum        "2d84ebbb7d6fb1fc3566d2d4b37f214b">
   <!ENTITY rpcbind-size          "124 KB">
   <!ENTITY rpcbind-buildsize     "1.6 MB">
-  <!ENTITY rpcbind-time          "less than 0.1 SBU">
+  <!ENTITY rpcbind-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="rpcbind" xreflabel="rpcbind-&rpcbind-version;">
@@ -23,80 +23,80 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to rpcbind</title>
+    <title>Introduksjon til rpcbind</title>
 
     <para>
-      The <application>rpcbind</application> program is a replacement for
-      <application>portmap</application>.  It is required for import or export
-      of Network File System (NFS) shared directories.
+      <application>rpcbind</application> programmet er en erstatning for
+      <application>portmap</application>.  Det kreves for import eller eksport
+      av delte mapper for Network File System (NFS).
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&rpcbind-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&rpcbind-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&rpcbind-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&rpcbind-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &rpcbind-md5sum;
+          Nedlasting MD5 sum: &rpcbind-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &rpcbind-size;
+          Nedlastingsstørrelse: &rpcbind-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &rpcbind-buildsize;
+          Estimert diskplass som kreves: &rpcbind-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &rpcbind-time;
+          Estimert byggetid: &rpcbind-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/rpcbind-&rpcbind-version;-vulnerability_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">rpcbind Dependencies</bridgehead>
+    <bridgehead renderas="sect3">rpcbind Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="libtirpc"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/rpcbind"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of rpcbind</title>
+    <title>Installasjon av rpcbind</title>
 
     <para revision="systemd">
-      There should be a dedicated user and group to take control
-      of the <command>rpcbind</command> daemon after it is started.
-      Issue the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Det bør være en dedikert bruker og gruppe til å ta kontroll
+      over <command>rpcbind</command> nissen etter at den er startet.
+      Utfør følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="systemd"><userinput>groupadd -g 28 rpc &amp;&amp;
@@ -105,15 +105,15 @@ useradd -c "RPC Bind Daemon Owner" -d /dev/null -g rpc \
 
     <!-- Packages should adapt to standards, not the other way around -->
     <para>
-      In order to get <application>rpcbind</application> to work
-      properly, first fix the package to use correct service name:
+      For å få <application>rpcbind</application> til å virke
+      riktig, fiks først pakken for å bruke riktig tjenestenavn:
     </para>
 
 <screen><userinput>sed -i "/servname/s:rpcbind:sunrpc:" src/rpcbind.c</userinput></screen>
 
     <para>
-      Install <application>rpcbind</application> by running the following
-      commands:
+      Installer <application>rpcbind</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <!-- Previously, there were switches for bindir= and sbindir= pointing to /sbin
@@ -139,11 +139,11 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -151,43 +151,43 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para revision="sysv">
-      <command>--with-rpcuser=root</command>: This works
-      around an error in the configure script.
+      <command>--with-rpcuser=root</command>: Dette virker
+      rundt en feil i konfigureringsskriptet.
     </para>
 
     <para revision="sysv">
       <command>--without-systemdsystemunitdir</command>:
-      This version of BLFS does not support systemd.
+      Denne versjonen av BLFS støtter ikke systemd.
     </para>
 
     <para revision="systemd">
       <parameter>--with-rpcuser=rpc</parameter>:
-      This switch is used so the <command>rpcbind</command> daemon will
-      run as an unprivileged user instead of the
-      <systemitem class="username">root</systemitem> user.
+      Denne bryteren brukes slik at <command>rpcbind</command> nissen vil
+      kjøre som en uprivilegert bruker i stedet for
+      <systemitem class="username">root</systemitem> bruker.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring rpcbind</title>
+    <title>Konfigurere rpcbind</title>
 
     <sect3 id="rpcbind-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Unit</phrase></title>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        Install the
+        Installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/rpcbind</filename>
-        init script</phrase> included in the
-        <xref linkend="bootscripts"/> package.
+        init skriptet</phrase> inkludert i
+        <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-         Enable the systemd unit installed with the package:
+         Aktiver systemd enheten installert med pakken:
       </para>
 
       <indexterm zone="rpcbind rpcbind-init" revision="sysv">
@@ -203,22 +203,22 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>rpcbind and rpcinfo</seg>
-        <seg>None</seg>
-        <seg>None</seg>
+        <seg>rpcbind og rpcinfo</seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -226,9 +226,9 @@ make</userinput></screen>
         <term><command>rpcbind</command></term>
         <listitem>
           <para>
-            is a server that converts RPC program numbers into universal
-            addresses.  It must be running on the host to be able to make RPC
-            calls on a server on that machine
+            er en server som konverterer RPC programnumre til universelle
+            adresser. Den må kjøres på verten for å kunne lage RPC
+            anrop til en server på den maskinen
           </para>
           <indexterm zone="rpcbind rpcbind-prog">
             <primary sortas="b-rpcbind">rpcbind</primary>
@@ -240,8 +240,8 @@ make</userinput></screen>
         <term><command>rpcinfo</command></term>
         <listitem>
           <para>
-            makes an RPC call to an RPC server and reports data according
-            to the requested options
+            foretar et RPC kall til en RPC server og rapporterer data iht
+            til de forespurte alternativene
           </para>
           <indexterm zone="rpcbind rpcinfo">
             <primary sortas="b-rpcinfo">rpcinfo</primary>
