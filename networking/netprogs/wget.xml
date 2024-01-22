@@ -10,8 +10,8 @@
            "&gnu-ftp;/wget/wget-&wget-version;.tar.gz">
   <!ENTITY wget-md5sum        "e89496b15f8bf039d723926fae4d91f5">
   <!ENTITY wget-size          "4.8 MB">
-  <!ENTITY wget-buildsize     "40 MB (add 26 MB for tests)">
-  <!ENTITY wget-time          "0.3 SBU (add 0.2 SBU for tests)">
+  <!ENTITY wget-buildsize     "40 MB (legg til 26 MB for tester)">
+  <!ENTITY wget-time          "0.3 SBU (legg til 0.2 SBU for tester)">
 ]>
 
 <sect1 id="wget" xreflabel="Wget-&wget-version;">
@@ -25,77 +25,77 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Wget</title>
+    <title>Introduksjon til Wget</title>
 
     <para>
-      The <application>Wget</application> package contains a utility useful for
-      non-interactive downloading of files from the Web.
+      <application>Wget</application> pakken inneholder et verktøy som er nyttig for
+      ikke-interaktiv nedlasting av filer fra nettet.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&wget-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&wget-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&wget-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&wget-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &wget-md5sum;
+          Nedlasting MD5 sum: &wget-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &wget-size;
+          Nedlastingsstørrelse: &wget-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &wget-buildsize;
+          Estimert diskplass som kreves: &wget-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &wget-time;
+          Estimert byggetid: &wget-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Wget Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Wget Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref role="runtime" linkend="make-ca"/> (runtime)
+      <xref role="runtime" linkend="make-ca"/> (kjøretid)
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gnutls"/>,
-      <xref linkend="perl-http-daemon"/> (for the test suite),
-      <xref linkend="perl-io-socket-ssl"/> (for the test suite),
+      <xref linkend="perl-http-daemon"/> (for testpakken),
+      <xref linkend="perl-io-socket-ssl"/> (for testpakken),
       <xref linkend="libidn2"/>,
       <xref linkend="libpsl"/>,
-      <xref linkend="pcre"/> or <xref linkend="pcre2"/>, and
-      <xref linkend="valgrind"/> (for the test suite)
+      <xref linkend="pcre"/> eller <xref linkend="pcre2"/>, og
+      <xref linkend="valgrind"/> (for testpakken)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/wget"/>
+      Brukernotater: <ulink url="&blfs-wiki;/wget"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Wget</title>
+    <title>Installasjon av Wget</title>
 
     <para>
-      Install <application>Wget</application> by running the following commands:
+      Installer <application>Wget</application> ved å kjøre følgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr      \
@@ -104,7 +104,7 @@
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make check</command>.
+      For å teste resultatene, kjør: <command>make check</command>.
     </para>
 
     <!-- libwww-perl/HTTP-Daemon/#21
@@ -112,50 +112,50 @@ make</userinput></screen>
          and replaced with IO::Socket::IP, which fixes the
          problem
     <para>
-      HTTPS tests are known to fail if Perl module IO::Socket::INET6
-      is installed.
+      HTTPS tester er kjent for å mislykkes hvis Perl modulen IO::Socket::INET6
+      er installert.
     </para>
 -->
     <para>
-      Some tests may fail when Valgrind tests are enabled.
+      Noen tester kan mislykkes når Valgrind tester er aktivert.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--sysconfdir=/etc</parameter>: This relocates the configuration
-      file from <filename class="directory">/usr/etc</filename> to
+      <parameter>--sysconfdir=/etc</parameter>: Dette flytter konfigurasjonsfilen
+      fra <filename class="directory">/usr/etc</filename> til
       <filename class="directory">/etc</filename>.
     </para>
 
     <para>
-      <parameter>--with-ssl=openssl</parameter>: This allows the program to use
-      openssl instead of <xref linkend="gnutls"/>.
+      <parameter>--with-ssl=openssl</parameter>: Dette gjør at programmet bruker
+      openssl i stedet for <xref linkend="gnutls"/>.
     </para>
 
     <para>
-      <option>--enable-valgrind-tests</option>: This allows the tests to be
-      run under valgrind.
+      <option>--enable-valgrind-tests</option>: Dette gjør at testene kan bli
+      kjørt under valgrind.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Wget</title>
+    <title>Konfigurere Wget</title>
 
     <sect3 id="wget-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
-        <filename>/etc/wgetrc</filename> and
+        <filename>/etc/wgetrc</filename> og
         <filename>~/.wgetrc</filename>
       </para>
 
@@ -169,9 +169,9 @@ make</userinput></screen>
 
 <!--
       <para>
-        If you have installed <xref linkend="make-ca"/> and you want
-        <application>Wget</application> to use them, as the
-        <systemitem class="username">root</systemitem> user:
+        Hvis du har installert <xref linkend="make-ca"/> og du vil at
+        <application>Wget</application> skal bruke dem, som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>echo ca-directory=/etc/ssl/certs >> /etc/wgetrc</userinput></screen>
@@ -182,28 +182,28 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
           wget
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -211,9 +211,9 @@ make</userinput></screen>
         <term><command>wget</command></term>
         <listitem>
           <para>
-            retrieves files from the Web using the HTTP, HTTPS and FTP
-            protocols.  It is designed to be non-interactive, for background or
-            unattended operations
+            henter filer fra nettet ved hjelp av HTTP, HTTPS og FTP
+            protokoller. Den er designet for å være ikke-interaktiv, for bakgrunn eller
+            ubetjente operasjoner
           </para>
           <indexterm zone="wget wget-prog">
             <primary sortas="b-wget">wget</primary>
