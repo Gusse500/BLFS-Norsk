@@ -23,99 +23,99 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Avahi</title>
+    <title>Introduksjon til Avahi</title>
 
     <para>
-      The <application>Avahi</application> package is a system which
-      facilitates service discovery on a local network.
+      <application>Avahi</application> pakken er et system som
+      forenkler tjenesteoppdagelse på et lokalt nettverk.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&avahi-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&avahi-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&avahi-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&avahi-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &avahi-md5sum;
+          Nedlasting MD5 sum: &avahi-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &avahi-size;
+          Nedlastingsstørrelse: &avahi-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &avahi-buildsize;
+          Estimert diskplass som kreves: &avahi-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &avahi-time;
+          Estimert byggetid: &avahi-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/avahi-&avahi-version;-ipv6_race_condition_fix-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Avahi Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Avahi Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="gobject-introspection"/>,
       <xref linkend="gtk2"/>,
       <xref linkend="gtk3"/>,
       <xref linkend="libdaemon"/>,
-      <xref linkend="libglade"/>, and
+      <xref linkend="libglade"/>, og
       <xref linkend="qt5"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="dbus-python"/>,
       <xref linkend="libevent"/>,
       <xref linkend="pygtk"/>,
-      <xref linkend="doxygen"/> and
+      <xref linkend="doxygen"/> og
       <ulink url="https://sourceforge.net/projects/xmltoman/">xmltoman</ulink>
-      (for generating documentation)
+      (for å generere dokumentasjon)
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/avahi"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Avahi</title>
+    <title>Installasjon av Avahi</title>
 
     <para>
-      There should be a dedicated user and group to take control
-      of the <command>avahi-daemon</command> daemon after it is
-      started. Issue the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Det bør være en dedikert bruker og gruppe til å ta kontroll
+      på <command>avahi-daemon</command> nissen etter at det er
+      startet. Utfør følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>groupadd -fg 84 avahi &amp;&amp;
@@ -123,22 +123,22 @@ useradd -c "Avahi Daemon Owner" -d /run/avahi-daemon -u 84 \
         -g avahi -s /bin/false avahi</userinput></screen>
 
     <para>
-      There should also be a dedicated privileged access group for
-      <application>Avahi</application> clients. Issue the following command as
-      the <systemitem class="username">root</systemitem> user:
+      Det bør også være en dedikert privilegert tilgangsgruppe for
+      <application>Avahi</application> klienter. Utfør følgende kommando som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>groupadd -fg 86 netdev</userinput></screen>
 
     <para>
-      Fix a regression that results in a race condition when IPv6 is in use
-      and multiple network adapters are present on the system:
+      Fiks en regresjon som resulterer i en konkurranse tilstand når IPv6 er i bruk
+      og flere nettverkskort er tilstede på systemet:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../avahi-&avahi-version;-ipv6_race_condition_fix-1.patch</userinput></screen>
 
     <para>
-      Fix a security vulnerability in <command>avahi-daemon</command>:
+      Rett opp en sikkerhetssårbarhet i <command>avahi-daemon</command>:
     </para>
 
 <screen><userinput remap="pre">sed -i '426a if (events &amp; AVAHI_WATCH_HUP) { \
@@ -147,8 +147,8 @@ return; \
 }' avahi-daemon/simple-protocol.c</userinput></screen>
 
     <para>
-      Install <application>Avahi</application> by running the following
-      commands:
+      Installer <application>Avahi</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>./configure \
@@ -185,11 +185,11 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -197,126 +197,126 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
 
     <para>
-      <parameter>--disable-libevent</parameter>: This parameter disables the
-      use of <xref linkend="libevent"/>. Remove if you have it installed.
+      <parameter>--disable-libevent</parameter>: Denne parameteren deaktiverer
+      bruken av <xref linkend="libevent"/>. Fjern hvis du har den installert.
     </para>
 
     <para>
-      <parameter>--disable-mono</parameter>: This parameter disables the
-      <application>Mono</application> bindings.
+      <parameter>--disable-mono</parameter>: Denne parameteren deaktiverer
+      <application>Mono</application> bindinger.
     </para>
 
     <para>
-      <parameter>--disable-monodoc</parameter>: This parameter disables
-      documentation for the <application>Mono</application> bindings.
+      <parameter>--disable-monodoc</parameter>: Denne parameteren deaktiverer
+      dokumentasjon for <application>Mono</application> bindinger.
     </para>
 
     <para>
-      <parameter>--disable-python</parameter>: This parameter disables the
-      scripts that depend on <application>Python</application>. It also
-      allows a regular install to complete successfully.
+      <parameter>--disable-python</parameter>: Denne parameteren deaktiverer
+      skript som er avhengig av <application>Python</application>. Det lar også
+      en vanlig installasjon fullføre.
     </para>
 
     <para>
-      <parameter>--disable-qt3</parameter>: This parameter disables the
-      attempt to build the obsolete <application>Qt3</application>
-      portions of the package.
+      <parameter>--disable-qt3</parameter>: Denne parameteren deaktiverer
+      forsøk på å bygge de foreldede <application>Qt3</application>
+      deler av pakken.
     </para>
 
     <para>
-      <parameter>--disable-qt4</parameter>: This parameter disables the
-      attempt to build the obsolete <application>Qt4Core</application>
-      portions of the package.
+      <parameter>--disable-qt4</parameter>: Denne parameteren deaktiverer
+      forsøk på å bygge de foreldede <application>Qt4Core</application>
+      deler av pakken.
     </para>
 
     <para>
-      <parameter>--enable-core-docs</parameter>: This parameter enables the
-      building of documentation.
+      <parameter>--enable-core-docs</parameter>: Denne parameteren aktiverer
+      bygging av dokumentasjonen.
     </para>
 
     <para>
-      <parameter>--with-distro=none</parameter>: There is an obsolete
-      boot script in the distribution for LFS. This option disables it.
+      <parameter>--with-distro=none</parameter>: Det er et foreldet
+      oppstartsskript i distribusjonen for LFS. Dette alternativet deaktiverer det.
     </para>
 
     <para revision="sysv">
-      <parameter>--with-systemdsystemunitdir=no</parameter>: Without it, the
-      daemon fails to start in BLFS, which does not support
+      <parameter>--with-systemdsystemunitdir=no</parameter>: Uten den
+      nissen klarer ikke å starte i BLFS, som ikke støtter
       <application>systemd</application>.
     </para>
 
     <para>
-      <parameter>--with-dbus-system-address=...</parameter>: This option
-      prevents the package from referring to the deprecated
-      <filename class='directory'>/var/run</filename> directory.
+      <parameter>--with-dbus-system-address=...</parameter>: Dette alternativet
+       forhindrer at pakken refererer til den utdaterte
+      <filename class='directory'>/var/run</filename> mappen.
     </para>
 
     <para>
-      <option>--disable-dbus</option>: This parameter disables the use
-      of <application>D-Bus</application>.
+      <option>--disable-dbus</option>: Denne parameteren deaktiverer bruken
+      av <application>D-Bus</application>.
     </para>
 
     <para>
-      <option>--disable-gtk</option>: This parameter disables the use
-      of <application>GTK+2</application>.
+      <option>--disable-gtk</option>: Denne parameteren deaktiverer bruken
+      av <application>GTK+2</application>.
     </para>
 
     <para>
-      <option>--disable-gtk3</option>: This parameter disables the use
-      of <application>GTK+3</application>.
+      <option>--disable-gtk3</option>: Denne parameteren deaktiverer bruken
+      av <application>GTK+3</application>.
     </para>
 
     <para>
-      <option>--disable-qt5</option>: This parameter disables the use
-      of <application>Qt5</application>, and allows building without it.
+      <option>--disable-qt5</option>: Denne parameteren deaktiverer bruken
+      av <application>Qt5</application>, og tillater bygging uten den.
     </para>
 
     <para>
-      <option>--disable-libdaemon</option>: This parameter disables the use
-      of <application>libdaemon</application>. If you use this option,
-      <command>avahi-daemon</command> won't be built.
+      <option>--disable-libdaemon</option>: Denne parameteren deaktiverer bruken
+      av <application>libdaemon</application>. Hvis du bruker dette alternativet,
+      <command>avahi-daemon</command> vil ikke bli bygget.
     </para>
 
     <para>
-      <option>--enable-tests</option>: This option enables the building of
-      tests and examples.
+      <option>--enable-tests</option>: Dette alternativet gjør det mulig å bygge
+      tester og eksempler.
     </para>
 
     <para>
-      <option>--enable-compat-howl</option>: This option enables the
-      compatibility layer for <application>HOWL</application>.
+      <option>--enable-compat-howl</option>: Dette alternativet aktiverer
+      kompatibilitetslag for <application>HOWL</application>.
     </para>
 
     <para>
-      <option>--enable-compat-libdns_sd</option>: This option enables the
-      compatibility layer for <application>libdns_sd</application>.
+      <option>--enable-compat-libdns_sd</option>: Dette alternativet aktiverer
+      kompatibilitetslag for <application>libdns_sd</application>.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring avahi</title>
+    <title>Konfigurere avahi</title>
 
     <sect3  id="avahi-init">
-      <title>Boot Script</title>
+      <title>Oppstartsskript</title>
 
       <para revision="sysv">
-        To automatically start the <command>avahi-daemon</command>
-        when the system is rebooted, install the
-        <filename>/etc/rc.d/init.d/avahi</filename> bootscript from
-        the <xref linkend="bootscripts"/> package.
+        For å starte <command>avahi-daemon</command> automatisk
+        når systemet startes på nytt, installer
+        <filename>/etc/rc.d/init.d/avahi</filename> oppstartsskriptet fra
+        <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        To start the <command>avahi-daemon</command> daemon at boot, enable
-        the previously installed systemd unit by running the following command
-        as the <systemitem class="username">root</systemitem> user:
+        For å starte <command>avahi-daemon</command> nissen ved oppstart, aktiver
+        den tidligere installerte systemd enheten ved å kjøre følgende kommando
+        som <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <indexterm zone="avahi avahi-init">
@@ -328,9 +328,9 @@ make</userinput></screen>
 <screen role="root" revision="systemd"><userinput>systemctl enable avahi-daemon</userinput></screen>
 
       <para revision="systemd">
-        To start the <command>avahi-dnsconfd</command> daemon at boot, enable
-        the previously installed systemd unit by running the following command
-        as the <systemitem class="username">root</systemitem> user:
+        For å starte <command>avahi-dnsconfd</command> nissen ved oppstart, aktiver
+        den tidligere installerte systemd enheten ved å kjøre følgende kommando
+        som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable avahi-dnsconfd</userinput></screen>
@@ -340,22 +340,22 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>avahi-autoipd, avahi-browse, avahi-browse-domains,
         avahi-daemon, avahi-discover-standalone, avahi-dnsconfd,
         avahi-publish, avahi-publish-address, avahi-publish-service,
         avahi-resolve, avahi-resolve-address, avahi-resolve-host-name,
-        avahi-set-host-name, bshell, bssh, and bvnc</seg>
+        avahi-set-host-name, bshell, bssh, og bvnc</seg>
         <seg>libavahi-client.so, libavahi-common.so, libavahi-core.so,
         libavahi-glib.so, libavahi-gobject.so, libavahi-libevent.so
-        libavahi-ui-gtk3.so, libavahi-qt5, libavahi-ui.so, libdns_sd.so, and
+        libavahi-ui-gtk3.so, libavahi-qt5, libavahi-ui.so, libdns_sd.so, og
         libhowl.so,</seg>
         <seg>/etc/avahi/services, /usr/include/{avahi-client,avahi-common,
         avahi-compat-howl, avahi-compat-libdns_sd, avahi-core, avahi-glib,
@@ -365,7 +365,7 @@ make</userinput></screen>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -373,7 +373,7 @@ make</userinput></screen>
         <term><command>avahi-autoipd</command></term>
         <listitem>
           <para>
-            is a IPv4LL network address configuration daemon
+            er en konfigurasjonsnisse for IPv4LL nettverksadresse
           </para>
           <indexterm zone="avahi avahi-autoipd">
             <primary sortas="b-avahi-autoipd">avahi-autoipd</primary>
@@ -385,8 +385,8 @@ make</userinput></screen>
         <term><command>avahi-bookmarks</command></term>
         <listitem>
           <para>
-            is a Web service showing mDNS/DNS-SD announced HTTP services
-            using the <application>Avahi</application> daemon.
+            er en webtjeneste som viser mDNS/DNS-SD annonserte HTTP-tjenester
+            ved bruk av <application>Avahi</application> nissen.
           </para>
           <indexterm zone="avahi avahi-bookmarks">
             <primary sortas="b-avahi-bookmarks">avahi-bookmarks</primary>
@@ -398,8 +398,8 @@ make</userinput></screen>
         <term><command>avahi-browse</command></term>
         <listitem>
           <para>
-            browses for mDNS/DNS-SD services using the
-            <application>Avahi</application> daemon
+            søker etter mDNS/DNS-SD tjenester ved hjelp av
+            <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-browse">
             <primary sortas="b-avahi-browse">avahi-browse</primary>
@@ -411,8 +411,8 @@ make</userinput></screen>
         <term><command>avahi-browse-domains</command></term>
         <listitem>
           <para>
-            browses for mDNS/DNS-SD services using the
-            <application>Avahi</application> daemon
+            søker etter mDNS/DNS-SD tjenester ved hjelp av
+            <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-browse-domains">
             <primary sortas="b-avahi-browse-domains">avahi-browse-domains</primary>
@@ -424,7 +424,7 @@ make</userinput></screen>
         <term><command>avahi-daemon</command></term>
         <listitem>
           <para>
-            is the <application>Avahi</application> mDNS/DNS-SD daemon
+            er <application>Avahi</application> mDNS/DNS-SD nissen
           </para>
           <indexterm zone="avahi avahi-daemon">
             <primary sortas="b-avahi-daemon">avahi-daemon</primary>
@@ -436,8 +436,8 @@ make</userinput></screen>
         <term><command>avahi-discover</command></term>
         <listitem>
           <para>
-            browses for mDNS/DNS-SD services using the
-            <application>Avahi</application> daemon.
+            søker etter mDNS/DNS-SD tjenester ved hjelp av
+            <application>Avahi</application> nissen.
           </para>
           <indexterm zone="avahi avahi-discover">
             <primary sortas="b-avahi-discover">avahi-discover</primary>
@@ -449,8 +449,8 @@ make</userinput></screen>
         <term><command>avahi-discover-standalone</command></term>
         <listitem>
           <para>
-            browses for mDNS/DNS-SD services using the
-            <application>Avahi</application> daemon
+            søker etter mDNS/DNS-SD tjenester ved hjelp av
+            <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-discover-standalone">
             <primary sortas="b-avahi-discover-standalone">avahi-discover-standalone</primary>
@@ -462,7 +462,7 @@ make</userinput></screen>
         <term><command>avahi-dnsconfd</command></term>
         <listitem>
           <para>
-            is a Unicast DNS server from mDNS/DNS-SD configuration daemon
+            er en Unicast DNS server fra mDNS/DNS-SD konfigurasjonsnissen
           </para>
           <indexterm zone="avahi avahi-dnsconfd">
             <primary sortas="b-avahi-dnsconfd">avahi-dnsconfd</primary>
@@ -474,8 +474,8 @@ make</userinput></screen>
         <term><command>avahi-publish</command></term>
         <listitem>
           <para>
-            registers a mDNS/DNS-SD service or host name or address mapping
-            using the <application>Avahi</application> daemon
+            registrerer en mDNS/DNS-SD tjeneste eller vertsnavn eller adressetilordning
+            ved bruk av <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-publish">
             <primary sortas="b-avahi-publish">avahi-publish</primary>
@@ -487,8 +487,8 @@ make</userinput></screen>
         <term><command>avahi-publish-address</command></term>
         <listitem>
           <para>
-            registers a mDNS/DNS-SD service or host name or address mapping
-            using the <application>Avahi</application> daemon
+            registrerer en mDNS/DNS-SD tjeneste eller vertsnavn eller adressetilordning
+            ved bruk av <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-publish-address">
             <primary sortas="b-avahi-publish-address">avahi-publish-address</primary>
@@ -500,8 +500,8 @@ make</userinput></screen>
         <term><command>avahi-publish-service</command></term>
         <listitem>
           <para>
-            registers a mDNS/DNS-SD service or host name or address mapping
-            using the <application>Avahi</application> daemon
+            registrerer en mDNS/DNS-SD tjeneste eller vertsnavn eller adressetilordning
+            ved bruk av <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-publish-service">
             <primary sortas="b-avahi-publish-service">avahi-publish-service</primary>
@@ -513,9 +513,9 @@ make</userinput></screen>
         <term><command>avahi-resolve</command></term>
         <listitem>
           <para>
-            resolves one or more mDNS/DNS host name(s) to IP address(es)
-            (and vice versa) using the <application>Avahi</application>
-            daemon
+            løser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
+            (og omvendt) ved å bruke <application>Avahi</application>
+            nissen
           </para>
           <indexterm zone="avahi avahi-resolve">
             <primary sortas="b-avahi-resolve">avahi-resolve</primary>
@@ -527,9 +527,9 @@ make</userinput></screen>
         <term><command>avahi-resolve-address</command></term>
         <listitem>
           <para>
-            resolves one or more mDNS/DNS host name(s) to IP address(es)
-            (and vice versa) using the <application>Avahi</application>
-            daemon
+            løser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
+            (og omvendt) ved å bruke <application>Avahi</application>
+            nissen
           </para>
           <indexterm zone="avahi avahi-resolve-address">
             <primary sortas="b-avahi-resolve-address">avahi-resolve-address</primary>
@@ -541,9 +541,9 @@ make</userinput></screen>
         <term><command>avahi-resolve-host-name</command></term>
         <listitem>
           <para>
-            resolves one or more mDNS/DNS host name(s) to IP address(es)
-            (and vice versa) using the <application>Avahi</application>
-            daemon
+            løser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
+            (og omvendt) ved å bruke <application>Avahi</application>
+            nissen
           </para>
           <indexterm zone="avahi avahi-resolve-host-name">
             <primary sortas="b-avahi-resolve-host-name">avahi-resolve-host-name</primary>
@@ -555,7 +555,7 @@ make</userinput></screen>
         <term><command>avahi-set-host-name</command></term>
         <listitem>
           <para>
-            changes the mDNS host name
+            endrer mDNS vertsnavnet
           </para>
           <indexterm zone="avahi avahi-set-host-name">
             <primary sortas="b-avahi-set-host-name">avahi-set-host-name</primary>
@@ -567,7 +567,7 @@ make</userinput></screen>
         <term><command>bshell</command></term>
         <listitem>
           <para>
-            does this .....
+            gjør dette .....
           </para>
           <indexterm zone="avahi bshell">
             <primary sortas="b-bshell">bshell</primary>
@@ -579,7 +579,7 @@ make</userinput></screen>
         <term><command>bssh</command></term>
         <listitem>
           <para>
-            browses for SSH servers on the local network
+            søker etter SSH servere på det lokale nettverket
           </para>
           <indexterm zone="avahi bssh">
             <primary sortas="b-bssh">bssh</primary>
@@ -591,7 +591,7 @@ make</userinput></screen>
         <term><command>bvnc</command></term>
         <listitem>
           <para>
-            browses for VNC servers on the local network
+            søker etter VNC servere på det lokale nettverket
           </para>
           <indexterm zone="avahi bvnc">
             <primary sortas="b-bvnc">bvnc</primary>
@@ -603,7 +603,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libavahi-client.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libavahi-client">
             <primary sortas="c-libavahi-client">libavahi-client.{so,a}</primary>
@@ -615,7 +615,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libavahi-common.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libavahi-common">
             <primary sortas="c-libavahi-common">libavahi-common.{so,a}</primary>
@@ -627,7 +627,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libavahi-core.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libavahi-core">
             <primary sortas="c-libavahi-core">libavahi-core.{so,a}</primary>
@@ -639,7 +639,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libavahi-glib.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libavahi-glib">
             <primary sortas="c-libavahi-glib">libavahi-glib.{so,a}</primary>
@@ -651,7 +651,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libavahi-gobject.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libavahi-gobject">
             <primary sortas="c-libavahi-gobject">libavahi-gobject.{so,a}</primary>
@@ -663,7 +663,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libavahi-ui-gtk3.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libavahi-ui-gtk3">
             <primary sortas="c-libavahi-ui-gtk3">libavahi-ui-gtk3.{so,a}</primary>
@@ -675,7 +675,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libavahi-ui.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libavahi-ui">
             <primary sortas="c-libavahi-ui">libavahi-ui.{so,a}</primary>
@@ -687,7 +687,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libdns_sd.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libdns_sd">
             <primary sortas="c-libdns_sd">libdns_sd.{so,a}</primary>
@@ -699,7 +699,7 @@ make</userinput></screen>
         <term><filename class='libraryfile'>libhowl.{so,a}</filename></term>
         <listitem>
           <para>
-            contains functions that .....
+            inneholder funksjoner som .....
           </para>
           <indexterm zone="avahi libhowl">
             <primary sortas="c-libhowl">libhowl.{so,a}</primary>
