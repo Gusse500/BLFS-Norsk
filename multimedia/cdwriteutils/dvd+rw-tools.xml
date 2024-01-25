@@ -9,7 +9,7 @@
   <!ENTITY dvd-rw-tools-md5sum        "8acb3c885c87f6838704a0025e435871">
   <!ENTITY dvd-rw-tools-size          "138 KB">
   <!ENTITY dvd-rw-tools-buildsize     "1.7 MB">
-  <!ENTITY dvd-rw-tools-time          "less than 0.1 SBU">
+  <!ENTITY dvd-rw-tools-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="dvd-rw-tools" xreflabel="dvd+rw-tools-&dvd-rw-tools-version;">
@@ -23,72 +23,72 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to dvd+rw-tools</title>
+    <title>Introduksjon til dvd+rw-tools</title>
 
     <para>
-        The <application>dvd+rw-tools</application> package contains
-    several utilities to master the DVD media, both +RW/+R and -R[W]. The
-    principle tool is <command>growisofs</command> which provides a way to both
-    lay down <emphasis role='strong'>and</emphasis> grow an ISO9660 file system
-    on (as well as to burn an arbitrary pre-mastered image to) all supported
-    DVD media. This is useful for creating a new DVD or adding to an existing
-    image on a partially burned DVD.
+        <application>dvd+rw-tools</application>pakken inneholder
+    flere verktøy for å mestre DVD mediet, både +RW/+R og -R[W].
+    hovedverktøyet er <command>growisofs</command> som gir en vei til både å
+    legge ned <emphasis role='strong'>og</emphasis> utvikle et ISO9660 filsystem
+    på (i tillegg til å brenne et vilkårlig forhåndsmastret bilde til) alle støttede
+    DVD medier. Dette er nyttig for å lage en ny DVD eller legge til en eksisterende
+    bilde på en delvis brent DVD.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&dvd-rw-tools-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&dvd-rw-tools-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&dvd-rw-tools-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&dvd-rw-tools-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &dvd-rw-tools-md5sum;
+          Nedlasting MD5 sum: &dvd-rw-tools-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &dvd-rw-tools-size;
+          Nedlastingsstørrelse: &dvd-rw-tools-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &dvd-rw-tools-buildsize;
+          Estimert diskplass som kreves: &dvd-rw-tools-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &dvd-rw-tools-time;
+          Estimert byggetid: &dvd-rw-tools-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">dvd+rw-tools Dependencies</bridgehead>
+    <bridgehead renderas="sect3">dvd+rw-tools Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para>
-      <xref role="runtime" linkend="cdrtools"/> (runtime)
+      <xref role="runtime" linkend="cdrtools"/> (kjøretid)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/dvd+rw-tools"/>
+      Brukernotater: <ulink url="&blfs-wiki;/dvd+rw-tools"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of dvd+rw-tools</title>
+    <title>Installasjon av dvd+rw-tools</title>
 
     <para>
-      Install <application>dvd+rw-tools</application> by running the following
-      commands:
+      Installer <application>dvd+rw-tools</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>sed -i '/stat.h/a #include &lt;sys/sysmacros.h&gt;' growisofs.c &amp;&amp;
@@ -96,11 +96,11 @@ sed -i '/stdlib/a #include &lt;limits.h&gt;' transport.hxx &amp;&amp;
 make all rpl8 btcflash</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make prefix=/usr install &amp;&amp;
@@ -109,55 +109,55 @@ install -v -m644 -D index.html \
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -i '/stdlib/a #include &lt;limits.h&gt;' ...</command>: This
-      sed includes <filename>limits.h</filename>, one of the kernel headers.
-      This is needed due to a change in the 2.6.23 kernel headers.
+      <command>sed -i '/stdlib/a #include &lt;limits.h&gt;' ...</command>: Denne
+      sed inkluderer <filename>limits.h</filename>, en av kjernedeklarasjonene.
+      Dette er nødvendig på grunn av en endring i 2.6.23 kjernedeklarasjonene.
     </para>
 
 <!-- left these here in the event that libisoburn gets fixed and can be a
      substitution again
 
     <para>
-      <command>sed -i 's#mkisofs"#xorrisofs"#' growisofs.c</command>: This sed
-      changes the code to use <command>xorrisofs</command> from
-      <xref linkend="xorriso"/>. The default was for it to use
-      <command>mkisofs</command> from
+      <command>sed -i 's#mkisofs"#xorrisofs"#' growisofs.c</command>: Denne sed
+      endrer koden som skal brukes <command>xorrisofs</command> fra
+      <xref linkend="xorriso"/>. Standard var at den skulle bruke
+      <command>mkisofs</command> fra
       <ulink url="https://sourceforge.net/projects/cdrtools/files/alpha/">Cdrtools</ulink>.
     </para>
 
     <para>
       <command>sed -i 's#mkisofs#xorrisofs#;s#MKISOFS#XORRISOFS#'
-      growisofs.1</command>: This sed fixes the man page to account for the
-      above change.
+      growisofs.1</command>: Denne sed fikser mansiden for å ta hensyn til
+      ovenfor endring.
     </para>
 -->
     <para>
-      <command>make all rpl8 btcflash</command>: This command uses additional
-      targets so that all the utilities are built.
+      <command>make all rpl8 btcflash</command>: Denne kommandoen bruker tilleggsmål
+      slik at alle verktøyene bygges.
     </para>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>btcflash, dvd+rw-booktype, dvd+rw-format, dvd+rw-mediainfo,
-        dvd-ram-control, growisofs, and rpl8</seg>
-        <seg>None</seg>
+        dvd-ram-control, growisofs, og rpl8</seg>
+        <seg>Ingen</seg>
         <seg>/usr/share/doc/dvd+rw-tools-&dvd-rw-tools-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -165,8 +165,8 @@ install -v -m644 -D index.html \
         <term><command>growisofs</command></term>
         <listitem>
           <para>
-            is a combined <command>mkisofs</command> frontend/DVD recording
-            program
+            er en kombinert <command>mkisofs</command> grenseflate/DVD
+            opptaksprogram
           </para>
           <indexterm zone="dvd-rw-tools growisofs">
             <primary sortas="b-growisofs">growisofs</primary>
