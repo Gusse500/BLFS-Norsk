@@ -9,8 +9,8 @@
   <!ENTITY pulseaudio-download-ftp  " ">
   <!ENTITY pulseaudio-md5sum        "2c7b8ceb5d7337565c7314b4d6087ca8">
   <!ENTITY pulseaudio-size          "1.5 MB">
-  <!ENTITY pulseaudio-buildsize     "42 MB (with tests)">
-  <!ENTITY pulseaudio-time          "0.2 SBU (Using parallelism=4; add 0.2 SBU for tests)">
+  <!ENTITY pulseaudio-buildsize     "42 MB (med tester)">
+  <!ENTITY pulseaudio-time          "0.2 SBU (Bruker parallellisme=4; legg til 0,2 SBU for tester)">
 ]>
 
 <sect1 id="pulseaudio" xreflabel="PulseAudio-&pulseaudio-version;">
@@ -24,109 +24,109 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to PulseAudio</title>
+    <title>Introduksjon til PulseAudio</title>
 
     <para>
-      <application>PulseAudio</application> is a sound system for POSIX OSes,
-      meaning that it is a proxy for sound applications. It allows you to do
-      advanced operations on your sound data as it passes between your
-      application and your hardware. Things like transferring the audio to a
-      different machine, changing the sample format or channel count and mixing
-      several sounds into one are easily achieved using a sound server.
+      <application>PulseAudio</application> er et lydsystem for POSIX OS,
+      som betyr at det er en mellomtjener for lydapplikasjoner. Det lar deg gjøre
+      avanserte operasjoner på lyddataene dine når de går mellom dine
+      applikasjonen og maskinvaren din. Ting som å overføre lyden til en
+      annen maskin, endre prøveformatet eller kanaltellingen og mikse
+      flere lyder til en oppnås enkelt ved hjelp av en lydserver.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&pulseaudio-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&pulseaudio-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&pulseaudio-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&pulseaudio-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &pulseaudio-md5sum;
+          Nedlasting MD5 sum: &pulseaudio-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &pulseaudio-size;
+          Nedlastingsstørrelse: &pulseaudio-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &pulseaudio-buildsize;
+          Estimert diskplass som kreves: &pulseaudio-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &pulseaudio-time;
+          Estimert byggetid: &pulseaudio-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">PulseAudio Dependencies</bridgehead>
+    <bridgehead renderas="sect3">PulseAudio Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="libsndfile"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="alsa-lib"/>,
       <xref linkend="dbus"/>,
       <phrase revision="sysv"><xref linkend="elogind"/>,</phrase>
       <xref linkend="glib2"/>,
-      <xref linkend="speex"/> and
+      <xref linkend="speex"/> og
       <xref linkend="xorg7-lib"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="avahi"/>,
       <xref linkend="bluez"/>,
-      <xref linkend="doxygen"/> (for documentation),
+      <xref linkend="doxygen"/> (for dokumentasjon),
       <xref linkend="fftw"/>,
       <xref linkend="gtk3"/>,
       <xref linkend="libsamplerate"/>,
-      <xref linkend="sbc"/> (Bluetooth support),
+      <xref linkend="sbc"/> (Bluetooth støtte),
       <xref linkend="valgrind"/>,
       <ulink url="https://www.jackaudio.org/">JACK</ulink>,
       <ulink url="https://0pointer.de/lennart/projects/libasyncns/">libasyncns</ulink>,
       <ulink url="https://www.lirc.org/">LIRC</ulink>,
       <ulink url="https://gstreamer.freedesktop.org/src/orc/">ORC</ulink>,
       <ulink url="https://sourceforge.net/projects/soxr/">soxr</ulink>,
-      <ulink url="https://tdb.samba.org/">TDB</ulink>, and
+      <ulink url="https://tdb.samba.org/">TDB</ulink>, og
       <ulink url="https://freedesktop.org/software/pulseaudio/webrtc-audio-processing/">
       WebRTC AudioProcessing</ulink>
       <!--<ulink url="http://www.xenproject.org/">XEN</ulink>-->
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/pulseaudio"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of PulseAudio</title>
+    <title>Installasjon av PulseAudio</title>
 <!--
     <para>
-      If <xref linkend="doxygen"/> is not installed, workaround a building
-      issue because of the changes in meson-0.57.2:
+      Hvis <xref linkend="doxygen"/> ikke er installert, omgå et bygge
+      problem på grunn av endringene i meson-0.57.2:
     </para>
 
 <screen><userinput>sed '/doxygen/d' -i meson.build</userinput></screen>
 -->
     <para>
-      Install <application>PulseAudio</application> by running the following
-      commands:
+      Installer <application>PulseAudio</application> ved å kjøre følgende
+      kommandoer:
     </para>
 <!--
 <screen revision="sysv"><userinput>./configure - -prefix=/usr                \
@@ -156,69 +156,69 @@ meson --prefix=/usr       \
 ninja</userinput></screen>
 
     <para>
-      To test the results, issue: <command>ninja test</command>. One test
-      fails if the tests are not run as the root user, but this can be ignored.
+      For å teste resultatene, kjør: <command>ninja test</command>. En test
+      mislykkes hvis testene ikke kjøres som root bruker, men dette kan ignoreres.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <!-- http://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/SystemWide/ -->
-    <para>Running PulseAudio as a system-wide daemon is possible but not
-      recommended. See <ulink
+    <para>Å kjøre PulseAudio som en systemomfattende nisse er mulig, men ikke
+      anbefalt. Se <ulink
       url="https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/SystemWide/"/>
-      for more information.
-      While still as the <systemitem class="username">root</systemitem>
-      user, remove the <application>D-Bus</application> configuration file
-      for the system wide daemon to avoid creating unnecessary system
-      users and groups:
+      for mer informasjon.
+       Mens fortsatt som <systemitem class="username">root</systemitem>
+      bruker, fjern <application>D-Bus</application> konfigurasjonsfil
+      for systemomfattende nisse for å unngå å lage unødvendige system
+      brukere og grupper:
     </para>
 
 <screen role="root"><userinput>rm -fv /etc/dbus-1/system.d/pulseaudio-system.conf</userinput></screen>
 
   </sect2>
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dbluez5=disabled</parameter>: This switch prevents
-      a runtime error if <xref linkend="dbus"/> and <xref linkend="sbc"/>
-      are both installed but <xref linkend="bluez"/> is not installed.
-      Remove this if you have installed all three packages.
+      <parameter>-Dbluez5=disabled</parameter>: Denne bryteren forhindrer
+      en kjøretidsfeil hvis <xref linkend="dbus"/> og <xref linkend="sbc"/>
+      er begge installert men <xref linkend="bluez"/> ikke er installert.
+      Fjern dette hvis du har installert alle tre pakkene.
     </para>
 
     <para>
-      <parameter>-Ddoxygen=false</parameter>: This allows the package to
-      compile if <xref linkend="doxygen"/> is not installed. Remove this
-      if you have installed this and wish to build the documentation.
+      <parameter>-Ddoxygen=false</parameter>: Dette gjør at pakken kan
+      kompilere hvis <xref linkend="doxygen"/> ikke er installert. Fjern dette
+      hvis du har installert dette og ønsker å bygge dokumentasjonen.
     </para>
 <!--
     <para>
-      <parameter>- -disable-rpath</parameter>: This switch prevents
-      linker from adding a hardcoded runtime path to the installed
-      programs and libraries.
+      <parameter>- -disable-rpath</parameter>: Denne bryteren forhindrer
+      linker fra å legge til en hardkodet kjøretidsbane til de installerte
+      programmer og biblioteker.
     </para>-->
 
   </sect2>
   <sect2 role="configuration">
-    <title>Configuring PulseAudio</title>
+    <title>Konfigurere PulseAudio</title>
 
     <sect3 id="pulseaudio-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
       <para>
-        There are system wide configuration files:
+        Det er systemomfattende konfigurasjonsfiler:
         <filename>/etc/pulse/daemon.conf</filename>,
         <filename>/etc/pulse/client.conf</filename>,
-        <filename>/etc/pulse/default.pa</filename>, and user configuration
-        files with the same names in
-        <filename class="directory">~/.config/pulse</filename>. User
-        configuration files take precedence over system wide ones.
+        <filename>/etc/pulse/default.pa</filename>, og brukers
+        konfigurasjonsfiler med samme navn i
+        <filename class="directory">~/.config/pulse</filename>. Brukers
+        konfigurasjonsfiler har forrang over systemomfattende filer.
       </para>
 
       <indexterm zone="pulseaudio pulseaudio-config">
@@ -241,13 +241,13 @@ ninja</userinput></screen>
       </indexterm>
     </sect3>
 
-    <sect3><title>Configuration Information</title>
+    <sect3><title>Konfigurasjonsinformasjon</title>
 <!--
       <para>
-        The default configuration files allow setting up a working installation.
-        However, a reference to Console-Kit needs to be removed.
-        Issue the following command as the
-        <systemitem class="username">root</systemitem> user:
+        Standard konfigurasjonsfilene tillater å sette opp en fungerende installasjon.
+        En referanse til Console-Kit må imidlertid fjernes.
+        Utfør følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>sed -i '/load-module module-console-kit/s/^/#/' /etc/pulse/default.pa</userinput></screen>
@@ -255,56 +255,56 @@ ninja</userinput></screen>
        In 13.0 this is protected via .ifexists module-console-kit.so
 -->
       <para>
-        You may have to configure the audio system. You can start
-        <application>pulseaudio</application> in command line mode using
-        <command>pulseaudio -C</command> and then list various
-        information and change settings. See
+        Du må kanskje konfigurere lydsystemet. Du kan starte
+        <application>pulseaudio</application> i kommandolinjemodus ved hjelp av
+        <command>pulseaudio -C</command> og deretter liste ulik
+        informasjon og endre innstillinger. Se
         <command>man pulse-cli-syntax</command>.
       </para>
 
       <para>
-        If <application>pulseaudio</application> was working but you no-longer
-        have sound, after checking for hardware issues (speakers or headphones
-        not connected, external amplifier not connected) you may need to fix it.
+        Hvis <application>pulseaudio</application> fungerte, men du ikke lenger
+        har lyd etter å ha sjekket for maskinvareproblemer (høyttalere eller hodetelefoner
+        ikke tilkoblet, ekstern forsterker ikke tilkoblet) kan det hende du må fikse det.
       </para>
 
       <para>
-        One suggestion is to close the application, such as
-        <application>firefox</application> where sound has stopped working, then
-        run: <command>pactl list short sinks</command> followed by:
-        <command>pacmd set-default-sink &lt;sink #&gt;</command> and then
-        restart the application.
+        Et forslag er å stenge applikasjoner, som f.eks
+        <application>firefox</application> hvor lyden har sluttet å virke, da
+        kjør: <command>pactl list short sinks</command> fulgt av:
+        <command>pacmd set-default-sink &lt;sink #&gt;</command> og så
+        start applikasjonen på nytt.
       </para>
 
       <para>
-        If that does not work, a more drastic approach often works. After closing
-        the application, close pulseaudio, either using <command>pulseaudio
-        --kill</command> or, if that fails, <command>killall -KILL
-        pulseaudio</command> and then <command>rm -rf
-        ~/.config/pulse/*</command> (and perhaps also
-        <command>rm -rf ~/.pulse/*</command> if you have used a very old version
-        of pulse on this machine), then run <command>pulseaudio
-        --verbose</command> to restart it. If the daemon starts, restart the
-        application. See <command>man pulseaudio</command> for more options.
+        Hvis det ikke fungerer, fungerer ofte en mer drastisk tilnærming. Etter stenging
+        av applikasjonenen, lukk pulsaudio, enten ved hjelp av <command>pulseaudio
+        --kill</command> eller, hvis det mislykkes, <command>killall -KILL
+        pulseaudio</command> og deretter <command>rm -rf
+        ~/.config/pulse/*</command> (og kanskje også
+        <command>rm -rf ~/.pulse/*</command> hvis du har brukt en veldig gammel versjon
+        av pulseaudio på denne maskinen), og kjør deretter <command>pulseaudio
+        --verbose</command> for å starte den på nytt. Hvis nissen starter, start på nytt
+        applikasjonen. Se <command>man pulseaudio</command> for flere alternativer.
       </para>
 
     </sect3>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
           <!--esdcompat,--> pacat, pacmd, pactl, padsp,
-          pamon (symlink to pacat), paplay (symlink to pacat),
-          parec (symlink to pacat), parecord (symlink to pacat), qpaeq,
-          pasuspender, pax11publish, pulseaudio, and
+          pamon (symbolkobling til pacat), paplay (symbolkobling til pacat),
+          parec (symbolkobling til pacat), parecord (symbolkobling til pacat), qpaeq,
+          pasuspender, pax11publish, pulseaudio, og
           <!-- it looks like the equalizer needs FFTW: qpaeq, -->
           start-pulseaudio-x11
         </seg>
@@ -313,7 +313,7 @@ ninja</userinput></screen>
           libpulse-mainloop-glib.so,
           libpulse-simple.so,
           libpulsecommon-&pulseaudio-major-version;.so,
-          libpulsecore-&pulseaudio-major-version;.so, and
+          libpulsecore-&pulseaudio-major-version;.so, og
           libpulsedsp.so
         </seg>
         <seg>
@@ -321,14 +321,14 @@ ninja</userinput></screen>
           /usr/include/pulse,
           /usr/lib/cmake/PulseAudio,
           /usr/lib/{pulseaudio,pulse-&pulseaudio-major-version;},
-          /usr/libexec/pulse, and
+          /usr/libexec/pulse, og
           /usr/share/pulseaudio
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -337,7 +337,7 @@ ninja</userinput></screen>
         <term><command>esdcompat</command></term>
         <listitem>
           <para>
-            is the <application>PulseAudio</application> ESD wrapper script.
+            er <application>PulseAudio</application> ESD innpakningsskript.
           </para>
           <indexterm zone="pulseaudio esdcompat">
             <primary sortas="b-esdcompat">esdcompat</primary>
@@ -350,8 +350,8 @@ ninja</userinput></screen>
         <term><command>pacat</command></term>
         <listitem>
           <para>
-            plays back or records raw or encoded audio streams on a
-            <application>PulseAudio</application> sound server
+            spiller av eller tar opp rå eller kodede lydstrømmer på en
+            <application>PulseAudio</application> lydserver
           </para>
           <indexterm zone="pulseaudio pacat">
             <primary sortas="b-pacat">pacat</primary>
@@ -363,8 +363,8 @@ ninja</userinput></screen>
         <term><command>pacmd</command></term>
         <listitem>
           <para>
-            is a tool used to reconfigure a <application>PulseAudio</application>
-            sound server during runtime
+            er et verktøy som brukes til å rekonfigurere en <application>PulseAudio</application>
+            lydserver under kjøring
           </para>
           <indexterm zone="pulseaudio pacmd">
             <primary sortas="b-pacmd">pacmd</primary>
@@ -376,8 +376,8 @@ ninja</userinput></screen>
         <term><command>pactl</command></term>
         <listitem>
           <para>
-            is used to control a running <application>PulseAudio</application>
-            sound server
+            brukes til å kontrollere en kjørende <application>PulseAudio</application>
+            lydserver
           </para>
           <indexterm zone="pulseaudio pactl">
             <primary sortas="b-pactl">pactl</primary>
@@ -389,7 +389,7 @@ ninja</userinput></screen>
         <term><command>padsp</command></term>
         <listitem>
           <para>
-            is the <application>PulseAudio</application> OSS Wrapper
+            er <application>PulseAudio</application> OSS Wrapper
           </para>
           <indexterm zone="pulseaudio padsp">
             <primary sortas="b-padsp">padsp</primary>
@@ -401,7 +401,7 @@ ninja</userinput></screen>
         <term><command>pamon</command></term>
         <listitem>
           <para>
-            is a symbolic link to <command>pacat</command>
+            er en symbolsk kobling til <command>pacat</command>
            </para>
           <indexterm zone="pulseaudio pamon">
             <primary sortas="b-pamon">pamon</primary>
@@ -413,8 +413,8 @@ ninja</userinput></screen>
         <term><command>paplay</command></term>
         <listitem>
           <para>
-            is used to play audio files on a
-            <application>PulseAudio</application> sound server
+            brukes til å spille av lydfiler på en
+            <application>PulseAudio</application> lydserver
           </para>
           <indexterm zone="pulseaudio paplay">
             <primary sortas="b-paplay">paplay</primary>
@@ -426,7 +426,7 @@ ninja</userinput></screen>
         <term><command>parec</command></term>
         <listitem>
           <para>
-            is a symbolic link to <command>pacat</command>
+            er en symbolsk kobling til <command>pacat</command>
           </para>
           <indexterm zone="pulseaudio parec">
             <primary sortas="b-parec">parec</primary>
@@ -438,7 +438,7 @@ ninja</userinput></screen>
         <term><command>parecord</command></term>
         <listitem>
           <para>
-            is a symbolic link to <command>pacat</command>
+            er en symbolsk kobling til <command>pacat</command>
           </para>
           <indexterm zone="pulseaudio parecord">
             <primary sortas="b-parecord">parecord</primary>
@@ -450,10 +450,10 @@ ninja</userinput></screen>
         <term><command>pasuspender</command></term>
         <listitem>
           <para>
-            is a tool that can be used to tell a local
-            <application>PulseAudio</application> sound server to temporarily
-            suspend access to the audio devices, to allow other applications
-            to access them directly
+            er et verktøy som kan brukes til å fortelle en lokal
+            <application>PulseAudio</application> lydserver til å midlertidig
+            suspendere tilgangen til lydenhetene for å tillate andre applikasjoner
+            å få direkte tilgang til dem
           </para>
           <indexterm zone="pulseaudio pasuspender">
             <primary sortas="b-pasuspender">pasuspender</primary>
@@ -465,7 +465,7 @@ ninja</userinput></screen>
         <term><command>pax11publish</command></term>
         <listitem>
           <para>
-            is the <application>PulseAudio</application>
+            er <application>PulseAudio</application>
             X11 Credential Utility
           </para>
           <indexterm zone="pulseaudio pax11publish">
@@ -478,8 +478,8 @@ ninja</userinput></screen>
         <term><command>pa-info</command></term>
         <listitem>
           <para>
-            is a shell script that prints various information relating to the
-            <application>Pulseaudio</application> server currently in use
+            er et skallskript som skriver ut forskjellig informasjon knyttet til
+            <application>Pulseaudio</application> serveren som er i bruk
           </para>
           <indexterm zone="pulseaudio pa-info">
             <primary sortas="b-pa-info">pa-info</primary>
@@ -491,7 +491,7 @@ ninja</userinput></screen>
         <term><command>pulseaudio</command></term>
         <listitem>
           <para>
-            is a networked low-latency sound server for Linux
+            er en nettverkstilkoblet lydserver med lav latens for Linux
           </para>
           <indexterm zone="pulseaudio pulseaudio-prog">
             <primary sortas="b-pulseaudio">pulseaudio</primary>
@@ -504,9 +504,9 @@ ninja</userinput></screen>
         <term><command>qpaeq</command></term>
         <listitem>
           <para>
-            is an equalizer interface for
+            er et equalizer grensesnitt for
             <application>PulseAudio</application> equalizer sinks
-            (Requires <xref linkend="fftw"/> at build time)
+            (Krever <xref linkend="fftw"/> ved byggetid)
           </para>
           <indexterm zone="pulseaudio qpaeq">
             <primary sortas="b-qpaeq">qpaeq</primary>
@@ -519,8 +519,8 @@ ninja</userinput></screen>
         <term><command>start-pulseaudio-kde</command></term>
         <listitem>
           <para>
-            Starts <application>PulseAudio</application> and loads
-            module-device-manager to use KDE routing policies.
+            Starter <application>PulseAudio</application> og laster
+            module-device-manager for å bruke KDE rutingspolicyer.
           </para>
           <indexterm zone="pulseaudio start-pulseaudio-kde">
             <primary sortas="b-start-pulseaudio-kde">start-pulseaudio-kde</primary>
@@ -532,8 +532,8 @@ ninja</userinput></screen>
         <term><command>start-pulseaudio-x11</command></term>
         <listitem>
           <para>
-            starts <application>PulseAudio</application> and registers it to
-            the X11 session manager
+            starter <application>PulseAudio</application> og registrerer det til
+            X11 øktbehandler
           </para>
           <indexterm zone="pulseaudio start-pulseaudio-x11">
             <primary sortas="b-start-pulseaudio-x11">start-pulseaudio-x11</primary>
