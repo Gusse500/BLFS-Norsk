@@ -10,8 +10,8 @@
   <!ENTITY vte-download-ftp  " ">
   <!ENTITY vte-md5sum        "86d2b49dcb1d05b489d228892b49c28a">
   <!ENTITY vte-size          "616 KB">
-  <!ENTITY vte-buildsize     "14 MB (with tests)">
-  <!ENTITY vte-time          "0.4 SBU (using parallelism=4; with tests)">
+  <!ENTITY vte-buildsize     "14 MB (med tester)">
+  <!ENTITY vte-time          "0.4 SBU (bruke parallellisme=4; med tester)">
 
   <!-- For "Contents" and "Short Descriptions" sections -->
   <!ENTITY vte-nano          "91">
@@ -28,84 +28,84 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to VTE</title>
+    <title>Introduksjon til VTE</title>
 
     <para>
-      The <application>VTE</application> package contains a termcap
-      file implementation for terminal emulators.
+      <application>VTE</application> pakken inneholder en termcap
+      filimplementering for terminalemulatorer.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&vte-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&vte-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&vte-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&vte-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &vte-md5sum;
+          Nedlasting MD5 sum: &vte-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &vte-size;
+          Nedlastingsstørrelse: &vte-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &vte-buildsize;
+          Estimert diskplass som kreves: &vte-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &vte-time;
+          Estimert byggetid: &vte-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">VTE Dependencies</bridgehead>
+    <bridgehead renderas="sect3">VTE Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="gtk3"/>,
-      <xref linkend="libxml2"/>, and
+      <xref linkend="libxml2"/>, og
       <xref linkend="pcre2"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="icu"/>,
       <xref linkend="gnutls"/>,
-      <xref linkend="gobject-introspection"/>, and
+      <xref linkend="gobject-introspection"/>, og
       <xref linkend="vala"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="fribidi"/>,
-      <xref linkend="gi-docgen"/>, and
+      <xref linkend="gi-docgen"/>, og
       <xref linkend="gtk4"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/vte"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of VTE</title>
+    <title>Installasjon av VTE</title>
 
     <para>
-      Install <application>VTE</application> by running the following
-      commands:
+      Installer <application>VTE</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
@@ -124,8 +124,8 @@ meson --prefix=/usr       \
 ninja</userinput></screen>
 
     <para>
-      If you have <xref linkend='gi-docgen'/> installed and wish to build
-      the API documentation for this package, issue:
+      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
+      API dokumentasjonen for denne pakken, kjør:
     </para>
 
     <!-- To editors: you may wonder why this change makes a
@@ -139,11 +139,11 @@ meson configure -Ddocs=true             &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      To test the results, issue <command>ninja test</command>.
+      For å teste resultatene, kjør <command>ninja test</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install &amp;&amp;
@@ -152,43 +152,43 @@ rm -v /etc/profile.d/vte.*</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <command>rm -v /etc/profile.d/vte.*</command>: This command removes two
-      files installed in /etc/profile.d that have no use on a LFS system.
+      <command>rm -v /etc/profile.d/vte.*</command>: Denne kommandoen fjerner to
+      filer installert i /etc/profile.d som ikke har noen bruk på et LFS system.
     </para>
 
     <para>
-      <parameter>-Dfribidi=false</parameter>: Omit this switch if you want
-      to enable bidirectional capabilities.
+      <parameter>-Dfribidi=false</parameter>: Utelat denne bryteren hvis du vil
+      aktivere toveisfunksjoner.
     </para>
 
     <para>
-      <option>-Dgnutls=false</option>: Add this switch if you do not
-      want to enable GnuTLS support.
+      <option>-Dgnutls=false</option>: Legg til denne bryteren hvis du ikke
+      ønsker å aktivere GnuTLS støtte.
     </para>
 
     <para>
-      <option>-Dvapi=false</option>: Add this switch if you do not
-      want to enable vala bindings.
+      <option>-Dvapi=false</option>: Legg til denne bryteren hvis du ikke
+      ønsker å aktivere vala bindinger.
     </para>
 
     <para>
-      <option>-Dgtk4=true</option>: Add this switch to build the GTK4 widget.
+      <option>-Dgtk4=true</option>: Legg til denne bryteren for å bygge GTK4 skjermelementet.
     </para>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
 <!-- EDITORS NOTE:
      vte installs a file into /etc/profile.d (/etc/profile.d/vte.sh) so that
@@ -205,14 +205,14 @@ rm -v /etc/profile.d/vte.*</userinput></screen>
           libvte-2.&vte-nano;.so
         </seg>
         <seg>
-          /usr/include/vte-2.&vte-nano; and
+          /usr/include/vte-2.&vte-nano; og
           (optional) /usr/share/doc/vte-&vte-version;
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -220,8 +220,8 @@ rm -v /etc/profile.d/vte.*</userinput></screen>
         <term><command>vte-2.&vte-nano;</command></term>
         <listitem>
           <para>
-            is a test application for the <application>VTE</application>
-            libraries
+            er en testapplikasjon for <application>VTE</application>
+            biblioteker
           </para>
           <indexterm zone="vte vte291">
             <primary sortas="b-vte2-&vte-nano;">vte-2.&vte-nano;</primary>
@@ -233,8 +233,8 @@ rm -v /etc/profile.d/vte.*</userinput></screen>
         <term><filename class="libraryfile">libvte-2.&vte-nano;.so</filename></term>
         <listitem>
           <para>
-            is a library which implements a terminal emulator
-            widget for <application>GTK+ 3</application>
+            er et bibliotek som implementerer en terminalemulator
+            skjermelement for <application>GTK+ 3</application>
           </para>
           <indexterm zone="vte libvte291">
             <primary sortas="c-libvte2-&vte-nano;">libvte-2.&vte-nano;.so</primary>
