@@ -8,8 +8,8 @@
   <!ENTITY tracker3-miners-download-ftp  "&gnome-download-ftp;/tracker-miners/3.4/tracker-miners-&tracker3-miners-version;.tar.xz">
   <!ENTITY tracker3-miners-md5sum        "12978674553320dc90c283dbd2605b1d">
   <!ENTITY tracker3-miners-size          "6.9 MB">
-  <!ENTITY tracker3-miners-buildsize     "31 MB (with tests)">
-  <!ENTITY tracker3-miners-time          "0.4 SBU (with parallelism=4; add 1.0 SBU for tests, dependent on disk speed)">
+  <!ENTITY tracker3-miners-buildsize     "31 MB (med tester)">
+  <!ENTITY tracker3-miners-time          "0.4 SBU (med parallellitet=4; legg til 1.0 SBU for tester, avhengig av diskhastighet)">
 ]>
 
 <sect1 id="tracker3-miners" xreflabel="tracker-miners-&tracker3-miners-version;">
@@ -23,74 +23,74 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Tracker-miners</title>
+    <title>Introduksjon til Tracker-miners</title>
 
     <para>
-      The <application>Tracker-miners</application> package contains a set of
-      data extractors for Tracker.
+      <application>Tracker-miners</application> pakken inneholder et sett med
+      datauttrekkere for Tracker.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&tracker3-miners-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&tracker3-miners-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&tracker3-miners-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&tracker3-miners-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &tracker3-miners-md5sum;
+          Nedlasting MD5 sum: &tracker3-miners-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &tracker3-miners-size;
+          Nedlastingsstørrelse: &tracker3-miners-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &tracker3-miners-buildsize;
+          Estimert diskplass som kreves: &tracker3-miners-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &tracker3-miners-time;
+          Estimert byggetid: &tracker3-miners-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Tracker-miners Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Tracker-miners Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="gst10-plugins-base"/>,
       <xref linkend="tracker3"/>,
-      <xref linkend="exempi"/>, and
+      <xref linkend="exempi"/>, og
       <xref linkend="gexiv2"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="giflib"/>,
       <xref linkend="gst10-plugins-base"/>,
-      <xref role='runtime' linkend="gst10-plugins-good"/> (runtime),
-      <xref role='runtime' linkend="gst10-libav"/> (runtime),
+      <xref role='runtime' linkend="gst10-plugins-good"/> (kjøretid),
+      <xref role='runtime' linkend="gst10-libav"/> (kjøretid),
       <xref linkend="icu"/>,
       <xref linkend="libexif"/>,
       <xref linkend="libgrss"/>,
       <xref linkend="libgxps"/>,
-      <xref linkend="libseccomp"/>, and
+      <xref linkend="libseccomp"/>, og
       <xref linkend="poppler"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="asciidoc"/>,
       <xref linkend="cmake"/>,
@@ -102,24 +102,24 @@
       <xref linkend="upower"/>,
       <ulink url="https://github.com/lipnitsk/libcue">libcue</ulink>,
       <ulink url="https://libiptcdata.sourceforge.net/">libitpcdata</ulink>,
-      <ulink url="https://libosinfo.org">libosinfo</ulink>, and
+      <ulink url="https://libosinfo.org">libosinfo</ulink>, og
       <ulink url="https://gitlab.gnome.org/GNOME/gupnp">gupnp</ulink>
       <!--<ulink url="https://pypi.python.org/pypi/tap.py/">tap.py</ulink>
       (for tests)-->
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/tracker-miners"/>
+      Brukernotater: <ulink url="&blfs-wiki;/tracker-miners"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Tracker-miners</title>
+    <title>Installasjon av Tracker-miners</title>
 
 <!--
     <para>
-      First, as the <systemitem class="username">root</systemitem> user,
-      remove some files from tracker-2 which will conflict with
+      Først, som <systemitem class="username">root</systemitem> bruker,
+      fjern noen filer fra tracker-2 som vil komme i konflikt med
       tracker-miners-3:
     </para>
 
@@ -128,25 +128,25 @@
 
     <note>
       <para>
-        If you plan to run the tests, some timeouts are too short when
-        using spinning disks. There are two places where timeouts are
-        used: first, individual tests inside a group of tests have a
-        default timeout of 10s. This can be changed by setting the environment
-        variable <envar>TRACKER_TESTS_AWAIT_TIMEOUT</envar> to the desired
-        value when running the tests (see below). Second, a global timeout
-        for a group of tests is fixed at configuration time. The default value
-        in the <filename class="directory">functional-tests</filename>
-        directory (other directories have only short lived tests) may be
-        increased with the following command (replace 200 with a value
-        suitable for your machine):
+        Hvis du planlegger å kjøre testene, er noen tidsavbrudd for korte ved
+        bruk av spinnende disker. Det er to steder hvor tidsavbrudd er
+        brukt: for det første har individuelle tester i en gruppe tester en
+        standard tidsavbrudd på 10s. Dette kan endres ved å stille inn miljøvariabelen
+        <envar>TRACKER_TESTS_AWAIT_TIMEOUT</envar> til ønsket
+        verdi når du kjører testene (se nedenfor). For det andre, en global tidsavbrudd
+        for en gruppe tester er fast på konfigurasjonstidspunktet. Standardverdien
+        i <filename class="directory">functional-tests</filename>
+        mappen (andre mapper har bare kortvarige tester) kan bli
+        økt med følgende kommando (erstatt 200 med en verdi
+        egnet for din maskin):
       </para>
 
 <screen remap="test"><userinput>sed -i s/120/<replaceable>200</replaceable>/ tests/functional-tests/meson.build</userinput></screen>
     </note>
 
     <para>
-      Install <application>Tracker-miners</application> by running the following
-      commands:
+      Installer <application>Tracker-miners</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 
@@ -166,8 +166,8 @@ meson --prefix=/usr                 \
 ninja</userinput></screen>
 
     <para>
-      To test the results, issue (adjust the individual test timeout to a
-      value suitable for your machine, see the note above):
+      For å teste resultatene, kjør (justere den individuelle testtidsavbruddet til en
+      verdi som passer for din maskin, se merknaden ovenfor):
     </para>
 
 <screen remap="test"><userinput>dbus-run-session env TRACKER_TESTS_AWAIT_TIMEOUT=<replaceable>20</replaceable> ninja test &amp;&amp;
@@ -175,69 +175,69 @@ rm -rf ~/tracker-tests</userinput></screen>
 
     <note>
       <para>
-        The tests create files in the user directory (up to 24 MB), so
-        they have to be removed afterwards.
+        Testene lager filer i brukermappen (opptil 24 MB), så
+        de må fjernes etterpå.
       </para>
     </note>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dman=false</parameter>: This switch prevents the build process
-      from generating man pages. Omit this switch if you have
-      <xref linkend="asciidoc" role="nodep"/> installed and wish to generate and
-      install the man pages.
+      <parameter>-Dman=false</parameter>: Denne bryteren forhindrer byggeprosessen
+      fra å generere mansider. Utelat denne bryteren hvis du har
+      <xref linkend="asciidoc" role="nodep"/> installert og ønsker å generere og
+      installere mansidene.
     </para>
 
     <para revision="sysv">
-      <parameter>-Dsystemd_user_services=false</parameter>: This switch prevents
-      the build process from installing systemd units since they are useless
-      on SysV systems.
+      <parameter>-Dsystemd_user_services=false</parameter>: Denne bryteren forhindrer
+      byggeprosessen fra å installere systemd enheter siden de er ubrukelige
+      på SysV systemer.
     </para>
 
     <para>
-      <option>-Dseccomp=false</option>: This option disables the seccomp system
-      call filter. On some architectures, such as i686 and ARM, the functions
-      that tracker-miners uses are not guarded properly, and tracker-miners
-      will get killed with a SIGSYS as a result.
+      <option>-Dseccomp=false</option>: Dette alternativet deaktiverer seccomp system
+      anropsfilter. På noen arkitekturer, som i686 og ARM, fungerer funksjonene
+      som tracker-miners bruker er ikke bevoktet ordentlig, og tracker-miners
+      vil bli drept med en SIGSYS som resultat.
     </para>
 
     <para>
-      <option>-Dminer_rss=false</option>: Use this option if you have not
-      installed the recommended dependency libgrss.
+      <option>-Dminer_rss=false</option>: Bruk dette alternativet hvis du ikke har
+      installert den anbefalte avhengigheten libgrss.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          Several modules under /usr/lib/tracker-miners-3.0
+          Flere moduler under /usr/lib/tracker-miners-3.0
         </seg>
         <seg>
           /usr/lib/tracker-miners-3.0,
-          /usr/libexec/tracker3, and
+          /usr/libexec/tracker3, og
           /usr/share/tracker3-miners
         </seg>
       </seglistitem>
