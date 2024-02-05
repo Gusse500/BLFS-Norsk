@@ -8,8 +8,8 @@
   <!ENTITY gcr-download-ftp  "&gnome-download-ftp;/gcr/&gcr-minor;/gcr-&gcr-version;.tar.xz">
   <!ENTITY gcr-md5sum        "c1e98af977236255006e11e8f8cfbaca">
   <!ENTITY gcr-size          "1008 KB">
-  <!ENTITY gcr-buildsize     "33 MB (with tests)">
-  <!ENTITY gcr-time          "0.2 SBU (with tests; both using parallelism=4)">
+  <!ENTITY gcr-buildsize     "33 MB (med tester)">
+  <!ENTITY gcr-time          "0.2 SBU (med tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="gcr" xreflabel="Gcr-&gcr-version;">
@@ -23,97 +23,97 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Gcr</title>
+    <title>Introduksjon til Gcr</title>
 
     <para>
-      The <application>Gcr</application> package contains libraries used
-      for displaying certificates and accessing key stores. It also
-      provides the viewer for crypto files on the
-      <application>GNOME</application> Desktop.
+      <application>Gcr</application> pakken inneholder biblioteker som brukes
+      for visning av sertifikater og tilgang til nøkkellagre. Det gir også
+      viseren for kryptofiler på
+      <application>GNOME</application> Skrivebordet.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&gcr-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&gcr-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&gcr-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&gcr-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &gcr-md5sum;
+          Nedlasting MD5 sum: &gcr-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &gcr-size;
+          Nedlastingsstørrelse: &gcr-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &gcr-buildsize;
+          Estimert diskplass som kreves: &gcr-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &gcr-time;
+          Estimert byggetid: &gcr-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Gcr Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Gcr Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>,
-      <xref linkend="libgcrypt"/>, and
+      <xref linkend="libgcrypt"/>, og
       <xref linkend="p11-kit"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="gnupg2"/>,
       <xref linkend="gobject-introspection"/>,
       <xref linkend="gtk3"/>,
       <xref linkend="libsecret"/>,
-      <xref linkend="libxslt"/>, and
+      <xref linkend="libxslt"/>, og
       <xref linkend="vala"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gi-docgen"/> and
+      <xref linkend="gi-docgen"/> og
       <xref linkend="valgrind"/>
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/gcr"/>
+      Brukernotater: <ulink url="&blfs-wiki;/gcr"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Gcr</title>
+    <title>Installasjon av Gcr</title>
 
     <!--
     <caution>
       <para>
-        If you are upgrading from a version of gcr prior to 3.36.0, you must
-        run the <filename>remove-la-files.sh</filename> script from the
-        <xref linkend="la-files"/> after installing gcr.
+        Hvis du oppgraderer fra en versjon av gcr før 3.36.0, må du
+        kjøre <filename>remove-la-files.sh</filename> skriptet fra
+        <xref linkend="la-files"/> etter installasjon av gcr.
       </para>
     </caution>
     -->
 
 <!--
     <para>
-      First apply a fix for building with newer versions of
+      Bruk først en rettelse for bygging med nyere versjoner av
       <application>meson</application>:
     </para>
 
@@ -121,8 +121,8 @@
 -->
 
     <para>
-      Install <application>Gcr</application> by running the following
-      commands:
+      Installer <application>Gcr</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>sed -i 's:"/desktop:"/org:' schema/*.xml &amp;&amp;
@@ -134,8 +134,8 @@ meson --prefix=/usr --buildtype=release -Dgtk_doc=false .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      If you have <xref linkend='gi-docgen'/> installed and wish to build
-      the API documentation for this package, issue:
+      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
+      API dokumentasjonen for denne pakken, kjør:
     </para>
 
 <screen role='nodump'><userinput>sed -e "/install_dir/s@,\$@ / 'gcr-&gcr-version;'&amp;@" \
@@ -145,49 +145,49 @@ meson configure -Dgtk_doc=true                &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      To test the results, issue: <command>ninja test</command>.
-      The tests must be run from an X Terminal or similar. <!-- One test,
+      For å teste resultatene, kjør: <command>ninja test</command>.
+      Testene skal kjøres fra en X Terminal eller lignende. <!-- One test,
       "test-openssl 3", is known to fail. -->
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
 <!--
     <para>
-      <command>sed ... schema/*.xml</command>:  This command fixes a
-      deprecated entry in the schema template.
+      <command>sed ... schema/*.xml</command>:  Denne kommandoen fikser en
+      utdatert oppføring i skjemamalen.
     </para>
 
     <para>
-      <command>sed ... ui/meson.build</command>:  This command fixes a
-      problem when building with meson-0.59.0.
+      <command>sed ... ui/meson.build</command>:  Denne kommandoen fikser et
+      problem når man bygger med meson-0.59.0.
     </para>
 -->
 
     <!--
     <para>
       <!- - https://gitlab.gnome.org/GNOME/gcr/-/merge_requests/52/ - ->
-      <command>sed ... gck/gck-slot.c</command>:  This command fixes a bug
-      (usage of uninitialized value) identified by upstream.
+      <command>sed ... gck/gck-slot.c</command>:  Denne kommandoen fikser en feil
+      (bruk av uinitialisert verdi) identifisert av oppstrøms.
     </para>
     -->
 
     <para>
-      <option>-Dgtk=false</option>: Use this switch if you
-      haven't installed <xref linkend="gtk3"/>. Note that
-      <application>gcr-viewer</application> will not be installed
-      if this is passed to meson.
+      <option>-Dgtk=false</option>: Bruk denne bryteren hvis du
+      ikke har installert <xref linkend="gtk3"/>. Merk at
+      <application>gcr-viewer</application> vil ikke bli installert
+      hvis dette sendes til meson.
     </para>
 
     <para>
@@ -200,30 +200,30 @@ ninja</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
           gcr-viewer
         </seg>
         <seg>
-          libgck-1.so, libgcr-base-3.so and libgcr-ui-3.so
+          libgck-1.so, libgcr-base-3.so og libgcr-ui-3.so
         </seg>
         <seg>
           /usr/include/gck-1,
-          /usr/include/gcr-3, and
+          /usr/include/gcr-3, og
           /usr/share/gtk-doc/html/{gcr,gck}
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -231,7 +231,7 @@ ninja</userinput></screen>
         <term><command>gcr-viewer</command></term>
         <listitem>
           <para>
-            is used to view certificates and key files
+            brukes til å vise sertifikater og nøkkelfiler
           </para>
           <indexterm zone="gcr gcr-viewer">
             <primary sortas="b-gcr-viewer">gcr-viewer</primary>
@@ -243,7 +243,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libgck-1.so</filename></term>
         <listitem>
           <para>
-            contains GObject bindings for PKCS#11
+            inneholder GObject bindinger for PKCS#11
           </para>
           <indexterm zone="gcr libgck-1">
             <primary sortas="c-libgck-1">libgck-1.so</primary>
