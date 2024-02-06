@@ -25,98 +25,98 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to GNOME Session</title>
+    <title>Introduksjon til GNOME Økt</title>
 
     <para>
-      The <application>GNOME Session</application> package contains
-      the <application>GNOME</application> session manager.
+      <application>GNOME Økt</application> pakken inneholder
+      <application>GNOME</application> øktbehandler.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&gnome-session-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&gnome-session-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&gnome-session-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&gnome-session-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &gnome-session-md5sum;
+          Nedlasting MD5 sum: &gnome-session-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &gnome-session-size;
+          Nedlastingsstørrelse: &gnome-session-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &gnome-session-buildsize;
+          Estimert diskplass som kreves: &gnome-session-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &gnome-session-time;
+          Estimert byggetid: &gnome-session-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">GNOME Session Dependencies</bridgehead>
+    <bridgehead renderas="sect3">GNOME Økt Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <phrase revision="sysv"><xref role="runtime" linkend="elogind"/>,</phrase>
       <xref linkend="gnome-desktop"/>,
       <xref linkend="json-glib"/>,
       <xref linkend="mesa"/>,
       <phrase revision="systemd"><xref role="runtime" linkend="systemd"/>,</phrase>
-      and <xref linkend="upower"/>
+      og <xref linkend="upower"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="xmlto"/>, and
-      <xref linkend="libxslt"/> with
-      <xref linkend="DocBook"/> and
-      <xref linkend="docbook-xsl"/> (to build the documentation)
+      <xref linkend="xmlto"/>, og
+      <xref linkend="libxslt"/> med
+      <xref linkend="DocBook"/> og
+      <xref linkend="docbook-xsl"/> (for å bygge dokumentasjonen)
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/gnome-session"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of GNOME Session</title>
+    <title>Installasjon av GNOME Økt</title>
 
     <para>
-      When running GNOME under <xref linkend="wayland"/>, environment settings
-      are not imported for the user using the system profile. The Wayland
-      developers are currently undecided on a standard method to provide system
-      environment settings for user sessions. To work around this limitation,
-      execute the following command to make
-      <command>gnome-session</command> use a login shell:
+      Når du kjører GNOME under <xref linkend="wayland"/>, miljøinnstillinger
+      importeres ikke for brukeren som bruker systemprofilen. Wayland
+      Utviklere er foreløpig usikre på en standardmetode for å tilby systemet
+      miljøinnstillinger for brukerøkter. For å omgå denne begrensningen,
+      kjør følgende kommando for at
+      <command>gnome-session</command> skal bruke et påloggingsskall:
     </para>
 
 <screen><userinput>sed 's@/bin/sh@/bin/sh -l@' -i gnome-session/gnome-session.in</userinput></screen>
 
 
     <para revision="sysv">
-      Adapt meson.build so that gnome-session can build without systemd:
+      Tilpass meson.build slik at gnome-session kan bygges uten systemd:
     </para>
 
 <screen revision="sysv"><userinput remap="pre">sed -i "/  systemd_dep/,+3d;/if enable_systemd/a \    systemd_userunitdir = '/tmp\'" meson.build</userinput></screen>
 
     <para>
-      Install <application>GNOME Session</application> by
-      running the following commands:
+      Installer <application>GNOME Økt</application> ved å
+      kjøre følgende kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
@@ -135,11 +135,11 @@ meson --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -147,28 +147,28 @@ ninja</userinput></screen>
      that causes error messages to flood stdin. -->
 
     <para>
-      Move the documentation to a versioned directory:
+      Flytt dokumentasjonen til en versjonert mappe:
     </para>
 
 <screen role="root"><userinput>mv -v /usr/share/doc/gnome-session{,-&gnome-session-version;}</userinput></screen>
 
 
     <para>
-      This package creates two Xorg based <filename>.desktop</filename> files
-      in the <filename class="directory">/usr/share/xsessions/</filename>
-      directory, and two Wayland based <filename>.desktop</filename> files in
-      the <filename class="directory">/usr/share/wayland-sessions/</filename>
-      directory.  Only one is needed in each directory on a BLFS system, so
-      prevent the extra files showing up as options in a display manager.  As
-      the &root; user:
+      Denne pakken lager to Xorg baserte <filename>.desktop</filename> filer
+      i <filename class="directory">/usr/share/xsessions/</filename>
+      mappen, og to Wayland baserte <filename>.desktop</filename> filer i
+      <filename class="directory">/usr/share/wayland-sessions/</filename>
+      mappen.  Bare en er nødvendig i hver mappe på et BLFS system, så
+      forhindre at de ekstra filene vises som alternativer i en skjermbehandler.
+      Som &root; bruker:
     </para>
 
 <screen role="root"><userinput>rm -v /usr/share/xsessions/gnome.desktop &amp;&amp;
 rm -v /usr/share/wayland-sessions/gnome.desktop</userinput></screen>
 
     <para revision="sysv">
-      Now, as the <systemitem class="username">root</systemitem> user,
-      remove systemd units that are useless on SysV systems:
+      Nå, som <systemitem class="username">root</systemitem> bruker,
+      fjern systemd enheter som er ubrukelige på SysV systemer:
     </para>
 
 <screen role="root" revision="sysv"><userinput>rm -rv /tmp/{*.d,*.target,*.service}</userinput></screen>
@@ -176,10 +176,10 @@ rm -v /usr/share/wayland-sessions/gnome.desktop</userinput></screen>
 <!-- this part is not needed on systemd, since the dbus session is created
 by systemd-user.-->
     <para revision="sysv">
-      The startup sequence of gnome-wayland needs to create a dbus session.
-      On SysV, this has to be added to the shipped
-      <filename>gnome-wayland.desktop</filename> file, which is written for
-      systemd. As the &root; user:
+      Oppstartssekvensen til gnome-wayland må opprette en dbus økt.
+      På SysV må dette legges til den sendte
+      <filename>gnome-wayland.desktop</filename> filen, som er skrevet for
+      systemd. Som &root; bruker:
     </para>
 
 <screen role="root" revision="sysv"><userinput>sed -e 's@^Exec=@&amp;/usr/bin/dbus-run-session @' \
@@ -188,32 +188,32 @@ by systemd-user.-->
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
    </sect2>
 
   <sect2 role="starting">
-    <title>Starting GNOME</title>
+    <title>Starte GNOME</title>
 
     <para>
-      The easiest way to start GNOME is to use a display manager.
-      <xref linkend="gdm"/> is the recommended display manager.
+      Den enkleste måten å starte GNOME på er å bruke en skjermbehandler.
+      <xref linkend="gdm"/> er den anbefalte skjermbehandleren.
     </para>
 
     <para>
-      It is also possible to start <application>GNOME</application> from the
-      command line. However, you must still have <xref linkend="gdm"/> installed
-      for some portions of the desktop to work. One reason to start from the
-      command line is if you want Wayland support on a system that has the
-      proprietary NVIDIA driver installed, since GDM will not show the Wayland
-      session type on such a system.
+      Det er også mulig å starte <application>GNOME</application> fra
+      kommandolinjen. Du må imidlertid fortsatt ha <xref linkend="gdm"/> installert
+      for at noen deler av skrivebordet skal fungere. En grunn til å starte fra
+      kommandolinjen er hvis du vil ha Wayland støtte på et system som har
+      proprietær NVIDIA driver installert, siden GDM ikke vil vise Wayland
+      økttype på et slikt system.
     </para>
 
     <para>
-      To start <application>GNOME</application> using
-      <xref role="nodep" linkend="xinit"/>, run the following commands:
+      For å starte <application>GNOME</application> ved hjelp av
+      <xref role="nodep" linkend="xinit"/>, kjør følgende kommandoer:
     </para>
 
 <screen role="nodump"><userinput>cat &gt; ~/.xinitrc &lt;&lt; "EOF"
@@ -223,8 +223,8 @@ EOF
 startx</userinput></screen>
 
     <para>
-      Alternatively, to start <application>GNOME</application> with Wayland
-      support, run the following command:
+      Alternativt, for å starte <application>GNOME</application> med Wayland
+      støtte, kjør følgende kommando:
     </para>
 
 <screen role="nodump"><userinput>XDG_SESSION_TYPE=wayland dbus-run-session gnome-session</userinput></screen>
@@ -232,29 +232,29 @@ startx</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          gnome-session, gnome-session-inhibit, and gnome-session-quit
+          gnome-session, gnome-session-inhibit, og gnome-session-quit
         </seg>
        <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          /usr/share/doc/gnome-session-&gnome-session-version; and
+          /usr/share/doc/gnome-session-&gnome-session-version; og
           /usr/share/gnome-session
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -262,8 +262,8 @@ startx</userinput></screen>
         <term><command>gnome-session</command></term>
         <listitem>
           <para>
-            is used to start up the <application>GNOME</application>
-            Desktop environment
+            brukes til å starte opp <application>GNOME</application>
+            Skrivebordsmiljøet
           </para>
           <indexterm zone="gnome-session gnome-session-prog">
             <primary sortas="b-gnome-session">gnome-session</primary>
@@ -275,8 +275,8 @@ startx</userinput></screen>
         <term><command>gnome-session-inhibit</command></term>
         <listitem>
           <para>
-            is used to inhibit certain <application>GNOME</application>
-            Session functionality while executing the given command
+            brukes til å hemme visse <application>GNOME</application>
+            øktfunksjonalitet mens du utfører den gitte kommandoen
           </para>
           <indexterm zone="gnome-session gnome-session-inhibit">
             <primary sortas="b-gnome-session-inhibit">gnome-session-inhibit</primary>
@@ -288,7 +288,7 @@ startx</userinput></screen>
         <term><command>gnome-session-quit</command></term>
         <listitem>
           <para>
-            is used to end the <application>GNOME</application> Session
+            brukes til å avslutte <application>GNOME</application> økten
           </para>
           <indexterm zone="gnome-session gnome-session-quit">
             <primary sortas="b-gnome-session-quit">gnome-session-quit</primary>
