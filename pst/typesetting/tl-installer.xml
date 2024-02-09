@@ -11,8 +11,8 @@
   <!ENTITY tl-installer-date             "20220321"> <!-- in the directory name -->
   <!ENTITY tl-installer-size            "5.6 MB">
 
-  <!ENTITY tl-installer-buildsize        "118 MB for basic TeX and latex, 7.1 GB if everything is included">
-  <!ENTITY tl-installer-time            "varies, depending on network speed and traffic">
+  <!ENTITY tl-installer-buildsize        "118 MB for grunnleggende TeX og latex, 7,1 GB hvis alt er inkludert">
+  <!ENTITY tl-installer-time            "varierer, avhengig av nettverkshastighet og trafikk">
 ]>
 
 <sect1 id="tl-installer" xreflabel="install-tl-unx">
@@ -26,191 +26,191 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to TeX Live and its installer</title>
+    <title>Introduksjon til TeX Live og installasjonsprogrammet</title>
 
     <para>
-      The <application>TeX Live</application> package is a comprehensive
-      TeX document production system.  It includes TeX, LaTeX2e, ConTeXt,
-      Metafont, MetaPost, BibTeX and many other programs; an extensive
-      collection of macros, fonts and documentation; and support for
-      typesetting in many different scripts from around the world.
+      <application>TeX Live</application> pakken er en omfattende
+      TeX dokumentproduksjonssystem. Det inkluderer TeX, LaTeX2e, ConTeXt,
+      Metafont, MetaPost, BibTeX og mange andre programmer; en omfattende
+      samling av makroer, fonter og dokumentasjon; og støtte til
+      typesetting i mange forskjellige skript fra hele verden.
     </para>
 
     <para>
-      This page is for people who wish to use the binary installer to
-      provide the programs, the scripts, and a lot of supporting files and
-      documentation.  The installer is updated frequently, so any published
-      md5sum will soon be out of date.  Newer versions of the
-      installer are expected to work with these instructions, for so long as
-      they install to a
-      <filename class="directory">&texlive-year;/</filename> directory.
+      Denne siden er for folk som ønsker å bruke det binære installasjonsprogrammet til
+      programmene, skriptene og mange støttefiler og
+      dokumentasjon. Installasjonsprogrammet oppdateres ofte, så alle publiserte
+      md5sum vil snart være utdatert. Nyere versjoner av
+      installatøren forventes å virke med disse instruksjonene så lenge som
+      de installerer til en
+      <filename class="directory">&texlive-year;/</filename> mappe.
     </para>
 
     <para>
-      There are two reasons why you may wish to install the binaries in BLFS:
-      either you need a smaller install (e.g. at a minimum plain TeX without
-      LaTeX2e, ConTeXt, etc), or you wish to use <command>tlmgr</command> to
-      get updates whilst this version is supported (typically, until April of
-      the year after it was released). For the latter, you might prefer to
-      install in your <filename class="directory">/home</filename> directory
-      as an unprivileged user, and to then make corresponding changes to the
-      PATH in your <filename>~/.bashrc</filename> or equivalent.
+      Det er to grunner til at du kanskje ønsker å installere binærfilene i BLFS:
+      enten trenger du en mindre installasjon (f.eks. som et minimum vanlig TeX uten
+      LaTeX2e, ConTeXt, etc), eller du ønsker å bruke <command>tlmgr</command> til
+      å få oppdateringer mens denne versjonen støttes (vanligvis frem til april
+      året etter at den ble utgitt). For sistnevnte foretrekker du kanskje å
+      installere i din <filename class="directory">/home</filename> mappe
+      som en uprivilegert bruker, og for deretter å gjøre tilsvarende endringer i
+      PATH i din <filename>~/.bashrc</filename> eller tilsvarende.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&tl-installer-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&tl-installer-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&tl-installer-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&tl-installer-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
           <!--Download MD5 sum: &tl-installer-md5sum; (for &tl-installer-date;)-->
-          Download MD5 sum: Varies frequently
+          Nedlasting MD5 sum: Varierer ofte
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &tl-installer-size;
+          Nedlastingsstørrelse: &tl-installer-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &tl-installer-buildsize;
+          Estimert diskplass som kreves: &tl-installer-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &tl-installer-time;
+          Estimert byggetid: &tl-installer-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="gnupg2"/> (to validate both the initial downloads, and also
-      any updates you might later make using <command>tlmgr</command>.)
-      <xref linkend="perl-libwww-perl"/> (to use a single connection to the server,
-      which will reduce its load and speed things up.)
+      <xref linkend="gnupg2"/> (for å validere både de første nedlastingene, og også
+      eventuelle oppdateringer du senere kan gjøre ved å bruke <command>tlmgr</command>.)
+      <xref linkend="perl-libwww-perl"/> (å bruke en enkelt tilkobling til serveren,
+      som vil redusere belastningen og øke hastigheten.)
     </para>
 
-    <bridgehead renderas="sect4">Recommended (at runtime)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (vwd kjøring)</bridgehead>
     <para role="recommended">
-      The binaries are mostly linked to included static libraries or
-      general (LFS) system libraries, but a few of the programs
-      and several scripts will fail if the following packages are not present:
+      Binærfilene er for det meste knyttet til inkluderte statiske biblioteker eller
+      generelle (LFS) systembiblioteker, men noen få av programmene
+      og flere skript vil mislykkes hvis følgende pakker ikke er til stede:
     </para>
     <para role="recommended">
-      <xref role="runtime" linkend="gs"/> is dynamically loaded by
-      the external application <ulink url="https://dvisvgm.de/">dvisvgm</ulink>,
-      which is used by <application>asy</application> when that creates SVG
-      files.
+      <xref role="runtime" linkend="gs"/> lastes dynamisk av
+      den eksterne applikasjonen <ulink url="https://dvisvgm.de/">dvisvgm</ulink>,
+      som brukes av <application>asy</application> når det oppretter SVG
+      filer.
     </para>
     <para role="recommended">
-      <xref role="runtime" linkend="xorg7-lib"/> and
-      <xref role="runtime" linkend="libxcb"/> are needed for inimf, mf,
-      pdfclose, pdfopen and xdvi-xaw. But if you are using asy, or using a
-      <application>TeX</application> engine to create a PDF file, you will
-      need <xref role="runtime" linkend="x-window-system"/> (for PDF files,
-      this is to support a PDF viewer of your choice, for example
+      <xref role="runtime" linkend="xorg7-lib"/> og
+      <xref role="runtime" linkend="libxcb"/> er nødvendig for inimf, mf,
+      pdfclose, pdfopen og xdvi-xaw. Men hvis du bruker asy, eller bruker en
+      <application>TeX</application> motor for å lage en PDF fil, vil du
+      trenge <xref role="runtime" linkend="x-window-system"/> (for PDF filer,
+      dette er for å støtte en PDF leser etter eget valg
        <xref role="nodep" linkend="epdfview"/>).
     </para>
 <!-- seems to not be needed in 2021
     <para role="recommended">
-      the optional non-wide-character ncurses library (for "some binary-only
-      application") from the bottom of the <application>Ncurses</application>
-      page in LFS is needed
-      for xindy.run which is used by <application>xindy</application>
+      det valgfrie ncurses-biblioteket med ikke-bredt tegn (for "noen bare binære
+      søknad") fra bunnen av <application>Ncurses</application>
+      side i LFS er nødvendig
+      for xindy.run som brukes av <application>xindy</application>
     </para> -->
     <para role="recommended">
-      The binary version of <application>asy</application> needs
+      Den binære versjonen av <application>asy</application> trenger
       <xref linkend="freeglut"/>.
     </para>
     <note>
       <para>
-        As always with contributed binary software, it is possible that the
-        required dependencies may change when the installer is updated. In
-        particular, these dependencies have only been checked on x86_64.
+        Som alltid med bidratt binær programvare, er det mulig at
+        nødvendige avhengigheter kan endres når installasjonsprogrammet oppdateres.
+        Disse avhengighetene har bare blitt sjekket på x86_64.
       </para>
     </note>
     <!-- text for runtime deps, shared with texlive -->
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
      href="../../xincludes/texruntime.xml"/>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/tl-installer"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Binary Installation of TeX Live</title>
+    <title>Binær installasjon av TeX Live</title>
 
     <para>
-      The <application>TeX Live</application> set of programs with its
-      supporting documents, fonts, and utilities is very large.  The upstream
-      maintainers recommend placing all files in a single directory structure.
-      BLFS recommends <filename class='directory'>/opt/texlive</filename>.
+      <application>TeX Live</application> sett av programmer med sine
+      støttedokumenter, fonter og verktøy er veldig store. Oppstrøms
+      vedlikeholdere anbefaler å plassere alle filer i en enkelt mappestruktur.
+      BLFS anbefaler <filename class='directory'>/opt/texlive</filename>.
     </para>
 
     <para>
-      As with any other package, unpack the installer and change into its
-      directory, <filename class='directory'>
+      Som med alle andre pakker, pakk ut installasjonsprogrammet og bytt til
+      mappen, <filename class='directory'>
         install-tl-&lt;CCYYMMDD&gt;</filename>.
-      This directory name changes when the installer is updated, so replace
-      &lt;CCYYMMDD&gt; by the correct directory name.
+      Dette mappenavnet endres når installasjonsprogrammet oppdateres, så bytt ut
+      &lt;CCYYMMDD&gt; med riktig mappenavn.
     </para>
 
     <note>
       <para>
-        The distribution binaries installed below may use static linking
-        for general linux system libraries.  Additional libraries or
-        interpreters as specified in the dependencies section do not need to
-        be present during the install, but the programs that need them will
-        not run until their specific dependencies have been installed.
+        Distribusjonsbinærfilene installert nedenfor kan bruke statisk kobling
+        for generelle linux systembiblioteker. Ekstra biblioteker eller
+        tolker som spesifisert i avhengighetsdelen trenger ikke å
+        være tilstede under installasjonen, men programmene som trenger dem vil
+        ikke kjøre før deres spesifikke avhengigheter er installert.
       </para>
 
     <!-- please keep something like this in the future -->
       <para>
-        With all contributed binary software, there may be a mismatch between
-        the builder's toolchain and your hardware.  In most of TeX this will
-        probably not matter, but in uncommon corner cases you might hit
-        problems. For example, if your x86_64 processor does not support 3dnowext or
-        3dnow, the 2014-06-28 binary failed in conTeXt when running LuaTeX,
-        although lualatex worked, as did the i686 binaries on the same
-        machine. In such cases, the easiest solution is to install texlive
-        from source. Similarly, the x86_64 binary version of
-        <command>asy</command> runs very slowly when creating 3-D diagrams.
+        Med all bidratt binær programvare kan det være et misforhold mellom
+        byggerens verktøykjede og maskinvaren din. I det meste av TeX vil dette
+        sannsynligvis ikke gjøre noe, men i uvanlige tilfeller kan du treffe på
+        problemer. For eksempel, hvis x86_64-prosessoren din ikke støtter 3dnowext eller
+        3dnow, 2014-06-28-binæren mislyktes i ConTeXt når du kjører LuaTeX,
+        selv om lualatex fungerte, det samme gjorde i686 binærene på den samme
+        maskinen. I slike tilfeller er den enkleste løsningen å installere texlive
+        fra kilden. Tilsvarende x86_64 binærversjonen av
+        <command>asy</command> kjører veldig sakte når du lager 3D diagrammer.
       </para>
     </note>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>TEXLIVE_INSTALL_PREFIX=/opt/texlive ./install-tl</userinput></screen>
 
     <para>
-      This command is interactive and allows selection or modification of
-      platform, packages, directories, and other options. The full installation
-      scheme will require about 4.9 gigabytes of disk space. The time to
-      complete the download will depend on your internet connection speed
-      and the number of packages selected.
+      Denne kommandoen er interaktiv og tillater valg eller modifikasjon av
+      plattform, pakker, mapper og andre alternativer. Det fullstendige installasjons
+      skjemaet vil kreve omtrent 4,9 gigabyte diskplass. Tiden til å
+      fullføre nedlastingen vil avhenge av hastigheten på Internetttilkoblingen din
+      og antall valgte pakker.
     </para>
 
     <para>
-      It has been established by debian that the <command>python</command>
-      scripts in <filename class="directory">latex-make</filename> will work
-      with <command>python3</command>, so update them to invoke that by running
-      the following command as the <systemitem class="username">root</systemitem>
-      user:
+      Det har blitt fastslått av debian at <command>python</command>
+      skriptet i <filename class="directory">latex-make</filename> vil virke
+      med <command>python3</command>, så oppdater dem for å påkalle det ved å kjøre
+      følgende kommando som <systemitem class="username">root</systemitem>
+      bruker:
     </para>
 
 <screen role="root"><userinput>for F in /opt/texlive/&texlive-year;/texmf-dist/scripts/latex-make/*.py ; do
@@ -221,42 +221,42 @@ done
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>test -f $F &amp;&amp; sed ...</command>: in a small install these
-      files might not be present, so test if they exist and if not return 'true'
-      to avoid any error if this command has been copied into one of your own install scripts.
+      <command>test -f $F &amp;&amp; sed ...</command>: i en liten installer disse
+      filene er kanskje ikke tilstede, så test om de eksisterer og hvis ikke returner "true"
+      for å unngå feil hvis denne kommandoen har blitt kopiert inn i et av dine egne installasjonsskript.
     </para>
 
     <para>
       <option>./install-tl --location
-      http://mirror.aut.ac.nz/CTAN/systems/texlive/tlnet/</option>: use a
-      variation of this if you wish to use a different mirror, for example, because
-      you are in New Zealand but the installer chooses to use an Australian
-      mirror. The list of mirrors is at
+      http://mirror.aut.ac.nz/CTAN/systems/texlive/tlnet/</option>: bruk en
+      variant av dette hvis du ønsker å bruke et annet speil, for eksempel fordi
+      du er i New Zealand, men installatøren velger å bruke en australsk
+      speil. Listen over speil er på
       <ulink url='https://ctan.org/mirrors/'/>.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>Over 300 binaries and symlinks to scripts</seg>
-        <seg>None</seg>
+        <seg>Over 300 binærfiler og symbolkoblinger til skript</seg>
+        <seg>Ingen</seg>
         <seg>/opt/texlive</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
