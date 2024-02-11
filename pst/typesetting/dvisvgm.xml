@@ -10,8 +10,8 @@
   <!ENTITY dvisvgm-download-ftp  " ">
   <!ENTITY dvisvgm-md5sum        "e3de28609b74a61ea496c85b3e0f0ef1">
   <!ENTITY dvisvgm-size          "2.9 MB">
-  <!ENTITY dvisvgm-buildsize     "310 MB (44 MB installed, add 962 MB for the tests)">
-  <!ENTITY dvisvgm-time          "0.8 SBU (add 0.6 SBU for the tests, both using parallelism=4)">
+  <!ENTITY dvisvgm-buildsize     "310 MB (44 MB installert, legg til 962 MB for testene)">
+  <!ENTITY dvisvgm-time          "0.8 SBU (legg til 0,6 SBU for testene, begge ved bruk av parallellitet=4)">
 ]>
 
 <sect1 id="dvisvgm" xreflabel="dvisvgm-&dvisvgm-version;">
@@ -25,85 +25,85 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to dvisvgm</title>
+    <title>Introduksjon til dvisvgm</title>
 
     <para>
-      The <application>dvisvgm</application> package converts DVI, EPS and
-      PDF files to SVG format.
+      <application>dvisvgm</application> pakken konverterer DVI, EPS og
+      PDF filer til SVG formatet.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&dvisvgm-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&dvisvgm-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&dvisvgm-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&dvisvgm-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &dvisvgm-md5sum;
+          Nedlasting MD5 sum: &dvisvgm-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &dvisvgm-size;
+          Nedlastingsstørrelse: &dvisvgm-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &dvisvgm-buildsize;
+          Estimert diskplass som kreves: &dvisvgm-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &dvisvgm-time;
+          Estimert byggetid: &dvisvgm-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">dvisvgm Dependencies</bridgehead>
+    <bridgehead renderas="sect3">dvisvgm Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <!-- EDITORS: the docs say it needs clipper, but it uses an internal
        modified version and cannot be built with system clipper -->
       <xref linkend="brotli"/>,
-      <xref linkend="gs"/>, and
+      <xref linkend="gs"/>, og
       <xref linkend="potrace"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="woff2"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="asciidoc"/> with
-      <xref linkend="xmlto"/> and
-      <xref linkend="libxslt"/> (see command explanations),
-      <ulink url="https://dblatex.sourceforge.net/">dblatex</ulink> (with the above) and
+      <xref linkend="asciidoc"/> med
+      <xref linkend="xmlto"/> og
+      <xref linkend="libxslt"/> (se parameterforklaringer),
+      <ulink url="https://dblatex.sourceforge.net/">dblatex</ulink> (med ovenstående) og
       <!-- version checked for dvisvgm-2.9, 0.7.3 is mentioned in the
            news and is the latest version at 2020-03-21
            maybe change to 'a recent version' if that releases faster -->
       <ulink url="https://github.com/Cyan4973/xxHash/releases/latest">xxHash</ulink>
-      (the current version is included in the tarball)
+      (gjeldende versjon er inkludert i tarballen)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/dvisvgm"/>
+      Brukernotater: <ulink url="&blfs-wiki;/dvisvgm"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of dvisvgm</title>
+    <title>Installasjon av dvisvgm</title>
 
 <!-- Editors: This is in the book for svg output from asymptote. tested in
  https://www.linuxfromscratch.org/~ken/asy-nontex-testfiles/asy-test-20200123.tar.xz
@@ -112,24 +112,24 @@
  Or, use use it to convert first or specified page(s) of a PDF to SVG - see the man page
 -->
     <para>
-      To enable the build system to link to
-      <filename class="libraryfile">libkpathsea.so</filename>, as the
-      <systemitem class="username">root</systemitem> user create a symlink from
+      For å aktivere byggesystemet til å koble til
+      <filename class="libraryfile">libkpathsea.so</filename>, som
+      <systemitem class="username">root</systemitem> bruker opprett en symbolkobling fra
       <filename class="directory">/usr/lib</filename>:
     </para>
 
 <screen role="root"><userinput>ln -svf $TEXLIVE_PREFIX/lib/libkpathsea.so /usr/lib</userinput></screen>
 
     <para>
-      The test suite assumes that a modern version of <application>Python</application>
-      has been installed as plain <command>python</command>. Changing this to use
-      <command>python3</command> requires a sed to one <filename>Makefile.in</filename>
-      file.
+      Testpakken forutsetter at en moderne versjon av <application>Python</application>
+      har blitt installert som vanlig <command>python</command>. Endrer dette til å bruke
+      <command>python3</command> krever en sed til en <filename>Makefile.in</filename>
+      fil.
     </para>
 
     <para>
-      Install <application>dvisvgm</application> by running the following
-      commands:
+      Installer <application>dvisvgm</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>sed -i 's/python/&amp;3/' tests/Makefile.in         &amp;&amp;
@@ -140,11 +140,11 @@
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make check</command>.
+      For å teste resultatene, kjør: <command>make check</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -152,21 +152,21 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <command>ln -svf $TEXLIVE_PREFIX/lib/libkpathsea.so /usr/lib</command>:
-      Without this, the program will not link correctly,
+      Uten dette vil ikke programmet kobles riktig,
     </para>
 
 <!-- The autoreconf command is not used above anymore.
     <para>
-      <command>autoreconf -fiv</command>: The versions of
-      <application>autoconf</application> and <application>automake</application>
-      used when this package was created are older than the current versions in
-      LFS. That causes 'make' to fail when it reaches the 'tests' subdirectory
-      unless autoreconf is forced to install missing (i.e. newer) auxiliary
-      files.
+      <command>autoreconf -fiv</command>: Versjonene av
+      <application>autoconf</application> og <application>automake</application>
+      brukt da denne pakken ble opprettet, er eldre enn gjeldende versjoner i
+      LFS. Det fører til at 'make' mislykkes når den når undermappen'tests'
+      med mindre autoreconf blir tvunget til å installere manglende (dvs. nyere) hjelpeprogram
+      filer.
     </para>
 -->
 
@@ -175,36 +175,36 @@ make</userinput></screen>
       can be invoked from top-level but needs dblatex), and I see no utility
       in explaining how to regenerate it. ken -->
     <para>
-      <parameter>--with-kpathsea=$TEXLIVE_PREFIX</parameter>: This allows
-      the build system to find the headers for <filename
+      <parameter>--with-kpathsea=$TEXLIVE_PREFIX</parameter>: Dette tillater
+      byggesystemet å finne deklarasjonene for <filename
       class="libraryfile">kpathsea</filename>
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
           dvisvgm
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -212,7 +212,7 @@ make</userinput></screen>
         <term><command>dvisvgm</command></term>
         <listitem>
           <para>
-            converts DVI, EPS and PDF files to the SVG format
+            konverterer DVI, EPS og PDF filer til SVG formatet
           </para>
           <indexterm zone="dvisvgm dvisvgm-prog">
             <primary sortas="b-dvisvgm">dvisvgm</primary>
