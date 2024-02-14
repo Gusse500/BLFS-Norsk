@@ -8,8 +8,8 @@
   <!ENTITY xwayland-download-ftp  "&xorg-download-ftp;/xserver/xwayland-&xwayland-version;.tar.xz">
   <!ENTITY xwayland-md5sum        "96879f938a91b0441ea784220159d843">
   <!ENTITY xwayland-size          "1.2 MB">
-  <!ENTITY xwayland-buildsize     "76 MB (add 358 MB for tests)">
-  <!ENTITY xwayland-time          "0.2 SBU (with parallelism=4; add 1.0 SBU for tests, not including clone time)">
+  <!ENTITY xwayland-buildsize     "76 MB (legg til 358 MB for tester)">
+  <!ENTITY xwayland-time          "0.2 SBU (med parallellitet=4; legg til 1.0 SBU for tester, ikke inkludert klonetid)">
 ]>
 
 <sect1 id="xwayland" xreflabel="Xwayland-&xwayland-version;">
@@ -23,91 +23,91 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Xwayland</title>
+    <title>Introduksjon til Xwayland</title>
 
     <para>
-      The <application>Xwayland</application> package is an Xorg server
-      running on top of the wayland server. It has been separated from the
-      main Xorg server package. It allows running X clients inside a
-      wayland session.
+      <application>Xwayland</application> pakken er en Xorg server
+      som kjører på toppen av wayland serveren. Den har blitt skilt fra
+      Xorg hovedserverpakke. Den lar X klienter kjøre inne i en
+      wayland økt.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&xwayland-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&xwayland-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&xwayland-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&xwayland-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &xwayland-md5sum;
+          Nedlasting MD5 sum: &xwayland-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &xwayland-size;
+          Nedlastingsstørrelse: &xwayland-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &xwayland-buildsize;
+          Estimert diskplass som kreves: &xwayland-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &xwayland-time;
+          Estimert byggetid: &xwayland-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Xwayland Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Xwayland Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="libxcvt"/>,
       <xref linkend="pixman"/>,
-      <xref linkend="wayland-protocols"/>, and
-      <xref linkend="xorg7-font"/> (only font-util)
+      <xref linkend="wayland-protocols"/>, og
+      <xref linkend="xorg7-font"/> (bare font-util)
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="libepoxy"/>,
-      <xref linkend="libtirpc"/>, and
+      <xref linkend="libtirpc"/>, og
       <xref linkend="mesa"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="git"/> (to download packages needed for the tests),
+      <xref linkend="git"/> (for å laste ned pakker som trengs for testene),
       <xref linkend="libgcrypt"/>,
       <xref linkend="nettle"/>,
       <xref linkend="xmlto"/>,
       <xref linkend="xorg7-legacy"/>
-         (only bdftopcf, for building fonts required for the tests),
-      <ulink url="https://gitlab.freedesktop.org/xorg/test/rendercheck">rendercheck</ulink> (for tests), and
-      <ulink url="https://wayland.pages.freedesktop.org/weston/">weston</ulink> (for tests)
+         (bare bdftopcf, for å bygge fonter som kreves for testene),
+      <ulink url="https://gitlab.freedesktop.org/xorg/test/rendercheck">rendercheck</ulink> (for tester), og
+      <ulink url="https://wayland.pages.freedesktop.org/weston/">weston</ulink> (for tester)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/xwayland"/>
+      Brukernotater: <ulink url="&blfs-wiki;/xwayland"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Xwayland</title>
+    <title>Installasjon av Xwayland</title>
 
     <para>
-      Install <application>xwayland</application> by running the following
-      commands:
+      Installer <application>xwayland</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>sed -i '/install_man/,$d' meson.build &amp;&amp;
@@ -122,27 +122,27 @@ meson --prefix=$XORG_PREFIX         \
 ninja</userinput></screen>
 
     <para>
-      Building the test framework needs some work. First,
+      Å bygge testrammeverket krever litt arbeid. Først,
       <ulink url="https://wayland.pages.freedesktop.org/weston/">weston</ulink>
-      brings in several dependencies, but the number can be reduced by
-      disabling unneeded features. The <command>meson</command> command
-      for a stripped down build of <application>weston</application> is shown
-      in <ulink
+      bringer inn flere avhengigheter, men antallet kan reduseres med
+      å deaktivere unødvendige funksjoner. <command>meson</command> kommandoer
+      for en nedstrippet oppbygging av <application>weston</application> er vist
+      i <ulink
       url="https://gitlab.freedesktop.org/xorg/xserver/-/blob/xwayland-22.1/.gitlab-ci/debian-install.sh">
       Upstream continuous integration build</ulink>.
     </para>
 <!--
     <para>
-      Furthermore, an X server needs to be running during the build of
-      <application>xts</application>. If not running the tests in a
-      graphical environment, you'll need to enable <command>Xvfb</command>
-      by removing the <parameter>-Dxvfb=false</parameter> above. The
-      instructions below expect this has been done.
+      Videre må en X server kjøres under byggingen av
+      <application>xts</application>. Hvis du ikke kjører testene i et
+      grafisk miljø, må du aktivere <command>Xvfb</command>
+      ved å fjerne <parameter>-Dxvfb=false</parameter> ovenfor.
+      Instruksjonene nedenfor forventer at dette er gjort.
     </para>
 -->
     <para>
-      Running the tests involves downloading two other frameworks, in addition
-      to the mentioned optional dependencies:
+      Å kjøre testene innebærer å laste ned to andre rammeverk, i tillegg
+      til de nevnte valgfrie avhengighetene:
     </para>
 
 <screen remap="test"><userinput>mkdir tools &amp;&amp;
@@ -167,14 +167,14 @@ unset DISPLAY VFB_PID        &amp;&amp;
 popd</userinput></screen>
 
     <para>
-      Then the tests can be run with:
+      Da kan testene kjøres med:
     </para>
 
 <screen remap="test"><userinput>XTEST_DIR=$(pwd)/tools/xts PIGLIT_DIR=$(pwd)/tools/piglit ninja test</userinput></screen>
 
     <!-- The xfontset tests fail on my system -renodr -->
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="sysv"><userinput>ninja install &amp;&amp;
@@ -185,9 +185,9 @@ EOF</userinput></screen>
 <screen role="root" revision="systemd"><userinput>ninja install</userinput></screen>
 
     <para>
-      If <xref linkend='xorg-server'/> is not installed and you do not plan
-      to install it later, you can install <command>Xvfb</command> from this
-      package.  As the &root; user:
+      Hvis <xref linkend='xorg-server'/> ikke er installert og du planlegger ikke
+      å installere det senere, kan du installere <command>Xvfb</command> fra denne
+      pakken.  Som &root; bruker:
     </para>
 
 <screen role="nodump"><userinput>install -vm755 hw/vfb/Xvfb /usr/bin</userinput></screen>
@@ -195,65 +195,65 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -i '/install_man/,$d' meson.build</command>: Prevents
-      installing a manual page for <command>Xserver</command>,
-      which is also provided by <xref linkend='xorg-server'/>.  Remove this
-      command if <xref linkend='xorg-server'/> is not installed and you
-      don't plan to install it later.
+      <command>sed -i '/install_man/,$d' meson.build</command>: Forhindrer
+      installering av en manualside for <command>Xserver</command>,
+      som også leveres av <xref linkend='xorg-server'/>.  Fjern denne
+      kommandoen hvis <xref linkend='xorg-server'/> ikke er installert og du
+      ikke planlegger å installere den senere.
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 <!--
     <para>
-      <parameter>-Dxvfb=false</parameter>: Prevents building the
-      <command>xvfb</command> program, which is also installed by
-      <xref linkend="xorg-server"/>. Remove this option if you do not plan to
-      install the X server.
+      <parameter>-Dxvfb=false</parameter>: Hindrer å bygge
+      <command>xvfb</command> program, som også er installert av
+      <xref linkend="xorg-server"/>. Fjern dette alternativet hvis du ikke planlegger å
+      installere X serveren.
     </para>
 
     <para>
-      <command>mkdir -pv /etc/X11/xorg.conf.d</command>: This directory is
-      needed to put configuration files for Xwayland. This command ensures
-      that it exists, as some applications might use it without first
-      creating it.
+      <command>mkdir -pv /etc/X11/xorg.conf.d</command>: Denne mappen er
+      nødvendig for å sette konfigurasjonsfiler for Xwayland. Denne kommandoen sikrer
+      at den eksisterer, ettersom noen applikasjoner kan bruke den uten først
+      å skape den.
     </para>
 -->
     <para revision="sysv">
-      <command>cat &gt;&gt; /etc/sysconfig/createfiles...</command>: This
-      command creates the <filename class="directory">/tmp/.X11-unix</filename>
-      directory at startup, and ensures that the permissions and ownership
-      are correct as required by applications using Xwayland.
+      <command>cat &gt;&gt; /etc/sysconfig/createfiles...</command>: Denne
+      kommandoen oppretter <filename class="directory">/tmp/.X11-unix</filename>
+      mappen ved oppstart, og sikrer at tillatelser og eierskap
+      er korrekte som kreves av applikasjoner som bruker Xwayland.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
           Xwayland
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -261,7 +261,7 @@ EOF</userinput></screen>
         <term><command>Xwayland</command></term>
         <listitem>
           <para>
-            Allows X clients to run under wayland
+            Lar X klienter kjøre under wayland
           </para>
           <indexterm zone="xwayland Xwayland">
             <primary sortas="b-Xwayland">Xwayland</primary>
