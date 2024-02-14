@@ -12,8 +12,8 @@
   <!ENTITY libinput-download-ftp  " ">
   <!ENTITY libinput-md5sum        "d164313f9a92162df7af3505b6915c76">
   <!ENTITY libinput-size          "967 KB">
-  <!ENTITY libinput-buildsize     "13 MB (add 22 MB for documentation and 9.6 MB for tests)">
-  <!ENTITY libinput-time          "0.1 SBU (add 0.1 SBU for documentation and 4.7 SBU for tests)">
+  <!ENTITY libinput-buildsize     "13 MB (legg til 22 MB for dokumentasjon og 9,6 MB for tester)">
+  <!ENTITY libinput-time          "0.1 SBU (legg til 0,1 SBU for dokumentasjon og 4,7 SBU for tester)">
 ]>
 
   <sect2 id="libinput" xreflabel="libinput-&libinput-version;">
@@ -30,86 +30,86 @@
     </indexterm>
 
     <sect3 role="package">
-      <title>Introduction to Libinput</title>
+      <title>Introduksjon til Libinput</title>
 
       <para>
-        <application>libinput</application> is a library that handles
-        input devices for display servers and other applications that
-        need to directly deal with input devices.
+        <application>libinput</application> er et bibliotek som håndterer
+        inndataenheter for skjermservere og andre applikasjoner som
+        trenger å håndtere inndataenheter direkte.
       </para>
 
       &lfs113_checked;
 
-      <bridgehead renderas="sect4">Package Information</bridgehead>
+      <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            Download (HTTP): <ulink url="&libinput-download-http;"/>
+            Nedlasting (HTTP): <ulink url="&libinput-download-http;"/>
           </para>
         </listitem>
         <listitem>
           <para>
-            Download (FTP): <ulink url="&libinput-download-ftp;"/>
+            Nedlasting (FTP): <ulink url="&libinput-download-ftp;"/>
           </para>
         </listitem>
         <listitem>
           <para>
-            Download MD5 sum: &libinput-md5sum;
+            Nedlasting MD5 sum: &libinput-md5sum;
           </para>
         </listitem>
         <listitem>
           <para>
-            Download size: &libinput-size;
+            Nedlastingsstørrelse: &libinput-size;
           </para>
         </listitem>
         <listitem>
           <para>
-            Estimated disk space required: &libinput-buildsize;
+            Estimert diskplass som kreves: &libinput-buildsize;
           </para>
         </listitem>
         <listitem>
           <para>
-            Estimated build time: &libinput-time;
+            Estimert byggetid: &libinput-time;
           </para>
         </listitem>
       </itemizedlist>
 
-      <bridgehead renderas="sect4">libinput Dependencies</bridgehead>
+      <bridgehead renderas="sect4">libinput Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect5">Required</bridgehead>
+      <bridgehead renderas="sect5">Påkrevd</bridgehead>
       <para role="required">
-        <xref linkend="libevdev"/> and
+        <xref linkend="libevdev"/> og
         <xref linkend="mtdev"/>
       </para>
 
-      <bridgehead renderas="sect5">Optional</bridgehead>
+      <bridgehead renderas="sect5">Valgfri</bridgehead>
       <para role="optional">
-        <xref linkend="valgrind"/> (to run the tests),
-        <xref linkend="gtk3"/> (to build the GUI event viewer),
-        <xref linkend="libunwind"/> (required for tests),
+        <xref linkend="valgrind"/> (for å kjøre testene),
+        <xref linkend="gtk3"/> (for å bygge GUI hendelsesvisningen),
+        <xref linkend="libunwind"/> (nødvendig for tester),
         <xref linkend="libwacom"/>,
-        <xref linkend="sphinx"/> (required to build documentation), and
-        <xref linkend="pyparsing"/> (for one non-root test)
+        <xref linkend="sphinx"/> (kreves for å bygge dokumentasjon), og
+        <xref linkend="pyparsing"/> (for en ikke-root test)
       </para>
 
       <para condition="html" role="usernotes">
-        User Notes: <ulink url="&blfs-wiki;/libinput"/>
+        Brukernotater: <ulink url="&blfs-wiki;/libinput"/>
       </para>
     </sect3>
 
     <sect3 role="kernel" id="libinput-kernel">
-      <title>Kernel Configuration for Running the Libinput Test Suite</title>
+      <title>Kjernekonfigurasjon for å kjøre Libinput Testpakken</title>
 
       <para>
-        Although libinput works with the same kernel configuration used by <xref
-        linkend="libevdev"/>, its extensive test suite requires the presence of
-        <filename>/dev/uinput</filename>  (as well as both <xref linkend="valgrind"/>
-        and <xref linkend="libunwind"/>).
+        Selv om libinput fungerer med den samme kjernekonfigurasjonen som brukes av <xref
+        linkend="libevdev"/>, dens omfattende testpakken krever tilstedeværelse av
+        <filename>/dev/uinput</filename>  (samt både <xref linkend="valgrind"/>
+        og <xref linkend="libunwind"/>).
       </para>
 
       <para>
-        If you wish to run the full tests, enable the following option in the kernel
-        configuration and recompile the kernel if necessary:
+        Hvis du ønsker å kjøre alle testene, aktiver følgende alternativ i
+        kjernekonfigurasjon og kompiler kjernen på nytt om nødvendig:
       </para>
 
 <screen><literal>Device Drivers ---&gt;
@@ -118,16 +118,16 @@
     &lt;*/M&gt;   User level driver support        [CONFIG_INPUT_UINPUT]</literal></screen>
 
       <para>
-        If you build this as a module, it needs to be inserted before the test suite
-        runs.
+        Hvis du bygger denne som en modul, må den settes inn før testpakken
+        kjører.
       </para>
 
       <para>
-        On an Xorg system you will also need to prevent the events generated
-        during the test suite from interfering with your desktop.  Copy the
-        file <filename>test/50-litest.conf</filename> into
+        På et Xorg system må du også forhindre genererte hendelser
+        under testpakken fra å forstyrre skrivebordet ditt. Kopier
+        filen <filename>test/50-litest.conf</filename> til
         <filename class="directory">${XORG_PREFIX}/share/X11/xorg.conf.d</filename>
-        and restart X. For further information see
+        og start X på nytt. For mer informasjon se
         <ulink url="https://wayland.freedesktop.org/libinput/doc/&libinput-version;/test-suite.html">libinput test suite</ulink>.
       </para>
 
@@ -137,11 +137,11 @@
     </sect3>
 
     <sect3 role="installation">
-      <title>Installation of Libinput</title>
+      <title>Installasjon av Libinput</title>
 
       <para>
-        Install <application>libinput</application> by running the following
-        commands:
+        Installer <application>libinput</application> ved å kjøre følgende
+        kommandoer:
       </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -158,30 +158,30 @@ ninja</userinput></screen>
 
       <note>
         <para>
-          If you want to run the full tests, remove -Dtests from the
-          <command>meson</command> command above. Please read "kernel
-          configuration for running the libinput test suite" (above).
+          Hvis du vil kjøre de fullstendige testene, fjerner du -Dtests fra
+          <command>meson</command> kommandoen ovenfor. Vennligst les
+          "Kjernekonfigurasjon for å kjøre libinput Testpakken" (over).
         </para>
 
         <para>
-          If you have enabled the full tests, you can run the main tests
-          <emphasis>as the root user</emphasis> by executing:
-          <command>ninja test</command>. A very large number of tests will
-          be run. One test fails on wayland.
+          Hvis du har aktivert de fullstendige testene, kan du kjøre hovedtestene
+          <emphasis>som root bruker</emphasis> ved å utføre:
+          <command>ninja test</command>. Et svært stort antall tester vil
+          bli kjørt. En test mislykkes på wayland.
         </para>
       </note>
 
       <para>
-        Now, as the <systemitem class="username">root</systemitem> user:
+        Nå, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
       <para>
-        If you have passed <option>-Ddocumentation=true</option> to
-        <command>meson</command>, you can install the generated documentation
-        by running the following commands as the <systemitem
-        class="username">root</systemitem> user:
+        Hvis du har gitt <option>-Ddocumentation=true</option> til
+        <command>meson</command>, kan du installere den genererte dokumentasjonen
+        ved å kjøre følgende kommandoer som <systemitem
+        class="username">root</systemitem> bruker:
       </para>
 
 <!-- seems the api doc is not generated because the directory is not a git
@@ -193,57 +193,57 @@ cp -rv Documentation/* /usr/share/doc/libinput-&libinput-version;/html</userinpu
     </sect3>
 
     <sect3 role="commands">
-      <title>Command Explanations</title>
+      <title>Parameterforklaringer</title>
 
       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
         href="../../xincludes/meson-buildtype-release.xml"/>
 
       <para>
-        <parameter>-Ddebug-gui=false</parameter>: This switch
-        disables creation of a visual debug helper for libinput. Remove
-        if you want it, and you have <xref linkend="gtk3"/> installed.
+        <parameter>-Ddebug-gui=false</parameter>: Denne bryteren
+        deaktiverer opprettelse av en visuell feilsøkingshjelper for libinput. Fjern
+        hvis du vil ha det, og du har <xref linkend="gtk3"/> installert.
       </para>
 
       <para>
-        <parameter>-Dtests=false</parameter>: This switch disables compilation of
-        the main tests.  Even with the tests defined as false, you can still run
-        the first four minor tests, as a regular user, but one will be skipped if
-        <xref linkend="pyparsing"/> is not installed.
+        <parameter>-Dtests=false</parameter>: Denne bryteren deaktiverer kompilering av
+        hovedtestene. Selv med testene definert som false,, kan du fortsatt kjøre
+        de fire første mindre testene, som vanlig bruker, men en vil bli hoppet over hvis
+        <xref linkend="pyparsing"/> ikke er installert.
       </para>
 
       <para>
-        <parameter>-Dlibwacom=false</parameter>: Remove this option if you
-        have <xref linkend="libwacom"/> installed, or if you are installing
+        <parameter>-Dlibwacom=false</parameter>: Fjern dette alternativet hvis du
+        har <xref linkend="libwacom"/> installert, eller hvis du installerer
         GNOME.
       </para>
 
       <para>
-        <parameter>-Dudev-dir=/usr/lib/udev</parameter>: In case that the
-        value of <envar>XORG_PREFIX</envar> is not set to
-        <filename class='directory'>/usr</filename>, this option prevents
-        the package from installing Udev rules and helpers into
-        <filename class='directory'>$XORG_PREFIX/lib/udev</filename> which
-        is not searched by Udev daemon.  This option is not needed for
-        systems with <envar>XORG_PREFIX</envar> set to
-        <filename class='directory'>/usr</filename>, but does no harm.
+        <parameter>-Dudev-dir=/usr/lib/udev</parameter>: I tilfelle at
+        verdien av <envar>XORG_PREFIX</envar> ikke er satt til
+        <filename class='directory'>/usr</filename>, dette alternativet forhindrer
+        pakken fra å installere Udev regler og hjelpere i
+        <filename class='directory'>$XORG_PREFIX/lib/udev</filename> som
+        ikke er søkt av Udev nissen. Dette alternativet er ikke nødvendig for
+        systemer med <envar>XORG_PREFIX</envar> satt til
+        <filename class='directory'>/usr</filename>, men gjør ingen skade.
       </para>
 
       <para>
-        <option>-Ddocumentation=true</option>: This switch enables
-        generation of the documentation. Add it if you want to generate
-        the documentation. You must have <xref linkend="doxygen"/> and
-        <xref linkend="graphviz"/> installed.
+        <option>-Ddocumentation=true</option>: Denne bryteren aktiverer
+        generering av dokumentasjonen. Legg den til hvis du vil generere
+        dokumentasjonen. Du må ha <xref linkend="doxygen"/> og
+        <xref linkend="graphviz"/> installert.
       </para>
 
     </sect3>
 
     <sect3 role="content">
-      <title>Contents</title>
+      <title>Innhold</title>
 
       <segmentedlist>
-        <segtitle>Installed Programs</segtitle>
-        <segtitle>Installed Libraries</segtitle>
-        <segtitle>Installed Directories</segtitle>
+        <segtitle>Installerte Programmer</segtitle>
+        <segtitle>Installerte Biblioteker</segtitle>
+        <segtitle>Installerte Mapper</segtitle>
 
         <seglistitem>
           <seg>
@@ -257,14 +257,14 @@ cp -rv Documentation/* /usr/share/doc/libinput-&libinput-version;/html</userinpu
           <seg>
             /etc/libinput,
             $XORG_PREFIX/libexec/libinput,
-            $XORG_PREFIX/usr/share/libinput, and (optionally)
+            $XORG_PREFIX/usr/share/libinput, og (valgfri)
             $XORG_PREFIX/share/doc/libinput-&libinput-version;
           </seg>
         </seglistitem>
       </segmentedlist>
 
       <variablelist>
-        <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+        <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
         <?dbfo list-presentation="list"?>
         <?dbhtml list-presentation="table"?>
 
@@ -272,8 +272,8 @@ cp -rv Documentation/* /usr/share/doc/libinput-&libinput-version;/html</userinpu
           <term><command>libinput</command></term>
           <listitem>
             <para>
-              is a set of tools to interface with the
-              <application>libinput</application> library
+              er et sett med verktøy for grensesnitt med
+              <application>libinput</application> biblioteket
             </para>
             <indexterm zone="libinput libinput-prog">
               <primary sortas="b-libinput-prog">libinput</primary>
@@ -285,7 +285,7 @@ cp -rv Documentation/* /usr/share/doc/libinput-&libinput-version;/html</userinpu
           <term><filename class="libraryfile">libinput.so</filename></term>
           <listitem>
             <para>
-              contains API functions for handling input devices
+              inneholder API funksjoner for håndtering av inndataenheter
             </para>
             <indexterm zone="libinput libinput-lib">
               <primary sortas="c-libinput-lib">libinput.so</primary>
