@@ -35,79 +35,79 @@
     </indexterm>
 
     <sect3 role="package">
-      <title>Introduction to Xorg Intel Driver</title>
+      <title>Introduksjon til Xorg Intel Driver</title>
 
       <para>
-        The <application>Xorg Intel Driver</application> package contains the
-        X.Org Video Driver for Intel integrated video chips including 8xx, 9xx,
-        Gxx, Qxx, HD, Iris, and Iris Pro graphics processors.
+        <application>Xorg Intel Driver</application> pakken inneholder
+        X.Org Videodriver for Intel integrerte videobrikker inkludert 8xx, 9xx,
+        Gxx, Qxx, HD, Iris og Iris Pro grafikkprosessorer.
       </para>
 
       &lfs113_checked;
 
       <note>
         <para>
-          This driver is for Intel integrated GPU, and a development
-          version is needed to work properly with the latest hardware.
-          This version is now one year old and has some problems. The
-          <quote>Kernel Modes Setting (KMS)</quote> driver shipped along
-          with Xorg Server is said to give better results.
+          Denne driveren er for Intel integrert GPU, og en utviklings
+          versjon er nødvendig for å fungere skikkelig med den nyeste maskinvaren.
+          Denne versjonen er nå ett år gammel og har noen problemer.
+          <quote>Kernel Modes Setting (KMS)</quote> driveren sendt med
+          med Xorg Server sies å gi bedre resultater.
         </para>
       </note>
 
-      <bridgehead renderas="sect4">Package Information</bridgehead>
+      <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            Download (HTTP): <ulink url="&xorg-intel-driver-download-http;"/>
+            Nedlasting (HTTP): <ulink url="&xorg-intel-driver-download-http;"/>
           </para>
         </listitem>
         <listitem>
           <para>
-            Download (FTP): <ulink url="&xorg-intel-driver-download-ftp;"/>
+            Nedlasting (FTP): <ulink url="&xorg-intel-driver-download-ftp;"/>
           </para>
         </listitem>
         <listitem>
           <para>
-            Download MD5 sum: &xorg-intel-driver-md5sum;
+            Nedlasting MD5 sum: &xorg-intel-driver-md5sum;
           </para>
         </listitem>
         <listitem>
           <para>
-            Download size: &xorg-intel-driver-size;
+            Nedlastingsstørrelse: &xorg-intel-driver-size;
           </para>
         </listitem>
         <listitem>
           <para>
-            Estimated disk space required: &xorg-intel-driver-buildsize;
+            Estimert diskplass som kreves: &xorg-intel-driver-buildsize;
           </para>
         </listitem>
         <listitem>
           <para>
-            Estimated build time: &xorg-intel-driver-time;
+            Estimert byggetid: &xorg-intel-driver-time;
           </para>
         </listitem>
       </itemizedlist>
 
-      <bridgehead renderas="sect4">Xorg Intel Driver Dependencies</bridgehead>
+      <bridgehead renderas="sect4">Xorg Intel Driver Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect5">Required</bridgehead>
+      <bridgehead renderas="sect5">Påkrevd</bridgehead>
       <para role="required">
-        <xref linkend="xcb-util"/> and
+        <xref linkend="xcb-util"/> og
         <xref linkend="xorg-server"/>
       </para>
 
       <para condition="html" role="usernotes">
-        User Notes: <ulink url="&blfs-wiki;/xorg-intel-driver"/>
+        Brukernotater: <ulink url="&blfs-wiki;/xorg-intel-driver"/>
       </para>
     </sect3>
 
     <sect3 role="kernel" id="xorg-intel-driver-kernel">
-      <title>Kernel Configuration</title>
+      <title>Kjernekonfigurasjon</title>
 
       <para>
-        Enable the following options in the kernel configuration.
-        Recompile the kernel if necessary:
+        Aktiver følgende alternativer i kjernekonfigurasjonen.
+        Om nødvendig kompiler kjernen på nytt:
       </para>
 
 <screen><literal>Device Drivers  ---&gt;
@@ -121,11 +121,11 @@
     </sect3>
 
     <sect3 role="installation">
-      <title>Installation of Xorg Intel Driver</title>
+      <title>Installasjon av Xorg Intel Driver</title>
 
 <!-- appears to be in the current git version, but commenting since I do not have an 32-bit
       <para>
-        If you are building on i686, apply a sed to fix a type mismatch.
+        Hvis du bygger på i686, bruk en sed for å fikse en type uoverensstemmelse.
       </para>
 
 <screen><userinput remap="pre">case $(uname -m) in
@@ -134,8 +134,8 @@
 esac</userinput></screen>-->
 
       <para>
-        Install <application>Xorg Intel Driver</application> by running the
-        following commands:
+        Installer <application>Xorg Intel Driver</application> ved å kjøre følgende
+        kommandoer:
       </para>
 
 <screen><userinput>./autogen.sh $XORG_CONFIG     \
@@ -145,11 +145,11 @@ esac</userinput></screen>-->
 make</userinput></screen>
 
       <para>
-        This package does not come with a test suite.
+        Denne pakken kommer ikke med en testpakke.
       </para>
 
       <para>
-        Now, as the <systemitem class="username">root</systemitem> user:
+        Nå, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -162,22 +162,22 @@ sed -i '/\.TH/s/4/1/' /usr/share/man/man1/intel-virtual-output.1</userinput></sc
     </sect3>
 
     <sect3>
-      <title>Working around problems with the Intel driver</title>
+      <title>Omgå problemer med Intel driveren</title>
 
       <para>
-        The SandyBridge New Acceleration (SNA) code is intended to replace the
-        old UXA (UMA Acceleration Architecture), but it is a large body of code
-        and may cause problems.  However, the version of the code in the
-        version control system listed above has been tested successfully with
-        both SNA and UXA capabilities.
+        SandyBridge New Acceleration (SNA) koden er ment å erstatte
+        gammel UXA (UMA Acceleration Architecture), men det er en stor mengde kode
+        og kan forårsake problemer. Imidlertid er versjonen av koden i
+        versjonskontrollsystemet som er oppført ovenfor blitt testet vellykket med
+        både SNA og UXA funksjoner.
       </para>
 
       <para>
-        To work around this problem, as well as enabling support for UXA, it is
-        necessary to force UXA to be used by creating a configuration file.  If
-        this problem applies to you, create the following file as the
-        <systemitem class="username">root</systemitem> user and modify it as
-        needed:
+        For å omgå dette problemet, i tillegg til å aktivere støtte for UXA, er det det
+        nødvendig for å tvinge UXA til å brukes ved å opprette en konfigurasjonsfil. Hvis
+        dette problemet gjelder deg, opprett følgende fil som
+        <systemitem class="username">root</systemitem> bruker og endre den etter
+         behov:
       </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/X11/xorg.conf.d/20-intel.conf &lt;&lt; "EOF"
@@ -193,27 +193,27 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3 role="commands">
-      <title>Command Explanations</title>
+      <title>Parameterforklaringer</title>
 
       <para>
-        <parameter>--enable-kms-only</parameter>: This switch omits the UMS
-        (User Mode Setting) code.
+        <parameter>--enable-kms-only</parameter>: Denne bryteren utelater UMS
+        (Brukermodusinnstilling) kode.
       </para>
 
       <para>
-        <parameter>--enable-uxa</parameter>: This switch allows the old UXA code
-        to be compiled in addition to the default SNA.
+        <parameter>--enable-uxa</parameter>: Denne bryteren gjør at den gamle UXA koden
+        blir kompilert i tillegg til standard SNA.
       </para>
 
     </sect3>
 
     <sect3 role="content">
-      <title>Contents</title>
+      <title>Innhold</title>
 
       <segmentedlist>
-        <segtitle>Installed Program</segtitle>
-        <segtitle>Installed Library</segtitle>
-        <segtitle>Installed Xorg Driver</segtitle>
+        <segtitle>Installert Program</segtitle>
+        <segtitle>Installert Bibliotek</segtitle>
+        <segtitle>Installert Xorg Driver</segtitle>
 
         <seglistitem>
           <seg>
@@ -229,7 +229,7 @@ EOF</userinput></screen>
       </segmentedlist>
 
       <variablelist>
-        <bridgehead renderas="sect4">Short Descriptions</bridgehead>
+        <bridgehead renderas="sect4">Korte Beskrivelser</bridgehead>
         <?dbfo list-presentation="list"?>
         <?dbhtml list-presentation="table"?>
 
@@ -237,8 +237,8 @@ EOF</userinput></screen>
           <term><command>intel-virtual-output</command></term>
           <listitem>
             <para>
-              is a utility to connect the integrated Intel GPU to discrete
-              outputs on hybrid systems
+              er et verktøy for å koble den integrerte Intel GPU til diskret
+              utdata på hybridsystemer
             </para>
             <indexterm zone="xorg-intel-driver intel-virtual-output">
               <primary sortas="b-intel-virtual-output">intel-virtual-output</primary>
@@ -250,7 +250,7 @@ EOF</userinput></screen>
           <term><filename class="libraryfile">intel_drv.so</filename></term>
           <listitem>
             <para>
-              is an Xorg video driver for Intel integrated graphics chipsets
+              er en Xorg videodriver for integrerte Intel grafikkbrikkesett
             </para>
             <indexterm zone="xorg-intel-driver intel_drv">
               <primary sortas="c-intel_drv">intel_drv.so</primary>
