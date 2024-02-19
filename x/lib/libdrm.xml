@@ -8,8 +8,8 @@
   <!ENTITY libdrm-download-ftp  " ">
   <!ENTITY libdrm-md5sum        "5403981a20c964f4c893ff91393652bd">
   <!ENTITY libdrm-size          "459 KB">
-  <!ENTITY libdrm-buildsize     "8.6 MB (with tests)">
-  <!ENTITY libdrm-time          "less than 0.1 SBU (with tests) with parallelism=4">
+  <!ENTITY libdrm-buildsize     "8.6 MB (med tester)">
+  <!ENTITY libdrm-time          "mindre enn 0,1 SBU (med tester) med parallellitet=4">
   <!-- With version 2.4.102, the tests add 1 second to my build. -->
   <!-- The 'threaded' test adds about 15 seconds if you're on an NVIDIA system
        due to it directly interacting with the GPU. -->
@@ -26,83 +26,83 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Libdrm</title>
+    <title>Introduksjon til Libdrm</title>
 
     <para>
-      <application>Libdrm</application> provides a userspace library for
-      accessing the direct rendering manager (DRM) on operating systems that
-      support the ioctl interface. Libdrm is a low-level library, typically used
-      by graphics drivers such as the Mesa DRI drivers, the X drivers, libva and
-      similar projects.
+      <application>Libdrm</application> gir et brukerromsbibliotek for
+      tilgang til direkte gjengivelsesbehandling (DRM) på operativsystemer som
+      støtter ioctl grensesnittet. Libdrm er et bibliotek på lavt nivå, vanligvis brukt
+      av grafikkdrivere som Mesa DRI drivere, X drivere, libva og
+      lignende prosjekter.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&libdrm-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&libdrm-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&libdrm-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&libdrm-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &libdrm-md5sum;
+          Nedlasting MD5 sum: &libdrm-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &libdrm-size;
+          Nedlastingsstørrelse: &libdrm-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &libdrm-buildsize;
+          Estimert diskplass som kreves: &libdrm-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &libdrm-time;
+          Estimert byggetid: &libdrm-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">libdrm Dependencies</bridgehead>
+    <bridgehead renderas="sect3">libdrm Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="xorg7-lib"/> (for Intel KMS API support required by Mesa)
+      <xref linkend="xorg7-lib"/> (for Intel KMS API støtte kreves av Mesa)
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="cairo"/> (for tests),
-      <xref linkend="cmake"/> (could be used to find dependencies without pkgconfig files),
+      <xref linkend="cairo"/> (for tester),
+      <xref linkend="cmake"/> (kan brukes til å finne avhengigheter uten pkgconfig filer),
       <xref linkend="DocBook"/>,
       <xref linkend="docbook-xsl"/>,
-      <xref linkend="docutils"/>, and
-      <xref linkend="libxslt"/> (to build manual pages),
-      <xref linkend="libatomic_ops"/> (required by architectures without native atomic operations),
-      <xref linkend="valgrind"/>, and
-      <ulink url="https://cunit.sourceforge.net/">CUnit</ulink> (for AMDGPU tests)
+      <xref linkend="docutils"/>, og
+      <xref linkend="libxslt"/> (for å bygge manual sider),
+      <xref linkend="libatomic_ops"/> (kreves av arkitekturer uten opprinnelige atomoperasjoner),
+      <xref linkend="valgrind"/>, og
+      <ulink url="https://cunit.sourceforge.net/">CUnit</ulink> (for AMDGPU tester)
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/libdrm"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Libdrm</title>
+    <title>Installasjon av Libdrm</title>
 
     <para>
-      Install <application>libdrm</application> by running the following
-      commands:
+      Installer <application>libdrm</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -115,7 +115,7 @@ meson setup  --prefix=$XORG_PREFIX \
 ninja</userinput></screen>
 
     <para>
-      To check the results, issue <command>ninja test</command>. <!--One test,
+      For å teste resultatene, kjør <command>ninja test</command>. <!--One test,
       'threaded' in the nouveau subdirectory, is known to fail with a
       30 second timeout.-->
       <!-- Regarding the 'threaded' test, it's now skipped by default (2.4.102)
@@ -131,7 +131,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -139,50 +139,50 @@ ninja</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dudev=true</parameter>: This parameter enables support for using
-      <application>Udev</application> instead of <command>mknod</command>.
+      <parameter>-Dudev=true</parameter>: Denne parameteren muliggjør støtte for bruk av
+      <application>Udev</application> i stedet for <command>mknod</command>.
     </para>
 
     <para>
-      <parameter>-Dvalgrind=disabled</parameter>: This parameter disables
-      building libdrm with valgrind support. This fixes building sysprof and
-      other packages that use libdrm. Change this parameter to "enabled"
-      (or remove it) if you need support for valgrind.
+      <parameter>-Dvalgrind=disabled</parameter>: Denne parameteren deaktiverer
+      bygging av libdrm med valgrind støtte. Dette fikser byggingen sysprof og
+      andre pakker som bruker libdrm. Endre denne parameteren til "enabled"
+      (eller fjern den) hvis du trenger støtte til valgrind.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
           libdrm_amdgpu.so, libdrm_intel.so, libdrm_nouveau.so,
-          libdrm_radeon.so, and libdrm.so<!--, and libkms.so-->
+          libdrm_radeon.so, og libdrm.so<!--, and libkms.so-->
         </seg>
         <seg>
            /usr/include/libdrm <!--,/usr/include/libkms,-->
-           and /usr/share/libdrm
+           og /usr/share/libdrm
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -190,7 +190,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libdrm_amdgpu.so</filename></term>
         <listitem>
           <para>
-            contains the AMDGPU specific Direct Rendering Manager functions
+            inneholder AMDGPU spesifikke Direct Rendering Manager funksjoner
           </para>
           <indexterm zone="libdrm libdrm_amdgpu">
             <primary sortas="c-libdrm_amdgpu">libdrm_amdgpu.so</primary>
@@ -202,8 +202,8 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libdrm_intel.so</filename></term>
         <listitem>
           <para>
-            contains the Intel specific Direct Rendering Manager
-            functions
+            inneholder Intel spesifikke Direct Rendering Manager
+            funksjoner
           </para>
           <indexterm zone="libdrm libdrm_intel">
             <primary sortas="c-libdrm_intel">libdrm_intel.so</primary>
@@ -215,8 +215,8 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libdrm_nouveau.so</filename></term>
         <listitem>
           <para>
-            contains the open source nVidia (Nouveau) specific Direct
-            Rendering Manager functions
+            inneholder open source nVidia (Nouveau) spesifikke Direct
+            Rendering Manager funksjoner
           </para>
           <indexterm zone="libdrm libdrm_nouveau">
             <primary sortas="c-libdrm_nouveau">libdrm_nouveau.so</primary>
@@ -228,8 +228,8 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libdrm_radeon.so</filename></term>
         <listitem>
           <para>
-            contains the AMD Radeon specific Direct Rendering Manager
-            functions
+            inneholder AMD Radeon spesifikke Direct Rendering Manager
+            funksjoner
           </para>
           <indexterm zone="libdrm libdrm_radeon">
             <primary sortas="c-libdrm_radeon">libdrm_radeon.so</primary>
@@ -241,7 +241,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libdrm.so</filename></term>
         <listitem>
           <para>
-            contains the Direct Rendering Manager API functions
+            inneholder Direct Rendering Manager API funksjoner
           </para>
           <indexterm zone="libdrm libdrm-lib">
             <primary sortas="c-libdrm">libdrm.so</primary>
@@ -254,7 +254,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libkms.so</filename></term>
         <listitem>
           <para>
-            contains API functions for kernel mode setting abstraction
+            inneholder API funksjoner for abstraksjon av kjernemodusinnstilling
           </para>
           <indexterm zone="libdrm libkms">
             <primary sortas="c-libkms">libkms.so</primary>
