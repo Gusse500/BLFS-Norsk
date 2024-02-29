@@ -9,7 +9,7 @@
   <!ENTITY transmission-md5sum        "29521f4373900a3077849e41b16801f9">
   <!ENTITY transmission-size          "10 MB">
   <!ENTITY transmission-buildsize     "202 MB">
-  <!ENTITY transmission-time          "1.4 SBU (with GTK gui interfaces; using parallelism=4) 5 SBU with both GTK and QT5">
+  <!ENTITY transmission-time          "1.4 SBU (med GTK gui grensesnitt; bruker parallellisme=4) 5 SBU med både GTK og QT5">
 ]>
 
 <sect1 id="transmission" xreflabel="Transmission-&transmission-version;">
@@ -23,97 +23,97 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Transmission</title>
+    <title>Introduksjon til Transmission</title>
 
     <para>
-      <application>Transmission</application> is a cross-platform, open source
-      BitTorrent client. This is useful for downloading large files (such as
-      Linux ISOs) and reduces the need for the distributors to provide server
-      bandwidth.
+      <application>Transmission</application> er en åpen kildekode BitTorrent klient
+      på tvers av plattformer. Dette er nyttig for å laste ned store filer (som f.eks
+      Linux ISO-er) og reduserer behovet for distributører å levere server
+      båndbredde.
     </para>
 
     &lfs113_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&transmission-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&transmission-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&transmission-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&transmission-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &transmission-md5sum;
+          Nedlasting MD5 sum: &transmission-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &transmission-size;
+          Nedlastingsstørrelse: &transmission-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &transmission-buildsize;
+          Estimert diskplass som kreves: &transmission-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &transmission-time;
+          Estimert byggetid: &transmission-time;
         </para>
       </listitem>
     </itemizedlist>
 
 
-    <bridgehead renderas="sect3">Transmission Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Transmission Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="curl"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="libevent"/> and
+      <xref linkend="libevent"/> og
       <xref linkend="libpsl"/>
-      (to use system libraries instead of bundled ones)
+      (for å bruke systembiblioteker i stedet for medfølgende)
     </para>
 
-    <bridgehead renderas="sect4">Recommended (to build a GUI)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (for å bygge en GUI)</bridgehead>
     <para role="recommended">
-      <xref linkend="gtkmm3"/> or
+      <xref linkend="gtkmm3"/> eller
       <xref linkend="qt5"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="nodejs"/> (for building the web client, not needed at run time),
+      <xref linkend="nodejs"/> (for å bygge nettklienten, ikke nødvendig under kjøring),
       <ulink url="https://github.com/ubuntu/gnome-shell-extension-appindicator">appindicator</ulink>,
       <ulink url="https://github.com/jech/dht">dht</ulink>,
       <ulink url="https://github.com/libb64/libb64">libb64</ulink>,
       <ulink url="https://github.com/ebiggers/libdeflate">libdeflate</ulink>,
       <ulink url="https://github.com/miniupnp/libnatpmp">libnatpmp</ulink>,
-      <ulink url="https://github.com/bittorrent/libutp">libutp</ulink>, and
+      <ulink url="https://github.com/bittorrent/libutp">libutp</ulink>, og
       <ulink url="https://github.com/miniupnp/miniupnp">miniupnp</ulink>
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/transmission"/>
+      Brukernotater: <ulink url="&blfs-wiki;/transmission"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Transmission</title>
+    <title>Installasjon av Transmission</title>
 
 
 
     <para>
-      Install <application>Transmission</application> by running the
-      following commands:
+      Installer <application>Transmission</application> ved å kjøre
+      følgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -128,13 +128,13 @@ make</userinput></screen>
 
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      As transmission.png seems to be missing, create it from the svg::
+      Siden transmission.png ser ut til å mangle, opprett den fra svg::
     </para>
 
 <screen role="root"><userinput>rsvg-convert                                               \
@@ -144,54 +144,54 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <option>-DENABLE_QT=OFF</option>: This switch disables building
-      the <application>Qt5</application> client. The default is to build it
-      if <xref linkend="qt5"/> is installed.
+      <option>-DENABLE_QT=OFF</option>: Denne bryteren deaktiverer bygging av
+      <application>Qt5</application> klienten. Standard er å bygge den
+      hvis <xref linkend="qt5"/> er installert.
     </para>
 
     <para>
-      <option>-DENABLE_GTK=OFF</option>: This switch disables building
-      the GTK+-3 cli client. The default is to build it
-      <xref linkend="gtkmm3"/> is installed.
+      <option>-DENABLE_GTK=OFF</option>: Denne bryteren deaktiverer bygging av
+      GTK+-3 cli klienten. Standard er å bygge den
+      hvis <xref linkend="gtkmm3"/> er installert.
     </para>
 
     <para>
-      <option>-DENABLE_WEB=OFF</option>: This switch disables building
-      the web client. The default is to build it if <xref linkend="nodejs"/>
-      is installed.
+      <option>-DENABLE_WEB=OFF</option>: Denne bryteren deaktiverer bygging av
+      nettklienten. Standard er å bygge den hvis <xref linkend="nodejs"/>
+      er installert.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
           transmission-cli, transmission-create, transmission-daemon,
           transmission-edit, transmission-gtk or transmission-qt,
-          transmission-remote, and transmission-show
+          transmission-remote, og transmission-show
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
-          /usr/share/transmission (contains the web client, optional) and
+          /usr/share/transmission (inneholder nettklienten, valgfri) og
           /usr/share/doc/transmission-&transmission-version;
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -199,8 +199,8 @@ make</userinput></screen>
         <term><command>transmission-cli</command></term>
         <listitem>
           <para>
-            is a lightweight, command-line BitTorrent client with scripting
-            capabilities
+            er en lettvekts, kommandolinje BitTorrent klient med skripting
+            muligheter
           </para>
           <indexterm zone="transmission transmission-cli">
             <primary sortas="b-transmission-cli">transmission-cli</primary>
@@ -212,7 +212,7 @@ make</userinput></screen>
         <term><command>transmission-create</command></term>
         <listitem>
           <para>
-            is a command line tool used to create .torrent files
+            er et kommandolinjeverktøy som brukes til å lage .torrent filer
           </para>
           <indexterm zone="transmission transmission-create">
             <primary sortas="b-transmission-create">transmission-create</primary>
@@ -224,8 +224,8 @@ make</userinput></screen>
         <term><command>transmission-daemon</command></term>
         <listitem>
           <para>
-            is a daemon-based Transmission session that can be controlled via
-            RPC commands from transmission's web interface or
+            er en nissebasert overføringsøkt som kan kontrolleres via
+            RPC kommandoer fra transmission sitt nettgrensesnitt eller
             <command>transmission-remote</command>
           </para>
           <indexterm zone="transmission transmission-daemon">
@@ -238,7 +238,7 @@ make</userinput></screen>
         <term><command>transmission-edit</command></term>
         <listitem>
           <para>
-            is a command-line utility to modify .torrent files' announce URLs
+            er et kommandolinjeverktøy for å endre .torrent filene sine kunngjørings URLer
           </para>
           <indexterm zone="transmission transmission-edit">
             <primary sortas="b-transmission-edit">transmission-edit</primary>
@@ -250,7 +250,7 @@ make</userinput></screen>
         <term><command>transmission-gtk</command></term>
         <listitem>
           <para>
-            is a GTK+ bittorrent client
+            er en GTK+ bittorrent klient
           </para>
           <indexterm zone="transmission transmission-gtk">
             <primary sortas="b-transmission-gtk">transmission-gtk</primary>
@@ -262,7 +262,7 @@ make</userinput></screen>
         <term><command>transmission-qt</command></term>
         <listitem>
           <para>
-            is a Qt bittorrent client
+            er en Qt bittorrent klient
           </para>
           <indexterm zone="transmission transmission-qt">
             <primary sortas="b-transmission-qt">transmission-qt</primary>
@@ -274,7 +274,7 @@ make</userinput></screen>
         <term><command>transmission-remote</command></term>
         <listitem>
           <para>
-            is a remote control utility for transmission-daemon and transmission
+            er et fjernkontrollverktøy for transmission-daemon og transmission
           </para>
           <indexterm zone="transmission transmission-remote">
             <primary sortas="b-transmission-remote">transmission-remote</primary>
@@ -286,7 +286,7 @@ make</userinput></screen>
         <term><command>transmission-show</command></term>
         <listitem>
           <para>
-            is a command line tool to display bittorrent .torrent file metadata
+            er et kommandolinjeverktøy å vise bittorrent .torrent filene sine metadata
           </para>
           <indexterm zone="transmission transmission-show">
             <primary sortas="b-transmission-show">transmission-show</primary>
