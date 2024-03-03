@@ -9,50 +9,50 @@
   <?dbhtml filename="x-setup.html"?>
 
 
-  <title>X Window System Components</title>
+  <title>X Vindussystem Komponenter</title>
 
-  <para condition="html" role="usernotes">User Notes:
+  <para condition="html" role="usernotes">Brukernotater:
   <ulink url='&blfs-wiki;/XWindowSystemComponents'/></para>
 
   <sect2 role="configuration" id='X11R6-compat-symlink'
          xreflabel="Creating an X11R6 Compatibility Symlink">
 
-    <title>Creating an X11R6 Compatibility Symlink</title>
+    <title>Opprette en X11R6 kompatibilitets symbolkobling</title>
 
-    <para>Until recently (relatively speaking) almost every
-    <application>X Window</application> installation you performed or came
-    across was installed in the
-    <filename class='directory'>/usr/X11R6</filename> directory. That was the
-    standard for years. Developers picked up on this and wrote their package
-    installation scripts looking for <application>X</application> in the
-    standard location. Things have changed and the trend is to now install
-    <application>X</application> in
-    <filename class='directory'>/usr</filename>. Some people want to install
-    it in a custom location.</para>
+    <para>Inntil nylig (relativt sett) nesten hver
+    <application>X Vindu</application> installasjonen du utførte eller kom
+    over ble installert i
+    <filename class='directory'>/usr/X11R6</filename> mappen. Det var
+    standard i årevis. Utviklere tok opp dette og skrev pakken sin
+    slik at installasjonsskript ser etter <application>X</application> i
+    standard plassering. Ting har endret seg og trenden er å nå installere
+    <application>X</application> i
+    <filename class='directory'>/usr</filename>. Noen ønsker å installere
+    det på et tilpasset sted.</para>
 
-    <para>Many package developers have not caught up to the change and their
-    packages are still trying to find <application>X</application> in
-    <filename class='directory'>/usr/X11R6</filename> and subsequently fail
-    when you try to build the package. Though for most packages it is not
-    difficult to 'hack' the installation script to fix the problem, that is not
-    the long term solution to the problem. Upstream developers need to modernize
-    their installation scripts and eliminate the problem altogether.</para>
+    <para>Mange pakkeutviklere har ikke fanget opp endringen og deres
+    pakker prøver fortsatt å finne <application>X</application> i
+    <filename class='directory'>/usr/X11R6</filename> og mislykkes deretter
+    når du prøver å bygge pakken. Selv om det ikke er for de fleste pakker
+    vanskelig å "hacke" installasjonsskriptet for å fikse problemet, det er ikke
+    den langsiktige løsningen på problemet. Oppstrømsutviklere må modernisere
+    installasjonsskriptene deres og eliminere problemet helt.</para>
 
-    <para>Until then, you can create a symbolic link to satisfy the
-    <filename class='directory'>/usr/X11R6</filename> requirement so that you
-    won't be inconvenienced with a package build failure due to this known
-    issue. If you wish to create the symlink, issue the following command as
-    the <systemitem class="username">root</systemitem> user (ensure you modify
-    <replaceable>&lt;$XORG_PREFIX&gt;</replaceable> appropriately):</para>
+    <para>Inntil da kan du opprette en symbolsk lenke for å tilfredsstille
+    <filename class='directory'>/usr/X11R6</filename> krav slik at det
+    ikke vil være til besvær med en pakkebyggingsfeil på grunn av dette kjente
+    problemet. Hvis du ønsker å lage symbolkoblingen, utfør følgende kommando som
+    <systemitem class="username">root</systemitem> bruker (sørg for at du endrer
+    <replaceable>&lt;$XORG_PREFIX&gt;</replaceable> passende):</para>
 
 <screen role="root"><userinput>ln -vsf <replaceable>&lt;$XORG_PREFIX&gt;</replaceable> /usr/X11R6</userinput></screen>
 
-<!--    <para>Packages in Xorg store their configuration files in
-    <filename class="directory">$XORG_PREFIX/lib/X11</filename> by default.
-    This is strictly against FHS guidelines.  Correct the installation
-    <filename class="directory">/etc/X11</filename> and create symlinks
-    in the original location with the commands as the
-    <systemitem class="username">root</systemitem> user:</para>
+<!--    <para>Pakker i Xorg lagrer konfigurasjonsfilene sine i
+    <filename class="directory">$XORG_PREFIX/lib/X11</filename> som standard.
+    Dette er strengt i strid med FHS retningslinjer. Korriger installasjonen
+    <filename class="directory">/etc/X11</filename> og lag symbolkoblinger
+    på den opprinnelige plasseringen med kommandoene som
+    <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role="root"><userinput>mkdir -p /etc/X11 &amp;&amp;
 for file in $XORG_PREFIX/{lib/X11/xinit,share/X11/{app-defaults,twm}}
@@ -66,11 +66,11 @@ done
   </sect2>
 
   <sect2 role="configuration" id='xconfig'>
-    <title>Configuring The X Window System</title>
+    <title>Konfigurere X Vindussystemet</title>
 
-    <para>As the <systemitem class="username">root</systemitem> user
-    create a basic X Window System configuration file with the following
-    command:</para>
+    <para>Som <systemitem class="username">root</systemitem> bruker
+    lag en grunnleggende X Vindussystem konfigurasjonsfil med følgende
+    kommando:</para>
 
 <screen><userinput>cd ~ &amp;&amp;
 Xorg -configure</userinput></screen>
@@ -79,18 +79,18 @@ Xorg -configure</userinput></screen>
       <primary sortas="e-etc-X11-xorg-conf">/etc/X11/xorg.conf</primary>
     </indexterm>
 
-    <para>The screen will go blank and you may hear some clicking of the
-    monitor.  This command will create a file,
-    <filename>xorg.conf.new</filename>, in your home directory.</para>
+    <para>Skjermen blir tom, og du kan høre noen klikk fra
+    skjermen. Denne kommandoen vil opprette en fil,
+    <filename>xorg.conf.new</filename>, i hjemmemappen din.</para>
 
 <!--
-    <para>Recent versions of <application>xorg-server</application> force the
-    use of the evdev input driver, and ignore legacy input devices defined in
-    <filename>xorg.conf</filename>.  This will result in an X display that
-    seems to lock up if you are using legacy input devices and do not have the
-    proper input configuration files in place (added later).  Add the following
-    lines to the new <application>Xorg</application> configuration file to
-    overcome this issue:</para>
+    <para>Nylige versjoner av <application>xorg-server</application> tvinger
+    bruk av evdev inndatadriveren, og ignorer eldre inndataenheter definert i
+    <filename>xorg.conf</filename>.  Dette vil resultere i en X visning som
+    ser ut til å låse seg hvis du bruker eldre inndataenheter og ikke har
+    riktige inndatakonfigurasjonsfiler på plass (legges til senere). Legg til følgende
+    linjer til den nye <application>Xorg</application> konfigurasjonsfil for å
+    overvinne dette problemet:</para>
 
 <screen><userinput>cat &gt;&gt; ~/xorg.conf.new &lt;&lt; "EOF"
 Section "ServerFlags"
@@ -99,60 +99,60 @@ EndSection
 EOF</userinput></screen>
 -->
 
-    <para>Edit the newly created configuration file to suit your system. The
-    details of the files are located in the <filename>xorg.conf.5x</filename>
-    man page.  Some things you may want to do are:</para>
+    <para>Rediger den nyopprettede konfigurasjonsfilen slik at den passer til systemet ditt.
+    Detaljer om filene er plassert i <filename>xorg.conf.5x</filename>
+    manualsiden.  Noen ting du kanskje vil gjøre er:</para>
 
     <itemizedlist>
       <listitem>
-        <para>Section "Files". Change the order of the font paths searched.
-        You may want to put 75dpi fonts ahead of 100dpi fonts if your system
-        normally comes up closer to 75 dots per inch. You may want to remove
-        some font directories completely.</para>
+        <para>Seksjon "Files". Endre rekkefølgen på fontbanene som søkes etter.
+        Det kan være lurt å sette 75dpi fonter foran 100dpi fonter hvis systemet ditt
+        normalt kommer nærmere 75 punkter per tomme. Det kan være lurt å fjerne
+        noen fontmapper helt.</para>
       </listitem>
       <listitem>
-        <para>Section "Module". If you are going to install NVIDIA
-        drivers, remove the "dri" line.</para>
+        <para>Seksjon "Module". Hvis du skal installere NVIDIA
+        drivere, fjern "dri" linjen.</para>
       </listitem>
       <listitem>
-        <para>Sections "InputDevice". You may want to change the
-        keyboard autorepeat rate by adding
+        <para>Seksjoner "InputDevice". Du vil kanskje endre
+        tastaturets automatisk gjentakelse rate ved å legge til
         <option>Option "Autorepeat" "250 30"</option>.</para>
       </listitem>
       <listitem>
-        <para>Section "Monitor". Specify the <option>VertRefresh</option>
-        and <option>HorizSync</option> values if the system does not
-        automatically detect the monitor and its values.</para>
+        <para>Seksjon "Monitor". Spesifiser <option>VertRefresh</option>
+        og <option>HorizSync</option> verdier hvis systemet ikke
+        oppdager monitoren og dens verdier automatisk.</para>
       </listitem>
       <listitem>
-        <para>Section "Device". You may want to set some of the options
-        available for your selected video driver. A description of the driver
-        parameters is in the man page for your driver.</para>
+        <para>Seksjon "Device". Du vil kanskje angi noen av alternativene
+        tilgjengelig for den valgte videodriveren. En beskrivelse av driver
+        parametere er på manualsiden for driveren din.</para>
       </listitem>
-      <listitem><para>Section "Screen". Add a DefaultDepth statement such as:
-        <option>DefaultDepth 24</option>. In the SubSection for your
-        default depth, add a modes line such as:
-        <option>Modes "1600x1200" "1280x1024" "1024x768"</option>. The first
-        mode listed will normally be the starting resolution.</para>
+      <listitem><para>Seksjon "Screen". Legg til en DefaultDepth erklæring som f.eks:
+        <option>DefaultDepth 24</option>. I SubSection for din
+        standard dybde, legg til en moduslinje som f.eks:
+        <option>Modes "1600x1200" "1280x1024" "1024x768"</option>. Den første
+        modus som er oppført vil normalt være startoppløsningen.</para>
       </listitem>
     </itemizedlist>
 
-    <para>Test the system with the following command:</para>
+    <para>Test systemet med følgende kommando:</para>
 
 <screen><userinput>X -retro -config ~/xorg.conf.new</userinput></screen>
 
-    <para>You will only get a gray background with an X-shaped mouse cursor,
-    but it confirms the system is working. Exit with
-    <keycap>Control+Alt+Backspace</keycap>. If the system does not work, take
-    a look at <filename>/var/log/Xorg.0.log</filename> to see what went
-    wrong.</para>
+    <para>Du vil bare få en grå bakgrunn med en X formet musepeker,
+    men det bekrefter at systemet fungerer. Avslutt med
+    <keycap>Control+Alt+Backspace</keycap>. Hvis systemet ikke fungerer, ta
+    en titt på <filename>/var/log/Xorg.0.log</filename> for å se hva som gikk
+    feil.</para>
 
-    <para>As the <systemitem class="username">root</systemitem> user, move the
-    configuration file to the new directory:</para>
+    <para>Som <systemitem class="username">root</systemitem> bruker, flytt
+    konfigurasjonsfilen til den nye mappen:</para>
 
 <screen role="root"><userinput>install -v -m644 ~/xorg.conf.new /etc/X11/xorg.conf</userinput></screen>
 
-    <para>As the <systemitem class="username">root</systemitem> user, create
+    <para>Som <systemitem class="username">root</systemitem> bruker, opprett
     <filename>.xinitrc</filename>:</para>
 
 <screen><userinput>cat &gt; ~/.xinitrc &lt;&lt; "EOF"
@@ -162,36 +162,36 @@ xclock -g 100x100-0+0 &amp;
 twm</literal>
 EOF</userinput></screen>
 
-    <para>This provides an initial screen with a small clock that is
-    managed by a simple window manager, Tab Window Manager. For details of
-    <command>twm</command>, see the man page.</para>
+    <para>Dette gir en startskjerm med en liten klokke som blir
+    administrert av en enkel vindusbehandler, Tab Window Manager. For detaljer om
+    <command>twm</command>, se manualsiden.</para>
 
     <indexterm zone="x-setup xconfig">
       <primary sortas="e-AA.xinitrc">~/.xinitrc</primary>
     </indexterm>
 
     <note>
-      <para>Both the default, and the BLFS configuration for
-      <application>Xorg</application> include <application>xterm</application>.
-      <application>Xorg</application>'s modular distribution no longer includes
-      <application>xterm</application>, and
-      as a result, the <command>startx</command> command will fail if you have
-      not installed <xref linkend="xterm2"/> when using the modular X Window
-      System.  You can remove the <application>xterm</application> line in the
-      above config file to test the xserver, or install one of the other
-      terminal emulators and make appropriate changes.</para>
+      <para>Både standard og BLFS konfigurasjonen for
+      <application>Xorg</application> inkluderer <application>xterm</application>.
+      <application>Xorg</application> sin modulær distribusjon inkluderer ikke lenger
+      <application>xterm</application>, og
+      som et resultat <command>startx</command> kommandoen mislykkes hvis du ikke har
+      installert <xref linkend="xterm2"/> når du bruker det modulære X Vindussystemet.
+      Du kan fjerne <application>xterm</application> linjen i
+      konfigurasjonsfilen over for å teste xserveren, eller installer en av de andre
+      terminalemulatorer og foreta passende endringer.</para>
     </note>
 
-    <para>When needed, the X Window System creates the directory
-    <filename class='directory'>/tmp/.ICE-unix</filename> if it does not
-    exist. If this directory is not owned by
+    <para>Ved behov oppretter X Vindussystemet mappen
+    <filename class='directory'>/tmp/.ICE-unix</filename> hvis den ikke
+    eksistere. Hvis denne mappen ikke eies av
     <systemitem class="username">root</systemitem>,
-    the X Window System delays startup by a few seconds and also
-    appends a warning to the logfile. This also affects startup of other
-    applications. To improve performance, it is advisable to manually create
-    the directory before the X Window System uses it. Add the file creation
-    to <filename>/etc/sysconfig/createfiles</filename> that is sourced by
-    the <filename>/etc/rc.d/init.d/cleanfs</filename> startup script.</para>
+    X Vindussystemet forsinker oppstarten med noen sekunder og også
+    legger til en advarsel til loggfilen. Dette påvirker også oppstart av andre
+    applikasjoner. For å forbedre ytelsen, anbefales det å opprette 
+    mappen manuelt før X Vindussystemet bruker den. Legg til filopprettingen
+    til <filename>/etc/sysconfig/createfiles</filename> som er hentet av
+    <filename>/etc/rc.d/init.d/cleanfs</filename> oppstartsskriptet.</para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/sysconfig/createfiles &lt;&lt; "EOF"
 /tmp/.ICE-unix dir 1777 root root
@@ -202,31 +202,31 @@ EOF</userinput></screen>
       sortas="e-etc-sysconfig-createfiles">/etc/sysconfig/createfiles</primary>
     </indexterm>
 
-    <para>Start <application>X</application> with:</para>
+    <para>Start <application>X</application> med:</para>
 
 <screen><userinput>startx</userinput></screen>
 
-    <para>and a basic functional <application>X Window
-    System</application> should be displayed.</para>
+    <para>og en grunnleggende funksjonell <application>X Window
+    System</application> bør vises.</para>
 
   </sect2>
 
   <sect2 id='dri'>
-    <title>Checking Direct Rendering Infrastructure (DRI) Installation</title>
+    <title>Kontrollerer installasjonen av Direct Rendering Infrastructure (DRI).</title>
 
     <indexterm zone="x-setup dri">
       <primary sortas="g-DRI">DRI</primary>
     </indexterm>
 
-    <para>DRI is a framework for allowing software to access graphics hardware
-    in a safe and efficient manner. It is installed in
-    <application>X</application> by default if you have a supported video card.
-    To enable direct rendering using the OpenGL implementation from
-    <xref linkend="mesalib"/> (built separately with <xref linkend="xorg7"/>
-    the "glx" and "dri" modules must be loaded.  Additionally, the created
-    device nodes in <filename class="directory">/dev/dri</filename> must
-    have proper permissions for your users.  A sample
-    <filename>xorg.conf</filename> file might look like this:</para>
+    <para>DRI er et rammeverk for å gi programvare tilgang til grafikkmaskinvare
+    på en sikker og effektiv måte. Den er installert i
+    <application>X</application> som standard hvis du har et støttet skjermkort.
+    For å aktivere direkte gjengivelse ved å bruke OpenGL implementeringen fra
+    <xref linkend="mesalib"/> (bygget separat med <xref linkend="xorg7"/>
+    "glx" og "dri" moduler må lastes. I tillegg opprettede
+    enhetsnoder i <filename class="directory">/dev/dri</filename> må
+    ha riktige tillatelser for brukerne dine. En eksempel
+    <filename>xorg.conf</filename> fil kan se slik ut:</para>
 
 <screen><literal>Section "Module"
     ...
@@ -240,41 +240,41 @@ Section "DRI"
     Mode  0660
 EndSection</literal></screen>
 
-    <para>The DRI devices are not accessible for any user except
-      <systemitem class="username">root</systemitem> and members of the
-      <systemitem class="groupname">video</systemitem> group. Add any users
-      that might use X to that group:</para>
+    <para>DRI enhetene er ikke tilgjengelige for andre brukere enn
+      <systemitem class="username">root</systemitem> og medlemmer av
+      <systemitem class="groupname">video</systemitem> gruppen. Legg til brukere
+      som kan bruke X til den gruppen:</para>
 
 <screen role="root"><userinput>usermod -a -G video <replaceable>&lt;username&gt;</replaceable></userinput></screen>
 
-    <note><para>DRI configuration may differ if you are using alternate
-    drivers, such as those from
-    <ulink url="http://www.nvidia.com/page/home.html">NVIDIA</ulink> or
+    <note><para>DRI konfigurasjonen kan variere hvis du bruker alternative
+    drivere, slik som de fra
+    <ulink url="http://www.nvidia.com/page/home.html">NVIDIA</ulink> eller
     <ulink url="http://www.ati.com/">ATI</ulink>.</para>
     </note>
 
-    <para>To check if DRI is installed properly, check the log file
-    <filename>/var/log/Xorg.0.log</filename> for statements like:</para>
+    <para>For å sjekke om DRI er riktig installert, sjekk loggfilen
+    <filename>/var/log/Xorg.0.log</filename> for utsagn som:</para>
 
 <screen><literal>(II) R128(0): Direct rendering enabled</literal></screen>
 
-    <para>If you elected to install the Mesa-Demos package when installing
-    <xref linkend="mesalib"/>, from an <command>xterm</command>, run
-    <command>glxinfo</command> and look for the phrase:</para>
+    <para>Hvis du valgte å installere Mesa-Demos pakken under installasjonen
+    <xref linkend="mesalib"/>, fra en <command>xterm</command>, kjør
+    <command>glxinfo</command> og se etter uttrykket:</para>
 
 <screen><computeroutput>direct rendering: Yes</computeroutput></screen>
 
-    <para>If direct rendering is not enabled, you can add verbosity by
-    running <command>LIBGL_DEBUG=verbose glxinfo</command>.  This will
-    show the drivers, device nodes and files used by the DRI system.</para>
+    <para>Hvis direkte gjengivelse ikke er aktivert, kan du legge til detaljerthet ved
+    å kjøre <command>LIBGL_DEBUG=verbose glxinfo</command>.  Dette vil
+    vise driverne, enhetsnodene og filene som brukes av DRI systemet.</para>
 
-    <para>Again, if you have added the Mesa-Demos package, you can also
-    run the test program <command>glxgears</command>.
-    This program brings up a window with three gears turning.  The
-    <command>xterm</command> will display how many frames were drawn every
-    five seconds, so this is a reasonable benchmark.  The window is scalable,
-    and the frames drawn per second is highly dependent on the size of
-    the window.</para>
+    <para>Igjen, hvis du har lagt til Mesa-Demos pakken, kan du også
+    kjøre testprogrammet <command>glxgears</command>.
+    Dette programmet viser et vindu med tre gir som dreier seg.
+    <command>xterm</command> vil vise hvor mange rammer som ble tegnet hvert
+    femte sekund, så dette er en rimelig målestokk. Vinduet er skalerbart,
+    og rammene tegnet per sekund er svært avhengig av størrelsen på
+    vinduet.</para>
 
     <indexterm zone="x-setup dri">
       <primary sortas="b-glxgears">glxgears</primary>
@@ -284,7 +284,7 @@ EndSection</literal></screen>
       <primary sortas="b-glxinfo">glxinfo</primary>
     </indexterm>
 
-    <para>For troubleshooting problems, check the DRI Users Guide at
+    <para>For feilsøking av problemer, sjekk DRI brukerveiledning på
     <ulink url="http://dri.sourceforge.net/doc/DRIuserguide.html"/>.</para>
 
   </sect2>
@@ -292,215 +292,215 @@ EndSection</literal></screen>
 <!-- ================================================== -->
 
   <sect2 id='fonts'>
-    <title>Setting up Fonts</title>
+    <title>Sette opp Fonter</title>
 
-    <para>There are two font systems in the
-    <application>X Window System</application>.  The first is the
-    core X font protocol, and the second is Xft.  Toolkits that use the core
-    X font protocol include Xt, Xaw, Motif clones and GTK+-1.2.  Toolkits that
-    use Xft include GTK+-2 and Qt and use <application>Fontconfig</application>
-    for control.  Both font systems should be configured for proper font
-    coverage in the <application>X Window System</application>.</para>
+    <para>Det er to fontsystemer i
+    <application>X Vindussystemet</application>.  Den første er
+    kjerne X fontprotokoll, og den andre er Xft. Verktøysett som bruker kjerne
+    X fontprotokollen inkluderer Xt, Xaw, Motif kloner og GTK+-1.2. Verktøysett som
+    bruker Xft inkluderer GTK+-2 og Qt og bruker <application>Fontconfig</application>
+    for kontroll. Begge fontsystemene bør konfigureres for riktig font
+    dekning i <application>X Vindussystemet</application>.</para>
 
     <indexterm zone="x-setup fonts">
       <primary sortas="e-etc-X11-xorg-conf">/etc/X11/xorg.conf</primary>
     </indexterm>
 
     <sect3>
-      <title>Core X Font Protocol</title>
+      <title>Kjerne X Fontprotokoll</title>
 
       <indexterm zone="x-setup fonts">
-        <primary sortas="g-core-x-font">Core X Font Protocol</primary>
+        <primary sortas="g-core-x-font">Kjerne X Fontprotokoll</primary>
       </indexterm>
 
-      <para>The core X font protocol finds fonts from the server configuration
-      file (<filename>xorg.conf</filename>).
-      If no font paths exist in the configuration file, the server will fall
-      back to an internal hard-coded path of
+      <para>Kjerne X fontprotokollen finner fonter fra server 
+      konfigurasjonenfilen (<filename>xorg.conf</filename>).
+      Hvis det ikke finnes noen fonttstier i konfigurasjonsfilen, vil serveren falle
+      tilbake til en intern hardkodet bane
       <filename class="directory">$XORG_PREFIX>/share/fonts/X11</filename>.
-      For each directory in the path, the server reads three files:</para>
+      For hver mappe i banen leser serveren tre filer:</para>
 
       <itemizedlist>
         <listitem>
-          <para><filename>fonts.dir</filename> - maps font files to font
-          names&semi; updated with <command>mkfontdir</command></para>
+          <para><filename>fonts.dir</filename> - tilordner fontfiler til 
+          fontnavn&semi; oppdatert med <command>mkfontdir</command></para>
         </listitem>
         <listitem>
-          <para><filename>fonts.alias</filename> - defines aliases (such as
-          "9x18") for existing fonts</para>
+          <para><filename>fonts.alias</filename> - definerer aliaser (som f.eks
+          "9x18") for eksisterende fonter</para>
         </listitem>
         <listitem>
-          <para><filename>fonts.scale</filename> - lists scalable fonts&semi;
-          updated with <command>mkfontscale</command></para>
+          <para><filename>fonts.scale</filename> - viser skalerbare fonter&semi;
+          oppdatert med <command>mkfontscale</command></para>
         </listitem>
       </itemizedlist>
 
-      <para>The core X fonts protocol uses names such as
+      <para>Kjerne X fontprotokollen bruker navn som f.eks
       <systemitem>-misc-fixed-medium-r-normal--13-120-75-75-c-80-iso8859-1</systemitem>.
-      These fonts are rendered by the <application>X</application> server
-      without antialiasing.  The server itself uses the "cursor" font for
-      painting the mouse cursor, and the protocol specification requires the
-      font "fixed" to be available.</para>
+      Disse fontene er gjengitt av <application>X</application> server
+      uten antialiasing. Serveren selv bruker "cursor" fonten for
+      å tegne musepekeren, og protokollspesifikasjonen krever
+      at fonten "fast" er tilgjengelig.</para>
 
-      <para>Scalable fonts, such as Type1 and TrueType, are read from
-      <filename>fonts.scale</filename> files by the server.  The core X font
-      system uses the "freetype" module for non-antialiased rendering of these
-      fonts.  Ensure that the "freetype" module is loaded in the
-      <filename>xorg.conf</filename> file by adding it to the "Module"
-      section:</para>
+      <para>Skalerbare skrifter, som Type1 og TrueType, leses fra
+      <filename>fonts.scale</filename> filer av serveren. Kjerne X font
+      systemet bruker "freetype" modulen for ikke-antialiasert gjengivelse av disse
+      fonter. Sørg for at "freetype" modulen er lastet inn i
+      <filename>xorg.conf</filename> fil ved å legge den til "Module"
+      seksjonen:</para>
 
-<screen><literal>Section "Module"
+<screen><literal>Seksjon "Module"
     ...
     Load  "freetype"
     ...
 EndSection</literal></screen>
 
-      <para>The character set used is part of the font name, e.g. "-iso8859-1".
-      It is important that applications which support a non-English interface
-      specify the character set correctly so that the proper glyphs are used.
-      This can be controlled through the <application>X</application>
-      resources, which will be described later.</para>
+      <para>Tegnsettet som brukes er en del av skriftnavnet, f.eks. "-iso8859-1".
+      Det er viktig at applikasjoner som støtter et ikke-engelsk grensesnitt
+      spesifiser tegnsettet riktig slik at de riktige glyfer brukes.
+      Dette kan kontrolleres gjennom <application>X</application>
+      ressurser, som vil bli beskrevet senere.</para>
 
-      <para>In some cases, applications rely upon the fonts named "fixed" or
-      something like "9x18".  In these cases, it is important that the
-      <filename>fonts.alias</filename> file specifies the correct character
-      set.  Users of ISO-8859-<replaceable>X</replaceable> encodings where
-      <replaceable>X</replaceable> != 1 should modify the
-      <filename>/usr/lib/X11/fonts/misc/fonts.alias</filename> file by
-      replacing the "iso8859-1" string with the proper encoding name.  This is
-      accomplished by running the following command as the <systemitem
-      class="username">root</systemitem> user, substituting the proper value
+      <para>I noen tilfeller er applikasjoner avhengige av skriftene kalt "fixed" eller
+      noe sånt som "9x18". I disse tilfellene er det viktig at
+      <filename>fonts.alias</filename> filen spesifiserer riktig 
+      tegnsett. Brukere av ISO-8859-<replaceable>X</replaceable> kodinger hvor
+      <replaceable>X</replaceable> != 1 bør endre
+      <filename>/usr/lib/X11/fonts/misc/fonts.alias</filename> filen ved å
+      erstatte "iso8859-1" strengen med riktig kodenavn. Dette
+      oppnås ved å kjøre følgende kommando som <systemitem
+      class="username">root</systemitem> bruker, erstatt den riktige verdien
       for <replaceable>&lt;X&gt;</replaceable>:</para>
 
 <screen role="root"><userinput>sed -i 's,iso8859-1\( \|$\),iso8859-<replaceable>&lt;X&gt;</replaceable>\1,g' \
     /usr/lib/X11/fonts/{75dpi,100dpi,misc}/fonts.alias</userinput></screen>
 
-      <para>Users of Cyrillic fonts have properly defined aliases in
-      <filename>/usr/lib/X11/fonts/cyrillic/fonts.alias</filename>.  However,
-      this file will not be used unless the <filename
-      class="directory">/usr/lib/X11/fonts/cyrillic</filename> directory is
-      first in the font search path.  Otherwise, the
-      <filename>/usr/lib/X11/fonts/misc/fonts.alias</filename> file will be
-      used.</para>
+      <para>Brukere av kyrilliske fonter har riktig definerte aliaser i
+      <filename>/usr/lib/X11/fonts/cyrillic/fonts.alias</filename>.  Imidlertid,
+      denne filen vil ikke bli brukt med mindre <filename
+      class="directory">/usr/lib/X11/fonts/cyrillic</filename> mappen er
+      først i fontsøkebanen. Ellers vil
+      <filename>/usr/lib/X11/fonts/misc/fonts.alias</filename> filen bli
+      brukt.</para>
 
     </sect3>
 
     <sect3 id="xft-font-protocol"  xreflabel="Xft Font Protocol">
-      <title>Xft Font Protocol</title>
+      <title>Xft Fontprotokoll</title>
 
       <indexterm zone="x-setup fonts">
-        <primary sortas="g-truetype">TrueType Fonts</primary>
+        <primary sortas="g-truetype">TrueType Fonter</primary>
       </indexterm>
 
-      <para>Xft provides antialiased font rendering through
-      <application>Freetype</application>, and fonts are controlled from the
-      client side using <application>Fontconfig</application>.  The default
-      search path is <filename class="directory">/usr/share/fonts</filename>
-      and <filename class="directory">~/.fonts</filename>.
-      <application>Fontconfig</application> searches directories in its
-      path recursively and maintains a cache of the font characteristics in
-      <filename>fonts.cache-1</filename> files in each directory.  If the cache
-      appears to be out of date, it is ignored, and information is (slowly)
-      fetched from the fonts themselves.  This cache
-      can be regenerated using the <command>fc-cache</command> command at any
-      time. You can see the list of fonts known by
-      <application>Fontconfig</application> by running the command
+      <para>Xft gir antialiased fontgjengivelse gjennom
+      <application>Freetype</application>, og fonter styres fra
+      klientsiden ved bruk av <application>Fontconfig</application>.  Standard
+      søkesti er <filename class="directory">/usr/share/fonts</filename>
+      og <filename class="directory">~/.fonts</filename>.
+      <application>Fontconfig</application> søker i mapper i sin
+      bane rekursivt og opprettholder en hurtigbuffer med fontkarakteristikkene i
+      <filename>fonts.cache-1</filename> filer i hver mappe. Hvis hurtigbufferen
+      ser ut til å være utdatert, den ignoreres, og informasjonen er (sakte)
+      hentet fra selve skriftene. Denne hurtigbufferen
+      kan regenereres ved hjelp av <command>fc-cache</command> kommandoen til enhver
+      tid. Du kan se listen over fonter kjent av
+      <application>Fontconfig</application> ved å kjøre kommandoen
       <command>fc-list</command>.</para>
 
-      <para>The <application>X</application> fonts were not installed in a
-      location known to <application>Fontconfig</application>. This prevents
-      <application>Fontconfig</application> from using the poorly rendered
-      Type 1 fonts or the non-scalable bitmapped fonts. Symlinks were created
-      from the <filename class="directory">OTF</filename> and <filename
+      <para><application>X</application> fonter ble ikke installert i et
+      sted kjent for <application>Fontconfig</application>. Dette forhindrer
+      <application>Fontconfig</application> fra å bruke det dårlig gjengitte
+      Type 1 fonter eller de ikke-skalerbare punktgrafikkskriftene. Symbolkoblinger ble opprettet
+      fra <filename class="directory">OTF</filename> og <filename
       class="directory">TTF</filename> <application>X</application> font
-      directories to <filename
-      class="directory">/usr/share/fonts/X11-{OTF,TTF}</filename>. This allows
-      <application>Fontconfig</application> to use the OpenType and TrueType
-      fonts provided by <application>X</application> (which are scalable and
-      of higher quality).</para>
+      mapper til <filename
+      class="directory">/usr/share/fonts/X11-{OTF,TTF}</filename>. Dette tillater
+      <application>Fontconfig</application> for å bruke OpenType og TrueType
+      fonter levert av <application>X</application> (som er skalerbare og
+      av høyere kvalitet).</para>
 
-      <para><application>Fontconfig</application> uses names such as
-      "Monospace 12" to define fonts.  Applications generally use generic font
-      names such as "Monospace", "Sans" and "Serif".
-      <application>Fontconfig</application> resolves these names to a font that
-      has all characters that cover the orthography of the language indicated
-      by the locale settings.  Knowledge of these font names is included in
-      <filename>/etc/fonts/fonts.conf</filename>. Fonts that are not listed
-      in this file are still usable by <application>Fontconfig</application>,
-      but they will not be accessible by the generic family names.</para>
+      <para><application>Fontconfig</application> bruker navn som f.eks
+      "Monospace 12" for å definere fonter. Applikasjoner bruker vanligvis generisk 
+      fontnavn som "Monospace", "Sans" og "Serif".
+      <application>Fontconfig</application> løser disse navnene til en font som
+      har alle tegn som dekker ortografien til det angitte språket
+      etter lokalitetsinnstillingene. Kunnskap om disse skriftnavnene er inkludert i
+      <filename>/etc/fonts/fonts.conf</filename>. Skrifter som ikke er oppført
+      i denne filen er fortsatt brukbare av <application>Fontconfig</application>,
+      men de vil ikke være tilgjengelige med de generiske familienavnene.</para>
 
-      <para>Standard scalable fonts that come with <application>X</application>
-      provide very poor Unicode coverage.  You may notice in applications that
-      use <application>Xft</application> that some characters appear as a box
-      with four binary digits inside.  In this case, a font set with the
-      available glyphs has not been found.  Other times, applications that
-      don't use other font families by default and don't accept substitutions
-      from <application>Fontconfig</application> will display blank lines when
-      the default font doesn't cover the orthography of the user's language.
-      This happens, e.g., with <application>Fluxbox</application> in the
-      ru_RU.KOI8-R locale.</para>
+      <para>Standard skalerbare fonter som følger med <application>X</application>
+      gir svært dårlig Unicode dekning. Du vil kanskje legge merke til det i applikasjoner
+      som bruker <application>Xft</application> at noen tegn vises som en boks
+      med fire binære sifre inni. I dette tilfellet er et skriftsett med
+      tilgjengelige glyfer ikke funnet. Andre ganger, applikasjoner som
+      ikke bruker andre skriftfamilier som standard og godtar ikke erstatninger
+      fra <application>Fontconfig</application> vil vise tomme linjer når
+      standardfonten dekker ikke ortografien til brukerens språk.
+      Dette skjer f.eks. med <application>Fluxbox</application> i
+      ru_RU.KOI8-R lokalitet.</para>
 
-      <para>In order to provide greater Unicode coverage, it is recommended
-      that you install these fonts:</para>
+      <para>For å gi større Unicode dekning, anbefales det
+      at du installerer disse skriftene:</para>
 
       <itemizedlist>
         <listitem>
           <para><ulink url="http://dejavu.sourceforge.net/">DejaVu fonts</ulink>
-          - These fonts are replacements for the Bitstream Vera fonts and
-          provide Latin-based scripts with accents and Cyrillic glyphs.</para>
+          - Disse skriftene er erstatninger for Bitstream Vera fontene og
+          gir latinbaserte fonter med aksenter og kyrilliske tegn.</para>
         </listitem>
         <listitem>
           <para><ulink
           url="http://download.savannah.nongnu.org/releases/freefont/">FreeFont</ulink>
-          - This set of fonts covers nearly every non-CJK character, but is not
-          visually pleasing.  <application>Fontconfig</application> will use it
-          as a last resort to substitute generic font family names.</para>
+          - Dette settet med skrifttyper dekker nesten alle ikke-CJK tegn, men er ikke
+          visuelt tiltalende.  <application>Fontconfig</application> vil bruke den
+          som en siste utvei for å erstatte generiske fontfamilienavn.</para>
         </listitem>
         <listitem>
           <para><ulink
           url="http://corefonts.sourceforge.net/">Microsoft Core fonts</ulink>
-          - These fonts provide slightly worse Unicode coverage than FreeFont,
-          but are better hinted.  Be sure to read the license before using
-          them. These fonts are listed in the
-          <filename>/etc/fonts/fonts.conf</filename> aliases by default.</para>
+          - Disse skriftene gir litt dårligere Unicode dekning enn FreeFont,
+          men er bedre antydet. Sørg for å lese lisensen før bruk av
+           em. Disse skriftene er oppført i
+          <filename>/etc/fonts/fonts.conf</filename> aliaser som standard.</para>
         </listitem>
         <listitem>
           <para><ulink
           url="http://cle.linux.org.tw/fonts/FireFly">Firefly New Sung font</ulink>
-          - This font provides Chinese coverage. This font is not listed in
-          the <filename>/etc/fonts/fonts.conf</filename> aliases by default.
+          - Denne fonten gir kinesisk dekning. Denne fonten er ikke oppført i
+          <filename>/etc/fonts/fonts.conf</filename> aliaser som standard.
           </para>
         </listitem>
         <listitem>
           <para><ulink
           url="http://cle.linux.org.tw/fonts/Arphic">Arphic fonts</ulink> -
-          A similar set of Chinese fonts to the Firefly New Sung font.
-          These fonts are listed in the
-          <filename>/etc/fonts/fonts.conf</filename> aliases by default.
+          Et lignende sett med kinesiske fonter som Firefly New Sung fonten.
+          Disse fontene er oppført i
+          <filename>/etc/fonts/fonts.conf</filename> aliaser som standard.
           </para>
         </listitem>
         <listitem>
           <para><ulink
           url="http://sourceforge.jp/projects/efont/">Kochi fonts</ulink> -
-          These provide Japanese characters, and they are listed in the aliases
-          in <filename>/etc/fonts/fonts.conf</filename> by default.</para>
+          Disse gir japanske tegn, og de er oppført i aliasene
+          i <filename>/etc/fonts/fonts.conf</filename> som standard.</para>
         </listitem>
         <listitem>
           <para><ulink
           url="http://kldp.net/projects/baekmuk/">Baekmuk fonts</ulink>
-          - These fonts provide Korean coverage, and they are listed in the
-          aliases in <filename>/etc/fonts/fonts.conf</filename> by default.
+          - Disse skriftene gir koreansk dekning, og de er oppført i
+          aliaser i <filename>/etc/fonts/fonts.conf</filename> som standard.
           </para>
         </listitem>
       </itemizedlist>
 
-      <para>The list above will not provide complete Unicode coverage.  For
-      more information, please visit the <ulink
+      <para>Listen ovenfor vil ikke gi fullstendig Unicode dekning. For
+      mer informasjon, vennligst besøk <ulink
       url="http://unifont.org/fontguide/">Unicode Font Guide</ulink>.</para>
 
-      <para>As an example, consider the installation of the DejaVu fonts.  From
-      the unpacked source directory, run the following commands as the
-      <systemitem class="username">root</systemitem> user:</para>
+      <para>Som et eksempel kan du vurdere installasjonen av DejaVu fontene. Fra
+      den utpakkede kildemappen, kjør følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role="root"><userinput>install -v -d -m755 /usr/share/fonts/dejavu &amp;&amp;
 install -v -m644 *.ttf /usr/share/fonts/dejavu &amp;&amp;
@@ -513,13 +513,13 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 <!-- ================================================== -->
 
   <sect2>
-    <title>Setting up Keyboards</title>
+    <title>Sette opp Tastaturer</title>
 
-    <para>In this version of <application>X</application>, non-Latin
-    keyboard layouts do not include Latin configurations as was previous
-    practice. To set up a keyboard for Latin and non-Latin input, change
-    the XkbLayout keyboard driver option in the InputDevice section
-    of the <filename>xorg.conf</filename> file. For example:</para>
+    <para>I denne versjonen av <application>X</application>, ikke-latinsk
+    tastaturoppsett inkluderer ikke latinske konfigurasjoner som tidligere ble
+    praktisert. For å sette opp et tastatur for latinske og ikke-latinske inndata, endre
+    XkbLayout tastaturdriveralternativet i InputDevice delen
+    av <filename>xorg.conf</filename> filen. For eksempel:</para>
 
 <screen><literal>Section "InputDevice"
     Identifier          "Keyboard0"
@@ -529,22 +529,22 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
     Option "XkbOptions" "grp:switch,grp:alt_shift_toggle,grp_led:scroll"
 EndSection</literal></screen>
 
-    <para>In this example, you can use the <keycap>Alt+Shift</keycap>
-    combination to switch between keyboard layouts and use the Scroll Lock
-    LED to indicate when the second layout is active.</para>
+    <para>I dette eksemplet kan du bruke <keycap>Alt+Shift</keycap>
+    kombinasjon for å bytte mellom tastaturoppsett og bruke Scroll Lock
+    LED for å indikere når den andre layouten er aktiv.</para>
 
   </sect2>
 
 <!-- ================================================== -->
 <!--
   <sect2 id='xdm'>
-    <title>Setting up XDM</title>
+    <title>Sette opp XDM</title>
 
-    <para><command>xdm</command> provides a graphical logon capability and
-    is normally set up in <filename>/etc/inittab</filename>. Most of the
-    information you need to customize <command>xdm</command> is found in
-    its man page. To execute <command>xdm</command> during bootup, change
-    the initdefault level to 5 and add the following lines to
+    <para><command>xdm</command> gir en grafisk påloggingsmulighet og
+    er normalt satt opp i <filename>/etc/inittab</filename>. Mesteparten av
+    informasjon du trenger for å tilpasse <command>xdm</command> finnes i
+    sin manualside. For å utføre <command>xdm</command> under oppstart, endre
+    initdefault nivået til 5 og legg til følgende linjer til
     <filename>/etc/inittab</filename>:</para>
 
     <indexterm zone="x-setup xdm">
@@ -554,10 +554,10 @@ EndSection</literal></screen>
 <screen><literal># Run xdm as a separate service
 x:5:respawn:/usr/X11R6/bin/xdm -nodaemon</literal></screen>
 
-    <para>If <application>Linux-PAM</application> is installed on your
-    system, you should create a PAM entry for <command>xdm</command> by
-    duplicating the <command>login</command> entry using the following
-    command:</para>
+    <para>Hvis <application>Linux-PAM</application> er installert på ditt
+    system, bør du opprette en PAM oppføring for <command>xdm</command> ved å
+    duplisere <command>login</command> oppføring ved å bruke følgende
+    kommando:</para>
 
     <indexterm zone="x-setup xdm">
       <primary sortas="e-etc-pam.d/xdm">/etc/pam.d/xdm</primary>
@@ -571,15 +571,15 @@ x:5:respawn:/usr/X11R6/bin/xdm -nodaemon</literal></screen>
 <!-- ================================================== -->
 
   <sect2 id='x-resources'>
-    <title>Using X Resources</title>
+    <title>Bruke X Ressurser</title>
 
-    <para>There are many options that can be set in
-    <application>X</application> and <application>X</application>
-    clients via resources. Typically resources are set in the
-    <filename>~/.Xresources</filename> file.</para>
+    <para>Det er mange alternativer som kan settes i
+    <application>X</application> og <application>X</application>
+    klienter via ressurser. Vanligvis er ressurser satt i
+    <filename>~/.Xresources</filename> filen.</para>
 
-    <para>The layout of the <filename>~/.Xresources</filename> file
-    consists of a list of specifications in the form of</para>
+    <para>Utformingen av <filename>~/.Xresources</filename> filen
+    består av en liste med spesifikasjoner i form av</para>
 
     <indexterm zone="x-setup x-resources">
       <primary sortas="e-AA.xresources">~/.Xresources</primary>
@@ -587,42 +587,42 @@ x:5:respawn:/usr/X11R6/bin/xdm -nodaemon</literal></screen>
 
 <screen><literal>object.subobject[.subobject...].attribute: value</literal></screen>
 
-    <para>Components of a resource specification are linked together by
-    either <emphasis>tight</emphasis>, represented by a dot (.), or
-    <emphasis>loose</emphasis>, represented by an asterisk (*), bindings.
-    A tight binding indicates that the components on either side of the
-    dot must be directly next to each other as defined in a specific
-    implementation. An asterisk is a wildcard character that means that
-    any number of levels in a defined hierarchy can be between the components.
-    For example, X offers two special cursors: redglass and whiteglass. To
-    use one of these resources, you need to add the following line:</para>
+    <para>Komponenter i en ressursspesifikasjon er koblet sammen av
+    enten <emphasis>stramt</emphasis>, representert med en prikk (.), eller
+    <emphasis>løs</emphasis>, representert med en stjerne (*), bindinger.
+    En tett binding indikerer at komponentene på hver side av
+    prikken må være rett ved siden av hverandre som definert i en spesifikk
+    gjennomføring. En stjerne er et jokertegn som betyr at
+    et hvilket som helst antall nivåer i et definert hierarki kan være mellom komponentene.
+    For eksempel tilbyr X to spesielle markører: redglass og whiteglass. For å
+    bruke en av disse ressursene, må du legge til følgende linje:</para>
 
 <screen><literal>Xcursor.theme: whiteglass</literal></screen>
 
-    <para>However, you can specify the background for all clients with:</para>
+    <para>Du kan imidlertid spesifisere bakgrunnen for alle klienter med:</para>
 
 <screen><literal>*background: blue</literal></screen>
 
-    <para>More specific resource variables will override less specific
-    names.</para>
+    <para>Mer spesifikke ressursvariabler vil overstyre mindre spesifikke
+    navn.</para>
 
-    <para>Resource definitions can be found in the man pages for each
-    respective client.</para>
+    <para>Ressursdefinisjoner finnes på manualsidene for hver
+    respektive klient.</para>
 
-    <para>In order to load your resources, the <command>xrdb</command>
-    program must be called with the appropriate parameters. Typically,
-    the first time resources are loaded, you use:</para>
+    <para>For å laste ressursene dine, <command>xrdb</command>
+    programmet må kalles opp med de riktige parameterne. Typisk,
+    første gang ressursene lastes, bruker du:</para>
 
 <screen><userinput>xrdb -load &lt;filename&gt;</userinput></screen>
 
-    <para>To add resources to <application>X</application>'s database
-    in memory, use:</para>
+    <para>For å legge til ressurser til <application>X</application> sin database
+    i minnet, bruk:</para>
 
 <screen><userinput>xrdb -merge &lt;filename&gt;</userinput></screen>
 
-    <para>The <command>xrdb</command> instruction is usually placed in
-    <filename>~/.xinitrc</filename> or <filename>~/.xsession</filename>.
-    To get more information, see the <command>xrdb</command> man page.</para>
+    <para><command>xrdb</command> instruksjon er vanligvis plassert i
+    <filename>~/.xinitrc</filename> eller <filename>~/.xsession</filename>.
+    For å få mer informasjon, se <command>xrdb</command> manualsiden.</para>
 
     <indexterm zone="x-setup x-resources">
       <primary sortas="b-xrdb">xrdb</primary>
