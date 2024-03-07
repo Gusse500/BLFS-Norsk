@@ -6,45 +6,45 @@
 
 ]>
 
-<sect1 id="cvsserver" xreflabel="Running a CVS Server">
+<sect1 id="cvsserver" xreflabel="Kjøre en CVS Server">
   <?dbhtml filename="cvsserver.html"?>
 
 
-  <title>Running a CVS Server</title>
+  <title>Kjøre en CVS Server</title>
 
   <sect2 role="package">
-    <title>Running a CVS Server</title>
+    <title>Kjøre en CVS Server</title>
 
-    <para>This section will describe how to set up, administer and secure
-    a CVS server.</para>
+    <para>Denne delen vil beskrive hvordan du setter opp, administrerer og sikrer
+    en CVS server.</para>
 
-    <bridgehead renderas="sect3">CVS Server Dependencies</bridgehead>
+    <bridgehead renderas="sect3">CVS Server Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
-    <para><xref linkend="cvs"/> and
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para><xref linkend="cvs"/> og
     <xref linkend="openssh"/></para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Setting up a CVS Server.</title>
+    <title>Sette opp en CVS Server.</title>
 
-    <para>A CVS server will be set up using OpenSSH as the remote access
-    method. Other access methods, including :pserver: and :server: will
-    not be used for write access to the CVS repository. The :pserver:
-    method sends clear text passwords over the network and the :server:
-    method is not supported in all CVS ports. Instructions for anonymous,
-    read only CVS access using :pserver: can be found at the end of this
-    section.</para>
+    <para>En CVS server vil bli satt opp med OpenSSH som ekstern tilgang
+    metode. Andre tilgangsmetoder, inkludert :pserver: og :server: vil
+    ikke brukes for skrivetilgang til CVS depotet. :pserver:
+    metoden sender klartekstpassord over nettverket og :serveren:
+    metoden støttes ikke i alle CVS porter. Instruksjoner for anonym,
+    skrivebeskyttet CVS tilgang ved å bruke :pserver: finner du på slutten av denne
+    seksjonen.</para>
 
-    <para>Configuration of the CVS server consists of four
-    steps:</para>
+    <para>Konfigurasjonen av CVS serveren består av fire
+    trinn:</para>
 
     <sect3>
-      <title>1. Create a Repository.</title>
+      <title>1. Opprett et depot.</title>
 
-      <para>Create a new CVS repository with the following
-      commands:</para>
+      <para>Opprett et nytt CVS depot med følgende
+      kommandoer:</para>
 
 <screen role="root"><userinput>mkdir          /srv/cvsroot &amp;&amp;
 chmod 1777     /srv/cvsroot &amp;&amp;
@@ -54,11 +54,11 @@ cvs init</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>2. Import Source Code Into the Repository.</title>
+      <title>2. Importer kildekode til depotet.</title>
 
-      <para>Import a source module into the repository with the following
-      commands, issued from a user account on the same machine as the
-      CVS repository:</para>
+      <para>Importer en kildemodul til depotet med følgende
+      kommandoer, utstedt fra en brukerkonto på samme maskin som
+      CVS depotet:</para>
 
 <screen><userinput>cd <replaceable>&lt;sourcedir&gt;</replaceable> &amp;&amp;
 cvs import -m "<replaceable>&lt;repository test&gt;</replaceable>" <replaceable>&lt;cvstest&gt;</replaceable> <replaceable>&lt;vendortag&gt;</replaceable> <replaceable>&lt;releasetag&gt;</replaceable></userinput></screen>
@@ -66,27 +66,27 @@ cvs import -m "<replaceable>&lt;repository test&gt;</replaceable>" <replaceable>
     </sect3>
 
     <sect3>
-      <title>3. Verify Local Repository Access.</title>
+      <title>3. Verifiser tilgang til lokalt depot.</title>
 
-      <para>Test access to the CVS repository from the same user
-      account with the following command:</para>
+      <para>Test tilgang til CVS depotet fra samme brukerkonto
+      med følgende kommando:</para>
 
 <screen><userinput>cvs co cvstest</userinput></screen>
 
     </sect3>
 
     <sect3>
-      <title>4. Verify Remote Repository Access.</title>
+      <title>4. Verifiser ekstern tilgang til depotet.</title>
 
-      <para>Test access to the CVS repository from a remote machine using
-      a user account that has <command>ssh</command> access to the CVS
-      server with the following commands:</para>
+      <para>Test tilgang til CVS depotet fra en ekstern maskin ved hjelp av
+      en brukerkonto som har <command>ssh</command> tilgang til CVS
+      serveren med følgende kommandoer:</para>
 
       <note>
-        <para>Replace <replaceable>&lt;servername&gt;</replaceable> with the
-        IP address or host name of the CVS repository machine. You will
-        be prompted for the user's shell account password before CVS
-        checkout can continue.</para>
+        <para>Erstatt <replaceable>&lt;servernavn&gt;</replaceable> med
+        IP adressen eller vertsnavnet til CVS depotmaskinen. Du vil
+        bli bedt om brukerens skallkontopassord før CVS
+        utsjekking kan fortsette.</para>
       </note>
 
 <screen><userinput>export CVS_RSH=/usr/bin/ssh &amp;&amp;
@@ -97,11 +97,11 @@ cvs -d:ext:<replaceable>&lt;servername&gt;</replaceable>:/srv/cvsroot co cvstest
   </sect2>
 
   <sect2 id='cvsserver-config' role="configuration">
-    <title>Configuring CVS for Anonymous Read Only Access.</title>
+    <title>Konfigurere CVS for anonym skrivebeskyttet tilgang.</title>
 
-    <para>CVS can be set up to allow anonymous read only access using the
-    :pserver: method by logging on as <systemitem class="username">root</systemitem>
-    and executing the following commands:</para>
+    <para>CVS kan settes opp for å tillate anonym skrivebeskyttet tilgang ved å bruke
+    :pserver: metoden ved å logge på som <systemitem class="username">root</systemitem>
+    og utfør følgende kommandoer:</para>
 
 <screen role="root"><userinput>(grep anonymous /etc/passwd || useradd anonymous -s /bin/false -u 98) &amp;&amp;
 echo anonymous: &gt; /srv/cvsroot/CVSROOT/passwd &amp;&amp;
@@ -150,74 +150,74 @@ EOF</userinput></screen>
     <para>Issue a <command>/etc/rc.d/init.d/xinetd reload</command> to reread
     the changed <filename>xinetd.conf</filename> file.</para>
 -->
-    <para>Testing anonymous access to the new repository requires an account
-    on another machine that can reach the CVS server via network. No account
-    on the CVS repository is needed. To test anonymous access to the CVS
-    repository, log in to another machine as an unprivileged user and execute
-    the following command:</para>
+    <para>Testing av anonym tilgang til det nye depotet krever en konto
+    på en annen maskin som kan nå CVS serveren via nettverk. Ingen konto
+    på CVS depotet er nødvendig. For å teste anonym tilgang til CVS
+    depotet, logg inn på en annen maskin som en uprivilegert bruker og kjør
+    følgende kommando:</para>
 
-<screen><userinput>cvs -d:pserver:anonymous@<replaceable>&lt;servername&gt;</replaceable>:/srv/cvsroot co cvstest</userinput></screen>
+<screen><userinput>cvs -d:pserver:anonymous@<replaceable>&lt;servernavn&gt;</replaceable>:/srv/cvsroot co cvstest</userinput></screen>
 
     <note>
-      <para>Replace <replaceable>&lt;servername&gt;</replaceable> with the
-      IP address or hostname of the CVS server.</para>
+      <para>Erstatt <replaceable>&lt;servername&gt;</replaceable> med
+      IP adressen eller vertsnavnet til CVS serveren.</para>
     </note>
 
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
-    <para><command>mkdir /srv/cvsroot</command>: Create the CVS
-    repository directory.</para>
+    <para><command>mkdir /srv/cvsroot</command>: Lag CVS
+    depotmappen.</para>
 
-    <para><command>chmod 1777 /srv/cvsroot</command>: Set sticky bit
-    permissions for <envar>CVSROOT</envar>.</para>
+    <para><command>chmod 1777 /srv/cvsroot</command>: Sett klebrig bit
+    tillatelser for <envar>CVSROOT</envar>.</para>
 
-    <para><command>export CVSROOT=/srv/cvsroot</command>: Specify new
-    <envar>CVSROOT</envar> for all <command>cvs</command> commands.</para>
+    <para><command>export CVSROOT=/srv/cvsroot</command>: Spesifiser ny
+    <envar>CVSROOT</envar> for alle <command>cvs</command> kommandoer.</para>
 
-    <para><command>cvs init</command>: Initialize the new CVS
-    repository.</para>
+    <para><command>cvs init</command>: Initialiser den nye CVS
+    oppbevaringsstedet.</para>
 
     <para><command>cvs import -m "repository test" cvstest vendortag
-    releasetag</command>: All source code modules must be imported into the
-    CVS repository before use, with the <command>cvs import</command> command.
-    The <option>-m</option> flags specifies an initial descriptive entry for
-    the new module. The <option>cvstest</option> parameter is the name used
-    for the module in all subsequent <command>cvs</command> commands. The
-    <option>vendortag</option> and <option>releasetag</option> parameters are
-    used to further identify each CVS module and are mandatory whether used
-    or not.</para>
+    releasetag</command>: Alle kildekodemoduler må importeres til
+    CVS depotet før bruk, med <command>cvs import</command> kommandoen.
+    <option>-m</option> flagget angir en innledende beskrivende oppføring for
+    den nye modulen. <option>cvstest</option> parameter er navnet som brukes
+    for modulen i alle påfølgende <command>cvs</command> kommandoer.
+    <option>vendortag</option> og <option>releasetag</option> parametere
+    brukes til å identifisere hver CVS modul ytterligere og er obligatoriske enten de brukes
+    eller ikke.</para>
 
     <para><command>(grep anonymous /etc/passwd || useradd anonymous -s
-    /bin/false -u 98)</command>: Check for an existing <systemitem
-    class="username">anonymous</systemitem> user and create one if not
-    found.</para>
+    /bin/false -u 98)</command>: Se etter en eksisterende <systemitem
+    class="username">anonymous</systemitem> bruker og opprett en hvis ikke
+    funnet.</para>
 
     <para><command>echo anonymous: &gt; /srv/cvsroot/CVSROOT/passwd</command>:
-    Add the <systemitem class="username">anonymous</systemitem> user to the
-    CVS passwd file, which is unused for anything else in this
-    configuration.</para>
+    Legg til <systemitem class="username">anonymous</systemitem> bruker til
+    CVS passwd fil, som er ubrukt til noe annet i denne
+    konfigurasjonen.</para>
 
     <para><command>echo anonymous &gt; /srv/cvsroot/CVSROOT/readers</command>:
-    Add the <systemitem class="username">anonymous</systemitem> user to the
-    CVS readers file, a list of users who have read only access to the
-    repository.</para>
+    Legg til <systemitem class="username">anonymous</systemitem> bruker til
+    CVS readers filen, en liste over brukere som har lesetilgang til
+    depoet.</para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>None</seg>
-        <seg>None</seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
         <seg>/srv/cvsroot</seg>
       </seglistitem>
     </segmentedlist>
