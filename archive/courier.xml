@@ -35,44 +35,44 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Courier</title>
+    <title>Introduksjon til Courier</title>
 
-    <para>The <application>Courier</application> package contains a Mail
-    Transport Agent (MTA). This is useful for sending email to other users
-    of your host machine. It can also be configured to be a central mail
-    server for your domain or a mail relay agent. The
-    <application>Courier</application> packages also includes a web-based
-    email interface, IMAP, IMAP-SSL, POP3, and POP3-SSL.</para>
+    <para><application>Courier</application> pakken inneholder en Post
+    Transportagent (MTA). Dette er nyttig for å sende e-post til andre brukere
+    på vertsmaskinen din. Den kan også konfigureres til å være en sentral post
+    server for domenet ditt eller en e-postreleagent.
+    <application>Courier</application> pakkene inkluderer også en nettbasert
+    e-postgrensesnitt, IMAP, IMAP-SSL, POP3, og POP3-SSL.</para>
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
-        <para>Download (HTTP): <ulink url="&courier-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&courier-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&courier-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&courier-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &courier-md5sum;</para>
+        <para>Nedlasting MD5 sum: &courier-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &courier-size;</para>
+        <para>Nedlastingsstørrelse: &courier-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &courier-buildsize;</para>
+        <para>Estimert diskplass som kreves: &courier-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &courier-time;</para>
+        <para>Estimert byggetid: &courier-time;</para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Courier Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Courier Avhengigheter</bridgehead>
 
-    <!-- <bridgehead renderas="sect4">Required</bridgehead>
+    <!-- <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required"><xref linkend="gdbm"/></para> -->
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
-    <para role="optional"><xref linkend="mysql"/> or <xref linkend="postgresql"/>,
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="mysql"/> eller <xref linkend="postgresql"/>,
     <xref linkend="linux-pam"/>,
     <xref linkend="openssl"/>,
     <xref linkend="gamin"/>,
@@ -83,57 +83,57 @@
     <xref linkend="gnupg"/>,
     <xref linkend="expect"/>,
     <xref linkend="gs"/><!-- or <xref linkend="espgs"/> -->,
-    <ulink url="http://netpbm.sourceforge.net/">Netpbm</ulink> and
+    <ulink url="http://netpbm.sourceforge.net/">Netpbm</ulink> og
     <ulink url="http://alpha.greenie.net/mgetty/">Mgetty+Sendfax</ulink></para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/courier"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Courier</title>
+    <title>Installasjon av Courier</title>
 
     <note>
-      <para><application>Courier</application>'s tarball must be extracted
-      as an unprivileged user or the <command>configure</command> script will
-      fail.</para>
+      <para><application>Courier</application> sin tarball må pakkes ut
+      som en uprivilegert bruker eller vil <command>configure</command> skriptet
+      mislykkes.</para>
     </note>
 
-    <para>Before you compile the program, you need to create the
-    <systemitem class="username">courier</systemitem> user and group
-    that is expected to be in place during installation.
-    As the <systemitem class="username">root</systemitem> user, add
-    the <systemitem class="username">courier</systemitem> user and
-    group with the following commands:</para>
+    <para>Før du kompilerer programmet, må du opprette
+    <systemitem class="username">courier</systemitem> bruker og gruppe
+    som forventes å være på plass under installasjonen.
+    Som <systemitem class="username">root</systemitem> bruker, legg til
+    <systemitem class="username">courier</systemitem> bruker og
+    gruppe med følgende kommandoer:</para>
 
 <screen role="root"><userinput>groupadd -g 30 courier &amp;&amp;
 useradd -c 'Courier Mail Server' -d /dev/null \
         -g courier -s /bin/false -u 30 courier</userinput></screen>
 
-    <para>The install script also expects a <systemitem
-    class="username">bin</systemitem> user. If you already have a
-    user named <systemitem class="username">bin</systemitem>, this
-    step can be safely ignored. If necessary, create the user by
-    issuing the following command as the
-    <systemitem class="username">root</systemitem> user:</para>
+    <para>Installasjonsskriptet forventer også en <systemitem
+    class="username">bin</systemitem> bruker. Hvis du allerede har en
+    bruker navngitt <systemitem class="username">bin</systemitem>, dette
+    trinnet kan trygt ignoreres. Om nødvendig, opprett brukeren ved å
+    utstede følgende kommando som
+    <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role="root"><userinput>useradd -c 'bin' -d /dev/null -g bin -u 1 bin</userinput></screen>
 
-    <para><application>Courierfilter</application> requires the directory
-    <filename class="directory">/var/run/courier</filename> to store
-    all the <application>Courier</application> PID and lock files.
-    <filename class="directory">/var/lock/subsys</filename> also must exist
-    for the master lock file for <application>Courier</application>. Issue
-    the following commands as the
-    <systemitem class="username">root</systemitem> user to create these
-    directories:</para>
+    <para><application>Courierfilter</application> krever mappen
+    <filename class="directory">/var/run/courier</filename> til å lagre
+    alle <application>Courier</application> PID og låse filer.
+    <filename class="directory">/var/lock/subsys</filename> må også eksistere
+    for hovedlåsfilen for <application>Courier</application>. Utsted
+    følgende kommandoer som
+    <systemitem class="username">root</systemitem> bruker for å opprette disse
+    mappene:</para>
 
 <screen role="root"><userinput>install -v -d /var/run/courier -o courier -g courier -m755 &amp;&amp;
 install -v -d /var/lock/subsys -o root -g root -m755</userinput></screen>
 
-    <para>Build <application>Courier</application> as an unprivileged user
-    with the following commands:</para>
+    <para>Bygg <application>Courier</application> som en uprivilegert bruker
+    med følgende kommandoer:</para>
 
 <screen><userinput>./configure --prefix=/usr --libexecdir=/usr/lib/courier \
     --datadir=/usr/share/courier --sysconfdir=/etc/courier \
@@ -142,9 +142,9 @@ install -v -d /var/lock/subsys -o root -g root -m755</userinput></screen>
     --enable-workarounds-for-imap-client-bugs --with-db=gdbm &amp;&amp;
 make</userinput></screen>
 
-    <para>Once again, become the <systemitem class="username">root</systemitem>
-    user and install <application>Courier</application> with the following
-    commands:</para>
+    <para>Igjen, bli <systemitem class="username">root</systemitem>
+    bruker og installere <application>Courier</application> med følgende
+    kommandoer:</para>
 
 <screen role="root"><userinput>make install &amp;&amp;
 make install-configure</userinput></screen>
@@ -152,78 +152,78 @@ make install-configure</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
-    <para><parameter>--libexecdir=/usr/lib/courier</parameter>: Specifies
-    the directory which contains programs and libraries that should not be
-    directly executed from the command-line.</para>
+    <para><parameter>--libexecdir=/usr/lib/courier</parameter>: Spesifiserer
+    mapper som inneholder programmer og biblioteker som ikke burde bli
+    direkte utført fra kommandolinjen.</para>
 
-    <para><parameter>--datadir=/usr/share/courier</parameter>: Specifies the
-    directory where miscellaneous shell scripts,
-    <application>Perl</application> scripts, and data files will be
-    installed.</para>
+    <para><parameter>--datadir=/usr/share/courier</parameter>: Spesifiserer
+    mappen hvor diverse skallskript,
+    <application>Perl</application> skript, og datafiler vil bli
+    installert.</para>
 
     <para><parameter>--localstatedir=/var/spool/courier</parameter>:
-    Specifies the directory that will hold the mail queue, and other
-    temporary data.</para>
+    Spesifiserer mappen som skal inneholde e-postkøen og annet
+    midlertidige data.</para>
 
-    <para><parameter>--with-piddir=/var/run/courier</parameter>: Specifies
-    the directory where <application>Courier</application>'s
-    PID files are stored when
-    <application>Courier</application> is active.</para>
+    <para><parameter>--with-piddir=/var/run/courier</parameter>: Spesifiserer
+    mappen hvor <application>Courier</application> sine
+    PID filer er lagret når
+    <application>Courier</application> er aktiv.</para>
 
-    <para><parameter>--with-paranoid-smtpext</parameter>: Be paranoid when
-    negotiating Courier-specific ESMTP extensions with remote servers.
-    The <application>Courier</application> mail server defines and implements
-    certain experimental ESMTP extensions: XVERP and XEXDATA. Problems may
-    result in the event that someone else uses the same name to implement
-    some other extension. If this option is specified,
-    <application>Courier</application>'s ESMTP server will also advertise a
-    dummy ESMTP capability called XCOURIEREXTENSIONS, and will not recognize
-    any Courier-specific extensions unless the remote mail server also
-    advertises this dummy ESMTP capability.</para>
+    <para><parameter>--with-paranoid-smtpext</parameter>: Vær paranoid når
+    forhandle Courier spesifikke ESMTP utvidelser med eksterne servere.
+    <application>Courier</application> postserver definerer og implementerer
+    visse eksperimentelle ESMTP utvidelser: XVERP og XEXDATA. Problemer kan
+    resultere i tilfelle noen andre bruker samme navn for å implementere
+    en annen utvidelse. Hvis dette alternativet er spesifisert,
+    <application>Courier</application> sin ESMTP server vil også annonsere en
+    dummy ESMTP evne kalt XCOURIEREXTENSIONS, og vil ikke gjenkjenne
+    eventuelle Courier spesifikke utvidelser med mindre den eksterne e-postserveren også
+    annonserer denne dummy ESMTP funksjonen.</para>
 
-    <para><parameter>--disable-autorenamesent</parameter>: Do not rename the
-    Sent folder every month. This option can also be controlled by the
-    <envar>SQWEBMAIL_AUTORENAMESENT</envar> environment variable.</para>
+    <para><parameter>--disable-autorenamesent</parameter>: Ikke gi nytt navn til
+    Sent mappen hver måned. Dette alternativet kan også kontrolleres av
+    <envar>SQWEBMAIL_AUTORENAMESENT</envar> miljøvariabelen.</para>
 
     <para><parameter>--enable-workarounds-for-imap-client-bugs</parameter>:
-    There are several confirmed bugs in some IMAP clients that do not properly
-    implement the IMAP4rev1 protocol. This option enables some workarounds for
-    those buggy IMAP clients. NOTE: <command>make check</command> will fail if
-    this option is used. You should first configure without this option, and
-    if all post-configuration tests succeed, rerun <command>configure</command>
-    with this option and recompile.</para>
+    Det er flere bekreftede feil i noen IMAP klienter som ikke
+    implementerer IMAP4rev1 protokollen skikkelig. Dette alternativet muliggjør noen løsninger for
+    disse buggy IMAP klientene. MERK: <command>make check</command> vil mislykkes hvis
+    dette alternativet brukes. Du bør først konfigurere uten dette alternativet, og
+    hvis alle tester etter konfigurasjon lykkes, kjør på nytt <command>configure</command>
+    med dette alternativet og kompiler på nytt.</para>
 
     <para><parameter>--with-db=gdbm</parameter>:
-    <application>Courier</application> requires either the
-    <application>GDBM</application> or the <application>DB</application>
-    database library. <application>GDBM</application> is used if both are
-    present. This option forces the selection of
-    <application>GDBM</application> as <application>Courier</application>
-    is currently broken when used with <application>DB</application>.</para>
+    <application>Courier</application> krever enten
+    <application>GDBM</application> eller <application>DB</application>
+    database bibliotek. <application>GDBM</application> brukes hvis begge er
+    tilstede. Dette alternativet tvinger valget av
+    <application>GDBM</application> siden <application>Courier</application>
+    er for øyeblikket ødelagt når den brukes med <application>DB</application>.</para>
 
     <!-- # Note - Courier will build fine with <xref linkend="db"/>, but all
     the database files will not be created correctly -->
 
     <para><option>--with-ispell=/usr/bin/aspell</option>:
-    <application>Courier</application>'s webmail server can use spell
-    checking, if <command>configure</command> finds
-    <application>ispell</application> or if you explicitly set the location
-    of <application>Aspell</application>.</para>
+    <application>Courier</application> sin nettpostserveren kan bruke stave
+    sjekking hvis <command>configure</command> finner
+    <application>ispell</application> eller hvis du eksplisitt angir plasseringen
+    til <application>Aspell</application>.</para>
 
-    <para><option>--enable-mimetypes=<replaceable>&lt;location of mime.types
-    file&gt;</replaceable></option>: Use this switch if you receive an error
-    saying that the <filename>mime.types</filename> file could not be
-    found.</para>
+    <para><option>--enable-mimetypes=<replaceable>&lt;plassering av mime.types
+    filen&gt;</replaceable></option>: Bruk denne bryteren hvis du får en feilmelding
+    som sier at <filename>mime.types</filename> filen ikke kunne bli
+    funnet.</para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Courier</title>
+    <title>Konfigurere Courier</title>
 
     <sect3 id="courier-config">
-      <title>Configuration Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para><filename>/etc/courier/*</filename></para>
 
@@ -234,141 +234,141 @@ make install-configure</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
-      <para>While still as <systemitem class="username">root</systemitem>,
-      you will need to create the following files with the contents
-      specified.</para>
+      <para>Mens fortsatt som <systemitem class="username">root</systemitem>,
+      må du lage følgende filer med innholdet
+      spesifisert.</para>
 
       <para><filename>/etc/courier/defaultdomain</filename></para>
 
 <screen role="root"><userinput>cat &gt; /etc/courier/defaultdomain &lt;&lt; "EOF"
-<literal><replaceable>&lt;yourdomain&gt;</replaceable></literal>
+<literal><replaceable>&lt;dittdomene&gt;</replaceable></literal>
 EOF</userinput></screen>
 
       <para><filename>/etc/courier/me</filename></para>
 
 <screen role="root"><userinput>cat &gt; /etc/courier/me &lt;&lt; "EOF"
-<literal><replaceable>&lt;servername.yourdomain&gt;</replaceable></literal>
+<literal><replaceable>&lt;servernavn.dittdomene&gt;</replaceable></literal>
 EOF</userinput></screen>
 
       <para><filename>/etc/courier/locals</filename></para>
 
 <screen role="root"><userinput>cat &gt; /etc/courier/locals &lt;&lt; "EOF"
 <literal>localhost
-<replaceable>&lt;yourdomain&gt;</replaceable></literal>
+<replaceable>&lt;dittdomene&gt;</replaceable></literal>
 EOF</userinput></screen>
 
       <para><filename>/etc/courier/esmtpacceptmailfor.dir/system</filename></para>
 
 <screen role="root"><userinput>cat &gt; /etc/courier/esmtpacceptmailfor.dir/system &lt;&lt; "EOF"
 <literal>localhost
-<replaceable>&lt;yourdomain&gt;</replaceable></literal>
+<replaceable>&lt;dittdomene&gt;</replaceable></literal>
 EOF</userinput></screen>
 
-      <para>You will also need to edit the
-      <filename>/etc/courier/aliases/system</filename> file and change the
-      following entry.</para>
+      <para>Du må også redigere
+      <filename>/etc/courier/aliases/system</filename> fil og endre
+      følgende oppføring.</para>
 
-<screen><literal>postmaster: <replaceable>&lt;your administrator email&gt;</replaceable></literal></screen>
+<screen><literal>postmaster: <replaceable>&lt;administratorens e-postadresse&gt;</replaceable></literal></screen>
 
-      <para>If you want to deny access from some hosts from sending mail,
-      you will need to edit the
-      <filename>/etc/courier/smtpaccess/default</filename> file.</para>
+      <para>Hvis du vil nekte tilgang fra enkelte verter fra å sende e-post,
+      må du redigere
+      <filename>/etc/courier/smtpaccess/default</filename> filen.</para>
 
-      <para>If you wish to host mail for non-local domains including virtual
-      domains, you must add them to
-      <filename>/etc/courier/hosteddomains</filename>. This file should exist
-      whether you need a hosted domain list or not:</para>
+      <para>Hvis du ønsker å være vert for e-post for ikke-lokale domener, inkludert virtuelle
+      domener, må du legge dem til
+      <filename>/etc/courier/hosteddomains</filename>. Denne filen bør eksistere
+      om du trenger en vertsbasert domeneliste eller ikke:</para>
 
 <screen role="root"><userinput>touch /etc/courier/hosteddomains</userinput></screen>
 
-      <para>After the above steps are completed you will need to run the
-      following commands:</para>
+      <para>Etter at trinnene ovenfor er fullført, må du kjøre
+      følgende kommandoer:</para>
 
 <screen role="root"><userinput>makesmtpaccess &amp;&amp;
 makehosteddomains &amp;&amp;
 makealiases</userinput></screen>
 
-      <para>For each user, you will need to create a
-      <filename class="directory">Maildir</filename> directory:</para>
+      <para>For hver bruker må du opprette en
+      <filename class="directory">Maildir</filename> mappe:</para>
 
-<screen role="root"><userinput>cd /home/<replaceable>&lt;username&gt;</replaceable> &amp;&amp;
+<screen role="root"><userinput>cd /home/<replaceable>&lt;brukernavn&gt;</replaceable> &amp;&amp;
 maildirmake Maildir &amp;&amp;
-chown <replaceable>&lt;username&gt;</replaceable>.<replaceable>&lt;username&gt;</replaceable> Maildir -R</userinput></screen>
+chown <replaceable>&lt;brukernavn&gt;</replaceable>.<replaceable>&lt;brukernavn&gt;</replaceable> Maildir -R</userinput></screen>
 
-      <para>If you wish to use SSL with <application>Courier</application>,
-      you should obtain certificates and store them in
-      <filename class='directory'>/usr/share/courier</filename>.  You can
-      optionally create self-signed, test certificates with the following
-      commands:</para>
+      <para>Hvis du ønsker å bruke SSL med <application>Courier</application>,
+      bør du skaffe sertifikater og lagre dem i
+      <filename class='directory'>/usr/share/courier</filename>.  Du kan
+      eventuelt opprette selvsignerte testsertifikater med følgende
+      kommandoer:</para>
 
 <screen role="root"><userinput>mkesmtpdcert &amp;&amp;
 mkimapdcert &amp;&amp;
 mkpop3dcert</userinput></screen>
 
-      <para>All of <application>Courier</application>'s configuration files reside
-      in the directory <filename class="directory">/etc/courier/</filename>. For
-      each service SMTP, POP3 and IMAP, you will have a standard config file, and
-      an SSL config file. For each service that you wish to utilize, you will
-      need to edit the configuration file, and change the
-      <replaceable>&lt;DAEMON&gt;</replaceable>START variable from 'NO' to 'YES'. For
-      example, to use SMTP with SSL, you'll need to edit
-      <filename>/etc/courier/esmtpd-ssl</filename> and change the value of
-      'ESMTPDSSLSTART' to 'YES'.  Make the same change for each service
-      configuration that you wish to use with
+      <para>Alle <application>Courier</application> sine konfigurasjonsfiler ligger
+      i mappen <filename class="directory">/etc/courier/</filename>. For
+      hver tjeneste SMTP, POP3 og IMAP, vil du ha en standard konfigurasjonsfil, og
+      en SSL konfigurasjonsfil. For hver tjeneste du ønsker å bruke, vil du
+      trenge å redigere konfigurasjonsfilen, og endre
+      <replaceable>&lt;DAEMON&gt;</replaceable>START variabelen fra 'NO' til 'YES'. Til
+      eksempel, for å bruke SMTP med SSL, må du redigere
+      <filename>/etc/courier/esmtpd-ssl</filename> og endre verdien av
+      'ESMTPDSSLSTART' til 'YES'.  Gjør den samme endringen for hver tjeneste
+      konfigurasjonen du ønsker å bruke med
       <application>Courier</application>.</para>
 
-      <para>If you wish to use LDAP, an LDAP configuration file should be
-      created:</para>
+      <para>Hvis du ønsker å bruke LDAP, bør en LDAP konfigurasjonsfil bli
+      opprettet:</para>
 
 <screen role="root"><userinput>echo "LDAPALIASDSTART=YES" > /etc/courier/ldapaliasd</userinput></screen>
 
-      <para>Similarly, if you wish to use webmail, you should create the webmail
-      configuration file:</para>
+      <para>På samme måte, hvis du ønsker å bruke webmail, bør du opprette webmail
+      konfigurasjonsfil:</para>
 
 <screen role="root"><userinput>echo "WEBMAILDSTART=YES" > /etc/courier/webmaild</userinput></screen>
 
-      <para>You will also need to copy the <filename>webmail</filename> file
-      from <filename>/usr/lib/courier/courier/webmail</filename> to the
-      <filename class='directory'>cgi-bin</filename> directory of your
+      <para>Du må også kopiere <filename>webmail</filename> filen
+      fra <filename>/usr/lib/courier/courier/webmail</filename> til
+      <filename class='directory'>cgi-bin</filename> mappen til din
       <application>Apache</application> server.</para>
 
 <screen role="root"><userinput>cp -v -a /usr/lib/courier/courier/webmail/webmail /srv/www/cgi-bin</userinput></screen>
 
-      <para>You will then need to copy the images to a directory under your
-      <filename class='directory'>htdocs</filename> directory of your
-      <application>Apache</application> server. The directory needs to be named
-      <filename class='directory'>webmail</filename> or you need to specify it
-      during the configure phase with
+      <para>Du må da kopiere bildene til en mappe under din
+      <filename class='directory'>htdocs</filename> mappen til din
+      <application>Apache</application> server. Mappen må navngis
+      <filename class='directory'>webmail</filename> eller du må spesifisere det
+      under konfigureringsfasen med
       <option>--enable-imageurl=<replaceable>&lt;URL&gt;</replaceable></option>.</para>
 
 <screen role="root"><userinput>cp -v -a /usr/share/courier/sqwebmail/images /srv/www/htdocs/webmail</userinput></screen>
 
-      <para>If you wish to utilize the webadmin utility, you will need to copy
-      the <filename>webadmin</filename> file from
+      <para>Hvis du ønsker å bruke webadmin verktøyet, må du kopiere
+      <filename>webadmin</filename> filen fra
       <filename class="directory">/usr/lib/courier/courier/webmail</filename>
-      to your <filename class="directory">cgi-bin</filename> directory of your
+      til din <filename class="directory">cgi-bin</filename> mappen til din
       <application>Apache</application> server.</para>
 
 <screen role="root"><userinput>cp -v -a /usr/lib/courier/courier/webmail/webadmin /srv/www/cgi-bin</userinput></screen>
 
-      <para>You also need to put the password into the file
+      <para>Du må også legge inn passordet i filen
       <filename>/etc/courier/webadmin/password</filename>:</para>
 
 <screen role="root"><userinput>cat &gt; /etc/courier/webadmin/password &lt;&lt; "EOF"
-<literal><replaceable>&lt;password&gt;</replaceable></literal>
+<literal><replaceable>&lt;passord&gt;</replaceable></literal>
 EOF</userinput></screen>
 
-      <para>If you are not using SSL on your <application>Apache</application>
-      server, you will also need to add
-      <filename>/etc/courier/webadmin/unsecureok</filename>, so you will be
-      able to use your web based administration tool.</para>
+      <para>Hvis du ikke bruker SSL på din <application>Apache</application>
+      server, du må også legge til
+      <filename>/etc/courier/webadmin/unsecureok</filename>, slik vil du
+      kunne bruke ditt nettbaserte administrasjonsverktøy.</para>
 
 <screen role="root"><userinput>touch /etc/courier/webadmin/unsecureok</userinput></screen>
 
-      <para>If you use <application>Linux-PAM</application> on your system,
-      you will need to create the PAM configuration files:</para>
+      <para>Hvis du bruker <application>Linux-PAM</application> på systemet ditt,
+      må du lage PAM konfigurasjonsfilene:</para>
 
 <screen role="root"><userinput>cat &gt; /etc/pam.d/esmtp &lt;&lt; "EOF"
 <literal># Begin /etc/pam.d/esmtp
@@ -410,12 +410,12 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3  id="courier-init">
-      <title>Boot Script</title>
+      <title>Oppstartsskript</title>
 
-      <para>Finally, if you wish to start the
-      <application>Courier</application> server at boot, install the
-      <filename>/etc/rc.d/init.d/courier</filename> bootscript included
-      in the <xref linkend="bootscripts"/> package.</para>
+      <para>Til slutt, hvis du ønsker å starte
+      <application>Courier</application> serveren ved oppstart, installer
+      <filename>/etc/rc.d/init.d/courier</filename> oppstartskriptet inkludert
+      i <xref linkend="bootscripts"/> pakken.</para>
 
       <indexterm zone="courier courier-init">
         <primary sortas="f-courier-init">courier</primary>
@@ -428,11 +428,11 @@ EOF</userinput></screen>
 <!-- Begin virtual user setup * To be removed once added to the hint. -->
 
     <sect3>
-      <title>Configuring for Virtual Users</title>
+      <title>Konfigurere for Virtuelle Brukere</title>
 
-      <para>These instructions will configure <application>Courier</application>
-      to lookup virtual users in a <application>MySQL</application> database.
-      Begin by making the following changes to
+      <para>Disse instruksjonene vil konfigurere <application>Courier</application>
+      å slå opp virtuelle brukere i en <application>MySQL</application> database.
+      Begynn med å gjøre følgende endringer i
       <filename>/etc/courier/authmysqlrc</filename>:</para>
 
 <screen><literal>MYSQL_SERVER            localhost
@@ -446,12 +446,12 @@ MYSQL_CLEAR_PWFIELD     clear
 DEFAULT DOMAIN          <replaceable>&lt;your domain&gt;</replaceable>
 MYSQL_QUOTA_FIELD       quota</literal></screen>
 
-      <para>Connect to <application>MySQL</application>:</para>
+      <para>Koble til <application>MySQL</application>:</para>
 
 <screen role="root"><userinput>mysql -p</userinput></screen>
 
-      <para>Create the <filename>courier_mail</filename> database and setup
-      the users table:</para>
+      <para>Opprett <filename>courier_mail</filename> databasen og sett opp
+      brukertabellen:</para>
 
 <screen role="root"><userinput>CREATE DATABASE courier_mail;
 USE courier_mail
@@ -467,19 +467,19 @@ quota                 char(255) DEFAULT '' NOT NULL,
 KEY id (id(128))
 );</userinput></screen>
 
-      <para>Grant all privileges to the <systemitem
-      class="username">courier</systemitem> user created earlier:</para>
+      <para>Gi alle privilegier til <systemitem
+      class="username">courier</systemitem> brukeren opprettet tidligere:</para>
 
 <screen role="root"><userinput>GRANT ALL PRIVILEGES ON *.* TO courier@localhost \
     IDENTIFIED BY '<replaceable>&lt;password&gt;</replaceable>' WITH GRANT OPTION;
 QUIT</userinput></screen>
 
-      <para>Create a virtual mailman user and group:</para>
+      <para>Opprett en virtuell mailman bruker og gruppe:</para>
 
 <screen role="root"><userinput>groupadd -g 35 vmailman &amp;&amp;
 useradd -c 'Virtual Mailman' -g vmailman -m -k /dev/null -u 35 vmailman</userinput></screen>
 
-      <para>Create a mail directory for a new virtual user:</para>
+      <para>Opprett en e-postmappe for en ny virtuell bruker:</para>
 
 <screen role="root"><userinput>cd /home/vmailman &amp;&amp;
 mkdir -v <replaceable>&lt;virtual_user&gt;</replaceable> &amp;&amp;
@@ -487,30 +487,30 @@ cd <replaceable>&lt;virtual_user&gt;</replaceable> &amp;&amp;
 maildirmake Maildir &amp;&amp;
 chown -v vmailman.vmailman Maildir -R</userinput></screen>
 
-      <para>Now, connect to the <application>MySQL</application> database as
-      the <systemitem class="username">courier</systemitem> user:</para>
+      <para>Nå, koble til <application>MySQL</application> databasen som
+      <systemitem class="username">courier</systemitem> bruker:</para>
 
 <screen role="root"><userinput>mysql -u courier -p</userinput></screen>
 
-      <para>To add the virtual user you need to enter at least one version of the
-      password; either clear text or encrypted.</para>
+      <para>For å legge til den virtuelle brukeren må du angi minst en versjon av
+      passord; enten klartekst eller kryptert.</para>
 
-      <para>Add the first virtual user with the following commands:</para>
+      <para>Legg til den første virtuelle brukeren med følgende kommandoer:</para>
 
 <screen><userinput>USE courier_mail
 INSERT INTO users VALUES (
-'<replaceable>&lt;virtual_users&gt;</replaceable>@<replaceable>&lt;domain.com&gt;</replaceable>,
-'<replaceable>&lt;encrypted password or blank&gt;</replaceable>',
-'<replaceable>&lt;clear text password or blank&gt;</replaceable>',
-'<replaceable>&lt;User's Name&gt;</replaceable>',
+'<replaceable>&lt;virtuelle_brukere&gt;</replaceable>@<replaceable>&lt;domain.com&gt;</replaceable>,
+'<replaceable>&lt;kryptert passord eller tomt&gt;</replaceable>',
+'<replaceable>&lt;klartekstpassord eller tomt&gt;</replaceable>',
+'<replaceable>&lt;Brukernavn&gt;</replaceable>',
 9000,
 9000,
-'<replaceable>&lt;location of Maildir&gt;</replaceable>',
-'<replaceable>&lt;Quota in Bytes'&gt;</replaceable>
+'<replaceable>&lt;plassering av Maildir&gt;</replaceable>',
+'<replaceable>&lt;Kvote i byte'&gt;</replaceable>
 );
 QUIT</userinput></screen>
 
-      <para>For example:</para>
+      <para>For eksempel:</para>
 
 <screen><userinput>INSERT INTO users VALUES (
 'blfsuser@&lfs-domainname;',
@@ -530,12 +530,12 @@ QUIT</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>addcr, authenumerate, cancelmsg, courier, courier-config,
@@ -548,22 +548,22 @@ QUIT</userinput></screen>
         mkesmtpdcert, mkimapdcert, mkpop3dcert, pop3d, pop3d-ssl, preline,
         pw2userdb, reformail, reformime, rmail, sendmail, sharedindexinstall,
         sharedindexsplit, showconfig, showmodules, testmxlookup, userdb,
-        userdbpw, vchkpw2userdb, webgpg, and webmaild</seg>
-        <seg>None</seg>
+        userdbpw, vchkpw2userdb, webgpg, og webmaild</seg>
+        <seg>Ingen</seg>
         <seg>/etc/courier, /usr/lib/courier, /usr/share/courier, /var/lib/courier,
-        /var/lock/subsys, /var/run/courier, and /var/spool/courier</seg>
+        /var/lock/subsys, /var/run/courier, og /var/spool/courier</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="cancelmsg">
         <term><command>cancelmsg</command></term>
         <listitem>
-          <para>removes a message from the mail queue.</para>
+          <para>fjerner en melding fra e-postkøen.</para>
           <indexterm zone="courier cancelmsg">
             <primary sortas="b-cancelmsg">cancelmsg</primary>
           </indexterm>
@@ -573,8 +573,8 @@ QUIT</userinput></screen>
       <varlistentry id="courier-prog">
         <term><command>courier</command></term>
         <listitem>
-          <para>is an administrative command used to control the
-          <application>Courier</application> scheduling engine.</para>
+          <para>er en administrativ kommando som brukes til å kontrollere
+          <application>Courier</application> planleggingsmotoren.</para>
           <indexterm zone="courier courier-prog">
             <primary sortas="b-courier">courier</primary>
           </indexterm>
@@ -584,7 +584,7 @@ QUIT</userinput></screen>
       <varlistentry id="courierfax">
         <term><command>courierfax</command></term>
         <listitem>
-          <para>sends email messages by fax.</para>
+          <para>sender e-postmeldinger på faks.</para>
           <indexterm zone="courier courierfax">
             <primary sortas="b-courierfax">courierfax</primary>
           </indexterm>
@@ -594,7 +594,7 @@ QUIT</userinput></screen>
       <varlistentry id="courierfilter">
         <term><command>courierfilter</command></term>
         <listitem>
-          <para>starts and stops all mail filters installed by
+          <para>starter og stopper alle e-postfiltre installert av
           <command>filterctl</command>.</para>
           <indexterm zone="courier courierfilter">
             <primary sortas="b-courierfilter">courierfilter</primary>
@@ -605,7 +605,7 @@ QUIT</userinput></screen>
       <varlistentry id="courierldapaliasd">
         <term><command>courierldapaliasd</command></term>
         <listitem>
-          <para>supports mail address aliasing using an LDAP directory.</para>
+          <para>støtter aliasing av e-postadresser ved å bruke en LDAP mappe.</para>
           <indexterm zone="courier courierldapaliasd">
             <primary sortas="b-courierldapaliasd">courierldapaliasd</primary>
           </indexterm>
@@ -615,9 +615,9 @@ QUIT</userinput></screen>
       <varlistentry id="courierlogger">
         <term><command>courierlogger</command></term>
         <listitem>
-          <para>captures error messages from other
-          <application>Courier</application> applications and forwards them
-          to the system logger.</para>
+          <para>fanger opp feilmeldinger fra andre
+          <application>Courier</application> applikasjoner og videresender dem
+          til systemloggeren.</para>
           <indexterm zone="courier courierlogger">
             <primary sortas="b-courierlogger">courierlogger</primary>
           </indexterm>
@@ -627,7 +627,7 @@ QUIT</userinput></screen>
       <varlistentry id="couriermlm">
         <term><command>couriermlm</command></term>
         <listitem>
-          <para>sets up, maintains, and manages mailing lists.</para>
+          <para>setter opp, vedlikeholder og administrerer e-postlister.</para>
           <indexterm zone="courier couriermlm">
             <primary sortas="b-couriermlm">couriermlm</primary>
           </indexterm>
@@ -637,7 +637,7 @@ QUIT</userinput></screen>
       <varlistentry id="courierperlfilter">
         <term><command>courierperlfilter</command></term>
         <listitem>
-          <para>is a sample filter written in
+          <para>er et eksempelfilter skrevet i
           <application>Perl</application>.</para>
           <indexterm zone="courier courierperlfilter">
             <primary sortas="b-courierperlfilter">courierperlfilter</primary>
@@ -648,7 +648,7 @@ QUIT</userinput></screen>
       <varlistentry id="courierpop3d">
         <term><command>courierpop3d</command></term>
         <listitem>
-          <para>is a <application>Courier</application>
+          <para>er en <application>Courier</application>
           POP3 server.</para>
           <indexterm zone="courier courierpop3d">
             <primary sortas="b-courierpop3d">courierpop3d</primary>
@@ -659,8 +659,8 @@ QUIT</userinput></screen>
       <varlistentry id="courierpop3login">
         <term><command>courierpop3login</command></term>
         <listitem>
-          <para>reads the POP3 userid and password and
-          passes them to the authentication modules.</para>
+          <para>leser POP3 bruker ID og passord og
+          sender dem til autentiseringsmodulene.</para>
           <indexterm zone="courier courierpop3login">
             <primary sortas="b-courierpop3login">courierpop3login</primary>
           </indexterm>
@@ -670,9 +670,9 @@ QUIT</userinput></screen>
       <varlistentry id="couriertcpd">
         <term><command>couriertcpd</command></term>
         <listitem>
-          <para>accepts incoming network connections, and runs other
-          <application>Courier</application> programs after establishing each
-          network connection.</para>
+          <para>aksepterer innkommende nettverkstilkoblinger, og kjører andre
+          <application>Courier</application> programmer etter etablering av hver
+          nettverkstilkobling.</para>
           <indexterm zone="courier couriertcpd">
             <primary sortas="b-couriertcpd">couriertcpd</primary>
           </indexterm>
@@ -682,8 +682,8 @@ QUIT</userinput></screen>
       <varlistentry id="couriertls">
         <term><command>couriertls</command></term>
         <listitem>
-          <para>is used by applications to encrypt a network connection
-          using SSL/TLS.</para>
+          <para>brukes av applikasjoner for å kryptere en nettverkstilkobling
+          ved bruk av SSL/TLS.</para>
           <indexterm zone="courier couriertls">
             <primary sortas="b-couriertls">couriertls</primary>
           </indexterm>
@@ -693,8 +693,8 @@ QUIT</userinput></screen>
       <varlistentry id="dotforward">
         <term><command>dotforward</command></term>
         <listitem>
-          <para>is a compatibility module that reads forwarding
-          instructions in <filename>$HOME/.forward</filename>.</para>
+          <para>er en kompatibilitetsmodul som leser videresending
+          instruksjoner i <filename>$HOME/.forward</filename>.</para>
           <indexterm zone="courier dotforward">
             <primary sortas="b-dotforward">dotforward</primary>
           </indexterm>
@@ -704,9 +704,9 @@ QUIT</userinput></screen>
       <varlistentry id="dupfilter">
         <term><command>dupfilter</command></term>
         <listitem>
-          <para>is a threaded filter that tries to block junk E-mail by
-          attempting to detect multiple copies of the same message, which
-          are rejected.</para>
+          <para>er et trådet filter som prøver å blokkere søppelpost
+          ved å forsøke å oppdage flere kopier av samme melding, som
+          blir avvist.</para>
           <indexterm zone="courier dupfilter">
             <primary sortas="b-dupfilter">dupfilter</primary>
           </indexterm>
@@ -716,7 +716,7 @@ QUIT</userinput></screen>
       <varlistentry id="esmtpd">
         <term><command>esmtpd</command></term>
         <listitem>
-          <para>is a control script for courieresmtpd.</para>
+          <para>er et kontrollskript for courieresmtpd.</para>
           <indexterm zone="courier esmtpd">
             <primary sortas="b-esmtpd">esmtpd</primary>
           </indexterm>
@@ -726,8 +726,8 @@ QUIT</userinput></screen>
       <varlistentry id="esmtpd-msa">
         <term><command>esmtpd-msa</command></term>
         <listitem>
-          <para>is a control script for courieresmtpd, but adds message
-          submission port 587 for the MSA protocol.</para>
+          <para>er et kontrollskript for courieresmtpd, men legger til melding
+          innsendingsport 587 for MSA protokollen.</para>
           <indexterm zone="courier esmtpd-msa">
             <primary sortas="b-esmtpd-msa">esmtpd-msa</primary>
           </indexterm>
@@ -737,7 +737,7 @@ QUIT</userinput></screen>
       <varlistentry id="filterctl">
         <term><command>filterctl</command></term>
         <listitem>
-          <para>installs or uninstalls global mail filters.</para>
+          <para>installerer eller avinstallerer globale e-postfiltre.</para>
           <indexterm zone="courier filterctl">
             <primary sortas="b-filterctl">filterctl</primary>
           </indexterm>
@@ -747,7 +747,7 @@ QUIT</userinput></screen>
       <varlistentry id="imapd">
         <term><command>imapd</command></term>
         <listitem>
-          <para>is the <application>Courier</application>-IMAP server.</para>
+          <para>er <application>Courier</application>-IMAP server.</para>
           <indexterm zone="courier imapd">
             <primary sortas="b-imapd">imapd</primary>
           </indexterm>
@@ -757,7 +757,7 @@ QUIT</userinput></screen>
       <varlistentry id="lockmail">
         <term><command>lockmail</command></term>
         <listitem>
-          <para>is a helper utility for locking  mailbox files.</para>
+          <para>er et hjelpeverktøy for å låse postboksfiler.</para>
           <indexterm zone="courier lockmail">
             <primary sortas="b-lockmail">lockmail</primary>
           </indexterm>
@@ -767,7 +767,7 @@ QUIT</userinput></screen>
       <varlistentry id="mailbot">
         <term><command>mailbot</command></term>
         <listitem>
-          <para>is a MIME-aware autoresponder utility.</para>
+          <para>er et MIME-bevisst autosvarverktøy.</para>
           <indexterm zone="courier mailbot">
             <primary sortas="b-mailbot">mailbot</primary>
           </indexterm>
@@ -777,7 +777,7 @@ QUIT</userinput></screen>
       <varlistentry id="maildiracl">
         <term><command>maildiracl</command></term>
         <listitem>
-          <para>manages access control lists.</para>
+          <para>administrerer tilgangskontrolllister.</para>
           <indexterm zone="courier maildiracl">
             <primary sortas="b-maildiracl">maildiracl</primary>
           </indexterm>
@@ -787,8 +787,8 @@ QUIT</userinput></screen>
       <varlistentry id="maildirkw">
         <term><command>maildirkw</command></term>
         <listitem>
-          <para>modifies <application>Courier</application>-IMAP compatible
-          maildir message keywords.</para>
+          <para>modifiserer <application>Courier</application>-IMAP kompatibel
+          maildir meldingsnøkkelord.</para>
           <indexterm zone="courier maildirkw">
             <primary sortas="b-maildirkw">maildirkw</primary>
           </indexterm>
@@ -798,7 +798,7 @@ QUIT</userinput></screen>
       <varlistentry id="maildirmake">
         <term><command>maildirmake</command></term>
         <listitem>
-          <para>creates maildirs, and maildir folders.</para>
+          <para>oppretter maildirs og maildir mapper.</para>
           <indexterm zone="courier maildirmake">
             <primary sortas="b-maildirmake">maildirmake</primary>
           </indexterm>
@@ -808,8 +808,8 @@ QUIT</userinput></screen>
       <varlistentry id="maildrop">
         <term><command>maildrop</command></term>
         <listitem>
-          <para>is a replacement local mail delivery agent that includes a
-          mail filtering language.</para>
+          <para>er en erstatningsagent for lokal postlevering som inkluderer en
+          e-postfiltreringsspråk.</para>
           <indexterm zone="courier maildrop">
             <primary sortas="b-maildrop">maildrop</primary>
           </indexterm>
@@ -819,8 +819,8 @@ QUIT</userinput></screen>
       <varlistentry id="mailq-courier">
         <term><command>mailq</command></term>
         <listitem>
-          <para>displays a list of all messages that have not been
-          delivered yet.</para>
+          <para>viser en liste over alle meldinger som ikke har blitt
+          levert ennå.</para>
           <indexterm zone="courier mailq-courier">
             <primary sortas="b-mailq">mailq</primary>
           </indexterm>
@@ -830,9 +830,9 @@ QUIT</userinput></screen>
       <varlistentry id="makeacceptmailfor">
         <term><command>makeacceptmailfor</command></term>
         <listitem>
-          <para>builds a list of domains to accept mail for, from the
+          <para>bygger en liste over domener å akseptere e-post for, fra
           <filename class="directory">/etc/courier/esmtpacceptmailfor.dir</filename>
-          directory.</para>
+          mappen.</para>
           <indexterm zone="courier makeacceptmailfor">
             <primary sortas="b-makeacceptmailfor">makeacceptmailfor</primary>
           </indexterm>
@@ -842,8 +842,8 @@ QUIT</userinput></screen>
       <varlistentry id="makealiases">
         <term><command>makealiases</command></term>
         <listitem>
-          <para>builds an alias database from one or more plain text
-          source files.</para>
+          <para>bygger en aliasdatabase fra en eller flere rene tekst
+          kildefiler.</para>
           <indexterm zone="courier makealiases">
             <primary sortas="b-makealiases">makealiases</primary>
           </indexterm>
@@ -853,8 +853,8 @@ QUIT</userinput></screen>
       <varlistentry id="makedat">
         <term><command>makedat</command></term>
         <listitem>
-          <para>is a utility to create <application>GDBM</application> or
-          <application>DB</application> files from plain text files.</para>
+          <para>er et verktøy for å opprette <application>GDBM</application> eller
+          <application>DB</application> filer fra vanlige tekstfiler.</para>
           <indexterm zone="courier makedat">
             <primary sortas="b-makedat">makedat</primary>
           </indexterm>
@@ -864,8 +864,8 @@ QUIT</userinput></screen>
       <varlistentry id="makehosteddomains">
         <term><command>makehosteddomains</command></term>
         <listitem>
-          <para>rebuilds the contents of the hosteddomains database from the
-          contents of <filename>/etc/courier/hosteddomains</filename>.</para>
+          <para>gjenoppbygger innholdet i hosteddomains databasen fra
+          innholdet i <filename>/etc/courier/hosteddomains</filename>.</para>
           <indexterm zone="courier makehosteddomains">
             <primary sortas="b-makehosteddomains">makehosteddomains</primary>
           </indexterm>
@@ -875,8 +875,8 @@ QUIT</userinput></screen>
       <varlistentry id="makemime">
         <term><command>makemime</command></term>
         <listitem>
-          <para>creates MIME-formatted messages from one
-          or more files.</para>
+          <para>oppretter MIME-formaterte meldinger fra en
+          eller flere filer.</para>
           <indexterm zone="courier makemime">
             <primary sortas="b-makemime">makemime</primary>
           </indexterm>
@@ -886,8 +886,8 @@ QUIT</userinput></screen>
       <varlistentry id="makepercentrelay">
         <term><command>makepercentrelay</command></term>
         <listitem>
-          <para>builds a list of %-relayed domains from the
-          <filename class="directory">percentrelay.dir</filename> directory.</para>
+          <para>bygger en liste over %-videresend domener fra
+          <filename class="directory">percentrelay.dir</filename> mappen.</para>
           <indexterm zone="courier makepercentrelay">
             <primary sortas="b-makepercentrelay">makepercentrelay</primary>
           </indexterm>
@@ -897,9 +897,9 @@ QUIT</userinput></screen>
       <varlistentry id="makesmtpaccess">
         <term><command>makesmtpaccess</command></term>
         <listitem>
-          <para>builds ESMTP server access files from the
+          <para>bygger ESMTP servertilgangsfiler fra
           <filename class="directory">/etc/courier/smtpaccess</filename>
-          directory.</para>
+          mappen.</para>
           <indexterm zone="courier makesmtpaccess">
             <primary sortas="b-makesmtpaccess">makesmtpaccess</primary>
           </indexterm>
@@ -909,9 +909,9 @@ QUIT</userinput></screen>
       <varlistentry id="makesmtpaccess-msa">
         <term><command>makesmtpaccess-msa</command></term>
         <listitem>
-          <para>builds ESMTP server access files from the
+          <para>bygger ESMTP servertilgangsfiler fra
           <filename class="directory">/etc/courier/smtpaccess</filename>
-          directory. This esmtp list is for the MSA protocol.</para>
+          mappen. Denne esmtp listen er for MSA protokollen.</para>
           <indexterm zone="courier makesmtpaccess-msa">
             <primary sortas="b-makesmtpaccess-msa">makesmtpaccess-msa</primary>
           </indexterm>
@@ -921,7 +921,7 @@ QUIT</userinput></screen>
       <varlistentry id="makeuserdb">
         <term><command>makeuserdb</command></term>
         <listitem>
-          <para>builds a user/password db from the contents of <filename
+          <para>bygger en bruker/passord db fra innholdet i <filename
           class="directory">/etc/courier/userdb</filename>.</para>
           <indexterm zone="courier makeuserdb">
             <primary sortas="b-makeuserdb">makeuserdb</primary>
@@ -932,8 +932,8 @@ QUIT</userinput></screen>
       <varlistentry id="mimegpg">
         <term><command>mimegpg</command></term>
         <listitem>
-          <para>signs, encrypts, or decrypts MIME-formatted
-          email messages using <application>GnuPG</application>.</para>
+          <para>signerer, krypterer eller dekrypterer MIME-formatert
+          e-postmeldinger ved hjelp av <application>GnuPG</application>.</para>
           <indexterm zone="courier mimegpg">
             <primary sortas="b-mimegpg">mimegpg</primary>
           </indexterm>
@@ -943,7 +943,7 @@ QUIT</userinput></screen>
       <varlistentry id="mkesmtpdcert">
         <term><command>mkesmtpdcert</command></term>
         <listitem>
-          <para>creates a secure SMTP test certificate.</para>
+          <para>oppretter et sikkert SMTP testsertifikat.</para>
           <indexterm zone="courier mkesmtpdcert">
             <primary sortas="b-mkesmtpdcert">mkesmtpdcert</primary>
           </indexterm>
@@ -953,7 +953,7 @@ QUIT</userinput></screen>
       <varlistentry id="mkimapdcert">
         <term><command>mkimapdcert</command></term>
         <listitem>
-          <para>creates a secure IMAP test certificate.</para>
+          <para>oppretter et sikkert IMAP testsertifikat.</para>
           <indexterm zone="courier mkimapdcert">
             <primary sortas="b-mkimapdcert">mkimapdcert</primary>
           </indexterm>
@@ -963,7 +963,7 @@ QUIT</userinput></screen>
       <varlistentry id="mkpop3dcert">
         <term><command>mkpop3dcert</command></term>
         <listitem>
-          <para>creates a secure POP3 test certificate.</para>
+          <para>oppretter et sikkert POP3 testsertifikat.</para>
           <indexterm zone="courier mkpop3dcert">
             <primary sortas="b-mkpop3dcert">mkpop3dcert</primary>
           </indexterm>
@@ -973,8 +973,8 @@ QUIT</userinput></screen>
       <varlistentry id="pop3d">
         <term><command>pop3d</command></term>
         <listitem>
-          <para>is a wrapper script for <command>couriertcpd</command> to
-          start and stop the POP3 service.</para>
+          <para>er et innpakningsskript for <command>couriertcpd</command> for å
+          starte og stoppe POP3 tjenesten.</para>
           <indexterm zone="courier pop3d">
             <primary sortas="b-pop3d">pop3d</primary>
           </indexterm>
@@ -984,8 +984,8 @@ QUIT</userinput></screen>
       <varlistentry id="pop3d-ssl">
         <term><command>pop3d-ssl</command></term>
         <listitem>
-          <para>is a wrapper script for <command>couriertcpd</command> to
-          start and stop the POP3 over SSL service.</para>
+          <para>er et innpakningsskript for <command>couriertcpd</command> for å
+          starte og stoppe POP3 over SSL tjenesten.</para>
           <indexterm zone="courier pop3d-ssl">
             <primary sortas="b-pop3d-ssl">pop3d-ssl</primary>
           </indexterm>
@@ -995,8 +995,8 @@ QUIT</userinput></screen>
       <varlistentry id="preline">
         <term><command>preline</command></term>
         <listitem>
-          <para>prepends legacy <filename>mbox</filename> headers to mail
-          messages.</para>
+          <para>legg eldre <filename>mbox</filename> deklarasjoner foran i e-post
+          meldinger.</para>
           <indexterm zone="courier preline">
             <primary sortas="b-preline">preline</primary>
           </indexterm>
@@ -1006,8 +1006,8 @@ QUIT</userinput></screen>
       <varlistentry id="reformail">
         <term><command>reformail</command></term>
         <listitem>
-          <para>reads a message on standard input, reformats it in some
-          way, and writes the message to standard output.</para>
+          <para>leser en melding på standardinndata, omformaterer den i noen
+          måte, og skriver meldingen til standardutdata.</para>
           <indexterm zone="courier reformail">
             <primary sortas="b-reformail">reformail</primary>
           </indexterm>
@@ -1017,7 +1017,7 @@ QUIT</userinput></screen>
       <varlistentry id="reformime">
         <term><command>reformime</command></term>
         <listitem>
-          <para>is a utility for reformatting MIME messages.</para>
+          <para>er et verktøy for å formatere MIME meldinger.</para>
           <indexterm zone="courier reformime">
             <primary sortas="b-reformime">reformime</primary>
           </indexterm>
@@ -1027,8 +1027,8 @@ QUIT</userinput></screen>
       <varlistentry id="sendmail-courier">
         <term><command>sendmail</command></term>
         <listitem>
-          <para>reads an email message and delivers the message to its
-          recipients.</para>
+          <para>leser en e-postmelding og leverer meldingen til sin
+          mottaker.</para>
           <indexterm zone="courier sendmail-courier">
             <primary sortas="b-sendmail">sendmail</primary>
           </indexterm>
@@ -1038,8 +1038,8 @@ QUIT</userinput></screen>
       <varlistentry id="submit">
         <term><command>submit</command></term>
         <listitem>
-          <para>submits messages to <application>Courier</application> for
-          processing.</para>
+          <para>sender meldinger til <application>Courier</application> for
+          behandling.</para>
           <indexterm zone="courier submit">
             <primary sortas="b-submit">submit</primary>
           </indexterm>
@@ -1049,8 +1049,8 @@ QUIT</userinput></screen>
       <varlistentry id="testmxlookup">
         <term><command>testmxlookup</command></term>
         <listitem>
-          <para>lists the names and IP addresses of mail
-          relays that receive mail for the domain.</para>
+          <para>viser navn og IP-adresser til e-post
+          releer som mottar e-post for domenet.</para>
           <indexterm zone="courier testmxlookup">
             <primary sortas="b-testmxlookup">testmxlookup</primary>
           </indexterm>
@@ -1060,7 +1060,7 @@ QUIT</userinput></screen>
       <varlistentry id="userdb">
         <term><command>userdb</command></term>
         <listitem>
-          <para>is a script to individually manipulate entries in
+          <para>er et skript for å individuelt manipulere oppføringer i
           <filename>/etc/courier/userdb.</filename></para>
           <indexterm zone="courier userdb">
             <primary sortas="b-userdb">userdb</primary>
@@ -1071,8 +1071,8 @@ QUIT</userinput></screen>
       <varlistentry id="userdbpw">
         <term><command>userdbpw</command></term>
         <listitem>
-          <para>reads a single line of text on standard input, encrypts
-          it, and prints the encrypted result to standard output.</para>
+          <para>leser en enkelt linje med tekst på standard inngang, krypterer
+          det, og skriver ut det krypterte resultatet til standard utgang.</para>
           <indexterm zone="courier userdbpw">
             <primary sortas="b-userdbpw">userdbpw</primary>
           </indexterm>
