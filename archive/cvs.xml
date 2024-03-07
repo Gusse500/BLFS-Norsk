@@ -9,7 +9,7 @@
   <!ENTITY cvs-md5sum        "0213ea514e231559d6ff8f80a34117f0">
   <!ENTITY cvs-size          "2.9 MB">
   <!ENTITY cvs-buildsize     "32.3 MB">
-  <!ENTITY cvs-time          "0.3 SBU (additional ~20 SBU to run the test suite)">
+  <!ENTITY cvs-time          "0.3 SBU (ytterligere ~20 SBU for å kjøre testpakken)">
 ]>
 
 <sect1 id="cvs" xreflabel="CVS-&cvs-version;">
@@ -23,69 +23,69 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to CVS</title>
+    <title>Introduksjon til CVS</title>
 
-    <para><application>CVS</application> is the Concurrent Versions System.
-    This is a version control system useful for projects using a central
-    repository to hold files and then track all changes made to those files.
-    These instructions install the client used to manipulate the repository,
-    creation of a repository is covered at <xref linkend="cvsserver"/>.</para>
+    <para><application>CVS</application> er Concurrent Versions System.
+    Dette er et versjonskontrollsystem som er nyttig for prosjekter som bruker et sentralt
+    depot for å holde filer og deretter spore alle endringer som er gjort i disse filene.
+    Disse instruksjonene installerer klienten som brukes til å manipulere depotet,
+    opprettelse av et depot er dekket på <xref linkend="cvsserver"/>.</para>
 
     &lfs77_checked; &gcc5_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
-        <para>Download (HTTP): <ulink url="&cvs-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&cvs-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&cvs-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&cvs-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &cvs-md5sum;</para>
+        <para>Nedlasting MD5 sum: &cvs-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &cvs-size;</para>
+        <para>Nedlastingsstørrelse: &cvs-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &cvs-buildsize;</para>
+        <para>Estimert diskplass som kreves: &cvs-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &cvs-time;</para>
+        <para>Estimert byggetid: &cvs-time;</para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
-        <para>Recommended patch: <ulink
+        <para>Anbefalt oppdatering: <ulink
         url="&patch-root;/cvs-&cvs-version;-zlib-1.patch"/></para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">CVS Dependencies</bridgehead>
+    <bridgehead renderas="sect3">CVS Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional"><!-- <xref linkend="gdbm"/>, -->
     <xref linkend="tcsh"/>,
     <xref linkend="openssh"/>,
     <ulink url="ftp://ftp.pdc.kth.se/pub/krb/src/">krb4</ulink>,
     <xref linkend="mitkrb"/>
-    (for the GSSAPI libraries),
-    <xref linkend="gs"/><!-- or <xref linkend="espgs"/> -->, and
-    an <xref linkend="server-mail"/> (that provides a
-    <command>sendmail</command> command)</para>
+    (for GSSAPI biblioteker),
+    <xref linkend="gs"/><!-- or <xref linkend="espgs"/> -->, og
+    en <xref linkend="server-mail"/> (som gir en
+    <command>sendmail</command> kommando)</para>
 
-    <para><application>CVS</application> will invoke a default text editor to
-    create a commit message if the <parameter>-m "Commit message"</parameter>
-    parameter was not used when changes are committed to a repository.
-    <application>CVS</application> looks for the following text editors, in the
-    order shown below, during configuration to determine the default. This
-    default can always be overridden by the <envar>CVSEDITOR</envar> or
-    <envar>EDITOR</envar> environment variables and can be specified directly
-    by passing the <option>--with-editor=<replaceable>&lt;desired text
-    editor&gt;</replaceable></option> parameter to the
-    <command>configure</command> script.</para>
+    <para><application>CVS</application> vil påkalle en standard tekstredigerer for å
+    opprette en commit melding hvis <parameter>-m "Commit message"</parameter>
+    parameter ble ikke brukt når endringer er sendt inn til et depot.
+    <application>CVS</application> ser etter følgende tekstredigerere, i
+    rekkefølgen vist nedenfor under konfigurasjonen for å bestemme standarden. Denne
+    standarden kan alltid overstyres av <envar>CVSEDITOR</envar> eller
+    <envar>EDITOR</envar> miljøvariabler og kan spesifiseres direkte
+    ved å sende <option>--with-editor=<replaceable>&lt;ønsket 
+    tekstredigerer&gt;</replaceable></option> parameteren til
+    <command>configure</command> skriptet.</para>
 
     <itemizedlist spacing='compact'>
       <listitem>
@@ -103,37 +103,37 @@
     </itemizedlist>
 
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/cvs"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of CVS</title>
+    <title>Installasjon av CVS</title>
 
-    <para>By default <application>CVS</application> is statically linked
-    against the <application>Zlib</application> library included in its source
-    tree. This makes it exposed to possible security vulnerabilities in that
-    library. If you want to modify <application>CVS</application> to use the
-    system shared <application>Zlib</application> library, apply the following
-    patch:</para>
+    <para>Som standard <application>CVS</application> er statisk koblet
+    mot <application>Zlib</application> bibliotek inkludert i
+    kildetreet. Dette gjør den utsatt for mulige sikkerhetssårbarheter i det
+    biblioteket. Hvis du ønsker å endre <application>CVS</application> til å bruke
+    systemdelte <application>Zlib</application> biblioteket, bruk følgende
+    oppdatering:</para>
 
 <screen><userinput>patch -Np1 -i ../cvs-&cvs-version;-zlib-1.patch</userinput></screen>
 
-    <para>Now fix some conflicts with newer libraries and programs:</para>
+    <para>Løs nå noen konflikter med nyere biblioteker og programmer:</para>
 
 <screen><userinput>sed -i -e 's/getline /get_line /' lib/getline.{c,h} &amp;&amp;
 sed -i -e 's/^@sp$/&amp; 1/'          doc/cvs.texinfo &amp;&amp;
 touch doc/*.pdf</userinput></screen>
 
-    <para>Install <application>CVS</application> by running
-    the following commands:</para>
+    <para>Installer <application>CVS</application> ved å kjøre
+    følgende kommandoer:</para>
 
 <screen><userinput>./configure --prefix=/usr --docdir=/usr/share/doc/cvs-&cvs-version; &amp;&amp;
 make</userinput></screen>
 
-    <para>If you wish to create HTML or text docs from the
-    documentation source files, issue the following command:</para>
+    <para>Hvis du ønsker å lage HTML eller tekst dokumenter fra
+    dokumentasjonskildefiler, utfør følgende kommando:</para>
 
 <screen><userinput>make -C doc html txt</userinput></screen>
 
@@ -155,17 +155,17 @@ make</userinput></screen>
     -e 's/g=rw,o=r$/g=r,o=r/' \
     -i src/sanity.sh</userinput></screen>-->
 
-    <para>This package does not come with a working test suite.</para>
+    <para>Denne pakken kommer ikke med en fungerende testpakke.</para>
 
-    <para>Now, as the <systemitem class="username">root</systemitem> user:</para>
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role='root'><userinput>make install &amp;&amp;
 make -C doc install-pdf &amp;&amp;
 install -v -m644 FAQ README /usr/share/doc/cvs-&cvs-version;</userinput></screen>
 
-    <para>If you created any additional documentation, install it by issuing
-    the following commands as the
-    <systemitem class="username">root</systemitem> user:</para>
+    <para>Hvis du opprettet ytterligere dokumentasjon, installer den ved å utstede
+    følgende kommandoer som
+    <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role='root'><userinput>install -v -m644 doc/*.txt /usr/share/doc/cvs-&cvs-version;                   &amp;&amp;
 install -v -m755 -d        /usr/share/doc/cvs-&cvs-version;/html/cvs{,client} &amp;&amp;
@@ -177,23 +177,23 @@ install -v -m644 doc/cvsclient.html/* \
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Kommandoforklaringer</title>
 
     <para>
-      <option>--with-rsh=ssh</option>: Use this switch to enable
-      <command>ssh</command> as the default remote shell program.
+      <option>--with-rsh=ssh</option>: Bruk denne bryteren for å aktivere
+      <command>ssh</command> som standard eksternt skallprogram.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring CVS</title>
+    <title>Konfigurere CVS</title>
 
     <sect3 id="cvs-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para><filename>~/.cvsrc</filename>, <filename>~/.cvswrappers</filename>,
-      and <filename>~/.cvspass</filename>.</para>
+      og <filename>~/.cvspass</filename>.</para>
 
       <indexterm zone="cvs cvs-config">
         <primary sortas="e-AA.cvsrc">~/.cvsrc</primary>
@@ -210,51 +210,51 @@ install -v -m644 doc/cvsclient.html/* \
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
-      <para><filename>~/.cvsrc</filename> is the main
-      <application>CVS</application> configuration file.
-      This file is used by users to specify defaults for different
-      <command>cvs</command> commands. For example, to make all
-      <command>cvs diff</command> commands run with <option>-u</option>, a user
-      would add <option>diff -u</option> to their <filename>.cvsrc</filename>
-      file.</para>
+      <para><filename>~/.cvsrc</filename> er 
+      <application>CVS</application> hovedkonfigurasjonsfil.
+      Denne filen brukes av brukere til å spesifisere standarder for forskjellige
+      <command>cvs</command> kommandoer. For eksempel å gjøre alle
+      <command>cvs diff</command> kommandoer kjørt med <option>-u</option>, en bruker
+      vil legge til <option>diff -u</option> til deres <filename>.cvsrc</filename>
+      fil.</para>
 
-      <para><filename>~/.cvswrappers</filename> specifies wrappers to be used in
-      addition to those specified in the <filename>CVSROOT/cvswrappers</filename>
-      file in the repository.</para>
+      <para><filename>~/.cvswrappers</filename> spesifiserer innpakninger som skal brukes i
+      tillegg til de som er spesifisert i <filename>CVSROOT/cvswrappers</filename>
+      filen i depoet.</para>
 
-      <para><filename>~/.cvspass</filename> contains passwords used to complete
-      logins to servers.</para>
+      <para><filename>~/.cvspass</filename> inneholder passord som brukes til å fullføre
+      pålogging til servere.</para>
 
     </sect3>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>cvs, cvsbug, and rcs2log</seg>
-        <seg>None</seg>
-        <seg>/usr/share/cvs and /usr/share/doc/cvs-&cvs-version;</seg>
+        <seg>cvs, cvsbug, og rcs2log</seg>
+        <seg>Ingen</seg>
+        <seg>/usr/share/cvs og /usr/share/doc/cvs-&cvs-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="cvs-prog">
         <term><command>cvs</command></term>
         <listitem>
-          <para>is the main program file for the concurrent versions system.</para>
+          <para>er hovedprogramfilen for gledende versjonssystem.</para>
           <indexterm zone="cvs cvs-prog">
             <primary sortas="b-cvs">cvs</primary>
           </indexterm>
@@ -264,8 +264,8 @@ install -v -m644 doc/cvsclient.html/* \
       <varlistentry id="cvsbug">
         <term><command>cvsbug</command></term>
         <listitem>
-          <para>is used to send problem reports about <application>CVS</application>
-          to a central support site.</para>
+          <para>brukes til å sende problemrapporter om <application>CVS</application>
+          til en sentral støtteside.</para>
           <indexterm zone="cvs cvsbug">
             <primary sortas="b-cvsbug">cvsbug</primary>
           </indexterm>
@@ -275,8 +275,8 @@ install -v -m644 doc/cvsclient.html/* \
       <varlistentry id="rcs2log">
         <term><command>rcs2log</command></term>
         <listitem>
-          <para>is a symlink to the contributed RCS to Change Log
-          generator.</para>
+          <para>er en symbolkobling til bidratt RCS til endringslogg
+          generatoren.</para>
           <indexterm zone="cvs rcs2log">
             <primary sortas="b-rcs2log">rcs2log</primary>
           </indexterm>
