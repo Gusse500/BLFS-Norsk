@@ -24,70 +24,70 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to DVB-Apps</title>
+    <title>Introduksjon til DVB-Apps</title>
 
     <para>
-      The <application>DVB-Apps</application> package contains a collection of
-      command line utilities for controlling and using a digital television
-      card/chip installed (possibly through a USB port) on your computer. These
-      are useful for scanning to make an index of the available channels, tuning
-      the chip to a chosen station or recording the channel to a file on your
-      computer so you can watch it at a later date.
+      <application>DVB-Apps</application> pakken inneholder en samling av
+      kommandolinjeverktøy for å kontrollere og bruke et digital-TV
+      kort/brikke installert (eventuelt gjennom en USB port) på datamaskinen din. Disse
+      er nyttige for skanning for å lage en indeks over tilgjengelige kanaler, stille inn
+      brikken til en valgt stasjon eller ta opp kanalen til en fil på din
+      datamaskin slik at du kan se den på et senere tidspunkt.
     </para>
 
     &lfs71_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&dvb-apps-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&dvb-apps-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&dvb-apps-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&dvb-apps-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &dvb-apps-md5sum;
+          Nedlasting MD5 sum: &dvb-apps-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &dvb-apps-size;
+          Nedlastingsstørrelse: &dvb-apps-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &dvb-apps-buildsize;
+          Estimert diskplass som kreves: &dvb-apps-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &dvb-apps-time;
+          Estimert byggetid: &dvb-apps-time;
         </para>
       </listitem>
     </itemizedlist>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/dvb-apps"/>
+      Brukernotater: <ulink url="&blfs-wiki;/dvb-apps"/>
     </para>
   </sect2>
 
   <sect2 role="kernel" id="dvb-apps-kernel">
-    <title>Kernel Configuration</title>
+    <title>Kjernekonfigurasjon</title>
 
     <para>
-      There are many TV chips available so it is not possible to give guidance
-      on the kernel config for all of them. <command>lspci</command> from
-      <xref linkend="pciutils"/> and Goggle are your friends. One possible
-      gotcha is that some pci cards (such as the <ulink
+      Det er mange TV-brikker tilgjengelig så det er ikke mulig å gi veiledning
+      for kjernekonfigurasjonen for dem alle. <command>lspci</command> fra
+      <xref linkend="pciutils"/> og Goggle er vennene dine. En mulighet
+      er at noen pci-kort (som f.eks <ulink
       url="http://www.amazon.co.uk/Hauppauge-WinTV-Nova-digital-tuner/dp/B000I1RHWA">
-      Hauppauge Nova T 500</ulink>) present themselves to the motherboard as a
-      USB controller and the TV chip on the card communicates with the
-      motherboard via this USB interface.
+      Hauppauge Nova T 500</ulink>) presentere seg for hovedkortet som en
+      USB kontroller og TV-brikken på kortet kommuniserer med
+      hovedkortet via dette USB grensesnittet.
     </para>
 
 <screen>General setup  ---&gt;
@@ -115,8 +115,8 @@ Device Drivers  ---&gt;
     (as required depending on your hardware)</screen>
 
     <para>
-      Select the appropriate sub-options that appear when the above options are
-      selected and recompile your kernel.
+      Velg de aktuelle underalternativene som vises når alternativene ovenfor er
+      valgt og kompiler kjernen på nytt.
     </para>
 
     <indexterm zone="dvb-apps dvb-apps-kernel">
@@ -125,11 +125,11 @@ Device Drivers  ---&gt;
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of DVB-Apps</title>
+    <title>Installasjon av DVB-Apps</title>
 
     <para>
-      Install <application>DVB-Apps</application> by running the following
-      commands:
+      Installer <application>DVB-Apps</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>sed -i 's/ $(lib_name).a//' Make.rules &amp;&amp;
@@ -137,33 +137,33 @@ sed -i 's/\.a/.so/g' test/*/Makefile &amp;&amp;
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -i 's/ $(lib_name).a//' Make.rules</command> and
-      <command>sed -i 's/\.a/.so/g' test/*/Makefile</command>: These seds
-      disable compiling the static libraries.
+      <command>sed -i 's/ $(lib_name).a//' Make.rules</command> og
+      <command>sed -i 's/\.a/.so/g' test/*/Makefile</command>: Disse sedene
+      deaktiver kompilering av statiske biblioteker.
     </para>
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring DVB-Apps</title>
+    <title>Konfigurere DVB-Apps</title>
 
     <sect3 id="dvb-apps-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
       <para>
-        <filename>~/.tzap/channels.conf</filename> and
+        <filename>~/.tzap/channels.conf</filename> og
         <filename>/etc/channels.conf</filename>.
       </para>
 
@@ -177,21 +177,21 @@ make</userinput></screen>
       </indexterm>
     </sect3>
 
-    <sect3><title>Configuration Information</title>
+    <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        For a user to be able to use the device files in /dev the simplest
-        solution is to make the user part of the video group. As the
-        <systemitem class="username">root</systemitem> user:
+        For at en bruker skal kunne bruke enhetsfilene i /dev er det enkleste
+        løsningen er å gjøre brukeren til en del av videogruppen. Som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>usermod -a -G video &lt;USERNAME&gt; </userinput></screen>
 
       <para>
-        Create a channels.conf file listing the channels available from your
-        local transmitter. If it's a terrestrial transmitter there should be a
-        file with its details in /usr/share/dvb/dvb-t. If it's a satellite the
-        file should be in /usr/share/dvb/dvb-s.
+        Opprett en channels.conf fil som viser kanalene som er tilgjengelige fra din
+        lokale sender. Hvis det er en bakkenettsender, bør det være en
+        fil med detaljene i /usr/share/dvb/dvb-t. Hvis det er en satellitt
+        filen skal være i /usr/share/dvb/dvb-s.
       </para>
 
 <screen><userinput>scan /usr/share/dvb/dvb-t/uk-WinterHill > channels.conf &amp;&amp;
@@ -199,9 +199,9 @@ mkdir -p ~/.tzap &amp;&amp;
 cp channels.conf ~/.tzap</userinput></screen>
 
       <para>
-        If that went Ok and you saw some familiar TV channels listed in your
-        terminal, as the <systemitem class="username">root</systemitem> user
-        copy it to a system wide location:
+        Hvis det gikk OK og du så noen kjente TV-kanaler oppført i din
+        terminal, som <systemitem class="username">root</systemitem> bruker
+        kopier den til en systemomfattende plassering:
       </para>
 
 <screen role="root"><userinput>cp channels.conf /etc/channels.conf</userinput></screen>
@@ -209,30 +209,30 @@ cp channels.conf ~/.tzap</userinput></screen>
   </sect2>
 
   <sect2 role="using">
-    <title>Using DVB-Apps</title>
+    <title>Bruke DVB-Apps</title>
 
     <para>
-      To record a channel to a file:
+      For å ta opp en kanal til en fil:
     </para>
 
 <screen><userinput>gnutv -out file bbc1.mpeg "BBC ONE"</userinput></screen>
 
     <para>
-      If you give it ten seconds or so to buffer you can then start to watch the
-      file with a video player such as <command>xine</command> or
-      <command>mplayer</command>. The advantage of watching TV via a file in
-      this way is that it allows you to pause playback and rewind if you want,
-      plus you can watch the file again later.
+      Hvis du gir den ti sekunder eller så til å bufre, kan du begynne å se på
+      filen med en videospiller som f.eks <command>xine</command> eller
+      <command>mplayer</command>. Fordelen med å se på TV via en fil på
+      denne måten er at den lar deg pause avspillingen og spole tilbake hvis du vil,
+      pluss at du kan se filen igjen senere.
     </para>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
@@ -252,14 +252,14 @@ cp channels.conf ~/.tzap</userinput></screen>
           lsdvb,
           scan,
           szap,
-          tzap and
+          tzap og
           zap,
         </seg>
         <seg>
           libdvbapi.so,
           libdvbcfg.so,
           libdvben50221.so,
-          libdvbsec.so and
+          libdvbsec.so og
           libesg.so,
           libucsi.so
         </seg>
@@ -269,14 +269,14 @@ cp channels.conf ~/.tzap</userinput></screen>
           /usr/include/libdvben50221,
           /usr/include/libdvbsec,
           /usr/include/libesg,
-          /usr/include/libucsi and
+          /usr/include/libucsi og
           /usr/share/dvb
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -284,8 +284,8 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>atsc_epg</command></term>
         <listitem>
           <para>
-            prints out the next three hours worth of programs on a given
-            frequency (for ATSC only)
+            skriver ut de neste tre timene med programmer på en gitt
+            frekvens (kun for ATSC)
           </para>
           <indexterm zone="dvb-apps atsc_epg">
             <primary sortas="b-atsc_epg">atsc_epg</primary>
@@ -297,7 +297,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>av7110_loadkeys</command></term>
         <listitem>
           <para>
-            is a utiltity to load IR remote keymaps into an av7110 based card
+            er et verktøy for å laste inn IR fjerntastaturer til et av7110 basert kort
           </para>
           <indexterm zone="dvb-apps av7110_loadkeys">
             <primary sortas="b-av7110_loadkeys">av7110_loadkeys</primary>
@@ -309,7 +309,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>azap</command></term>
         <listitem>
           <para>
-            is a tuning utility for ATSC
+            er et tuningverktøy for ATSC
           </para>
           <indexterm zone="dvb-apps azap">
             <primary sortas="b-azap">azap</primary>
@@ -321,7 +321,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>czap</command></term>
         <listitem>
           <para>
-            is a tuning utilities for DVB-C (cable)
+            er et tuningverktøy for DVB-C (kabel)
           </para>
           <indexterm zone="dvb-apps czap">
             <primary sortas="b-czap">czap</primary>
@@ -333,7 +333,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>dib3000-watch</command></term>
         <listitem>
           <para>
-            is a tool to monitor DIB3000 demodulators
+            er et verktøy for å overvåke DIB3000 demodulatorer
           </para>
           <indexterm zone="dvb-apps dib3000-watch">
             <primary sortas="b-dib3000-watch">dib3000-watch</primary>
@@ -345,7 +345,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>dst_test</command></term>
         <listitem>
           <para>
-            is a utility for DST based cards
+            er et verktøy for DST baserte kort
           </para>
           <indexterm zone="dvb-apps dst_test">
             <primary sortas="b-dst_test">dst_test</primary>
@@ -357,8 +357,8 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>dvbdate</command></term>
         <listitem>
           <para>
-            is a utility that can read date time information from the currently
-            tuned multiplex
+            er et verktøy som kan lese informasjon om dato og klokkeslett fra
+            innstilte multipleks som er aktiv
           </para>
           <indexterm zone="dvb-apps dvbdate">
             <primary sortas="b-dvbdate">dvbdate</primary>
@@ -370,9 +370,9 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>dvbnet</command></term>
         <listitem>
           <para>
-            is a utility to control digital data network interfaces, a DVB
-            network interface manager (IP over DVB) for streaming programs from
-            one computer to another over a network.
+            er et verktøy for å kontrollere digitale datanettverksgrensesnitt, en DVB
+            nettverksgrensesnitt behandler (IP over DVB) for streaming av programmer fra
+            en datamaskin til en annen over et nettverk.
           </para>
           <indexterm zone="dvb-apps dvbnet">
             <primary sortas="b-dvbnet">dvbnet</primary>
@@ -384,7 +384,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>dvbscan</command></term>
         <listitem>
           <para>
-            is another frequency scanning tool used to generate channel lists
+            er et annet frekvensskanningsverktøy som brukes til å generere kanallister
           </para>
           <indexterm zone="dvb-apps dvbscan">
             <primary sortas="b-dvbscan">dvbscan</primary>
@@ -396,8 +396,8 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>dvbtraffic</command></term>
         <listitem>
           <para>
-            is a utility to monitor traffic on a digital device and perform PID
-            analysis of currently tuned multiplex
+            er et verktøy for å overvåke trafikk på en digital enhet og utføre PID
+            analyse av innstilt multipleks som er aktiv
           </para>
           <indexterm zone="dvb-apps dvbtraffic">
             <primary sortas="b-dvbtraffic">dvbtraffic</primary>
@@ -409,8 +409,8 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>femon</command></term>
         <listitem>
           <para>
-            is a frontend monitor, it monitors the tuning status on a digital TV
-            device
+            er en grensesnittskjerm, den overvåker innstillingsstatusen på en digital TV
+            enhet
           </para>
           <indexterm zone="dvb-apps femon">
             <primary sortas="b-femon">femon</primary>
@@ -422,7 +422,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>gnutv</command></term>
         <listitem>
           <para>
-            is a utility to tune and stream your TV
+            er et verktøy for å stille inn og strømme din TV
           </para>
           <indexterm zone="dvb-apps gnutv">
             <primary sortas="b-gnutv">gnutv</primary>
@@ -434,7 +434,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>gotox</command></term>
         <listitem>
           <para>
-            is a utility for calculating the position of satellites
+            er et verktøy for å beregne posisjonen til satellitter
           </para>
           <indexterm zone="dvb-apps gotox">
             <primary sortas="b-gotox">gotox</primary>
@@ -446,7 +446,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>lsdvb</command></term>
         <listitem>
           <para>
-            is a simple utility to list PCI/PCIe DVB devices
+            er et enkelt verktøy for å liste PCI/PCIe DVB enheter
           </para>
           <indexterm zone="dvb-apps lsdvb">
             <primary sortas="b-lsdvb">lsdvb</primary>
@@ -458,7 +458,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>scan</command></term>
         <listitem>
           <para>
-            is a utility to generate channel lists
+            er et verktøy for å generere kanallister
           </para>
           <indexterm zone="dvb-apps scan">
             <primary sortas="b-scan">scan</primary>
@@ -470,7 +470,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>szap</command></term>
         <listitem>
           <para>
-            is a tool to tune a satellite DVB receiver
+            er et verktøy for å stille inn en satellitt DVB mottaker
           </para>
           <indexterm zone="dvb-apps szap">
             <primary sortas="b-szap">szap</primary>
@@ -482,7 +482,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>tzap</command></term>
         <listitem>
           <para>
-            is a tool to tune a terrestrial DVB receiver
+            er et verktøy for å stille inn en bakkenett DVB mottaker
           </para>
           <indexterm zone="dvb-apps tzap">
             <primary sortas="b-tzap">tzap</primary>
@@ -494,7 +494,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><command>zap</command></term>
         <listitem>
           <para>
-            just tunes a digital device (and is really intended for developers)
+            stiller bare inn en digital enhet (og er egentlig ment for utviklere)
           </para>
           <indexterm zone="dvb-apps zap">
             <primary sortas="b-zap">zap</primary>
@@ -506,7 +506,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><filename class="libraryfile">libdvbapi.so</filename></term>
         <listitem>
           <para>
-            is an interface library for digital TV devices
+            er et grensesnittbibliotek for digitale TV enheter
           </para>
           <indexterm zone="dvb-apps libdvbapi">
             <primary sortas="c-libdvbapi">libdvbapi.so</primary>
@@ -518,8 +518,8 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><filename class="libraryfile">libdvbcfg.so</filename></term>
         <listitem>
           <para>
-            contains functions that parse/create digital TV channel
-            configuration files
+            inneholder funksjoner som analyserer/oppretter digital TV kanal
+            konfigurasjonsfiler
           </para>
           <indexterm zone="dvb-apps libdvbcfg">
             <primary sortas="c-libdvbcfg">libdvbcfg.so</primary>
@@ -531,8 +531,8 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><filename class="libraryfile">libdvben50221.so</filename></term>
         <listitem>
           <para>
-            contains functions that implement the CENELEC (European Committee
-            for Electrotechnical Standardization) EN 50221 CAM stack
+            inneholder funksjoner som implementerer CENELEC (European Committee
+            for elektroteknisk standardisering) EN 50221 CAM-stabel
           </para>
           <indexterm zone="dvb-apps libdvben50221">
             <primary sortas="c-libdvben50221">libdvben50221.so</primary>
@@ -544,7 +544,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><filename class="libraryfile">libdvbsec.so</filename></term>
         <listitem>
           <para>
-            is a library for Satellite Equipment Control operations
+            er et bibliotek for satellittutstyrskontrolloperasjoner
           </para>
           <indexterm zone="dvb-apps libdvbsec">
             <primary sortas="c-libdvbsec">libdvbsec.so</primary>
@@ -556,7 +556,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><filename class="libraryfile">libesg.so</filename></term>
         <listitem>
           <para>
-            contains functions for an Electronic Service Guide parser
+            inneholder funksjoner for en elektronisk tjenesteveiledning analysator
           </para>
           <indexterm zone="dvb-apps libesg">
             <primary sortas="c-libesg">libesg.so</primary>
@@ -568,7 +568,7 @@ cp channels.conf ~/.tzap</userinput></screen>
         <term><filename class="libraryfile">libucsi.so</filename></term>
         <listitem>
           <para>
-            is a Fast MPEG2 Transport Stream SI table parsing library
+            er et rask MPEG2 transport strømme SI tabell analysator bibliotek
           </para>
           <indexterm zone="dvb-apps libucsi">
             <primary sortas="c-libucsi">libucsi.so</primary>
