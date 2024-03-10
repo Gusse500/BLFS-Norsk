@@ -10,11 +10,11 @@
   <!ENTITY firefox-size          "316 MB">
   <!-- NB with stylo, much of the build uses rust, and therefore cargo files.
     But the extra cached cargo files, if any, seem to be minimal -->
-  <!ENTITY firefox-buildsize     "5.2 GB (186 MB installed) without tests">
+  <!ENTITY firefox-buildsize     "5.2 GB (186 MB installert) uten tester">
   <!-- editors: with ff63 and rust-1.29, ./mach build -j4 is probably the
    most practical way to get a timing on a machine with more cores, if taking
    cores offline is not practical. If in doubt, round up -->
-  <!ENTITY firefox-time          "28 SBU (on a 4-core machine) without tests">
+  <!ENTITY firefox-time          "28 SBU (på en 4-kjerne maskin) uten tester">
 ]>
 
 <sect1 id="firefox-legacy" xreflabel="Firefox-&JS78-version; Legacy">
@@ -28,55 +28,55 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Firefox Legacy</title>
+    <title>Introduksjon til Firefox Legacy</title>
 
     <para>
-      <application>Firefox</application> is a stand-alone browser based on the
-      <application>Mozilla</application> codebase.
+      <application>Firefox</application> er en frittstående nettleser basert på
+      <application>Mozilla</application> kodebase.
     </para>
 
-    <para>This package is known to build and work properly using an LFS-10.1
-    platform but cannot be built on systems using glibc-2.34.</para>
+    <para>Denne pakken er kjent for å bygge og fungere riktig ved å bruke en LFS-10.1
+    plattform, men kan ikke bygges på systemer som bruker glibc-2.34.</para>
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&firefox-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&firefox-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&firefox-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&firefox-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &firefox-md5sum;
+          Nedlasting MD5 sum: &firefox-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &firefox-size;
+          Nedlastingsstørrelse: &firefox-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &firefox-buildsize;
+          Estimert diskplass som kreves: &firefox-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &firefox-time;
+          Estimert byggetid: &firefox-time;
         </para>
       </listitem>
     </itemizedlist>
 
-<!--<bridgehead renderas="sect3">Additional Downloads</bridgehead>
+<!--<bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/firefox-&firefox-version;esr-rust1520-1.patch"/>
         </para>
       </listitem>
@@ -84,36 +84,36 @@
 
     <warning>
       <para>
-        This is the old series of firefox ESR releases, the final release is
-        planned to be 78.15.0 in October 2021.  This page is expected to be
-        removed in November 2021 when firefox-91.3 is released.
+        Dette er den gamle serien med firefox ESR utgivelser, den endelige utgivelsen er
+        planlagt å være 78.15.0 i oktober 2021. Denne siden forventes å være
+        fjernet i november 2021 når firefox-91.3 er utgitt.
       </para>
 
       <para>
-        If you are using glibc-2.34 or later, this old version of firefox will
-        not be usable and you should use <xref linkend="firefox"/>.
+        Hvis du bruker glibc-2.34 eller nyere, vil denne gamle versjonen av firefox
+        ikke være brukbar og du bør bruke <xref linkend="firefox"/>.
       </para>
 
       <para>
-        There are only two reasons to use this version: either you want to use
-        ftp from the browser and do not yet have a workaround, or you have a
-        system which for unexplained reasons cannot compile current firefox
-        (there is now a patch to work around that).
+        Det er bare to grunner til å bruke denne versjonen: enten du vil bruke
+        ftp fra nettleseren og har ennå ikke en løsning, eller du har en
+        system som av uforklarlige årsaker ikke kan kompilere gjeldende firefox
+        (det er nå en oppdatering for å omgå det).
       </para>
     </warning>
 
     <note>
       <para>
-        The directory name is firefox-&JS78-version;
+        Mappenavnet er firefox-&JS78-version;
       </para>
 
       <para>
-        Extracting the tarball
-        will reset the permissions of the current directory to 0755 if you
-        have permission to do that. If you do this in a directory where
-        the sticky bit is set, such
-        as <filename class="directory">/tmp</filename> it will end with error
-        messages:
+        Pakke ut tarballen
+        vil tilbakestille tillatelsene til gjeldende mappe til 0755 hvis du
+        har tillatelse til å gjøre det. Hvis du gjør dette i en mappe hvor
+        den klebrige biten er satt, slik
+        som <filename class="directory">/tmp</filename> vil det ende med 
+        feilmeldinger:
       </para>
 
 <literallayout>tar: .: Cannot utime: Operation not permitted
@@ -122,53 +122,53 @@ tar: Exiting with failure status due to previous errors
 </literallayout>
 
       <para>
-        This does finish with non-zero status, but it does
-        <emphasis>NOT</emphasis> mean there is a real problem.
-        Do not untar as the <systemitem class="username">root</systemitem> user
-        in a directory where the sticky bit is set - that will unset it.
+        Dette avsluttes med ikke-null status, men det betyr
+        <emphasis>Ikke</emphasis> at det er et reelt problem.
+        Ikke untar som <systemitem class="username">root</systemitem> bruker
+        i en mappe der sticky biten er satt - det vil deaktivere den.
       </para>
 
       <para>
-        As with other large packages which use C++ (or rust), the SBU times
-        to build this vary more widely than you might expect. The build times
-        will increase significantly if your machine has to swap.
+        Som med andre store pakker som bruker C++ (eller rust), er SBU tiden
+        for å bygge dette varierende mer enn du kanskje forventer. Byggetidene
+        vil øke betydelig hvis maskinen din må bruke vekselminnet.
       </para>
 
       <para>
-        Although upstream prefer to use <application>PulseAudio</application>,
-        for the moment <application>Alsa</application> can still be used. Both
-        may need runtime configuration to get sound working.
+        Selv om oppstrøms foretrekker å bruke <application>PulseAudio</application>,
+        for øyeblikket <application>Alsa</application> kan fortsatt brukes. Begge
+        kan trenge kjøretidskonfigurasjon for å få lyden til å fungere.
       </para>
     </note>
 
-    <bridgehead renderas="sect3">Firefox Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Firefox Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="autoconf213"/>,
       <xref linkend="cbindgen"/>,
       <xref linkend="dbus-glib"/>,
-      both <xref linkend="gtk3"/> and
+      både <xref linkend="gtk3"/> og
       <xref linkend="gtk2"/>,
       <xref linkend="libnotify"/>,
-      <xref linkend="llvm"/> (clang, used for bindgen even if using gcc),
+      <xref linkend="llvm"/> (clang, brukt for bindgen selv om du bruker gcc),
       <xref linkend="nodejs"/>,
       <xref linkend="nss"/>,
       <xref linkend="pulseaudio"/>
-      (or
-      <xref linkend="alsa-lib"/> if you edit the mozconfig;
-        now deprecated by mozilla), in either case please read the
-        Configuration Information,
+      (eller
+      <xref linkend="alsa-lib"/> hvis du redigerer mozconfig;
+        nå avviklet av mozilla), i begge tilfeller vennligst les
+        Konfigurasjonsinformasjon,
       <!-- rustc is required by cbindgen so not needed here
       <xref linkend="rust"/>,-->
-      <xref linkend="python3"/> (rebuilt after installing <xref linkend="sqlite"/>),
+      <xref linkend="python3"/> (gjenoppbygget etter installasjon <xref linkend="sqlite"/>),
       <xref linkend="startup-notification"/>,
       <xref linkend="unzip"/>,
-      <xref linkend="yasm"/>, and
+      <xref linkend="yasm"/>, og
       <xref linkend="zip"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="icu"/>,
       <xref linkend="libevent"/>,
@@ -178,17 +178,17 @@ tar: Exiting with failure status due to previous errors
 
     <note>
       <para>
-        If you don't install recommended dependencies, then internal copies of
-        those packages will be used. They might be tested to work, but they can
-        be out of date or contain security holes.
+        Hvis du ikke installerer anbefalte avhengigheter, så blir interne kopier av
+        disse pakkene brukt. De kan bli testet for å fungere, men de kan
+        være utdatert eller inneholde sikkerhetshull.
       </para>
     </note>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="curl"/>,
       <xref linkend="doxygen"/>,
-      <xref role="runtime" linkend="ffmpeg"/> (runtime, to play mov, mp3 or mp4 files),
+      <xref role="runtime" linkend="ffmpeg"/> (kjøretid, for å spille mov, mp3 eller mp4 filer),
       <!--      <phrase revision="sysv"><ulink url="https://sourceforge.net/projects/liboauth/files/">liboauth</ulink></phrase> -->
       <xref linkend="liboauth"/>,
       <xref linkend="openjdk"/>,
@@ -199,22 +199,22 @@ tar: Exiting with failure status due to previous errors
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/firefox"/>
+      Brukernotater: <ulink url="&blfs-wiki;/firefox"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Firefox Legacy</title>
+    <title>Installasjon av Firefox Legacy</title>
 
     <para>
-      The configuration of <application>Firefox</application> is accomplished
-      by creating a <filename>mozconfig</filename> file containing the desired
-      configuration options. A default <filename>mozconfig</filename> is
-      created below. To see the entire list of available configuration options
-      (and an abbreviated description of some of them), issue <command>./mach
-      configure &amp;&amp; ./configure --help | less</command>. You may also
-      wish to review the entire file and uncomment any other desired options.
-      Create the file by issuing the following command:
+      Konfigurasjonen av <application>Firefox</application> er oppnådd
+      ved å lage en <filename>mozconfig</filename> fil som inneholder ønsket
+      konfigurasjonsalternativer. En standard <filename>mozconfig</filename> er
+      opprettet nedenfor. For å se hele listen over tilgjengelige konfigurasjonsalternativer
+      (og en forkortet beskrivelse av noen av dem), utsted <command>./mach
+      configure &amp;&amp; ./configure --help | less</command>. Du kan også
+      se gjennom hele filen og fjerne kommentarer til andre ønskede alternativer.
+      Opprett filen ved å gi følgende kommando:
     </para>
 
 <screen><userinput>cat &gt; mozconfig &lt;&lt; "EOF"
@@ -304,22 +304,22 @@ mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/firefox-build-dir</literal>
 EOF</userinput></screen>
 
     <para>
-      Compile <application>Firefox</application> by issuing the following
-      commands:
+      Kompilere <application>Firefox</application> ved å utstede følgende
+      kommandoer:
     </para>
 
 <!--<para>
-      Apply a patch that prevent a crash when opening HTML videos if
-      compiling against rust-1.52.0 or higher:
+      Bruk en oppdatering som forhindrer krasj når du åpner HTML videoer hvis
+      kompilering mot rust-1.52.0 eller høyere:
     </para>
 
 <screen><userinput>patch -Np1 -i ../firefox-&firefox-version;esr-rust1520-1.patch</userinput></screen>-->
 
     <para>
-      In the esr version of firefox-78, the code to ensure that add-ons
-      are signed by the trusted root has been disabled, presumably for
-      organizations which require their own add-ons. To enable it as an
-      added security measure issue the following command:
+      I esr versjonen av firefox-78, koden for å sikre at programtillegg
+      er signert av den pålitelige roten har blitt deaktivert, antagelig for
+      organisasjoner som trenger egne programtillegg. For å aktivere det som et
+      ekstra sikkerhetstiltak utsted følgende kommando:
     </para>
 
 <screen><userinput>sed -e 's/Disable/Enable/'            \
@@ -327,18 +327,18 @@ EOF</userinput></screen>
     -i build/mozconfig.common</userinput></screen>
 
     <para>
-      If the geolocation APIs are needed:
+      Hvis geolokaliserings APIene er nødvendige:
     </para>
 
     <note>
       <para>
         <!-- Taken from Arch Linux - an immensely helpful link - Thanks -->
-        The Google and Mozilla API Keys below are specific to LFS. If using
-        these instructions for another distro, or if you intend to distribute
-        binary copies of the software using these instructions, please obtain
-        your own keys following the instructions located at
-        <ulink url="http://www.chromium.org/developers/how-tos/api-keys"/> and
-        <ulink url="https://location.services.mozilla.com/api"/> respectively.
+        Google og Mozilla API nøkler nedenfor er spesifikke for LFS. Hvis du bruker
+        disse instruksjonene for en annen distro, eller hvis du har tenkt å distribuere
+        binære kopier av programvaren ved å bruke disse instruksjonene, hent
+        dine egne nøkler ved å følge instruksjonene på
+        <ulink url="http://www.chromium.org/developers/how-tos/api-keys"/> og
+        <ulink url="https://location.services.mozilla.com/api"/> henholdsvis.
         <!-- BLFS Devs, register an account at Google with your
         @linuxfromscratch.org email address, and I'll make you an administrator
         for the 'Google APIs for LFS' project (where the API and OAuth keys
@@ -375,7 +375,7 @@ esac</userinput></screen>
 <screen><userinput remap="pre">patch -p1 -i ../firefox-&firefox-version;esr-rustc1470-1.patch</userinput></screen>-->
 
     <para>
-      Now invoke the Python script to compile the package.
+      Påkall nå Python skriptet for å kompilere pakken.
     </para>
 
 <screen><userinput>export CC=gcc CXX=g++ &amp;&amp;
@@ -384,24 +384,24 @@ export MOZBUILD_STATE_PATH=${PWD}/mozbuild &amp;&amp;
 ./mach build</userinput></screen>
 
     <para>
-      The <filename>mozconfig</filename> above disables the tests because
-      they use a lot more time and disk space for no obvious benefit. If
-      you have nevertheless enabled them, you can run the tests by executing
-      <command>./mach gtest</command>. This will require a network connection,
-      and to be run from within an Xorg session - there is a popup dialog
-      when it fails to connect to ALSA (that does not create a failed test).
-      One or two tests will fail.  To see the details of the failure(s) you
-      will need to log the output from that command so that you can review it.
+      <filename>mozconfig</filename> ovenfor deaktiverer testene fordi
+      de bruker mye mer tid og diskplass uten noen åpenbar fordel. Hvis
+      du likevel har aktivert dem, kan du kjøre testene ved å kjøre
+      <command>./mach gtest</command>. Dette vil kreve en nettverkstilkobling,
+      og å bli kjørt fra en Xorg økt - det er en sprettopp dialog
+      når den ikke klarer å koble til ALSA (det skaper ikke en mislykket test).
+      En eller to tester vil mislykkes. For å se detaljene om feilen(e) må du
+      logge utdataene fra den kommandoen slik at du kan se gjennom den.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>./mach install</userinput></screen>
 
     <para>
-      Set environment variables back to their values:
+      Sett miljøvariabler tilbake til deres verdier:
     </para>
 
 <screen><userinput>unset CC CXX MOZBUILD_STATE_PATH</userinput></screen>
@@ -409,59 +409,59 @@ export MOZBUILD_STATE_PATH=${PWD}/mozbuild &amp;&amp;
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
 <!--<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/SIOCGSTAMP.xml"/>-->
 
     <para>
-      <command>export CC=gcc CXX=g++ ...</command>: Upstream now prefer
-      <application>clang</application> so that they can use one compiler
-      everywhere. On the X86 architectures <application>clang</application>
-      now appears to support most of the same security-hardening options as
+      <command>export CC=gcc CXX=g++ ...</command>: Oppstrøms foretrekker nå
+      <application>clang</application> slik at de kan bruke én kompilator
+      overalt. På X86 arkitekturene <application>clang</application>
+      ser nå ut til å støtte de fleste av de samme sikkerhetsherdealternativene som
       <application>GCC</application>.
       <!-- supported in llvm-11
       but the newer
       <literal>-fstack-clash-protection</literal> is still not supported.-->
-      With the current versions and the default flags,
-      <application>GCC</application> creates a marginally bigger build but
-      takes typically 2 SBU less time on a 4-core machine using the mozconfig
-      above.
+      Med gjeldende versjoner og standardflagg,
+      <application>GCC</application> skaper et marginalt større bygg, men
+      tar vanligvis 2 SBU mindre tid på en 4-kjerners maskin som bruker mozconfig
+      ovenfor.
     </para>
 
     <para>
-      <command>export MOZBUILD_STATE_PATH=${PWD}/mozbuild</command>: The build
-      is now supposed to tell you that it intends to create <filename
-      class="directory">~/.mozbuild</filename>, and offer you an option to
-      press &lt;ENTER&gt; to accept this, or Ctrl-C to cancel and restart the
-      build after specifying the directory. In practice, the message may not
-      appear until after &lt;ENTER&gt; is keyed, i.e. the build stalls.
+      <command>export MOZBUILD_STATE_PATH=${PWD}/mozbuild</command>: Bygget
+      er nå ment å fortelle deg at den har til hensikt å opprette <filename
+      class="directory">~/.mozbuild</filename>, og tilby deg et alternativ for
+      å trykke &lt;ENTER&gt; for å akseptere dette, eller Ctrl-C for å avbryte og starte bygget på nytt
+      etter å ha spesifisert mappen. I praksis kan det hende at meldingen ikke
+      vises til etter at &lt;ENTER&gt; er trykket, dvs. byggingen stopper.
     </para>
 
     <para>
-      That directory is used for a (probably random) telemetry identifier.
-      Creating this in the build directory, and deleting that after the
-      installation, prevents it being used. If you wish to participate in
-      telemetry, export MOZBUILD_STATE_PATH to point to its default directory.
+      Denne mappen brukes for en (sannsynligvis tilfeldig) telemetriidentifikator.
+      Opprette dette i byggemappen, og slette det etter
+      installasjon, hindrer den i å bli brukt. Hvis du ønsker å delta
+      i telemetri, eksporter MOZBUILD_STATE_PATH for å peke til standardmappen.
     </para>
 
     <para>
       <command>./mach build</command>: <application>Firefox</application>
-      now uses this <application>python</application> script to run the
-      build and install.
+      bruker nå dette <application>python</application> skript til å kjøre
+      byggingen og installeringen.
     </para>
 
     <para>
-      <option>./mach build --verbose</option>: Use this alternative if you
-      need details of which files are being compiled, together with any C or
-      C++ flags being used. But do not add '--verbose' to the install command,
-      it is not accepted there.
+      <option>./mach build --verbose</option>: Bruk dette alternativet hvis du
+      trenger detaljer om hvilke filer som kompileres, sammen med eventuelle C eller
+      C++ flagg som brukes. Men ikke legg til '--verbose' til installeringskommandoen,
+      det er ikke akseptert der.
     </para>
 
     <para>
-      <option>./mach build -jN</option>: The build should, by default, use
-      all the online CPU cores. If using all the cores causes the build to swap
-      because you have insufficient memory, using fewer cores can be faster.
+      <option>./mach build -jN</option>: Byggingen skal som standard bruke
+      alle online tilgjengelige kjerner. Hvis bruk av alle kjernene får bygget til å bruke vekselminnet
+      fordi du har utilstrekkelig minne, kan det gå raskere å bruke færre kjerner.
     </para>
 
 <!--
@@ -484,16 +484,16 @@ export MOZBUILD_STATE_PATH=${PWD}/mozbuild &amp;&amp;
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Firefox</title>
+    <title>Konfigurere Firefox</title>
 
     <para>
-      If you use a desktop environment like <application>Gnome</application> or
-      <application>KDE</application> you may like to create a
-      <filename>firefox.desktop</filename> file so that
-      <application>Firefox</application> appears in the panel's menus. <!--If you
+      Hvis du bruker et skrivebordsmiljø som <application>Gnome</application> eller
+      <application>KDE</application> kan du lage en
+      <filename>firefox.desktop</filename> fil sånn at
+      <application>Firefox</application> vises i panelets menyer. <!--If you
       didn't enable startup-notification in your mozconfig change the
-      StartupNotify line to false.--> As the
-      <systemitem class="username">root</systemitem> user:
+      StartupNotify line to false.--> Som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>mkdir -pv /usr/share/applications &amp;&amp;
@@ -523,25 +523,25 @@ unset MIMETYPE &amp;&amp;
 ln -sfv /usr/lib/firefox/browser/chrome/icons/default/default128.png \
         /usr/share/pixmaps/firefox.png</userinput></screen>
 
-    <sect3><title>Configuration Information</title>
+    <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        The application settings for firefox are accessible by keying
-        <command>about:config</command> in the address bar.
+        Applikasjonsinnstillingene for firefox er tilgjengelige ved å taste
+        <command>about:config</command> i adressefeltet.
       </para>
 
       <para>
-        Occasionally, getting working sound in
-        <application>firefox</application> can be a problem.  Although upstream
-        prefers pulseaudio,
-        on balance using <application>Alsa</application> may be easier.
+        Av og til for å få fungerende lyd
+        <application>firefox</application> kan være et problem. Skjønt oppstrøms
+        foretrekker pulsaudio,
+        å få balanse ved hjelp av <application>Alsa</application> kan være lettere.
       </para>
 
       <para>
-        If you enabled <application>Alsa</application> for sound, you may need
-        to alter one variable to get working sound. If you run
-        <command>firefox</command> from a term and try to play something with
-        sound you might encounter error messages like:
+        Hvis du har aktivert <application>Alsa</application> for lyd, kan det hende du trenger
+         å endre én variabel for å få fungerende lyd. Hvis du kjører
+        <command>firefox</command> fra en terminal og prøv å spille noe med
+        lyd kan du støte på feilmeldinger som:
       </para>
 
       <para>
@@ -550,94 +550,94 @@ ln -sfv /usr/lib/firefox/browser/chrome/icons/default/default128.png \
       </para>
 
       <para>
-        That was on x86_64, on i686 the syscall number is 54. To allow this
-        syscall, in <command>about:config</command> change
-        <command>security.sandbox.content.syscall_whitelist</command> to 16
-        (or 54 if using i686).
+        Det var på x86_64, på i686 er syscall-nummeret 54. For å tillate dette
+        syscall, i <command>about:config</command> endre
+        <command>security.sandbox.content.syscall_whitelist</command> til 16
+        (eller 54 hvis du bruker i686).
       </para>
 
       <para>
-        If you use <command>pulseaudio</command> in a Desktop Environment, it
-        might already be started by that DE.  But if it is not, although
-        firefox-57 managed to start it, firefox-58 did not.  If you run
-        <command>firefox</command> from a term and this problem is present,
-        trying to play sound will
-        encounter error messages warning <literal>Can't get cubeb
+        Hvis du bruker <command>pulseaudio</command> i et skrivebordsmiljø, det
+        kan allerede være startet av det skrivebordsmiljøet. Men hvis det ikke er det, skjønt
+        firefox-57 klarte å starte den, firefox-58 gjorde det ikke. Hvis du kjører
+        <command>firefox</command> fra en terminal og dette problemet er tilstede,
+        prøve å spille av lyd vil
+        støte på feilmeldinger advarsel <literal>Can't get cubeb
         context!</literal>
       </para>
 
     <para>
-      The fix for this is to close firefox, start pulseaudio to check it
-      does start (if not, read the information on Configuring in <xref
-      linkend="pulseaudio"/>) and restart firefox to check it is working.
-      If it now works, add the following to your <filename>~/.xinitrc</filename>:
+      Løsningen for dette er å lukke firefox, starte pulsaudio for å sjekke det
+      starter (hvis ikke, les informasjonen om konfigurering i <xref
+      linkend="pulseaudio"/>) og start firefox på nytt for å sjekke at det fungerer.
+      Hvis det nå fungerer, legg til følgende i din <filename>~/.xinitrc</filename>:
 <phrase revision="sysv">
 <literal>pulseaudio --verbose --log-target=syslog&amp;</literal></phrase>
 <phrase revision="systemd">
 <literal>pulseaudio --verbose --log-target=journald&amp;</literal></phrase>
-        (unfortunately, on some systems this does not work).
+        (dessverre, på noen systemer fungerer ikke dette).
       </para>
 
       <para>
-        You may wish to use multiple profiles within firefox. To do that, invoke
-        firefox as <command>firefox --ProfileManager</command>. You can also
-        check which profile is currently in use from
+        Det kan bruke flere profiler i firefox. For å gjøre det, påkall
+        firefox som <command>firefox --ProfileManager</command>. Du kan også
+        sjekke hvilken profil som er i bruk fra
         <command>about:profiles</command>.
       </para>
 
       <para>
-        Although WebRender (using the GPU for compositing) is not used by
-        default, it now appears to work well on supported hardware (ATI, Nvidia
-        and Intel GPUs with Mesa-18 or later. For an explanation, please see
+        Selv om WebRender (bruker GPU for komposisjon) ikke brukes som
+        standard, ser det nå ut til å fungere bra på støttet maskinvare (ATI, Nvidia
+        og Intel GPUer med Mesa-18 eller nyere. For en forklaring, se
         <ulink
        url="https://hacks.mozilla.org/2017/10/the-whole-web-at-maximum-fps-how-webrender-gets-rid-of-jank/">hacks.mozilla.org</ulink>.
-       The only downside seems to be that on a machine with limited RAM it might
-       use more RAM.
+       Den eneste ulempen ser ut til å være at på en maskin med begrenset RAM kan det hende det
+       bruke mer RAM.
      </para>
 
     <para>
-      To check if WebRender is being used, look in about:support. In the Graphics
-      section Compositing will either show 'Basic' (i.e. not in use) or
-      'WebRender'. To enable it, go to about:config and change gfx.webrender.all
-      to True. You will need to restart firefox.
+      For å sjekke om WebRender brukes, se i about:support. I grafikk
+      seksjonen Compositing vil enten vise 'Basic' (dvs. ikke i bruk) eller
+      'WebRender'. For å aktivere det, gå til about:config og endre gfx.webrender.all
+      til True. Du må starte firefox på nytt.
     </para>
 
     <para>
-      It may be useful to mention the processes from firefox which can appear in
-      <command>top</command> - as well as firefox itself, there may be multiple
-      Web Content processes, and now an RDD Process (Remote Data Decoder) which
-      appears when playing web videos encoded with av1 (libdav1d). If WebRender
-      has been enabled, a GPU Process will also appear when firefox has to
-      repaint (e.g. scrolling, opening a new tab, or playing a video).
+      Det kan være nyttig å nevne prosessene fra firefox som kan dukke opp i
+      <command>top</command> - så vel som firefox selv, kan det være flere
+      nettinnholds prosesser, og nå en RDD prosess (Remote Data Decoder) som
+      vises når du spiller av nettvideoer kodet med av1 (libdav1d). Hvis WebRender
+      har blitt aktivert, vil en GPU prosess også vises når firefox må
+      male på nytt (f.eks. bla, åpne en ny fane eller spille av en video).
     </para>
 
     </sect3>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
           firefox
         </seg>
         <seg>
-          Numerous libraries, browser components, plugins, extensions, and
-          helper modules installed in /usr/lib/firefox
+          Tallrike biblioteker, nettleserkomponenter, programtillegg, utvidelser og
+          hjelpemoduler installert i /usr/lib/firefox
         </seg>
         <seg>
-	  /usr/lib/firefox and /usr/lib/mozilla
+	  /usr/lib/firefox og /usr/lib/mozilla
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -645,8 +645,8 @@ ln -sfv /usr/lib/firefox/browser/chrome/icons/default/default128.png \
         <term><command>firefox</command></term>
         <listitem>
           <para>
-	    is a <application>GTK+-3</application> internet browser that uses
-	    the Mozilla Gecko rendering engine
+	    er en <application>GTK+-3</application> nettleser som bruker
+	    Mozilla Gecko gjengivelsesmotoren
           </para>
           <indexterm zone="firefox-legacy firefox-legacy-prog">
             <primary sortas="b-firefox">firefox</primary>
