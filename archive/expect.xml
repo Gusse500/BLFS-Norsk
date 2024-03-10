@@ -8,8 +8,8 @@
   <!ENTITY expect-download-ftp  " ">
   <!ENTITY expect-md5sum        "00fce8de158422f5ccd2666512329bd2">
   <!ENTITY expect-size          "624 KB">
-  <!ENTITY expect-buildsize     "3.2 MB (with tests)">
-  <!ENTITY expect-time          "0.2 SBU (with tests)">
+  <!ENTITY expect-buildsize     "3.2 MB (med tester)">
+  <!ENTITY expect-time          "0.2 SBU (med tester)">
 ]>
 
 <sect1 id="expect" xreflabel="Expect-&expect-version;">
@@ -23,79 +23,79 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Expect</title>
+    <title>Introduksjon til Expect</title>
 
     <para>
-      The <application>Expect</application> package was installed in the
-      LFS temporary tools directory for testing other packages.  These
-      procedures install it in a permanent location.  It contains tools for
-      automating interactive applications such as <command>telnet</command>,
+      <application>Expect</application> pakken ble installert i
+      LFS midlertidige verktøymappe for testing av andre pakker. Disse
+      prosedyrer installere den på et permanent sted. Den inneholder verktøy for
+      å automatisere interaktive applikasjoner som f.eks <command>telnet</command>,
       <command>ftp</command>, <command>passwd</command>,
       <command>fsck</command>, <command>rlogin</command>,
-      <command>tip</command>, etc. <application>Expect</application> is also
-      useful for testing these same applications as well as easing all sorts of
-      tasks that are prohibitively difficult with anything else.
+      <command>tip</command>, osv. <application>Expect</application> er også
+      nyttig for å teste de samme applikasjonene i tillegg til å lette alle slags
+      oppgaver som er uoverkommelig vanskelig med noe annet.
     </para>
 
     &lfs91_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&expect-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&expect-download-http;"/>
         </para>
       </listitem>
       <!-- <listitem>
         <para>
-          Download (FTP): <ulink url="&expect-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&expect-download-ftp;"/>
         </para>
       </listitem> -->
       <listitem>
         <para>
-          Download MD5 sum: &expect-md5sum;
+          Nedlasting MD5 sum: &expect-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &expect-size;
+          Nedlastingsstørrelse: &expect-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &expect-buildsize;
+          Estimert diskplass som kreves: &expect-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &expect-time;
+          Estimert byggetid: &expect-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Expect Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Expect Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="tcl"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="tk"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/expect"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Expect</title>
+    <title>Installasjon av Expect</title>
 
     <para>
-      Install <application>Expect</application> by running the following
-      commands:
+      Installer <application>Expect</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
     <!-- Not sure if we need a static library as it does not build by default
@@ -109,11 +109,11 @@
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make test</command>.
+      For å teste resultatene, kjør: <command>make test</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -122,36 +122,36 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>-with-tcl=/usr/lib</parameter>: This parameter is used to
-      tell the <command>configure</command> script where the
-      <command>tclConfig.sh</command> is located.
+      <parameter>-with-tcl=/usr/lib</parameter>: Denne parameteren brukes til
+      å fortelle <command>configure</command> skriptet hvor
+      <command>tclConfig.sh</command> er lokalisert.
     </para>
 
     <para>
-      <parameter>--enable-shared</parameter>: This option enables
-      building the shared library.
+      <parameter>--enable-shared</parameter>: Dette alternativet aktiverer
+      bygging av det delte biblioteket.
     </para>
 
     <!-- Not really sure if this is required any longer as the library is now
          installed directly in /usr/lib/expect5.45/. -->
     <para>
-      <command>ln -sf ...</command>: This command creates a required link
-      to the shared library.
+      <command>ln -sf ...</command>: Denne kommandoen oppretter en nødvendig kobling
+      til det delte biblioteket.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Expect</title>
+    <title>Konfigurere Expect</title>
 
     <sect3 id="expect-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
-        <filename>$exp_library/expect.rc</filename> and
+        <filename>$exp_library/expect.rc</filename> og
         <filename>~/.expect.rc</filename>
       </para>
 
@@ -166,15 +166,15 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Reference the <command>expect</command> man page for information about
-        utilizing the <filename>expect.rc</filename> configuration files.
-        Additionally, many of the tools contained in the
-        <application>Expect</application> package will use their own
-        configuration files. Reference the respective man page, or
-        examine the script directly for configuration file information.
+        Referer til <command>expect</command> manualside for informasjon om
+        hvordan benytte <filename>expect.rc</filename> konfigurasjonsfiler.
+        I tillegg vil mange av verktøyene i
+        <application>Expect</application> pakken bruke sin egen
+        konfigurasjonsfiler. Referer til den respektive manualsiden, eller
+        undersøk skriptet direkte for informasjon om konfigurasjonsfilen.
       </para>
 
     </sect3>
@@ -182,26 +182,26 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>autoexpect, autopasswd, cryptdir, decryptdir, dislocate, expect, ftp-rfc,
         kibitz, lpunlock, mkpasswd, passmass, rftp, rlogin-cwd, timed-read, timed-run,
-        unbuffer, weather, and optionally (if <application>Expect</application> was
-        linked against <application>Tk</application>), multixterm,
-        tknewsbiff, tkpasswd, xkibitz, and xpstat</seg>
+        unbuffer, weather, og eventuelt (hvis <application>Expect</application> var
+        lenket mot <application>Tk</application>), multixterm,
+        tknewsbiff, tkpasswd, xkibitz, og xpstat</seg>
         <seg>libexpect&expect-version;.so</seg>
         <seg>/usr/lib/expect&expect-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -209,8 +209,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>autoexpect</command></term>
         <listitem>
           <para>
-            generates an <application>Expect</application> script from
-            watching a session.
+            genererer et <application>Expect</application> skript fra
+            å se på en økt.
           </para>
           <indexterm zone="expect autoexpect">
             <primary sortas="b-autoexpect">autoexpect</primary>
@@ -222,8 +222,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>autopasswd</command></term>
         <listitem>
           <para>
-            is a wrapper to make <command>passwd</command>(1) be
-            non-interactive.
+            er en innpakning for å gjøre <command>passwd</command>(1)
+            ikke-interaktive.
           </para>
           <indexterm zone="expect autopasswd">
             <primary sortas="b-autopasswd">autopasswd</primary>
@@ -235,7 +235,7 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>cryptdir</command></term>
         <listitem>
           <para>
-            encrypts all files in a directory.
+            krypterer alle filer i en mappe.
           </para>
           <indexterm zone="expect cryptdir">
             <primary sortas="b-cryptdir">cryptdir</primary>
@@ -247,7 +247,7 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>decryptdir</command></term>
         <listitem>
           <para>
-            decrypts all files in a directory.
+            dekrypterer alle filer i en mappe.
           </para>
           <indexterm zone="expect decryptdir">
             <primary sortas="b-decryptdir">decryptdir</primary>
@@ -259,7 +259,7 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>dislocate</command></term>
         <listitem>
           <para>
-            allows processes to be disconnected and reconnected to a
+            gjør at prosesser kan kobles fra og kobles på nytt til en
             terminal.
           </para>
           <indexterm zone="expect dislocate">
@@ -272,8 +272,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>expect</command></term>
         <listitem>
           <para>
-            is a program that <quote>talks</quote> to other interactive
-            programs according to a script.
+            er et program som <quote>snakker</quote> til andre interaktive
+            programmer i henhold til et skript.
           </para>
           <indexterm zone="expect expect-prog">
             <primary sortas="b-expect">expect</primary>
@@ -285,7 +285,7 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>ftp-rfc</command></term>
         <listitem>
           <para>
-            retrieves an RFC (or the index) from UUNET.
+            henter en RFC (eller indeksen) fra UUNET.
           </para>
           <indexterm zone="expect ftp-rfc">
             <primary sortas="b-ftp-rfc">ftp-rfc</primary>
@@ -297,8 +297,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>kibitz</command></term>
         <listitem>
           <para>
-            allows two (or more) people to interact with one shell
-            (or any arbitrary program).
+            lar to (eller flere) personer samhandle med ett skall
+            (eller et hvilket som helst vilkårlig program).
           </para>
           <indexterm zone="expect kibitz">
             <primary sortas="b-kibitz">kibitz</primary>
@@ -310,8 +310,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>lpunlock</command></term>
         <listitem>
           <para>
-            unhangs a printer which claims it is <quote>waiting for
-            lock</quote>.
+            løsner en skriver som hevder at den <quote>venter på
+            lås</quote>.
           </para>
           <indexterm zone="expect lpunlock">
             <primary sortas="b-lpunlock">lpunlock</primary>
@@ -323,7 +323,7 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>mkpasswd</command></term>
         <listitem>
           <para>
-            generates passwords and can apply them automatically to users.
+            genererer passord og kan automatisk gjøre dem anvendelige for brukere.
           </para>
           <indexterm zone="expect mkpasswd">
             <primary sortas="b-mkpasswd">mkpasswd</primary>
@@ -335,7 +335,7 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>passmass</command></term>
         <listitem>
           <para>
-            changes a password on multiple machines.
+            endrer et passord på flere maskiner.
           </para>
           <indexterm zone="expect passmass">
             <primary sortas="b-passmass">passmass</primary>
@@ -347,9 +347,9 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>rftp</command></term>
         <listitem>
           <para>
-            is much like <command>ftp</command> except it uses
-            <option>~g</option> and <option>~p</option> instead of
-            <option>mget</option> and <option>mput</option>.
+            er mye som <command>ftp</command> bortsett fra at den bruker
+            <option>~g</option> og <option>~p</option> i stedet for
+            <option>mget</option> og <option>mput</option>.
           </para>
           <indexterm zone="expect rftp">
             <primary sortas="b-rftp">rftp</primary>
@@ -361,8 +361,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>rlogin-cwd</command></term>
         <listitem>
           <para>
-            is <command>rlogin</command> except it uses the local current
-            directory as the current working directory on the remote machine.
+            er <command>rlogin</command> bortsett fra at den bruker den lokale gjeldende
+            mappen som gjeldende arbeidsmappe på den eksterne maskinen.
           </para>
           <indexterm zone="expect rlogin-cwd">
             <primary sortas="b-rlogin-cwd">rlogin-cwd</primary>
@@ -374,8 +374,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>timed-read</command></term>
         <listitem>
           <para>
-            reads a complete line from stdin and aborts after a given
-            number of seconds.
+            leser en hel linje fra stdin og avbryter etter en gitt
+            antall sekunder.
           </para>
           <indexterm zone="expect timed-read">
             <primary sortas="b-timed-read">timed-read</primary>
@@ -387,7 +387,7 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>timed-run</command></term>
         <listitem>
           <para>
-            runs a program for a given amount of time.
+            kjører et program i en gitt tidsperiode.
           </para>
           <indexterm zone="expect timed-run">
             <primary sortas="b-timed-run">timed-run</primary>
@@ -399,8 +399,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>unbuffer</command></term>
         <listitem>
           <para>
-            disables the output buffering that occurs when program output
-            is redirected.
+            deaktiverer utdatabuffringen som oppstår når programmets utdata
+            blir omdirigert.
           </para>
           <indexterm zone="expect unbuffer">
             <primary sortas="b-unbuffer">unbuffer</primary>
@@ -412,8 +412,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>weather</command></term>
         <listitem>
           <para>
-            retrieves a weather report (courtesy University of Michigan)
-            for a given city or geographical area.
+            henter en værmelding (med tillatelse fra University of Michigan)
+            for en gitt by eller geografisk område.
           </para>
           <indexterm zone="expect weather">
             <primary sortas="b-weather">weather</primary>
@@ -425,8 +425,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>multixterm</command></term>
         <listitem>
           <para>
-            creates multiple <command>xterm</command>s that can be driven
-            together or separately.
+            skaper flere <command>xterm</command>er som kan kjøres
+            sammen eller hver for seg.
           </para>
           <indexterm zone="expect multixterm">
             <primary sortas="b-multixterm">multixterm</primary>
@@ -438,8 +438,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>tknewsbiff</command></term>
         <listitem>
           <para>
-            pops up a window when there is unread news in your favorite
-            newsgroups and removes the window after you've read the news.
+            popper opp et vindu når det er uleste nyheter i dine favoritt
+            nyhetsgrupper og fjerner vinduet etter at du har lest nyhetene.
           </para>
           <indexterm zone="expect tknewsbiff">
             <primary sortas="b-tknewsbiff">tknewsbiff</primary>
@@ -451,8 +451,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>tkpasswd</command></term>
         <listitem>
           <para>
-            is a script to change passwords using
-            <command>expect</command> and <application>Tk</application>.
+            er et skript for å endre passord ved hjelp av
+            <command>expect</command> og <application>Tk</application>.
           </para>
           <indexterm zone="expect tkpasswd">
             <primary sortas="b-tkpasswd">tkpasswd</primary>
@@ -464,8 +464,8 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>xkibitz</command></term>
         <listitem>
           <para>
-            allows users in separate <command>xterm</command>s to share one
-            shell (or any program that runs in an <command>xterm</command>).
+            tillater brukere i separate <command>xterm</command>er å dele et
+            skall (eller et hvilket som helst program som kjører i en <command>xterm</command>).
           </para>
           <indexterm zone="expect xkibitz">
             <primary sortas="b-xkibitz">xkibitz</primary>
@@ -477,7 +477,7 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><command>xpstat</command></term>
         <listitem>
           <para>
-            is a script that acts as a front-end for <command>xpilot</command>.
+            er et skript som fungerer som et grensesnitt for <command>xpilot</command>.
           </para>
           <indexterm zone="expect xpstat">
             <primary sortas="b-xpstat">xpstat</primary>
@@ -489,9 +489,9 @@ ln -svf expect&expect-version;/libexpect&expect-version;.so /usr/lib</userinput>
         <term><filename class='libraryfile'>libexpect&expect-version;.so</filename></term>
         <listitem>
           <para>
-            contains functions that allow <application>Expect</application> to
-            be used as a <application>Tcl</application> extension or to be
-            used directly from C or C++ (without
+            inneholder funksjoner som tillater <application>Expect</application> til å
+            brukes som en <application>Tcl</application> utvidelse eller å bli
+            brukt direkte fra C eller C++ (uten
             <application>Tcl</application>).
           </para>
           <indexterm zone="expect libexpect">
