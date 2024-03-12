@@ -25,74 +25,74 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to gnash</title>
+    <title>Introduksjon til gnash</title>
 
     <para>
-      <application>Gnash</application> is the GNU Flash movie player and browser
-      plugin. This is useful for watching YouTube videos or simple flash
-      animations.
+      <application>Gnash</application> er GNU Flash filmspiller og nettleser
+      programtillegget. Dette er nyttig for å se YouTube videoer eller enkle flash
+      animasjoner.
     </para>
 
     &lfs76_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&gnash-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&gnash-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&gnash-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&gnash-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &gnash-md5sum;
+          Nedlasting MD5 sum: &gnash-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &gnash-size;
+          Nedlastingsstørrelse: &gnash-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &gnash-buildsize;
+          Estimert diskplass som kreves: &gnash-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &gnash-time;
+          Estimert byggetid: &gnash-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/gnash-&gnash-version;-CVE-2012-1175-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">gnash Dependencies</bridgehead>
+    <bridgehead renderas="sect3">gnash Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="agg"/>,
       <xref linkend="boost"/>,
       <xref linkend="curl"/>,
       <!-- <xref linkend="ffmpeg"/> or -->
       <xref linkend="gst-ffmpeg"/>,
-      <xref linkend="npapi-sdk"/>, and
+      <xref linkend="npapi-sdk"/>, og
       <xref linkend="giflib"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="dejagnu"/>,
       <xref linkend="GConf"/>,
@@ -108,21 +108,21 @@
       <ulink url="http://www.mtasc.org/">Mtasc</ulink>,
       <ulink url="http://netcat.sourceforge.net/">Netcat</ulink>,
       <ulink url="http://csound.sourceforge.net/">Csound</ulink>,
-      <ulink url="https://launchpad.net/libgsm">LibGSM</ulink> and
+      <ulink url="https://launchpad.net/libgsm">LibGSM</ulink> og
       <ulink url="http://sourceforge.net/projects/libdc1394/">Libdc1394</ulink>.
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/gnash"/>
+      Brukernotater: <ulink url="&blfs-wiki;/gnash"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of gnash</title>
+    <title>Installasjon av gnash</title>
 
     <para>
-      Install <application>gnash</application> by running the following
-      commands:
+      Installer <application>gnash</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>patch -Np1 -i ../gnash-&gnash-version;-CVE-2012-1175-1.patch &amp;&amp;
@@ -140,11 +140,11 @@ sed -i '/#include &lt;csignal&gt;/a\#include &lt;unistd.h&gt;' plugin/klash4/kla
 make</userinput></screen>
 
     <para>
-      To test the results issue <command>make check</command>.
+      For å teste resultatene, kjør <command>make check</command>.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -152,75 +152,75 @@ make install-plugin</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <command>sed -i '/^LIBS/s/\(.*\)/\1 -lboost_system/' ...</command>:
-      This fixes linking to the current <application>boost</application> libraries.
+      Dette fikser koblingen til nåværende <application>boost</application> biblioteker.
     </para>
 
     <para>
       <command>sed -e '/DGifOpen/s:Data:&amp;, NULL:' ...</command>:
-      This sed fixes building with recent versions of
+      Denne sed fikser bygging med nyere versjoner av
       <application>Giflib</application>.
     </para>
 
     <para>
       <command>sed -i '/#include &lt;csignal&gt;/a\#include &lt;unistd.h&gt;' ...</command>:
-      This fixes building when <application>kdelibs</application> has been installed.
+      Dette fikser byggingen når <application>kdelibs</application> har blitt installert.
     </para>
 
     <para>
-      <option>--enable-media=gst</option>: This tells it to use Gstreamer for
-      to play video and audio (--enable-media=ffmpeg is broken with
+      <option>--enable-media=gst</option>: Dette forteller den å bruke Gstreamer for
+      å spille av video og lyd (--enable-media=ffmpeg er brutt med
       FFmpeg-0.11.1).
     </para>
 
     <para>
-      <option>--with-npapi-incl=/usr/include/npapi-sdk</option>: This option tells
-      it where to find some Mozilla headers that it needs.
+      <option>--with-npapi-incl=/usr/include/npapi-sdk</option>: Dette alternativet forteller
+      det hvor den finner noen Mozilla deklarasjoner som den trenger.
     </para>
 
     <para>
-      <option>--with-npapi-plugindir=/usr/lib/mozilla/plugins</option>: This
-      option tells it to install the Mozilla browser plugin into
+      <option>--with-npapi-plugindir=/usr/lib/mozilla/plugins</option>: Dette
+      alternativet ber den installere Mozilla nettleser programtillegget i
       /usr/lib/mozilla/plugins.
     </para>
 
     <para>
-      <option>--without-gconf</option>: Omit this switch if you have GConf
-      installed and wish gnash to use it.
+      <option>--without-gconf</option>: Utelat denne bryteren hvis du har GConf
+      installert og ønsker gnash å bruke den.
     </para>
 
     <para>
-      <command>make install-plugin</command>: This command installs the Mozilla
-      browser plugin.
+      <command>make install-plugin</command>: Denne kommandoen installerer Mozilla
+      nettleser programtillegget.
     </para>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>gnash-gtk-launcher</seg>
         <seg>
-          2 private libraries in /usr/lib/gnash and
+          2 private biblioteker i /usr/lib/gnash og
           libgnashplugin.so.
         </seg>
         <seg>
-          /usr/lib/gnash and
+          /usr/lib/gnash og
           /usr/share/gnash.
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -228,7 +228,7 @@ make install-plugin</userinput></screen>
         <term><command>gnash-gtk-launcher</command></term>
         <listitem>
           <para>
-            launches Gnash.
+            starter Gnash.
           </para>
           <indexterm zone="gnash gnash-gtk-launcher">
             <primary sortas="b-gnash-gtk-launcher">gnash-gtk-launcher</primary>
@@ -240,7 +240,7 @@ make install-plugin</userinput></screen>
         <term><filename class="libraryfile">libgnashplugin.so</filename></term>
         <listitem>
           <para>
-            is the Mozilla browser plugin.
+            er Mozilla nettleser programtillegget.
           </para>
           <indexterm zone="gnash libgnashplugin">
             <primary sortas="c-libgnashplugin">libgnashplugin.so</primary>
