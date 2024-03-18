@@ -9,7 +9,7 @@
   <!ENTITY junit-md5sum        "22578a9b35cbb71d556a2e625c576c81">
   <!ENTITY junit-size          "433 KB">
   <!ENTITY junit-buildsize     "27 MB">
-  <!ENTITY junit-time          "0.2 SBU (with documentation, using 4 cores; add maven <quote>artifacts</quote> download time)">
+  <!ENTITY junit-time          "0.2 SBU (med dokumentasjon, ved hjelp av 4 kjerner; legg til maven <quote>artifacts</quote> nedlastingstid)">
 ]>
 
 <sect1 id="junit" xreflabel="JUnit-&junit-version;">
@@ -23,97 +23,97 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to JUnit</title>
+    <title>Introduksjon til JUnit</title>
 
     <para>
-      The <application>JUnit</application> package contains a simple, open
-      source framework to write and run repeatable tests. It is an instance of
-      the xUnit architecture for unit testing frameworks. JUnit features include
-      assertions for testing expected results, test fixtures for sharing common
-      test data, and test runners for running tests.
+      <application>JUnit</application> pakken inneholder en enkel, åpen
+      kilderamme for å skrive og kjøre repeterbare tester. Det er et eksempel på
+      xUnit arkitekturen for rammeverk for enhetstesting. JUnit funksjoner inkluderer
+      påstander for testing av forventede resultater, testarmaturer for å dele felles
+      testdata, og testkjørere for kjøretester.
     </para>
 
     &lfs83_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
-        <para>Download (HTTP): <ulink url="&junit-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&junit-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&junit-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&junit-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &junit-md5sum;</para>
+        <para>Nedlasting MD5 sum: &junit-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &junit-size;</para>
+        <para>Nedlastingsstørrelse: &junit-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &junit-buildsize;</para>
+        <para>Estimert diskplass som kreves: &junit-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &junit-time;</para>
+        <para>Estimert byggetid: &junit-time;</para>
       </listitem>
     </itemizedlist>
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch: <ulink
+          Nødvendig oppdatering: <ulink
              url="&patch-root;/junit&junit-major;-r&junit-version;-simplify_NoExitSecurityManager-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">JUnit Dependencies</bridgehead>
+    <bridgehead renderas="sect3">JUnit Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="maven"/> and
+      <xref linkend="maven"/> og
       <xref linkend="unzip"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/junit"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of JUnit</title>
+    <title>Installasjon av JUnit</title>
     <para>
-      First remove a test, which fails with <application>Java 10</application>.
+      Fjern først en test som mislykkes med <application>Java 10</application>.
     </para>
 
 <screen><userinput>sed -e '/MethodsSorted/i    @Ignore' \
     -i src/test/java/org/junit/runners/model/TestClassTest.java</userinput></screen>
 
     <para>
-      Replace deprecated SecurityManager code:
+      Erstatt utdatert SecurityManager kode:
     </para>
 
 <screen><userinput>patch -Np1 -i ../junit4-r&junit-version;-simplify_NoExitSecurityManager-1.patch</userinput></screen>
 
     <para>
-      Install <application>Junit</application> by running the following
-      commands:
+      Installer <application>Junit</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>mvn -DjdkVersion=1.6 install</userinput></screen>
 
     <para>
-      The tests are run as part of the command above.
+      Testene kjøres som en del av kommandoen ovenfor.
     </para>
 
     <para>
-      If you wish to generate the documentation, issue:
+      Hvis du ønsker å generere dokumentasjonen, utsted:
     </para>
 
 <screen><userinput>mvn site</userinput></screen>
 
     <para>
-      Install the files in the final location as the
-      <systemitem class="username">root</systemitem> user:
+      Installer filene på den endelige plasseringen som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -v -m755 -d             /usr/share/java/junit-&junit-version; &amp;&amp;
@@ -121,47 +121,47 @@ cp -v target/junit-&junit-version;.jar     /usr/share/java/junit-&junit-version;
 cp -v lib/hamcrest-core-1.3.jar /usr/share/java/junit-&junit-version;</userinput></screen>
 
     <para>
-      if the documentation was built, install it as the
-      <systemitem class="username">root</systemitem> user:
+      hvis dokumentasjonen ble bygget, installer den som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 <screen role="root"><userinput>install -v -m755 -d    /usr/share/doc/junit-&junit-version; &amp;&amp;
 cp -v -R target/site/* /usr/share/doc/junit-&junit-version;</userinput></screen>
 
 
     <para>
-      If you have followed the instructions in <xref linkend="ojdk-conf"/>,
-      there is nothing more to do: the <envar>CLASSPATH</envar> variable
-      would be automatically updated.
+      Hvis du har fulgt instruksjonene i <xref linkend="ojdk-conf"/>,
+      det er ikke noe mer å gjøre: <envar>CLASSPATH</envar> variabel
+      vil bli automatisk oppdatert.
     </para>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>None</seg>
-        <seg>hamcrest-core and junit jar files</seg>
-        <seg>/usr/share/doc/junit-&junit-version; and
+        <seg>Ingen</seg>
+        <seg>hamcrest-core og junit jar filer</seg>
+        <seg>/usr/share/doc/junit-&junit-version; og
              /usr/share/java/junit-&junit-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="junit.jar">
         <term><filename class='libraryfile'>junit-&junit-version;.jar</filename></term>
         <listitem>
-          <para>contains java classes to support the xUnit framework testing
-          architecture.</para>
+          <para>inneholder java klasser for å støtte xUnit rammetestingen
+          arkitektur.</para>
           <indexterm zone="junit junit.jar">
             <primary sortas="c-junit.jar">junit-&junit-version;.jar</primary>
           </indexterm>
@@ -171,8 +171,8 @@ cp -v -R target/site/* /usr/share/doc/junit-&junit-version;</userinput></screen>
       <varlistentry id="hamcrest-core">
         <term><filename class='libraryfile'>hamcrest-core-1.3.jar</filename></term>
         <listitem>
-          <para>contains java classes to support matchers used in xUnit
-          tests.</para>
+          <para>inneholder java klasser for å støtte matchere brukt i xUnit
+          tester.</para>
           <indexterm zone="junit hamcrest-core">
             <primary sortas="c-hamcrest-core">hamcrest-core-1.3.jar</primary>
           </indexterm>
