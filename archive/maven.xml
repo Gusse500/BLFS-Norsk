@@ -25,82 +25,82 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Apache-Maven</title>
+    <title>Introduksjon til Apache-Maven</title>
 
     <para>
-      <application>Apache-Maven</application> is a tool that can be used for
-      building and managing any Java-based project. Based on the concept of a
-      project object model (POM), <application>Apache-Maven</application> can
-      manage a project's build, reporting and documentation from a central
-      piece of information.
+      <application>Apache-Maven</application> er et verktøy som kan brukes til
+      bygge og administrere ethvert Java-basert prosjekt. Basert på konseptet en
+      prosjektobjektmodell (POM), <application>Apache-Maven</application> kan
+      administrere et prosjekts bygg, rapportering og dokumentasjon fra en sentral
+      bit av informasjon.
     </para>
 
     &lfs83_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&maven-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&maven-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&maven-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&maven-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &maven-md5sum;
+          Nedlasting MD5 sum: &maven-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &maven-size;
+          Nedlastingsstørrelse: &maven-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &maven-buildsize;
+          Estimert diskplass som kreves: &maven-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &maven-time;
+          Estimert byggetid: &maven-time;
         </para>
       </listitem>
     </itemizedlist>
 
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          <application>Appache-Maven</application> needs to be built with
-          itself, so a binary is needed:
+          <application>Appache-Maven</application> må bygges med
+          seg selv, så en binær er nødvendig:
           <ulink url="&maven-binary-http;"/>
         </para>
       </listitem>
     </itemizedlist>
 
 
-    <bridgehead renderas="sect3">Apache-Maven Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Apache-Maven Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      A JDK (<xref linkend="java-bin"/> or <xref linkend="openjdk"/>)
+      En JDK (<xref linkend="java-bin"/> eller <xref linkend="openjdk"/>)
     </para>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url="&blfs-wiki;/ApacheMaven"/>
+      Brukernotater: <ulink url="&blfs-wiki;/ApacheMaven"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Apache-Maven</title>
+    <title>Installasjon av Apache-Maven</title>
 
     <para>
-      First fix two issues which prevent building with Java 10:
+      Først fiks to problemer som hindrer bygging med Java 10:
     </para>
 
 <screen><userinput>sed -e '/-surefire-/a&lt;version&gt;2.21.0&lt;/version&gt;' \
@@ -108,8 +108,8 @@
     -i pom.xml</userinput></screen>
 
     <para>
-      Install <application>Apache-Maven</application> by running the following
-      commands:
+      Installer <application>Apache-Maven</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen><userinput>install -vdm 755 ../apache-maven-bin     &amp;&amp;
@@ -124,11 +124,11 @@ mvn -DdistributionTargetDir=build \
     package</userinput></screen>
 
     <para>
-      The test are run as part of the compilation above.
+      Testen kjøres som en del av kompileringen ovenfor.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -vdm 755            /opt/maven-&maven-version; &amp;&amp;
@@ -136,8 +136,8 @@ cp -Rv apache-maven/build/* /opt/maven-&maven-version; &amp;&amp;
 ln -sfvn maven-&maven-version; /opt/maven</userinput></screen>
 
     <para>
-      You can know reset the <envar>PATH</envar> variable and clean
-      the source directory:
+      Du kan nå tilbakestille <envar>PATH</envar> variabelen og rydde
+      kildemappen:
     </para>
 
 <screen><userinput>PATH=$SAVEPATH &amp;&amp;
@@ -146,48 +146,48 @@ rm -rf ../apache-maven-bin</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <command>tar ../apache-maven-&maven-version;-bin.tar.gz ...
-               PATH=.../bin:$PATH</command>: Extracts the
-      <application>Apache-Maven</application> binary and let the system know
-      about the binary location.
+               PATH=.../bin:$PATH</command>: Pakker ut
+      <application>Apache-Maven</application> binær og la systemet få vite
+      om den binære plasseringen.
     </para>
 
     <para>
-      <command>mvn ... package</command>: Compiles and tests the package, and
-      packages it to its final format.
+      <command>mvn ... package</command>: Kompilerer og tester pakken, og
+      pakker den til det endelige formatet.
     </para>
 
     <para>
-      <parameter>-DdistributionTargetDir=build</parameter>: Specifies
-      the location where the built binary should be packaged. The content of
-      this directory is ready to be copied to its final location.
+      <parameter>-DdistributionTargetDir=build</parameter>: Spesifiserer
+      stedet der den innebygde binære filen skal pakkes. Innholdet i
+      denne mappen er klar til å bli kopiert til den endelige plasseringen.
     </para>
 
     <para>
-      <command>ln -sfvn maven-&maven-version; /opt/maven</command>: Creates
-      a convenience symlink.
+      <command>ln -sfvn maven-&maven-version; /opt/maven</command>: Oppretter
+      en bekvemmelighetssymbolkobling.
     </para>
 
     <para>
-      <option>-Dmaven.repo.local=...</option>: Specifies a maven local
-      repository for this build, instead of the default <filename
-      class="directory">~/.m2/repository</filename>. You may want to use this
-      if several users are to use <application>Apache-Maven</application>.
+      <option>-Dmaven.repo.local=...</option>: Spesifiserer en maven lokalt
+      depot for denne byggingen, i stedet for standard <filename
+      class="directory">~/.m2/repository</filename>. Det kan være lurt å bruke denne
+      hvis flere brukere skal bruke <application>Apache-Maven</application>.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Apache-Maven</title>
+    <title>Konfigurere Apache-Maven</title>
 
     <sect3 id="maven-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
       <para>
-        The user settings file <filename>~/.m2/settings.xml</filename> and
-        the global settings file
+        Brukerinnstillingsfilen <filename>~/.m2/settings.xml</filename> og
+        den globale innstillingsfilen
         <filename>/opt/maven/conf/settings.xml</filename>
       </para>
 
@@ -201,18 +201,18 @@ rm -rf ../apache-maven-bin</userinput></screen>
       </indexterm>
     </sect3>
 
-    <sect3><title>Configuration Information</title>
+    <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        The default configuration file shipped with
-        <application>Apache-Maven</application> should be sufficent for
-        common tasks. You may want to copy the global settings file to
-        your user one and modify it to suit your needs.
+        Standard konfigurasjonsfilen levert med
+        <application>Apache-Maven</application> skal være tilstrekkelig for vanlige oppgaver.
+        Det kan være lurt å kopiere den globale innstillingsfilen til
+        brukeren din og endre den for å passe dine behov.
       </para>
 
       <para>
-        You should add the <command>mvn</command> command to
-        <envar>PATH</envar>. For example:
+        Du bør legge til <command>mvn</command> kommandoen til
+        <envar>PATH</envar>. For eksempel:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/profile.d/maven.sh &lt;&lt; "EOF"
@@ -228,19 +228,19 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directory</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
-          mvn, mvnDebug, and mvnyjp
+          mvn, mvnDebug, og mvnyjp
         </seg>
         <seg>
-          libjansi.so in <filename
+          libjansi.so i <filename
           class="directory">/opt/maven/lib/jansi-native</filename>
         </seg>
         <seg>
@@ -250,7 +250,7 @@ EOF</userinput></screen>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -258,8 +258,8 @@ EOF</userinput></screen>
         <term><command>mvn</command></term>
         <listitem>
           <para>
-            is the <application>Apache-Maven</application> Java-based project
-            builder and manager
+            er <application>Apache-Maven</application> Java-basert prosjekt
+            bygger og behandler
           </para>
           <indexterm zone="maven mvn">
             <primary sortas="b-mvn">mvn</primary>
@@ -271,7 +271,7 @@ EOF</userinput></screen>
         <term><command>mvnDebug</command></term>
         <listitem>
           <para>
-            turns on <command>mvn</command> debug mode
+            skrur på <command>mvn</command> feilsøkingsmodus
           </para>
           <indexterm zone="maven mvnDebug">
             <primary sortas="b-mvnDebug">mvnDebug</primary>
@@ -283,7 +283,7 @@ EOF</userinput></screen>
         <term><command>mvnyjp</command></term>
         <listitem>
           <para>
-            runs <command>mvn</command>under the supervision of the
+            kjører <command>mvn</command> under tilsyn av
             <ulink url="https://www.yourkit.com/java/profiler/">YourKit Java
             Profiler</ulink>
           </para>
