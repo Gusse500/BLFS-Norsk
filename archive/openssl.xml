@@ -10,8 +10,8 @@
            "ftp://openssl.org/source/openssl-&openssl-version;.tar.gz">
   <!ENTITY openssl-md5sum        "ba5f1b8b835b88cadbce9b35ed9531a6">
   <!ENTITY openssl-size          "5.2 MB">
-  <!ENTITY openssl-buildsize     "73 MB (with tests)">
-  <!ENTITY openssl-time          "1.5 SBU (with tests)">
+  <!ENTITY openssl-buildsize     "73 MB (med tester)">
+  <!ENTITY openssl-time          "1.5 SBU (med tester)">
 ]>
 
 <sect1 id="openssl" xreflabel="OpenSSL-&openssl-version;">
@@ -25,62 +25,62 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to OpenSSL</title>
+    <title>Introduksjon til OpenSSL</title>
 
     <para>
-      The <application>OpenSSL</application> package contains management tools
-      and libraries relating to cryptography.  These are useful for providing
-      cryptographic functions to other packages, such as
-      <application>OpenSSH</application>, email applications and web browsers
-      (for accessing HTTPS sites).
+      <application>OpenSSL</application> pakken inneholder administrasjonsverktøy
+      og biblioteker knyttet til kryptografi. Disse er nyttige for å gi
+      kryptografiske funksjoner til andre pakker, som f.eks
+      <application>OpenSSH</application>, e-postapplikasjoner og nettlesere
+      (for tilgang til HTTPS nettsteder).
     </para>
 
     &lfs81_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&openssl-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&openssl-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&openssl-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&openssl-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &openssl-md5sum;
+          Nedlasting MD5 sum: &openssl-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &openssl-size;
+          Nedlastingsstørrelse: &openssl-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &openssl-buildsize;
+          Estimert diskplass som kreves: &openssl-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &openssl-time;
+          Estimert byggetid: &openssl-time;
         </para>
       </listitem>
     </itemizedlist>
 
     <para condition="html" role="usernotes">
-      User Notes: <ulink url='&blfs-wiki;/OpenSSL'/>
+      Brukernotater: <ulink url='&blfs-wiki;/OpenSSL'/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of OpenSSL</title>
+    <title>Installasjon av OpenSSL</title>
 
     <para>
-      Install <application>OpenSSL</application> with the following commands:
+      Installer <application>OpenSSL</application> med følgende kommandoer:
     </para>
 
 
@@ -92,17 +92,17 @@
 make</userinput></screen>
 
     <para>
-      To test the results, issue: <command>make test</command>.
+      For å teste resultatene, kjør: <command>make test</command>.
     </para>
 
     <para>
-      If you want to disable installing the static libraries, use this sed:
+      Hvis du vil deaktivere installasjonen av de statiske bibliotekene, bruk denne sed:
     </para>
 
 <screen><userinput>sed -i 's# libcrypto.a##;s# libssl.a##;/INSTALL_LIBS/s#libcrypto.a##' Makefile</userinput></screen>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <!-- dev note: make INSTALL_PREFIX=<DESTDIR> MANDIR=/usr/share/man MANSUFFIX=ssl install -->
@@ -114,39 +114,39 @@ cp -vfr doc/* /usr/share/doc/openssl-&openssl-version;</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>shared</parameter>: This parameter forces the creation of
-      shared libraries along with the static libraries.
+      <parameter>shared</parameter>: Denne parameteren tvinger opprettelsen av
+      delte biblioteker sammen med de statiske bibliotekene.
     </para>
 
     <para>
-      <parameter>zlib-dynamic</parameter>: This parameter adds
-      compression/decompression functionality using the
-      <filename class="libraryfile">libz</filename> library.
+      <parameter>zlib-dynamic</parameter>: Denne parameteren legger til
+      komprimerings-/dekompresjons funksjonalitet ved hjelp av
+      <filename class="libraryfile">libz</filename> biblioteket.
     </para>
 
     <para>
-      <option>no-rc5 no-idea</option>: When added to the
-      <command>./config</command> command, this will eliminate the building
-      of those encryption methods. Patent licenses may be needed for you to
-      utilize either of those methods in your projects.
+      <option>no-rc5 no-idea</option>: Når lagt til
+      <command>./config</command> kommandoen, vil dette eliminere bygningen
+      av disse krypteringsmetodene. Patentlisenser kan være nødvendig for
+      bruk av disse metodene i prosjektene dine.
     </para>
 
     <para>
       <command>make MANSUFFIX=ssl install</command>:
-      This command appends an "ssl" suffix to the manual page names to avoid
-      conflicts with manual pages installed by other packages.
+      Denne kommandoen legger til et "ssl" suffiks til de manuelle sidenavnene for å unngå
+      konflikter med manuelle sider installert av andre pakker.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring OpenSSL</title>
+    <title>Konfigurere OpenSSL</title>
 
     <sect3 id="openssl-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         <filename>/etc/ssl/openssl.cnf</filename>
@@ -159,25 +159,25 @@ cp -vfr doc/* /usr/share/doc/openssl-&openssl-version;</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Most users will want to install Certificate Authority Certificates
-        for validation of downloaded certificates. For example, these
-        certificates can be used by <xref linkend='git'/>,
-        <xref linkend='curl'/> or <xref linkend='wget'/> when accessing secure
-        (https protocol) sites. To do this, follow the instructions from the
-        <xref linkend='cacerts'/> page.
+        De fleste brukere vil ønske å installere Certificate Authority sertifikater
+        for validering av nedlastede sertifikater. For eksempel disse
+        sertifikater kan brukes av <xref linkend='git'/>,
+        <xref linkend='curl'/> eller <xref linkend='wget'/> når du får tilgang til sikker
+        (https protokoll) nettsteder. For å gjøre dette, følg instruksjonene fra
+        <xref linkend='cacerts'/> siden.
       </para>
 
       <para>
-        Users who just want to use <application>OpenSSL</application> for
-        providing functions to other programs such as
-        <application>OpenSSH</application> and web browsers do not need to worry
-        about additional configuration. This is an advanced topic and those
-        who do need it would normally be expected to either know how to properly
-        update <filename>/etc/ssl/openssl.cnf</filename> or be able to find out
-        how to do it.
+        Brukere som bare vil bruke <application>OpenSSL</application> for
+        gir funksjoner til andre programmer som f.eks
+        <application>OpenSSH</application> og nettlesere trenger ikke å bekymre deg
+        om tilleggskonfigurasjon. Dette er et avansert emne og de
+        som trenger det, forventes normalt å enten vite hvordan man skal gjøre det
+        oppdatere <filename>/etc/ssl/openssl.cnf</filename> eller kunne finne ut av det
+        hvordan gjøre det.
       </para>
 
     </sect3>
@@ -185,31 +185,31 @@ cp -vfr doc/* /usr/share/doc/openssl-&openssl-version;</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          c_rehash and openssl
+          c_rehash og openssl
         </seg>
         <seg>
-          libcrypto.{so,a} and libssl.{so,a}
+          libcrypto.{so,a} og libssl.{so,a}
         </seg>
         <seg>
           /etc/ssl,
           /usr/include/openssl,
-          /usr/lib/engines and
+          /usr/lib/engines og
           /usr/share/doc/openssl-&openssl-version;
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -217,8 +217,8 @@ cp -vfr doc/* /usr/share/doc/openssl-&openssl-version;</userinput></screen>
         <term><command>c_rehash</command></term>
         <listitem>
           <para>
-            is a <application>Perl</application> script that scans all files in
-            a directory and adds symbolic links to their hash values.
+            er en <application>Perl</application> skript som skanner alle filer i
+            en mappe og legger til symbolske lenker til hashverdiene deres.
           </para>
           <indexterm zone="openssl c_rehash">
             <primary sortas="b-c_rehash">c_rehash</primary>
@@ -230,9 +230,9 @@ cp -vfr doc/* /usr/share/doc/openssl-&openssl-version;</userinput></screen>
         <term><command>openssl</command></term>
         <listitem>
           <para>
-            is a command-line tool for using the various cryptography functions
-            of <application>OpenSSL</application>'s crypto library from the
-            shell. It can be used for various functions which are documented in
+            er et kommandolinjeverktøy for bruk av de ulike kryptografifunksjonene
+            av <application>OpenSSL</application> sin kryptobibliotek fra
+            skallet. Den kan brukes til ulike funksjoner som er dokumentert i
             <command>man 1 openssl</command>.
           </para>
           <indexterm zone="openssl openssl-prog">
@@ -245,13 +245,13 @@ cp -vfr doc/* /usr/share/doc/openssl-&openssl-version;</userinput></screen>
         <term><filename class="libraryfile">libcrypto.{so,a}</filename></term>
         <listitem>
           <para>
-            implements a wide range of cryptographic algorithms used in various
-            Internet standards. The services provided by  this library are used
-            by the <application>OpenSSL</application> implementations of SSL,
-            TLS and S/MIME, and they have also been used to implement
+            implementerer et bredt spekter av kryptografiske algoritmer som brukes i ulike
+            Internett standarder. Tjenestene som tilbys av dette biblioteket brukes
+            ved <application>OpenSSL</application> implementeringer av SSL,
+            TLS og S/MIME, og de har også blitt brukt til å implementere
             <application>OpenSSH</application>,
-            <application>OpenPGP</application>, and other cryptographic
-            standards.
+            <application>OpenPGP</application>, og andre kryptografiske
+            standarder.
           </para>
           <indexterm zone="openssl libcrypto">
             <primary sortas="c-libcrypto">libcrypto.{so,a}</primary>
@@ -263,9 +263,9 @@ cp -vfr doc/* /usr/share/doc/openssl-&openssl-version;</userinput></screen>
         <term><filename class="libraryfile">libssl.{so,a}</filename></term>
         <listitem>
           <para>
-            implements the Transport Layer Security (TLS v1) protocol.
-            It provides a rich API, documentation
-            on which can be found by running <command>man 3 ssl</command>.
+            implementerer protokollen Transport Layer Security (TLS v1).
+            Det gir en rik API, dokumentasjon
+            som kan bli funnet ved å kjøre <command>man 3 ssl</command>.
           </para>
           <indexterm zone="openssl libssl">
             <primary sortas="c-libssl">libssl.{so,a}</primary>
