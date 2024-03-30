@@ -35,104 +35,104 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Portmap</title>
+    <title>Introduksjon til Portmap</title>
 
-    <para>The <application>portmap</application> package is a more secure
-    replacement for the original SUN <application>portmap</application> package.
-    <application>Portmap</application> is used to forward RPC requests to RPC
-    daemons such as NFS and NIS.</para>
+    <para><application>portmap</application> pakken er en sikrere
+    erstatning for den originale SUN <application>portmap</application> pakken.
+    <application>Portmap</application> brukes til å videresende RPC-forespørsler til RPC
+    nisser som NFS og NIS.</para>
 
     &lfs70_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
-        <para>Download (HTTP): <ulink url="&portmap-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&portmap-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&portmap-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&portmap-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &portmap-md5sum;</para>
+        <para>Nedlasting MD5 sum: &portmap-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &portmap-size;</para>
+        <para>Nedlastingsstørrelse: &portmap-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &portmap-buildsize;</para>
+        <para>Estimert diskplass som kreves: &portmap-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &portmap-time;</para>
+        <para>Estimert byggetid: &portmap-time;</para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Portmap Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Portmap Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="libtirpc"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="tcpwrappers"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/portmap"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Portmap</title>
+    <title>Installasjon av Portmap</title>
 
-    <para>Portmap runs as a daemon with a uid of 1.  This uid is only
-    configurable at compile time and is used as default. To set up a
-    user to match this uid, as the <systemitem class="username">root</systemitem>
-    user, issue:</para>
+    <para>Portmap kjører som en nisse med en uid på 1. Denne uid er bare
+    konfigurerbar på kompileringstidspunktet og brukes som standard. For å sette opp en
+    bruker for å matche denne uid, som <systemitem class="username">root</systemitem>
+    bruker, utsted:</para>
 
 <screen><userinput>useradd -u 1 -g 1 -d /dev/null -s /bin/false bin</userinput></screen>
 
-    <para>Install <application>portmap</application> with the following
-    commands:</para>
+    <para>Installer <application>portmap</application> ved å kjøre følgende
+    kommandoer:</para>
 
 <screen><userinput>LDLIBS=-ltirpc make</userinput></screen>
 
-    <para>Note that the LDLIBS environment variable must be before the
-    <command>make</command> command.</para>
+    <para>Merk at LDLIBS-miljøvariabelen må være før
+    <command>make</command> kommandoen.</para>
 
-    <para>If you want the portmap daemon to use a uid/gid other than the
-    defaults, pass DAEMON_UID=x and DAEMON_GID=y as shown below:</para>
+    <para>Hvis du vil at portmap-nissen skal bruke en annen uid/gid enn
+    standard, pass DAEMON_UID=x og DAEMON_GID=y som vist nedenfor:</para>
 
     <para><command>LDLIBS=-ltirpc make DAEMON_UID=x DAEMON_GID=y</command></para>
 
-    <para>If you want to build the portmap daemon without
-    <application>tcpwrappers</application>, add
-    <userinput>NO_TCP_WRAPPER=true</userinput> to the make line as shown below:</para>
+    <para>Hvis du vil bygge portmap-nissen uten
+    <application>tcpwrappers</application>, legg til
+    <userinput>NO_TCP_WRAPPER=true</userinput> til make linjen som vist nedenfor:</para>
 
     <para><command>LDLIBS=-ltirpc make NO_TCP_WRAPPER=true</command></para>
 
-    <para>Now, as the <systemitem class="username">root</systemitem> user:</para>
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role='root'><userinput>make install</userinput></screen>
 
     <note>
-      <para>The above installation places executable <command>portmap</command>
-      in <filename class="directory">/sbin</filename>. You may choose to move the
-      file to <filename class="directory">/usr/sbin</filename>. If you do,
-      remember to modify the bootscript also.</para>
+      <para>Installasjonen ovenfor plasserer kjørbar <command>portmap</command>
+      i <filename class="directory">/sbin</filename>. Du kan velge å flytte
+      fil til <filename class="directory">/usr/sbin</filename>. Hvis du gjør,
+      husk å endre Oppstartsskriptet også.</para>
     </note>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Portmap</title>
+    <title>Konfigurere Portmap</title>
 
     <sect3  id="portmap-init">
-      <title>Boot Script</title>
+      <title>Oppstartsskript</title>
 
-      <para>Install the <filename>/etc/rc.d/init.d/portmap</filename> init script
-      included in the <xref linkend="bootscripts"/> package.</para>
+      <para>Installer <filename>/etc/rc.d/init.d/portmap</filename> init skriptet
+      inkludert i <xref linkend="bootscripts"/> pakken.</para>
 
       <indexterm zone="portmap portmap-init">
         <primary sortas="f-portmap">portmap</primary>
@@ -145,22 +145,22 @@
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>pmap_dump, pmap_set, and portmap</seg>
-        <seg>None</seg>
-        <seg>None</seg>
+        <seg>pmap_dump, pmap_set, og portmap</seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -168,7 +168,7 @@
          <!-- Don't remove the extra space, it prevent a FOP warning. -->
         <term><command>pmap_dump</command> </term>
         <listitem>
-          <para>saves the port mapping table to an ASCII file.</para>
+          <para>lagrer portkartleggingstabellen til en ASCII-fil.</para>
           <indexterm zone="portmap pmap_dump">
             <primary sortas="b-pmap_dump">pmap_dump</primary>
           </indexterm>
@@ -178,7 +178,7 @@
       <varlistentry id="pmap_set">
         <term><command>pmap_set</command></term>
         <listitem>
-          <para>restores the port mapping table from an ASCII file.</para>
+          <para>gjenoppretter portkartleggingstabellen fra en ASCII-fil.</para>
           <indexterm zone="portmap pmap_set">
             <primary sortas="b-pmap_set">pmap_set</primary>
           </indexterm>
@@ -188,7 +188,7 @@
       <varlistentry id="portmap-prog">
         <term><command>portmap</command></term>
         <listitem>
-          <para>is an RPC port mapper.</para>
+          <para>er en RPC-portkartlegger.</para>
           <indexterm zone="portmap portmap-prog">
             <primary sortas="b-portmap">portmap</primary>
           </indexterm>
