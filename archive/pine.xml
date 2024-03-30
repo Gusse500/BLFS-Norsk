@@ -23,61 +23,61 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Pine</title>
+    <title>Introduksjon til Pine</title>
 
-    <para>The <application>Pine</application> package contains the
-    <application>Pine</application> Mail User Agent and several
-    server daemons for various mail protocols, in addition to some nice
-    file and directory editing/browsing programs.</para>
+    <para><application>Pine</application> pakken inneholder
+    <application>Pine</application> Mail User Agent og flere
+    servernisser for ulike e-postprotokoller, i tillegg til noen fine
+    fil- og mappe redigerings-/surfingsprogrammer.</para>
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
-        <para>Download (HTTP): <ulink url="&pine-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&pine-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&pine-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&pine-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &pine-md5sum;</para>
+        <para>Nedlasting MD5 sum: &pine-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &pine-size;</para>
+        <para>Nedlastingsstørrelse: &pine-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &pine-buildsize;</para>
+        <para>Estimert diskplass som kreves: &pine-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &pine-time;</para>
+        <para>Estimert byggetid: &pine-time;</para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
-        <para>Recommended Patch: <ulink
+        <para>Anbefalt Oppdatering: <ulink
         url="&patch-root;/pine-&pine-version;-utf8-1.patch"/></para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Pine Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Pine Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required"><xref linkend="openssl"/></para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
-    <para role="optional"><xref linkend="openldap"/> and <xref linkend="mitkrb"/></para>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="openldap"/> og <xref linkend="mitkrb"/></para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/pine"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Pine</title>
+    <title>Installasjon av Pine</title>
 
-    <para>Install <application>Pine</application> by running the following
-    commands:</para>
+    <para>Installer <application>Pine</application> ved å kjøre følgende
+    kommandoer:</para>
 
 <screen><userinput>patch -Np1 -i ../pine-&pine-version;-utf8-1.patch &amp;&amp;
 sed -i "s@/usr/local/lib/pine@/etc/pine@g" \
@@ -85,9 +85,9 @@ sed -i "s@/usr/local/lib/pine@/etc/pine@g" \
 ./build DEBUG=-O MAILSPOOL=/var/mail \
     SSLDIR=/usr SSLCERTS=/etc/ssl/certs slx</userinput></screen>
 
-    <para>This package does not come with a test suite.</para>
+    <para>Denne pakken kommer ikke med en testpakke.</para>
 
-    <para>Now, as the <systemitem class="username">root</systemitem> user:</para>
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role='root'><userinput>install -v -m644 doc/*.1 /usr/share/man/man1 &amp;&amp;
 install -v -p -m644 doc/tech-notes/*.html /usr/share/doc/pine&pine-version; &amp;&amp;
@@ -98,44 +98,44 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para><command>patch -Np1 -i ../pine-&pine-version;-utf8-1.patch</command>:
-    This patch enables Pine UTF-8 and charset conversion.</para>
+    Denne oppdateringen muliggjør Pine UTF-8 og tegnsettkonvertering.</para>
 
-    <para><command>sed -i "s@/usr/ ... /lib/pine *)</command>: This
-    <command>sed</command> will make <application>Pine</application> use <filename
-    class="directory">/etc</filename> for configuration files. It also alters
-    the documentation to reflect that.</para>
+    <para><command>sed -i "s@/usr/ ... /lib/pine *)</command>: Denne
+    <command>sed</command> gør at <application>Pine</application> vil bruke <filename
+    class="directory">/etc</filename> for konfigurasjonsfiler. Det endrer også
+    dokumentasjonen for å gjenspeile det.</para>
 
-    <para>The build procedure for <application>Pine</application> is somewhat
-    unusual, in that options usually passed as <command>./configure</command>
-    options or housed in $<envar>CFLAGS</envar> must all be passed on the command
-    line to the <command>./build</command> script.</para>
+    <para>Byggeprosedyren for <application>Pine</application> er noe
+    uvanlig, ved at alternativene vanligvis passert som <command>./configure</command>
+    alternativer eller plassert i $<envar>CFLAGS</envar> må alle sendes på kommandolinjen
+    til <command>./build</command> skriptet.</para>
 
-    <para><command>./build slx</command>: <application>Pine</application> offers
-    quite a few target platforms, slx specifies Linux using
-    <option>-lcrypt</option> to get the crypt function.  See the
-    <filename>doc/pine-ports</filename> file for more information and
-    other authentication options.</para>
+    <para><command>./build slx</command>: <application>Pine</application> gir
+    ganske mange målplattformer, slx spesifiserer Linux bruker
+    <option>-lcrypt</option> for å få kryptfunksjonen. Se
+    <filename>doc/pine-ports</filename> fil for mer informasjon og
+    andre autentiseringsalternativer.</para>
 
-    <para><command>DEBUG=-O</command>: This flag compiles an optimized
-    version of <command>pine</command> and <command>pico</command> that
-    produces no debug files.</para>
+    <para><command>DEBUG=-O</command>: Dette flagget kompilerer en optimalisert
+    versjon av <command>pine</command> og <command>pico</command> som
+    produserer ingen feilsøkingsfiler.</para>
 
-    <para><command>MAILSPOOL=/var/mail</command>: Location of mail spool
-    files, <filename class="directory">/var/mail</filename>.</para>
+    <para><command>MAILSPOOL=/var/mail</command>: Plassering av post spool
+    filer, <filename class="directory">/var/mail</filename>.</para>
 
-    <para><command>SSLDIR=/usr SSLCERTS=/etc/ssl/certs</command>: Location
-    of <application>OpenSSL</application> files.</para>
+    <para><command>SSLDIR=/usr SSLCERTS=/etc/ssl/certs</command>: Lokasjon
+    av <application>OpenSSL</application> filer.</para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Pine</title>
+    <title>Konfigurere Pine</title>
 
     <sect3 id="pine-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para><filename>~/.pinerc</filename></para>
 
@@ -146,40 +146,40 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
-      <para>The <command>pine</command> executable needs no global configuration to
-      use.  Users set <application>Pine</application> options in
-      <filename>~/.pinerc</filename> using an internal configuration menu.</para>
+      <para><command>pine</command> kjørbar trenger ingen global konfigurasjon
+      for bruk. Brukere setter <application>Pine</application> alternativer i
+      <filename>~/.pinerc</filename> ved hjelp av en intern konfigurasjonsmeny.</para>
 
     </sect3>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>imapd, ipop2d, ipop3d, mtest, pico, pilot, pine, rpdump, and rpload</seg>
-        <seg>None</seg>
+        <seg>imapd, ipop2d, ipop3d, mtest, pico, pilot, pine, rpdump, og rpload</seg>
+        <seg>Ingen</seg>
         <seg>/usr/share/doc/pine&pine-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="imapd-pine">
         <term><command>imapd</command></term>
         <listitem>
-          <para>is the IMAP server daemon.</para>
+          <para>er IMAP-servernissen.</para>
           <indexterm zone="pine imapd-pine">
             <primary sortas="b-pine">pine</primary>
           </indexterm>
@@ -189,7 +189,7 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
       <varlistentry id="ipop2d">
         <term><command>ipop2d</command></term>
         <listitem>
-          <para>is an IMAP to POP2 conversion server.</para>
+          <para>er en IMAP til POP2 konverteringsserver.</para>
           <indexterm zone="pine ipop2d">
             <primary sortas="b-ipop2d">ipop2d</primary>
           </indexterm>
@@ -199,7 +199,7 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
       <varlistentry id="ipop3d">
         <term><command>ipop3d</command></term>
         <listitem>
-          <para>is an IMAP to POP3 conversion server.</para>
+          <para>er en IMAP til POP3 konverteringsserver.</para>
           <indexterm zone="pine ipop3d">
             <primary sortas="b-ipop3d">ipop3d</primary>
           </indexterm>
@@ -209,7 +209,7 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
       <varlistentry id="mtest">
         <term><command>metest</command></term>
         <listitem>
-          <para>is a minimal IMAP mail user agent, used for debugging.</para>
+          <para>er en minimal IMAP-e-postbrukeragent som brukes til feilsøking.</para>
           <indexterm zone="pine mtest">
             <primary sortas="b-mtest">mtest</primary>
           </indexterm>
@@ -219,8 +219,8 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
       <varlistentry id="pico-pine">
         <term><command>pico</command></term>
         <listitem>
-          <para>is a stand-alone editor, similar to the
-          <application>Pine</application> internal message composer.</para>
+          <para>er en frittstående tekstbehandler, som ligner på
+          <application>Pine</application> intern meldingsskriver.</para>
           <indexterm zone="pine pico-pine">
             <primary sortas="b-pico">pico</primary>
           </indexterm>
@@ -230,7 +230,7 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
       <varlistentry id="pilot">
         <term><command>pilot</command></term>
         <listitem>
-          <para>is a file and directory navigator and browser.</para>
+          <para>er en fil- og katalognavigator og nettleser.</para>
           <indexterm zone="pine pilot">
             <primary sortas="b-pilot">pilot</primary>
           </indexterm>
@@ -240,7 +240,7 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
       <varlistentry id="pine-prog">
         <term><command>pine</command></term>
         <listitem>
-          <para>is the <application>Pine</application> mail user agent.</para>
+          <para>er <application>Pine</application>e-postbrukeragent.</para>
           <indexterm zone="pine pine-prog">
             <primary sortas="b-pine">pine</primary>
           </indexterm>
@@ -250,8 +250,8 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
       <varlistentry id="rpdump">
         <term><command>rpdump</command></term>
         <listitem>
-          <para>is used to copy data from remote <application>Pine</application>
-          configuration files or address books into a local file.</para>
+          <para>brukes til å kopiere data fra eksterne <application>Pine</application>
+          konfigurasjonsfiler eller adressebøker til en lokal fil.</para>
           <indexterm zone="pine rpdump">
             <primary sortas="b-rpdump">rpdump</primary>
           </indexterm>
@@ -261,9 +261,9 @@ bin/{pine,imapd,ipop2d,ipop3d,mailutil,mtest,pico,pilot,rpdump,rpload} \
       <varlistentry id="rpload">
         <term><command>rpload</command></term>
         <listitem>
-          <para>is the <application>Pine</application> remote data utility, used to
-          convert local <application>Pine</application> configuration files or address
-          books into remote configurations or address books.</para>
+          <para>er <application>Pine</application> eksternt dataverktøy, brukes til
+          konvertere lokalt <application>Pine</application> konfigurasjonsfiler eller adresse
+          bøker til eksterne konfigurasjoner eller adressebøker.</para>
           <indexterm zone="pine rpload">
             <primary sortas="b-rpload">rpload</primary>
           </indexterm>
