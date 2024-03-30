@@ -9,11 +9,11 @@
   <?dbhtml filename="pre-install-config.html"?>
 
 
-  <title>Pre-installation Configuration</title>
+  <title>Konfigurasjon før Installasjon</title>
 
-  <para>Set an environment variable to resolve the prefix destination.</para>
+  <para>Angi en miljøvariabel for å løse prefiksdestinasjonen.</para>
 
-  <para>If <application>GNOME</application> is your desktop of choice:</para>
+  <para>Hvis <application>GNOME</application> er ditt foretrukne skrivebord:</para>
 
 <screen><userinput>cat &gt; /etc/profile.d/gnome.sh &lt;&lt; "EOF" &amp;&amp;
 <literal>export GNOME_PREFIX=/usr
@@ -24,33 +24,33 @@ EOF
 . /etc/profile.d/gnome.sh</userinput></screen>
 
 
-  <para>If you want to try-out <application>GNOME</application>, or install
-  it in an easy-to-remove location:</para>
+  <para>Hvis du vil prøve <application>GNOME</application>, eller installere
+  den på et sted som er lett å fjerne:</para>
 
   <note>
-    <para>You may wish to create a symbolic link to the actual versioned
-    directory using a non-versioned name. This has the advantage of an easier
-    path to type in all the changes below and also makes it easy to point
-    to a different/newer version of GNOME without changing all the edits
-    below. If you wish to use a non-versioned name in the changes below,
-    issue the following commands as the
-    <systemitem class='username'>root</systemitem> user:</para>
+    <para>Det kan være lurt å lage en symbolsk lenke til den faktiske versjonen
+    mappe ved hjelp av et navn uten versjon. Dette har fordelen av en enklere
+    bane for å skrive inn alle endringene nedenfor og gjør det også enkelt å peke
+    til en annen/nyere versjon av GNOME uten å endre alle redigeringene
+    under. Hvis du ønsker å bruke et navn uten versjon i endringene nedenfor,
+    utstede følgende kommandoer som
+    <systemitem class='username'>root</systemitem> bruker:</para>
 
 <screen role='root'><userinput>install -v -m755 -d /opt/gnome-&gnome-version;&gnome-minor-version; &amp;&amp;
 ln -v -s gnome-&gnome-version;&gnome-minor-version; /opt/gnome</userinput></screen>
   </note>
 
-  <para>If you created the symbolic link, change all instances of <filename
+  <para>Hvis du opprettet den symbolske lenken, endre alle forekomster av <filename
   class='directory'>/opt/gnome-&gnome-version;&gnome-minor-version;</filename>
-  to <filename class='directory'>/opt/gnome</filename> in the instructions
-  below.</para>
+  til <filename class='directory'>/opt/gnome</filename> i instruksjonene
+  under.</para>
 
 <screen><userinput>export GNOME_PREFIX=/opt/gnome-&gnome-version;&gnome-minor-version;</userinput></screen>
 
-  <para>The try-out group will also need to make all the following
-  configuration changes:</para>
+  <para>Prøvegruppen må også gjøre alt det følgende
+  konfigurasjonsendringer:</para>
 
-  <para>Add to your system or personal profile:</para>
+  <para>Legg til systemet eller den personlige profilen din:</para>
 
 <screen><literal>export PATH=${PATH}:/opt/gnome-&gnome-version;&gnome-minor-version;/bin
 export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/opt/gnome-&gnome-version;&gnome-minor-version;/lib/pkgconfig
@@ -58,7 +58,7 @@ export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/opt/gnome-&gnome-version;&gnome-minor
 export GNOME_LIBCONFIG_PATH=/usr/lib:/opt/gnome-&gnome-version;&gnome-minor-version;/lib
 export PYTHONPATH=${PYTHONPATH}:/usr/lib/python&python2-majorver;/site-packages:/opt/gnome-&gnome-version;/lib/python&python2-majorver;/site-packages</literal></screen>
 
-  <para>Add to your <filename>/etc/ld.so.conf</filename>:</para>
+  <para>Legg til din <filename>/etc/ld.so.conf</filename>:</para>
 
 <screen role='root'><userinput>cat &gt;&gt; /etc/ld.so.conf &lt;&lt; "EOF"
 <literal># Begin gnome addition to /etc/ld.so.conf
@@ -68,7 +68,7 @@ export PYTHONPATH=${PYTHONPATH}:/usr/lib/python&python2-majorver;/site-packages:
 # End gnome addition</literal>
 EOF</userinput></screen>
 
-  <para>Add to your <filename>/etc/man_db.conf</filename>:</para>
+  <para>Legg til din <filename>/etc/man_db.conf</filename>:</para>
 
 <screen role='root'><userinput>cat &gt;&gt; /etc/man_db.conf &lt;&lt; "EOF"
 <literal># Begin gnome addition to man_db.conf
@@ -79,9 +79,9 @@ MANDATORY_MANPATH /opt/gnome-&gnome-version;&gnome-minor-version;/share/man
 EOF</userinput></screen>
 
   <tip>
-    <para>Remember to execute <command>ldconfig</command> as the
-    <systemitem class='username'>root</systemitem> user after installation of
-    libraries to update the linker's library cache.</para>
+    <para>Husk å utføre <command>ldconfig</command> som
+    <systemitem class='username'>root</systemitem> bruker etter installasjon av
+    biblioteker for å oppdatere linkerens bibliotekbuffer.</para>
   </tip>
 
 </sect1>
