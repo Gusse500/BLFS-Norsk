@@ -23,84 +23,84 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to PPP</title>
+    <title>Introduksjon til PPP</title>
 
-    <para>The <application>PPP</application> package contains the
-    <command>pppd</command> daemon and the <command>chat</command>
-    program. This is used for connecting to other machines; often for connecting to
-    the Internet via a dial-up or PPPoE connection to an ISP.</para>
+    <para><application>PPP</application> pakken inneholder
+    <command>pppd</command> nissen og <command>chat</command>
+    program. Dette brukes for å koble til andre maskiner; ofte for å koble til
+    Internett via en oppringt eller PPPoE-tilkobling til en ISP.</para>
 
     &lfs70_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
-        <para>Download (HTTP): <ulink url="&ppp-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&ppp-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&ppp-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&ppp-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &ppp-md5sum;</para>
+        <para>Nedlasting MD5 sum: &ppp-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &ppp-size;</para>
+        <para>Nedlastingsstørrelse: &ppp-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &ppp-buildsize;</para>
+        <para>Estimert diskplass som kreves: &ppp-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &ppp-time;</para>
+        <para>Estimert byggetid: &ppp-time;</para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">PPP Dependencies</bridgehead>
+    <bridgehead renderas="sect3">PPP Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
-    <para role="optional"><xref linkend="libpcap"/> (needed to do PPP filtering)
-    and <xref linkend="linux-pam"/> (to authenticate incoming calls using PAM -
-    only needed by ISPs).
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional"><xref linkend="libpcap"/> (nødvendig for å gjøre PPP-filtrering)
+    og <xref linkend="linux-pam"/> (for å autentisere innkommende anrop ved hjelp av PAM -
+    bare nødvendig av Internett-leverandører).
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/PPP"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of PPP</title>
+    <title>Installasjon av PPP</title>
 
     <note id="ppp-kernel">
-      <para><application>PPP</application> support (CONFIG_PPP),
-      the asynchronous line discipline (CONFIG_PPP_ASYNC), the
-      driver for your serial port device and/or the PPP over Ethernet
-      (PPPoE) protocol driver (CONGIG_PPPOE) must be compiled into the
-      kernel or loaded as kernel modules.
-      Udev doesn't load the ppp_generic and pppoe modules automatically. If you
-      compiled them as modules they can be loaded by the modules bootscript if
-      they are mentioned in <filename>/etc/sysconfig/modules</filename>
-      file.</para>
+      <para><application>PPP</application> støtte (CONFIG_PPP),
+      den asynkrone linjedisiplinen (CONFIG_PPP_ASYNC), den
+      driver for din serielle portenhet og/eller PPP over Ethernet
+      (PPPoE) protokolldriver (CONGIG_PPPOE) må kompileres inn i
+      kjerne eller lastet som kjernemoduler.
+      Udev laster ikke ppp_generic og pppoe-modulene automatisk. Hvis du
+      kompilerte dem som moduler kan de lastes av modulene oppstartskript hvis
+      de er nevnt i <filename>/etc/sysconfig/modules</filename>
+      filen.</para>
     </note>
 
     <indexterm zone="ppp ppp-kernel">
-      <primary sortas="d-PPP-support">PPP support</primary>
+      <primary sortas="d-PPP-support">PPP støtte</primary>
     </indexterm>
 
-    <para>Create (as <systemitem class="username">root</systemitem>)
-    the group for users who may run <application>PPP</application>:</para>
+    <para>Opprett (som <systemitem class="username">root</systemitem>)
+    gruppen for brukere som kan kjøre <application>PPP</application>:</para>
 
 <screen role="root"><userinput>groupadd -g 52 pppusers</userinput></screen>
 
-    <para>Compile <application>PPP</application> by running the
-    following commands:</para>
+    <para>Kompilere <application>PPP</application> ved å kjøre
+    følgende kommandoer:</para>
 
 <screen><userinput>rm include/linux/if_pppol2tp.h &amp;&amp;
 ./configure --prefix=/usr &amp;&amp;
 make</userinput></screen>
 
-    <para>This package does not come with a test suite.</para>
+    <para>Denne pakken kommer ikke med en testpakke.</para>
 
-    <para>Now, as the <systemitem class="username">root</systemitem> user:</para>
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role='root'><userinput>make install &amp;&amp;
 install -d /etc/ppp/peers</userinput></screen>
@@ -108,45 +108,45 @@ install -d /etc/ppp/peers</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para><command>rm include/linux/if_pppol2tp.h</command>:
-    <application>PPP-&ppp-version;</application> contains an out of date copy
-    of the kernel header <filename>linux/if_pppol2tp.h</filename>. This needs to
-    be removed to <emphasis>force</emphasis> it to use the one installed in
-    <filename class="directory">/usr</filename>. If you don't remove this file
-    the build will still succeed (thanks to a poorly written
-    <filename>Makefile</filename>) but it will fail to compile the
+    <application>PPP-&ppp-version;</application> inneholder en utdatert kopi
+    av kjernedeklarasjonene <filename>linux/if_pppol2tp.h</filename>. Dette må
+    fjernes til <emphasis>å tvinge</emphasis> den for å bruke den som er installert i
+    <filename class="directory">/usr</filename>. Hvis du ikke fjerner denne filen
+    byggingen vil fortsatt lykkes (takket være en dårlig skrevet
+    <filename>Makefile</filename>) men det vil mislykkes i å kompilere
     <filename class="libraryfile">openl2tp.so</filename>,
     <filename class="libraryfile">pppol2tp.so</filename>,
-    and <filename class="libraryfile">rp-pppoe.so</filename> plugins:</para>
+    og <filename class="libraryfile">rp-pppoe.so</filename> programtilleggene:</para>
 
-    <para><command>install -d /etc/ppp/peers</command>: This command creates
-    a directory for PPP peer configuration files.</para>
+    <para><command>install -d /etc/ppp/peers</command>: Denne kommandoen oppretter
+    en mappe for PPP peer-konfigurasjonsfiler.</para>
 
 <!-- FIXME: the three options below are taken from pppd/Makefile.linux file.
      They have not been tested. There are other options, such as USE_SRP=y,
      that cannot work (in this case, because libsrp is not available from
      anywhere) - Alexander E. Patrakov -->
 
-    <para><parameter>USE_PAM=y</parameter>: Add this argument to the
-    <command>make</command> command to compile in support for PAM, usually
-    needed for authenticating inbound calls against a central database.</para>
+    <para><parameter>USE_PAM=y</parameter>: Legg dette argumentet til
+    <command>make</command> kommando for å kompilere som støtte for PAM, vanligvis
+    nødvendig for autentisering av innkommende anrop mot en sentral database.</para>
 
-    <para><parameter>HAVE_INET6=y</parameter>: Add this argument to the
-    <command>make</command> command to compile in support for IPv6.</para>
+    <para><parameter>HAVE_INET6=y</parameter>: Legg dette argumentet til
+    <command>make</command> kommando for å kompilere i støtte for IPv6.</para>
 
-    <para><parameter>CBCP=y</parameter>: Add this argument to the
-    <command>make</command> command to compile in support for the
-    Microsoft proprietary Callback Control Protocol.</para>
+    <para><parameter>CBCP=y</parameter>: Legg dette argumentet til
+    <command>make</command> kommando for å kompilere som støtte for
+    Microsofts proprietære tilbakeringingskontrollprotokoll.</para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring PPP</title>
+    <title>Konfigurere PPP</title>
 
     <sect3 id="ppp-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para><filename>/etc/ppp/*</filename></para>
 
@@ -157,31 +157,31 @@ install -d /etc/ppp/peers</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
-      <para>Add the users who may run <application>PPP</application> to the
-      <systemitem class="groupname">pppusers</systemitem> group:</para>
+      <para>Legg til brukerne som kan kjøre <application>PPP</application> til
+      <systemitem class="groupname">pppusers</systemitem> gruppen:</para>
 
 <screen role="root"><userinput>usermod -a -G pppusers <replaceable>&lt;username&gt;</replaceable></userinput></screen>
 
-      <para>Most internet service providers that use ppp give you a username
-      and password for you to use to authenticate yourself when you connect to
-      their servers. These secrets are kept in the files
-      <filename>/etc/ppp/pap-secrets</filename> or
-      <filename>/etc/ppp/chap-secrets</filename>. If you don't know whether
-      your ISP uses CHAP or PAP then create both files and put the same content
-      in both files.</para>
+      <para>De fleste Internett-leverandører som bruker ppp gir deg et brukernavn
+      og passord som du kan bruke for å autentisere deg selv når du kobler til
+      deres servere. Disse hemmelighetene oppbevares i filene
+      <filename>/etc/ppp/pap-secrets</filename> eller
+      <filename>/etc/ppp/chap-secrets</filename>. Hvis du ikke vet om
+      Internett-leverandøren din bruker CHAP eller PAP, og lag deretter begge filene og legg det samme innholdet
+      i begge filene.</para>
 
-      <para>If you have more than one ISP account the second column
-      (remotename) is used to identify between the different
-      usernames/passwords needed for the different ISPs. If you only have one
-      ISP account an asterisk will work fine in the second column.</para>
+      <para>Hvis du har mer enn én ISP-konto, den andre kolonnen
+      (remotename) brukes til å identifisere mellom de forskjellige
+      brukernavn/passord som trengs for de forskjellige Internett-leverandørene. Hvis du bare har en
+      ISP-konto en stjerne vil fungere fint i den andre kolonnen.</para>
 
-      <para>In this example the username given by the ISP is
-      <quote>jdoe</quote>, the password is <quote>guessit</quote>, the ISP uses
-      PAP and the user wants to give this account the remotename
-      <quote>dialup</quote> in order to distinguish it from other PPP
-      accounts:</para>
+      <para>I dette eksemplet er brukernavnet gitt av Internett-leverandøren
+      <quote>jdoe</quote>, passordet er <quote>guessit</quote>, Internett-leverandøren bruker
+      PAP og brukeren ønsker å gi denne kontoen det eksterne navnet
+      <quote>dialup</quote> for å skille den fra andre PPP
+      kontoer:</para>
 
 <screen role="root"><userinput>cat &gt;&gt;/etc/ppp/pap-secrets &lt;&lt;"EOF"</userinput>
 <literal># username      remotename    password
@@ -190,12 +190,12 @@ jdoe            dialup        guessit</literal>
 chmod 600 /etc/ppp/pap-secrets</userinput></screen>
 
     <sect4>
-      <title>DNS Server Configuration</title>
+      <title>DNS Serverkonfigurasjon</title>
 
-      <para>If you don't run your own caching DNS server (like
-      <xref linkend="bind"/>) <command>pppd</command> can ask your ISP for its
-      domain name servers and put them in <filename>/etc/ppp/resolv.conf</filename>.
-      If you want to use their domain name servers:</para>
+      <para>Hvis du ikke kjører din egen caching DNS-server (som
+      <xref linkend="bind"/>) <command>pppd</command> kan spørre Internett-leverandøren din om det
+      domenenavnservere og sette dem inn <filename>/etc/ppp/resolv.conf</filename>.
+      Hvis du vil bruke deres domenenavnservere:</para>
 
 <screen role="root"><userinput>mv /etc/resolv.conf{,.orig}
 ln -s ppp/resolv.conf /etc</userinput></screen>
@@ -203,10 +203,10 @@ ln -s ppp/resolv.conf /etc</userinput></screen>
     </sect4>
 
     <sect4>
-      <title>PPPoE connections</title>
+      <title>PPPoE forbindelser</title>
 
-      <para>In order to configure a PPPoE connection, create a peer file that
-      contains the connection details:</para>
+      <para>For å konfigurere en PPPoE-tilkobling, lag en peer-fil som
+      inneholder tilkoblingsdetaljer:</para>
 <screen role="root"><userinput>cat &gt;/etc/ppp/peers/<replaceable>peername</replaceable> &lt;&lt;"EOF"</userinput>
 <literal>plugin rp-pppoe.so <replaceable>eth0</replaceable>
 
@@ -244,13 +244,13 @@ chmod 600 /etc/ppp/peers/<replaceable>peername</replaceable></userinput></screen
     </sect4>
 
     <sect4>
-      <title>PPPoATM connections</title>
+      <title>PPPoATM forbindelser</title>
 
-      <para>PPPoA connections are very similar to PPPoE, the main differences
-      are that you use the pppoatm.so plugin instead of rp-pppoe.so, you don't
-      specify the ethernet interface (it uses ppp0) and you need to VP/VC
-      numbers that are used by your ISP (there is a list of VP/VC numbers
-      <ulink url="http://www.linux-usb.org/SpeedTouch/faq/index.html#q12">here
+      <para>PPPoA tilkoblinger er veldig like PPPoE, de viktigste forskjellene
+      er at du bruker pppoatm.so-programtillegget i stedet for rp-pppoe.so, gjør du ikke
+      spesifiser ethernet-grensesnittet (det bruker ppp0) og du må VP/VC
+      numre som brukes av Internett-leverandøren din (det er en liste over VP/VC-numre
+      <ulink url="http://www.linux-usb.org/SpeedTouch/faq/index.html#q12">her
       </ulink>)</para>
 
 <screen role="root"><userinput>cat &gt;/etc/ppp/peers/<replaceable>peername</replaceable> &lt;&lt;"EOF"</userinput>
@@ -295,7 +295,7 @@ chmod 600 /etc/ppp/peers/<replaceable>peername</replaceable></userinput></screen
     </sect4>
 
     <sect4>
-      <title>Dialup Modem Connection</title>
+      <title>Oppringt Modem forbindelser</title>
 
 <!-- This section has been tested with various ISPs in Yekaterinburg,
      Russia using Lucent WinModem. I cannot test it anymore, because
@@ -304,19 +304,19 @@ chmod 600 /etc/ppp/peers/<replaceable>peername</replaceable></userinput></screen
      and nobody complained about non-working dialup on the LFS LiveCD.
      - Alexander E. Patrakov -->
 
-      <para>Dialup connections are established with the help of a modem
-      connected to a computer and the telephone line. The modem dials a
-      telephone number of the ISP's modem, and they exchange data using
-      the signal frequencies 300-4000 Hz. Typical data transfer
-      rate is 40-50 kilobits per second, and the gateway ping time
-      (latency) is up to 300-400 ms. In order to configure the
-      dialup connection, it is required to know the telephone number of
-      the ISP's modem pool, the username and the password.</para>
+      <para>Oppringte tilkoblinger opprettes ved hjelp av et modem
+      koblet til en datamaskin og telefonlinjen. Modemet ringer en
+      telefonnummeret til internettleverandørens modem, og de utveksler data vha
+      signalfrekvensene 300-4000 Hz. Typisk dataoverføring
+      hastigheten er 40-50 kilobits per sekund, og gateway-pingtiden
+      (latens) er opptil 300-400 ms. For å konfigurere
+      oppringt tilkobling, er det nødvendig å vite telefonnummeret til
+      Internett-leverandørens modempool, brukernavnet og passordet.</para>
 
-      <para>In order to configure a dialup connection, two files have to
-      be created: a chat script that automates the connection procedure
-      (common for all dialup accounts), and a peer file that provides
-      configuration information about a specific connection to
+      <para>For å konfigurere en oppringt tilkobling, må to filer
+      bli opprettet: et chat-skript som automatiserer tilkoblingsprosedyren
+      (felles for alle oppringt kontoer), og en peer-fil som gir
+      konfigurasjonsinformasjon om en bestemt tilkobling til
       <command>pppd</command>:</para>
 <screen role="root"><userinput>cat &gt;/etc/ppp/dialup.chat &lt;&lt;"EOF"</userinput>
 <literal>ABORT BUSY ABORT 'NO CARRIER' ABORT VOICE ABORT 'NO DIALTONE'
@@ -354,30 +354,30 @@ noipdefault
 usepeerdns</literal>
 <userinput>EOF</userinput></screen>
 
-      <para>The first three lines of the
-      <filename>/etc/ppp/dialup.chat</filename> file abort the script when
-      it receives an indication of an error from the modem. Then the timeout
-      is set to 5 seconds and the script checks that the modem responds to
-      the dummy AT command. If not, measures are taken to dewedge it
-      (by interrupting the data transfer and going on hook). Then the
-      telephone number is dialed, and the script waits for the answer for
-      75 seconds. The serial connection is considered established when the
-      modem sends the string CONNECT.</para>
+      <para>De tre første linjene i
+      <filename>/etc/ppp/dialup.chat</filename> fil avbryte skriptet når
+      den mottar en indikasjon på en feil fra modemet. Så timeout
+      er satt til 5 sekunder og skriptet sjekker at modemet reagerer på
+      dummy AT-kommandoen. Hvis ikke, iverksettes tiltak for å fjerne den
+      (ved å avbryte dataoverføringen og legge på røret). Og så
+      telefonnummer slås, og skriptet venter på svar på
+      75 sekunder. Den serielle forbindelsen anses som etablert når
+      modemet sender strengen CONNECT.</para>
 
     </sect4>
 
     <sect4>
-      <title>GPRS and EDGE Connections</title>
+      <title>GPRS og EDGE Forbindelser</title>
 
 <!-- This section has been tested with GPRS service from MOTIV in
      Yekaterinburg, Russia. According to forum messages, the procedure
      also works with EDGE, but my cellular phone (Motorola C350) does not
      support EDGE. - Alexander E. Patrakov -->
 
-      <para>GPRS and EDGE connections are established with the help of a
-      cellular phone connected to a computer via serial, USB, or Bluetooth.
-      The phone exchanges data packets with the nearest base station,
-      which can be up to 35 kilometers away.
+      <para>GPRS- og EDGE-forbindelser opprettes ved hjelp av en
+      mobiltelefon koblet til en datamaskin via seriell, USB eller Bluetooth.
+      Telefonen utveksler datapakker med nærmeste basestasjon,
+      som kan være opptil 35 kilometer unna.
 
       <!-- FIXME: watch for new standards! SkyLink is already offering
            3.1 megabits per second with CDMA mobile phones, and
@@ -385,22 +385,22 @@ usepeerdns</literal>
            a regular dialup setup with the telephone number "#777",
            username "mobile" and password "internet" works with SkyLink. -->
 
-      The maximum possible data transfer rate is 170 kilobits per second
-      for GPRS and 474 kilobits per second for EDGE, but many cellular
-      operators impose lower limits, such as 64 kilobits per second. The
-      gateway ping time is 900 ms for GPRS, which makes playing many online
-      games impossible and causes connection to ICQ to be unreliable.
-      In order to configure a GPRS or EDGE connection,
-      it is required to know the access point name (APN) and, rarely, the
-      username and the password.
-      In most cases, billing is based on the telephone number, and the
-      username/password pair is not needed, as assumed in the example
-      below.</para>
+      Maksimal mulig dataoverføringshastighet er 170 kilobits per sekund
+      for GPRS og 474 kilobits per sekund for EDGE, men mange mobilnett
+      operatører pålegger lavere grenser, for eksempel 64 kilobits per sekund. De
+      gateway-pingtiden er 900 ms for GPRS, noe som gjør å spille mange online
+      spill umulig og fører til at tilkoblingen til ICQ er upålitelig.
+      For å konfigurere en GPRS- eller EDGE-tilkobling,
+      det kreves å vite tilgangspunktnavnet (APN) og, sjelden,
+      brukernavn og passord.
+      I de fleste tilfeller er fakturering basert på telefonnummeret og
+      brukernavn/passord-par er ikke nødvendig, som antatt i eksempelet
+      under.</para>
 
-      <para>In order to configure a GPRS connection, two files have to
-      be created: a chat script that automates the connection procedure
-      (common for all GPRS accounts), and a peer file that provides
-      configuration information about a specific connection to
+      <para>For å konfigurere en GPRS-tilkobling, må to filer
+      bli opprettet: et chat-skript som automatiserer tilkoblingsprosedyren
+      (felles for alle GPRS-kontoer), og en peer-fil som gir
+      konfigurasjonsinformasjon om en bestemt tilkobling til
       <command>pppd</command>:</para>
 <screen role="root"><userinput>cat &gt;/etc/ppp/gprs.chat &lt;&lt;"EOF"</userinput>
 <literal>ABORT BUSY ABORT 'NO CARRIER' ABORT VOICE ABORT 'NO DIALTONE'
@@ -444,23 +444,23 @@ usepeerdns</literal>
     </sect4>
 
     <sect4>
-      <title>Establishing the connection manually</title>
+      <title>Etablere forbindelsen manuelt</title>
 
-      <para>In order to establish a PPP connection described by the
+      <para>For å etablere en PPP-forbindelse beskrevet av
       <filename>/etc/ppp/peers/<replaceable>peername</replaceable></filename>
-      file run (as <systemitem class="username">root</systemitem> or as a member
-      of the <systemitem class="groupname">pppusers</systemitem> group):</para>
+      fil kjør (som <systemitem class="username">root</systemitem> eller som medlem
+      av <systemitem class="groupname">pppusers</systemitem> gruppen):</para>
 <screen><userinput>pppd call <replaceable>peername</replaceable></userinput></screen>
 
-      <para>In order to stop the connection, run:</para>
+      <para>For å stoppe tilkoblingen, kjør:</para>
 <screen><userinput>killall pppd</userinput></screen>
 
       <!--  There are an infinite number of ways that computers can be
       connected together. Trying to write a bootscript that can cope with every
       possible network configuration is the road to madness. Andrew Benton -->
 
-      <para>Writing a bootscript that brings up the connection during the boot
-      process is left as an exercise for the reader ;)</para>
+      <para>Skrive et bootscript som henter opp forbindelsen under oppstarten
+      prosessen overlates som en øvelse for leseren ;)</para>
 
     </sect4>
 
@@ -468,33 +468,33 @@ usepeerdns</literal>
 
   </sect2>
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>chat, pppd, pppdump, pppoe-discovery and pppstats</seg>
-        <seg>Several plugin modules installed in
+        <seg>chat, pppd, pppdump, pppoe-discovery og pppstats</seg>
+        <seg>Flere programtillegg moduler installert i
         <filename class='directory'>/usr/lib/pppd/&ppp-version;</filename></seg>
-        <seg>/etc/ppp, /usr/include/pppd and /usr/lib/pppd</seg>
+        <seg>/etc/ppp, /usr/include/pppd og /usr/lib/pppd</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="chat">
         <term><command>chat</command></term>
         <listitem>
-          <para>defines a conversational exchange between the computer and the
-          modem. Its primary purpose is to establish the connection between the
-          Point-to-Point Protocol Daemon (PPPD) and the remote
-          <command>pppd</command> process.</para>
+          <para>definerer en samtaleutveksling mellom datamaskinen og
+          modem. Dens primære formål er å etablere forbindelsen mellom
+          Point-to-Point Protocol Daemon (PPPD) og fjernkontrollen
+          <command>pppd</command> prosess.</para>
           <indexterm zone="ppp chat">
             <primary sortas="b-chat">chat</primary>
           </indexterm>
@@ -504,7 +504,7 @@ usepeerdns</literal>
       <varlistentry id="pppd">
         <term><command>pppd</command></term>
         <listitem>
-          <para>is the Point to Point Protocol daemon.</para>
+          <para>er punkt-til-punkt-protokoll-nissen.</para>
           <indexterm zone="ppp pppd">
             <primary sortas="b-pppd">pppd</primary>
           </indexterm>
@@ -514,8 +514,8 @@ usepeerdns</literal>
       <varlistentry id="pppdump">
         <term><command>pppdump</command></term>
         <listitem>
-          <para>is used to convert
-          <application>PPP</application> record files to a readable
+          <para>brukes til å konvertere
+          <application>PPP</application> ta opp filer til en lesbar
           format.</para>
           <indexterm zone="ppp pppdump">
             <primary sortas="b-pppdump">pppdump</primary>
@@ -526,8 +526,8 @@ usepeerdns</literal>
       <varlistentry id="pppoe-discovery">
         <term><command>pppoe-discovery</command></term>
         <listitem>
-          <para>performs the same discovery process as the pppoe plugin, but
-          does not initiate a <application>PPP</application> session.</para>
+          <para>utfører samme oppdagelsesprosess som pppoe-plugin, men
+          setter ikke i gang en <application>PPP</application> økt.</para>
           <indexterm zone="ppp pppoe-discovery">
             <primary sortas="b-pppoe-discovery">pppoe-discovery</primary>
           </indexterm>
@@ -537,8 +537,8 @@ usepeerdns</literal>
       <varlistentry id="pppstats">
         <term><command>pppstats</command></term>
         <listitem>
-          <para>is used to print
-          <application>PPP</application> statistics.</para>
+          <para>brukes til å skrive ut
+          <application>PPP</application> statistikk.</para>
           <indexterm zone="ppp pppstats">
             <primary sortas="b-pppstats">pppstats</primary>
           </indexterm>
