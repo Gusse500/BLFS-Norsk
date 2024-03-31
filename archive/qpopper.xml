@@ -23,64 +23,64 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to Qpopper</title>
+    <title>Introduksjon til Qpopper</title>
 
-    <para>The <application>Qpopper</application> package contains a
-    POP3 mail server.</para>
+    <para><application>Qpopper</application> pakken inneholder en
+    POP3 e-postserver.</para>
 
     &lfs74_built;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
-        <para>Download (HTTP): <ulink url="&qpopper-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&qpopper-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&qpopper-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&qpopper-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &qpopper-md5sum;</para>
+        <para>Nedlasting MD5 sum: &qpopper-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &qpopper-size;</para>
+        <para>Nedlastingsstørrelse: &qpopper-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &qpopper-buildsize;</para>
+        <para>Estimert diskplass som kreves: &qpopper-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &qpopper-time;</para>
+        <para>Estimert byggetid: &qpopper-time;</para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Qpopper Dependencies</bridgehead>
+    <bridgehead renderas="sect3">Qpopper Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
-    <para role="required">An <xref linkend="server-mail"/></para>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">En <xref linkend="server-mail"/></para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="openssl"/>,
-      <xref linkend="linux-pam"/>, and
+      <xref linkend="linux-pam"/>, og
       <xref linkend="mitkrb"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/qpopper"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of Qpopper</title>
+    <title>Installasjon av Qpopper</title>
 
-    <para>Install <application>Qpopper</application> with the following
-    commands:</para>
+    <para>Installer <application>Qpopper</application> ved å kjøre følgende
+    kommandoer:</para>
 
 <screen><userinput>./configure --prefix=/usr --enable-standalone &amp;&amp;
 make</userinput></screen>
 
-    <para>This package does not come with a test suite.</para>
+    <para>Denne pakken kommer ikke med en testpakke.</para>
 
-    <para>Now, as the <systemitem class="username">root</systemitem> user:</para>
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role="root"><userinput>make install &amp;&amp;
 install -D -m644 GUIDE.pdf /usr/share/doc/qpopper-&qpopper-version;/GUIDE.pdf</userinput></screen>
@@ -88,23 +88,23 @@ install -D -m644 GUIDE.pdf /usr/share/doc/qpopper-&qpopper-version;/GUIDE.pdf</u
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
-    <para><option>--enable-standalone</option>: This option gives the
-    flexibility to run <application>Qpopper</application> in
-    standalone mode.</para>
+    <para><option>--enable-standalone</option>: Dette alternativet gir
+    fleksibilitet til å kjøre <application>Qpopper</application> i
+    frittstående modus.</para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring Qpopper</title>
+    <title>Konfigurere Qpopper</title>
 
     <sect3 id="qpopper-config">
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
-      <para>Update the <application>Syslog</application> configuration file and
-      force the <command>syslogd</command> daemon to reread the new file so that
-      <application>Qpopper</application> events are logged:</para>
+      <para>Oppdater <application>Syslog</application> konfigurasjonsfil og
+      tvinge <command>syslogd</command> nissen for å lese den nye filen på nytt slik at
+      <application>Qpopper</application> hendelser logges:</para>
 
       <indexterm zone="qpopper qpopper-config">
         <primary sortas="e-etc-syslog.conf">/etc/syslog.conf</primary>
@@ -113,10 +113,10 @@ install -D -m644 GUIDE.pdf /usr/share/doc/qpopper-&qpopper-version;/GUIDE.pdf</u
 <screen role="root"><userinput>echo "local0.notice;local0.debug /var/log/POP.log" &gt;&gt; /etc/syslog.conf &amp;&amp;
 killall -HUP syslogd</userinput></screen>
 
-      <para id="qpopper-init">If you want <application>Qpopper</application> to
-      start automatically when the system is booted, install the
-      <filename>/etc/rc.d/init.d/qpopper</filename> init script included in the
-      <xref linkend="bootscripts"/> package.</para>
+      <para id="qpopper-init">Hvis du vil <application>Qpopper</application> til å
+      starte automatisk når systemet startes opp, installer
+      <filename>/etc/rc.d/init.d/qpopper</filename> init skriptet inkludert i
+      <xref linkend="bootscripts"/> pakken.</para>
 
       <indexterm zone="qpopper qpopper-init">
         <primary sortas="f-qpopper">popper</primary>
@@ -124,8 +124,8 @@ killall -HUP syslogd</userinput></screen>
 
 <screen role="root"><userinput>make install-qpopper</userinput></screen>
 
-      <para>This startup procedure uses a configuration file.  The details of
-      the configuration file can be found in the documentation file
+      <para>Denne oppstartsprosedyren bruker en konfigurasjonsfil. Detaljene ved
+      konfigurasjonsfilen finner du i dokumentasjonsfilen
       <filename>GUIDE.pdf</filename>.</para>
 
 <screen role="root"><userinput>cat &gt; /etc/mail/qpopper.conf &lt;&lt; "EOF"
@@ -144,8 +144,8 @@ set statistics = true
 # End /etc/shells</literal>
 EOF</userinput></screen>
 
-      <para>If you use <command>inetd</command>, the following command will
-      add the <application>Qpopper</application> entry to
+      <para>Hvis du bruker <command>inetd</command>, følgende kommando vil
+      legge til <application>Qpopper</application> inngang til
       <filename>/etc/inetd.conf</filename>:</para>
 
       <indexterm zone="qpopper qpopper-config">
@@ -155,37 +155,37 @@ EOF</userinput></screen>
 <screen role="root"><userinput>echo "pop3 stream tcp nowait root /usr/sbin/popper popper" &gt;&gt; /etc/inetd.conf &amp;&amp;
 killall inetd || inetd</userinput></screen>
 
-      <para>Issue a <command>killall -HUP inetd</command> to reread the
-      changed <filename>inetd.conf</filename> file.</para>
+      <para>Utsted en <command>killall -HUP inetd</command> for å lese på nytt
+      endret <filename>inetd.conf</filename> fil.</para>
 
     </sect3>
 
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Program</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>popper</seg>
-        <seg>None</seg>
-        <seg>None</seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="popper-qpopper">
         <term><command>popper</command></term>
         <listitem>
-          <para>is the POP3 server daemon.</para>
+          <para>er POP3 server nissen.</para>
           <indexterm zone="qpopper popper-qpopper">
             <primary sortas="b-popper">popper</primary>
           </indexterm>
