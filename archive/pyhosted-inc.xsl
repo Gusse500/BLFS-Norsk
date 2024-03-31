@@ -8,84 +8,84 @@
 <!ENTITY % general-entities SYSTEM "../../../general.ent">
  %general-entities;
 
-  <!ENTITY pythonhosted-download-http "See Below">
+  <!ENTITY pythonhosted-download-http "Se Under">
   <!ENTITY pythonhosted-download-ftp  " ">
-  <!ENTITY pythonhosted-md5sum        "See Below">
+  <!ENTITY pythonhosted-md5sum        "Se Under">
   <!ENTITY pythonhosted-size          "14 MB">
   <!ENTITY pythonhosted-buildsize     "2.2 MB">
   <!ENTITY pythonhosted-time          "TBD SBU)">
 ]>
 
-<sect2 id="pythonhosted" xreflabel="pythonhosted files">
+<sect2 id="pythonhosted" xreflabel="pythonhosted filer">
    <!--<?dbhtml filename="pythonhosted.html"?>-->
 
-  <title>Building pythonhosted.org Files</title>
+  <title>Bygge pythonhosted.org Filer</title>
 
   <indexterm zone="pythonhosted">
      <primary sortas="a-pythonhosted">pythonhosted</primary>
   </indexterm>
 
   <sect3 role="package">
-   <title>Introduction to pythonhosted.org Files</title>
+   <title>Introduksjon til pythonhosted.org Filer</title>
 
   <para>
-     This section is for user convenience and is optional.
-     It can be used to fetch and install all the pythonhosted.org module
-     packages below in two convenient scripts.
+     Denne delen er for brukervennlighet og er valgfri.
+     Den kan brukes til å hente og installere hele pythonhosted.org modul
+     pakker nedenfor i to praktiske skript.
   </para>
 
   &lfs112_checked;
 
-  <bridgehead renderas="sect4">Package Information</bridgehead>
+  <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
   <itemizedlist spacing="compact">
     <listitem>
       <para>
-        Download (HTTP): &pythonhosted-download-http;
+        Nedlasting (HTTP): &pythonhosted-download-http;
       </para>
     </listitem>
     <listitem>
       <para>
-        Download (FTP): <ulink url="&pythonhosted-download-ftp;"/>
+        Nedlasting (FTP): <ulink url="&pythonhosted-download-ftp;"/>
       </para>
     </listitem>
     <listitem>
       <para>
-        Download MD5 sum: &pythonhosted-md5sum;
+        Nedlasting MD5 sum: &pythonhosted-md5sum;
       </para>
     </listitem>
     <listitem>
       <para>
-        Download size: &pythonhosted-size;
+        Nedlastingsstørrelse: &pythonhosted-size;
       </para>
     </listitem>
     <listitem>
       <para>
-        Estimated disk space required: &pythonhosted-buildsize;
+        Estimert diskplass som kreves: &pythonhosted-buildsize;
       </para>
     </listitem>
     <listitem>
       <para>
-        Estimated build time: &pythonhosted-time;
+        Estimert byggetid: &pythonhosted-time;
       </para>
     </listitem>
   </itemizedlist>
 
-  <bridgehead renderas="sect4">Pythonhosted.org Dependencies</bridgehead>
+  <bridgehead renderas="sect4">Pythonhosted.org Avhengigheter</bridgehead>
 
-  <bridgehead renderas="sect5">Required</bridgehead>
+  <bridgehead renderas="sect5">Påkrevd</bridgehead>
   <para role="required">
     TBD
     <!--<xref linkend="fontforge"/>,-->
     <!-- does not seem to be needed as of 5.22.4 <xref linkend="GConf"/>, -->
   </para>
 
-  <bridgehead renderas="sect5">Recommended</bridgehead>
+  <bridgehead renderas="sect5">Anbefalt</bridgehead>
   <para role="recommended">
      TBD
      <!--<xref linkend="fftw"/>,-->
   </para>
 
-  <bridgehead renderas="sect5">Optional</bridgehead>
+  <bridgehead renderas="sect5">Valgfri</bridgehead>
   <para role="optional">
      TBD
      <!--
@@ -93,22 +93,22 @@
     <ulink url="http://www.dest-unreach.org/socat/">socat</ulink> (for pam_kwallet)-->
   </para>
   <!--
-  <para condition="html" role="usernotes">User Notes:
+  <para condition="html" role="usernotes">Brukernotater:
   <ulink url="&blfs-wiki;/pythonhosted"/></para>
   -->
   </sect3>
 
    <sect3>
-    <title>Downloading All Pythonhosted Module Files</title>
+    <title>Laste ned alle Pythonhosted modulfiler</title>
 
     <para>
-      The easiest way to install the modules from the files.pythonhosted.org site
-      is to run a script to install them all at once.
+      Den enkleste måten å installere modulene på fra nettstedet files.pythonhosted.org
+      er å kjøre et skript for å installere dem alle samtidig.
     </para>
 
     <para>
-      The order of building files is important due to internal dependencies.
-      First, create the list of files in the proper order as follows:
+      Rekkefølgen på byggefiler er viktig på grunn av interne avhengigheter.
+      Først lager du listen over filer i riktig rekkefølge som følger:
     </para>
 
 <screen><userinput>cat &gt; pythonhosted-files.md5 &lt;&lt; "EOF"
@@ -117,7 +117,7 @@
 EOF</userinput></screen>
 
     <para>
-      Next, create a script to fetch the files:
+      Deretter lager du et skript for å hente filene:
     </para>
 
     <screen><userinput>cat &gt; get-pythonhosted-files.sh &lt;&lt; "EOF"
@@ -140,7 +140,7 @@ done
 EOF</literal></userinput></screen>
 
     <para>
-      Run the script and check the files:
+      Kjør skriptet og sjekk filene:
     </para>
 
    <screen><userinput>bash get-pythonhosted-files.sh &amp;&amp;
@@ -149,10 +149,10 @@ EOF</literal></userinput></screen>
    </sect3>
 
   <sect3 role="installation">
-    <title>Installation of Pythonhosted Modules</title>
+    <title>Installasjon av Pythonhosted Modules</title>
 
     <para>
-      Set up a script to install all of the packages:
+      Sett opp et skript for å installere alle pakkene:
     </para>
 
     <screen><userinput>cat &gt; install-pythonhosted-files.sh &lt;&lt; "EOF"
@@ -191,15 +191,15 @@ do
 done</literal></userinput></screen>
 
     <para>
-       Now run the script to install the files.  If the script is run
-       multiple times, it will not try to reinstall the modules unless
-       the version in the .md5 file has been changed.
+       Kjør nå skriptet for å installere filene. Hvis skriptet kjøres
+       flere ganger, vil den ikke prøve å installere modulene på nytt med mindre
+       versjonen i .md5-filen er endret.
     </para>
 
    <screen><userinput>bash install-pythonhosted-files.sh</userinput></screen>
 
-   <para>Some of the packages have test procedures. See the individual
-   package sections below to run any desired tests.</para>
+   <para>Noen av pakkene har testprosedyrer. Se den enkelte
+   pakkedelene nedenfor for å kjøre eventuelle ønskede tester.</para>
 
   </sect3>
 
@@ -207,7 +207,7 @@ done</literal></userinput></screen>
     <title>Contents</title>
 
     <para>
-       See the contents of the individual package sections below.
+       Se innholdet i de enkelte pakkedelene nedenfor.
     </para>
 
   </sect3>
