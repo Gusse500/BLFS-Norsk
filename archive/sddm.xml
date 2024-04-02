@@ -23,87 +23,87 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to SDDM</title>
+    <title>Introduksjon til SDDM</title>
 
     <para>
-      The <application>SDDM</application> package contains a lightweight
-      display manager based upon <application>Qt</application> and QML.
+      <application>SDDM</application> pakken inneholder en lettvekt
+      skjermbehandler basert på <application>Qt</application> og QML.
     </para>
 
     &lfs81_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&sddm-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&sddm-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&sddm-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&sddm-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &sddm-md5sum;
+          Nedlasting MD5 sum: &sddm-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &sddm-size;
+          Nedlastingsstørrelse: &sddm-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &sddm-buildsize;
+          Estimert diskplass som kreves: &sddm-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &sddm-time;
+          Estimert byggetid: &sddm-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">SDDM Dependencies</bridgehead>
+    <bridgehead renderas="sect3">SDDM Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>,
-      <xref linkend="extra-cmake-modules"/> and
+      <xref linkend="extra-cmake-modules"/> og
       <xref linkend="qt5"/>
     </para>
 
-    <bridgehead renderas="sect4">Recommended</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="linux-pam"/> and
+      <xref linkend="linux-pam"/> og
       <xref linkend="upower"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="docutils"/> (for the man pages)
+      <xref linkend="docutils"/> (for manualsidene)
     </para>
 
-    <bridgehead renderas="sect4" revision="sysv">Runtime Dependency</bridgehead>
+    <bridgehead renderas="sect4" revision="sysv">Kjøretids Avhengighet</bridgehead>
     <para role="required" revision="sysv">
       <xref role="runtime" linkend="consolekit"/>
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/sddm"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of SDDM</title>
+    <title>Installasjon av SDDM</title>
 
     <para>
-      First, create a dedicated user and group to take
-      control of the <command>sddm</command> daemon after it is
-      started. Issue the following commands as the
-      <systemitem class="username">root</systemitem> user:
+      Først oppretter du en dedikert bruker og gruppe å ta
+      kontroll av <command>sddm</command> nissen etter det er
+      startet. Utfør følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>groupadd -g 64 sddm &amp;&amp;
@@ -113,8 +113,8 @@ useradd  -c "SDDM Daemon" \
          -s /bin/false sddm</userinput></screen>
 
     <para revision="sysv">
-      Next, fix the application to start <command>upowerd</command>,
-      if necessary, and after login, start the session with
+      Deretter fikser du programmet for å starte <command>upowerd</command>,
+      om nødvendig, og etter pålogging, start økten med
       <command>ck-launch-session</command>:
     </para>
 
@@ -125,8 +125,8 @@ sed -e '/\$@$/s/exec/&amp; ck-launch-session/' \
     -i data/scripts/Xsession</userinput></screen>
 
     <para revision="sysv">
-      For sddm-0.16.0, ConsoleKit support has been added, but is broken. Remove
-      it with:
+      For sddm-0.16.0 har ConsoleKit-støtte blitt lagt til, men er ødelagt. Fjerne
+      det med:
     </para>
 <!-- This removes also logind support. Hopefully should be fixed for next
      version -->
@@ -134,8 +134,8 @@ sed -e '/\$@$/s/exec/&amp; ck-launch-session/' \
     -i src/daemon/LogindDBusTypes.cpp</userinput></screen>
 
     <para>
-      Install <application>SDDM</application> by running the following
-      commands:
+      Installer <application>SDDM</application> ved å kjøre følgende
+      kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
@@ -157,11 +157,11 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -170,38 +170,38 @@ install -v -dm755 -o sddm -g sddm /var/lib/sddm</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: This switch is used to
-      apply additional compiler optimizations.
+      <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren er brukt til
+      å bruke ekstra kompilatoroptimaliseringer.
     </para>
 
     <para revision="sysv">
-      <parameter>-DENABLE_JOURNALD=OFF</parameter>: This switch is used because
-      this version of BLFS does not support <application>systemd</application>.
+      <parameter>-DENABLE_JOURNALD=OFF</parameter>: Denne bryteren brukes pga
+      denne versjonen av BLFS støtter ikke <application>systemd</application>.
     </para>
 
     <para revision="sysv">
       <parameter>-DDBUS_CONFIG_FILENAME=sddm_org.freedesktop.DisplayManager.conf</parameter>:
-      This switch prevents the file <filename>
-      /etc/dbus-1/system.d/org.freedesktop.DisplayManager.conf</filename> from
-      being overwritten, as it may be used by other DM's.
+      Denne bryteren forhindrer filen <filename>
+      /etc/dbus-1/system.d/org.freedesktop.DisplayManager.conf</filename> fra å
+      blir overskrevet, da den kan brukes av andre DM-er.
     </para>
 
     <para>
-      <option>-DBUILD_MAN_PAGES=ON</option>: This switch may be used if you want
-      the man pages to be installed. Notice that you need
-      <xref linkend="docutils"/> to build them.
+      <option>-DBUILD_MAN_PAGES=ON</option>: Denne bryteren kan brukes hvis du vil
+      manualsidene som skal installeres. Legg merke til at du trenger
+      <xref linkend="docutils"/> for å bygge dem.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring SDDM</title>
+    <title>Konfigurere SDDM</title>
 
     <sect3 id="sddm-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
       <para>
         /usr/lib/sddm/sddm.conf.d/*, /etc/sddm.conf.d/*, and /etc/sddm.conf
@@ -220,70 +220,70 @@ install -v -dm755 -o sddm -g sddm /var/lib/sddm</userinput></screen>
       </indexterm>
 
       <para>
-        Only <filename>/etc/sddm.conf</filename> is installed, but the
-        configuration files are read in the following order: all files in
-        <filename class="directory">/usr/lib/sddm/sddm.conf.d</filename> in
-        alphabetical order, then all files in <filename class="directory">
-        /etc/sddm.conf.d</filename> in alphabetical order, and finally
+        Bare <filename>/etc/sddm.conf</filename> er installert, men
+        konfigurasjonsfiler leses i følgende rekkefølge: alle filer i
+        <filename class="directory">/usr/lib/sddm/sddm.conf.d</filename> i
+        alfabetisk rekkefølge, og deretter alle filene i <filename class="directory">
+        /etc/sddm.conf.d</filename> i alfabetisk rekkefølge, og til slutt
         <filename>/etc/sddm.conf</filename>.
       </para>
 
       <para>
-        Normally, you want to edit this file. For example, if Xorg is installed
-        in /opt, use your preferred editor as the <systemitem
-        class="username">root</systemitem> user to replace the default
-        <emphasis>XauthPath</emphasis> value by
-        <emphasis>/opt/xorg/bin/xauth</emphasis>. Or, as the <systemitem
-        class="username">root</systemitem> user, issue:
+        Vanligvis vil du redigere denne filen. For eksempel hvis Xorg er installert
+        i /opt, bruk din foretrukne editor som <systemitem
+        class="username">root</systemitem> bruker for å erstatte standarden
+        <emphasis>XauthPath</emphasis> verdi med
+        <emphasis>/opt/xorg/bin/xauth</emphasis>. Eller, som <systemitem
+        class="username">root</systemitem> bruker, utsted:
       </para>
 
 <screen role="root"><userinput>sed -e '/ServerPath/ s|usr|opt/xorg|' \
     -i.orig /etc/sddm.conf</userinput></screen>
 
       <para>
-        This command will do the substitution and create a copy of the original
-        file with name <filename>/etc/sddm.conf.orig</filename>.
+        Denne kommandoen vil gjøre erstatningen og lage en kopi av originalen
+        fil med navn <filename>/etc/sddm.conf.orig</filename>.
       </para>
 
       <para>
-        From now on, we will describe how to modify configurations using sed.
-        Of course, you may instead use your preferred editor as the <systemitem
-        class="username">root</systemitem> user.
+        Fra nå av vil vi beskrive hvordan du endrer konfigurasjoner ved å bruke sed.
+        Selvfølgelig kan du i stedet bruke din foretrukne editor som <systemitem
+        class="username">root</systemitem> bruker.
       </para>
 
       <para>
-        For security reasons, you normally want the default
-        <emphasis>ServerArguments=-nolisten tcp</emphasis>, unless a remote
-        machine needs access to the local X server. In that case, as the
-        <systemitem class="username">root</systemitem> user, issue:
+        Av sikkerhetsgrunner vil du vanligvis ha standarden
+        <emphasis>ServerArguments=-nolisten tcp</emphasis>, med mindre en ekstern
+        maskinen trenger tilgang til den lokale X-serveren. I så fall, som
+        <systemitem class="username">root</systemitem> bruker, utsted:
       </para>
 
 <screen role="root"><userinput>sed -e 's/-nolisten tcp//'\
     -i /etc/sddm.conf</userinput></screen>
 
       <para>
-        Desktop (Notebook) users, normally wish the Num Lock key on (off).  For
-        that, as the <systemitem
-        class="username">root</systemitem> user, issue:
+        Desktop-brukere (notebook) ønsker vanligvis Num Lock-tasten på (av). Til
+         det, som <systemitem
+        class="username">root</systemitem> bruker, utsted:
       </para>
 
 <screen role="root"><userinput>sed -e 's/\"none\"/\"on\"/' \
     -i /etc/sddm.conf</userinput></screen>
 
       <para>
-        for Desktop users. For Notebook users, replace \"on\" by \"off\",
-        in the command above.
+        for skrivebordsbrukere. For bærbare brukere, erstatt \"på\" med \"av\",
+        i kommandoen ovenfor.
       </para>
 
    </sect3>
 
     <sect3 id="sddm-bootscript">
-      <title>Boot Script</title>
+      <title>Oppstartsskript</title>
 
       <para>
-        Install the <filename revision="sysv">/etc/rc.d/init.d/sddm</filename>
-        init script from the <xref linkend="bootscripts" revision="sysv"/>
-        <xref linkend="systemd-units" revision="systemd"/> package.
+        Installer <filename revision="sysv">/etc/rc.d/init.d/sddm</filename>
+        init skriptet fra <xref linkend="bootscripts" revision="sysv"/>
+        <xref linkend="systemd-units" revision="systemd"/> pakken.
       </para>
 
       <indexterm zone="sddm sddm-bootscript">
@@ -297,14 +297,14 @@ install -v -dm755 -o sddm -g sddm /var/lib/sddm</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Linux PAM Configuration</title>
+      <title>Linux PAM Konfigurasjon</title>
 
       <para>
-        If you have built <application>SDDM</application>
-        with <application>Linux PAM</application> support,
-        create the necessary configuration files by running
-        the following commands as the <systemitem
-        class="username">root</systemitem> user:
+        Hvis du har bygget <application>SDDM</application>
+        med <application>Linux PAM</application> støtte,
+        opprette de nødvendige konfigurasjonsfilene ved å kjøre
+        følgende kommandoer som <systemitem
+        class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root" revision="sysv"><userinput>cat &gt; /etc/pam.d/sddm &lt;&lt; "EOF"
@@ -412,30 +412,30 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3 id="sddm-init" revision="sysv">
-      <title>Starting sddm</title>
+      <title>Starte sddm</title>
 
       <para>
-        If the sddm bootscript has been installed, start sddm by running, as the
-        <systemitem class="username">root</systemitem> user:
+        Hvis sddm-oppstartsskriptet er installert, start sddm ved å kjøre, som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>/etc/rc.d/init.d/sddm start</userinput></screen>
 
       <para>
-        By convention, X should be executed at runlevel 5, consequently, the
-        same is true for <application>sddm</application>. However, LFS default
-        runlevel is 3. Changing to runlevel 5, from a console terminal, as
-        <systemitem class="username">root</systemitem> user, starts the
-        <command>sddm</command> bootscript, bringing up the greeter screen:
+        Etter konvensjon bør X kjøres på kjørenivå 5, følgelig
+        samme gjelder for <application>sddm</application>. Imidlertid er LFS standard
+        runlevel er 3. Bytte til runlevel 5, fra en konsollterminal, som
+        <systemitem class="username">root</systemitem> bruker, starter
+        <command>sddm</command> oppstartsskriptet, og henter frem velkomstskjermen:
       </para>
 
 <screen role="root"><userinput>init 5</userinput></screen>
 
       <para>
-        In order to permanently set the default to 5, starting the
-        <command>sddm</command> greeter screen automatically, modify
-        <filename>/etc/inittab</filename>.  As the <systemitem
-        class="username">root</systemitem> user:
+        For å permanent sette standarden til 5, starter du
+        <command>sddm</command> velkomstskjerm automatisk, endre
+        <filename>/etc/inittab</filename>.  Som <systemitem
+        class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>cp -v /etc/inittab{,-orig} &amp;&amp;
@@ -444,39 +444,39 @@ sed -i '/initdefault/ s/3/5/' /etc/inittab</userinput></screen>
     </sect3>
 
     <sect3 id="sddm-sessions">
-      <title>Available Sessions</title>
+      <title>Tilgjengelige økter</title>
 
       <para>
-        The greeter offers a list of available sessions,
-        depending on the Window Managers and Desktop Environments installed. The
-        list includes sessions which have a corresponding
-        <filename>.desktop</filename> file installed under
-        <filename class="directory">/usr/share/xsessions</filename>. Most of the
-        Window Managers and Desktop Environments automatically provide those
-        files, but if necessary, you may include a custom one.
+        Hilseren tilbyr en liste over tilgjengelige økter,
+        avhengig av Window Managers og Desktop Environment installert. De
+        listen inkluderer økter som har en tilsvarende
+        <filename>.desktop</filename> fil installert under
+        <filename class="directory">/usr/share/xsessions</filename>. Mesteparten av
+        Vindusbehandlere og skrivebordsmiljøer gir disse automatisk
+        filer, men om nødvendig kan du inkludere en egendefinert.
       </para>
 
     </sect3>
 
     <sect3 id="sddm-themes">
-      <title>Themes</title>
+      <title>Temaer</title>
 
       <para>
-        Three themes are installed at <filename class="directory">
+        Tre temaer er installert i <filename class="directory">
         /usr/share/sddm/themes</filename>:
         elarun,
-        maldives, and
+        maldives, og
         maya.
-        There is also a default theme, which is not present in that directory.
-        You can install other themes in that directory. In order to change the
-        theme, you need to edit <filename>/etc/sddm.conf</filename>,
-        to change the default (empty) theme, replacing <quote>Current=</quote>
-        with <quote>Current=&lt;new theme&gt;</quote>, e.g.
+        Det er også et standardtema, som ikke finnes i den mappen.
+        Du kan installere andre temaer i den mappen. For å endre
+        tema, må du redigere <filename>/etc/sddm.conf</filename>,
+        for å endre standard (tomt) tema, erstatte <quote>Current=</quote>
+        med <quote>Current=&lt;nytt tema&gt;</quote>, f.eks.
         <quote>Current=maldives</quote>.
       </para>
 
       <para>
-        In order to see the theme without leaving the session, issue:
+        For å se temaet uten å forlate økten, utsted:
       </para>
 
 <screen><userinput>sddm-greeter --test-mode --theme <replaceable>&lt;theme path&gt;</replaceable></userinput></screen>
@@ -484,59 +484,59 @@ sed -i '/initdefault/ s/3/5/' /etc/inittab</userinput></screen>
     </sect3>
 
     <sect3 id="sddm-Issues">
-      <title>Known Issues</title>
+      <title>Kjente problemer</title>
 
       <para>
-        This application works well, but there are issues. You find the
-        mainstream known issues at
+        Denne applikasjonen fungerer bra, men det er problemer. Du finner
+        mainstream kjente problemer på
         <ulink url="https://github.com/sddm/sddm/issues">Issues</ulink>.
-        The BLFS development team have found some issues.
+        BLFS-utviklingsteamet har funnet noen problemer.
       </para>
 
       <note>
         <para>
-          In the next couple of paragraphs, due to a problem with sddm-greeter,
-          we mention how to define the keyboard used there. Notice that this is
-          also the keyboard that will be used in the X session, unless there is
-          a configuration in the Desktop Environment or in the Window Manager
-          overriding it, afterwards.
+          I de neste par avsnittene, på grunn av et problem med sddm-greeter,
+          vi nevner hvordan du definerer tastaturet som brukes der. Legg merke til at dette er
+          også tastaturet som skal brukes i X-økten, med mindre det er det
+          en konfigurasjon i skrivebordsmiljøet eller i Window Manager
+          overstyre det etterpå.
         </para>
       </note>
 
       <para>
-        Keyboard selection: the greeter shows a double question mark or the
-        wrong keyboard. When you start to type the password or user name
-        (depending on the theme, only password), the right keyboard selection
-        magically appears. Optionally, a workaround is to include the keyboard
-        list in <command>/usr/share/sddm/scripts/Xsetup</command> script, as the
-        <systemitem class="username">root</systemitem> user:
+        Tastaturvalg: hilsenen viser et dobbelt spørsmålstegn eller
+        feil tastatur. Når du begynner å skrive inn passordet eller brukernavnet
+        (avhengig av tema, bare passord), riktig tastaturvalg
+        dukker magisk opp. En alternativ løsning er å inkludere tastaturet
+        liste i <command>/usr/share/sddm/scripts/Xsetup</command> skriptet, som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>echo 'setxkbmap <replaceable>"&lt;your keyboard comma separated list&gt;"</replaceable>' &gt;&gt; \
      /usr/share/sddm/scripts/Xsetup</userinput></screen>
 
       <para>
-        E.g. <command>echo 'setxkbmap "fr,gb,br,us"' &gt;&gt;
-        /usr/share/sddm/scripts/Xsetup</command>. A very accurate definition
-        of the keyboard(s) is possible, for example: <command>echo 'setxkbmap
+        F.eks. <command>echo 'setxkbmap "fr,gb,br,us"' &gt;&gt;
+        /usr/share/sddm/scripts/Xsetup</command>. En veldig nøyaktig definisjon
+        av tastaturet(e) er mulig, for eksempel: <command>echo 'setxkbmap
         -model pc105 -layout br,us -variant abnt2,dvorak -keycodes evdev'
-        &gt;&gt; /usr/share/sddm/scripts/Xsetup</command>. See man setxkbmap.
+        &gt;&gt; /usr/share/sddm/scripts/Xsetup</command>. Se man setxkbmap.
       </para>
 
       <para>
-        Dircolors: the <filename>/etc/dircolors</filename> file is not
-        honoured. Particularly, the compressed files are not displayed in red
-        colour. If this happens, a workaround is to issue, as the
-        <systemitem class="username">root</systemitem> user:
+        Dircolors: <filename>/etc/dircolors</filename> filen er ikke
+        hedret. Spesielt vises ikke de komprimerte filene i rødt
+        farge. Hvis dette skjer, er det å løse problemet, som
+        <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>echo "source /etc/profile.d/dircolors.sh" &gt;&gt; /etc/bashrc</userinput></screen>
 
       <para>
-        It has been reported that problems may happen with this package, if
-        Xorg is installed with a prefix other than <filename
-        class="directory">/usr</filename>. So far, BLFS development team has
-        not hit any problem, in this case.
+        Det har blitt rapportert at problemer kan oppstå med denne pakken, hvis
+        Xorg er installert med et annet prefiks enn <filename
+        class="directory">/usr</filename>. Så langt har BLFS utviklingsteam
+        ikke truffet noe problem, i dette tilfellet.
       </para>
 
     </sect3>
@@ -544,30 +544,30 @@ sed -i '/initdefault/ s/3/5/' /etc/inittab</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          sddm and sddm-greeter
+          sddm og sddm-greeter
         </seg>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
           $QT5DIR/qml/SddmComponents,
-          /usr/share/sddm, and
+          /usr/share/sddm, og
           /var/lib/sddm
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -575,8 +575,8 @@ sed -i '/initdefault/ s/3/5/' /etc/inittab</userinput></screen>
         <term><command>sddm</command></term>
         <listitem>
           <para>
-            is a display and login manager based on
-            <application>Qt</application> libraries.
+            er en skjerm- og påloggingsbehandling basert på
+            <application>Qt</application> biblioteker.
           </para>
           <indexterm zone="sddm sddm-prog">
             <primary sortas="b-sddm">sddm</primary>
@@ -588,10 +588,10 @@ sed -i '/initdefault/ s/3/5/' /etc/inittab</userinput></screen>
         <term><command>sddm-greeter</command></term>
         <listitem>
           <para>
-            is an auxiliary process that displays the greeter,
-            a graphical user interface that performs user
-            authentication and initiates the selected window manager
-            or display environment.
+            er en hjelpeprosess som viser hilsenen,
+            et grafisk brukergrensesnitt som utfører bruker
+            autentisering og starter den valgte vindusbehandlingen
+            eller visningsmiljø.
           </para>
           <indexterm zone="sddm sddm-greeter">
             <primary sortas="b-sddm-greeter">sddm-greeter</primary>
