@@ -9,7 +9,7 @@
   <!ENTITY tcpwrappers-md5sum        "e6fa25f71226d090f34de3f6b122fb5a">
   <!ENTITY tcpwrappers-size          "97 KB">
   <!ENTITY tcpwrappers-buildsize     "1.09 MB">
-  <!ENTITY tcpwrappers-time          "less than 0.1 SBU">
+  <!ENTITY tcpwrappers-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="tcpwrappers" xreflabel="TCP Wrappers-&tcpwrappers-version;">
@@ -23,86 +23,86 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to TCP Wrappers</title>
+    <title>Introduksjon til TCP Wrappers</title>
 
-      <para>The <application>TCP Wrapper</application> package provides daemon
-      wrapper programs that report the name of the client requesting network
-      services and the requested service.  This capability is obsolete in
-      a modern environment, but several applications still use the library
-      and associated configuration files.</para>
+      <para><application>TCP Wrapper</application> pakken gir nisse
+      wrapper-programmer som rapporterer navnet på klienten som ber om nettverket
+      tjenester og den forespurte tjenesten. Denne muligheten er foreldet i
+      et moderne miljø, men flere applikasjoner bruker fortsatt biblioteket
+      og tilhørende konfigurasjonsfiler.</para>
 
     &lfs70_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
-        <para>Download (HTTP): <ulink url="&tcpwrappers-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&tcpwrappers-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&tcpwrappers-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&tcpwrappers-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &tcpwrappers-md5sum;</para>
+        <para>Nedlasting MD5 sum: &tcpwrappers-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &tcpwrappers-size;</para>
+        <para>Nedlastingsstørrelse: &tcpwrappers-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &tcpwrappers-buildsize;</para>
+        <para>Estimert diskplass som kreves: &tcpwrappers-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &tcpwrappers-time;</para>
+        <para>Estimert byggetid: &tcpwrappers-time;</para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
-        <para>Required Patch (Fixes some build issues and adds building a
-        shared library): <ulink
+        <para>Nødvendig oppdatering (fikser noen byggeproblemer og legger til bygg av
+        delt bibliotek): <ulink
         url="&patch-root;/tcp_wrappers-&tcpwrappers-version;-shared_lib_plus_plus-1.patch"/></para>
       </listitem>
     </itemizedlist>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/tcpwrappers"/></para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of TCP Wrappers</title>
+    <title>Installasjon av TCP Wrappers</title>
 
-    <para>Install <application>TCP Wrapper</application> with the following
-    commands:</para>
+    <para>Installer <application>TCP Wrapper</application> ved å kjøre følgende
+    kommandoer:</para>
 
 <screen><userinput>patch -Np1 -i ../tcp_wrappers-&tcpwrappers-version;-shared_lib_plus_plus-1.patch &amp;&amp;
 sed -i -e "s,^extern char \*malloc();,/* &amp; */," scaffold.c &amp;&amp;
 make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen>
 
-    <para>This package does not come with a test suite.</para>
+    <para>Denne pakken kommer ikke med en testpakke.</para>
 
-    <para>Now, as the <systemitem class="username">root</systemitem> user:</para>
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
-    <para><command>sed -i -e ... scaffold.c</command>: This command removes an
-    obsolete C declaration which causes the build to fail if using
+    <para><command>sed -i -e ... scaffold.c</command>: Denne kommandoen fjerner en
+    foreldet C-erklæring som fører til at byggingen mislykkes ved bruk
     <application>GCC &gt;= 3.4.x</application>.</para>
 
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring TCP Wrappers</title>
+    <title>Konfigurere TCP Wrappers</title>
 
     <sect3 id="tcpwrappers-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
-      <para><filename>/etc/hosts.allow</filename> and
+      <para><filename>/etc/hosts.allow</filename> og
       <filename>/etc/hosts.deny</filename></para>
 
       <indexterm zone="tcpwrappers tcpwrappers-config">
@@ -113,14 +113,14 @@ make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen
         <primary sortas="e-etc-hosts.deny">/etc/hosts.deny</primary>
       </indexterm>
 <!--
-      <para>File protections: the wrapper, all files used by the wrapper,
-      and all directories in the path leading to those files, should be
-      accessible but not writable for unprivileged users (mode 755 or mode
-      555). Do not install the wrapper set-uid.</para>
+      <para>Filbeskyttelse: innpakningen, alle filene som brukes av innpakningen,
+      og alle kataloger i banen som fører til disse filene, skal være det
+      tilgjengelig, men ikke skrivbar for uprivilegerte brukere (modus 755 eller modus
+      555). Ikke installer innpakningssett-uid.</para>
 
-      <para>As the <systemitem class="username">root</systemitem> user,
-      perform the following edits on the
-      <filename>/etc/inetd.conf</filename> configuration file:</para>
+      <para>Som <systemitem class="username">root</systemitem> bruker,
+      utføre følgende redigeringer på
+      <filename>/etc/inetd.conf</filename> konfigurasjonsfil:</para>
 
       <indexterm zone="tcpwrappers tcpwrappers-config">
         <primary sortas="e-etc-inetd.conf">/etc/inetd.conf</primary>
@@ -128,18 +128,18 @@ make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen
 
 <screen><literal>finger stream tcp nowait nobody /usr/sbin/in.fingerd in.fingerd</literal></screen>
 
-      <para>becomes:</para>
+      <para>blir:</para>
 
 <screen><literal>finger stream tcp nowait nobody /usr/sbin/tcpd in.fingerd</literal></screen>
 
       <note>
-        <para>The <command>finger</command> server is used as an example here.</para>
+        <para><command>finger</command> server brukes som eksempel her.</para>
       </note>
 
-      <para>Similar changes must be made if <application>xinetd</application> is
-      used, with the emphasis being on calling <command>/usr/sbin/tcpd</command>
-      instead of calling the service daemon directly, and passing the name of the
-      service daemon to <command>tcpd</command>.</para>
+      <para>Lignende endringer må gjøres hvis <application>xinetd</application> er
+      brukes, med vekt på å kalle <command>/usr/sbin/tcpd</command>
+      i stedet for å kalle tjenestenissen direkte, og sende navnet på
+      tjenestenissen til <command>tcpd</command>.</para>
 
       <indexterm zone="tcpwrappers tcpwrappers-config">
         <primary sortas="e-etc-xinetd.conf">/etc/xinetd.conf</primary>
@@ -150,31 +150,31 @@ make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Library</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>tcpd, tcpdchk, tcpdmatch, try-from, and safe_finger</seg>
+        <seg>tcpd, tcpdchk, tcpdmatch, try-from, og safe_finger</seg>
         <seg>libwrap.{so,a}</seg>
-        <seg>None</seg>
+        <seg>Ingen</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="tcpd">
         <term><command>tcpd</command></term>
         <listitem>
-          <para>is the main access control daemon for all Internet services,
-          which <command>inetd</command> or <command>xinetd</command>
-          will run instead of running the requested service daemon.</para>
+          <para>er den viktigste tilgangskontrollnissen for alle Internett-tjenester,
+          hvilken <command>inetd</command> eller <command>xinetd</command>
+          vil kjøre i stedet for å kjøre den forespurte tjenestenissen.</para>
           <indexterm zone="tcpwrappers tcpd">
             <primary sortas="b-tcpd">tcpd</primary>
           </indexterm>
@@ -184,8 +184,8 @@ make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen
       <varlistentry id="tcpdchk">
         <term><command>tcpdchk</command></term>
         <listitem>
-          <para>is a tool to examine a <command>tcpd</command> wrapper
-          configuration and report problems with it.</para>
+          <para>er et verktøy for å undersøke en <command>tcpd</command> innpakning
+          konfigurere og rapportere problemer med den.</para>
           <indexterm zone="tcpwrappers tcpdchk">
             <primary sortas="b-tcpdchk">tcpdchk</primary>
           </indexterm>
@@ -195,8 +195,8 @@ make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen
       <varlistentry id="tcpdmatch">
         <term><command>tcpdmatch</command></term>
         <listitem>
-          <para>is used to predict how the TCP wrapper
-          would handle a specific request for a service.</para>
+          <para>brukes til å forutsi hvordan TCP-innpakningen
+          ville håndtere en spesifikk forespørsel om en tjenestee.</para>
           <indexterm zone="tcpwrappers tcpdmatch">
             <primary sortas="b-tcpdmatch">tcpdmatch</primary>
           </indexterm>
@@ -206,8 +206,8 @@ make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen
       <varlistentry id="try-from">
         <term><command>try-from</command></term>
         <listitem>
-          <para>can be called via a remote shell command to find out if the
-          host name and address are properly recognized.</para>
+          <para>kan kalles via en ekstern skallkommando for å finne ut om
+          vertsnavn og adresse gjenkjennes riktig.</para>
           <indexterm zone="tcpwrappers try-from">
             <primary sortas="b-try-from">try-from</primary>
           </indexterm>
@@ -217,8 +217,8 @@ make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen
       <varlistentry id="safe_finger">
         <term><command>safe_finger</command></term>
         <listitem>
-          <para>is a wrapper for the <command>finger</command> utility, to
-          provide automatic reverse name lookups.</para>
+          <para>er en innpakning for <command>finger</command> verktøy, til
+          gi automatiske omvendte navneoppslag.</para>
           <indexterm zone="tcpwrappers safe_finger">
             <primary sortas="b-safe_finger">safe_finger</primary>
           </indexterm>
@@ -228,9 +228,9 @@ make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux</userinput></screen
       <varlistentry id="libwrap">
         <term><filename class='libraryfile'>libwrap.{so,a}</filename></term>
         <listitem>
-          <para>contains the API functions required by
-          the <application>TCP Wrapper</application> programs as well as other programs
-          to become <quote><application>TCP Wrapper</application>-aware</quote>.</para>
+          <para>inneholder API-funksjonene som kreves av
+          <application>TCP Wrapper</application> programmer så vel som andre programmer
+          å bli <quote><application>TCP Wrapper</application>-oppmerksomme</quote>.</para>
           <indexterm zone="tcpwrappers libwrap">
             <primary sortas="c-libwrap">libwrap.{so,a}</primary>
           </indexterm>
