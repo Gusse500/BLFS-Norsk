@@ -23,76 +23,76 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to W3m</title>
+    <title>Introduksjon til W3m</title>
 
-    <para><application>w3m</application> is primarily a pager but it can
-    also be used as a text-mode WWW browser.</para>
+    <para><application>w3m</application> er først og fremst en personsøker, men den kan
+    også brukes som en tekst-modus WWW-nettleser.</para>
 
     &lfs84_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
-        <para>Download (HTTP): <ulink url="&w3m-download-http;"/></para>
+        <para>Nedlasting (HTTP): <ulink url="&w3m-download-http;"/></para>
       </listitem>
       <listitem>
-        <para>Download (FTP): <ulink url="&w3m-download-ftp;"/></para>
+        <para>Nedlasting (FTP): <ulink url="&w3m-download-ftp;"/></para>
       </listitem>
       <listitem>
-        <para>Download MD5 sum: &w3m-md5sum;</para>
+        <para>Nedlasting MD5 sum: &w3m-md5sum;</para>
       </listitem>
       <listitem>
-        <para>Download size: &w3m-size;</para>
+        <para>Nedlastingsstørrelse: &w3m-size;</para>
       </listitem>
       <listitem>
-        <para>Estimated disk space required: &w3m-buildsize;</para>
+        <para>Estimert diskplass som kreves: &w3m-buildsize;</para>
       </listitem>
       <listitem>
-        <para>Estimated build time: &w3m-time;</para>
+        <para>Estimert byggetid: &w3m-time;</para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Required patch:
+          Nødvendig oppdatering:
           <ulink url="&patch-root;/w3m-&w3m-version;-bdwgc72-2.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">W3m Dependencies</bridgehead>
+    <bridgehead renderas="sect3">W3m Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required"><xref linkend="gc"/></para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gpm"/>,
 <!--      <xref linkend="openssl10"/>,-->
       <xref linkend="imlib2"/>,
       <xref linkend="gtk2"/>,
       <ulink url="http://ftp.gnome.org/pub/gnome/sources/imlib/1.9/">Imlib</ulink>
-        (not recommended: obsolete, abandoned upstream,
-        <ulink url="http://bugs.debian.org/448360">buggy</ulink>, and gives no
-        additional functionality as compared to other image loading libraries),
+        (ikke anbefalt: foreldet, forlatt oppstrøms,
+        <ulink url="http://bugs.debian.org/448360">buggy</ulink>, og gir ingen
+        tilleggsfunksjonalitet sammenlignet med andre bildelastingsbiblioteker),
       <xref linkend="gdk-pixbuf"/>,
-      <xref linkend="compface"/>, and
+      <xref linkend="compface"/>, og
       <ulink url="http://packages.debian.org/unstable/text/nkf">nkf</ulink>,
-      a Mail User Agent, and
-      an External Browser
+      en Mail User Agent, og
+      en ekstern nettleser
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
     <ulink url="&blfs-wiki;/W3M"/></para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of W3m</title>
+    <title>Installasjon av W3m</title>
 
-    <para>Install <application>w3m</application> by running the following
-    commands:</para>
+    <para>Installer <application>w3m</application> ved å kjøre følgende
+    kommandoer:</para>
 
 <screen><userinput>patch -Np1 -i ../w3m-&w3m-version;-bdwgc72-2.patch      &amp;&amp;
 sed -i 's/file_handle/file_foo/' istream.{c,h}  &amp;&amp;
@@ -103,9 +103,9 @@ sed -i '/USE_EGD/s/define/undef/' config.h.in   &amp;&amp;
 ./configure --prefix=/usr --sysconfdir=/etc  &amp;&amp;
 make</userinput></screen>
 
-    <para>This package does not come with a test suite.</para>
+    <para>Denne pakken kommer ikke med en testpakke.</para>
 
-    <para>Now, as the <systemitem class="username">root</systemitem> user:</para>
+    <para>Nå, som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role="root"><userinput>make install &amp;&amp;
 install -v -m644 -D doc/keymap.default /etc/w3m/keymap &amp;&amp;
@@ -116,39 +116,39 @@ install -v -m644    doc/{HISTORY,READ*,keymap.*,menu.*,*.html} \
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
       <command>patch -p1 &lt; ../w3m-&w3m-version;-bdwgc72-2.patch</command>:
-      This patch fixes compiling w3m with GC-7.2 and above installed.
+      Denne oppdateringen fikser kompilering av w3m med GC-7.2 og høyere installert.
     </para>
 
     <para><command>sed -i 's/file_handle/file_foo/' istream.{c,h}</command>:
-    This sed renames the file_handle function to avoid a clash with a glibc
-    function that has the same name, defined in
+    Denne sed gir nytt navn til file_handle-funksjonen for å unngå et sammenstøt med en glibc
+    funksjon som har samme navn, definert i
     /usr/include/bits/fcntl.h.</para>
 
     <para><command>sed -i 's#gdk-pixbuf-xlib-2.0#&amp; x11#'
-    configure</command>: This sed fixes compiling <application>w3m</application>
-    using <xref linkend="gtk2"/> as its image library. It has no impact if
-    <xref linkend="gtk2"/> is not installed.</para>
+    configure</command>: Denne sed fikser kompilering <application>w3m</application>
+    ved hjelp av <xref linkend="gtk2"/> som bildebibliotek. Det har ingen innvirkning hvis
+    <xref linkend="gtk2"/> er ikke installert.</para>
 
     <para>
-      <command>sed -i '/USE_EGD/s/define/undef/' config.h.in</command>: Allows
-      building against <application>openssl-1.1</application>.
+      <command>sed -i '/USE_EGD/s/define/undef/' config.h.in</command>: Muliggjør
+      bygge mot <application>openssl-1.1</application>.
     </para>
 
-    <para><parameter>--sysconfdir=/etc</parameter>: This option puts the
-    configuration files in /etc.</para>
+    <para><parameter>--sysconfdir=/etc</parameter>: Dette alternativet setter
+    konfigurasjonsfiler i /etc.</para>
   </sect2>
 
   <sect2 role="configuration">
-    <title>Configuring W3m</title>
+    <title>Konfigurere W3m</title>
 
     <sect3 id="w3m-config">
-      <title>Config Files</title>
+      <title>Konfigurasjonsfiler</title>
 
-      <para><filename>/etc/w3m/*</filename> and
+      <para><filename>/etc/w3m/*</filename> og
       <filename>~/.w3m/*</filename></para>
 
       <indexterm zone="w3m w3m-config">
@@ -162,31 +162,31 @@ install -v -m644    doc/{HISTORY,READ*,keymap.*,menu.*,*.html} \
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>w3m and w3mman</seg>
-        <seg>None</seg>
+        <seg>w3m og w3mman</seg>
+        <seg>Ingen</seg>
         <seg>/usr/libexec/w3m,
-             /usr/share/w3m, and
+             /usr/share/w3m, og
              /usr/share/doc/w3m-&w3m-version;</seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="w3m-prog">
         <term><command>w3m</command></term>
         <listitem>
-          <para>is a text based web browser and pager.</para>
+          <para>er en tekstbasert nettleser og personsøker.</para>
           <indexterm zone="w3m w3m-prog">
             <primary sortas="b-w3m">w3m</primary>
           </indexterm>
@@ -197,7 +197,7 @@ install -v -m644    doc/{HISTORY,READ*,keymap.*,menu.*,*.html} \
          <!-- Don't remove the extra space, it prevent a FOP warning. -->
         <term><command>w3mman</command> </term>
         <listitem>
-          <para>is an interface to the on-line reference manuals in
+          <para>er et grensesnitt til de nettbaserte referansemanualene i
           <command>w3m</command>.</para>
           <indexterm zone="w3m w3mman">
             <primary sortas="b-w3mman">w3mman</primary>
