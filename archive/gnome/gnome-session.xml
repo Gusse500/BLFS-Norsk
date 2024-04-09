@@ -25,92 +25,92 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to GNOME Session</title>
+    <title>Introduksjon til GNOME Økt</title>
 
     <para>
-      The <application>GNOME Session</application> package contains
-      the <application>GNOME</application> session manager.
+      <application>GNOME Økt</application> pakken inneholder
+      <application>GNOME</application> øktbehandler.
     </para>
 
     &lfs72_checked;
 
-    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&gnome-session-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&gnome-session-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&gnome-session-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&gnome-session-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &gnome-session-md5sum;
+          Nedlasting MD5 sum: &gnome-session-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &gnome-session-size;
+          Nedlastingsstørrelse: &gnome-session-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &gnome-session-buildsize;
+          Estimert diskplass som kreves: &gnome-session-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &gnome-session-time;
+          Estimert byggetid: &gnome-session-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">GNOME Session Dependencies</bridgehead>
+    <bridgehead renderas="sect3">GNOME Økt Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Required</bridgehead>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="GConf"/>,
       <xref linkend="gtk3"/>,
-      <xref linkend="json-glib"/> and
+      <xref linkend="json-glib"/> og
       <xref linkend="upower"/>
     </para>
 
-    <bridgehead renderas="sect4">Optional</bridgehead>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="xmlto"/>
     </para>
 
-    <bridgehead renderas="sect4">Runtime Dependencies</bridgehead>
+    <bridgehead renderas="sect4">Kjøretids Avhengigheter</bridgehead>
     <para role="required">
-      <xref linkend="consolekit"/> (if you intend to use startx to initiate
-      your <application>GNOME</application> desktop)
+      <xref linkend="consolekit"/> (hvis du har tenkt å bruke startx for å starte
+      din <application>GNOME</application> skrivebord)
     </para>
 
-    <para condition="html" role="usernotes">User Notes:
+    <para condition="html" role="usernotes">Brukernotater:
       <ulink url="&blfs-wiki;/gnome-session"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of GNOME Session</title>
+    <title>Installasjon av GNOME Økt</title>
 
     <para>
-      Install <application>GNOME Session</application> by
-      running the following commands:
+      Installer <application>GNOME Økt</application> ved å
+      kjøre følgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr --libexecdir=/usr/lib/gnome-session &amp;&amp;
 make</userinput></screen>
 
     <para>
-      This package does not come with a test suite.
+      Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Now, as the <systemitem class="username">root</systemitem> user:
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -118,49 +118,49 @@ make</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
-    <title>Command Explanations</title>
+    <title>Parameterforklaringer</title>
 
     <para>
-      <option>--enable-docbook-docs</option>: This switch is used to
-      enable building of the documentation.
+      <option>--enable-docbook-docs</option>: Denne bryteren er brukt til
+      å muliggjøre bygging av dokumentasjonen.
     </para>
 
   </sect2>
 
   <sect2 role="configuration" id="gnome-session-config">
-    <title>Configuring GNOME Session</title>
+    <title>Konfigurere GNOME Økt</title>
 
     <sect3>
-      <title>Configuration Information</title>
+      <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        If you are not using <application>GDM</application> to start your
-        <application>GNOME</application> desktop, you will need to invoke
-        <command>gnome-session</command> <emphasis>instead of</emphasis> invoking
-        a window-manager directly.  All of the packages in the 'Desktop' section of
-        this chapter need to be installed first, and some of the 'Applications' -
-        particularly <application>GNOME Terminal</application>
-        (<application>xterm</application> does not  install a '.desktop' file and
-        so not appear in the menus).
+        Hvis du ikke bruker <application>GDM</application> å starte din
+        <application>GNOME</application> skrivebordet, må du påkalle
+        <command>gnome-session</command> <emphasis>i stedet for</emphasis> påkalle
+        en vindusbehandler direkte. Alle pakkene i 'Desktop'-delen av
+        dette kapittelet må installeres først, og noen av 'applikasjonene' -
+        særlig <application>GNOME Terminal</application>
+        (<application>xterm</application> installerer ikke en '.desktop'-fil og
+        så ikke vises i menyene).
       </para>
 
       <para>
-        When <command>gnome-session</command> is run, it invokes the necessary
-        daemons and either <application>Metacity</application> or
-        <application>gnome-shell</application>. A desktop manager such as
-        <application>GDM</application> will invoke <application>ConsoleKit</application>
-        before the window manager, but if you use <command>startx</command> the first
-        invocation after booting may fail because the daemon is not already running,
-        so it is invoked first.
+        Når <command>gnome-session</command> kjøres, påkaller den det nødvendige
+        nisser og enten <application>Metacity</application> eller
+        <application>gnome-shell</application>. En skrivebordsadministrator som f.eks
+        <application>GDM</application> vil påkalle <application>ConsoleKit</application>
+        før vindusbehandleren, men hvis du bruker <command>startx</command> den første
+        påkalling etter oppstart kan mislykkes fordi nissen ikke allerede kjører,
+        så det påkalles først.
       </para>
 
       <para>
-        To automatically start the <application>gnome-session</application>
-        window manager when you issue the <command>startx</command> command,
-        backup your current <filename>~/.xinitrc</filename> before proceeding.
-        Note that you will be able to invoke <application>GNOME Terminal</application>
-        from the menu, so there is no reason to invoke <command>xterm</command> here.
-        Create a new <filename>.xinitrc</filename> using this command:
+        For å starte automatisk <application>gnome-session</application>
+        vindusbehandling når du utsteder <command>startx</command> kommando,
+        sikkerhetskopiere din nåværende <filename>~/.xinitrc</filename> før du fortsetter.
+        Merk at du vil kunne påkalle <application>GNOME Terminal</application>
+        fra menyen, så det er ingen grunn til å påkalle <command>xterm</command> her.
+        Opprett en ny <filename>.xinitrc</filename> ved å bruke denne kommandoen:
       </para>
 
       <indexterm zone="metacity gnome-session-config">
@@ -176,30 +176,30 @@ EOF</userinput></screen>
   </sect2>
 
   <sect2 role="content">
-    <title>Contents</title>
+    <title>Innhold</title>
 
     <segmentedlist>
-      <segtitle>Installed Programs</segtitle>
-      <segtitle>Installed Libraries</segtitle>
-      <segtitle>Installed Directories</segtitle>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
         <seg>
-          gnome-session, gnome-session-properties and gnome-session-quit
+          gnome-session, gnome-session-properties og gnome-session-quit
         </seg>
        <seg>
-          None
+          Ingen
         </seg>
         <seg>
           /usr/lib/gnome-session,
-          /usr/share/doc/gnome-session and
+          /usr/share/doc/gnome-session og
           /usr/share/gnome-session
         </seg>
       </seglistitem>
     </segmentedlist>
 
     <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
@@ -207,8 +207,8 @@ EOF</userinput></screen>
         <term><command>gnome-session</command></term>
         <listitem>
           <para>
-            is used to start up the <application>GNOME</application>
-            Desktop environment.
+            brukes til å starte opp <application>GNOME</application>
+            Skrivebordsmiljø.
           </para>
           <indexterm zone="gnome-session gnome-session-prog">
             <primary sortas="b-gnome-session">gnome-session</primary>
@@ -220,8 +220,8 @@ EOF</userinput></screen>
         <term><command>gnome-session-properties</command></term>
         <listitem>
           <para>
-            allows the users to configure which applications should be
-            started at login.
+            lar brukerne konfigurere hvilke applikasjoner som skal bli
+            startet ved pålogging.
           </para>
           <indexterm zone="gnome-session gnome-session-properties">
             <primary sortas="b-gnome-session-properties">gnome-session-properties</primary>
@@ -233,7 +233,7 @@ EOF</userinput></screen>
         <term><command>gnome-session-quit</command></term>
         <listitem>
           <para>
-            is used to end the <application>GNOME</application> Session.
+            brukes til å avslutte <application>GNOME</application> Økt.
           </para>
           <indexterm zone="gnome-session gnome-session-quit">
             <primary sortas="b-gnome-session-quit">gnome-session-quit</primary>
