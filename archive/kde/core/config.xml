@@ -9,10 +9,10 @@
   <?dbhtml filename="config.html"?>
 
 
-  <title>Configuring the Core Trinity/KDE3 Packages</title>
+  <title>Konfigurering av kjernen til Trinity/KDE3 Pakkene</title>
 
-  <para>Back up your existing <filename>~/.xinitrc</filename> file
-  and create a new <filename>.xinitrc</filename> file to start
+  <para>Sikkerhetskopier din eksisterende <filename>~/.xinitrc</filename> fil
+  og opprett en ny <filename>.xinitrc</filename> fil for å starte
   <application>Trinity/KDE3</application>:</para>
 
 <screen><userinput>echo "exec startkde" &gt; ~/.xinitrc</userinput></screen>
@@ -21,56 +21,56 @@
     <primary sortas="e-AA.xinitrc">~/.xinitrc</primary>
   </indexterm>
 
-  <para>If you have <xref linkend="dbus"/> installed, you can start the
-  <application>D-BUS</application> session daemon here as well. Starting the
-  session daemon here has the added bonus that it will exit when you log out
-  of your <application>Trinity/KDE3</application> session. If you wish to start the
-  daemon here, use the following command instead of the one shown above:</para>
+  <para>Hvis du har <xref linkend="dbus"/> installert, kan du starte
+  <application>D-BUS</application> øktnissen her også. Å starte
+  øktnissen her har den ekstra bonusen at den avsluttes når du logger ut
+  av din <application>Trinity/KDE3</application> økt. Hvis du ønsker å starte
+  nissen her, bruk følgende kommando i stedet for den som er vist ovenfor:</para>
 
 <screen><userinput>echo "exec dbus-launch --exit-with-session startkde" &gt;&gt; ~/.xinitrc</userinput></screen>
 
   <note>
-    <para>Check the <filename>~/.xinitrc</filename> file and ensure you have
-    no other window managers or other <application>X</application> applications
-    mentioned before <application>KDE</application>.</para>
+    <para>Sjekk <filename>~/.xinitrc</filename> fil og sørg for at du har
+    ingen andre vindusbehandlere eller andre <application>X</application> applikasjoner
+    nevnt før <application>KDE</application>.</para>
   </note>
 
-  <para>If you installed the <xref linkend="desktop-file-utils"/> package,
-  ensure the <envar>XDG_DATA_DIRS</envar> and <envar>XDG_CONFIG_DIRS</envar>
-  environment variables are configured properly as explained in that package
-  and update the MIME-type application database (as <systemitem
+  <para>Hvis du installerte <xref linkend="desktop-file-utils"/> pakke,
+  sikre <envar>XDG_DATA_DIRS</envar> og <envar>XDG_CONFIG_DIRS</envar>
+  miljøvariabler er riktig konfigurert som forklart i den pakken
+  og oppdater MIME-type applikasjonsdatabasen (som <systemitem
   class="username">root</systemitem>):</para>
 
 <screen role="root"><userinput>update-desktop-database</userinput></screen>
 
-  <para>Ensure all libraries can be found with (as
+  <para>Sørg for at alle biblioteker kan bli funnet med (som
   <systemitem class="username">root</systemitem>):</para>
 
 <screen role="root"><userinput>ldconfig</userinput></screen>
 
-  <para>At this point you can bring up <application>Trinity/KDE3</application> with:</para>
+  <para>På dette punktet kan du ta opp <application>Trinity/KDE3</application> med:</para>
 
 <screen><userinput>startx</userinput></screen>
 
-   <para>Set the PATHs used for the installation in the login startup
-   files.  If you installed <application>Trinity/KDE3</application> in the
-   recommended versioned directory, /opt/trinity-&trinity-version;, create a
-   generic symbiolic link as the <systemitem class="username">root</systemitem>
-   user:</para>
+   <para>Angi PATHene som brukes for installasjonen i oppstarten av påloggingen
+   filer. Hvis du har installert <application>Trinity/KDE3</application> i
+   anbefalt versjonsmappe, /opt/trinity-&trinity-version;, lage en
+   generisk symbiologisk kobling som <systemitem class="username">root</systemitem>
+   bruker:</para>
 
 <screen role='root'><userinput>ln -sf trinity-&trinity-version; /opt/trinity</userinput></screen>
 
-   <para>Now update the search path for dynamic libraries and update the cache.
-   As the <systemitem class="username">root</systemitem> user:</para>
+   <para>Oppdater nå søkebanen for dynamiske biblioteker og oppdater hurtigbufferen.
+   Som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role='root'><userinput>echo "/opt/trinity/lib" &gt;&gt; /etc/ld.so.conf &amp;&amp;
 ldconfig</userinput></screen>
 
-   <para>Set the paths.  Thee are several ways to do this.  You can edit
-   <filename>/etc/profile</filename>, or <filename>~/.bash_/profile</filename>
-   to add the paths.  If you used the recommended procedure in <xref
-   linkend='postlfs-config-profile'/>, run the following as the <systemitem
-   class="username">root</systemitem> user:</para>
+   <para>Sett stiene. Det er flere måter å gjøre dette på. Du kan redigere
+   <filename>/etc/profile</filename>, eller <filename>~/.bash_/profile</filename>
+   for å legge til banene. Hvis du brukte den anbefalte prosedyren i <xref
+   linkend='postlfs-config-profile'/>, kjør følgende som <systemitem
+   class="username">root</systemitem> bruker:</para>
 
 <screen role='root'><userinput>cat &gt; /etc/profile.d/extrapaths.sh &lt;&lt; "EOF"
 <literal>
@@ -79,6 +79,6 @@ pathappend  /opt/trinity/share/man             MANPATH
 pathappend  /opt/trinity/lib/pkgconfig         PKG_CONFIG_PATH</literal>
 EOF</userinput></screen>
 
-  <para>To set the paths immediately, run <userinput>source /etc/profile</userinput>.</para>
+  <para>For å angi banene umiddelbart, kjør <userinput>source /etc/profile</userinput>.</para>
 
 </sect1>
