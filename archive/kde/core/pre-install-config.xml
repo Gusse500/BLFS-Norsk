@@ -9,61 +9,61 @@
   <?dbhtml filename="pre-install-config.html"?>
 
 
-  <title>Trinity/KDE3 Pre-installation Configuration</title>
+  <title>Trinity/KDE3 Konfigurasjon før Installasjon</title>
 
-  <para>Based on your preference, set TRINITY_PREFIX.</para>
+  <para>Basert på dine preferanser, angi TRINITY_PREFIX.</para>
 
-  <para>One option is to put <application>Trinity/KDE3</application> into the
-  <filename class='directory'>/usr</filename> hierarchy.  This creates a
-  simpler setup but is more difficult to try multiple versions of
+  <para>Et alternativ er å sette <application>Trinity/KDE3</application> inn i
+  <filename class='directory'>/usr</filename> hierarki. Dette skaper en
+  enklere oppsett, men er vanskeligere å prøve flere versjoner av
   <application>Trinity/KDE3</application>.</para>
 
-<screen><userinput>export TRINITY_PREFIX=/usr</userinput></screen>
+<screen><userinput>eksport TRINITY_PREFIX=/usr</userinput></screen>
 
-  <para>The Trinty developers and BLFS editors recommend installing Trinity in
-  the <filename class='directory'>/opt</filename> directory in order to support
-  using one version while building another.</para>
+  <para>Trinty-utviklerne og BLFS-redaktørene anbefaler å installere Trinity i
+  <filename class='directory'>/opt</filename> mappen for å støtte
+  bruken av en versjon mens du bygger en annen.</para>
 
 <screen><userinput>export TRINITY_PREFIX=/opt/trinity-&trinity-version;</userinput></screen>
 
-  <para>Using this option requires updates to the PATH, PKG_CONFIG_PATH, and
-  library search path:</para>
+  <para>Bruk av dette alternativet krever oppdateringer til PATH, PKG_CONFIG_PATH og
+  biblioteksøkesti:</para>
 
   <itemizedlist>
     <listitem>
-    <para>Update PATH</para>
+    <para>Oppdater PATH</para>
 <screen><userinput>export PATH=$TRINITY_PREFIX/bin:$PATH</userinput></screen>
     </listitem>
 
     <listitem>
-    <para>Update PKG_CONFIG_PATH</para>
+    <para>Oppdater PKG_CONFIG_PATH</para>
 <screen><userinput>export PKG_CONFIG_PATH=$TRINITY_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH</userinput></screen>
     </listitem>
 
     <listitem>
-    <para>Update the library search path</para>
+    <para>Oppdater biblioteksøkebanen</para>
 <screen><userinput>export LD_LIBRARY_PATH=$TRINITY_PREFIX/lib:$LD_LIBRARY_PATH</userinput></screen>
     </listitem>
 
   </itemizedlist>
 
-  <para>The instructions for making these changes permanent are in
+  <para>Instruksjonene for å gjøre disse endringene permanente er i
   <xref linkend='kde-core-config'/>.</para>
 
-  <para>There are two other environment variables that need to be set to build
-  <application>Trinity/KDE3</application>. These are needed for all the
-  <userinput>cmake</userinput> based packages:</para>
+  <para>Det er to andre miljøvariabler som må settes for å bygge
+  <application>Trinity/KDE3</application>. Disse trengs for alle
+  <userinput>cmake</userinput> baserte pakker:</para>
 
 <screen><userinput>export CMAKE_PREFIX_PATH=/opt/qt:$TRINITY_PREFIX         &amp;&amp;
 
 CMAKE_INCLUDE_PATH=/opt/qt/include:/usr/include/dbus-1.0 &amp;&amp;
 export CMAKE_INCLUDE_PATH=$CMAKE_INCLUDE_PATH:$TRINITY_PREFIX/include</userinput></screen>
 
-  <para>You should also consider installing the <xref linkend="desktop-file-utils"/>
-  package. Though not required, this package will allow you to easily use
-  existing <filename>.desktop</filename> files in
-  <filename class='directory'>/usr/share/applications</filename> (and any other
-  locations identified by <envar>XDG_DATA_DIRS</envar>), and automatically add
-  these applications to the menu system.</para>
+  <para>Du bør også vurdere å installere <xref linkend="desktop-file-utils"/>
+  pakke. Selv om det ikke er nødvendig, lar denne pakken deg enkelt bruke
+  eksisterende <filename>.desktop</filename> filer i
+  <filename class='directory'>/usr/share/applications</filename> (og alle andre
+  steder identifisert av <envar>XDG_DATA_DIRS</envar>), og legge til automatisk
+  disse programmene til menysystemet.</para>
 
 </sect1>
