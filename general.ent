@@ -5,9 +5,9 @@
 <!ENTITY % release     "INCLUDE"> <!-- set to INCLUDE for release,
                                       set to IGNORE for development or rc -->
 <!ENTITY % relyear    "2023">
-<!ENTITY % relnum     "11.3">
-<!ENTITY % reldate    "1. Mars 2023">
-<!ENTITY % relpubdate "01.03.2023">
+<!ENTITY % relnum     "12.0">
+<!ENTITY % reldate    "September 1st, 2023">
+<!ENTITY % relpubdate "2023-09-01">
 <!-- ================================================================== -->
 <!-- Do not change anything below unless the www or book layouts change -->
 
@@ -110,31 +110,37 @@
 <!-- These entities are used to identify versions of LFS
      packages referenced throughout the BLFS book. -->
 
-<!ENTITY lfs-perl-version             "5.36"> <!-- used in git -->
+<!ENTITY lfs-perl-version             "5.38"> <!-- used in git -->
 
 <!-- End LFS versions -->
 
-<!ENTITY blfs-bootscripts-version     "20230101">
-<!ENTITY systemd-units-version        "20220720">
+<!ENTITY blfs-bootscripts-version     "20230824">
+<!ENTITY systemd-units-version        "20230816">
 
 <!ENTITY blfs-wiki                    "https://wiki.&lfs-domainname;/blfs/wiki">
 
 <!-- These entities are used to annotate the current status of a package as it
      relates to the version of LFS it will build/work against -->
+<!--
+<!ENTITY lfs113_checked  "<note><para>Utviklingsversjoner av BLFS kan ikke bygges eller kjøre
+                          noen pakker riktig hvis LFS eller avhengigheter har blitt oppdatert
+                          siden de siste stabile versjonene av bøkene.</para></note>">
+-->
 
-<!ENTITY lfs113_checked       "<para>Denne pakken er kjent for å bygge og fungere riktig
-                               ved å bruke LFS 11.3 plattformen.</para>">
+<!ENTITY lfs120_checked  "<para>Denne pakken er kjent for å bygge og fungere riktig
+                          ved å bruke en LFS 12.0 plattform.</para>">
+
 
 <!-- End special entities about LFS compatibility -->
 
 <!ENTITY as_root "<note><para>Når du installerer flere pakker i et skript,
-  installasjonen må gjøres som brukeren root. Det er tre generelle
+  installasjonen må gjøres som root bruker. Det er tre generelle
   alternativer som kan brukes til å gjøre dette:</para>
 
   <orderedlist>
 
-  <listitem><para>Kjør hele skriptet som brukeren root (anbefales
-  ikke).</para></listitem>
+  <listitem><para>Kjør hele skriptet som root bruker (ikke
+  anbefalt).</para></listitem>
 
   <listitem><para>Bruk <command>sudo</command> kommandoen fra <xref
   linkend='sudo'/> pakken.</para></listitem>
@@ -147,8 +153,8 @@
 
   <para>En måte å håndtere denne situasjonen på er å lage en kort
   <command>bash</command> funksjon som automatisk velger riktig
-  metode. Når kommandoen er satt i miljøet, trenger den ikke å
-  settes på nytt.</para>
+  metode. Når kommandoen er satt i miljøet, trenger den ikke å bli
+  satt på nytt.</para>
 
   <screen><userinput>as_root()
 {
@@ -162,7 +168,7 @@ export -f as_root</userinput></screen>
 </note>">
 
 <!ENTITY not-katamari         "<para>Denne pakken er gitt for å teste
-                               fullført Xorg-installasjonen.</para>">
+                               den fullførte Xorg installasjonen.</para>">
 
 <!ENTITY % package-entities SYSTEM      "packages.ent">
 %package-entities;
@@ -171,14 +177,29 @@ export -f as_root</userinput></screen>
                           det bygges med flere prosessorer. Se <xref
                           linkend='parallel-builds'/> for mer informasjon.</para></note>">
 
-<!ENTITY shell-env "<note><para>Hvis du installerer i chroot-miljøet, vær
-                    sikker på å eksportere <envar>SHELL</envar> miljøvariabelen
-                    ellers vil konfigurasjon av pakken
+<!ENTITY shell-env "<note><para>Hvis du installerer i chroot miljøet, vær
+                   sikker på å eksportere <envar>SHELL</envar> miljøvariabelen
+                   ellers vil konfigurasjon av pakken
                     mislykkes.</para></note>">
 
 <!ENTITY gi-doc-disable
          "Tillat å bygge denne pakken uten <xref linkend='gi-docgen'/>
           installert. Hvis du har <xref linkend='gi-docgen'/> installert og
-          du ønsker å gjenoppbygge og installere API-dokumentasjonen, en
-          <command>meson configure</command> kommandoen vil tilbakestille dette
+          du ønsker å gjenoppbygge og installere API dokumentasjonen, en
+          <command>meson configure</command> kommando vil tilbakestille dette
           alternativet.">
+
+<!ENTITY build-use-internet
+         "<note><para>En Internett tilkobling er nødvendig for å bygge denne
+          pakken.</para></note>">
+
+<!ENTITY test-use-internet
+         "<note><para>En Internett tilkobling er nødvendig for noen tester av
+          denne pakken.</para></note>">
+
+<!ENTITY logind
+         "<phrase revision='sysv'><xref linkend='elogind'/></phrase>
+          <phrase revision='systemd'><xref linkend='systemd'/></phrase>">
+
+<!ENTITY qt5-deps
+         "(<xref linkend='qt5'/> eller <xref role='nodep' linkend='qt5-alternate'/>)">
