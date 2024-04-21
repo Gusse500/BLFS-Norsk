@@ -6,6 +6,8 @@
 
   <!ENTITY aspell-download-http "&gnu-http;/aspell/aspell-&aspell-version;.tar.gz">
   <!ENTITY aspell-download-ftp  "&gnu-ftp;/aspell/aspell-&aspell-version;.tar.gz">
+  <!ENTITY aspell-en-dict       "aspell6-en-2020.12.07-0">
+  <!ENTITY aspell-en-dict-url   "&gnu-http;/aspell/dict/en/&aspell-en-dict;.tar.bz2">
   <!ENTITY aspell-md5sum        "012fa9209203ae4e5a61c2a668fd10e3">
   <!ENTITY aspell-size          "3.3 MB">
   <!ENTITY aspell-buildsize     "51 MB (Ytterligere 8 MB for EN ordbok)">
@@ -32,7 +34,7 @@
       bibliotek eller som en uavhengig stavekontroll.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -70,14 +72,15 @@
 
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <para>
-      Du må laste ned minst én ordbok. Linken nedenfor vil ta
-      deg til en side som inneholder lenker til ordbøker på mange språk.
+      Du må laste ned minst én ordbok. Den engelske ordboken
+      er gitt som et eksempel nedenfor. Ordbøker på mange andre språk kan bli
+      funnet på <ulink url="&gnu-http;/aspell/dict"/>.
     </para>
 
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Aspell ordbøker: <ulink url="&gnu-http;/aspell/dict"/>
+          Aspell Engelsk ordbok: <ulink url="&aspell-en-dict-url;"/>
         </para>
       </listitem>
     </itemizedlist>
@@ -89,9 +92,6 @@
       <xref linkend="which"/> (for ordbøkene)
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/aspell"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -142,13 +142,6 @@ install -v -m644 manual/aspell-dev.html/* \
  <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-<!--    <para>
-      <command>make -C manual pdf</command>: Denne kommandoen er oppført to ganger siden
-      første gang den kjører vil den vise en feil og avbryte, selv om den
-      oppretter den forespurte filen. Å kjøre kommandoen på nytt sikrer at den andre
-      filen opprettes også.
-    </para>
-    -->
     <para>
       <command>ln -svfn aspell-0.60 /usr/lib/aspell</command>: Denne kommandoen er
       nyttig for konfigurering av andre applikasjoner, for eksempel
@@ -164,11 +157,14 @@ install -v -m644 manual/aspell-dev.html/* \
 
       <para>
         Etter at <application>Aspell</application> er installert, må du sette opp
-        minst en ordbok. Installer en eller flere ordbøker ved å kjøre
+        minst én ordbok. Installer den engelske ordboken ved å kjøre
         følgende kommandoer:
       </para>
 
-<screen><userinput>./configure &amp;&amp;
+<screen><userinput>tar xf ../&aspell-en-dict;.tar.bz2 &amp;&amp;
+cd &aspell-en-dict;                &amp;&amp;
+
+./configure &amp;&amp;
 make</userinput></screen>
 
       <para>
@@ -176,6 +172,10 @@ make</userinput></screen>
       </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
+
+      <para>
+        Andre ordbøker kan installeres med samme instruksjoner.
+      </para>
     </sect3>
   </sect2>
 
@@ -190,7 +190,7 @@ make</userinput></screen>
       <seglistitem>
         <seg>
           aspell, aspell-import, precat, preunzip, prezip, prezip-bin,
-          pspell-config, run-with-aspell, word-list-compress and optionally,
+          pspell-config, run-with-aspell, word-list-compress og valgfritt,
           ispell og spell.
         </seg>
         <seg>libaspell.so og libpspell.so</seg>
@@ -298,7 +298,7 @@ make</userinput></screen>
         <term><command>prezip-bin</command></term>
         <listitem>
           <para>
-            kalles av de forskjellige innpakningskriptene for å utføre selve
+            kalles av de forskjellige innpakningsskriptene for å utføre selve
             komprimeringen og dekomprimeringen
           </para>
           <indexterm zone="aspell prezip-bin">
@@ -312,7 +312,7 @@ make</userinput></screen>
         <listitem>
           <para>
             viser informasjon om
-            <filename class="libraryfile">libpspell</filename> installasjonen,
+            <filename class="libraryfile">libpspell</filename> installasjon,
             mest for bruk i byggeskript
           </para>
           <indexterm zone="aspell pspell-config">
@@ -325,7 +325,7 @@ make</userinput></screen>
         <term><command>run-with-aspell</command></term>
         <listitem>
           <para>
-            er et skript for å hjelpe deg å bruke <application>Aspell</application> som en
+            er et skript for å hjelpe å bruke <application>Aspell</application> som en
             <command>ispell</command> erstatning
           </para>
           <indexterm zone="aspell run-with-aspell">
@@ -364,8 +364,8 @@ make</userinput></screen>
         <listitem>
           <para>
             er et grensesnitt til
-            <filename class="libraryfile">libaspell</filename> bibliotek. Alle
-            stavekontrollfunksjonalitet er nå i
+            <filename class="libraryfile">libaspell</filename> biblioteket. Alle
+            stavekontrollfunksjonaliteten er nå i
             <filename class="libraryfile">libaspell</filename> men dette biblioteket
             er inkludert for bakoverkompatibilitet
           </para>

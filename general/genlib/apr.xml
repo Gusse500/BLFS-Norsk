@@ -8,10 +8,10 @@
     "https://archive.apache.org/dist/apr/apr-&apr-version;.tar.bz2">
   <!ENTITY apr-download-ftp
     "ftp://ftp.mirrorservice.org/sites/ftp.apache.org/apr/apr-&apr-version;.tar.bz2">
-  <!ENTITY apr-md5sum        "9a00835e4da8c215348e263b550fc130">
-  <!ENTITY apr-size          "870 KB">
-  <!ENTITY apr-buildsize     "12 MB (ytterligere 4 MB for testene)">
-  <!ENTITY apr-time          "0.2 SBU (legge til 1,7 SBU for tester)">
+  <!ENTITY apr-md5sum        "f8a62f3984898ba0ea8b6f26b851cb99">
+  <!ENTITY apr-size          "876 KB">
+  <!ENTITY apr-buildsize     "11 MB (ytterligere 4 MB for testene)">
+  <!ENTITY apr-time          "0.1 SBU (legg til 1,4 SBU for tester)">
 ]>
 
 <sect1 id="apr" xreflabel="Apr-&apr-version;">
@@ -29,14 +29,14 @@
 
     <para>
       Apache Portable Runtime (APR) er et støttebibliotek for
-      Apache webserver. Den gir et sett med applikasjonsprogrammeringsgrensesnitt
+      Apache nettserver. Den gir et sett med applikasjonsprogrammeringsgrensesnitt
       (APIer) som tilordnes det underliggende operativsystemet (OS). Hvor OS
       ikke støtter en bestemt funksjon, vil APR gi en emulering. Dermed kan
-      programmerere bruke APR til å gjøre et program flyttbart på tvers av forskjellige
+      programmerere bruke APR til å gjøre et program flyttbar på tvers av forskjellige
       plattformer.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -72,9 +72,6 @@
       </listitem>
     </itemizedlist>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/apr"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -94,12 +91,13 @@
 \    if (xt-&gt;tm_mon &lt; 0 || xt-&gt;tm_mon &gt;= 12) return APR_EBADDATE;" \
     -i time/unix/time.c</userinput></screen>
 -->
+<!--
     <para>
-      Løs et problem med å sjekke en plassering i en skriptmal:
+      Fiks et problem med å sjekke en plassering i en skriptmal:
     </para>
 <screen><userinput>sed -e '/^case "$0"/s;$0;$(readlink -f $0);' \
     -i apr-config.in</userinput></screen>
-
+-->
     <para>
       Installer <application>Apr</application> ved å kjøre følgende kommandoer:
     </para>
@@ -110,12 +108,12 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>. <!-- teststr is
-      known to hang on some systems. - WORKS AS OF 1.6.5 (renodr) -->
+      For å teste resultatene, kjør: <command>make test</command>. <!-- teststr er
+      kjent for å henge på enkelte systemer. - FUNGERER PR 1.6.5 (renodr) -->
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som<systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -161,7 +159,7 @@ make</userinput></screen>
         <listitem>
           <para>
             er et skallskript som brukes til å hente informasjon om apr
-            bibliotek i systemet. Det brukes vanligvis til å kompilere og lenke
+            biblioteket i systemet. Det brukes vanligvis til å kompilere og lenke
             mot biblioteket
           </para>
           <indexterm zone="apr apr-1-config">
@@ -174,7 +172,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libapr-1.so</filename></term>
         <listitem>
           <para>
-            er Apache Portable Runtime biblioteket
+            er Apache flyttbart kjøretids bibliotek
           </para>
           <indexterm zone="apr libapr-1">
             <primary sortas="c-libapr-1">libapr-1.so</primary>
