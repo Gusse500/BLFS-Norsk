@@ -6,13 +6,11 @@
 
   <!ENTITY boost-download-http "https://boostorg.jfrog.io/artifactory/main/release/&boost-version;/source/boost_&boost-dl-version;.tar.bz2">
   <!ENTITY boost-download-ftp  " ">
-  <!ENTITY boost-md5sum        "3276c0637d1be8687740c550237ef999">
-  <!ENTITY boost-size          "113 MB">
-  <!ENTITY boost-buildsize     "1.1 GB (195 MB installert)">
-  <!ENTITY boost-time          "1.4 SBU (Bruker parallellisme=4; legge til 1,2 SBU for tester)">
+  <!ENTITY boost-md5sum        "406f0b870182b4eb17a23a9d8fce967d">
+  <!ENTITY boost-size          "117 MB">
+  <!ENTITY boost-buildsize     "1.1 GB (199 MB installert)">
+  <!ENTITY boost-time          "2.8 SBU (Bruker parallellisme=4; legg til 0,7 SBU for tester)">
 ]>
-
-<!-- Editors: Check test failures with python-3.11 -->
 
 <sect1 id="boost" xreflabel="Boost-&boost-version;">
   <?dbhtml filename="boost.html"?>
@@ -30,11 +28,11 @@
     <para>
       <application>Boost</application> gir et sett med gratis fagfellevurderte
       flyttbare C++ kildebiblioteker. Det inkluderer biblioteker for lineær algebra,
-      generering av pseudorandom, flertråding, bildebehandling, vanlige
+      generering av pseudotilfeldig tall, flertråding, bildebehandling, vanlige
       uttrykk og enhetstesting.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -74,7 +72,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Anbefalt oppdatering, nødvendig for å bygge <xref linkend="libreoffice"/>:
+          Nødvendig oppdatering, nødvendig for å bygge <xref linkend="libreoffice"/>:
           <ulink url="&patch-root;/boost-&boost-version;-gcc_10-1.patch"/>
         </para>
       </listitem>
@@ -94,7 +92,7 @@
       <ulink url="https://www.open-mpi.org/">Open MPI</ulink>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
+    <para condition="html" role="usernotes">Redaktørens notater:
       <ulink url="&blfs-wiki;/boost"/>
     </para>
   </sect2>
@@ -106,7 +104,7 @@
       En endring i denne versjonen av <application>boost</application> ødelegger
       de få pakkene som bruker <application>phoenix</application>
       modul når den er kompilert med nåværende <application>GCC</application>. I BLFS,
-      påvirker det <xref linkend="libreoffice"/>. Fiks dette med følgende
+      påvirker dette <xref linkend="libreoffice"/>. Fiks dette med følgende
       kommando:
     </para>
 
@@ -125,18 +123,19 @@
 ./b2 stage -j<replaceable>&lt;N&gt;</replaceable> threading=multi link=shared</userinput></screen>
 
     <para>
-      For å kjøre Boost.Builds regresjonstest, kjør
+      For å kjøre Boost.Build's regresjonstester, utsted
       <command>pushd tools/build/test; python3 test_all.py; popd</command>.
-      Med python-3.10.x skal alle 168 tester bestå. Med
-      <xref linkend='python3'/>, 20 tester mislykkes av ubestemte årsaker.
+      <!--Med python-3.10.x alle 168 tester skal bestå.  Med
+      <xref linkend='python3'/>, 20 tester mislykkes av ubestemte årsaker.-->
+      <!-- Dette ble fikset i 1.83.0 -->
     </para>
 
     <para>
-      For å kjøre hvert biblioteks regresjonstester, kjør <command>pushd status;
-      ../b2; popd</command>.  Noen få tester kan mislykkes. De tar veldig lang tid
+      For å kjøre hvert biblioteks regresjonstester, utsted <command>pushd status;
+      ../b2; popd</command>.  Noen få tester kan mislykkes. Det tar veldig lang tid
       (over 119 SBU ved -j4) og bruker en veldig stor mengde diskplass
-      (46 GB). Du bør bruke <parameter>-jN</parameter> bryteren til å
-      få fart på dem.
+       46 GB). Du bør bruke <parameter>-jN</parameter> bryteren for å
+       øke hastigheten.
     </para>
 
     <note>
@@ -170,7 +169,7 @@
 
     <para>
       <parameter>sed -i '/#include ...</parameter>: Dette fjerner inkluderingen
-      av <filename>boost/phoenix/stl/tuple.hpp</filename> kun fra denne deklarasjons
+      av <filename>boost/phoenix/stl/tuple.hpp</filename> fra denne bare-deklarasjoner
       biblioteket, slik at applikasjoner som bruker det kan koble til ved hjelp av nylige C++.
       <!-- FIXME: remove before 11.3 is we still use 1.81.0 and LO-7.4,
       this alternative is only for people working through the development book.-->
@@ -181,7 +180,7 @@
 
     <para>
       <parameter>threading=multi</parameter>: Denne parameteren sikrer at
-      <application>Boost</application> er bygget med støtte for flertråding.
+      <application>Boost</application> er bygget med støtte for flere tråder.
     </para>
 
     <para>
@@ -189,7 +188,7 @@
       delte biblioteker opprettes, bortsett fra libboost_exception og
       libboost_test_exec_monitor som er opprettet som statiske. Folk flest
       vil ikke trenge de statiske bibliotekene, og de fleste programmer som bruker
-      <application>Boost</application> bruk kun deklarasjonene. Utelate
+      <application>Boost</application> bruker kun deklarasjonene. Utelate
       denne parameteren hvis du trenger statiske biblioteker.
     </para>
 
@@ -200,7 +199,7 @@
 
     <para>
        <option>-jN</option>: Denne bryteren kan legges til
-       <command>b2</command> kommandolinjer, for å kjøre opp til N prosesser i
+       <command>b2</command> kommandolinjer, for å kjøre opp til N prosesser
        parallell.
     </para>
 
@@ -212,11 +211,11 @@
     <segmentedlist>
       <segtitle>Installerte Programmer</segtitle>
       <segtitle>Installerte Biblioteker</segtitle>
-      <segtitle>Installerte Mapper</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
-          None
+          Ingen
         </seg>
         <seg>
           libboost_atomic.so, libboost_chrono.so, libboost_container.so,
@@ -227,7 +226,7 @@
           libboost_log_setup.so, libboost_log.so, libboost_math_c99.so,
           libboost_math_c99f.so, libboost_math_c99l.so, libboost_math_tr1.so,
           libboost_math_tr1f.so, libboost_math_tr1l.so,
-          libboost_nowide.so, libboost_numpy39.so,
+          libboost_nowide.so, libboost_numpy3&python3-minor;.so,
           libboost_prg_exec_monitor.so, libboost_program_options.so,
           libboost_python3&python3-minor;.so, libboost_random.so,
           libboost_regex.so, libboost_serialization.so,
@@ -235,7 +234,7 @@
           libboost_stacktrace_noop.so, libboost_system.so,
           libboost_test_exec_monitor.a, libboost_thread.so, libboost_timer.so,
           libboost_type_erasure.so, libboost_unit_test_framework.so,
-          libboost_wave.so, og libboost_wserialization.so
+          libboost_url.so, libboost_wave.so, og libboost_wserialization.so
         </seg>
         <seg>
           /usr/include/boost

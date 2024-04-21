@@ -29,12 +29,12 @@
     <para>
       <application>Brotli</application> gir en generell tapsfri
       komprimeringsalgoritme som komprimerer data ved å bruke en kombinasjon av en
-      moderne variant av LZ77 algoritmen, Huffman-koding og 2. orden
+      moderne variant av LZ77 algoritmen, Huffman koding og 2. orden
       kontekstmodellering. Bibliotekene brukes spesielt til WOFF2 fonter
       på nettsider.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -72,27 +72,20 @@
 
     <bridgehead renderas="sect3">Brotli Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
-    <para role="required">
+    <!-- Not "Required" because we can use
+         "./bootstrap && ./configure ... && make && make install".
+         Doing so can break an optional circular dependency:
+         curl is recommended for cmake, and brotli is optional for curl. -->
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
       <xref linkend="cmake"/>
     </para>
 
-<!-- Brotli doesn't have any lua bindings, at least not with 1.0.7.
-         Do not advertise python2 as python3 should be used instead
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
-    <para role="optional">
-      <xref linkend="lua"/> (å lage Lua binding) og
-      <xref linkend="python2"/> (for å lage python2 bindinger)
-    </para>
--->
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/brotli"/>
-    </para>
   </sect2>
 
 
   <sect2 role="installation">
-    <title>Installation of Brotli</title>
+    <title>Installasjon av Brotli</title>
 
     <para>
       Først, fiks et problem i pkg-config filer:
@@ -115,15 +108,15 @@ make</userinput></screen>
 
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.
+      For å teste resultatene, utsted: <command>make test</command>.
     </para>
 
 <!--  These are broken
     <para>
-      Pythontestene mangler de fleste nødvendige testdatafiler og
+      Python testene mangler de fleste nødvendige testdatafiler og
       derfor mislykkes 240 av 311 tester.
       Hvis du likevel ønsker å teste bindingene, gå tilbake til mappen på øverste nivå og
-      kjør: <command>python3 setup.py test</command>.
+      utsted: <command>python3 setup.py test</command>.
     </para>
 -->
     <para>
@@ -161,8 +154,9 @@ pip3 install --no-index --find-links dist --no-cache-dir --no-user Brotli</useri
           libbrotlienc{,-static.a,.so}
         </seg>
         <seg>
-          /usr/include/brotli
+          /usr/include/brotli og
           /usr/lib/python&python3-majorver;/site-packages/Brotli-&brotli-version;.dist-info
+          (hvis du bygde og installerte Python3 bindingene)
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -213,7 +207,7 @@ pip3 install --no-index --find-links dist --no-cache-dir --no-user Brotli</useri
         <term><filename class="libraryfile">libbrotlienc{-static.a,.so}</filename></term>
         <listitem>
           <para>
-            er Brotli felles koderbibliotek
+            er Brotli vanlige koderbibliotek
           </para>
           <indexterm zone="brotli libbrotlienc">
             <primary sortas="c-libbrotlienc">libbrotlienc{,-static.a,.so}</primary>
