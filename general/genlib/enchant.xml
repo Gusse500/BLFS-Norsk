@@ -6,10 +6,10 @@
 
   <!ENTITY enchant-download-http "https://github.com/AbiWord/enchant/releases/download/v&enchant-version;/enchant-&enchant-version;.tar.gz">
   <!ENTITY enchant-download-ftp  " ">
-  <!ENTITY enchant-md5sum        "9b8519d43a711dae47b47a82fe78b194">
-  <!ENTITY enchant-size          "968 KB">
-  <!ENTITY enchant-buildsize     "6.9 MB (legg til 77 MB for tester)">
-  <!ENTITY enchant-time          "0.2 SBU (legg til 0.8 SBU for tester)">
+  <!ENTITY enchant-md5sum        "3cbf29a5d7f31107adb4e584e0bdfebb">
+  <!ENTITY enchant-size          "967 KB">
+  <!ENTITY enchant-buildsize     "7.3 MB (legg til 64 MB for tester)">
+  <!ENTITY enchant-time          "0.1 SBU (legg til 0.7 SBU for tester)">
 ]>
 
 <sect1 id="enchant" xreflabel="enchant-&enchant-version;">
@@ -26,11 +26,11 @@
     <title>Introduksjon til enchant</title>
 
     <para>
-      <application>enchant</application> pakken gir en generisk
+      <application>enchant</application> pakken gir et generisk
       grensesnitt inn i ulike eksisterende stavekontrollbiblioteker.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -87,11 +87,9 @@
       <ulink url="https://nuspell.github.io/">Nuspell</ulink>,
       <ulink url="https://hunspell.github.io/">Voikko</ulink>, og
       <ulink url="https://github.com/unittest-cpp/unittest-cpp/releases">
-        unittest-cpp</ulink> (nødvendig for tester)
+        unittest-cpp</ulink> (påkrevd for testene)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-    <ulink url="&blfs-wiki;/enchant"/></para>
 
   </sect2>
 
@@ -103,7 +101,9 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+<screen><userinput>./configure --prefix=/usr    \
+            --disable-static \
+            --docdir /usr/share/doc/enchant-&enchant-version; &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -155,7 +155,7 @@ make</userinput></screen>
    we do above. Leaving it in source (for a while) in case I'm wrong and
    it needs to be restored.
       <para>
-        Hvis du ønsker å bruke <xref linkend="aspell"/> bakstykke, opprett en
+        Hvis du ønsker å bruke <xref linkend="aspell"/> bakstykket, opprett en
         symbolkobling, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -163,8 +163,8 @@ make</userinput></screen>
 -->
       <para>
         Du kan teste installasjonen og konfigurasjonen ved å lage en testfil
-        og kjør følgende kommandoer (du kan erstatte
-        en_GB ordbok med andre lastet ned ved installasjon <xref
+        og kjøre følgende kommandoer (du kan erstatte
+        en_GB ordboken med andre lastet ned ved installasjonen av <xref
         linkend="aspell"/>):
       </para>
 
@@ -200,8 +200,8 @@ enchant-2 -d en_GB -a /tmp/test-enchant.txt</userinput></screen>
       <seglistitem>
         <seg>enchant-2 og enchant-lsmod-2</seg>
         <seg>libenchant-2.so</seg>
-        <seg>/usr/include/enchant-2, /usr/lib/enchant-2, og
-        /usr/share/enchant</seg>
+        <seg>/usr/include/enchant-2, /usr/lib/enchant-2,
+          /usr/share/enchant, and /usr/share/doc/enchant-&enchant-version;</seg>
       </seglistitem>
     </segmentedlist>
 
@@ -238,7 +238,7 @@ enchant-2 -d en_GB -a /tmp/test-enchant.txt</userinput></screen>
         <term><filename class="libraryfile">libenchant-2.so</filename></term>
         <listitem>
           <para>
-            inneholder API funksjoner for stavekontrollgrensesnitt
+            inneholder API funksjoner for stavekontrollgrensesnittet
           </para>
           <indexterm zone="enchant libenchant-2">
             <primary sortas="c-libenchant-2">libenchant-2.so</primary>
