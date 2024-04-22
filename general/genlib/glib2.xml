@@ -6,10 +6,10 @@
 
   <!ENTITY glib2-download-http "&gnome-download-http;/glib/&glib2-minor;/glib-&glib2-version;.tar.xz">
   <!ENTITY glib2-download-ftp  "&gnome-download-ftp;/glib/&glib2-minor;/glib-&glib2-version;.tar.xz">
-  <!ENTITY glib2-md5sum        "7561501d9f63f3418ddb23d2903cc968">
+  <!ENTITY glib2-md5sum        "b0df5864ec08248e79c13f71a717aa03">
   <!ENTITY glib2-size          "5.0 MB">
-  <!ENTITY glib2-buildsize     "122 MB (legg til 8 MB for tester)">
-  <!ENTITY glib2-time          "0.5 SBU (legg til 0.4 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY glib2-buildsize     "150 MB (med tester)">
+  <!ENTITY glib2-time          "0.7 SBU (legg til 0,4 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="glib2" xreflabel="GLib-&glib2-version;">
@@ -27,12 +27,12 @@
 
     <para>
       <application>GLib</application> pakken inneholder lavt nivå
-      biblioteker som er nyttige for å gi datastrukturhåndtering for C, portabile
+      biblioteker som er nyttige for å gi datastrukturhåndtering for C, portabilitet
       innpakninger og grensesnitt for slik kjøretidsfunksjonalitet som en
       hendelsesløkke, tråder, dynamisk lasting og et objektsystem.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -73,7 +73,7 @@
       <listitem>
         <para>
           Valgfri oppdatering:
-          <ulink url="&patch-root;/glib-&glib2-version;-skip_warnings-1.patch"/>
+          <ulink url="&patch-root;/glib-skip_warnings-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
@@ -91,70 +91,67 @@
       <xref linkend="dbus"/> (for noen tester),
       <xref linkend="fuse3"/> og
       <ulink url="https://bindfs.org/">bindfs</ulink>
-        (begge trengs for en test),
+        (begge trengs for en testt),
       <xref linkend="gdb"/> (for bindinger),
       <xref linkend="DocBook"/>,
       <xref linkend="docbook-xsl"/>,
-      <xref linkend="gtk-doc"/> (for å bygge API dokumentasjon),
+      <xref linkend="gtk-doc"/> (for å bygge API dokumentasjonen),
       <xref linkend="glib-networking"/> (for noen tester, men dette er en sirkulær
       avhengighet), og
       <xref linkend="sysprof"/>
     </para>
 
-    <bridgehead renderas="sect4">Ytterligere Runtime Avhengigheter</bridgehead>
+    <bridgehead renderas="sect4">Ytterligere Kjøretids Avhengigheter</bridgehead>
     <para role="recommended">
       <xref role="runtime" linkend="gobject-introspection"/>
-      (bør installeres før gtk+, atk, etc.)
+      (burde bli installert før gtk+, atk, etc.)
     </para>
     <para role="optional">
       Sitert direkte fra <filename>INSTALL</filename> filen:
       <quote>Some of the mimetype-related functionality in GIO requires the
       <command>update-mime-database</command> and
       <command>update-desktop-database</command> utilities</quote>,
-      som er en del av
-      <xref role="runtime" linkend="shared-mime-info"/> og
-      <xref role="runtime" linkend="desktop-file-utils"/>, hhv.
-      Disse to verktøyene er også nødvendige for noen tester.
+      which are part of
+      <xref role="runtime" linkend="shared-mime-info"/> and
+      <xref role="runtime" linkend="desktop-file-utils"/>, respectively.
+      These two utilities are also needed for some tests.
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/glib2"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av GLib</title>
 
     <para>
-      Hvis ønskelig, anvend den valgfrie oppdateringen. I mange tilfeller applikasjoner som
-      bruke dette biblioteket, enten direkte eller indirekte via andre biblioteker som f.eks
-      <xref linkend="gtk3"/>, sender ut mange advarsler når du kjører fra
+      Hvis ønskelig, bruk den valgfrie oppdateringen. I mange tilfeller applikasjoner som
+      bruker dette biblioteket, enten direkte eller indirekte via andre biblioteker som f.eks
+      som <xref linkend="gtk3"/>, gi ut mange advarsler når du kjører fra
       kommandolinjen. Denne oppdateringen muliggjør bruk av en miljøvariabel,
       <envar>GLIB_LOG_LEVEL</envar>, som undertrykker uønskede meldinger.
       Verdien av variabelen er et siffer som tilsvarer:
     </para>
 
     <simplelist>
-      <member>1  Alert</member>
-      <member>2  Critical</member>
-      <member>3  Error</member>
-      <member>4  Warning</member>
-      <member>5  Notice</member>
+      <member>1  Varsling</member>
+      <member>2  Kritisk</member>
+      <member>3  Feil</member>
+      <member>4  Advarsel</member>
+      <member>5  Merknad</member>
     </simplelist>
 
     <para>
       For eksempel <userinput>export GLIB_LOG_LEVEL=4</userinput> vil hoppe over
       utdata av advarsels- og varselmeldinger (og info/feilsøkingsmeldinger hvis de
-      er slått på). Hvis <envar>GLIB_LOG_LEVEL</envar> ikke er definert, normalt
+      er slått på). Hvis <envar>GLIB_LOG_LEVEL</envar> ikke er definert, normal
       meldingsutdata vil ikke bli påvirket.
     </para>
 
-<screen><userinput>patch -Np1 -i ../glib-&glib2-version;-skip_warnings-1.patch</userinput></screen>
+<screen><userinput>patch -Np1 -i ../glib-skip_warnings-1.patch</userinput></screen>
 
     <warning>
       <para>
-        Hvis en tidligere versjon av glib er installert, flytter du deklarasjonene
-        slik at senere pakker ikke møter konflikter:
+        Hvis en tidligere versjon av glib er installert, flytter du deklarasjonene ut av
+        veien slik at senere pakker ikke møter konflikter:
       </para>
 
 <screen role="root"><userinput remap="pre">if [ -e /usr/include/glib-2.0 ]; then
@@ -172,16 +169,16 @@ fi</userinput></screen>
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr       \
+meson setup ..            \
+      --prefix=/usr       \
       --buildtype=release \
-      -Dman=true          \
-      ..                  &amp;&amp;
+      -Dman=true          &amp;&amp;
 ninja</userinput></screen>
 
     <note><para>
       Hvis <xref linkend="libxslt"/> er installert, kan kommandoen ovenfor
       angi flere (ca. 33) feil som starter med "Error: no ID for
-      constraint linkend:" når man genererer mansidene. Disse er ufarlige.
+      constraint linkend:" når man genererer manualsidene. Disse er ufarlige.
     </para></note>
 
     <para>
@@ -189,7 +186,7 @@ ninja</userinput></screen>
       <application>desktop-file-utils</application> for noen tester. Derimot,
       <application>desktop-file-utils</application> krever
       <application>GLib</application> for å kompilere; derfor må du
-      først installere <application>GLib</application> og kjør deretter
+      først installere <application>GLib</application> og deretter kjøre
       testpakken.
     </para>
 
@@ -204,23 +201,26 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
 
     <para>
       Du bør nå installere <xref linkend="desktop-file-utils"/> og
-      <xref linkend="shared-mime-info"/> og fortsett for å
+      <xref linkend="shared-mime-info"/> og fortsette for å
       kjøre testpakken.
     </para>
 
     <warning>
       <para>
-        Ikke kjør testpakken som &root; ellers vil noen tester mislykkes
+        Ikke kjør testpakken som &root; da vil noen tester mislykkes
         uventet og la noen ikke-FHS kompatible mapper være i
         <filename class='directory'>/usr</filename> hierarkiet.
       </para>
     </warning>
 
     <para>
-      For å teste resultatene, etter å ha installert pakken, kjør:
-      <command>LC_ALL=C ninja test</command> som en ikke-&root; bruker.
-      <!-- https://gitlab.gnome.org/GNOME/glib/-/issues/2913 -->
-      En test navngitt <filename>glib:glib / error</filename> er kjent for å mislykkes.
+      For å teste resultatene, etter å ha installert pakken, utsted:
+      <command>LC_ALL=C ninja test</command> som ikke-&root; bruker.
+      <!-- https://gitlab.gnome.org/GNOME/glib/-/issues/2965
+           Fixed for 2.78, but NOT any 2.76.x patch releases.
+           PLEASE DO NOT REMOVE UNLESS YOU'VE TESTED WITH COREUTILS 9.2 OR
+           LATER! -->
+      En test navngitt <literal>glib:gio / file</literal> er kjent for å mislykkes.
     </para>
   </sect2>
 
@@ -232,12 +232,12 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
 
     <para>
       <parameter>-Dman=true</parameter>: Denne bryteren gjør at
-      pakkens mansider blir laget og installert .
+      bygget lager og installerer pakkens manualsider.
     </para>
 
     <para>
       <option>-Dgtk_doc=true</option>: Denne bryteren gjør at
-      API dokumentasjonen blir laget og installert .
+      bygget lager og installerer API dokumentasjonen.
     </para>
 
   </sect2>
@@ -270,10 +270,11 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <seg>
           /usr/include/gio-unix-2.0,
           /usr/include/glib-2.0,
+          /usr/lib/gio,
           /usr/lib/glib-2.0,
           /usr/share/glib-2.0,
-          /usr/share/doc/glib-&glib2-version;, og
-          /usr/share/gtk-doc/html/{gio,glib,gobject} (optional)
+          /usr/share/doc/{glib-2.0,glib-&glib2-version;}, og
+          /usr/share/gtk-doc/html/{gio,glib,gobject} (valgfri)
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -288,7 +289,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <listitem>
           <para>
             kan brukes til å starte applikasjoner og sende
-            meldinger til allerede kjørende forekomster av andre applikasjoner
+            meldinger til allerede kjørende økter av andre applikasjoner
           </para>
           <indexterm zone="glib2 gapplication">
             <primary sortas="b-gapplication">application</primary>
@@ -338,9 +339,9 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gio-querymodules</command></term>
         <listitem>
           <para>
-            brukes til å lage en <filename>giomodule.cache</filename> fil i
+            brukes til å opprette en <filename>giomodule.cache</filename> fil i
             de listede mappene. Denne filen viser den implementerte utvidelsen
-            punkt for hver modul som er funnet
+            punktet for hver modul som er funnet
           </para>
           <indexterm zone="glib2 gio-querymodules">
             <primary sortas="b-gio-querymodules">gio-querymodules</primary>
@@ -354,7 +355,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
           <para>
             brukes til å lese ressursbeskrivelsen fra en fil og
             filene den refererer til for å lage en binær ressurs
-            pakke som er egnet for bruk med GResource API
+            bunt som er egnet for bruk med GResource API
           </para>
           <indexterm zone="glib2 glib-compile-resources">
             <primary sortas="b-glib-compile-resources">glib-compile-resources</primary>
@@ -380,7 +381,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>glib-genmarshal</command></term>
         <listitem>
           <para>
-            er et C kode rangering genereringsverktøy for GLib lukkinger
+            er et C kode marshaller genereringsverktøy for GLib lukkinger
           </para>
           <indexterm zone="glib2 glib-genmarshal">
             <primary sortas="b-glib-genmarshal">glib-genmarshal</primary>
@@ -478,7 +479,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
           <listitem>
           <para>
             inneholder kjernebiblioteker på lavt nivå for
-            <application>GIMP</application> Verktøysett
+            <application>GIMP</application> Toolkit
           </para>
           <indexterm zone="glib2 GLib-libraries">
             <primary sortas="c-GLib-libraries">Glib libraries</primary>
