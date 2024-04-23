@@ -7,10 +7,10 @@
   <!ENTITY icu-download-http
            "https://github.com/unicode-org/icu/releases/download/release-&icu-major;-&icu-minor;/icu4c-&icu-major;_&icu-minor;-src.tgz">
   <!ENTITY icu-download-ftp  " ">
-  <!ENTITY icu-md5sum        "4de6484a6c460d3d1468a6fe50369439">
+  <!ENTITY icu-md5sum        "b8a4b8cf77f2e2f6e1341eac0aab2fc4">
   <!ENTITY icu-size          "25 MB">
-  <!ENTITY icu-buildsize     "337 MB (legg til 41 MB for tester)">
-  <!ENTITY icu-time          "0.6 SBU (Bruker parallellisme=4; legg til 1,6 SBU for tester)">
+  <!ENTITY icu-buildsize     "389 MB (legg til 43 MB for tester)">
+  <!ENTITY icu-time          "0.5 SBU (Bruker parallellisme=4; legg til 1.0 SBU for tester)">
 ]>
 
 <sect1 id="icu" xreflabel="ICU-&icu-version;">
@@ -27,14 +27,49 @@
     <title>Introduksjon til ICU</title>
 
     <para>
-      <application>International Components for Unicode</application> (ICU)
+      <application>Internasjonale Komponenter for Unicode</application> (ICU)
       pakken er et modent, mye brukt sett med C/C++ biblioteker som gir Unicode
       og globaliseringsstøtte for programvareapplikasjoner.
-      <application>ICU</application> er allment flyttbart og gir applikasjoner
+      <application>ICU</application> er veldig overførbar og gir applikasjoner
       de samme resultatene på alle plattformer.
     </para>
 
-    &lfs113_checked;
+    <warning>
+      <para>
+        Oppgradering av denne pakken til en ny hovedversjon (for eksempel fra
+        72.1 to &icu-version;) vil kreve ombygging av mange andre
+        pakker. Hvis noen pakker som bruker bibliotekene bygget av
+        icu4c-&icu-major; bygges om, vil de bruke de nye bibliotekene mens
+        gjeldende pakker vil bruke de tidligere bibliotekene. Hvis Linux
+        applikasjonslaster
+        (<filename class='libraryfile'>/usr/lib/ld-linux-x86-64.so.2</filename>)
+        bestemmer at både det gamle og det nye biblioteket er nødvendig, og et
+        symbol (navn på data eller funksjon) finnes i begge versjoner av
+        biblioteket, vil alle referanser til symbolet bli løst til
+        versjonen som vises tidligere i bredde-første sekvensen av
+        avhengighetsgrafen. Dette kan føre til at applikasjonen mislykkes hvis
+        definisjonen av dataene eller oppførselen til funksjonen det henvises til
+        ved symbolet er forskjellig i to versjoner. For å unngå problemet, brukere
+        må gjenoppbygge hver pakke som er knyttet til et ICU bibliotek så snart
+        som mulig når ICU er oppdatert til en ny hovedversjon.
+      </para>
+
+      <para>
+        For å finne ut hvilke eksterne biblioteker som trengs (direkte eller indirekte)
+        av en applikasjon eller et bibliotek, kjør:
+      </para>
+
+<screen><userinput>ldd &lt;application or library&gt; </userinput></screen>
+
+      <para>
+        eller bare se de direkte nødvendige bibliotekene:
+      </para>
+
+<screen><userinput>readelf -d  &lt;application or library&gt; | grep NEEDED</userinput></screen>
+
+    </warning>
+
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -88,9 +123,6 @@
       <xref linkend="doxygen"/> (for dokumentasjon)
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/icu"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -107,15 +139,15 @@
       <para>
         Hvis <command>clang++</command> er tilgjengelig, vil den bli brukt i
         feil tro at <command>g++</command> støtter kanskje ikke C++11,
-        selv om <command>configure</command> har testet for det. Hvis det
-        brukes <command>g++</command> det vil komme en unødvendig advarsel på
+        selv om <command>configure</command> har testet for det. Hvis
+        <command>g++</command> brukes vil det bli en unødvendig advarsel i
         slutten av <command>configure</command>.  Bygge med
         <command>g++</command> tar også lengre tid enn estimert SBU vist.
       </para>
     </note>
 <!--
     <para>
-      Først, fiks en regresjon i version 58.1:
+      Først, fiks en regresjon i versjon 58.1:
     </para>
 
 <screen><userinput>patch -p1 -i ../icu4c-&icu-version;-fix_enumeration-1.patch</userinput></screen>
@@ -135,7 +167,7 @@ sed '/fdef U_CHARSET_I/i#define U_CHARSET_IS_UTF8 1' -i common/unicode/platform.
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For å teste resultatene, utsted: <command>make check</command>.
     </para>
 
     <para>
@@ -219,7 +251,7 @@ make</userinput></screen>
         <term><command>genccode</command></term>
         <listitem>
           <para>
-            genererer C- eller plattformspesifikk monteringskode fra en ICU
+            genererer C eller plattformspesifikk monteringskode fra en ICU
             datafil
           </para>
           <indexterm zone="icu genccode">
@@ -245,7 +277,7 @@ make</userinput></screen>
         <term><command>gencmn</command></term>
         <listitem>
           <para>
-            genererer en ICU-minnekartbar datafil
+            genererer en ICU minnekartbar datafil
           </para>
           <indexterm zone="icu gencmn">
             <primary sortas="b-gencmn">gencmn</primary>
@@ -317,7 +349,7 @@ make</userinput></screen>
         <term><command>icu-config</command></term>
         <listitem>
           <para>
-            utdata ICU byggealternativer
+            skriver ut ICU byggealternativer
           </para>
           <indexterm zone="icu icu-config">
             <primary sortas="b-icu-config">icu-config</primary>
@@ -329,7 +361,7 @@ make</userinput></screen>
         <term><command>icuinfo</command></term>
         <listitem>
           <para>
-            sender ut konfigurasjonsinformasjon om gjeldende ICU
+            skriver ut konfigurasjonsinformasjon om gjeldende ICU
           </para>
           <indexterm zone="icu icuinfo">
             <primary sortas="b-icuinfo">icuinfo</primary>
@@ -425,7 +457,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libicule.so</filename></term>
         <listitem>
           <para>
-            er layoutmotoren.
+            er utformingsmotoren.
           </para>
           <indexterm zone="icu libicule">
             <primary sortas="c-libicule">libicule.so</primary>
@@ -437,7 +469,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libiculx.so</filename></term>
         <listitem>
           <para>
-            er motoren for layoututvidelser.
+            er motoren for utformingsutvidelser.
           </para>
           <indexterm zone="icu libiculx">
             <primary sortas="c-libiculx">libiculx.so</primary>
