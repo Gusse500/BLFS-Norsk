@@ -10,13 +10,14 @@
   we have moved to next firefox-esr (ff-91) and JS  has not moved
   <!ENTITY ff91-version       "&JS91-version;"> -->
 
-  <!ENTITY ff102-version       "&firefox-version;">
+<!--<!ENTITY ff102-version       "&firefox-version;">-->
   <!ENTITY js102-download-http "&mozilla-http;/firefox/releases/&JS102-version;esr/source/firefox-&JS102-version;esr.source.tar.xz">
   <!ENTITY js102-download-ftp  " ">
-  <!ENTITY js102-md5sum        "&firefox-md5;">
-  <!ENTITY js102-size          "457 MB">
-  <!ENTITY js102-buildsize     "3.3 GB (38 MB installert etter fjerning av 34 MB statisk lib)">
-  <!ENTITY js102-time          "1.8 SBU (med parallellitet=4)">
+  <!ENTITY js102-md5sum        "42b9a73626ed8281b86222f6f0a96c73">
+  <!ENTITY js102-md5sum        "">
+  <!ENTITY js102-size          "464 MB">
+  <!ENTITY js102-buildsize     "3.3 GB (38 MB installert etter fjerning av 34 MB statiske biblioteker)">
+  <!ENTITY js102-time          "1.7 SBU (med parallellitet=4)">
 ]>
 
 <sect1 id="js102" xreflabel="JS-&JS102-version;">
@@ -35,13 +36,13 @@
     <para>
       <application>JS</application> (også referert til som
       <application>SpiderMonkey</application>) er Mozillas JavaScript og
-      WebAssembly Engine, skrevet i C++ og Rust.
+      WebAssembly Motor, skrevet i C++ og Rust.
       I BLFS er kildekoden til JS hentet fra Firefox.
     </para>
 
     <!-- To editors: make sure polkit work with mozjs before
          tagging mozjs.  -->
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -98,12 +99,21 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <!-- If clang is installed, it will be used instead of gcc.
-           gcc does not work for 32-bit system w/o -msse2 -mfpmath=sse:
+      <!-- Hvis clang er installert, vil den bli brukt i stedet for gcc.
+           gcc fungerer ikke for 32-biters system w/o -msse2 -mfpmath=sse:
            https://bugzilla.mozilla.org/show_bug.cgi?id=1729459 -->
       <xref linkend="llvm"/> (med <application>Clang</application>,
-      kreves for 32-bits systemer uten SSE2 funksjoner)
+      påkrevd for 32-bits systemer uten SSE2 funksjoner)
     </para>
+
+    <important>
+      <para>
+        Hvis du bygger denne pakken på et 32-bits system, og Clang
+        ikke er installert eller du overstyrer standard kompilatorvalg
+        med miljøvariabelen <envar>CXX</envar>, vennligst les
+        Parameterforklaringer først.
+      </para>
+    </important>
 
     <!-- It seems nasm is only used for aarch64-win64. -->
     <!--bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -111,9 +121,6 @@
       <xref linkend="nasm"/>
     </para-->
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/js102"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -121,18 +128,18 @@
 
     <note>
       <para>
-        I motsetning til de fleste andre pakker i BLFS, krever instruksjonene nedenfor at du
-        untarer <filename>firefox-&JS102-version;esr.tar.xz</filename> og
+        I motsetning til de fleste andre pakker i BLFS, krever instruksjonene nedenfor deg
+        å untar <filename>firefox-&JS102-version;esr.tar.xz</filename> og
         endre til <filename>firefox-&JS102-version;</filename> mappen.
       </para>
 
       <para>
-        Å pakke ut tarballen
+        Pakke ut tarballen
         vil tilbakestille tillatelsene til gjeldende mappe til 0755 hvis du
         har tillatelse til å gjøre det. Hvis du gjør dette i en mappe hvor
         den klebrige biten er satt, slik
-        som <filename class="directory">/tmp</filename> vil det ende med en
-        feilmelding:
+        som <filename class="directory">/tmp</filename> vil det ende med
+        feilmeldinger:
       </para>
 
 <literallayout>tar: .: Cannot utime: Operation not permitted
@@ -144,23 +151,11 @@ tar: Exiting with failure status due to previous errors
         Dette avsluttes med ikke-null status, men det betyr
         <emphasis>IKKE</emphasis> at det er et reelt problem.
         Ikke untar som <systemitem class="username">root</systemitem> bruker
-        i en mappe der den klebrige biten er satt - det vil deaktivere den.
+        i en mappe der klebrig-biten er satt - det vil deaktivere den.
       </para>
 
     </note>
-<!-- not needed when using clang.  Upstream bug at
-     https://bugzilla.mozilla.org/show_bug.cgi?id=1729459
 
-    <para>
-      Hvis du bygger på en 32-bits maskin, løser følgende sed et problem
-      med en inkompatibel <quote>dobbel</quote> type i en deklarasjonsfil:
-    </para>
-
-<screen><userinput>case "$(uname -m)" in
-    i?86) sed -e '/typedef[ ]*double/s/double/long double/' \
-              -i modules/fdlibm/src/math_private.h ;;
-esac</userinput></screen>
--->
     <para>
       Installer <application>JS</application> ved å kjøre følgende
       kommandoer:
@@ -174,21 +169,10 @@ esac</userinput></screen>
          href="../../xincludes/mozconfigure.xml"/>
 
       <para>
-        Å kompilere C++-koden respekterer $MAKEFLAGS og er standard til 'j1',
+        Å kompilere C++ koden respekterer $MAKEFLAGS og er standard til 'j1',
         rustkoden vil bruke alle prosessorer.
       </para>
     </note>
-
-    <para>
-      Fjern først et foreldet flagg i python koden, som har blitt fjernet
-      i python-3.11:
-    </para>
-
-<screen><userinput>grep -rl \"rU\" | xargs sed -i 's/"rU"/"r"/'</userinput></screen>
-
-    <para>
-      Så kjør:
-    </para>
 
 <screen><userinput>mkdir obj &amp;&amp;
 cd    obj &amp;&amp;
@@ -203,7 +187,7 @@ sh ../js/src/configure.in --prefix=/usr            \
 make</userinput></screen>
 
     <para>
-      For å kjøre JS testpakken, kjør:
+      For å kjøre JS testpakken, utsted:
       <command>make -C js/src check-jstests
       JSTESTS_EXTRA_ARGS="--timeout 300 --wpt=disabled"</command>.
       Det anbefales å omdirigere utdataene til en logg.
@@ -213,7 +197,7 @@ make</userinput></screen>
       (av totalt mer enn 50 000) er kjent for å mislykkes.
     </para>
     <para>
-      For å kjøre JIT testpakken, kjør:
+      For å kjøre JIT testpakken, utsted:
       <command>make -C js/src check-jit-test
       JITTEST_EXTRA_ARGS="--timeout 300"</command>.
     </para>
@@ -221,7 +205,7 @@ make</userinput></screen>
     <caution>
       <para>
         Et problem i installasjonsprosessen forårsaker at ethvert kjørende program som
-        lenker til JS102 delt bibliotek (for eksempel GNOME Shell) å krasje hvis
+        lenker til JS102 delt bibliotek (for eksempel GNOME Skall) til å krasje hvis
         JS102 oppgraderes eller installeres på nytt. For å omgå dette problemet, fjern
         den gamle versjonen av JS102 delte bibliotek før installasjon:
       </para>
@@ -250,14 +234,14 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
     </para>
 
     <para>
-      <parameter>--with-intl-api</parameter>: Dette muliggjør
+      <parameter>--with-intl-api</parameter>: Dette aktiverer
       internasjonaliseringsfunksjoner som kreves av
       <application>Gjs</application>.
     </para>
 
     <para>
       <parameter>--with-system-*</parameter>: Disse parameterne tillater byggesystemet
-      å bruke systemversjoner av bibliotekene ovenfor. Dette kreves for
+      å bruke systemversjoner av bibliotekene ovenfor. Disse kreves for
       stabilitet.
     </para>
 
@@ -270,13 +254,13 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
       <parameter>--disable-jemalloc</parameter>: Denne bryteren deaktiverer
       intern minneallokator brukt i JS102. jemalloc er kun beregnet på
       Firefox nettlesermiljøet. For andre applikasjoner som bruker JS102,
-      applikasjonen kan krasje som elementer tildelt i jemalloc allokatoren
+      applikasjonen kan krasje siden elementer tildelt i jemalloc allokatoren
       er frigjort på system (glibc) allokator.
     </para>
 
     <para>
-      <parameter>--disable-debug-symbols</parameter>: Ikke generer feilsøkings
-      symboler siden de er veldig store og de fleste brukere ikke trenger det. Fjern
+      <parameter>--disable-debug-symbols</parameter>: Ikke generer feilsøkingssymboler
+      siden de er veldig store og de fleste brukere ikke trenger det. Fjern
       det hvis du vil feilsøke JS102.
     </para>
 
@@ -292,14 +276,14 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
 
     <para>
       <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide å
-      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstillinger for
+      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstilling
       <application>clang</application> programmer. Med utgivelsen av
       gcc-12 bygget tar lengre tid med gcc og g++, først og fremst fordi
       ekstra advarsler, og er større. Send disse miljøvariablene
       til konfigureringsskriptet hvis du ønsker å fortsette å bruke gcc, g++
       (ved å eksportere dem og deaktivere dem etter installasjonen, eller ganske enkelt
       forberede dem før
-      <command>sh ../js/src/configure.in</command> kommandoen).  Hvis du
+      <command>sh ../js/src/configure.in</command> kommando). Hvis du
       bygger på et 32-bits system, se også nedenfor.
     </para>
 
@@ -307,12 +291,12 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js102-config</userinput></screen>
       <option><envar>CXXFLAGS="-msse2 -mfpmath=sse"</envar></option>:
       Bruk SSE2 i stedet for 387 for flytende komma med dobbel presisjon
       operasjoner. Det er nødvendig av GCC for å tilfredsstille forventningene til
-      oppstrøms (Mozilla) utviklere med flytende komma-aritmetikk.
+      oppstrøms (Mozilla) utviklere med flytende komma aritmetikk.
       Bruk den hvis du bygger denne pakken på et 32-bits system med
       GCC (hvis Clang ikke er installert eller GCC er eksplisitt spesifisert).
       Merk at dette vil føre til at JS krasjer på en prosessor uten SSE2
       evne. Hvis du kjører systemet på en så gammel prosessor,
-      Clang er strengt nødvendig. Denne innstillingen er ikke nødvendig på 64-bit
+      er Clang strengt nødvendig. Denne innstillingen er ikke nødvendig på 64-bit
       systemer fordi alle 64-bit x86-prosessorer støtter SSE2 og 64-bit
       kompilatorer (både Clang og GCC) bruker SSE2 som standard.
     </para>
