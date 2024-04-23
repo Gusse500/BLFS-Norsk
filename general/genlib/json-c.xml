@@ -6,10 +6,10 @@
 
   <!ENTITY json-c-download-http "https://s3.amazonaws.com/json-c_releases/releases/json-c-&json-c-version;.tar.gz">
   <!ENTITY json-c-download-ftp  " ">
-  <!ENTITY json-c-md5sum        "8110782cb2a996da5517f1f27a4bed8e">
-  <!ENTITY json-c-size          "344 KB">
-  <!ENTITY json-c-buildsize     "7.7 MB">
-  <!ENTITY json-c-time          "0.2 SBU (med tester)">
+  <!ENTITY json-c-md5sum        "bad8f5e91b7b2563ee2d507054c70eb2">
+  <!ENTITY json-c-size          "384 KB">
+  <!ENTITY json-c-buildsize     "7.9 MB">
+  <!ENTITY json-c-time          "0.4 SBU (med tester)">
 ]>
 
 <sect1 id="json-c" xreflabel="JSON-C-&json-c-version;">
@@ -32,7 +32,7 @@
       tilbake til C representasjonen av JSON objekter.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -74,16 +74,13 @@
     <para role="required">
       <xref linkend="cmake"/>
     </para>
-<!--
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
-    <para role="Optional">
+
+    <bridgehead renderas="sect4">Valgfri (for dokumentasjon)</bridgehead>
+    <para role="optional">
       <xref linkend="doxygen"/> og
       <xref linkend="graphviz"/> (for dot verktøy)
     </para>
--->
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/json-c"/>
-    </para>
+
   </sect2>
 
   <sect2 role="installation">
@@ -110,7 +107,15 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.
+      Hvis du har installert <xref linkend="doxygen" role="nodep"/> og
+      <xref linkend="graphviz" role="nodep"/>, kan du bygge dokumentasjonen
+      ved å kjøre følgende kommando:
+    </para>
+
+<screen remap="doc"><userinput>doxygen doc/Doxyfile</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>make test</command>.
     </para>
 
     <para>
@@ -118,6 +123,15 @@ make</userinput></screen>
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      Hvis du har laget dokumentasjonen, installer den ved å kjøre følgende
+      kommandoer som &root; bruker:
+    </para>
+
+<screen role="root" remap="doc"><userinput>install -d -vm755 /usr/share/doc/json-c-&json-c-version; &amp;&amp;
+install -v -m644 doc/html/* /usr/share/doc/json-c-&json-c-version;</userinput></screen>
+
   </sect2>
 
   <sect2 role="commands">

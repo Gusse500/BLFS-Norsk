@@ -9,7 +9,7 @@
   <!ENTITY keyutils-md5sum        "919af7f33576816b423d537f8a8692e8">
   <!ENTITY keyutils-size          "96 KB">
   <!ENTITY keyutils-buildsize     "1.9 MB (med tester)">
-  <!ENTITY keyutils-time          "less than 0.1 SBU (legg til 0.6 SBU for tester)">
+  <!ENTITY keyutils-time          "mindre enn 0.1 SBU (legg til 0.6 SBU for tester)">
 ]>
 
 <sect1 id="keyutils" xreflabel="keyutils-&keyutils-version;">
@@ -27,12 +27,12 @@
 
     <para>
       <application>Keyutils</application> er et sett med verktøy for å administrere
-      nøkkeloppbevaringsfunksjonen i kjernen, som kan brukes av
-      filsystemer, blokkenheter og mer for å få og beholde autorisasjonen
+      nøkkeloppbevaringsfasiliteten i kjernen, som kan brukes av
+      filsystemer, blokk enheter og mer for å få og beholde autorisasjonen
       og krypteringsnøkler som kreves for å utføre sikre operasjoner.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -73,12 +73,10 @@
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="mitkrb"/>
-      <!-- Without krb5 installed, a FTBFS occurs while trying to compile dns.afsdb.c.
-      It looks for profile.h, which is installed by krb5. -->
+      <!-- Uten krb5 installert, oppstår en FTBFS under forsøk på å kompilere dns.afsdb.c.
+      Den ser etter profile.h, som er installert av krb5. -->
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-    <ulink url="&blfs-wiki;/keyutils"/></para>
 
   </sect2>
 
@@ -94,7 +92,7 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør, som
+      For å teste resultatene, utsted, som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -124,7 +122,7 @@ make</userinput></screen>
 
     <para>
       <parameter>NO_ARLIB=1</parameter>: Dette make flagget deaktiverer installasjonen av
-      det statiske biblioteket.
+      statisk bibliotek.
     </para>
 
   </sect2>
@@ -176,7 +174,7 @@ make</userinput></screen>
         <term><command>keyctl</command></term>
         <listitem>
           <para>
-            kontrollerer nøkkeladministrasjonsanlegget med en rekke underkommandoer
+            kontrollerer nøkkeladministrasjonsfasilitetet med en rekke underkommandoer
           </para>
           <indexterm zone="keyutils keyctl">
             <primary sortas="b-keyctl">keyctl</primary>
@@ -188,10 +186,10 @@ make</userinput></screen>
         <term><command>key.dns_resolver</command></term>
         <listitem>
           <para>
-            påkalles av <command>request-key</command> på vegne av
+            er påkalt av <command>request-key</command> på vegne av
             kjernen når kjernetjenester (som NFS, CIFS og AFS) trenger å
             utføre et vertsnavnoppslag og kjernen ikke har nøkkelen
-            bufret. Den er vanligvis ikke ment å bli påkalt direkte
+            bufret. Det er vanligvis ikke ment å bli påkalt direkte
           </para>
           <indexterm zone="keyutils key.dns_resolver">
             <primary sortas="b-key.dns_resolver">key.dns_resolver</primary>
@@ -204,8 +202,8 @@ make</userinput></screen>
         <listitem>
           <para>
             påkalles av kjernen når kjernen blir bedt om en nøkkel som den
-            ikke har umiddelbart tilgjengelig. Kjernen oppretter en midlertidig
-            nøkkel og roper deretter til dette programmet for å instansiere det. Den er
+            ikke har tilgjengelig umiddelbart. Kjernen oppretter en midlertidig
+            nøkkel og kaller deretter til dette programmet for å instansiere det. Det er
             ikke ment å bli påkalt direkte
           </para>
           <indexterm zone="keyutils request-key">
@@ -218,7 +216,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libkeyutils.so</filename></term>
         <listitem>
           <para>
-            inneholder keyutils bibliotek API instansiering
+            inneholder keyutils bibliotekets API instansering
           </para>
           <indexterm zone="keyutils libkeyutils">
             <primary sortas="c-libkeyutils">libkeyutils.so</primary>
