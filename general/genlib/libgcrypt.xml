@@ -7,9 +7,9 @@
   <!ENTITY libgcrypt-download-http "&gnupg-http;/libgcrypt/libgcrypt-&libgcrypt-version;.tar.bz2">
   <!ENTITY libgcrypt-download-ftp  "&gnupg-ftp;/libgcrypt/libgcrypt-&libgcrypt-version;.tar.bz2">
   <!ENTITY libgcrypt-download-ftp  " ">
-  <!ENTITY libgcrypt-md5sum        "8fadbe1fddafa341dce5ef3869f70e25">
+  <!ENTITY libgcrypt-md5sum        "663abb395452750522d6797967e2f442">
   <!ENTITY libgcrypt-size          "3.6 MB">
-  <!ENTITY libgcrypt-buildsize     "130 MB (med tester og pdf dokumentasjon)">
+  <!ENTITY libgcrypt-buildsize     "130 MB (med tester)">
   <!ENTITY libgcrypt-time          "0.4 SBU (med dokumentasjon; legg til 0,5 SBU for tester)">
 ]>
 
@@ -27,14 +27,14 @@
     <title>Introduksjon til libgcrypt</title>
 
     <para>
-      <application>libgcrypt</application> pakken inneholder en generell
-      formåls kryptobibliotek basert på koden som brukes i
-      <application>GnuPG</application>. Biblioteket gir et grensesnitt på høyt nivå
-      til kryptografiske byggeblokker ved hjelp av en utvidbar og fleksibel
+      <application>libgcrypt</application> pakken inneholder et generelt
+      formålskryptobibliotek basert på koden som brukes i
+      <application>GnuPG</application>. Biblioteket gir et høyt nivå
+      grensesnitt til kryptografiske byggeblokker ved hjelp av en utvidbar og fleksibel
       API.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -84,9 +84,6 @@
       <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/libgcrypt"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -104,17 +101,18 @@ make -C doc html                                                       &amp;&amp
 makeinfo --html --no-split -o doc/gcrypt_nochunks.html doc/gcrypt.texi &amp;&amp;
 makeinfo --plaintext       -o doc/gcrypt.txt           doc/gcrypt.texi</userinput></screen>
 
+<!--  The commands for building the pdf and ps formats are broken.
     <para>
-      Kommandoene ovenfor bygger dokumentasjonen i html format og ren tekst
-      format. Hvis du ønsker å bygge alternative formater av dokumentasjonen, trenger
-      du <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>). Kjør
+      Kommandoene ovenfor bygger dokumentasjonen i html og ren tekst
+      formater. Hvis du ønsker å bygge alternative formater av dokumentasjonen,
+      trenger du <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>). Utsted
       følgende kommando:
     </para>
 
 <screen remap="doc"><userinput>make -C doc pdf</userinput></screen>
-
+-->
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For å teste resultatene, utsted: <command>make check</command>.
     </para>
 
     <para>
@@ -133,17 +131,17 @@ install -v -m644 doc/gcrypt_nochunks.html \
                     /usr/share/doc/libgcrypt-&libgcrypt-version;      &amp;&amp;
 install -v -m644 doc/gcrypt.{txt,texi} \
                     /usr/share/doc/libgcrypt-&libgcrypt-version;</userinput></screen>
-
+<!--
     <para>
       Hvis du bygde alternative formater av dokumentasjonen, installer dem ved å
-      kjøre følgende kommando som
+      utstede følgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"
         remap="doc"><userinput>install -v -m644 doc/gcrypt.{pdf,ps,dvi} \
                     /usr/share/doc/libgcrypt-&libgcrypt-version;</userinput></screen>
-
+-->
   </sect2>
 
   <sect2 role="commands">
@@ -151,7 +149,7 @@ install -v -m644 doc/gcrypt.{txt,texi} \
 
     <para>
       <option>--with-capabilities</option>: Dette alternativet aktiverer libcap2 støtte.
-      Merk at dette brekker <xref linkend="cryptsetup"/>
+      Merk at dette ødelegger <xref linkend="cryptsetup"/>
     </para>
 
   </sect2>
@@ -162,7 +160,7 @@ install -v -m644 doc/gcrypt.{txt,texi} \
     <segmentedlist>
       <segtitle>Installerte Programmer</segtitle>
       <segtitle>Installert Bibliotek</segtitle>
-      <segtitle>Installerte Mapper</segtitle>
+      <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
         <seg>
@@ -186,7 +184,7 @@ install -v -m644 doc/gcrypt.{txt,texi} \
         <term><command>dumpsexp</command></term>
         <listitem>
           <para>
-            er et feilsøkingsverktøy for S-uttrykk
+            er et feilsøkingsverktøy for S-expressions
           </para>
           <indexterm zone="libgcrypt dumpsexp">
             <primary sortas="b-dumpsexp">dumpsexp</primary>
@@ -211,8 +209,8 @@ install -v -m644 doc/gcrypt.{txt,texi} \
         <term><command>libgcrypt-config</command></term>
         <listitem>
           <para>
-            bestemmer kompilerings- og linkerflaggene som skal brukes til
-            å kompiler og koble programmer som bruker <filename class="libraryfile">libgcrypt</filename>
+            bestemmer kompilerings og linker flaggene som skal brukes til
+            å kompilere og koble programmer som bruker <filename class="libraryfile">libgcrypt</filename>
           </para>
           <indexterm zone="libgcrypt libgcrypt-config">
             <primary sortas="b-libgcrypt-config">libgcrypt-config</primary>

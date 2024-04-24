@@ -7,10 +7,10 @@
   <!ENTITY libblockdev-download-http
     "https://github.com/storaged-project/libblockdev/releases/download/&libblockdev-version;-1/libblockdev-&libblockdev-version;.tar.gz">
   <!ENTITY libblockdev-download-ftp " ">
-  <!ENTITY libblockdev-md5sum        "6476e5967753ee03d8e65f4d7837a4b6">
-  <!ENTITY libblockdev-size          "908 KB">
+  <!ENTITY libblockdev-md5sum        "b03d1b4def6962aa2e3eb93b50c22163">
+  <!ENTITY libblockdev-size          "1.0 MB">
   <!ENTITY libblockdev-buildsize     "14 MB">
-  <!ENTITY libblockdev-time          "0.2 SBU">
+  <!ENTITY libblockdev-time          "0.1 SBU">
 ]>
 
 <sect1 id="libblockdev" xreflabel="libblockdev-&libblockdev-version;">
@@ -34,7 +34,7 @@
       CLI eller den nye LVM DBus API).
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -74,11 +74,17 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="gobject-introspection"/>,
+      <xref linkend="glib2"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="cryptsetup"/>,
+      <xref linkend="gobject-introspection"/> (påkrevd for GNOME),
+      <xref linkend="keyutils"/>,
       <xref linkend="libbytesize"/>,
-      <xref linkend="libyaml"/>,
-      <xref linkend="parted"/>, og
-      <xref linkend="volume_key"/>
+      <xref linkend="libnvme"/>, og
+      <xref linkend="lvm2"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -86,21 +92,22 @@
       <xref linkend="btrfs-progs"/>,
       <xref linkend="gtk-doc"/>,
       <xref linkend="mdadm"/>,
-      <ulink url="https://people.redhat.com/~heinzm/sw/dmraid/">dmraid</ulink>,
-      <ulink url="https://bcachefs.org/">bcachefs</ulink>, og
-      <ulink url="https://github.com/pmem/ndctl">ndctl</ulink>
+      <xref linkend="parted"/>,
+      <xref linkend="volume_key"/>,
+<!--      <ulink url="https://people.redhat.com/~heinzm/sw/dmraid/">dmraid</ulink>, -->
+<!--      <ulink url="https://bcachefs.org/">bcachefs</ulink>, -->
+      <ulink url="https://github.com/pmem/ndctl">ndctl</ulink>, og
+      <ulink url="https://github.com/Datera/targetcli">targetcli</ulink>
+      (for tester)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/libblockdev"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av libblockdev</title>
 <!--
     <para>
-      Fiks bruken av en glib funksjon som er utdatert for sikkerhet:
+      For sikkerhet fiks bruken av en glibfunksjon som er utdatert:
     </para>
 
 <screen><userinput>sed 's/g_memdup/&amp;2/' -i             \
@@ -112,16 +119,20 @@
       følgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr     \
-            --sysconfdir=/etc \
-            --with-python3    \
-            --without-gtk-doc \
-            --without-nvdimm  \
-            --without-dm      &amp;&amp;
+<screen><userinput>./configure --prefix=/usr      \
+            --sysconfdir=/etc  \
+            --with-python3     \
+            --without-escrow   \
+            --without-gtk-doc  \
+            --without-lvm      \
+            --without-lvm_dbus \
+            --without-nvdimm   \
+            --without-tools    &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Denne pakken kommer ikke med en fungerende testpakke.
+      Testpakken krever <application>targetcli</application>, som
+      ikke er en del av BLFS.
     </para>
 
     <para>
@@ -131,13 +142,67 @@ make</userinput></screen>
 <screen role="root"><userinput>make install</userinput></screen>
 
   </sect2>
-<!--
+
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
+    <para>
+      <parameter>--without-escrow</parameter>: Denne bryteren tillater bygging av
+      <application>libblockdev</application> uten
+      <xref linkend="volume_key"/> installert.  Fjern den hvis du har installert
+      <xref linkend="volume_key"/>.
+    </para>
+
+    <para>
+      <parameter>--without-lvm --without-lvm_dbus
+      --without-tools</parameter>: Kombinasjonen av disse bryterne tillater
+      bygging av <application>libblockdev</application> uten
+      <xref linkend="parted"/> installert.  Fjern den hvis du har installert
+      <xref linkend="parted"/> og ønsker å bygge
+      <command>lvm-cache-stats</command> eller <command>vfat-resize</command>
+      verktøy, eller ønsker <application>libblockdev</application> å støtte
+      logiske volumer.
+    </para>
+
+    <para>
+      <option>--without-btrfs --without-mdraid --without-tools</option>:
+      Kombinasjonen av disse bryterne tillater bygging av
+      <application>libblockdev</application> uten
+      <xref linkend="libbytesize"/> installert. 
+      <option>--without-mdraid</option> alternativet vil bryte
+      <xref linkend="udisks2"/>, så ikke bruk det med mindre du virkelig vet hva
+      du gjør.
+    </para>
+
+    <para>
+      <option>--without-crypto</option>: Denne bryteren tillater bygging av
+      <application>libblockdev</application> uten
+      <xref linkend="cryptsetup"/> eller <xref linkend="keyutils"/> installert.
+      Denne bryteren vil bryte <xref linkend="udisks2"/>, så ikke bruk det
+      med mindre du virkelig vet hva du gjør.
+    </para>
+
+    <para>
+      <option>--without-dm --without-lvm --without-lvm_dbus
+      --without-mpath</option>: Kombinasjonen av disse bryterne tillater
+      bygging av <application>libblockdev</application> uten
+      <xref linkend="lvm2"/> installert.  <option>--without-dm</option>
+      og <option>--without-mpath</option> alternativene er ikke i instruksjonene
+      gitt av boken fordi <xref linkend="lvm2"/> er påkrevd for
+      <xref linkend="cryptsetup"/> og <xref linkend="cryptsetup"/> er uansett en
+      anbefalt avhengighet av <application>libblockdev</application>.
+    </para>
+
+    <para>
+      <option>--without-nvme</option>: Denne bryteren tillater bygging av
+      <application>libblockdev</application> uten
+      <xref linkend="libnvme"/> installert.  Denne bryteren vil bryte
+      <xref linkend="udisks2"/>, så ikke bruk det med mindre du virkelig vet hva
+      du gjør.
+    </para>
 
   </sect2>
--->
+
   <sect2 role="content">
     <title>Innhold</title>
 
@@ -148,29 +213,28 @@ make</userinput></screen>
 
       <seglistitem>
         <seg>
-          lvm-cache-stats
+          lvm-cache-stats og vfat-resize (begge valgfri)
         </seg>
         <seg>
           libbd_btrfs.so,
           libbd_crypto.so,
+          libbd_dm.so,
           libbd_fs.so,
-          libbd_kbd.so,
           libbd_loop.so,
-          libbd_lvm.so,
-          libbd_lvm-dbus.so,
+          libbd_lvm.so (valgfri),
+          libbd_lvm-dbus.so (valgfri),
           libbd_mdraid.so,
           libbd_mpath.so,
+          libbd_nvme.so,
           libbd_part.so,
-          libbd_part_err.so,
           libbd_swap.so,
-          libbd_utils.so,
-          libbd_vdo.so, og
+          libbd_utils.so, og
           libblockdev.so
         </seg>
         <seg>
           /etc/libblockdev,
           /usr/include/blockdev, og
-          /usr/share/gtk-doc/html/libblockdev
+          /usr/share/gtk-doc/html/libblockdev (valgfri)
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -184,7 +248,7 @@ make</userinput></screen>
         <term><command>lvm-cache-stats</command></term>
         <listitem>
           <para>
-            skriver ut statistikk over hurtiglager på LVM Logical Volumes
+            skriver ut statistikk over hurtiglagre på LVM Logiske Volumer
           </para>
           <indexterm zone="libblockdev lvm-cache-stats">
             <primary sortas="b-lvm-cache-stats">lvm-cache-stats</primary>
@@ -192,6 +256,18 @@ make</userinput></screen>
         </listitem>
       </varlistentry>
 
+      <varlistentry id="vfat-resize">
+        <term><command>vfat-resize</command></term>
+        <listitem>
+          <para>
+            endrer størrelse på <systemitem class="filesystem">vfat</systemitem>
+            filsystemer
+          </para>
+          <indexterm zone="libblockdev vfat-resize">
+            <primary sortas="b-vfat-resize">vfat-resize</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
     </variablelist>
 
   </sect2>
