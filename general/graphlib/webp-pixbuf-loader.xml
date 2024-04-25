@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY webp-pixbuf-loader-download-http "https://github.com/aruiz/webp-pixbuf-loader/archive/&webp-pixbuf-loader-version;/webp-pixbuf-loader-&webp-pixbuf-loader-version;.tar.gz">
+  <!ENTITY webp-pixbuf-loader-download-ftp  " ">
+  <!ENTITY webp-pixbuf-loader-md5sum        "2218f764598044497691c02bf641173d">
+  <!ENTITY webp-pixbuf-loader-size          "8.7 MB">
+  <!ENTITY webp-pixbuf-loader-buildsize     "9.7 MB">
+  <!ENTITY webp-pixbuf-loader-time          "mindre enn 0.1 SBU (med tester)">
+]>
+
+<sect1 id="webp-pixbuf-loader" xreflabel="webp-pixbuf-loader-&webp-pixbuf-loader-version;">
+  <?dbhtml filename="webp-pixbuf-loader.html"?>
+
+  <title>webp-pixbuf-loader-&webp-pixbuf-loader-version;</title>
+
+  <indexterm zone="webp-pixbuf-loader">
+    <primary sortas="a-webp-pixbuf-loader">webp-pixbuf-loader</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til webp-pixbuf-loader</title>
+
+    <para>
+      <application>webp-pixbuf-loader</application> pakken inneholder en
+      bibliotek som lar gdk-pixbuf laste og behandle webp bilder.
+    </para>
+
+    &lfs120_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&webp-pixbuf-loader-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&webp-pixbuf-loader-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &webp-pixbuf-loader-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &webp-pixbuf-loader-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &webp-pixbuf-loader-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &webp-pixbuf-loader-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">webp-pixbuf-loader Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="gdk-pixbuf"/> og
+      <xref linkend="libwebp"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av webp-pixbuf-loader</title>
+
+    <para>
+      Installer <application>webp-pixbuf-loader</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja test</command>.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para>
+      Webp formatet må legges til lasterens hurtiglager:
+    </para>
+
+<screen role="root"><userinput>gdk-pixbuf-query-loaders --update-cache</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <command>gdk-pixbuf-query-loaders --update-cache</command>: Denne kommandoen
+      oppdaterer gdk-pixbuf lasterens hurtiglager slik at den vet at webp lasteren har
+      blitt installert.
+    </para>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libpixbufloader-webp.so
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libpixbufloader-webp">
+        <term><filename class="libraryfile">libpixbufloader-webp.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som lar gdk-pixbuf laste inn webp bilder
+          </para>
+          <indexterm zone="webp-pixbuf-loader libpixbufloader-webp">
+            <primary sortas="c-libpixbufloader-webp">libpixbufloader-webp.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
