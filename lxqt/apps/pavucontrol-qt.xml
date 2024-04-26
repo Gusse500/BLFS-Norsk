@@ -4,23 +4,19 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-<!-- As of August 2017, downloads.lxqt.org is down. Use github archives
-     instead, but keep the old link in case the host become available again.
-     According to lxqt devs, they are working on it...
-  <!ENTITY pavucontrol-qt-download-http "https://downloads.lxqt.org/pavucontrol-qt/&pavucontrol-qt-version;/pavucontrol-qt-&pavucontrol-qt-version;.tar.xz">-->
-  <!ENTITY pavucontrol-qt-download-http "https://github.com/lxde/pavucontrol-qt/releases/download/&pavucontrol-qt-version;/pavucontrol-qt-&pavucontrol-qt-version;.tar.xz">
+  <!ENTITY pavucontrol-qt-download-http "https://github.com/lxqt/pavucontrol-qt/releases/download/&lxqt-version;/pavucontrol-qt-&lxqt-version;.tar.xz">
   <!ENTITY pavucontrol-qt-download-ftp  " ">
-  <!ENTITY pavucontrol-qt-md5sum        "050e24b2a22d197c119b8899f252b44b">
-  <!ENTITY pavucontrol-qt-size          "34 KB">
+  <!ENTITY pavucontrol-qt-md5sum        "0601924b580f050f43d038d407969c3b">
+  <!ENTITY pavucontrol-qt-size          "105 KB">
   <!ENTITY pavucontrol-qt-buildsize     "3.9 MB">
   <!ENTITY pavucontrol-qt-time          "0.2 SBU">
 ]>
 
-<sect1 id="pavucontrol-qt" xreflabel="pavucontrol-qt-&pavucontrol-qt-version;">
+<sect1 id="pavucontrol-qt" xreflabel="pavucontrol-qt-&lxqt-version;">
   <?dbhtml filename="pavucontrol-qt.html"?>
 
 
-  <title>pavucontrol-qt-&pavucontrol-qt-version;</title>
+  <title>pavucontrol-qt-&lxqt-version;</title>
 
   <indexterm zone="pavucontrol-qt">
     <primary sortas="a-pavucontrol-qt">pavucontrol-qt</primary>
@@ -30,12 +26,12 @@
     <title>Introduksjon til pavucontrol-qt</title>
 
     <para>
-      <application>pavucontrol-qt</application> er Qt-porten for volum
-      kontroll pavukontroll av lydserver PulseAudio. Bruken er ikke begrenset
-      til LXQt.
+      <application>pavucontrol-qt</application> er Qt porten til
+      volumkontrollverktøyet pavucontrol, som brukes til å justere lydnivåer i
+      Pulsaudio. Det er skrivebordsmiljøagnostisk.
     </para>
 
-    &lfs82_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -76,18 +72,8 @@
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="liblxqt"/> og
-      <xref linkend="pulseaudio"/>, bygget med
-      <xref linkend="glib2"/> støtte
-    </para>
-
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
-    <para role="optional">
-      <xref linkend="git"/> (for å laste ned oversettelsesfiler) eller
-      <xref linkend="lxqt-l10n"/> (for å legge til lokaliseringsfiler)
-    </para>
-
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/pavucontrol-qt"/>
+      <xref linkend="pulseaudio"/> (bygget med
+      <xref linkend="glib2"/> støtte)
     </para>
   </sect2>
 
@@ -96,15 +82,14 @@
 
     <para>
        Installer <application>pavucontrol-qt</application> ved å kjøre følgende
-       kommandoer:
+      kommandoer:
     </para>
 
 <screen><userinput>mkdir -v build &amp;&amp;
 cd       build &amp;&amp;
 
-cmake -DCMAKE_BUILD_TYPE=Release          \
-      -DCMAKE_INSTALL_PREFIX=$LXQT_PREFIX \
-      -DPULL_TRANSLATIONS=no              \
+cmake -DCMAKE_BUILD_TYPE=Release  \
+      -DCMAKE_INSTALL_PREFIX=/usr \
       ..       &amp;&amp;
 make</userinput></screen>
 
@@ -113,31 +98,10 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, some <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
-
-    <para>
-      Hvis du installerte i /opt, igjen som
-      <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>if [ "$LXQT_PREFIX" != /usr ]; then
-  ln -svf $LXQT_PREFIX/share/applications/pavucontrol-qt.desktop \
-          /usr/share/applications
-fi</userinput></screen>
-
-  </sect2>
-
-  <sect2 role="commands">
-    <title>Parameterforklaringer</title>
-
-    <para>
-      <parameter>-DPULL_TRANSLATIONS=no</parameter>: Fjerner behovet for
-      <xref linkend="git"/>, som ellers ville blitt bedt om å laste ned
-      oversettelsesfilene.
-    </para>
 
   </sect2>
 
@@ -171,8 +135,8 @@ fi</userinput></screen>
         <term><command>pavucontrol-qt</command></term>
         <listitem>
           <para>
-            er et Qt-basert GUI-konfigurasjonsverktøy for lydinnstillinger ved hjelp av
-            <application>pulsaudio</application>.
+            er et Qt basert GUI konfigurasjonsverktøy for lydinnstillinger ved hjelp av
+            <application>pulseaudio</application>
           </para>
           <indexterm zone="pavucontrol-qt pavucontrol-qt-prog">
             <primary sortas="b-pavucontrol-qt">pavucontrol-qt</primary>
