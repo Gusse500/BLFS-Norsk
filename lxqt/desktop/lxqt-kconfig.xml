@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY kconfig-download-http "&kf5-download-http;/kconfig-&kf5-version;.tar.xz">
+  <!ENTITY kconfig-download-ftp  " ">
+  <!ENTITY kconfig-md5sum        "fe2b1c516c2f9caadd6c8e3bf35ffd96">
+  <!ENTITY kconfig-size          "288 KB">
+  <!ENTITY kconfig-buildsize     "20 MB">
+  <!ENTITY kconfig-time          "0.1 SBU (Bruke parallellisme=4)">
+]>
+
+<sect1 id="lxqt-kconfig" xreflabel="kconfig-&plasma5-version; for lxqt">
+  <?dbhtml filename="lxqt-kconfig.html"?>
+
+
+  <title>kconfig-&kf5-version; for lxqt</title>
+
+  <indexterm zone="lxqt-kconfig">
+    <primary sortas="a-kconfig">kconfig</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til kconfig</title>
+
+    <para>
+      <application>kconfig</application> pakken gir tilgang til
+      konfigurasjonsfiler.
+    </para>
+
+    &lfs120_checked;
+
+    <important>
+      <para>
+        Denne pakken er hentet fra KF5 settet med pakker.
+        Hvis <xref linkend="kf5-frameworks"/> er bygget, <emphasis
+        role="bold">IKKE</emphasis> bygg denne pakken som er presentert
+        her også.
+      </para>
+    </important>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&kconfig-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&kconfig-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &kconfig-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &kconfig-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &kconfig-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &kconfig-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">kconfig Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="extra-cmake-modules"/> og
+      &qt5-deps;
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av kconfig</title>
+
+    <para>
+      Installer <application>kconfig</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      -DCMAKE_INSTALL_LIBDIR=lib  \
+      -DBUILD_TESTING=OFF         \
+      -Wno-dev ..                 &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      Til slutt, fjern noen unødvendige filer som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>rm -rf /usr/mkspecs &amp;&amp;
+rm -rf /usr/lib/libexec</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          kreadconfig5 og
+          kwriteconfig5
+        </seg>
+        <seg>
+          libKF5ConfigCore.so,
+          libKF5ConfigGui.so, og
+          libKF5ConfigQml.so
+        </seg>
+        <seg>
+          /usr/lib/cmake/KF5Config og
+          /usr/include/KF5/{KConfigCore,KConfig,KConfigQml,KConfigGui}
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="lxqt-kconfig-kreadconfig5">
+        <term><command>kreadconfig5</command></term>
+        <listitem>
+          <para>
+            leser en konfigurasjonsfil ved å bruke KConfig grensesnittet
+          </para>
+          <indexterm zone="lxqt-kconfig kreadconfig5">
+            <primary sortas="b-kreadconfig5">kreadconfig5</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lxqt-kconfig-kwriteconfig5">
+        <term><command>kwriteconfig5</command></term>
+        <listitem>
+          <para>
+            skriver til en konfigurasjonsfil ved å bruke KConfig grensesnittet
+          </para>
+          <indexterm zone="lxqt-kconfig kwriteconfig5">
+            <primary sortas="b-kwriteconfig5">kwriteconfig5</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lxqt-kconfig-libKF5ConfigCore">
+        <term><filename class="libraryfile">libKF5ConfigCore.so</filename></term>
+        <listitem>
+          <para>
+            inneholder kjernekonfigurasjonsbiblioteket for KF5
+          </para>
+          <indexterm zone="lxqt-kconfig lxqt-kconfig-libKF5ConfigCore">
+            <primary sortas="c-libKF5ConfigCore">libKF5ConfigCore.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lxqt-kconfig-libKF5ConfigGui">
+        <term><filename class="libraryfile">libKF5ConfigGui.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner for en GUI for KConfig
+          </para>
+          <indexterm zone="lxqt-kconfig lxqt-kconfig-libKF5ConfigGui">
+            <primary sortas="c-libKF5ConfigGui">libKF5ConfigGui.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+       <varlistentry id="lxqt-kconfig-libKF5ConfigQml">
+        <term><filename class="libraryfile">libKF5ConfigQml.so</filename></term>
+        <listitem>
+          <para>
+            inneholder et QML grensesnitt til KConfig
+          </para>
+          <indexterm zone="lxqt-kconfig lxqt-kconfig-libKF5ConfigQml">
+            <primary sortas="c-libKF5ConfigQml">libKF5ConfigQml.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
