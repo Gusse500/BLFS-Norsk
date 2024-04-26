@@ -4,14 +4,10 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-<!-- As of August 2017, downloads.lxqt.org is down. Use github archives
-     instead, but keep the old link in case the host become available again.
-     According to lxqt devs, they are working on it...
-  <!ENTITY obconf-qt-download-http "https://downloads.lxqt.org/obconf-qt/&obconf-qt-version;/obconf-qt-&obconf-qt-version;.tar.xz">-->
-  <!ENTITY obconf-qt-download-http "https://github.com/lxde/obconf-qt/releases/download/&obconf-qt-version;/obconf-qt-&obconf-qt-version;.tar.xz">
+  <!ENTITY obconf-qt-download-http "https://github.com/lxqt/obconf-qt/releases/download/&obconf-qt-version;/obconf-qt-&obconf-qt-version;.tar.xz">
   <!ENTITY obconf-qt-download-ftp  " ">
-  <!ENTITY obconf-qt-md5sum        "91e6e57e80380437b9db2622745dfd4e">
-  <!ENTITY obconf-qt-size          "33 KB">
+  <!ENTITY obconf-qt-md5sum        "0fc4fdf4f8d9b0005fea13857596bf46">
+  <!ENTITY obconf-qt-size          "108 KB">
   <!ENTITY obconf-qt-buildsize     "3.0 MB">
   <!ENTITY obconf-qt-time          "0.2 SBU">
 ]>
@@ -30,10 +26,11 @@
     <title>Introduksjon til obconf-qt</title>
 
     <para>
-      <application>obconf-qt</application> pakken er en
-      <application>OpenBox</application> Qt basert konfigurasjonsverktøy.</para>
+      <application>obconf-qt</application> pakken er et Qt basert
+      konfigurasjonsverktøy for <application>Openbox</application>.
+    </para>
 
-    &lfs82_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -73,21 +70,12 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="gtk2"/> (for <command>gtk-update-icon-cache</command>),
+      <!--<xref linkend="gtk2"/> (for <command>gtk-update-icon-cache</command>),-->
       <xref linkend="hicolor-icon-theme"/>,
       <xref linkend="liblxqt"/>, og
       <xref linkend="openbox"/>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
-    <para role="optional">
-      <xref linkend="git"/> (for å laste ned oversettelsesfiler) eller
-      <xref linkend="lxqt-l10n"/> (for å legge til lokaliseringsfiler)
-    </para>
-
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/obconf-qt"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -101,10 +89,9 @@
 <screen><userinput>mkdir -v build &amp;&amp;
 cd       build &amp;&amp;
 
-cmake -DCMAKE_BUILD_TYPE=Release          \
-      -DCMAKE_INSTALL_PREFIX=$LXQT_PREFIX \
-      -DPULL_TRANSLATIONS=no              \
-      ..       &amp;&amp;
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      ..                          &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -112,31 +99,10 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
-
-    <para>
-      Hvis du installerte i /opt, igjen som
-      <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>if [ "$LXQT_PREFIX" != /usr ]; then
-  ln -svf $LXQT_PREFIX/share/applications/obconf-qt.desktop \
-          /usr/share/applications
-fi</userinput></screen>
-
-  </sect2>
-
-  <sect2 role="commands">
-    <title>Parameterforklaringer</title>
-
-    <para>
-      <parameter>-DPULL_TRANSLATIONS=no</parameter>: Fjerner behovet for
-      <xref linkend="git"/>, som ellers ville blitt bedt om å laste ned
-      oversettelsesfilene.
-    </para>
 
   </sect2>
 
@@ -170,8 +136,8 @@ fi</userinput></screen>
         <term><command>obconf-qt</command></term>
         <listitem>
           <para>
-            er et Qt-basert GUI-konfigurasjonsverktøy for
-            <application>OpenBox</application>.
+            er et Qt basert konfigurasjonsverktøy for
+            <application>Openbox</application>
           </para>
           <indexterm zone="obconf-qt obconf-qt-prog">
             <primary sortas="b-obconf-qt">obconf-qt</primary>
