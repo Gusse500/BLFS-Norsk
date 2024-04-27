@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY kidletime-download-http "&kf5-download-http;/kidletime-&kf5-version;.tar.xz">
+  <!ENTITY kidletime-download-ftp  " ">
+  <!ENTITY kidletime-md5sum        "d8f87c99c0b798f04ac328d7050d2d97">
+  <!ENTITY kidletime-size          "32 KB">
+  <!ENTITY kidletime-buildsize     "3.7 MB">
+  <!ENTITY kidletime-time          "0.2 SBU">
+]>
+
+<sect1 id="lxqt-kidletime" xreflabel="kidletime-&kf5-version; for lxqt">
+  <?dbhtml filename="lxqt-kidletime.html"?>
+
+
+  <title>kidletime-&kf5-version; for lxqt</title>
+
+  <indexterm zone="lxqt-kidletime">
+    <primary sortas="a-kidletime">kidletime</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til kidletime</title>
+
+    <para>
+      KIdleTime brukes til å rapportere inaktiv tid for brukere og systemet. Det er
+      nyttig ikke bare for å bestemme gjeldende hviletid for PC-en,
+      men også for å bli varslet om uvirksomme hendelser, for eksempel tilpasset
+      tidsavbrudd eller brukeraktivitet.
+    </para>
+
+    &lfs120_checked;
+
+    <important>
+      <para>
+        Denne pakken er hentet fra KF5 settet med pakker.
+        Hvis <xref linkend="kf5-frameworks"/> er bygget, <emphasis
+        role="bold">IKKE</emphasis> bygge denne pakken som presentert
+        her også.
+      </para>
+    </important>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&kidletime-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&kidletime-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &kidletime-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &kidletime-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &kidletime-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &kidletime-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">kidletime Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="extra-cmake-modules"/>,
+      <xref linkend="plasma-wayland-protocols"/>, og
+      &qt5-deps;
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av kidletime</title>
+
+    <para>
+      Installer <application>kidletime</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      -DBUILD_TESTING=OFF         \
+      -Wno-dev ..                 &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      Til slutt, fjern noen unødvendige filer som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>rm -rf /usr/mkspecs</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libKF5IdleTime.so
+        </seg>
+        <seg>
+          /usr/lib/plugins/kf5/org.kde.kidletime.platforms,
+          /usr/lib/cmake/KF5IdleTime, og
+          /usr/include/KF5/KIdleTime
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="lxqt-kidletime-lib">
+        <term><filename class="libraryfile">libKF5GuiAddons.so</filename></term>
+        <listitem>
+          <para>
+            inneholder KDE API for inaktive tidsrapporter
+          </para>
+          <indexterm zone="lxqt-kidletime-lib">
+            <primary sortas="c-libKF5WindowSystem">libKF5GuiAddons.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY kwayland-download-http "&kf5-download-http;/kwayland-&kf5-version;.tar.xz">
+  <!ENTITY kwayland-download-ftp  " ">
+  <!ENTITY kwayland-md5sum        "b9ce7efb96ee1f88f3d8c505a3c8e8b1">
+  <!ENTITY kwayland-size          "332 KB">
+  <!ENTITY kwayland-buildsize     "31 MB">
+  <!ENTITY kwayland-time          "0.3 SBU (Bruke parallellisme=4)">
+]>
+
+<sect1 id="lxqt-kwayland" xreflabel="kwayland-&kf5-version; for lxqt">
+  <?dbhtml filename="lxqt-kwayland.html"?>
+
+
+  <title>kwayland-&kf5-version; for lxqt</title>
+
+  <indexterm zone="lxqt-kwayland">
+    <primary sortas="a-kwayland">kwayland</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til kwayland</title>
+
+    <para>
+      <application>kwayland</application> er en Qt stil API å samhandle med
+      <application>wayland-client</application> og
+      <application>wayland-server</application> API.
+    </para>
+
+    &lfs120_checked;
+
+    <important>
+      <para>
+        Denne pakken er hentet fra KF5 settet med pakker.
+        Hvis <xref linkend="kf5-frameworks"/> er bygget, <emphasis
+        role="bold">IKKE</emphasis> bygg denne pakken som presentert
+        her også.
+      </para>
+    </important>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&kwayland-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&kwayland-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &kwayland-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &kwayland-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &kwayland-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &kwayland-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">kwayland Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="extra-cmake-modules"/>,
+      <xref linkend="mesa"/> (bygget med <xref linkend="wayland"/> støtte),
+      <xref linkend="plasma-wayland-protocols"/>, og
+      &qt5-deps;
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av kwayland</title>
+
+    <para>
+      Installer <application>kwayland</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      -DBUILD_TESTING=OFF         \
+      -Wno-dev ..                 &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      Til slutt, fjern noen unødvendige filer som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>rm -rf /usr/mkspecs</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libKF5WaylandClient.so og libKF5WaylandServer.so
+        </seg>
+        <seg>
+          /usr/lib/cmake/KF5Wayland,
+          /usr/include/KF5/KWayland, og
+          /usr/share/qlogging-categories5
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="lxqt-kwayland-client">
+        <term><filename class="libraryfile">libKF5WaylandClient.so</filename></term>
+        <listitem>
+          <para>
+            inneholder <application>wayland-client</application> Qt stil
+            innpakningsbibliotek
+          </para>
+          <indexterm zone="lxqt-kwayland-client">
+            <primary sortas="c-libKF5WaylandClient">libKF5WaylandClient.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lxqt-kwayland-server">
+        <term><filename class="libraryfile">libKF5WaylandServer.so</filename></term>
+        <listitem>
+          <para>
+            inneholder <application>wayland-server</application> Qt stil
+            innpakningsbibliotek
+          </para>
+          <indexterm zone="lxqt-kwayland-server">
+            <primary sortas="c-libKF5WaylandServer">libKF5WaylandServer.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

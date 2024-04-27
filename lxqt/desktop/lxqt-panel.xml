@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY lxqt-panel-download-http "https://github.com/lxqt/lxqt-panel/releases/download/&lxqt-version;/lxqt-panel-&lxqt-version;.tar.xz">
+  <!ENTITY lxqt-panel-download-ftp  " ">
+  <!ENTITY lxqt-panel-md5sum        "98f8b9b8f47ec0b1e7bc5eca475b7f45">
+  <!ENTITY lxqt-panel-size          "600 KB">
+  <!ENTITY lxqt-panel-buildsize     "55 MB">
+  <!ENTITY lxqt-panel-time          "0.5 SBU (Bruke parallellisme=4)">
+]>
+
+<sect1 id="lxqt-panel" xreflabel="lxqt-panel-&lxqt-version;">
+  <?dbhtml filename="lxqt-panel.html"?>
+
+
+  <title>lxqt-panel-&lxqt-version;</title>
+
+  <indexterm zone="lxqt-panel">
+    <primary sortas="a-lxqt-panel">lxqt-panel</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til lxqt-panel</title>
+
+    <para>
+      <application>lxqt-panel</application> pakken inneholder en
+      lettvekts X11 skrivebordspanel.
+    </para>
+
+    &lfs120_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&lxqt-panel-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&lxqt-panel-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &lxqt-panel-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &lxqt-panel-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &lxqt-panel-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &lxqt-panel-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">lxqt-panel Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="libdbusmenu-qt"/>,
+      <xref linkend="liblxqt"/>,
+      <xref linkend="lxqt-globalkeys"/>,
+      <xref linkend="lxqt-menu-data"/>,
+      (<xref linkend="lxqt-solid"/> eller
+       <xref role="nodep" linkend="kf5-frameworks"/>), og
+      <xref linkend="menu-cache"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="alsa-lib"/> eller
+      <xref linkend="pulseaudio"/> (volum programtillegg; se parameterforklaringer nedenfor
+         hvis ikke tilstede),
+      <xref linkend="libstatgrab"/> (nettverksmonitor og CPU last programtillegg),
+      <xref linkend="libsysstat"/> (Programtillegg for CPU og nettverks monitor),
+      <xref linkend="libxkbcommon"/> (tastaturindikator programtillegg), og
+      <xref linkend="lm_sensors"/> (sensorer programtillegg)
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av lxqt-panel</title>
+
+    <para>
+      Hvis <xref linkend="kf5-frameworks"/> ikke ble installert i /usr, hjelp
+      koden finne noen deklarasjoner som den trenger:
+    </para>
+
+<screen role="pre"><userinput>export CXXFLAGS+="-I $KF5_PREFIX/include"
+export CFLAGS+="-I $KF5_PREFIX/include"</userinput></screen>
+
+    <para>
+      Installer <application>lxqt-panel</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      ..                          &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <option>-D&lt;plugin&gt;_PLUGIN=no</option>: Deaktiver en &lt;plugin&gt;,
+      hvor &lt;plugin&gt; kan være CLOCK, COLORPICKER, CPULOAD, DIRECTORYMENU,
+      DESKTOPSWITCH, KBINDICATOR, MAINMENU, MOUNT, QUICKLAUNCH, SENSORS,
+      SHOWDESKTOP, NETWORKMONITOR, SYSSTAT, TASKBAR, STATUSNOTIFIER, TRAY,
+      VOLUME, WORLDCLOCK, eller SPACER
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          lxqt-panel
+        </seg>
+        <seg>
+          flere programtillegg under /usr/lib/lxqt-panel
+        </seg>
+        <seg>
+          /usr/lib/lxqt-panel,
+          /usr/share/lxqt/panel, og
+          /usr/share/lxqt/panel
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="lxqt-panel-prog">
+        <term><command>lxqt-panel</command></term>
+        <listitem>
+          <para>
+            er et lettvekts <application>Qt5</application> basert
+            panel for <application>LXQt</application> Skrivebordet
+          </para>
+          <indexterm zone="lxqt-panel lxqt-panel-prog">
+            <primary sortas="b-lxqt-panel">lxqt-panel</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
