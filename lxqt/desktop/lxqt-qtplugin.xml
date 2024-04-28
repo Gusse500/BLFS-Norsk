@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY lxqt-qtplugin-download-http "https://github.com/lxqt/lxqt-qtplugin/releases/download/&lxqt-version;/lxqt-qtplugin-&lxqt-version;.tar.xz">
+  <!ENTITY lxqt-qtplugin-download-ftp  " ">
+  <!ENTITY lxqt-qtplugin-md5sum        "569bbb880942c3eeb1b08b8d4115365b">
+  <!ENTITY lxqt-qtplugin-size          "24 KB">
+  <!ENTITY lxqt-qtplugin-buildsize     "1.7 MB">
+  <!ENTITY lxqt-qtplugin-time          "0.1 SBU">
+]>
+
+<sect1 id="lxqt-qtplugin" xreflabel="lxqt-qtplugin-&lxqt-version;">
+  <?dbhtml filename="lxqt-qtplugin.html"?>
+
+
+  <title>lxqt-qtplugin-&lxqt-version;</title>
+
+  <indexterm zone="lxqt-qtplugin">
+    <primary sortas="a-lxqt-qtplugin">lxqt-qtplugin</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til lxqt-qtplugin</title>
+
+    <para>
+      <application>lxqt-qtplugin</application> pakken gir en
+      <application>LXQt</application> <application>Qt</application> plattform
+      integrerings programtillegg.
+    </para>
+
+    &lfs120_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&lxqt-qtplugin-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&lxqt-qtplugin-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &lxqt-qtplugin-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &lxqt-qtplugin-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &lxqt-qtplugin-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &lxqt-qtplugin-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">lxqt-qtplugin Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="liblxqt"/> og
+      <xref linkend="libdbusmenu-qt"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av lxqt-qtplugin</title>
+
+    <para>
+      Installer <application>lxqt-qtplugin</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      ..       &amp;&amp;
+
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere lxqt-qtplugin</title>
+
+    <sect3><title>Konfigurasjonsinformasjon</title>
+
+      <para>
+        For å bruke programtillegget i Qt 5, miljøvariabelen
+        <envar>QT_QPA_PLATFORMTHEME</envar> må settes til <quote>lxqt</quote>.
+        En måte å gjøre det på er å utstede som &root; bruker:
+      </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/profile.d/lxqt.sh &lt;&lt; "EOF"
+<literal># Begin lxqt-qtplugin configuration
+
+export QT_QPA_PLATFORMTHEME=lxqt
+
+# End lxqt-qtplugin configuration</literal>
+EOF</userinput></screen>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libqtlxqt.so (i $QT5DIR/plugins/platformthemes)
+        </seg>
+        <seg>
+          $QT5DIR/plugins/platformthemes
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libqtlxqt-lib">
+        <term><filename class="libraryfile">libqtlxqt.so</filename></term>
+        <listitem>
+          <para>
+            inneholder LXQt QT programtillegg lasteren
+          </para>
+          <indexterm zone="lxqt-qtplugin libqtlxqt-lib">
+            <primary sortas="c-libqtlxqt">libqtlxqt.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

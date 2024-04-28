@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY lxqt-session-download-http "https://github.com/lxqt/lxqt-session/releases/download/&lxqt-version;/lxqt-session-&lxqt-version;.tar.xz">
+  <!ENTITY lxqt-session-download-ftp  " ">
+  <!ENTITY lxqt-session-md5sum        "6703a001a5acbf4dad6d13e1e5e9278c">
+  <!ENTITY lxqt-session-size          "184 KB">
+  <!ENTITY lxqt-session-buildsize     "8.6 MB">
+  <!ENTITY lxqt-session-time          "0.4 SBU">
+]>
+
+<sect1 id="lxqt-session" xreflabel="lxqt-session-&lxqt-version;">
+  <?dbhtml filename="lxqt-session.html"?>
+
+
+  <title>lxqt-session-&lxqt-version;</title>
+
+  <indexterm zone="lxqt-session">
+    <primary sortas="a-lxqt-session">lxqt-session</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til lxqt-session</title>
+
+    <para>
+      <application>lxqt-session</application> pakken inneholder standard
+      øktbehandler for <application>LXQt</application>.
+    </para>
+
+    &lfs120_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&lxqt-session-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&lxqt-session-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &lxqt-session-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &lxqt-session-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &lxqt-session-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &lxqt-session-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">lxqt-session Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="liblxqt"/>,
+      (<xref linkend="lxqt-kwindowsystem"/> eller
+       <xref role="nodep" linkend="kf5-frameworks"/>),
+      <xref linkend="qtxdg-tools"/>, og
+      <xref linkend="xdg-user-dirs"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av lxqt-session</title>
+
+    <para>
+      Installer <application>lxqt-session</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>sed -e '/TryExec/s|=|=/usr/bin/|' \
+    -i xsession/lxqt.desktop.in &amp;&amp;
+
+mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      ..       &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <command>sed -e '/TryExec/s|=|='/usr'/bin/|' -i xsessions/lxqt.desktop.in</command>:
+      Hvis du bruker en skjermbehandler, må hele banen til
+      <quote>TryExec</quote> direktivet gis slik at
+      <application>LXQt</application> skrivebordet vises i øktlisten.
+    </para>
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere lxqt-session</title>
+
+    <para>
+      Andre vindusbehandlere enn <xref linkend="openbox"/> kan brukes, f.eks.
+      <xref linkend="xfwm4"/>. Vær oppmerksom på at <xref linkend="icewm"/> er ikke en
+      god erstatning. <application>Fluxbox</application> fungerer, skjønt
+      i denne sammenhengen (med <xref linkend="lxqt-config"/>), <xref
+      linkend="openbox"/> er bedre. Konfigurasjonsfilen
+      <filename>/usr/share/lxqt/windowmanagers.conf</filename> kommer med mange
+      eksempler på vindusbehandlere og de som er installert vil vises
+      i en nedtrekksliste til <command>lxqt-config-session</command>. For
+       de som ikke er inkludert i
+      <filename>/usr/share/lxqt/windowmanagers.conf</filename>, kan du bruke
+      <command>lxqt-config-session</command>s "søk" knappen, for eksempel for <xref
+      linkend="fluxbox"/>, navigere gjennom filsystemet til du kan
+      velge <command>fluxbox</command>. <!--Alternativt, hvis du ønsker vindusbehandlere
+      av ditt valg å vises i rullegardinlisten, inkludere den i
+      <filename>/etc/xdg/lxqt/windowmanagers.conf</filename>. For <xref
+      linkend="fluxbox"/>, inkludere linjen
+    </para>
+
+<screen role="nodump"><userinput><literal>fluxbox/Name=Fluxbox</literal></userinput></screen>
+    <para>
+      og det vil vises som et alternativ i rullegardinlisten. For å endre WM,
+      etter å ha valgt det, må du starte økten på nytt.
+-->
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          lxqt-config-session,
+          lxqt-leave,
+          lxqt-session, og
+          startlxqt
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="lxqt-config-session-prog">
+        <term><command>lxqt-config-session</command></term>
+        <listitem>
+          <para>
+            er et GUI konfigurasjonsverktøy for <command>lxqt-session</command>
+          </para>
+          <indexterm zone="lxqt-session lxqt-config-session-prog">
+            <primary sortas="b-lxqt-config-session">lxqt-config-session</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lxqt-leave-prog">
+        <term><command>lxqt-leave</command></term>
+        <listitem>
+          <para>
+            er en grafisk dialogboks for å avslutte økten
+          </para>
+          <indexterm zone="lxqt-session lxqt-leave-prog">
+            <primary sortas="b-lxqt-leave">lxqt-leave</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lxqt-session-prog">
+        <term><command>lxqt-session</command></term>
+        <listitem>
+          <para>
+            er en lettvekts X øktbehandler
+          </para>
+          <indexterm zone="lxqt-session lxqt-session-prog">
+            <primary sortas="b-lxqt-session">lxqt-session</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="startlxqt">
+        <term><command>startlxqt</command></term>
+        <listitem>
+          <para>
+            brukes til å starte skrivebordsøkten for
+            <application>LXQt</application>
+          </para>
+          <indexterm zone="lxqt-session startlxqt">
+            <primary sortas="b-startlxqt">startlxqt</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
