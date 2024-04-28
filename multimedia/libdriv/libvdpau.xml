@@ -14,11 +14,12 @@
   <!ENTITY libvdpau-time          "mindre enn 0.1 SBU (med tester)">
 ]>
 
-  <sect2 id="libvdpau" xreflabel="libvdpau-&libvdpau-version;">
+  <sect1 id="libvdpau" xreflabel="libvdpau-&libvdpau-version;">
+  <?dbhtml filename="libvdpau.html"?>
 
-    <sect2info>
+    <sect1info>
       <date>$Date$</date>
-    </sect2info>
+    </sect1info>
 
     <title>libvdpau-&libvdpau-version;</title>
 
@@ -26,7 +27,7 @@
       <primary sortas="a-libvdpau">libvdpau</primary>
     </indexterm>
 
-    <sect3 role="package">
+    <sect2 role="package">
       <title>Introduksjon til libvdpau</title>
 
       <para>
@@ -37,9 +38,9 @@
       <para>
         VDPAU (Video Decode and Presentation API for Unix) er et åpen kildekode
         bibliotek (libvdpau) og API opprinnelig designet av Nvidia for GeForce
-        8 serien og senere GPU maskinvare rettet mot X Vindussystemet.
+        8 serien og senere GPU maskinvare rettet mot X vindussytemet.
         Denne VDPAU API lar videoprogrammer laste ned deler av videoen
-        sin dekodingsprosess og videoetterbehandling til GPU videomaskinvaren.
+        dekodingsprosess og videoetterbehandling til GPU videomaskinvaren.
      </para>
 
      <para>
@@ -55,9 +56,9 @@
         nødvendig.
       </para>
 
-      &lfs113_checked;
+      &lfs120_checked;
 
-      <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
+      <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
         <listitem>
           <para>
@@ -91,31 +92,38 @@
         </listitem>
       </itemizedlist>
 
-      <bridgehead renderas="sect4">libvdpau Avhengigheter</bridgehead>
+      <bridgehead renderas="sect3">libvdpau Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect5">Påkrevd</bridgehead>
+      <bridgehead renderas="sect4">Påkrevd</bridgehead>
       <para role="required">
         <xref linkend="xorg7-lib"/>
       </para>
 
-      <bridgehead renderas="sect5">Valgfri</bridgehead>
+      <bridgehead renderas="sect4">Anbefalt (Kjøretid)</bridgehead>
+      <!-- "nodep" to prevent BLFS tool from blindly installing all the
+           drivers -->
+      <para role='nodep'>
+        VDPAU driveren som passer for maskinvaren i systemet ditt:
+        <xref linkend='libvdpau-va-gl'/> (for Intel GPUer) og
+        <xref linkend='mesa'/> (gir <literal>r600</literal>,
+        <literal>radeonsi</literal>, og <literal>nouveau</literal> VDPAU
+        driverre, for ATI/AMD Radeon HD 2xxx GPUs og senere, og
+        <ulink url='https://nouveau.freedesktop.org/VideoAcceleration.html'>
+støttede
+        NVIDIA GPUer</ulink>; Mesa må bygges etter denne pakken for disse
+        drivere)
+      </para>
+
+      <bridgehead renderas="sect4">Valgfri</bridgehead>
       <para role="optional">
         <xref linkend="doxygen"/>,
         <xref linkend="graphviz"/>, og
         <xref linkend="texlive"/> eller <xref linkend="tl-installer"/>
       </para>
 
-      <bridgehead renderas="sect5">Kjøretids Avhengighet</bridgehead>
-      <para role="optional">
-        <xref role="runtime" linkend="mesa"/>
-      </para>
+    </sect2>
 
-      <para condition="html" role="usernotes">
-        Brukernotater: <ulink url="&blfs-wiki;/libvdpau"/>
-      </para>
-    </sect3>
-
-    <sect3 role="installation">
+    <sect2 role="installation">
       <title>Installasjon av libvdpau</title>
 
       <para>
@@ -126,12 +134,12 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=$XORG_PREFIX .. &amp;&amp;
+meson setup --prefix=$XORG_PREFIX .. &amp;&amp;
 ninja</userinput></screen>
 
       <para>
-        For å teste resultatene, kjør: <command>ninja test</command>.
-        Det er bare en test for denne pakken, dlclose, og den er kjent for
+        For å teste resultatene, utsted: <command>ninja test</command>.
+        Det er bare én test for denne pakken, dlclose, og den er kjent for
         å feile på noen systemer.
       </para>
 
@@ -149,9 +157,9 @@ ninja</userinput></screen>
 
 <screen role="root"><userinput>[ -e $XORG_PREFIX/share/doc/libvdpau ] &amp;&amp; mv -v $XORG_PREFIX/share/doc/libvdpau{,&libvdpau-version;}</userinput></screen>
 
-    </sect3>
+    </sect2>
 
-    <sect3 role="content">
+    <sect2 role="content">
       <title>Innhold</title>
 
       <segmentedlist>
@@ -173,7 +181,7 @@ ninja</userinput></screen>
       </segmentedlist>
 
       <variablelist>
-        <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+        <bridgehead renderas="sect2">Korte Beskrivelser</bridgehead>
         <?dbfo list-presentation="list"?>
         <?dbhtml list-presentation="table"?>
 
@@ -181,7 +189,7 @@ ninja</userinput></screen>
           <term><filename class="libraryfile">libvdpau.so</filename></term>
           <listitem>
             <para>
-              inneholder funksjoner for å avlaste deler av videodekoding
+              inneholder funksjoner for å avlaste deler av videodekodings
               prosessen og video etterbehandling til GPU videomaskinvaren
             </para>
             <indexterm zone="libvdpau libvdpau-lib">
@@ -192,6 +200,6 @@ ninja</userinput></screen>
 
       </variablelist>
 
-    </sect3>
+    </sect2>
 
-  </sect2>
+  </sect1>

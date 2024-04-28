@@ -14,11 +14,12 @@
   <!ENTITY libvdpau-va-gl-time          "mindre enn 0.1 SBU">
 ]>
 
-  <sect2 id="libvdpau-va-gl" xreflabel="libvdpau-va-gl-&libvdpau-va-gl-version;">
+  <sect1 id="libvdpau-va-gl" xreflabel="libvdpau-va-gl-&libvdpau-va-gl-version;">
+  <?dbhtml filename="libvdpau-va-gl.html"?>
 
-    <sect2info>
+    <sect1info>
       <date>$Date$</date>
-    </sect2info>
+    </sect1info>
 
     <title>libvdpau-va-gl-&libvdpau-va-gl-version;</title>
 
@@ -26,7 +27,7 @@
       <primary sortas="a-libvdpau-va-gl">libvdpau-va-gl</primary>
     </indexterm>
 
-    <sect3 role="package">
+    <sect2 role="package">
       <title>Introduksjon til libvdpau-va-gl</title>
 
       <para>
@@ -35,12 +36,12 @@
         panseret for å akselerere tegning og skalering og VA-API (hvis tilgjengelig) til
         å akselerere videodekoding. Foreløpig er VA-API tilgjengelig på enkelte Intel
         brikker, og på noen AMD skjermkort ved hjelp av libvdpau
-        driveren.
+        driver.
       </para>
 
-      &lfs113_checked;
+      &lfs120_checked;
 
-      <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
+      <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
         <listitem>
           <para>
@@ -74,33 +75,30 @@
         </listitem>
       </itemizedlist>
 
-      <bridgehead renderas="sect4">libvdpau-va-gl Avhengigheter</bridgehead>
+      <bridgehead renderas="sect3">libvdpau-va-gl Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect5">Påkrevd</bridgehead>
+      <bridgehead renderas="sect4">Påkrevd</bridgehead>
       <para role="required">
         <xref linkend="cmake"/>,
         <xref linkend="libvdpau"/>, og
         <xref linkend="libva"/>
       </para>
 
-      <bridgehead renderas="sect5">Valgfri</bridgehead>
+      <bridgehead renderas="sect4">Valgfri</bridgehead>
       <para role="optional">
         <xref linkend="doxygen"/>,
         <xref linkend="graphviz"/>, og
         <xref linkend="texlive"/> eller <xref linkend="tl-installer"/>
       </para>
 
-      <bridgehead renderas="sect5">Kjøretids Avhengighet</bridgehead>
+      <bridgehead renderas="sect4">Kjøretid Avhengighet</bridgehead>
       <para role="optional">
         <xref role="runtime" linkend="mesa"/>
       </para>
 
-      <para condition="html" role="usernotes">
-        Brukernotater: <ulink url="&blfs-wiki;/libvdpau"/>
-      </para>
-    </sect3>
+    </sect2>
 
-    <sect3 role="installation">
+    <sect2 role="installation">
       <title>Installasjon av libvdpau-va-gl</title>
 
       <para>
@@ -108,14 +106,16 @@
         kommandoer:
       </para>
 
-<screen><userinput>mkdir build &amp;&amp;
+<screen><userinput>sed -e '/#include &lt;stdlib.h&gt;/a #include &lt;string&gt;' -i src/api-device.cc &amp;&amp;
+
+mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$XORG_PREFIX .. &amp;&amp;
 make</userinput></screen>
 
       <para>
-        For å teste resultatene, kjør: <command>make check</command>.  Testene må
+        For å teste resultatene, utsted: <command>make check</command>.  Testene må
         kjøres fra et Xorg miljø.
       </para>
 
@@ -125,9 +125,20 @@ make</userinput></screen>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
-    </sect3>
+    </sect2>
 
-    <sect3 role="configuration">
+    <sect2 role="commands">
+      <title>Parameterforklaringer</title>
+
+      <para>
+        <command>sed -e '/#include &lt;stdlib.h&gt;/a #include &lt;string&gt;' ...</command>:
+        fikse byggingen for C++ Standard Bibliotek Deklarasjoner endringene i gcc-13.
+      </para>
+
+    </sect2>
+
+
+    <sect2 role="configuration">
       <title>Konfigurasjon</title>
 
       <para>
@@ -137,9 +148,9 @@ make</userinput></screen>
 
 <screen role="root"><userinput>echo "export VDPAU_DRIVER=va_gl" >> /etc/profile.d/xorg.sh</userinput></screen>
 
-    </sect3>
+    </sect2>
 
-    <sect3 role="content">
+    <sect2 role="content">
       <title>Innhold</title>
 
       <segmentedlist>
@@ -161,7 +172,7 @@ make</userinput></screen>
       </segmentedlist>
 
       <variablelist>
-        <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+        <bridgehead renderas="sect2">Korte Beskrivelser</bridgehead>
         <?dbfo list-presentation="list"?>
         <?dbhtml list-presentation="table"?>
 
@@ -180,6 +191,6 @@ make</userinput></screen>
 
       </variablelist>
 
-    </sect3>
+    </sect2>
 
-  </sect2>
+  </sect1>
