@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+]>
+
+<sect1 id="lxqt-post-install" xreflabel="LXQt-Post-Install">
+  <?dbhtml filename="post-install.html"?>
+
+  <title>Endelig Instruksjoner for LXQt Skrivebordet</title>
+
+  <indexterm zone="lxqt-post-install">
+    <primary sortas="g-lxqt-post-install">LXQt-post-install</primary>
+  </indexterm>
+
+  <sect2 role="package">
+  <title>Instruksjoner etter Installasjon</title>
+
+    <para>
+      Vennligst følg disse instruksjonene før du starter
+      <application>LXQt</application> for første gang.
+    </para>
+
+    <bridgehead renderas="sect3">Avhengigheter for å Starte LXQt</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="openbox"/>, eller en annen vindusbehandler, for eksempel
+      <xref role="nodep" linkend="xfwm4"/>, eller
+      kwin fra <xref role="nodep" linkend="plasma5-build"/>.
+      Merk at <xref role="nodep" linkend="icewm"/> er ikke egnet for LXQt.
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="breeze-icons"/> og
+      <xref linkend="desktop-file-utils"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="lightdm"/> eller en annen Skjermbehandler, f.eks.
+      <xref role="nodep" linkend="sddm"/>, og
+      <xref linkend="xscreensaver"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Endelig konfigurasjon</title>
+
+    <sect3 id="lxqt-final-updates" xreflabel="LXQt Final Database Updates">
+      <title>LXQt Endelige databaseoppdateringer</title>
+
+      <para>
+        Skrivebordsdatabasene må opprettes eller oppdateres på dette tidspunktet.
+        Kjør følgende kommandoer som &root; bruker:
+      </para>
+
+<screen role="root"><userinput>ldconfig                             &amp;&amp;
+update-mime-database /usr/share/mime &amp;&amp;
+xdg-icon-resource forceupdate        &amp;&amp;
+update-desktop-database -q</userinput></screen>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="starting">
+    <title>Starte LXQt</title>
+
+    <para revision="sysv">
+      Du kan starte <application>LXQt</application> fra kjørenivå 3, ved hjelp av
+      <xref linkend="xinit"/>, eller fra kjørenivå 5, ved å bruke en skjermbehandler,
+      som for eksempel <xref linkend="lightdm"/>.
+    </para>
+
+    <para revision="systemd">
+      Du kan starte <application>LXQt</application> fra en TTY, ved hjelp av
+      <xref linkend="xinit"/>, eller ved å bruke en grafisk skjermbehandler som f.eks
+      <xref linkend="lightdm"/>.
+    </para>
+
+    <para>
+      For å starte <application>LXQt</application> ved hjelp av <xref linkend="xinit"/>,
+      kjør følgende kommandoer:
+    </para>
+
+<screen><userinput>cat &gt; ~/.xinitrc &lt;&lt; "EOF"
+<literal>exec startlxqt</literal>
+EOF
+
+startx</userinput></screen>
+
+    <para>
+      X økten starter på den første ubrukte virtuelle terminalen, normalt vt1.
+      Du kan bytte til en annen vt<emphasis>n</emphasis> ved å samtidig
+      trykke på tastene Ctrl-Alt-F<emphasis>n</emphasis>
+      (<emphasis>n</emphasis>=2, 3, ...).  For å bytte tilbake til X økten,
+      vanligvis startet på vt1, bruk Ctrl-Alt-F1. Vt hvor kommandoen
+      <command>startx</command> ble utført vil vise mange meldinger,
+      inkludert X startmeldinger, applikasjoner startet automatisk med
+      økten, og til slutt noen advarsler og feilmeldinger, men disse
+      er skjult av det grafiske grensesnittet. Du foretrekker kanskje å omdirigere disse
+      meldinger til en loggfil, som kan brukes til feilsøkingsformål. Dette
+      kan gjøres fra X med:
+    </para>
+
+    <screen><userinput>startx &amp;&gt; ~/.x-session-errors</userinput></screen>
+
+  </sect2>
+
+  <sect2>
+    <title>Innledende konfigurasjon</title>
+
+    <para>
+      Når LXQt starter for første gang, vil den be deg om vindusbehandleren å bruke.
+      For å starte anbefaler BLFS redaktørene å bruke <application>openbox</application>.
+      På dette tidspunktet vil både bakgrunnen og panelet være svart. Høyreklikke
+      på bakgrunnen vil du få opp en meny og velge "Desktop Preferences"
+      lar deg endre bakgrunnsfargen eller angi et bakgrunnsbilde.
+    </para>
+
+    <para>
+      Panelet vil være nederst på skjermen. Høyreklikke på
+      panelet vil få opp en meny som lar deg tilpasse panelet
+      inkludert å legge til skjermelementer og angi bakgrunnsfargen. BLFS
+      redaktører anbefaler å installere, som et minimum, Applikasjonsbehandling og
+      Oppgavebehandling skjermelementene.
+    </para>
+
+    <para>
+      Etter at LXQt har startet for første gang, anbefaler BLFS redaktørene
+      å gå gjennom innstillingene presentert i LXQt Konfigurasjonssenter,
+      som finnes under LXQt innstillinger i Preferansemenyen til
+      programstarter.
+    </para>
+
+    <note>
+      <para>
+         Brukerkonfigurasjonsfilene vil bli opprettet i mappen
+         $HOME/.config/lxqt/. For å få skjermelementikoner til å vises riktig,
+         filen lxqt.conf må kanskje redigeres manuelt for å inkludere
+         linjen "icon_theme=oxygen".
+      </para>
+    </note>
+
+  </sect2>
+</sect1>

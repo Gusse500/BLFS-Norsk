@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY pcmanfm-qt-download-http "https://github.com/lxqt/pcmanfm-qt/releases/download/&lxqt-version;/pcmanfm-qt-&lxqt-version;.tar.xz">
+  <!ENTITY pcmanfm-qt-download-ftp  " ">
+  <!ENTITY pcmanfm-qt-md5sum        "c1e8738479f4d43df33b642af7e5004c">
+  <!ENTITY pcmanfm-qt-size          "352 KB">
+  <!ENTITY pcmanfm-qt-buildsize     "14 MB">
+  <!ENTITY pcmanfm-qt-time          "0.1 SBU (Bruke parallellisme=4)">
+]>
+
+<sect1 id="pcmanfm-qt" xreflabel="pcmanfm-qt-&lxqt-version;">
+  <?dbhtml filename="pcmanfm-qt.html"?>
+
+
+  <title>pcmanfm-qt-&lxqt-version;</title>
+
+  <indexterm zone="pcmanfm-qt">
+    <primary sortas="a-pcmanfm-qt">pcmanfm-qt</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til pcmanfm-qt</title>
+
+    <para>
+      <application>pcmanfm-qt</application> er en filbehandler og skrivebord
+      ikonbehandler (en <application>Qt</application> overføring av
+      <application>pcmanfm</application> og <application>libfm</application>).
+    </para>
+
+    &lfs120_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&pcmanfm-qt-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&pcmanfm-qt-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &pcmanfm-qt-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &pcmanfm-qt-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &pcmanfm-qt-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &pcmanfm-qt-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">pcmanfm-qt Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="liblxqt"/>,
+      <xref linkend="libfm-qt"/>, og
+      <xref linkend="lxqt-menu-data"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="gvfs"/> (kjøretid) og 
+      <xref linkend="oxygen-icons5"/> eller et annet ikontema (avhengig av ditt
+      valg, vil noen ikoner mangle flere steder)
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av pcmanfm-qt</title>
+
+    <para>
+      Installer <application>pcmanfm-qt</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      ..       &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      For å gjøre <application>pcmanfm-qt</application> lettere å finne i
+      menyer, justerer du .desktop filen. Igjen, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>sed -e '/Categories=/s/=/=System;FileTools;/' \
+    -e '/Name=/s/=.*/=File Manager PCManFM-Qt'/ \
+    -i /usr/share/applications/pcmanfm-qt.desktop</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          pcmanfm-qt
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          /usr/share/pcmanfm-qt
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="pcmanfm-qt-prog">
+        <term><command>pcmanfm-qt</command></term>
+        <listitem>
+          <para>
+            er en filbehandler og skrivebordsikonbehandler
+          </para>
+          <indexterm zone="pcmanfm-qt pcmanfm-qt-prog">
+            <primary sortas="b-pcmanfm-qt">pcmanfm-qt</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

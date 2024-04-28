@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY solid-download-http "&kf5-download-http;/solid-&kf5-version;.tar.xz">
+  <!ENTITY solid-download-ftp  " ">
+  <!ENTITY solid-md5sum        "8952c4756ed0bc072a8bad998ed81bc6">
+  <!ENTITY solid-size          "300 KB">
+  <!ENTITY solid-buildsize     "29 MB">
+  <!ENTITY solid-time          "0.6 SBU">
+]>
+
+<sect1 id="lxqt-solid" xreflabel="solid-&kf5-version; for lxqt">
+  <?dbhtml filename="lxqt-solid.html"?>
+
+
+  <title>solid-&kf5-version; for lxqt</title>
+
+  <indexterm zone="lxqt-solid">
+    <primary sortas="a-solid">solid</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til solid</title>
+
+    <para>
+      <application>Solid</application> er et enhetsintegrasjonsrammeverk. Den
+      gir en måte å spørre og samhandle med maskinvare uavhengig av
+      det underliggende operativsystemet.
+    </para>
+
+    &lfs120_checked;
+
+    <important>
+      <para>
+        Denne pakken er hentet fra KF5 settet med pakker.
+        Hvis <xref linkend="kf5-frameworks"/> er bygget, <emphasis
+        role="bold">IKKE</emphasis> bygg denne pakken som presentert
+        her også.
+      </para>
+    </important>
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&solid-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&solid-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &solid-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &solid-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &solid-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &solid-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">solid Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="extra-cmake-modules"/> og
+      &qt5-deps;
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri (kjøretid)</bridgehead>
+    <para role="optional">
+      <xref role="runtime" linkend="udisks2"/>,
+      <xref role="runtime" linkend="upower"/>,
+      <ulink url="https://libimobiledevice.org/">libimobiledevice</ulink>, og
+      <!-- inkluderer både libimobilevice og libplist, som CMake sier er
+           valgfri.-->
+      <ulink role="runtime"
+             url="http://www.freedesktop.org/wiki/Software/media-player-info">
+      media-player-info</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av solid</title>
+
+    <para>
+      Installer <application>solid</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      -DBUILD_TESTING=OFF         \
+      -Wno-dev ..                 &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      Til slutt, fjern noen unødvendige filer som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>rm -rf /usr/mkspecs</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          solid-hardware5
+        </seg>
+        <seg>
+          libKF5Solid.so
+        </seg>
+        <seg>
+          /usr/include/KF5/Solid,
+          /usr/lib/cmake/KF5Solid, og
+          /usr/lib/qml/org/kde/solid
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="lxqt-solid-solid-hardware5">
+        <term><command>solid-hardware5</command></term>
+        <listitem>
+          <para>
+            spør etter maskinvareinformasjon fra systemet
+          </para>
+          <indexterm zone="lxqt-solid lxqt-solid-solid-hardware5">
+            <primary sortas="b-solid-hardware5">solid-hardware5</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lxqt-solid-lib">
+        <term><filename class="libraryfile">libKF5Solid.so</filename></term>
+        <listitem>
+          <para>
+            gir en måte å spørre og samhandle med maskinvare
+            uavhengig av det underliggende operativsystemet
+          </para>
+          <indexterm zone="lxqt-solid-lib">
+            <primary sortas="c-libKF5Solid">libKF5solid.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
