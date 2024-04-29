@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libaom-download-http "https://storage.googleapis.com/aom-releases/libaom-&libaom-version;.tar.gz">
+  <!ENTITY libaom-download-ftp  " ">
+  <!ENTITY libaom-md5sum        "e5b1843484eb9873666b878e03d8160b">
+  <!ENTITY libaom-size          "5.0 MB">
+  <!ENTITY libaom-buildsize     "103 MB (legg til 969 MB for tester)">
+  <!ENTITY libaom-time          "0.5 SBU (med parallellitet=4, legg til 136 SBU for tester)">
+
+]>
+
+<!-- Tests not run for version 3.6.1. -->
+
+<sect1 id="libaom" xreflabel="libaom-&libaom-version;">
+  <?dbhtml filename="libaom.html"?>
+
+  <title>libaom-&libaom-version;</title>
+
+  <indexterm zone="libaom">
+    <primary sortas="a-libaom">libaom</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libaom</title>
+
+    <para>
+      <application>libaom</application> pakken inneholder en referanse
+      versjon av Alliance for Open Media videokodeken. Denne kodeken er et
+      patentfritt alternativ til H.265, og begynner å bli brukt rundt hele
+      internett.
+    </para>
+
+    &lfs120_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libaom-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&libaom-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libaom-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libaom-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libaom-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libaom-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libaom Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="yasm"/>
+      (eller <xref role='nodep' linkend="nasm"/>, send
+      <option>-DENABLE_NASM=yes</option> alternativet til <command>cmake</command>
+      hvis du vil bruke den i stedet for yasm)
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="doxygen"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libaom</title>
+
+    <para>
+      Installer <application>libaom</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir aom-build &amp;&amp;
+cd    aom-build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      -DBUILD_SHARED_LIBS=1       \
+      -DENABLE_DOCS=no            \
+      -G Ninja .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja runtests</command>. Merk at
+      testene tar ekstremt lang tid å kjøre.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install &amp;&amp;
+rm -v /usr/lib/libaom.a</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-DBUILD_SHARED_LIBS=1</parameter>: Denne bryteren bygger delte
+      versjoner av bibliotekene.
+    </para>
+
+    <para>
+      <parameter>-DENABLE_DOCS=no</parameter>: Denne bryteren deaktiverer bygging
+      av dokumentasjonen fordi den mislykkes på grunn av en inkompatibilitet med
+      siste versjon av <xref role="nodep" linkend="doxygen"/>.
+    </para>
+
+    <para>
+      <option>-DENABLE_NASM=yes</option>: Bruk denne bryteren hvis du har
+      <xref role="nodep" linkend="nasm"/> installert og ønsker å bruke den i stedet
+      for yasm.
+    </para>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libaom.so
+        </seg>
+        <seg>
+          /usr/include/aom
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libaom-lib">
+        <term><filename class="libraryfile">libaom.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som gir en referanseimplementering av
+            AV1 kodeken
+          </para>
+          <indexterm zone="libaom libaom-lib">
+            <primary sortas="c-libaom">libaom.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
