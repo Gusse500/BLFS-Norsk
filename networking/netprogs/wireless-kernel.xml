@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+]>
+
+<sect1 id="wireless-kernel" xreflabel="Configuring the Linux Kernel for Wireless">
+  <?dbhtml filename="wireless-kernel.html"?>
+
+
+  <title>Konfigurering av Linux kjernen for trådløs</title>
+
+  <para>
+    Før du bruker noen brukerområdeverktøy for å koble til et trådløst AP,
+    Linux kjernen må være konfigurert for å drive det trådløse NIC-en riktig.
+    Aktiver følgende alternativer i kjernekonfigurasjonen så vel som
+    spesifikke enhetsdrivere for maskinvaren din og kompiler kjernen på nytt hvis
+    nødvendig:
+  </para>
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="wireless-kernel-kernel.xml"/>
+
+  <para>
+    Åpne <quote>Wireless LAN</quote> undermenyen og velg alternativene som
+    støtter maskinvaren din. <command>lspci</command> fra
+    <xref linkend="pciutils"/> eller <command>lsusb</command> fra
+    <xref linkend="usbutils"/> kan brukes til
+    se maskinvarekonfigurasjonen din. Merk at mange (men ikke alle)
+    alternativene for de trådløse NIC-ene avhenger av
+    <parameter>CONFIG_MAC80211</parameter>. Etter at de riktige driverne er
+     astet, vil grensesnittet vises i
+    <filename>/sys/class/net</filename>, eller i utdataen til
+    <command>ip link</command> kommandoen.
+  </para>
+
+  <para>
+    Mange trådløse NIC drivere krever fastvare. Hvis du har aktivert
+    riktig driver i kjernekonfigurasjonen, men den klarer ikke å laste (med
+    meldinger som <quote><computeroutput>Direct firmware load for
+    <replaceable>&lt;filename</replaceable>&gt; failed with error
+    -2</computeroutput></quote>, betyr det at du må installere fastvaren
+    eller det trådløse nettverkskortet vil ikke fungere. Les <xref linkend='postlfs-firmware'/>
+    for flere detaljer.
+  </para>
+
+</sect1>
