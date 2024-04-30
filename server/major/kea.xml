@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY kea-download-http "https://downloads.isc.org/isc/kea/&kea-dhcp-version;/kea-&kea-dhcp-version;.tar.gz">
+  <!ENTITY kea-download-ftp  "ftp://ftp.isc.org/isc/kea/&kea-dhcp-version;/kea-&kea-dhcp-version;.tar.gz">
+  <!ENTITY kea-md5sum        "e01bdc8d68cfaca1cae17b20b26e09b6">
+  <!ENTITY kea-size          "9.9 MB">
+  <!ENTITY kea-buildsize     "1.1 GB">
+  <!ENTITY kea-time          "14 SBU"><!-- Thats unexpectedly long -->
+  <!ENTITY kea-arm-vers      "&kea-dhcp-version;">
+]>
+
+<sect1 id="kea" xreflabel="Kea-&kea-dhcp-version; DHCP Server">
+  <?dbhtml filename="kea.html"?>
+
+  <title>Kea &kea-dhcp-version; DHCP Server</title>
+
+  <indexterm zone="kea">
+    <primary sortas="a-KEA">Kea DHCP Server</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til ISC Kea DHCP Server</title>
+
+    <para>
+      <application>ISC Kea</application> pakken inneholder
+      serverprogrammer for DHCP. Det er etterfølgeren til
+      den gamle ISC DHCP server som er utgått siden desember 2022.
+    </para>
+
+    &lfs120_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&kea-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&kea-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &kea-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &kea-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &kea-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &kea-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Kea Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="boost"/> og
+      <xref linkend="log4cplus"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="mitkrb"/>, for dokumentasjon
+      <xref linkend="doxygen"/>,
+      <xref linkend="graphviz"/>, og
+      <xref linkend="sphinx_rtd_theme"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfrie database bakstykker</bridgehead>
+    <para role="optional">
+      <xref linkend="mariadb"/> eller <ulink url="https://www.mysql.com/">MySQL</ulink>, og
+      <xref linkend="postgresql"/>
+    </para>
+<!--
+    <para condition="html" role="usernotes">Redaktørens notater:
+      <ulink url="&blfs-wiki;/kea"/>
+    </para>
+-->
+  </sect2>
+
+  <sect2 role="kernel" id="kea-dhcp-kernel">
+    <title>Kjernekonfigurasjon</title>
+
+    <para>
+      Du må ha Packet Socket støtte. IPv6 støtte er valgfritt.
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="kea-kernel.xml"/>
+
+    <indexterm zone="kea kea-dhcp-kernel">
+      <primary sortas="d-KEA">Kea</primary>
+    </indexterm>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av ISC Kea DHCP Server</title>
+
+    <para>
+      Installer <application>ISC Kea DHCP Server</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr        \
+            --sysconfdir=/etc    \
+            --docdir=/usr/share/doc/kea-&kea-dhcp-version; \
+            --localstatedir=/var \
+            --enable-shell       \
+            --with-openssl       \
+            --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>make check</command>.
+    </para>
+
+    <para>
+      For å installere <application>ISC Kea DHCP Server</application> pakken,
+      utsted følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make -j1 install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>--with-pgsql</parameter> or <parameter>--with-mysql</parameter>:
+      <application>ISC Kea</application> kan lagre leiekontraktene på en
+      database. Dette kan være nyttig i store miljøer som kjører
+      en klynge med DHCP servere. Å bruke <emphasis>memfile</emphasis>
+      bakstykket (som er en CSV fil som er lagret lokalt) er mulig uansett.
+    </para>
+
+    <para>
+      <parameter>--enable-generate-docs</parameter>:
+      Hvis dokumentasjonen skal gjenoppbygges, legg til dette alternativet. Flere
+      avhengigheter må installeres for å generere dokumentasjonen.
+    </para>
+
+    <para>
+      <parameter>make -j1 install</parameter>: ISC anbefaler ikke
+      noen form for parallell eller jobbserver alternativer når du utfører installasjonen.
+    </para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere ISC Kea DHCP Server</title>
+
+    <para>Støtte for IPv4, IPv6 og DDNS er delt inn i
+    separate servere som kjører uavhengig av hverandre. Hver
+    av dem har sin egen konfigurasjonsfil. Ekstra konfigurasjonsfiler
+    kommer fra keactrl agenten som brukes til å kontrollere
+    servere på en enkel måte.</para>
+
+    <para>Rådfør deg med
+    <ulink url="https://kea.readthedocs.io/en/kea-&kea-arm-vers;/">Kea Administrator Reference Manual</ulink>
+    for detaljert informasjon om konfigurasjonen av <application>ISC Kea</application>
+   siden det er et ganske kapabelt system. Konfigurasjonen viste et
+    minimum for å få en DHCP serveren til å kjøre, men den inkluderer allerede
+    konfigurasjon for DDNS (Dynamisk DNS). Det oppsettet fungerer kanskje
+    for små nettverk med få klienter og lite trafikk. For større
+    installasjoner med tusenvis av kunder, <application>ISC Kea</application>
+    kan konfigureres til å bruke databaser (mariadb eller postgresql) til å lagre
+    leiekontraktene og bygge en klynge med flere noder. Det kan
+    være integrert til <ulink url="https://www.isc.org/categories/stork/">ISC Stork</ulink>
+    som er et administrasjons dashbord til <application>ISC Kea</application>.</para>
+
+    <para>
+      Hvis du vil starte DHCP serveren ved oppstart, installer
+      <phrase revision="sysv"><filename>/etc/rc.d/init.d/kea-dhcpd</filename>
+      init skriptet</phrase>
+      <phrase revision="systemd"><filename>kea-dhcpd.service</filename>
+      enheten</phrase> inkludert i
+      <xref linkend="bootscripts" revision="sysv"/>
+      <xref linkend="systemd-units" revision="systemd"/>
+      pakken:
+    </para>
+
+<screen role="root"><userinput>make install-kea-dhcpd</userinput></screen>
+
+    <sect3 id="kea-dhcp-config">
+      <title>Konfigurasjonsfiler</title>
+
+      <para>
+        <filename>/etc/kea/keactrl.conf</filename>,
+        <filename>/etc/kea/kea-ctrl-agent.conf</filename>,
+        <filename>/etc/kea/kea-dhcp4.conf</filename>,
+        <filename>/etc/kea/kea-dhcp6.conf</filename> og
+        <filename>/etc/kea/kea-dhcp-ddns.conf</filename>
+      </para>
+
+      <indexterm zone="kea keactrl-config">
+        <primary sortas="e-etc-kea-keactrl.conf">/etc/kea/keactrl.conf</primary>
+      </indexterm>
+
+      <indexterm zone="kea kea-ctrl-agent-config">
+        <primary sortas="e-etc-kea-kea-ctrl-agent.conf">/etc/kea/kea-ctrl-agent.conf</primary>
+      </indexterm>
+
+      <indexterm zone="kea kea-dhcp4-config">
+        <primary sortas="e-etc-kea-dhcp4.conf">/etc/kea/kea-dhcp4.conf</primary>
+      </indexterm>
+<!--
+      <indexterm zone="kea kea-dhcp6-config">
+        <primary sortas="e-etc-kea-dhcp6.conf">/etc/kea/kea-dhcp6.conf</primary>
+      </indexterm>
+-->
+      <indexterm zone="kea kea-dhcp-ddns-config">
+        <primary sortas="e-etc-kea-dhcp-ddns.conf">/etc/kea/kea-dhcp-ddns.conf</primary>
+      </indexterm>
+    </sect3>
+
+    <sect3 id="keactrl-config">
+      <title>Kea kontrollkonfigurasjon</title>
+
+      <para><command>keactrl</command> brukes til å kontrollere
+      uavhengige servere (IPv4, IPv6, DDNS). Konfigurasjonsfilen
+      <filename>/etc/kea/keactrl.conf</filename> er installert som
+      standard og inkluderer mange baneinnstillinger som er definert
+      på grunn av <command>configure</command> ved byggetiden. Det
+      inkluderer også innstillinger for å spesifisere hvilken av serverne som skal være
+      startet.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Kontrollagent</para>
+          <para>Kontrollagenten er en nisse som tillater
+          (re)konfigurasjon av Kea DHCP tjenesten via REST API.
+          Sett <literal>ctrl_agent=yes</literal> for å starte
+          kontrollagent (tjeneste som gir en REST API), sett
+          <literal>ctrl_agent=no</literal> i tilfelle kontrollagenten
+          ikke er nødvendig.</para>
+        </listitem>
+        <listitem>
+          <para>IPv4 DHCP server</para>
+          <para>Denne nissen håndterer forespørsler om IPv4 adresser.
+          Sett <literal>dhcp4=yes</literal> for å starte den, sett
+          <literal>dhcp4=no</literal> i tilfelle DHCP tjeneste for IPv4
+          ikke er ønsket.</para>
+        </listitem>
+        <listitem>
+          <para>IPv6 DHCP server</para>
+          <para>Denne nissen håndterer forespørsler om IPv6 adresser.
+          Sett <literal>dhcp6=yes</literal> for å starte den, sett
+          <literal>dhcp6=no</literal> i tilfelle DHCP tjeneste for IPv6
+          ikke er ønsket.</para>
+        </listitem>
+        <listitem>
+          <para>Dynamic DNS</para>
+          <para>Denne nissen brukes til å oppdatere en DNS server dynamisk
+          når Kea tildeler en IP adresse til en enhet.
+          Sett <literal>dhcp_ddns=yes</literal> for å aktivere det, sett
+          <literal>dhcp_ddns=no</literal> i tilfelle dynamic DNS oppdateringer
+          ikke er ønsket.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Netconf tjenesten er ikke installert fordi nødvendige
+      avhengigheter dekkes ikke av gjeldende BLFS bok.</para>
+
+      <para>Med følgende kommando vil Kea bli konfigurert til
+      å starte dhcp tjenesten for IPv4 og
+      dynamisk DNS oppdatering, mens kontrollagenten og
+      dhcp tjenesten for IPv6 forblir nede. Juster kommandoen til
+      å matche dine behov på startet tjenester og utfør som
+      <systemitem class="username">root</systemitem> bruker:</para>
+
+<screen role="root"><userinput>sed -e "s/^dhcp4=.*/dhcp4=yes/" \
+    -e "s/^dhcp6=.*/dhcp6=no/" \
+    -e "s/^dhcp_ddns=.*/dhcp_ddns=yes/" \
+    -e "s/^ctrl_agent=.*/ctrl_agent=no/" \
+    -i /etc/kea/keactrl.conf
+</userinput></screen>
+
+    </sect3>
+
+    <sect3 id="kea-ctrl-agent-config">
+      <title>Kontrollagentkonfigurasjon</title>
+
+      <para>
+        Den oppgitte konfigurasjonen kan brukes uten endringer
+        men i BLFS er objekter som sockets lagret i
+        <filename class="directory">/run</filename>
+        heller enn i
+        <filename class="directory">/tmp</filename>.
+      </para>
+
+<screen role="nodump"><userinput>cat &gt; /etc/kea/kea-ctrl-agent.conf &lt;&lt; "EOF"
+<literal>// Begin /etc/kea/kea-ctrl-agent.conf
+{
+  // This is a basic configuration for the Kea Control Agent.
+  // RESTful interface to be available at http://127.0.0.1:8000/
+  "Control-agent": {
+    "http-host": "127.0.0.1",
+    "http-port": 8000,
+    "control-sockets": {
+      "dhcp4": {
+        "socket-type": "unix",
+        "socket-name": "/run/kea4-ctrl-socket"
+      },
+      "dhcp6": {
+        "socket-type": "unix",
+        "socket-name": "/run/kea6-ctrl-socket"
+      },
+      "d2": {
+        "socket-type": "unix",
+        "socket-name": "/run/kea-ddns-ctrl-socket"
+      }
+    },
+
+    "loggers": [
+      {
+        "name": "kea-ctrl-agent",
+        "output_options": [
+          {
+            "output": "/var/log/kea-ctrl-agent.log"
+            "pattern": "%D{%Y-%m-%d %H:%M:%S.%q} %-5p %m\n"
+          }
+        ],
+        "severity": "INFO",
+        "debuglevel": 0
+      }
+    ]
+  }
+}
+// End /etc/kea/kea-ctrl-agent.conf</literal>
+EOF</userinput></screen>
+
+    </sect3>
+
+    <sect3 id="kea-dhcp4-config">
+      <title>IPv4 DHCP Server Konfigurasjon</title>
+
+      <para>
+        En eksempelkonfigurasjonsfil opprettes i <filename>/etc/kea/kea-dhcp4.conf</filename>.
+        Juster filen slik at den passer dine behov eller overskriv den ved å bruke
+        følgende eksempel som <systemitem class="username">root</systemitem>
+        bruker:
+      </para>
+
+<screen role="nodump"><userinput>cat &gt; /etc/kea/kea-dhcp4.conf &lt;&lt; "EOF"
+<literal>// Begin /etc/kea/kea-dhcp4.conf
+{
+  "Dhcp4": {
+    // Add names of your network interfaces to listen on.
+    "interfaces-config": {
+      "interfaces": [ "eth0", "eth2" ]
+    },
+
+    "control-socket": {
+      "socket-type": "unix",
+      "socket-name": "/run/kea4-ctrl-socket"
+    },
+
+    "lease-database": {
+      "type": "memfile",
+      "lfc-interval": 3600
+    },
+
+    "expired-leases-processing": {
+      "reclaim-timer-wait-time": 10,
+      "flush-reclaimed-timer-wait-time": 25,
+      "hold-reclaimed-time": 3600,
+      "max-reclaim-leases": 100,
+      "max-reclaim-time": 250,
+      "unwarned-reclaim-cycles": 5
+    },
+
+    "renew-timer": 900,
+    "rebind-timer": 1800,
+    "valid-lifetime": 3600,
+
+    // Enable DDNS - Kea will dynamically update the DNS
+    "ddns-send-updates" : true,
+    "ddns-qualifying-suffix": "your.domain.tld",
+    "dhcp-ddns" : {
+      "enable-updates": true
+    },
+
+    "subnet4": [
+      {
+        "subnet": "192.168.56.0/24",
+        "pools": [ { "pool": "192.168.56.16 - 192.168.56.254" } ],
+        "option-data": [
+          {
+            "name": "domain-name",
+            "data": "your.domain.tld"
+          },
+          {
+            "name": "domain-name-servers",
+            "data": "192.168.56.2, 192.168.3.7"
+          },
+          {
+            "name": "domain-search",
+            "data": "your.domain.tld"
+          },
+          {
+            "name": "routers",
+            "data": "192.168.56.2"
+          }
+        ]
+      }
+    ],
+
+    "loggers": [
+      {
+        "name": "kea-dhcp4",
+        "output_options": [
+          {
+            "output": "/var/log/kea-dhcp4.log",
+            "pattern": "%D{%Y-%m-%d %H:%M:%S.%q} %-5p %m\n"
+          }
+        ],
+        "severity": "INFO",
+        "debuglevel": 0
+      }
+    ]
+  }
+}
+// End /etc/kea/kea-dhcp4.conf</literal>
+EOF</userinput></screen>
+
+      <para>
+        Konfigurasjonen for IPv6 er lik konfigurasjonen
+         av IPv4. Konfigurasjonsfilen er
+        <filename>/etc/kea/kea-dhcp6.conf</filename>.
+      </para>
+
+    </sect3>
+
+    <sect3 id="kea-dhcp-ddns-config">
+      <title>Dynamisk DNS konfigurasjon</title>
+
+      <para>
+        Hvis det er en <xref linkend="bind"/> server som kjører,
+        <application>ISC Kea</application> kan oppdatere DNS når
+        det gir en IP adresse til en klient. En eksempelkonfigurasjon
+        fil er opprettet i <filename>/etc/kea/kea-dhcp-ddns.conf</filename>.
+        Juster filen slik at den passer dine behov eller overskriv den ved å bruke
+        følgende eksempel som <systemitem class="username">root</systemitem>
+        bruker:
+      </para>
+
+<screen role="nodump" ><userinput>cat &gt; /etc/kea/kea-dhcp-ddns.conf &lt;&lt; "EOF"
+<literal>// Begin /etc/kea/kea-dhcp-ddns.conf
+{
+  "DhcpDdns": {
+    "ip-address": "127.0.0.1",
+    "port": 53001,
+    "control-socket": {
+      "socket-type": "unix",
+      "socket-name": "/run/kea-ddns-ctrl-socket"
+    },
+
+    "tsig-keys": [
+      {
+        "name"      : "rndc-key",
+        "algorithm" : "hmac-sha256",
+        "secret"    : "1FU5hD7faYaajQCjSdA54JkTPQxbbPrRnzOKqHcD9cM="
+      }
+    ],
+
+    "forward-ddns" : {
+      "ddns-domains" : [
+        {
+          "name" : "your.domain.tld.",
+          "key-name": "rndc-key",
+          "dns-servers" : [
+            {
+              "ip-address" : "127.0.0.1",
+              "port" : 53
+            }
+          ]
+        }
+      ]
+    },
+
+    "reverse-ddns" : {
+      "ddns-domains" : [
+        {
+          "name" : "56.168.192.in-addr.arpa.",
+          "key-name": "rndc-key",
+          "dns-servers" : [
+            {
+              "ip-address" : "127.0.0.1",
+              "port" : 53
+            }
+          ]
+        }
+      ]
+    },
+
+    "loggers": [
+      {
+        "name": "kea-dhcp-ddns",
+        "output_options": [
+          {
+            "output": "/var/log/kea-ddns.log",
+            "pattern": "%D{%Y-%m-%d %H:%M:%S.%q} %-5p %m\n"
+          }
+        ],
+        "severity": "INFO",
+        "debuglevel": 0
+      }
+    ]
+  }
+}
+// End /etc/kea/kea-dhcp-ddns.conf</literal>
+EOF</userinput></screen>
+
+      <note>
+        <para>
+          Verdien av <literal>secret</literal> er bare et eksempel.
+          Generer nøkkelen for installasjonen din ved å bruke
+          <command>rndc-confgen -a</command> kommandoen eller
+          <command>tsig-keygen</command> kommandoen som begge er
+          levert av <xref linkend="bind"/>.
+        </para>
+        <para>
+          I denne eksempelkonfigurasjonen antas det at DNS serveren
+          kjører på samme maskin som Kea gjør (tilgjengelig via
+          <literal>127.0.0.1</literal>) og at denne maskinen har
+          IP <literal>192.168.56.2</literal>.
+        </para>
+      </note>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          keactrl, kea-admin, kea-ctrl-agent, kea-dhcp4, kea-dhcp6,
+          kea-dhcp-ddns, kea-lfc, kea-shell
+        </seg>
+        <seg>
+          libkea-*
+        </seg>
+        <seg>
+          /etc/kea,
+          /usr/include/kea,
+          /var/lib/kea
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="keactrl">
+        <term><command>keactrl</command></term>
+        <listitem>
+          <para>
+            Verktøy for å kontrollere (starte/stoppe) serverprosessene.
+          </para>
+          <indexterm zone="kea keactrl">
+            <primary sortas="b-keactrl">keactrl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="kea-admin">
+        <term><command>kea-admin</command></term>
+        <listitem>
+          <para>
+            kea-admin er et skallskript som tilbyr databasevedlikehold.
+          </para>
+          <indexterm zone="kea kea-admin">
+            <primary sortas="b-kea-admin">kea-admin</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="kea-ctrl-agent">
+        <term><command>kea-ctrl-agent</command></term>
+        <listitem>
+          <para>
+            Nisse som viser et RESTful kontrollgrensesnitt for
+            å administrere Kea servere.
+          </para>
+          <indexterm zone="kea kea-ctrl-agent">
+            <primary sortas="b-kea-ctrl-agent">kea-ctrl-agent</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="kea-dhcp4">
+        <term><command>kea-dhcp4</command></term>
+        <listitem>
+          <para>
+            Servernissen som gir IPv4 adresser.
+          </para>
+          <indexterm zone="kea kea-dhcp4">
+            <primary sortas="b-kea-dhcp4">kea-dhcp4</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="kea-dhcp6">
+        <term><command>kea-dhcp6</command></term>
+        <listitem>
+          <para>
+            Servernissen som gir IPv6 adresser.
+          </para>
+          <indexterm zone="kea kea-dhcp6">
+            <primary sortas="b-kea-dhcp6">kea-dhcp6</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="kea-dhcp-ddns">
+        <term><command>kea-dhcp-ddns</command></term>
+        <listitem>
+          <para>
+            Servernissen som utfører de dynamiske DNS oppdateringene.
+          </para>
+          <indexterm zone="kea kea-dhcp-ddns">
+            <primary sortas="b-kea-dhcp-ddns">kea-dhcp-ddns</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="kea-lfc">
+        <term><command>kea-lfc</command></term>
+        <listitem>
+          <para>
+            kea-lfc serviceprosessen fjerner overflødig informasjon
+            fra filene som brukes til å gi vedvarende lagring for
+            memfil database bakstykket. Den drives av Kea DHCP serveren.
+          </para>
+          <indexterm zone="kea kea-lfc">
+            <primary sortas="b-kea-lfc">kea-lfc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="keashell">
+        <term><command>keashell</command></term>
+        <listitem>
+          <para>
+            RESTful klient til <application>ISC Kea</application>
+            servicer.
+          </para>
+          <indexterm zone="kea keashell">
+            <primary sortas="b-keashell">keashell</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
