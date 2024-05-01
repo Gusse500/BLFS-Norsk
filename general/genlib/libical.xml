@@ -9,7 +9,7 @@
   <!ENTITY libical-md5sum        "3799f9dde1db6f7eb0cb112b5e14ab60">
   <!ENTITY libical-size          "900 KB">
   <!ENTITY libical-buildsize     "24 MB (med tester og API dokumentasjon)">
-  <!ENTITY libical-time          "0.3 SBU (med tester og dokumentasjon)">
+  <!ENTITY libical-time          "0.3 SBU (med tester og API dokumentasjon)">
 <!-- run at -j1 because it fails at -j4 -->
 ]>
 
@@ -31,7 +31,7 @@
       av iCalendar protokollene og dataformatene.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
 
@@ -91,9 +91,6 @@
       <xref linkend="pygobject3"/> (for noen tester)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/libical"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -132,18 +129,18 @@ make -j1</userinput></screen>
       Hvis du har <xref linkend="doxygen"/>, <xref linkend="graphviz"/>,
       og <xref linkend="gtk-doc"/>
       installert og ønsker å bygge API dokumentasjonen, bør du
-      fjerne <parameter>-DICAL_BUILD_DOCS=false</parameter> bryteren
-      og kjøre:
+      fjerne <parameter>-DICAL_BUILD_DOCS=false</parameter> parameteren
+      og utstede:
     </para>
 
 <screen remap="doc"><userinput>make docs</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.
-      <!-- One test, timezones, is known to fail on SysV systems. -->
-      <!-- On systemd, we symlink the current timezone to
-           /etc/localtime, which is what libical expects.
-           This is now done on SysV as well.-->
+      For å teste resultatene, utsted: <command>make test</command>.
+      <!-- En test, timezones, er kjent for å mislykkes på SysV systemer. -->
+      <!-- På systemd symlinker vi gjeldende tidssone til
+           /etc/localtime, som er det libical forventer.
+           Dette gjøres nå også på SysV.-->
     </para>
 
     <para>
@@ -153,7 +150,7 @@ make -j1</userinput></screen>
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      Hvis du har bygget API dokumentasjonen, installer ved å kjøre, som
+      Hvis du har bygget API dokumentasjonen, installer ved å utstede, som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -173,12 +170,12 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
 
     <para>
       <parameter>-DSHARED_ONLY=yes</parameter>: Denne bryteren brukes
-      for å kun bygge de delte bibliotekene.
+      for kun å bygge de delte bibliotekene.
     </para>
 
     <para>
       <parameter>-DICAL_BUILD_DOCS=false</parameter>: Denne bryteren forhindrer
-      byggingen av <application>GTK</application> dokumentasjonen. Fjern
+      bygging av <application>GTK</application> dokumentasjon. Fjern
       hvis du vil bygge dokumentasjonen.
     </para>
 
@@ -235,8 +232,8 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
           /usr/include/libical-glib,
           /usr/lib/cmake/LibIcal,
           /usr/libexec/libical,
-          /usr/share/gtk-doc/html/libical-glib (valgfri),
-          and /usr/share/doc/libical-&libical-version;/html
+          /usr/share/gtk-doc/html/libical-glib (optional),
+          og /usr/share/doc/libical-&libical-version;/html
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -313,7 +310,7 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <term><filename class="libraryfile">libicalvcal.so</filename></term>
         <listitem>
           <para>
-            er et vCard/vCalendar C grensesnitt
+            er en vCard/vCalendar C grensesnitt
           </para>
           <indexterm zone="libical libicalvcal">
             <primary sortas="c-libicalvcal">libicalvcal.so</primary>
