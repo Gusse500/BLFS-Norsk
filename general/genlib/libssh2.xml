@@ -6,8 +6,8 @@
 
   <!ENTITY libssh2-download-http "https://www.libssh2.org/download/libssh2-&libssh2-version;.tar.gz">
   <!ENTITY libssh2-download-ftp  " ">
-  <!ENTITY libssh2-md5sum        "f604ba083fad23bf715a9ecccc9f57f4">
-  <!ENTITY libssh2-size          "944 KB">
+  <!ENTITY libssh2-md5sum        "a01d543fd891ca48fe47726540d50b17">
+  <!ENTITY libssh2-size          "1.1 MB">
   <!ENTITY libssh2-buildsize     "13 MB (med tester)">
   <!ENTITY libssh2-time          "0.2 SBU (med tester)">
 ]>
@@ -27,10 +27,10 @@
 
     <para>
       <application>Libssh2</application> pakken er et C bibliotek på klientsiden
-      implementerer SSH2 protokollen.
+      som implementerer SSH2 protokollen.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -66,6 +66,7 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -75,40 +76,45 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <bridgehead renderas="sect3">libssh2 Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gnupg2"/>,
-      <xref linkend="libgcrypt"/>, og
-      <xref linkend="openssh"/> (alle tre kreves for testpakken)
+      <xref linkend="cmake"/> (kan brukes i stedet for
+      <command>configure</command> skript),
+      <xref linkend="libgcrypt"/> (kan brukes i stedet for OpenSSL),
+      <xref linkend="openssh"/> (for noen tester), og
+      <ulink url='https://www.docker.com'>Docker</ulink> (for noen tester)
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/libssh2"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av libssh2</title>
 
     <para>
-      Bruk en oppdatering for å fikse inkompatibilitet med nylige OpenSSH utgivelser:
+      Hvis du ønsker å teste pakken, ekskluder testene som krever et statisk
+      bibliotek:
     </para>
 
-<screen><userinput>patch -Np1 -i ../libssh2-&libssh2-version;-upstream_fix-1.patch</userinput></screen>
+<screen><userinput>sed -E '/^DOCKER_TEST/,/^SSHD_TEST/s/test_(auth_keyboard_info.* |hostkey |simple)/$(NOTHING)/' \
+    -i tests/Makefile.inc &amp;&amp;
+autoreconf -fi</userinput></screen>
 
     <para>
       Installer <application>libssh2</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+<screen><userinput>./configure --prefix=/usr          \
+            --disable-docker-tests \
+            --disable-static       &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For å teste resultatene, utsted: <command>make check</command>.
     </para>
 
     <para>
@@ -120,6 +126,12 @@ make</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>--disable-docker-tests</parameter>: Deaktiver testene som
+      krever Docker, noe som ligger utenfor BLFS. Fjern dette
+      bryteren hvis du har installert Docker og du ønsker å kjøre testpakken.
+    </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
