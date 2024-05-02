@@ -30,7 +30,7 @@
       som brukes av enkelte programmer for tilgang til USB enheter.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -73,8 +73,27 @@
       <xref linkend="doxygen"/>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/libusb"/>
+  </sect2>
+
+  <sect2 role="kernel">
+    <title>Konfigurere Libusb</title>
+
+    <para id="libusb-kernel">
+      For å få tilgang til rå USB enheter (de som ikke behandles som en disk av masselagrings
+      driveren), må passende støtte være tilgjengelig i kjernen. Sjekk din
+      kjernekonfigurasjon:
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="libusb-kernel.xml"/>
+
+    <indexterm zone="libusb libusb-kernel">
+      <primary sortas="d-USB-device-filesystem">Støtte for Host-side USB</primary>
+    </indexterm>
+
+    <para>
+      For mer informasjon om oppsett av USB enheter, se <xref
+      linkend="usb-device-issues"/>.
     </para>
   </sect2>
 
@@ -91,7 +110,7 @@ make</userinput></screen>
 
     <para>
       Hvis <application>Doxygen</application> er installert og du ønsker å
-      bygge API dokumentasjonen, kjør følgende kommandoer:
+      bygge API dokumentasjonen, utfør følgende kommandoer:
     </para>
 
 <screen remap="doc"><userinput>pushd doc                &amp;&amp;
@@ -130,31 +149,6 @@ install -v -m644    doc/api-1.0/* \
     </para>
   </sect2>
 -->
-  <sect2 role="configuration">
-    <title>Konfigurere Libusb</title>
-
-    <para id="libusb-kernel">
-      For å få tilgang til rå USB enheter (de som ikke behandles som en disk av masselagrings
-      drivere), må passende støtte være tilgjengelig i kjernen. Sjekk din
-      kjernekonfigurasjon:
-    </para>
-
-<screen><literal>Device Drivers ---&gt;
-  [*] USB support ---&gt;                   [CONFIG_USB_SUPPORT]
-    &lt;*/M&gt; Support for Host-side USB      [CONFIG_USB]
-    (Select any USB hardware device drivers you may need on the same page)</literal></screen>
-
-    <indexterm zone="libusb libusb-kernel">
-      <primary sortas="d-USB-device-filesystem">Støtte for USB på vertssiden</primary>
-    </indexterm>
-
-    <para>
-      For mer informasjon om oppsett av USB enheter, se <xref
-      linkend="usb-device-issues"/>.
-    </para>
-
-  </sect2>
-
   <sect2 role="content">
     <title>Innhold</title>
 
