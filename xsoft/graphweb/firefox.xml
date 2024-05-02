@@ -6,15 +6,16 @@
 
   <!ENTITY firefox-download-http "&mozilla-http;/firefox/releases/&firefox-version;esr/source/firefox-&firefox-version;esr.source.tar.xz">
   <!ENTITY firefox-download-ftp  " ">
-  <!ENTITY firefox-md5sum        "&firefox-md5;">
-  <!ENTITY firefox-size          "457 MB">
+  <!ENTITY firefox-md5sum        "747043bb967bdbc6f4bd3b29b5bdd438">
+  <!ENTITY firefox-size          "491 MB">
+
   <!-- NB with stylo, much of the build uses rust, and therefore cargo files.
     But the extra cached cargo files, if any, seem to be minimal -->
-  <!ENTITY firefox-buildsize     "7.0 GB (197 MB installert) uten tester">
+  <!ENTITY firefox-buildsize     "6.4 GB (209 MB installert) uten tester">
   <!-- editors: with ff63 and rust-1.29, ./mach build -j4 is probably the
    most practical way to get a timing on a machine with more cores, if taking
    cores offline is not practical. If in doubt, round up -->
-  <!ENTITY firefox-time          "20 SBU bruker -j4, uten tester">
+  <!ENTITY firefox-time          "22 SBU using -j4, uten tester">
 ]>
 
 <sect1 id="firefox" xreflabel="Firefox-&firefox-version;">
@@ -22,7 +23,7 @@
 
 
 <!-- indicate this is the ESR variant,
-  The point was that the 102.0 stable release differed slightly.
+  The point is that the stable release differs slightly.
   <title>Firefox-&firefox-version;</title>-->
   <title>Firefox-&firefox-version;esr</title>
 
@@ -38,7 +39,7 @@
       <application>Mozilla</application> kodebasen.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -79,13 +80,13 @@
       <listitem>
         <para>
           Nødvendig oppdatering:
-          <ulink url="&patch-root;/firefox-&firefox-version;esr-gcc12_fix-1.patch"/>
+          <ulink url="&patch-root;/firefox-&firefox-version;-consolidated-1.patch"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Anbefalt oppdatering:
-          <ulink url="&patch-root;/firefox-&firefox-version;esr-disable_rust_test-1.patch"/>
+          Nødvendig oppdatering for ny <xref linkend="ffmpeg"/> API:
+          <ulink url="&patch-root;/firefox-&firefox-version;-ffmpeg_6-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>-->
@@ -97,8 +98,8 @@
 
       <para>
         Å pakke ut tarballen
-        vil tilbakestille tillatelsene for gjeldende mappe til 0755 hvis du
-        har tillatelse til å gjøre det. Hvis du gjør dette i en mappe hvor
+        vil tilbakestille tillatelsene til gjeldende mappe til 0755 hvis du
+        har tillatelse til det. Hvis du gjør dette i en mappe hvor
         den klebrige biten er satt, slik
         som <filename class="directory">/tmp</filename> vil det ende med 
         feilmeldinger:
@@ -112,19 +113,19 @@ tar: Exiting with failure status due to previous errors
       <para>
         Dette avsluttes med ikke-null status, men det betyr
         <emphasis>IKKE</emphasis> at det er et reelt problem.
-        Ikke pakk ut som <systemitem class="username">root</systemitem> bruker
-        i en katalog der klebrig biten er satt - det vil deaktivere den.
+        Ikke untar som <systemitem class="username">root</systemitem> bruker
+        i en mappe der klebrig-biten er satt - det vil deaktivere den.
       </para>
 
       <para>
-        Som med andre store pakker som bruker C++ (eller rust), SBU tiden
+        Som med andre store pakker som bruker C++ (eller rust), er SBU tiden
         for å bygge dette varierer mer enn du kanskje forventer. Byggetidene
         vil øke betydelig hvis maskinen din må bruke vekselminnet.
       </para>
 
       <para>
         Selv om oppstrøms foretrekker å bruke <application>PulseAudio</application>,
-        for øyeblikket kan <application>Alsa</application> fortsatt brukes. Begge
+        for øyeblikket <application>Alsa</application> kan fortsatt brukes. Begge
         kan trenge kjøretidskonfigurasjon for å få lyden til å fungere.
       </para>
     </note>
@@ -133,19 +134,18 @@ tar: Exiting with failure status due to previous errors
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="autoconf213"/>,
       <xref linkend="cbindgen"/>,
       <xref linkend="dbus-glib"/>,
       <xref linkend="gtk3"/>,
       <xref linkend="libnotify"/>,
-      <xref linkend="llvm"/> (med clang, brukes til bindgen selv om du bruker gcc),
+      <xref linkend="llvm"/> (med clang, brukes til bindgen selv om man bruker gcc),
       <xref linkend="nodejs"/>,
       <xref linkend="pulseaudio"/>
       (eller
       <xref linkend="alsa-lib"/> hvis du redigerer mozconfig;
         nå avviklet av mozilla), i begge tilfeller vennligst les
         Konfigurasjonsinformasjon,
-      <xref linkend="python3"/> (gjenoppbygg etter installasjon av <xref linkend="sqlite"/>),
+      <xref linkend="python3"/> (gjenoppbygget etter installasjon <xref linkend="sqlite"/>),
       <xref linkend="startup-notification"/>,
       <xref linkend="unzip"/>,
       <xref linkend="yasm"/>, og
@@ -164,8 +164,8 @@ tar: Exiting with failure status due to previous errors
 
     <note>
       <para>
-        Hvis du ikke installerer anbefalte avhengigheter, vil interne kopier av
-        disse pakkene bli brukt. De kan ha blitt testet til å fungere, men de kan
+        Hvis du ikke installerer anbefalte avhengigheter, blir interne kopier av
+        disse pakkene brukt. De kan ha blitt testet for å fungere, men de kan
         være utdatert eller inneholde sikkerhetshull.
       </para>
     </note>
@@ -174,8 +174,9 @@ tar: Exiting with failure status due to previous errors
     <para role="optional">
       <xref linkend="curl"/>,
       <xref linkend="doxygen"/>,
-      <xref role="runtime" linkend="ffmpeg"/> (kjøretid, for å spille mov, mp3 eller mp4 filer),
+      <xref role="runtime" linkend="ffmpeg"/> (kjøretid, for å spille mov, mp3 eller mp4 files),
       <xref linkend="liboauth"/>,
+      <xref role="runtime" linkend="pciutils"/> (kjøretid),
       <xref linkend="valgrind"/>,
       <xref linkend="wget"/>,
       <xref linkend="wireless_tools"/>,
@@ -183,7 +184,7 @@ tar: Exiting with failure status due to previous errors
     </para>
 
     <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/firefox"/>
+      Redaktørens notater: <ulink url="&blfs-wiki;/firefox"/>
     </para>
   </sect2>
 
@@ -196,8 +197,8 @@ tar: Exiting with failure status due to previous errors
       konfigurasjonsalternativer. En standard <filename>mozconfig</filename> er
       opprettet nedenfor. For å se hele listen over tilgjengelige konfigurasjonsalternativer
       (og en forkortet beskrivelse av noen av dem), utsted <command>./mach
-      configure &amp;&amp; ./configure --help | less</command>. Du kan også
-      ønske å se gjennom hele filen og fjerne kommentarer til andre ønskede alternativer.
+      configure -- --help | less</command>. Du kan også
+      se gjennom hele filen og fjerne kommentarer til andre ønskede alternativer.
       Opprett filen ved å gi følgende kommando:
     </para>
 
@@ -235,9 +236,9 @@ ac_add_options --with-system-webp
 # save four megabytes in the installed file it does not make
 # the build faster.
 
-# libdavid (av1 decoder) requires nasm. Uncomment this if nasm
+# libdav1d (av1 decoder) requires nasm. Uncomment this if nasm
 # has not been installed. Do not uncomment this if you have
-# ffmpeg-5 installed.
+# ffmpeg installed.
 #ac_add_options --disable-av1
 
 # You cannot distribute the binary if you do this
@@ -277,6 +278,11 @@ ac_add_options --with-system-jpeg
 ac_add_options --with-system-png
 ac_add_options --with-system-zlib
 
+# Sandboxing works well on x86_64 but might cause issues on other
+# platforms. If not on x86_64, e.g. i686, it is recommended to
+# uncomment the following switch.
+#ac_add_options --disable-sandbox
+
 # Using sandboxed wasm libraries has been moved to all builds instead
 # of only mozilla automation builds. It requires extra llvm packages
 # and was reported to seriously slow the build. Disable it.
@@ -297,15 +303,6 @@ EOF</userinput></screen>
       Kompiler <application>Firefox</application> ved å kjøre følgende
       kommandoer:
     </para>
-
-    <para>
-      En endring i cbindgen-0.24.2 fører til at et symbol nå sendes ut av
-      cbindgen, men den er allerede definert i en deklarasjon. Denne sed
-      forhindrer at byggingen til slutt mislykkes:
-    </para>
-
-<screen><userinput>sed -i '/ROOT_CLIP_CHAIN/d' gfx/webrender_bindings/webrender_ffi.h</userinput></screen>
-
 <!-- Not needed with clang. Upstream bug at
      https://bugzilla.mozilla.org/show_bug.cgi?id=1729459
 
@@ -330,7 +327,7 @@ esac</userinput></screen>
         Google og Mozilla API nøkler nedenfor er spesifikke for LFS. Hvis du bruker
         disse instruksjonene for en annen distro, eller hvis du har tenkt å distribuere
         binære kopier av programvaren ved å bruke disse instruksjonene,
-        få dine egne nøkler ved å følge instruksjonene på
+        hent dine egne nøkler ved å følge instruksjonene på
         <ulink url="https://www.chromium.org/developers/how-tos/api-keys"/> og
         <ulink url="https://location.services.mozilla.com/api"/> henholdsvis.
         <!-- BLFS Devs, register an account at Google with your
@@ -352,25 +349,22 @@ echo "613364a7-9418-4c86-bcee-57e32fd70c23" > mozilla-key</userinput></screen>
        href="../../xincludes/mozmach.xml"/>
 
     </note>
-    <!-- Fixed in 102.8
-    <para>
-      Fjern først et foreldet flagg i python koden, som har blitt fjernet
-      i python-3.11:
+
+<!--<para>
+      Fiks å bygge Firefox med Clang 16 eller C++ deklarasjoner fra GCC 13.
+      Og, omgå en byggefeil med Rustc-1.70.0:
     </para>
 
-<screen><userinput>grep -rl \"rU\" | xargs sed -i 's/"rU"/"r"/'</userinput></screen>
+<screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;-consolidated-1.patch</userinput></screen>
 
     <para>
-      Løs deretter et problem med regulære uttrykk i python-3.11:
+      Bruk følgende oppdatering slik at firefox kan spille av H.264-videoer:
     </para>
 
-<screen><userinput>sed -e 's/?s)\./?s:.)/'               \
-    -e '/?m)/{s/?m)/?m:/;s/\$"/$)"/}' \
-    -e '/?s)%/{s/?s)/?s:/;s/?"/?)"/}' \
-    -i xpcom/idl-parser/xpidl/xpidl.py</userinput></screen>
--->
+<screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;-ffmpeg_6-1.patch</userinput></screen>-->
+
     <para>
-      Påkall nå Python <command>mach</command> skriptet for å kompilere pakken.
+      Påkall nå Python <command>mach</command> skript for å kompilere pakken.
     </para>
 
 <screen><userinput>export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none &amp;&amp;
@@ -385,8 +379,8 @@ export MOZBUILD_STATE_PATH=${PWD}/mozbuild          &amp;&amp;
       <command>./mach gtest</command>. Dette vil kreve en nettverkstilkobling,
       og å bli kjørt fra en Xorg økt - det er en sprettopp-dialog
       når den ikke klarer å koble til ALSA (det skaper ikke en mislykket test).
-      En eller to tester vil mislykkes. For å se detaljene om feilen(e) må du
-      logge utdataene fra den kommandoen slik at du kan se gjennom den.
+      En eller to tester vil mislykkes. For å se detaljene om feilen(e)
+      må du logge utdataene fra den kommandoen slik at du kan se gjennom den.
     </para>
 
     <para>
@@ -411,18 +405,18 @@ export MOZBUILD_STATE_PATH=${PWD}/mozbuild          &amp;&amp;
 
     <para>
       <command>export MOZBUILD_STATE_PATH=${PWD}/mozbuild</command>: Bygget
-      er nå ment å fortelle deg at den har til hensikt å lage <filename
-      class="directory">~/.mozbuild</filename>, og tilby deg et alternativ til
-      å trykke &lt;ENTER&gt; å akseptere dette, eller Ctrl-C for å avbryte og starte bygget på nytt
-      etter å ha spesifisert mappen. I praksis kan det hende at meldingen ikke
-      vises før etter at &lt;ENTER&gt; er trykket, dvs. bygget feiler.
+      er nå ment å fortelle deg at den har til hensikt å opprette <filename
+      class="directory">~/.mozbuild</filename>, og tilby deg et alternativ å
+      trykke &lt;ENTER&gt; for å godta dette, eller Ctrl-C for å avbryte og starte på nytt
+      å bygge etter å ha spesifisert mappen. I praksis kan det hende at meldingen ikke
+      vises til etter &lt;ENTER&gt; er presset, dvs. bygget stopper.
     </para>
 
     <para>
-      Denne katalogen brukes for en (sannsynligvis tilfeldig) telemetriidentifikator.
+      Den mappen brukes for en (sannsynligvis tilfeldig) telemetriidentifikator.
       Opprette dette i byggemappen, og slette det etter
-      installasjon, hindrer den i å bli brukt. Hvis du ønsker å delta
-      telemetri, eksport MOZBUILD_STATE_PATH til å peke på standardmappen
+      installasjon, hindrer den i bruk. Hvis du ønsker å delta
+      telemetri, eksporter MOZBUILD_STATE_PATH for å peke til standardmappen
       og fjern oppføringen fra <filename>mozconfig</filename>.
     </para>
 
