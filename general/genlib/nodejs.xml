@@ -6,10 +6,10 @@
 
   <!ENTITY nodejs-download-http "https://nodejs.org/dist/v&nodejs-version;/node-v&nodejs-version;.tar.xz">
   <!ENTITY nodejs-download-ftp  " ">
-  <!ENTITY nodejs-md5sum        "09aaaa219c453d6d5307641cc41b76e1">
-  <!ENTITY nodejs-size          "40 MB">
-  <!ENTITY nodejs-buildsize     "962 MB (legg til 34 MB for tester)">
-  <!ENTITY nodejs-time          "15 SBU (legg til 4.2 SBU for tester: både ved å bruke parallellisme=4 og 4 CPUer tilgjengelige, deler av testene vil bruke alle tilgjengelige CPUer)">
+  <!ENTITY nodejs-md5sum        "cfadecca2649bb74daba89d60fbd02e5">
+  <!ENTITY nodejs-size          "39 MB">
+  <!ENTITY nodejs-buildsize     "992 MB (legg til 25 MB for tester)">
+  <!ENTITY nodejs-time          "13 SBU (legg til 3.3 SBU for tester: både ved å bruke parallellisme=8 og 8 CPUer tilgjengelige, deler av testene vil bruke alle tilgjengelige CPUer)">
 ]>
 
 <sect1 id="nodejs" xreflabel="nodejs-&nodejs-version;">
@@ -31,7 +31,7 @@
       <application>Chrome</application> sin V8 JavaScript motor.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -101,33 +101,12 @@
       <command>npm</command> vil bli installert hvis den ikke er til stede)
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/nodejs"/>
-    </para>
 
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av Node.js</title>
 
-<!--
-    <para>
-      Først, bruk en oppdatering for å fikse byggingen av Node.js mot ICU-69.1:
-    </para>
-
-<screen><userinput>patch -Np1 -i ../node-v&nodejs-version;-icu_69-1.patch</userinput></screen>
--->
-<!-- Does not appear to be needed for version 18.13.0
-    <para>
-      <command>configure</command> skriptet for denne versjonen av Node.js er
-      ikke klar over Python-3.11. Hvis du har installert <xref linkend="python3"/>,
-      ta i bruk følgende endring:
-    </para>
-
-<screen><userinput>sed -e '/=.*exec/a command -v python3.11 >/dev/null &amp;&amp; exec python3.11 "$0" "$@"' \
-    -e s'/((/((3, 11), (/'  \
-    -i configure</userinput></screen>
--->
     <para>
       Bygg <application>Node.js</application> ved å kjøre følgende
       kommandoer:
@@ -144,10 +123,14 @@ make</userinput></screen>
 
     <para>
       For å teste resultatene, kjør: <command>make test-only</command>.
-      En test er kjent for å mislykkes.
+<!--      To tester (av 3801 tester), test-net-socket-connect-without-cb og
+      test-tcp-wrap-listen er kjent for å mislykkes. -->
+      Flere tester er kjent for å mislykkes på grunn av atferdsforskjeller mellom
+      OpenSSL-3.0 og OpenSSL-3.1.
 <!--
-Failed tests:
-out/Release/node /tmp/node-v18.14.1/test/parallel/test-cluster-bind-privileged-port.js
+Mislykkede tester:
+out/Release/node /build/node/node-v18.17.0/test/parallel/test-net-socket-connect-without-cb.js
+out/Release/node - -expose-internals /build/node/node-v18.17.0/test/parallel/test-tcp-wrap-listen.js
 -->
     </para>
 
