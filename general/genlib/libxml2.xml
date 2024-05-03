@@ -8,9 +8,9 @@
   <!ENTITY libxml2-download-http "https://download.gnome.org/sources/libxml2/2.10/libxml2-&libxml2-version;.tar.xz">
 <!--  <!ENTITY libxml2-download-http "http://xmlsoft.org/sources/libxml2-&libxml2-version;.tar.xz">-->
   <!ENTITY libxml2-download-ftp  " ">
-  <!ENTITY libxml2-md5sum        "f9edac7fac232b3657a003fd9a5bbe42">
+  <!ENTITY libxml2-md5sum        "76808c467a58c31e2dbd511e71d5fd13">
   <!ENTITY libxml2-size          "2.5 MB">
-  <!ENTITY libxml2-buildsize     "105 MB (med tester)">
+  <!ENTITY libxml2-buildsize     "106 MB (med tester)">
   <!ENTITY libxml2-time          "0.4 SBU (Bruker parallellisme=4; med tester)">
   <!ENTITY testsuite-version     "20130923">
 ]>
@@ -33,7 +33,7 @@
       og verktøy som brukes til å analysere XML filer.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -101,9 +101,6 @@
       </para>
     </note>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/libxml2"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -179,6 +176,20 @@ make</userinput></screen>
       <option>--with-icu</option>: Legg til denne bryteren hvis du har bygget
       <xref linkend="icu"/>, for bedre unicode støtte.
     </para>
+
+    <note>
+      <para>
+        Hvis <option>--with-icu</option> bryteren brukes, BLFS redaktørene
+        anbefaler å fjerne unødvendige referanser til ICU bibliotekene. Dette
+        vil forhindre at mange pakker som bruker libxml2 kobles unødvendig
+        til ICU bibliotekene. Dette vil igjen forhindre behovet for
+        å gjenoppbygge mange pakker ved oppgradering av ICU til en ny hovedversjon.
+        Etter å ha installert libxml2, som &root; bruker, utsted:
+      </para>
+
+<screen role="nodump"><userinput>rm -vf /usr/lib/libxml2.la &amp;&amp;
+sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config</userinput></screen>
+    </note>
 
   </sect2>
 
