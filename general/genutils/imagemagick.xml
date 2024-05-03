@@ -4,16 +4,16 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY imagemagick-patch-version "61">
+  <!ENTITY imagemagick-patch-version "15">
 
   <!ENTITY imagemagick-download-http "https://www.imagemagick.org/archive/releases/ImageMagick-&imagemagick-version;-&imagemagick-patch-version;.tar.xz">
 <!-- 2021-01-14 : ftp.imagemagick.org hangs, assume no longer usable
   <!ENTITY imagemagick-download-ftp  "ftp://ftp.imagemagick.org/pub/ImageMagick/releases/ImageMagick-&imagemagick-version;-&imagemagick-patch-version;.tar.xz"> -->
   <!ENTITY imagemagick-download-ftp  " ">
-  <!ENTITY imagemagick-md5sum        "f9973657738b5c970325e97f198b9977">
-  <!ENTITY imagemagick-size          "9.9 MB">
-  <!ENTITY imagemagick-buildsize     "192 MB (med typiske avhengigheter; legg til 20 MB for sjekker)">
-  <!ENTITY imagemagick-time          "0.8 SBU (med typiske avhengigheter; legg til 1,9 SBU for sjekker, begge med parallellisme=4)">
+  <!ENTITY imagemagick-md5sum        "14dc2057465df350005311b4ae3649b5">
+  <!ENTITY imagemagick-size          "9.7 MB">
+  <!ENTITY imagemagick-buildsize     "164 MB (med typiske avhengigheter; legg til 31 MB for sjekker)">
+  <!ENTITY imagemagick-time          "0.8 SBU (med typiske avhengigheter; legg til 0,8 SBU for sjekker, begge med parallellisme=4)">
 ]>
 
 <!-- Editors: It is highly unlikely that the buildsize (disk space used) will
@@ -48,7 +48,8 @@
      For those of us who touch this infrequently:
      DPS/dpsXclient is from apple so not relevant to linux builds
      GVC is part of Graphviz and documented in the explanations
-     LQR is Liquid Rescale  -->
+     iLQR is Liquid Rescale
+     ufraw-batch (ufraw) is unmaintained and does not build with current exiv2  -->
 
 <sect1 id="imagemagick" xreflabel="ImageMagick-&imagemagick-version;-&imagemagick-patch-version;">
   <?dbhtml filename="imagemagick.html"?>
@@ -65,12 +66,12 @@
 
     <para>
       <application>ImageMagick</application> er en samling av verktøy og
-      biblioteker for å lese, skrive og manipulere et bilde i forskjellige bildeformater.
-      Bildebehandlingsoperasjoner er tilgjengelige fra kommandolinjen.
+      biblioteker for å lese, skrive og manipulere et bilde i forskjellige
+      bildeformater. Bildebehandlingsoperasjoner er tilgjengelige fra kommandolinjen.
       Bindinger for Perl og C++ er også tilgjengelig.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -108,8 +109,8 @@
         de eksisterende BLFS instruksjonene for å installere den. Sjansen er stor for at det vil
         fungerer helt fint, men dette har ikke blitt testet av BLFS teamet. Hvis
         pakkeversjonen vist ovenfor ikke er tilgjengelig fra de viste stedene
-        ovenfor, kan du laste den ned fra BLFS pakkeserveren i Oregon State
-        universitet: <ulink url="ftp://ftp.osuosl.org/pub/blfs/conglomeration/ImageMagick/"/>.
+        ovenfor, kan du laste den ned fra BLFS pakkeserveren på Oregon State
+        University: <ulink url="ftp://ftp.osuosl.org/pub/blfs/conglomeration/ImageMagick/"/>.
       </para>
     </note>
 
@@ -128,14 +129,14 @@
       the <quote>MAGICK DELEGATES</quote> section of the
       <filename>README.txt</filename> file located in the source tree. -->
       Ytterligere informasjon om avhengighetene finner du i
-      <filename>Install-unix.txt</filename> filen som ligger i kildetreet samt
-      i tillegg til utstede <command>./configure --help</command> kommandoen. Et
-      sammendrag av denne informasjonen, samt noen tilleggsmerknader kan bli
-      lest på nett på <ulink
+      <filename>Install-unix.txt</filename> filen som ligger i kildetreet og
+      i tillegg utstede <command>./configure --help</command> kommanden. Et
+      sammendrag av denne informasjonen, samt noen tilleggsmerknader kan
+      finnes på nett på <ulink
       url="https://imagemagick.org/script/install-source.php"/>.
     </para>
 
-    <bridgehead renderas="sect4">Valgfrie systemverktøy</bridgehead>
+    <bridgehead renderas="sect4">Valgfrie Systemverktøy</bridgehead>
     <para role="optional">
       Clang fra <xref linkend="llvm"/>,
       <xref linkend="cups"/>,
@@ -155,7 +156,7 @@
       <ulink url="https://imagemagick.org/archive/delegates/">Profiles</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Valgfrie grafikkbiblioteker</bridgehead>
+    <bridgehead renderas="sect4">Valgfrie Grafiske Biblioteker</bridgehead>
     <para role="optional">
       <xref linkend="jasper"/>,
       <xref role="nodep" linkend="lcms"/> eller
@@ -166,7 +167,7 @@
       <xref linkend="libgxps"/>,
       <xref linkend="libjpeg"/>,
       <xref linkend="libpng"/>,
-      <xref linkend="libraw"/> (RAW_R),
+      <xref linkend="libraw"/> (for dng filer, trenger thread-safe libraw_r),
       <xref linkend="librsvg"/>,
       <xref linkend="libtiff"/>,
       <xref linkend="libwebp"/>,
@@ -189,7 +190,7 @@
       (eller <ulink url="http://www.mcmurchy.com/ralcgm/ralcgm-3.51.tar.gz">ralcgm</ulink>)
     </para>
 
-    <bridgehead renderas="sect4">Valgfrie grafikkverktøy</bridgehead>
+    <bridgehead renderas="sect4">Valgfrie Grafiske Verktøy</bridgehead>
     <para role="optional">
       <xref linkend="dejavu-fonts"/>,
       <xref linkend="gs"/>,
@@ -204,14 +205,14 @@
       <ulink url="https://www.radiance-online.org/">Radiance</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Valgfrie konverteringsverktøy</bridgehead>
+    <bridgehead renderas="sect4">Valgfrie Konverteringsverktøy</bridgehead>
     <para role="optional">
       <xref linkend="enscript"/>,
       <xref linkend="potrace"/>,
       <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>)
       <ulink url="https://autotrace.sourceforge.net/">AutoTrace</ulink>,
       <ulink url="https://www.extensis.com/">
-      GeoExpress Command Line Utilities, AKA MrSID Utilities (binær pakke)</ulink>,
+      GeoExpress Kommandolinjeverktøy, AKA MrSID Verktøy (binær pakke)</ulink>,
       <ulink url="https://www.gnu.org/software/hp2xx/">hp2xx</ulink>,
       <!-- not accessible
       <ulink url="https://user.it.uu.se/~jan/html2ps.html">html2ps</ulink>,
@@ -219,16 +220,21 @@
       <ulink url="https://wvware.sourceforge.net/">libwmf</ulink>,
       <ulink url="https://sk1project.net/uc2/">
       UniConvertor</ulink>,
-      <ulink url="https://ufraw.sourceforge.net/">ufraw</ulink> (for dng filer,
-      se
+      <!-- ufraw-batch was a delegate program, the delegate library coders/dng.so
+      is used if librar_r is present, ufraw now ftbfs with exiv2-0.28, and IM-7.1.1
+      in any case (if no libraw) invokes it to ask for a temp png file, but then
+      tries to open the temp file using a ppm suffix, which of course fails.
+      <ulink url="https://ufraw.sourceforge.net/">ufraw</ulink> (for dng files,
+      see
       <ulink url="https://imagemagick.org/script/formats.php">
-      https://imagemagick.org/script/formats.php</ulink> for noen spesielle brytere)
+      https://imagemagick.org/script/formats.php</ulink> for some special switches)
+      -->
       og
       <ulink url="https://www.cs.utah.edu/gdc/projects/urt/">Utah Raster Toolkit</ulink>
       (eller <ulink url="http://www.mcmurchy.com/urt/urt-3.1b.tar.gz">URT-3.1b</ulink>)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
+    <para condition="html" role="usernotes">Redaktørens notater:
     <ulink url="&blfs-wiki;/imagemagick"/></para>
 
   </sect2>
@@ -256,23 +262,23 @@ make</userinput></screen>
 <screen role="root"><userinput>make DOCUMENTATION_PATH=/usr/share/doc/imagemagick-&imagemagick-version; install</userinput></screen>
 
     <para>
-      For å teste installasjonen, kjør: <command>make check</command>.
-              <!-- ser ut til å ha blitt droppet                         En mer
-      omfattende test er <application>ImageMagick</application>
-      valideringspakke. Hvis <command>make check</command> ikke er utført,
-      kjør <command>make tests/validate</command> for å kompilere den. Kjør
-      <command>tests/validate 2>&amp;1 | tee validate.log</command> for å kjøre
-      valideringspakken.--> <!-- sammendrag er siste utdatalinje
-       Resultatsammendraget kan fås med <command>grep
+      For å teste resultatene, utsted: <command>make check</command>.
+              <!-- seems to have been dropped                         A more
+      comprehensive test is the <application>ImageMagick</application>
+      validation suite. If <command>make check</command> has not been executed,
+      run <command>make tests/validate</command> to compile it.  Issue
+      <command>tests/validate 2>&amp;1 | tee validate.log</command> to run the
+      validation suite.--> <!-- summary is last line of output
+       The result summary may be obtained with <command>grep
       "validation suite" validate.log</command>. -->
      <!-- I'm not convinced that Helvetica is required, I don't install the gs
       fonts. But lots of references to it. Surely fontconfig provides it? ken -->
-                                                 Merk at EPS, PS og PDF
+                                                 Merk at EPS, PS, og PDF
       tester krever en fungerende <application>Ghostscript</application>. En test
-       i "make check" trenger <quote>Helvetica</quote> fra <quote>Ghostscript
-      Standard fonter</quote>, som er valgfritt installert i
-      <xref linkend="gs"/> - den testen, og en annen, kan mislykkes, men alle
-      valideringer kan fortsatt bestå.
+      i "make check" trenger <quote>Helvetica</quote> fra <quote>Ghostscript
+      Standard Fonter</quote>, som er valgfritt installert i
+      <xref linkend="gs"/> - den testen, og en annen, kan mislykkes, men all
+      validering kan fortsatt bestå.
     </para>
 
   </sect2>
@@ -281,7 +287,7 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--enable-hdri</parameter>: Gjør det mulig å bygge en
+      <parameter>--enable-hdri</parameter>: Aktiverer bygging av en
       høy dynamisk rekkevidde versjon av ImageMagick.
     </para>
 
@@ -291,8 +297,8 @@ make</userinput></screen>
     </para>
 
     <para>
-      <parameter>--with-perl</parameter>: Gjør det mulig å bygge og
-      installering av PerlMagick.
+      <parameter>--with-perl</parameter>: Aktiverer bygging av og
+      installasjon av PerlMagick.
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -310,7 +316,7 @@ make</userinput></screen>
 
     <para>
       <option>--with-autotrace</option>: Aktiverer støtte for å bruke
-      the <application>Autotrace</application> biblioteket.
+      <application>Autotrace</application> biblioteket.
     </para>
 
     <para>
@@ -319,7 +325,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      <option>--with-gvc</option>: Aktiverer støtte å bruke
+      <option>--with-gvc</option>: Aktiverer støtte for å bruke
       <application>GraphViz</application>.
     </para>
 
@@ -339,7 +345,7 @@ make</userinput></screen>
 
     <para>
       Alternativene og parameterne som er oppført ovenfor er de eneste du bør
-      gi til <command>configure</command> skript for å aktivere alle
+      sende til <command>configure</command> skriptet for å aktivere alle
       delegatavhengighetene. Alle andre avhengigheter blir automatisk
       oppdaget og brukt i bygget hvis de er installert.
     </para>
@@ -533,7 +539,7 @@ make</userinput></screen>
       <term><command>stream</command></term>
       <listitem>
         <para>
-          strømmer en eller flere pikselkomponenter av et bilde eller
+          strømmer én eller flere pikselkomponenter i et bilde eller
           del av bildet til ditt valg av lagringsformater
         </para>
         <indexterm zone="imagemagick stream">
@@ -549,7 +555,7 @@ make</userinput></screen>
           tillater lesing, manipulering og skriving av et stort antall
           bildefilformater ved hjelp av <application>ImageMagick</application>
           biblioteket. Kjør <command>make</command> i
-          <filename class="directory">PerlMagick/demo</filename> mappen av
+          <filename class="directory">PerlMagick/demo</filename> mappen over
           pakkekildetreet etter at pakken er installert for å se en fin
           demo av modulens muligheter
         </para>

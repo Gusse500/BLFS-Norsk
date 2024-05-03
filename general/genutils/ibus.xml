@@ -6,9 +6,9 @@
 
   <!ENTITY ibus-download-http "https://github.com/ibus/ibus/releases/download/&ibus-version;/ibus-&ibus-version;.tar.gz">
   <!ENTITY ibus-download-ftp  " ">
-  <!ENTITY ibus-md5sum        "3590d33fbd84e041acb75fcee818b504">
-  <!ENTITY ibus-size          "3.6 MB">
-  <!ENTITY ibus-buildsize     "66 MB (legg til 3 MB for tester)">
+  <!ENTITY ibus-md5sum        "e788203d60e2b9cf56d95f1ee73a6898">
+  <!ENTITY ibus-size          "3.7 MB">
+  <!ENTITY ibus-buildsize     "66 MB (legg til 5 MB for tester)">
   <!ENTITY ibus-time          "0.2 SBU (Bruker parallellisme=4; legg til 0,6 SBU for tester)">
 <!-- Since UCD.zip can be used by gucharmap too, let's use the same version:
      This prevents version mismatches, since UCD.zip filename is not versioned.
@@ -35,7 +35,7 @@
       inndatametode brukergrensesnitt.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -113,9 +113,6 @@
       <ulink url="https://www.joypixels.com/">EmojiOne</ulink>
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/ibus"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -168,13 +165,13 @@ make</userinput></screen>
       For å teste resultatene, kjør: <command>make -k check</command>.
       Testen kalt ibus-compose mislykkes fordi den bruker noen lokaler
       ikke installert i LFS.
-      Testen kalt ibus-keypress er kjent for å mislykkes på et Wayland basert
-      skrivebordmiljø.
-      <!-- xkeyboard-config MR #400 -->
+      <!-- Loggen sier "No idea to simulate key events in Wayland"
+           in a Mutter wayland session.  -->
+      Testen kalt ibus-keypress er kjent for å mislykkes i en Wayland basert
+      grafisk miljø.
+      <!-- https://github.com/ibus/ibus/issues/2542 -->
       Testen kalt xkb-latin-layouts er kjent for å mislykkes med en nylig
       xkeyboard-config utgivelse.
-      Testen som heter test-override-ibus.py er kjent for å mislykkes hvis Python
-      støttebibliotek er aktivert.
     </para>
 
     <para>
