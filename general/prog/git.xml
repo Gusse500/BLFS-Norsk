@@ -8,15 +8,15 @@
 
   <!ENTITY git-download-http "&git-root;/git-&git-version;.tar.xz">
   <!ENTITY git-download-ftp  " ">
-  <!ENTITY git-md5sum        "32d34dc65ae0955cc68c7152b5ca8b13">
+  <!ENTITY git-md5sum        "c1f58a12b891ad73927b8e4a3aa29c7b">
 
-  <!ENTITY git-size          "6.8 MB">
+  <!ENTITY git-size          "11 MB">
   <!-- but people keep forgetting that an install not only needs the net build
        space, it also needs the install space (or DESTDIR) -->
-  <!ENTITY git-buildsize     "392 MB (med nedlastet dokumentasjon, legg til 18 MB for å bygge dokumentasjonen)">
+  <!ENTITY git-buildsize     "252 MB (med nedlastet dokumentasjon)">
   <!-- With 2.23.0, there was a large increase in time for tests. Possibly disk related? -->
   <!-- Confirmed that it is disk related.-->
-  <!ENTITY git-time          "0.3 SBU (med parallellitet=4; legg til 0,4 SBU for byggedokumentasjon og 1,6 SBU (avhengig av diskhastighet) for tester, begge med parallellitet=4)">
+  <!ENTITY git-time          "0.3 SBU (med parallellitet=4; legge opp til 1,6 SBU (diskhastighetsavhengig) for tester, begge med parallellitet=4)">
 ]>
 
 <sect1 id="git" xreflabel="git-&git-version;">
@@ -47,7 +47,7 @@
       <application>Team Foundation Server</application>.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -113,6 +113,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <xref linkend="apache"/> (for noen tester),
       <xref role="runtime" linkend="gnupg2"/> (kjøretid, kan brukes til å signere
       <application>Git</application> utførelser eller tagger, eller verifisere signaturene
       av dem),
@@ -148,9 +149,6 @@
       lage infosider
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/git"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -188,9 +186,19 @@ make</userinput></screen>
 
     <para>
       Testpakken kan kjøres i parallell modus. For å kjøre testpakken, kjør:
-      <command>make test</command>. Hvis den kjøres som en vanlig bruker, bør 0 tester være
-      rapportert som mislykket i det endelige sammendraget.
+      <command>make -k test</command>. <!--Hvis den kjøres som en vanlig bruker, bør 0 tester være
+      rapportert som mislykket i det endelige sammendraget.-->
+	  Hvis <xref linkend="apache"/> er installert,
+      tre tester i <filename>t5559-http-fetch-smart-http2.sh</filename> er
+      kjent å mislykkes pga cURL-8.1.x.
     </para>
+	
+	<!-- The tests in question are "GIT_TRACE_CURL redirects auth details",
+         "GIT_CURL_VERBOSE redacts auth details", and "cookies are redacted by
+         default". I sent upstream a bug report:
+         https://lore.kernel.org/git/3843d97f-0073-e2d4-b98d-5a38c33b25f3@linuxfromscratch.org/T/#u
+         and hopefully will hear back soon. -renodr -->
+
 
     <para>
       Nå, som <systemitem class="username">root</systemitem>

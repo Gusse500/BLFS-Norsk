@@ -6,13 +6,11 @@
 
   <!ENTITY gdb-download-http "&gnu-http;/gdb/gdb-&gdb-version;.tar.xz">
   <!ENTITY gdb-download-ftp  "&gnu-ftp;/gdb/gdb-&gdb-version;.tar.xz">
-  <!ENTITY gdb-md5sum        "4aaad768ff2585464173c091947287ec">
+  <!ENTITY gdb-md5sum        "fbd3cdae16c581e8a742cb766ba35076">
   <!ENTITY gdb-size          "23 MB">
-  <!ENTITY gdb-buildsize     "1.1 GB (legg til 406 MB for dokumenter; legg til 373 MB for tester)">
-  <!ENTITY gdb-time          "2.1 SBU (Bruker parallellisme=4; legg til 0,5 SBU for dokumenter; legg til 20 SBU for tester)">
+  <!ENTITY gdb-buildsize     "914 MB (legg til 805 MB for dokumenter; legg til 575 MB for tester)">
+  <!ENTITY gdb-time          "2.1 SBU (legg til 0,4 SBU for dokumenter; legg til 18 SBU for tester; alle bruker parallellisme=4)">
 ]>
-
-<!-- I skipped running the full tests for this 8.3.1 point version.  Bruce -->
 
 <sect1 id="gdb" xreflabel="GDB-&gdb-version;">
   <?dbhtml filename="gdb.html"?>
@@ -36,7 +34,7 @@
       er strippet.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -71,7 +69,7 @@
         </para>
       </listitem>
     </itemizedlist>
-<!--
+    <!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -81,7 +79,7 @@
         </para>
       </listitem>
     </itemizedlist>
--->
+    -->
     <bridgehead renderas="sect3">GDB Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Anbefalt kjøretidsavhengighet</bridgehead>
@@ -93,25 +91,29 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <!-- <xref linkend="dejagnu"/> (required for tests), -->
       <xref linkend="doxygen"/>,
       <xref linkend="gcc"/> (ada, gfortran, og go er brukt for tester),
       <xref linkend="guile"/>,
-      <xref linkend="python2"/>,
+      <!-- don't advertise python2...
+      <xref linkend="python2"/>,-->
       <xref linkend="rust"/> (brukt for noen tester),
       <xref linkend="valgrind"/>, og
       <ulink url="https://sourceware.org/systemtap/">SystemTap</ulink>
       (kjøretid, brukt til tester)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/gdb"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av GDB</title>
+    <!--
+    <para>
+      Først bruker du en oppdatering som løser problemer når programmer debugges kompilert
+      med <xref linkend="rust" role="nodep"/>:
+    </para>
 
+<screen><userinput remap="pre">patch -Np1 -i ../gdb-&gdb-version;-upstream_fixes-1.patch</userinput></screen>
+-->
     <para>
       Installer <application>GDB</application> ved å kjøre følgende
       kommandoer:
@@ -203,12 +205,15 @@ or this
           A test run of the test suite had about 1700 unexpected failures
           (out of over 80000 tests). Over 1370 of the failures were related
           to FORTRAN tests. -->
-<!-- for gdb-12.1, gcc-11.3.0 - bdubbs 
+<!-- for gdb-12.1, gcc-11.3.0 - bdubbs
           A test run of the test suite had a little over 200 unexpected failures
           out of over 94000 tests.-->
-<!-- for gdb-13.0, gcc-12.2.0 - bdubbs -->
+<!-- for gdb-13.0, gcc-12.2.0 - bdubbs
           En testkjøring av testpakken hadde 33 uventede feil
-          av over 106 000 tester.
+          av over 106 000 tester. -->
+<!-- for gdb-13.2, gcc-13.1.0 - pierre -->
+          En testkjøring av testpakken hadde 183 uventede feil
+          av over 105 000 tester.
         </para>
       </listitem>
 
@@ -233,7 +238,8 @@ or this
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make -C gdb install</userinput></screen>
+<screen role="root"><userinput>make -C gdb install &amp;&amp;
+make -C gdbserver install</userinput></screen>
 
     <para>
       Hvis du har bygget API dokumentasjonen, er den nå i gdb/doc/doxy.
@@ -260,8 +266,9 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
     <para>
       <parameter>--with-python=/usr/bin/python3</parameter>: Denne bryteren
       tvinger <application>GDB</application> å bruke Python 3.
+      <!-- Vi anbefaler ikke å bruke python2 lenger
       Fjern denne bryteren hvis du har installert
-      <xref linkend="python2"/> og vil bruke den i stedet for Python 3.
+      <xref linkend="python2"/> og vil bruke den i stedet for Python 3.-->
     </para>
 
   </sect2>
@@ -276,14 +283,13 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
 
       <seglistitem>
         <seg>
-          gcore, gdb og gdbserver
+          gcore, gdb, gdbserver, and gdb-add-index
         </seg>
         <seg>
-          <!--libinproctrace.so-->
-          Ingen
+          libinproctrace.so
         </seg>
         <seg>
-          /usr/{include,share}/gdb og /usr/share/doc/gdb-&gdb-version;
+          /usr/{include,share}/gdb and /usr/share/doc/gdb-&gdb-version;
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -330,7 +336,19 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
         </listitem>
       </varlistentry>
 
-<!-- Not present with 10.1
+     <varlistentry id="gdb-add-index">
+        <term><command>gdb-add-index</command></term>
+        <listitem>
+          <para>
+            Tillater å legge til indeksfiler til ELF binærfiler. Dette setter fart på
+            <command>gdb</command> starting av store programmer.
+          </para>
+          <indexterm zone="gdb gdb-add-index">
+            <primary sortas="b-gdb-add-index">gdb-add-index</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
       <varlistentry id="libinproctrace">
         <term><filename class="libraryfile">libinproctrace.so</filename></term>
         <listitem>
@@ -345,7 +363,7 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
- -->
+ 
     </variablelist>
 
   </sect2>
