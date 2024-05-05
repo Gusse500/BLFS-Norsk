@@ -7,9 +7,9 @@
   <!ENTITY urllib3-download-http "https://files.pythonhosted.org/packages/source/u/urllib3/urllib3-&urllib3-version;.tar.gz">
   <!ENTITY urllib3-download-ftp  " ">
   <!ENTITY urllib3-md5sum        "&urllib3-md5sum;">
-  <!ENTITY urllib3-size          "294 KB">
+  <!ENTITY urllib3-size          "272 KB">
   <!ENTITY urllib3-buildsize     "3.2 MB (legg til 49 MB for tester)">
-  <!ENTITY urllib3-time          "mindre enn 0.1 SBU (0.7 SBU for tester)">
+  <!ENTITY urllib3-time          "mindre enn 0.1 SBU (1.6 SBU for tester)">
 ]>
 
   <sect2 id="urllib3" xreflabel="urllib3-&urllib3-version;">
@@ -29,7 +29,7 @@
         funksjoner som mangler fra Python standardbibliotekene.
       </para>
 
-      &lfs113_checked;
+      &lfs120_checked;
 
       <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -67,12 +67,17 @@
 
       <bridgehead renderas="sect4">Urllib3 Avhengigheter</bridgehead>
 
+      <bridgehead renderas="sect5">Påkrevd</bridgehead>
+      <para role="required">
+        <xref linkend="hatchling"/>
+      </para>
+
       <bridgehead renderas="sect5">Valgfri (for tester)</bridgehead>
       <para role="optional">
         <xref linkend="pytest"/>,
         <ulink url="https://pypi.org/project/mock/">mock</ulink>,
         <ulink url="https://pypi.org/project/PySocks/">PySocks</ulink>,
-        <ulink url="https://pypi.org/project/pytest-freezegun/">pytest-freezegun</ulink>,
+        <!--<ulink url="https://pypi.org/project/pytest-freezegun/">pytest-freezegun</ulink>,-->
         <ulink url="https://pypi.org/project/pytest-timeout/">pytest-timeout</ulink>,
         <ulink url="https://pypi.org/project/python-dateutil/">python-dateutil</ulink>,
         <ulink url="https://pypi.org/project/tornado/">tornado</ulink>, og
@@ -84,6 +89,13 @@
     <sect3 role="installation">
       <title>Installasjon av Urllib3</title>
 
+    <para> Hvis du vil kjøre testene, fjern noen som kan henge: </para>
+
+<screen><userinput>rm -v test/test_retry.py \
+      test/contrib/test_pyopenssl.py \
+      test/contrib/test_securetransport.py \
+      test/with_dummyserver/test_socketlevel.py</userinput></screen>
+
     <para> Bygg modulen: </para>
 
 <screen><userinput>pip3 wheel -w dist --no-build-isolation --no-deps $PWD</userinput></screen>
@@ -93,6 +105,13 @@
     </para>
 
 <screen role="root"><userinput>pip3 install --no-index --find-links dist --no-cache-dir --no-user urllib3</userinput></screen>
+
+    <note>
+      <para>
+        Å kjøre testene kan føre til at prosedyren nedenfor henger og er
+        ikke anbefalt.
+      </para>
+    </note>
 
     <para>
       Forutsatt <xref linkend="pytest"/> er installert, men de andre valgfrie
@@ -107,8 +126,7 @@ pip3 install trustme         \
              python-dateutil \
              mock            \
              pysocks         \
-             pytest-timeout  \
-             pytest-freezegun                  &amp;&amp;
+             pytest-timeout  &amp;&amp;
 python3 /usr/bin/pytest<!-- no && because of a possible error -->
 deactivate</userinput></screen>
 
