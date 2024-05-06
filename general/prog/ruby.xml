@@ -6,10 +6,10 @@
 
   <!ENTITY ruby-download-http "https://cache.ruby-lang.org/pub/ruby/&ruby-minor-version;/ruby-&ruby-version;.tar.xz">
   <!ENTITY ruby-download-ftp  " ">
-  <!ENTITY ruby-md5sum        "23617540ad13c57ed8dd9d4ed32192a5">
+  <!ENTITY ruby-md5sum        "377853f31d10bfe37c58b8537fc3e05d">
   <!ENTITY ruby-size          "14 MB">
-  <!ENTITY ruby-buildsize     "461 MB (legg til 1,3 GB for C API dokumenter)">
-  <!ENTITY ruby-time          "1.4 SBU (bruker parallellisme=4; legg til 5.0 SBU for tester; legg til 0,8 SBU for C API dokumenter)">
+  <!ENTITY ruby-buildsize     "694 MB (legg til 1,0 GB for C API dokumenter)">
+  <!ENTITY ruby-time          "1.2 SBU (bruker parallellisme=4; legge til 4.6 SBU for tester; legg til 0,6 SBU for C API dokumenter)">
 ]>
 
 <sect1 id="ruby" xreflabel="Ruby-&ruby-version;">
@@ -31,7 +31,7 @@
       er nyttig for objektorientert skripting.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -85,14 +85,19 @@
       <ulink url="http://dtrace.org/blogs/about/">DTrace</ulink>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/ruby"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av Ruby</title>
+<!--
+    <para>
+      Hvis du ønsker å kjøre testene etter å ha installert denne pakken, fikser du et problem
+      som resulterer i en krasj under testpakken, på grunn av en udefinert
+      variabel:
+    </para>
 
+<screen><userinput>sed -i '283d' tool/lib/leakchecker.rb</userinput></screen>
+-->
     <para>
       Installer <application>Ruby</application> ved å kjøre følgende
       kommandoer:
@@ -101,23 +106,37 @@
 <screen><userinput>./configure --prefix=/usr      \
             --enable-shared    \
             --without-valgrind \
+            --without-baseruby \
             --docdir=/usr/share/doc/ruby-&ruby-version; &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Du kan eventuelt bygge CAPI dokumentene ved å kjøre følgende
+      Valgfritt bygg CAPI dokumentene ved å kjøre følgende
       kommandoer:
     </para>
 
 <screen><userinput>make capi</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>. Det er over
+      Testene krever at den nye versjonen av Ruby allerede er installert for å
+      kjøre riktig. Hvis du vil kjøre testene, utfør dem etter installasjonen
+      av pakken. <!-- Ticket #17887 -->
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>make -k check</command>. Det er over
       25 000 tester. Noen tester relatert til ipv6 kan indikere feil. Hvis
       tester kjøres i en mappe som har en skrivbar komponent (f.eks.
-      /tmp) så kan flere ekstra tester mislykkes. Noen få tester kan mislykkes pga
-      forventningene til systemkonfigurasjonen.
+      /tmp), så kan flere ekstra tester mislykkes. Noen få tester kan mislykkes pga
+      systemkonfigurasjonsforventninger.
     </para>
+
 <!-- With 3.0.2:
 Finished tests in 443.541527s, 47.5739 tests/s, 6031.9921 assertions/s.
 21101 tests, 2675439 assertions, 4 failures, 1 errors, 45 skips
@@ -129,12 +148,6 @@ with 3.2.0 there are several summaries:
 * Finished tests in 462.613063s, 50.5649 tests/s, 12069.0885 assertions/s.
   23392 tests, 5583318 assertions, 3 failures, 0 errors, 79 skips
 -->
-
-    <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>make install</userinput></screen>
 
     <note>
       <para>
@@ -148,7 +161,7 @@ with 3.2.0 there are several summaries:
 bundle update rake</userinput></screen>
 
       <para>
-        og omstart webserveren som betjener applikasjonen på nytt.
+        og start nettserveren som betjener applikasjonen på nytt.
       </para>
 
     </note>
@@ -160,7 +173,13 @@ bundle update rake</userinput></screen>
 
     <para>
       <parameter>--enable-shared</parameter>: Denne bryteren gjør det mulig å bygge
-      <filename class="libraryfile">libruby</filename> delt bibliotek.
+      <filename class="libraryfile">libruby</filename> delte bibliotek.
+    </para>
+
+    <para>
+      <parameter>--without-baseruby</parameter>: Denne bryteren forhindrer bruk av
+      systemets <command>ruby</command> hvis den allerede er installert.
+      Byggesystemet vil bruke den nybygde versjonen i stedet.
     </para>
 
     <para>
@@ -176,12 +195,6 @@ bundle update rake</userinput></screen>
     <para>
       <option>--disable-install-capi</option>: Denne bryteren deaktiverer bygging
       og installering av C API dokumenter.
-    </para>
-
-    <para>
-      <option>--without-baseruby</option>: Denne bryteren forhindrer bruk av
-      systemets <command>ruby</command> hvis den allerede er installert. Byggesystemet
-      vil bruke den nybygde versjonen i stedet.
     </para>
 
   </sect2>
@@ -231,7 +244,7 @@ bundle update rake</userinput></screen>
         <term><command>bundle</command></term>
         <listitem>
           <para>
-            lager bundle med Ruby Gems
+            lager pakker med Ruby Gems
           </para>
           <indexterm zone="ruby bundle">
             <primary sortas="b-bundle">bundle</primary>
@@ -255,7 +268,7 @@ bundle update rake</userinput></screen>
         <term><command>erb</command></term>
         <listitem>
           <para>
-            er en kommandolinjegrensesnitt for eRuby, som gir et
+            er et kommandolinjegrensesnitt for eRuby, som gir et
             malsystem for <application>Ruby</application>
           </para>
           <indexterm zone="ruby erb">
@@ -268,9 +281,9 @@ bundle update rake</userinput></screen>
         <term><command>gem</command></term>
         <listitem>
           <para>
-            er kommandoen for RubyGems, som er en sofistikert pakkebehandler
-            for <application>Ruby</application>. Dette er likt
-            Pythons 'pip' kommando
+            er kommandoen for RubyGems, som er en sofistikert pakke
+            administrator for <application>Ruby</application>. Denne er lik
+           Pythons 'pip' kommando
           </para>
           <indexterm zone="ruby gem">
             <primary sortas="b-gem">gem</primary>
@@ -295,7 +308,7 @@ bundle update rake</userinput></screen>
         <term><command>rake</command></term>
         <listitem>
           <para>
-            er et make-lik byggeverktøy for <application>Ruby</application>
+            er et make lignende byggeverktøy for <application>Ruby</application>
           </para>
           <indexterm zone="ruby rake">
             <primary sortas="b-rake">rake</primary>
@@ -307,7 +320,7 @@ bundle update rake</userinput></screen>
         <term><command>rdbg</command></term>
         <listitem>
           <para>
-            er en interaktiv feilsøker for <application>Ruby</application>
+            er en interaktiv feilsøking for <application>Ruby</application>
           </para>
           <indexterm zone="ruby rdbg">
             <primary sortas="b-rdbg">rdbg</primary>
@@ -344,7 +357,7 @@ bundle update rake</userinput></screen>
         <term><command>ruby</command></term>
         <listitem>
           <para>
-            er et tolket skriptspråk for rask
+            er et tolket skriptspråk for raskt
             og enkel objektorientert programmering
           </para>
           <indexterm zone="ruby ruby-prog">
