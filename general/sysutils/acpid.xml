@@ -26,7 +26,7 @@
     <title>Introduksjon til acpid</title>
 
     <para>
-      <application>acpid</application> (Advanced Configuration and Power
+      <application>acpid</application> Advanced Configuration and Power
       Interface event daemon) er en helt fleksibel, helt utvidbar
       nisse for å levere ACPI hendelser. Den lytter på netlink grensesnitt og
       når en hendelse inntreffer, kjører programmer for å håndtere hendelsen. Programmene
@@ -34,7 +34,25 @@
       slippes på plass av pakker eller av brukeren.
     </para>
 
-    &lfs113_checked;
+    <note>
+      <para>
+        Noen andre pakker kan også håndtere noen ACPI hendelser, og de
+        kan komme i konflikt med denne pakken. For eksempel, &logind;
+        (les dokumentasjonen for <option>Handle*=</option> i
+        <filename>logind.conf(5)</filename> for detaljer) og
+        <xref linkend='upower'/> (brukes av mange skrivebordsmiljøer som f.eks
+        GNOME, KDE og XFCE for håndtering av ACPI hendelser). Hvis du har installert
+        en slik pakke og det er nok for din brukssituasjon, er denne pakken
+        sannsynligvis ikke nødvendig. Hvis du virkelig trenger denne pakken, må du være
+        nøye med å konfigurere den og de andre pakkene som håndterer ACPI hendelser
+        for å unngå konflikter. Spesielt &logind; håndterer noen ACPI hendelser
+        som standard, så håndteringen av disse hendelsene av &logind; bør være
+        deaktivert først hvis du håndterer disse hendelsene med acpid
+         (igjen, les <filename>logind.conf(5)</filename> for detaljer).
+      </para>
+    </note>
+
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -70,16 +88,13 @@
       </listitem>
     </itemizedlist>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/acpid"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av acpid</title>
 
     <para>
-      Install <application>acpid</application> ved å
+      Installer <application>acpid</application> ved å
       kjøre følgende kommandoer:
     </para>
 
@@ -109,16 +124,20 @@ cp -r samples /usr/share/doc/acpid-&acpid-version;</userinput></screen>
       Plasser hendelsesfiler under
       <filename class="directory">/etc/acpi/events</filename> mappen. Hvis en
       hendelse inntreffer, <command>acpid</command> går igjen gjennom hendelsesfilene
-      for å se om det regulære uttrykket definert etter "hendelse" stemmer overens. Hvis de gjør det,
-      handlingen blir utført.
+      for å se om regex definert etter "hendelse" stemmer overens. Hvis de gjør det,
+      blir handlingen utført.
     </para>
 
     <para>
-      Følgende korte eksempel vil suspendere systemet når den bærbare lokket
-      blir stengt (det krever <xref linkend="pm-utils"/>):
+      Følgende korte eksempel vil suspendere systemet når den bærbare datamaskin
+      lokket er lukket<phrase revision='sysv'> (det krever
+      <xref linkend="pm-utils"/>)</phrase>.  Eksemplet deaktiverer også
+      standardhåndteringen av lokkets hendelse av &logind; når
+      systemet er på batteri og ikke koblet til noen ekstern skjerm,
+      for å unngå konflikt:
     </para>
 
-<screen role="root"><userinput>cat &gt; /etc/acpi/events/lid &lt;&lt; "EOF"
+<screen revision='sysv' role="nodump"><userinput>cat &gt; /etc/acpi/events/lid &lt;&lt; "EOF"
 <literal>event=button/lid
 action=/etc/acpi/lid.sh</literal>
 EOF
@@ -128,29 +147,49 @@ cat &gt; /etc/acpi/lid.sh &lt;&lt; "EOF"
 /bin/grep -q open /proc/acpi/button/lid/LID/state &amp;&amp; exit 0
 /usr/sbin/pm-suspend</literal>
 EOF
-chmod +x /etc/acpi/lid.sh</userinput></screen>
+chmod +x /etc/acpi/lid.sh
+
+mkdir -pv /etc/elogind/logind.conf.d
+echo <literal>HandleLidSwitch=ignore</literal> &gt; /etc/elogind/logind.conf.d/acpi.conf</userinput></screen>
+
+<screen revision='systemd' role="nodump"><userinput>cat &gt; /etc/acpi/events/lid &lt;&lt; "EOF"
+<literal>event=button/lid
+action=/etc/acpi/lid.sh</literal>
+EOF
+
+cat &gt; /etc/acpi/lid.sh &lt;&lt; "EOF"
+<literal>#!/bin/sh
+/bin/grep -q open /proc/acpi/button/lid/LID/state &amp;&amp; exit 0
+/usr/bin/systemctl suspend</literal>
+EOF
+chmod +x /etc/acpi/lid.sh
+
+mkdir -pv /etc/systemd/logind.conf.d
+echo <literal>HandleLidSwitch=ignore</literal> &gt; /etc/systemd/logind.conf.d/acpi.conf</userinput></screen>
 
     <para>
-      Dessverre er det ikke alle datamaskiner som merker ACPI hendelser på samme måte. Til
-      å bestemme hvordan knappene dine gjenkjennes, bruk
-      <command>acpi_listen</command> verktøy. Se også i <filename
+      Dessverre merker ikke alle datamaskiner ACPI hendelser på samme måte
+      (for eksempel kan lokket gjenkjennes som <filename>LID0</filename>
+      i stedet for <filename>LID</filename>).
+      For å finne ut hvordan knappene dine gjenkjennes, bruk
+      <command>acpi_listen</command> verktøyet. Se også i <filename
       class="directory">samples</filename> mappen under <filename
       class="directory">/usr/share/doc/acpid-&acpid-version;</filename>
       for flere eksempler.
     </para>
 
     <sect3  id="acpid-init">
-      <title><phrase revision="sysv">Boot Script</phrase>
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
              <phrase revision="systemd">Systemd Socket</phrase></title>
 
       <para revision="sysv">
-        For å starte <command>acpid</command> automatisk når systemet nlir
-        omstartet, installer <filename>/etc/rc.d/init.d/acpid</filename>
+        For å starte <command>acpid</command> automatisk når systemet
+        startes på nytt, installer <filename>/etc/rc.d/init.d/acpid</filename>
         oppstartsskript fra <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        For å starte <command>acpid</command> nissen ved oppstart,
+        For å starte <command>acpid</command> nissen ved systemstart,
         installer systemd enheten fra <xref linkend="systemd-units"/>
         pakken ved å kjøre følgende kommando som
         <systemitem class="username">root</systemitem> bruker:
@@ -164,7 +203,7 @@ chmod +x /etc/acpi/lid.sh</userinput></screen>
 
       <note revision="systemd">
         <para>
-          Denne pakken bruker socketbasert aktivering og vil startes når
+          Denne pakken bruker socketbasert aktivering og vil bli startet når
           noe trenger det. Ingen frittstående enhetsfil er gitt for denne
           pakken.
         </para>
@@ -190,7 +229,7 @@ chmod +x /etc/acpi/lid.sh</userinput></screen>
           Ingen
         </seg>
         <seg>
-          /etc/acpi og /usr/share/doc/acpid-&acpid-version;
+          /etc/acpi and /usr/share/doc/acpid-&acpid-version;
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -231,7 +270,7 @@ chmod +x /etc/acpi/lid.sh</userinput></screen>
         <listitem>
           <para>
             er et monitorprogram som kobles til tre kilder til ACPI hendelser
-            (events file, netlink og input layer) og rapporterer deretter om hva det
+            (hendelsesfil, netlink og input-lag) og rapporterer deretter om hva det
             ser mens den er tilkoblet
           </para>
           <indexterm zone="acpid kacpimon">
