@@ -32,7 +32,7 @@
       ytelsen til noe maskinvare (for eksempel kjølevifter).
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -94,39 +94,29 @@
       (kjøretid)
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/lm_sensors"/>
-    </para>
   </sect2>
 
   <sect2 role="kernel" id="lm_sensors-kernel">
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Å få riktig kjernekonfigurasjon er en iterativ prosess som kan kreve
-      at du rekompilerer kjernen et par ganger. Den enkleste veien å gå
-      er å starte med å aktivere moduler og så kompilere alt som
-      kan være nødvendig for Lm Sensors som en modul:
+      Følgende konfigurasjonsalternativer prøver å dekke de vanligste
+      maskinvareovervåkingsenheter i et typisk stasjonært eller bærbart system.
+      Se hjelpen til hver (ved å trykke på <keycap>H</keycap> knapp
+      med alternativet fokusert i <command>make menuconfig</command>)
+      å vite om du trenger det. Det er mye plattformspesifikk maskinvare
+      overvåkingsenheter slik at det er umulig å liste opp konfigurasjonen for
+      alle her. Du kan undersøke innholdet i
+      <filename class='directory'>/sys/class/hwmon</filename> innenfor en
+      <quote>mainstream</quote> distro som kjører på systemet for å vite hvilken
+      drivere du trenger.
     </para>
 
-<screen><literal>[*] Enable loadable module support  ---&gt;  [CONFIG_MODULES]
-
-Device Drivers  ---&gt;
-  [*] PCI support ---&gt;                    [CONFIG_PCI]
-  I2C support ---&gt;
-    &lt;*/M&gt; I2C device interface            [CONFIG_I2C_CHARDEV]<!--
-Seems to be automatically selected and invisible on linux 3.17:
-    I2C Algorithms  -&45;-&gt;
-      &lt;M&gt; (configure all of them as modules)-->
-    I2C Hardware Bus support  ---&gt;
-      &lt;M&gt; (configure all of them as modules)
-  &lt;*/M&gt; Hardware Monitoring support  ---&gt; [CONFIG_HWMON]
-    &lt;M&gt; (configure all of them as modules)</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="lm_sensors-kernel.xml"/>
 
     <para>
-      Recompile your kernel and reboot into the new kernel. Don't forget to
-      <command>make modules_install</command> We will come back to the kernel in
-      the Configuring section below.
+      Kompiler kjernen på nytt og start på nytt den nye kjernen.
     </para>
 
     <indexterm zone="lm_sensors lm_sensors-kernel">
@@ -201,7 +191,9 @@ cp -rv              README INSTALL doc/* \
       </indexterm>
 
     </sect3>
-
+    <!-- Completely outdated.  It only sets a list of kernel modules which
+         should be loaded by lm_sensors.  But today udev will load them
+         once the sensor device is detected by the kernel.
     <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
@@ -219,7 +211,7 @@ cp -rv              README INSTALL doc/* \
       </para>
 
     </sect3>
-
+    -->
   </sect2>
 
   <sect2 role="content">
