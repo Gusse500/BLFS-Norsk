@@ -6,9 +6,9 @@
 
   <!ENTITY upower-download-http "https://gitlab.freedesktop.org/upower/upower/-/archive/v&upower-version;/upower-v&upower-version;.tar.bz2">
   <!ENTITY upower-download-ftp  " ">
-  <!ENTITY upower-md5sum        "4fba71838a9ba0db6f140418eddbe2b7">
-  <!ENTITY upower-size          "128 KB">
-  <!ENTITY upower-buildsize     "4.9 MB (legg til 1.3 MB for tester)">
+  <!ENTITY upower-md5sum        "bfd6e3275e61d7e097b53eb2b216fffa">
+  <!ENTITY upower-size          "136 KB">
+  <!ENTITY upower-buildsize     "6.5 MB (legg til 1.1 MB for tester)">
   <!ENTITY upower-time          "mindre enn 0.1 SBU (ved å bruke parallellisme=4, legg til 0,6 SBU for tester)">
 ]>
 
@@ -32,7 +32,7 @@
       org.freedesktop.UPower tjenesten via systemmeldingsbussen.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -72,9 +72,8 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="libgudev"/>,
-      <xref linkend="libusb"/>, og
-      <xref linkend="polkit"/>
+      <xref linkend="libgudev"/> og
+      <xref linkend="libusb"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri (Påkrevd hvis du bygger GNOME)</bridgehead>
@@ -93,9 +92,6 @@
       <ulink url="https://libimobiledevice.org/">libimobiledevice</ulink>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/upower"/>
-    </para>
   </sect2>
 
   <sect2 role="kernel" id="upower-kernel" revision="systemd">
@@ -109,9 +105,8 @@
       om nødvendig:
     </para>
 
- <screen><literal>General Setup ---&gt;
-    [*] Namespaces support ---&gt;     [CONFIG_NAMESPACES]
-       [*] User namespace           [CONFIG_USER_NS]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="upower-systemd-kernel.xml"/>
 
     <indexterm zone="upower upower-kernel">
       <primary sortas="d-upower">upower</primary>
@@ -132,33 +127,39 @@
       kommandoer:
     </para>
 
-<screen revision="sysv"><userinput>mkdir build                         &amp;&amp;
-cd    build                         &amp;&amp;
-meson --prefix=/usr                        \
-      --buildtype=release                  \
-      -Dgtk-doc=false                      \
-      -Dman=false                          \
-      -Dsystemdsystemunitdir=no            \
-      -Dudevrulesdir=/usr/lib/udev/rules.d \
-      ..                            &amp;&amp;
+<screen revision="sysv"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..                  \
+      --prefix=/usr             \
+      --buildtype=release       \
+      -Dgtk-doc=false           \
+      -Dman=false               \
+      -Dsystemdsystemunitdir=no \
+      -Dudevrulesdir=/usr/lib/udev/rules.d &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="systemd"><userinput>mkdir build                         &amp;&amp;
 cd    build                         &amp;&amp;
-meson --prefix=/usr       \
+meson setup ..            \
+      --prefix=/usr       \
       --buildtype=release \
       -Dgtk-doc=false     \
-      -Dman=false         \
-      ..                            &amp;&amp;
+      -Dman=false         &amp;&amp;
 ninja</userinput></screen>
 
     <!-- On my system with LANG=zh_CN.UTF-8, one test attempted to compare
          Chinese error message with English references and failed.
          LC_ALL=C fixes the problem.  -->
+    <!-- Headphone hotplug (bluetooth and AUX) was tested and seems to work
+         okay even with the test faliures. Maybe it's wants headphones plugged
+         in during the test? Regardless, it can be safely ignored. -->
     <para>
-      For å teste resultatene, kjør: <command>LC_ALL=C ninja test</command>. Noen
+      For å teste resultatene, utsted: <command>LC_ALL=C ninja test</command>. Noen
       sjekker kan kanskje ikke bestå på grunn av manglende filer. Testpakken skal kjøres fra
-      en lokal GUI økt startet med dbus-launch.
+      en lokal GUI økt startet med dbus-launch. 2 tester knyttet til
+      hodetelefon hotplug funksjonen er kjent for å mislykkes, disse kan trygt ignoreres
+      siden hodetelefonfunksjonaliteten fortsatt fungerer.
     </para>
 
     <para>
