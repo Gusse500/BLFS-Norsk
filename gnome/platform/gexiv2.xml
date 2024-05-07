@@ -7,10 +7,10 @@
 <!-- gexiv2 -->
   <!ENTITY gexiv2-download-http "&gnome-download-http;/gexiv2/&gexiv2-minor;/gexiv2-&gexiv2-version;.tar.xz">
   <!ENTITY gexiv2-download-ftp  "&gnome-download-ftp;/gexiv2/&gexiv2-minor;/gexiv2-&gexiv2-version;.tar.xz">
-  <!ENTITY gexiv2-md5sum        "b4b1ac55bf9d32fb36a35eb346e1728e">
-  <!ENTITY gexiv2-size          "380 KB">
-  <!ENTITY gexiv2-buildsize     "3.4 MB">
-  <!ENTITY gexiv2-time          "0.1 SBU">
+  <!ENTITY gexiv2-md5sum        "1e65556fad5d24a4c365696544d8c945">
+  <!ENTITY gexiv2-size          "384 KB">
+  <!ENTITY gexiv2-buildsize     "4.0 MB">
+  <!ENTITY gexiv2-time          "0.1 SBU (med parallellitet=4 og tester)">
 ]>
 
 <sect1 id="gexiv2" xreflabel="gexiv2-&gexiv2-version;">
@@ -30,7 +30,7 @@
       gexiv2 er en GObject basert innpakning rundt Exiv2 biblioteket.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -66,6 +66,22 @@
       </listitem>
     </itemizedlist>
 
+<!-- applied in 0.14.2
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering for å bygge mot exiv2-0.28 og høyere:
+          <ulink url="&patch-root;/gexiv2-&gexiv2-version;-exiv_0_28-1.patch"/>
+        </para>
+        <para>
+          Nødvendig oppdatering for å bygge på i686 systemer:
+          <ulink url="&patch-root;/gexiv2-&gexiv2-version;-buildfixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
+
     <bridgehead renderas="sect3">gexiv2 Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -84,13 +100,26 @@
 <!--  <xref linkend="python2"/> (for the Python2 module) -->
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/gexiv2"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av gexiv2</title>
+
+<!-- applied in 0.14.2
+    <para>
+      Bruk først noen rettelser som lar deg bygge mot exiv2-0.28 og høyere:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../gexiv2-&gexiv2-version;-exiv_0_28-1.patch</userinput></screen>
+
+    <para>
+      Deretter, hvis du er på et i686 system, fikser du bygget ved å justere typer:
+    </para>
+
+<screen><userinput remap="pre">case $(uname -m) in
+    i?86) patch -Np1 -i ../gexiv2-&gexiv2-version;-buildfixes-1.patch ;;
+esac</userinput></screen>
+-->
 
     <para>
       Installer <application>gexiv2</application> ved å kjøre følgende
@@ -104,8 +133,11 @@ meson --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør <command>ninja test</command>.
+      For å teste resultatene, kjør:
     </para>
+
+<screen remap="test"><userinput>meson configure -Dtests=true &amp;&amp;
+ninja test</userinput></screen>
 
     <para>
       Som <systemitem class="username">root</systemitem> bruker:
