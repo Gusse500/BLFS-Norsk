@@ -5,15 +5,13 @@
   %general-entities;
 
   <!ENTITY gnome-shell-download-http
-           "&gnome-download-http;/gnome-shell/&gnome-43;/gnome-shell-&gnome-shell-version;.tar.xz">
+           "&gnome-download-http;/gnome-shell/&gnome-44;/gnome-shell-&gnome-shell-version;.tar.xz">
   <!ENTITY gnome-shell-download-ftp
-           "&gnome-download-ftp;/gnome-shell/&gnome-43;/gnome-shell-&gnome-shell-version;.tar.xz">
-  <!ENTITY gnome-shell-md5sum        "5d0117627359b93ed27814957d2b146b">
+           "&gnome-download-ftp;/gnome-shell/&gnome-44;/gnome-shell-&gnome-shell-version;.tar.xz">
+  <!ENTITY gnome-shell-md5sum        "a73a7ba82782ad46378127a9a3acdec8">
   <!ENTITY gnome-shell-size          "1.9 MB">
-  <!ENTITY gnome-shell-buildsize     "60 MB">
-  <!ENTITY gnome-shell-time          "0.2 SBU (Bruke parallellisme=4)">
-  <!ENTITY gnome-shell-buildsize-systemd "60 MB (med tester)">
-  <!ENTITY gnome-shell-time-systemd      "0.2 SBU (Bruke parallellisme=4; med tester)">
+  <!ENTITY gnome-shell-buildsize     "61 MB">
+  <!ENTITY gnome-shell-time          "0.2 SBU (Bruke parallellisme=4; med tester)">
 ]>
 
 <sect1 id="gnome-shell" xreflabel="gnome-shell-&gnome-shell-version;">
@@ -34,7 +32,7 @@
       <application>GNOME</application> Skrivebordsmiljøet.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -58,24 +56,14 @@
           Nedlastingsstørrelse: &gnome-shell-size;
         </para>
       </listitem>
-      <listitem revision='sysv'>
+      <listitem>
         <para>
           Estimert diskplass som kreves: &gnome-shell-buildsize;
         </para>
       </listitem>
-      <listitem revision='sysv'>
+      <listitem>
         <para>
           Estimert byggetid: &gnome-shell-time;
-        </para>
-      </listitem>
-      <listitem revision='systemd'>
-        <para>
-          Estimert diskplass som kreves: &gnome-shell-buildsize-systemd;
-        </para>
-      </listitem>
-      <listitem revision='systemd'>
-        <para>
-          Estimert byggetid: &gnome-shell-time-systemd;
         </para>
       </listitem>
     </itemizedlist>
@@ -87,29 +75,21 @@
       <xref linkend="evolution-data-server"/>,
       <xref linkend="gcr4"/>,
       <xref linkend="gjs"/>,
-      <xref linkend="gnome-autoar"/>,
-      <xref linkend="gnome-control-center"/>,
-      <xref linkend="gtk4"/>,
-      <xref role="runtime" linkend="libgweather"/> (kjøretid),
+      <xref linkend="gnome-desktop"/>,
+      <xref linkend="ibus"/>,
       <xref linkend="mutter"/>,
-      <xref linkend="sassc"/>,
-      <xref linkend="startup-notification"/>, og
-      <phrase revision="sysv"><xref linkend="elogind"/></phrase>
-      <phrase revision="systemd"><xref linkend="systemd"/></phrase>
+      <xref linkend="polkit"/>,
+      <xref linkend="sassc"/>, og
+      <xref linkend="startup-notification"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="desktop-file-utils"/>,
+      <xref linkend="gnome-autoar"/>,
       <xref linkend="gnome-bluetooth"/>,
       <xref linkend="gst10-plugins-base"/>, og
       <xref linkend="NetworkManager"/>
-    </para>
-
-    <bridgehead renderas="sect4"
-                revision="sysv">Anbefalt (Kjøretid)</bridgehead>
-    <para role="recommended" revision="sysv">
-      <xref linkend="blocaled" role="runtime"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -118,18 +98,30 @@
       <ulink url="https://github.com/scop/bash-completion">bash-completion</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Kjøretids Avhengigheter</bridgehead>
+    <bridgehead renderas="sect4">Nødvendige Kjøretids Avhengigheter</bridgehead>
     <para role="required">
       <xref role="runtime" linkend="adwaita-icon-theme"/>,
       <xref role="runtime" linkend="dconf"/>,
+      <phrase revision="sysv">
+        <xref role='runtime' linkend="elogind"/>,
+      </phrase>
       <xref role="runtime" linkend="gdm"/>,
-      <xref role="runtime" linkend="gnome-backgrounds"/>, og
+      <xref role="runtime" linkend="gnome-backgrounds"/>,
+      <xref role="runtime" linkend="gnome-control-center"/>,
+      <xref role="runtime" linkend="libgweather"/>,
+      <phrase revision="sysv">og</phrase>
+      <phrase revision="systemd">
+        <xref role='runtime' linkend="systemd"/>, og
+      </phrase>
       <xref role="runtime" linkend="telepathy-mission-control"/>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/gnome-shell"/>
+    <bridgehead renderas="sect4"
+                revision="sysv">Anbefalte Kjøretids Avhengigheter</bridgehead>
+    <para role="recommended" revision="sysv">
+      <xref linkend="blocaled" role="runtime"/>
     </para>
+
   </sect2>
 
   <sect2 role="installation">
@@ -143,23 +135,21 @@
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr       \
-      --buildtype=release \
-      -Dsystemd=false     \
-      -Dtests=false       \
-      .. &amp;&amp;
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -Dsystemd=false     \
+            -Dtests=false       \
+            ..                  &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr --buildtype=release -Dtests=false .. &amp;&amp;
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -Dtests=false       \
+            ..                  &amp;&amp;
 ninja</userinput></screen>
-
-    <para revision='sysv'>
-      Denne pakken kommer ikke med en fungerende testpakke i et
-      SystemV miljø.
-    </para>
 
     <para revision='systemd'>
       For å teste resultatene må du fjerne
@@ -168,7 +158,22 @@ ninja</userinput></screen>
 
       For å kjøre testene, utsted: <command>ninja test</command>. Du må
       kjører en X økt for å kjøre testene. Noen vil mislykkes hvis <xref
-      linkend="gdm"/> ikke er installert.
+      linkend="gdm"/> ikke er installert. <phrase revision="sysv">Flere
+      tester kan mislykkes i Sysv-miljøet.</phrase>
+      <!-- "Failed to read monitors config file
+           '/home/xry111/.config/monitors.xml': Logical monitors not
+           adjacent"
+           The same thing happens in mutter but it's worked around with
+           HOME="".  We cannot use HOME="" here or more tests will fail.
+           We also cannot tell the users to remove monitors.xml because
+           doing so will purge their monitor settings.  Maybe we can
+           use bwrap to run the test with an empty tmpfs mounted on $HOME
+           in a separate namespace, but it's too overkill IMO.
+           DO NOT REMOVE unless you've tested with a "complex multi-monitor
+           configuration" (with mixed scaling settings and "strange"
+           positions of monitors). -->
+      En test navngitt <filename>CSS styling support</filename> er kjent for
+      mislykkes med noen flerskjermskonfigurasjoner.
     </para>
 
     <para>
@@ -199,6 +204,11 @@ ninja</userinput></screen>
       <parameter>-Dtests=false</parameter>: Fjern denne bryteren hvis du vil
       bygge testene. Men da vil <command>meson</command> mislykkes hvis
       <xref linkend="mutter"/> tester ikke er installert.
+    </para>
+
+    <para>
+      <option>-Dextensions_tool=false</option>: Denne bryteren tillater bygging
+      av denne pakken uten <xref linkend='gnome-autoar'/> installert.
     </para>
 
   </sect2>
