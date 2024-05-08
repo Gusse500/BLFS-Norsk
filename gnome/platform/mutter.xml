@@ -4,13 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-43;/mutter-&mutter-version;.tar.xz">
-  <!ENTITY mutter-download-ftp  "&gnome-download-ftp;/mutter/&gnome-43;/mutter-&mutter-version;.tar.xz">
-  <!ENTITY mutter-md5sum        "aba8f5170a27fe7d24f07a3b2fdf2725">
+  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-44;/mutter-&mutter-version;.tar.xz">
+  <!ENTITY mutter-download-ftp  "&gnome-download-ftp;/mutter/&gnome-44;/mutter-&mutter-version;.tar.xz">
+  <!ENTITY mutter-md5sum        "c9a692911a8ff849c6bbfb44eca7a92f">
   <!ENTITY mutter-size          "2.7 MB">
-  <!ENTITY mutter-buildsize     "151 MB (without tests)">
-  <!ENTITY mutter-time          "0.6 SBU (Bruk parallellisme=4)">
-  <!ENTITY mutter-time-systemd  "0.6 SBU (Bruk parallellisme=4, legg til 1,0 SBU for tester)">
+  <!ENTITY mutter-buildsize     "99 MB (med tester)">
+  <!ENTITY mutter-time          "0.8 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
 ]>
 
 <sect1 id="mutter" xreflabel="Mutter-&mutter-version;">
@@ -33,7 +32,7 @@
       maskin med en maskinvareakselererte videodrivere).
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -62,14 +61,9 @@
           Estimert diskplass som kreves: &mutter-buildsize;
         </para>
       </listitem>
-      <listitem revision='sysv'>
+      <listitem>
         <para>
           Estimert byggetid: &mutter-time;
-        </para>
-      </listitem>
-      <listitem revision='systemd'>
-        <para>
-          Estimert byggetid: &mutter-time-systemd;
         </para>
       </listitem>
     </itemizedlist>
@@ -88,9 +82,8 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="desktop-file-utils"/>,
-      <xref linkend="gobject-introspection"/>,
-      <xref linkend="startup-notification"/>, og
-      <xref linkend="sysprof"/>
+      <xref linkend="gobject-introspection"/>, og
+      <xref linkend="startup-notification"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt (Påkrevd for å
@@ -100,8 +93,6 @@
       <xref linkend="wayland"/>,
       <xref linkend="wayland-protocols"/>, og
       <xref linkend="xwayland"/>.
-      I tillegg, <xref linkend="gtk3"/> trengs for å bygge med
-      <application>Wayland</application> støtte.
     </para>
 
     <bridgehead renderas="sect4"
@@ -113,16 +104,16 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="python-dbusmock"/> (påkrevd for tester),
+	  <xref linkend="sysprof"/>,
       <xref linkend="xorg-server"/> (for X11 økter)
     </para>
 
-    <!-- NOTE: Mutter compiles git versions of COGL and Clutter for it's own
-    internal use. This is because the wayland support upstream isn't advanced
-    enough for the graphics stack used in Mutter. -->
-
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/mutter"/>
-    </para>
+    <!-- NOTE: Mutter compiles shipped Cogl and Clutter for it's own
+    internal use. This is because upstream have decided that Cogl and
+    Clutter should be only used by Mutter in the future, so the development
+    of Cogl and Clutter is now performed in the Mutter repository.  The
+    "standalone" Cogl and Clutter are considered obsolete now and we have
+    archived them.  -->
 
   </sect2>
 
@@ -137,7 +128,11 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr --buildtype=debugoptimized -Dtests=false .. &amp;&amp;
+meson setup --prefix=/usr              \
+            --buildtype=release        \
+            -Dtests=false              \
+            -Dprofiler=false           \
+            ..                         &amp;&amp;
 ninja</userinput></screen>
 
 <!--
@@ -160,7 +155,7 @@ ninja</userinput></screen>
     -->
 
     <para>
-      Testpakken krever at feilsøkingsfunksjoner er aktivert i bygget, og et
+      Testpakken krever et
       eksternt program kalt <command>xvfb-run</command>.  Hvis du ønsker å kjøre
       testene, bør du laste ned og installere den før du kjører
       <command>meson</command>.
@@ -175,7 +170,7 @@ ninja</userinput></screen>
 
       Du bør også bytte ut <parameter>-Dtests=false</parameter> i
       <command>meson</command> kommandoen, med
-      <parameter>-Dtests=true</parameter>.  Testpakken
+      <parameter>-Dtests=true -Dclutter_tests=false</parameter>.  Testpakken
       krever at mutter skjemaet er installert på systemet, så det er
       bedre å kjøre testene etter installasjon av pakken.
     </para>
@@ -197,7 +192,7 @@ ninja</userinput></screen>
       fra en test:
     </para>
 
-<screen role='test'><userinput>sed 's/zenity --[a-z]*/gtk3-demo/' -i ../src/tests/x11-test.sh</userinput></screen>
+<screen role='test'><userinput>sed 's/zenity --[a-z]*/gtk4-demo/' -i ../src/tests/x11-test.sh</userinput></screen>
 
     <para>
       Kjør nå testpakken:
@@ -209,41 +204,44 @@ ninja</userinput></screen>
 
     <para>
       Testene krever en aktiv X eller wayland økt.
-      <filename>native-unit</filename> testen er kjent for å mislykkes.
-      Mange tester vil mislykkes hvis opengl gjengivelsen ikke gjøres i maskinvare.
-      Ikke bruk mus eller tastatur mens testpakken
-      kjører ellers vil noen tester mislykkes.
+      To tester navngitt
+      <!-- https://gitlab.gnome.org/GNOME/mutter/-/issues/2848 -->
+      <filename>cogl-test-framebuffer-get-bits-gl3</filename> og
+      <!-- This needs a pipewire daemon running.  As at Aug 2023
+           the method to run a pipewire daemon is not in BLFS
+           (but in editor notes), so claim this a known failure.  -->
+      <filename>native-unit</filename> er kjent for å mislykkes.
+      Noen få andre tester kan mislykkes avhengig av konfigurasjonen.
+      Ikke gjør noen mus eller tastatur inndata mens testpakken
+      kjører ellers kan noen tester mislykkes.
     </para>
+
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <!-- https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5512
-         If debug is disabled, the "assertion 'CLUTTER_IS_ACTOR (self)'
-         failed" message will turn into a crash.  Enabling debug is just a
-         work around, it's not a proper fix.  -->
-    <para>
-      <parameter>--buildtype=debugoptimized</parameter>: Overstyr
-      standard byggetype (<quote>debug</quote>), som ville produsere
-      uoptimaliserte binærfiler. Den brukes i stedet for
-      <option>--buildtype=release</option> for å omgå et problem
-      som får gnome skallet til å krasje.
-    </para>
-<!--
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
--->
+
     <para>
       <parameter>-Dtests=false</parameter>: Hindrer å bygge testene,
       og fjerner et hardt krav på <command>xvfb-run</command>.
     </para>
 
     <para>
-      <option>-Dprofiler=false</option>: Bruk dette alternativet hvis
-      <application>Sysprof</application> ikke er installert, og du ikke
-      vil at meson skal laste ned <application>Sysprof</application> 
-      kildekode.
+      <parameter>-Dprofiler=false</parameter>: Tillater å bygge denne pakken
+      uten <application>Sysprof</application>.  Fjern dette alternativet hvis
+      du har installert <application>Sysprof</application> og vil
+      analysere gjengivelsesytelsen til
+      <application>Mutter</application>.
+    </para>
+
+    <para>
+      <option>-Dtests=true -Dclutter_tests=false</option>: Bygger alle
+      tester, uten testene for det sendte <application>Clutter</application>
+      biblioteket. <application>Clutter</application> tester er kjent for
+      mislykkes med <option>--buildtype=release</option>.
     </para>
 
   </sect2>
@@ -251,7 +249,7 @@ ninja</userinput></screen>
   <sect2 role="starting" id="mutter-starting">
     <title>Starte Mutter</title>
 
-    <!-- Mutter as a Wayland compositor Works with mutter-42.4 and 43.0.
+    <!-- Mutter as a Wayland compositor works with recent mutter releases.
          IIRC mutter can also be used as a X window manager: just replace
          "twm" with "mutter &dash;&dash;x11" in xinitrc. But I've not tested
          such a configuration recently (I don't build Xorg Server or xinit
@@ -299,10 +297,10 @@ ninja</userinput></screen>
           mutter
         </seg>
         <seg>
-          libmutter-11.so
+          libmutter-12.so and libmutter-test-12.so (valgfri)
         </seg>
         <seg>
-          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-11
+          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-12
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -326,13 +324,28 @@ ninja</userinput></screen>
       </varlistentry>
 
       <varlistentry id="libmutter">
-        <term><filename class="libraryfile">libmutter-11.so</filename></term>
+        <term><filename class="libraryfile">libmutter-12.so</filename></term>
         <listitem>
           <para>
             inneholder <application>Mutter</application> API funksjoner
           </para>
           <indexterm zone="mutter libmutter">
-            <primary sortas="c-libmutter">libmutter-11.so</primary>
+            <primary sortas="c-libmutter">libmutter-12.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libmutter-test">
+        <term><filename class="libraryfile">libmutter-test-12.so</filename></term>
+        <listitem>
+          <para>
+            inneholder <application>Mutter</application> testpakke API
+            funksjoner; dette biblioteket er bare installert hvis testpakken til
+            denne pakken er aktivert og den er nødvendig av
+            <application>gnome-shell</application> testpakken
+          </para>
+          <indexterm zone="mutter libmutter-test">
+            <primary sortas="c-libmutter-test">libmutter-test-12.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>

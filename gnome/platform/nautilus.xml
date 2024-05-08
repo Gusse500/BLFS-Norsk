@@ -5,11 +5,11 @@
   %general-entities;
 
   <!ENTITY nautilus-download-http
-           "&gnome-download-http;/nautilus/&gnome-43;/nautilus-&nautilus-version;.tar.xz">
+           "&gnome-download-http;/nautilus/&gnome-44;/nautilus-&nautilus-version;.tar.xz">
   <!ENTITY nautilus-download-ftp
-           "&gnome-download-ftp;/nautilus/&gnome-43;/nautilus-&nautilus-version;.tar.xz">
-  <!ENTITY nautilus-md5sum        "c563e92d7904b2f2b5777105f865163f">
-  <!ENTITY nautilus-size          "3.0 MB">
+           "&gnome-download-ftp;/nautilus/&gnome-44;/nautilus-&nautilus-version;.tar.xz">
+  <!ENTITY nautilus-md5sum        "aa72cb40ee0ac4555b9e8babf74ced57">
+  <!ENTITY nautilus-size          "3.1 MB">
   <!ENTITY nautilus-buildsize     "110 MB (med tester)">
   <!ENTITY nautilus-time          "0.7 SBU (med tester, begge ved bruk av parallellitet=4)">
 ]>
@@ -32,7 +32,7 @@
       <application>GNOME</application> filbehandler.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -105,9 +105,6 @@
         montering skal virke)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/nautilus"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -119,6 +116,15 @@
 
 <screen><userinput>sed "/docdir =/s@\$@ / 'nautilus-&nautilus-version;'@" -i meson.build</userinput></screen>
 
+<!--
+    <para>
+      Fix an inverted test that may lead to crashes, and also prevents
+      building with GCC-13:
+    </para>
+
+<screen><userinput>sed "/assert (basename ==/s/==/!=/" -i src/nautilus-file-operations.c</userinput></screen>
+-->
+
     <para>
       Installer <application>Nautilus</application> ved å kjøre følgende
       kommandoer:
@@ -127,18 +133,19 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr       \
-      --buildtype=release \
-      -Dselinux=false     \
-      -Dpackagekit=false  \
-      .. &amp;&amp;
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -Dselinux=false     \
+            -Dpackagekit=false  \
+            ..                  &amp;&amp;
 
 ninja</userinput></screen>
 
     <para>
       For å teste resultatene, kjør: <command>ninja test</command>. Testene
       må kjøres i et grafisk miljø. En test er kjent for å mislykkes
-      hvis <xref linkend='tracker3-miners'/> ikke er installert.
+      hvis <xref linkend='tracker3-miners'/> ikke er installert. En test er også
+      kjent for tidsavbrudd hvis brukeren som kjører testene har en stor hjemmemappe.
     </para>
 
     <para>
