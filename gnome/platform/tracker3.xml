@@ -5,12 +5,12 @@
   %general-entities;
 
   <!ENTITY tracker3-download-http
-           "&gnome-download-http;/tracker/3.4/tracker-&tracker3-version;.tar.xz">
+           "&gnome-download-http;/tracker/3.5/tracker-&tracker3-version;.tar.xz">
   <!ENTITY tracker3-download-ftp
-           "&gnome-download-ftp;/tracker/3.4/tracker-&tracker3-version;.tar.xz">
-  <!ENTITY tracker3-md5sum        "161d074eeae05dffc77911f12cf5ec14">
-  <!ENTITY tracker3-size          "1.8 MB">
-  <!ENTITY tracker3-buildsize     "34 MB (med tester)">
+           "&gnome-download-ftp;/tracker/3.5/tracker-&tracker3-version;.tar.xz">
+  <!ENTITY tracker3-md5sum        "f78a0d145007d9871174be21a49ce9ef">
+  <!ENTITY tracker3-size          "2.5 MB">
+  <!ENTITY tracker3-buildsize     "51 MB (med tester)">
   <!ENTITY tracker3-time          "0.3 SBU (med tester)">
 ]>
 
@@ -32,7 +32,7 @@
       søkeleverandør som brukes i <application>GNOME</application> skrivebordsmiljøet.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -102,7 +102,11 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="asciidoc"/>,
-      <xref linkend="gtk-doc"/>,
+<!--  It looks like not used even if docs=true,
+      the pre-built doc is shipped in tarball and will be installed
+      <xref linkend="gi-docgen"/>
+-->
+      <xref linkend="graphviz"/>,
       <xref linkend="libsoup"/>,
       <ulink url="https://github.com/scop/bash-completion/">bash-completion</ulink>, og
       <ulink url="https://github.com/snowballstem/snowball/">libstemmer</ulink>
@@ -110,13 +114,18 @@
       (for tests)-->
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/tracker3"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av Tracker</title>
+
+    <para>
+      Fiks plasseringen å installere dokumentasjonen på:
+    </para>
+
+<screen><userinput>mv docs/reference/libtracker-sparql/doc/{Tracker-3.0,tracker-&tracker3-version;} &amp;&amp;
+sed '/docs_name/s/Tracker-3.0/tracker-&tracker3-version;/' \
+    -i docs/reference/libtracker-sparql/meson.build</userinput></screen>
 
     <para>
       Installer <application>Tracker</application> ved å kjøre følgende
@@ -126,32 +135,35 @@
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr       \
-      --buildtype=release \
-      -Ddocs=false        \
-      -Dman=false ..      &amp;&amp;
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -Dman=false         \
+            ..                  &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr      \
-      --buildtype=release \
-      -Ddocs=false       \
-      -Dman=false        \
-      -Dsystemd_user_services=false .. &amp;&amp;
+meson setup --prefix=/usr                 \
+            --buildtype=release           \
+            -Dman=false                   \
+            -Dsystemd_user_services=false \
+            ..                            &amp;&amp;
 ninja</userinput></screen>
-
-    <para>
-      For å teste resultatene, kjør: <command>ninja test</command>. Testene
-      bør kjøres fra en grafisk økt.
-    </para>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>meson configure -Ddebug=true
+      &amp;&amp; ninja test</command>.
+      Testpakken skal kjøres fra en grafisk sesjon. En test,
+      <filename>tracker: fts / fts</filename>, er kjent for å mislykkes på grunn av en
+      inkompatibilitet med SQLite-3.42.
+    </para>
 
   </sect2>
 
@@ -161,13 +173,6 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-
-    <para>
-      <parameter>-Ddocs=false</parameter>: Denne bryteren forhindrer
-      byggeprosessen fra å generere av API dokumentasjon. Utelat denne bryteren hvis du
-      har <xref linkend="gtk-doc" role="nodep"/> installert og ønsker å
-      generere og installere API dokumentasjonen.
-    </para>
 
     <para>
       <parameter>-Dman=false</parameter>: Denne bryteren forhindrer
@@ -180,6 +185,13 @@ ninja</userinput></screen>
       <parameter>-Dsystemd_user_services=false</parameter>: Denne bryteren forhindrer
       byggeprosessen fra å installere systemd brukertjenester siden de er
       ubrukelig på SysV systemer.
+    </para>
+
+    <para>
+      <command>meson configure -Ddebug=true</command>: Denne kommandoen aktiverer
+      noen feilsøkingskontroller som er nødvendige for testpakken. Vi vil ikke
+      aktiver dem for de installerte Tracker 3 bibliotekene og programmene, så
+      vi kjører testpakken etter installasjonen.
     </para>
 
   </sect2>
@@ -204,7 +216,8 @@ ninja</userinput></screen>
           /usr/{include,lib}/tracker-3.0,
           /usr/libexec/tracker3,
           /usr/share/tracker3, og
-          /usr/share/gtk-doc/html/{libtracker-sparql,ontology}-3 (valgfri)
+          /usr/share/doc/Tracker-3.0 (valgfri)
+          <!-- Xi, when you change documentation, please change this path -->
         </seg>
       </seglistitem>
     </segmentedlist>
