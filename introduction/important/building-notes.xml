@@ -13,27 +13,27 @@
 
   <para>De personene som har bygget et LFS system kan være klar over
   de generelle prinsippene for nedlasting og utpakking av programvare. Noe
-  av denne informasjonen gjentas her for de som er nye i byggingen
-  av egen programvare.</para>
+  av denne informasjonen gjentas her for de som er nye i byggingen av
+  deres egen programvare.</para>
 
-  <para>Hvert sett med installasjonsinstruksjoner inneholder en URL som du
-  kan laste ned pakken fra. Oppdateringene; lagres imidlertid på LFS
-  servere og er tilgjengelige via HTTP. Disse er referert til etter behov i
-  installasjonsinstruksjonene.</para>
+  <para>Hvert sett med installasjonsinstruksjoner inneholder en URL hvor du
+  kan laste ned pakken. Oppdateringer; lagres imidlertid på LFS
+  servere og er tilgjengelige via HTTP. Disse er referert etter behov i
+  installasjonsinstruksjoner.</para>
 
-  <para>Selv om du kan beholde kildefilene hvor som du vil, antar vi at
+  <para>Selv om du kan beholde kildefilene hvor som helst du vil, antar vi at
   du har pakket ut pakken og endret til mappen opprettet av
-  utpakkingsprosessen ('build' mappen). Vi antar også at du har
-  dekomprimerte eventuelle nødvendige oppdateringer og de er i katalogen umiddelbart
-  over 'build' mappen.</para>
+  utpakkingsprosessen (kildemappen). Vi antar også at du har
+  dekomprimerte eventuelle nødvendige oppdateringer, og de er i mappen
+  rett over kildemappen.</para>
 
   <para>Vi kan ikke understreke sterkt nok at du bør ta utgangspunkt i et
   <emphasis>rent kildetre</emphasis> hver gang. Dette betyr at hvis
   du har hatt en feil under konfigurasjon eller kompilering, er det vanligvis
   best å slette kildetreet og
-  pakke den ut på nytt <emphasis>før</emphasis> prøver igjen. Dette gjelder åpenbart
+  pakke den ut på nytt <emphasis>før</emphasis> du prøver igjen. Dette gjelder åpenbart
   ikke hvis du er en avansert bruker som er vant til å hacke
-  <filename>Makefile</filename> filer og C kode, men hvis du er i tvil, start fra et
+  <filename>Makefile</filename>s og C kode, men hvis du er i tvil, start fra et
   rent tre.</para>
 
   <sect2>
@@ -41,11 +41,11 @@
 
     <para>Den gylne regelen for Unix System Administrasjon er å bruke dine
     superkrefter bare når det er nødvendig. Derfor anbefaler BLFS at du
-    bygger programvare som en uprivilegert bruker og bare bli
+    bygger programvaren som en uprivilegert bruker og bare bli
     <systemitem class='username'>root</systemitem> bruker når du installerer
-    programvare. Denne filosofien følges i alle pakkene i denne boken.
+    programvaren. Denne filosofien følges i alle pakkene i denne boken.
     Med mindre annet er spesifisert, skal alle instruksjoner utføres som en
-    uprivilegert bruker. Boken vil gi deg råd om instruksjoner du trenger
+    uprivilegert bruker. Boken vil gi deg råd om instruksjoner som trenger
     <systemitem class='username'>root</systemitem> privilegier.</para>
 
   </sect2>
@@ -74,15 +74,21 @@ tar -xvf filename.tar.bz2</userinput></screen>
 
 <screen><userinput>bzcat filename.tar.bz2 | tar -xv</userinput></screen>
 
-    <para>Til slutt må du noen ganger være i stand til å pakke ut oppdateringer som
-    vanligvis ikke er i <filename class='extension'>.tar</filename> formatet.
-    Beste måten å gjøre dette på er å kopiere oppdateringsfilen til forelderen til "build"
-    mappen og kjør deretter en av følgende kommandoer avhengig av om
-    filen er en <filename class='extension'>.gz</filename> eller <filename
-    class='extension'>.bz2</filename> fil:</para>
+    <para>
+      Til slutt, noen ganger har vi en komprimert oppdateringsfil i
+      <filename class='extension'>.patch.gz</filename> eller
+      <filename class='extension'>.patch.bz2</filename> formatet.
+      Den beste måten å anvende oppdateringen på er å kanalisere utdataen av
+      dekomprimeringen til <command>patch</command> verktøyet. For eksempel:
+    </para>
 
-<screen><userinput>gunzip -v patchname.gz
-bunzip2 -v patchname.bz2</userinput></screen>
+    <screen><userinput>gzip -cd ../patchname.patch.gz | patch -p1</userinput></screen>
+
+    <para>
+      Eller for en oppdatering komprimert med <command>bzip2</command>:
+    </para>
+
+    <screen><userinput>bzcat ../patchname.patch.bz2 | patch -p1</userinput></screen>
 
   </sect2>
 
@@ -106,13 +112,13 @@ bunzip2 -v patchname.bz2</userinput></screen>
     Alternativt kan du bare kjøre kommandoen vist nedenfor og sammenligne utdataene
     til md5sum dataene vist i BLFS boken.</para>
 
-<screen><userinput>md5sum <replaceable>&lt;name_of_downloaded_file&gt;</replaceable></userinput></screen>
+<screen><userinput>md5sum <replaceable>&lt;navn_på_nedlastet_fil&gt;</replaceable></userinput></screen>
 
     <para>MD5 er ikke kryptografisk sikker, så md5summene er kun
     for å oppdage uønskede endringer i filinnholdet.
     For eksempel en feil eller avkorting som ble introdusert under nettverksoverføring, eller
     en <quote>stealth</quote> oppdatering til pakken fra oppstrøms
-    (oppdaterer innholdet i en utgitt tarball i stedet for å lage en ny
+    (oppdaterer innholdet i en utgitt tarball i stedet for å lage et nytt
     slipp riktig).</para>
 
     <para>Det er ingen måte å være <quote>100%</quote> sikker
@@ -142,7 +148,7 @@ bunzip2 -v patchname.bz2</userinput></screen>
       i tillegg til å kompromittere selve pakken.</para>
     </note>
 
-<screen><userinput>sha256sum -c <replaceable>file</replaceable>.sha256sum</userinput></screen>
+<screen><userinput>sha256sum -c <replaceable>fil</replaceable>.sha256sum</userinput></screen>
 
     <para>Hvis <xref linkend="gnupg2"/> er installert, kan du også bekrefte
     ektheten til pakken med en GPG signatur. Importer oppstrøms GPG
@@ -155,7 +161,7 @@ bunzip2 -v patchname.bz2</userinput></screen>
     eksempel, kopier den fra oppstrøms offisielle nettside ved å bruke https). Nå
     kan du verifisere signaturen med:</para>
 
-<screen><userinput>gpg --recv-key <replaceable>file</replaceable>.sig <replaceable>file</replaceable></userinput></screen>
+<screen><userinput>gpg --recv-key <replaceable>fil</replaceable>.sig <replaceable>fil</replaceable></userinput></screen>
 
     <para>Fordelen med <application>GnuPG</application> signaturen er,
     at når du har importert en offentlig nøkkel som du kan stole på, kan du laste ned
@@ -174,9 +180,9 @@ bunzip2 -v patchname.bz2</userinput></screen>
     å stirre på skjermen i håp om å fange en bestemt feil eller advarsel. Loggfiler
     er også nyttige for feilsøking og journalføring. Følgende
     kommando lar deg lage en installasjonslogg. Erstatt
-    <replaceable>&lt;command&gt;</replaceable> med kommandoen du har tenkt å utføre.</para>
+    <replaceable>&lt;kommando&gt;</replaceable> med kommandoen du har tenkt å utføre.</para>
 
-<screen><userinput>( <replaceable>&lt;command&gt;</replaceable> 2&gt;&amp;1 | tee compile.log &amp;&amp; exit $PIPESTATUS )</userinput></screen>
+<screen><userinput>( <replaceable>&lt;kommando&gt;</replaceable> 2&gt;&amp;1 | tee compile.log &amp;&amp; exit $PIPESTATUS )</userinput></screen>
 
     <para><option>2&gt;&amp;1</option> omdirigerer feilmeldinger til den samme
     plassering som standard utdata. <command>tee</command> kommandoen tillater
@@ -217,10 +223,11 @@ bunzip2 -v patchname.bz2</userinput></screen>
     <screen><userinput>ninja -j2</userinput></screen>
 
     <para>
-      men for ninja er standard antall jobber &lt;N&gt;+2, hvor &lt;N&gt;
-      er antall tilgjengelige prosessorer, slik at bruk av kommandoene ovenfor
-      er snarere for å begrense antall jobber (se nedenfor for hvorfor dette kan
-      være nødvendig).
+      men for ninja er standard antall jobber N + 2, hvis
+      antall logiske prosessorer N er større enn 2; eller N + 1 hvis
+      N er 1 eller 2. Grunnen til å bruke en rekke jobber litt større
+      enn antallet logiske prosessorer er å holde alle logiske
+      prosessorer opptatt selv om noen jobber utfører I/O operasjoner.
     </para>
 
     <para>Generelt bør antallet prosesser ikke overstige antallet
@@ -241,19 +248,19 @@ bunzip2 -v patchname.bz2</userinput></screen>
     enkelt prosessor bygg. Legg til '-j1' til en make kommando vil overstyre
     den lignende innstillingen i <envar>MAKEFLAGS</envar>
     miljøvariabel.</para>
-
+<!-- outdated
     <note><para>Når du kjører pakketestene eller installasjonsdelen av
     pakkebyggingsprosessen, anbefaler vi ikke å bruke et alternativ som er større enn
     '-j1' med mindre annet er spesifisert. Installasjonsprosedyrer eller kontroller
     har ikke blitt validert ved hjelp av parallelle prosedyrer og kan mislykkes med problemer
     som er vanskelige å feilsøke.</para></note>
-
+-->
     <important>
       <para>
         Et annet problem kan oppstå med moderne CPUer, som har mange kjerner.
         Hver påbegynt jobb bruker minne, og hvis summen av det nødvendige
         minnet for hver jobb overskrider tilgjengelig minne, kan du støte på
-        enten et OOM kjerneavbrudd (tom minne) eller intens bytting
+        enten et OOM kjerneavbrudd (tom minne) eller intens bruk av  vekselfilen
         som vil bremse byggingen utover rimelige grenser.
       </para>
 
@@ -278,7 +285,7 @@ bunzip2 -v patchname.bz2</userinput></screen>
     byggingen av BLFS pakker. Detaljert hvordan og eksempler på de mange
     måter du kan automatisere byggingen av pakker på er utenfor rammen av denne
     seksjonen. Denne delen vil vise deg bruk av filomdirigering og
-    <command>ja</command> kommandoer for å gi ideer om hvordan du kan automatisere
+    <command>yes</command> kommandoer for å gi ideer om hvordan du kan automatisere
     byggene dine.</para>
 
     <bridgehead renderas="sect3">Filomadressering for å Automatisere Inndata</bridgehead>
@@ -292,7 +299,7 @@ bunzip2 -v patchname.bz2</userinput></screen>
     scenario krever å legge de ønskede svarene i en fil og bruke
     omdirigering slik at programmet bruker dataene i filen som svar på
     spørsmålene.</para>
-
+<!-- outdated
     <para>Å bygge <application>CUPS</application> pakken er et bra
     eksempel på hvordan omdirigering av en fil som inndata til ledetekster kan hjelpe deg med å automatisere
     byggingen. Hvis du kjører testpakken, blir du bedt om å svare på en serie
@@ -302,14 +309,14 @@ bunzip2 -v patchname.bz2</userinput></screen>
     den vist nedenfor for å automatisere kjøringen av testpakken:</para>
 
 <screen><userinput>make check &lt; ../cups-1.1.23-testsuite_parms</userinput></screen>
-
+-->
     <para>Dette gjør effektivt at testpakken bruker svarene i filen
     som innspill til spørsmålene. Av og til kan du ende opp med å gjøre litt
     prøving og feiling for å bestemme det nøyaktige formatet på inndatafilen for noen
     ting, men når du har funnet ut og dokumentert, kan du bruke dette til å automatisere
     byggingen av pakken.</para>
 
-    <bridgehead renderas="sect3">Ved hjelp av <command>yes</command> for å Automatisere
+    <bridgehead renderas="sect3">Bruke <command>yes</command> for å Automatisere
     Inndata</bridgehead>
 
     <para>Noen ganger trenger du bare å gi ett svar, eller gi
@@ -352,7 +359,7 @@ chmod 755 blfs-yes-test1</userinput></screen>
     resulterer i at <keycap>y</keycap> blir overført til skriptet. Prøv nå med en
     tekststreng:</para>
 
-<screen><userinput>yes 'This is some text' | ./blfs-yes-test1</userinput></screen>
+<screen><userinput>yes 'Dette er litt tekst' | ./blfs-yes-test1</userinput></screen>
 
     <para>Den nøyaktige strengen ble brukt som respons på skriptet. Endelig,
     prøv det med en tom (null) streng:</para>
@@ -376,24 +383,24 @@ chmod 755 blfs-yes-test1</userinput></screen>
     av loggfiler for byggeutdataen. Omdirigeringsmetoden vist der brukte
     <command>tee</command> kommandoen for å omdirigere utdata til en fil men også
     vise utdataene på skjermen. Her vil utdataen kun sendes til
-     en fil.</para>
+    en fil.</para>
 
     <para>Igjen, den enkleste måten å demonstrere teknikken på er å vise et
     eksempel. Utfør først kommandoen:</para>
 
-<screen><userinput>ls -l /usr/bin | more</userinput></screen>
+<screen><userinput>ls -l /usr/bin | less</userinput></screen>
 
     <para>Selvfølgelig må du se utdataene en side om gangen
-    fordi <command>more</command> filteret ble brukt. Prøv nå den samme
+    fordi <command>less</command> filteret ble brukt. Prøv nå den samme
     kommandoen, men denne gangen omdirigerer utdataene til en fil. Den spesielle filen
     <filename>/dev/null</filename> kan brukes i stedet for filnavnet som vises,
     men du vil ikke ha noen loggfil å undersøke:</para>
 
-<screen><userinput>ls -l /usr/bin | more &gt; redirect_test.log 2&gt;&amp;1</userinput></screen>
+<screen><userinput>ls -l /usr/bin | less &gt; redirect_test.log 2&gt;&amp;1</userinput></screen>
 
     <para>Legg merke til at denne gangen kom kommandoen umiddelbart tilbake til skallets
     ledetekst uten å måtte bla gjennom utdataene. Du kan nå fjerne
-    loggfilen.</para>
+    loggfilenfile.</para>
 
     <para>Det siste eksemplet vil bruke <command>yes</command> kommandoen i
     kombinasjon med utdataomdirigering for å omgå å måtte bla gjennom
@@ -406,7 +413,7 @@ chmod 755 blfs-yes-test1</userinput></screen>
 <screen><userinput>cat &gt; blfs-yes-test2 &lt;&lt; "EOF"
 <literal>#!/bin/bash
 
-ls -l /usr/bin | more
+ls -l /usr/bin | less
 
 echo -n -e "\n\nDid you enjoy reading this? (y,n) "
 
@@ -451,21 +458,53 @@ chmod 755 blfs-yes-test2</userinput></screen>
     <itemizedlist>
       <listitem>
         <para><emphasis>Påkrevd</emphasis> betyr at målpakken
-        ikke kan bygges riktig uten at avhengigheten først er
-        installert.</para>
+        ikke kan bygges riktig uten at avhengigheten først har blitt
+        installert, bortsett fra hvis avhengigheten sies å være
+        <quote>kjøretid</quote>, som betyr at målpakken kan bygges men
+        kan ikke fungere uten.</para>
+        <para>
+          Merk at en målpakke kan begynne å <quote>fungere</quote>
+          på mange subtile måter: en installert konfigurasjonsfil kan gjøre
+          init systemet, cron nissen eller buss nissen for å kjøre et program
+          automatisk; en annen pakke som bruker målpakken som en
+          avhengighet kan kjøre et program fra målpakken i
+          byggesystemet; og konfigurasjonsdelene i BLFS boken
+          kan også kjøre et program fra en nettopp installert pakke. Så hvis
+          du installerer målpakken uten en
+          <emphasis>Påkrevd (kjøretid)</emphasis> avhengighet installert,
+          Bør du installere avhengigheten så snart som mulig etter
+          installasjonen av målpakken.
+        </para>
       </listitem>
       <listitem>
         <para><emphasis>Anbefalt</emphasis> betyr at BLFS sterkt
-        foreslår at denne pakken installeres først for en ren og problemfri
-        bygging, som ikke vil ha problemer verken under byggeprosessen eller ved
+         foreslår at denne pakken installeres først (bortsett fra hvis det sies å være
+        <quote>kjøretid</quote>, se nedenfor) for et rent og problemfritt
+        bygg, som ikke vil ha problemer verken under byggeprosessen eller ved
         kjøretid. Instruksjonene i boken forutsetter at disse pakkene er
         installert. Noen endringer eller løsninger kan være nødvendige hvis disse
-        pakkene ikke er installert.</para>
+        pakker ikke er installert. Hvis en anbefalt avhengighet er sagt
+        å være <quote>kjøretid</quote>, betyr det at BLFS sterkt foreslår
+        at denne avhengigheten er installert før du bruker pakken, for
+        å få full funksjonalitet.</para>
       </listitem>
       <listitem>
         <para><emphasis>Valgfri</emphasis> betyr at denne pakken kan bli
         installert for ekstra funksjonalitet. Ofte vil BLFS beskrive
-        avhengigheten for å forklare den ekstra funksjonaliteten resultatet gir .</para>
+        avhengighet for å forklare den ekstra funksjonalitetenen som vil bli resultatet.
+        En valgfri avhengighet kan automatisk plukkes opp av
+        målpakken hvis avhengigheten er installert, men en annen er valgfri
+        avhengighet kan også trenge flere konfigurasjonsalternativer for å aktivere
+        dem når målpakken er bygget. Slike tilleggsalternativer er
+        ofte dokumentert i BLFS boken. Hvis en valgfri avhengighet er
+        sagt å være <quote>kjøretid</quote>, betyr det at du kan installere
+        avhengigheten etter installasjon av målpakken for å støtte noen
+        valgfrie funksjoner i målpakken hvis du trenger disse
+        egenskapene.</para>
+        <para>En valgfri avhengighet kan være utenfor BLFS. Hvis du trenger slik
+        <emphasis>ekstern</emphasis> valgfri avhengighet for noen
+        funksjoner du trenger, les <xref linkend='beyond'/> for generelle
+        hint om å installere en pakke utenfor BLFS.</para>
       </listitem>
     </itemizedlist>
 
@@ -561,7 +600,7 @@ chmod 755 blfs-yes-test2</userinput></screen>
           Å strippe (eller ikke generere) feilsøkingssymboler kan også
           oppnås ved å strippe
           <parameter>-g&lt;noe&gt;</parameter> alternativer
-          i C/C++-anrop. Hvordan du gjør det er veldig spesifikt for hver enkelt
+          i C/C++ anrop. Hvordan du gjør det er veldig spesifikt for hver enkelt
           pakke. Og den stripper ikke unødvendige symboltabelloppføringer.
           Så det vil ikke bli forklart i detalj her. Se også nedenfor
           avsnittene om optimalisering.
@@ -580,9 +619,13 @@ chmod 755 blfs-yes-test2</userinput></screen>
       og det er sannsynlig at du vil se noen <emphasis>(slettede)</emphasis>
       oppføringer. <command>mv</command> fjerner bare målfilen fra
       mappen, men berører ikke innholdet, slik at den tilfredsstiller
-      betingelsen for at kjernen skal bruke den gamle (slettede) filen. Skriptet nedenfor
-      er bare et eksempel.
-       Den skal kjøres som &root; bruker:
+      betingelsen for at kjernen skal bruke den gamle (slettede) filen.
+      Men denne tilnærmingen kan løsne harde lenker til dupliserte kopier,
+      forårsaker det en oppblåsthet som åpenbart er uønsket når vi stripper for å
+      redusere systemstørrelsen. Hvis to filer i samme filsystem deler
+      samme inodenummer, de er harde lenker til hverandre, og vi burde
+      rekonstruere koblingen. Skriptet nedenfor er bare et eksempel.
+      Det skal kjøres som &root; bruker:
     </para>
 
 <screen><userinput>cat &gt; /usr/sbin/strip-all.sh &lt;&lt; "EOF"
@@ -593,17 +636,28 @@ if [ $EUID -ne 0 ]; then
   exit 1
 fi
 
+last_fs_inode=
+last_file=
+
 { find /usr/lib -type f -name '*.so*' ! -name '*dbg'
   find /usr/lib -type f -name '*.a'
   find /usr/{bin,sbin,libexec} -type f
-} |  while read file; do
+} | xargs stat -c '%m %i %n' | sort | while read fs inode file; do
        if ! readelf -h $file >/dev/null 2>&amp;1; then continue; fi
        if file $file | grep --quiet --invert-match 'not stripped'; then continue; fi
+
+       if [ "$fs $inode" = "$last_fs_inode" ]; then
+         ln -f $last_file $file;
+         continue;
+       fi
 
        cp --preserve $file    ${file}.tmp
        strip --strip-unneeded ${file}.tmp
        mv ${file}.tmp $file
-     done</literal>
+
+       last_fs_inode="$fs $inode"
+       last_file=$file
+done</literal>
 EOF
 chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
 
@@ -624,7 +678,7 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
 
 <!--
   <sect2 id="libtool">
-    <title>Libtool filer</title>
+    <title>Libtool files</title>
 
     <para>
       En av bivirkningene av pakker som bruker Autotools, inkludert
@@ -649,50 +703,60 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
     <title>Arbeide med ulike byggesystemer</title>
 
     <para>
-      Det er nå tre forskjellige byggesystemer i vanlig bruk for
-      å konvertere C eller C++ kildekode til kompilerte programmer eller
+      Det er nå tre forskjellige byggesystemer i vanlig bruk for å
+      konvertere C eller C++ kildekode til kompilerte programmer eller
       biblioteker og deres detaljer (spesielt å finne ut om tilgjengelige
       alternativer og deres standardverdier) er forskjellige. Det er kanskje lettest å forstå
       problemene forårsaket av noen valg (vanligvis langsom utførelse eller
       uventet bruk av, eller utelatelse av, optimaliseringer) ved å starte med
-      miljøvariablene CFLAGS og CXXFLAGS. Det er også noen
-      programmer som bruker rust.
+      <envar>CFLAGS</envar>, <envar>CXXFLAGS</envar>, og
+      <envar>LDFLAGS</envar> miljøvariabler. Det er også noen
+      programmer som bruker Rust.
     </para>
 
     <para>
-      De fleste LFS- og BLFS-byggere er sannsynligvis klar over det grunnleggende om CFLAGS
-      og CXXFLAGS for å endre hvordan et program kompileres. Vanligvis noen
-      form for optimalisering brukes av oppstrømsutviklere (-O2 eller -O3),
-      noen ganger med opprettelse av feilsøkingssymboler (-g), som standard.
+      De fleste LFS og BLFS byggere er sannsynligvis klar over det grunnleggende om
+      <envar>CFLAGS</envar> og <envar>CXXFLAGS</envar> for å endre hvordan et
+      program er kompilert. Vanligvis brukes en eller annen form for optimalisering av
+      oppstrøms utviklere (<option>-O2</option> eller <option>-O3</option>),
+      noen ganger med opprettelse av feilsøkingssymboler (<option>-g</option>),
+      som standard.
     </para>
 
     <para>
-      Hvis det er motstridende flagg (f.eks. flere forskjellige -O-verdier),
+      Hvis det er motstridende flagg (f.eks. flere forskjellige
+      <option>-O</option> verdier),
       den <emphasis>siste</emphasis> verdien vil bli brukt. Noen ganger betyr dette
       at flagg spesifisert i miljøvariabler vil bli plukket opp før
       verdier hardkodet i Makefilen, og derfor ignorert. For eksempel,
-      der en bruker spesifiserer '-O2' og det blir etterfulgt av '-O3' vil byggingen
-      bruke '-O3'.
+      der en bruker spesifiserer <option>-O2</option> og det blir etterfulgt av
+      <option>-O3</option> vil byggingen bruke <option>-O3</option>.
     </para>
 
     <para>
-      Det er forskjellige andre ting som kan sendt til CFLAGS eller
-      CXXFLAGS, for eksempel å tvinge kompilering for en spesifikk mikroarkitektur
-      (f.eks. -march=amdfam10, -march=native) eller spesifisere en spesifikk standard
-      for C eller C++ (-std=c++17 for eksempel). Men en ting som nå har kommet
-      for bruk er at programmerere kan inkludere feilsøkingspåstander i sin
-      kode, og forventer at de blir deaktivert i utgivelser ved å bruke -DNDEBUG.
-      Spesielt hvis <xref linkend="mesa"/> er bygget med disse flaggene
-      aktivert, kan enkelte aktiviteter som lasting av spill ta
-      ekstremt lang tid, selv på skjermkort av høy klasse.
+      Det er forskjellige andre ting som kan sendes til CFLAGS eller
+      CXXFLAGS, for eksempel å tvinge kompilering for en spesifikk mikroarkitektur (f.eks.
+      <option>-march=amdfam10</option> eller <option>-march=native</option>),
+      stille inn den genererte koden for en spesifikk mikroarkitektur (f.eks.
+      <option>-mtune=tigerlake</option> or <option>-mtune=native</option>,
+      hvis <option>-mtune=</option> ikke brukes, mikroarkitekturen fra
+      <option>-march=</option> innstillingen vil bli brukt), eller spesifisere en
+      spesifikk standard for C eller C++ (<option>-std=c++17</option> for
+      eksempel). Men en ting som nå har kommet frem er at
+      programmerere kan inkludere feilsøkingspåstander i koden sin, forventer
+      de skal deaktiveres i utgivelser ved å bruke <option>-DNDEBUG</option>.
+      Spesielt hvis <xref linkend="mesa"/> er bygget med disse
+      påstander aktivert, noen aktiviteter som lasting av spill
+      kan ta ekstremt lang tid, selv på skjermkort av høy klasse.
     </para>
 
     <bridgehead renderas="sect3" id="autotools-info">Autotools med Make</bridgehead>
 
       <para>
-       Denne kombinasjonen beskrives ofte som 'CMMI' (konfigurere, bygg, bygg
-       installere (configure, make, make install)) og brukes her til også å dekke de få pakkene som har et
-       konfigureringsskript som ikke er generert av autoverktøy.
+        This combination is often described as <quote>CMMI</quote>
+        (configure, make, make install) og brukes her til også å dekke
+        de få pakkene som har et konfigureringsskript som ikke er
+        generert av autotools.
       </para>
 
       <para>
@@ -712,23 +776,26 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
       </para>
 
       <para>
-       I de fleste CMMI pakkene vil kjøring av 'make' liste hver kommando og kjøre
-       det, ispedd eventuelle advarsler. Men noen pakker prøver å være "stille"
-       og bare vise hvilken fil de kompilerer eller kobler til i stedet for å vise
-       kommandolinjen. Hvis du trenger å inspisere kommandoen, enten pga
-       en feil, eller bare for å se hvilke alternativer og flagg som brukes, legg til
-       'V=1' til make påkallelsen kan hjelpe.
-     </para>
+        I de fleste CMMI pakkene vil kjøring av <command>make</command> liste
+        hver kommando og kjøre det, ispedd eventuelle advarsler. Men noen
+        pakker prøver å være <quote>stille</quote> og bare vise hvilken fil
+        de kompilerer eller kobler i stedet for å vise kommandolinjen.
+        Hvis du trenger å inspisere kommandoen, enten på grunn av en feil, eller
+        bare for å se hvilke alternativer og flagg som brukes, legg til
+        <option>V=1</option> for å lage påkallelsen kan hjelpe.
+      </para>
 
     <bridgehead renderas="sect3" id="cmake-info">CMake</bridgehead>
 
       <para>
         CMake fungerer på en helt annen måte, og den har to bakstykker som kan
-        brukes på BLFS: 'make' og 'ninja'. Standard bakstykke er make, men
+        brukes på BLFS: <command>make</command> og
+        <command>ninja</command>. Standard bakstykke er make, men
         ninja kan være raskere på store pakker med flere prosessorer. For
-        å bruke ninja, spesifiser '-G Ninja' i cmake kommandoen. Det finnes imidlertid
-        noen pakker som skaper fatale feil i ninja filene, men bygger
-        vellykket ved å bruke standarden til Unix Makefiler.
+        å bruke ninja, spesifiser <option>-G Ninja</option> i cmake kommandoen.
+        Imidlertid er det noen pakker som skaper fatale feil i deres
+        ninja filer, men bygd vellykket ved å bruke standard Unix
+        Makefiler.
       </para>
 
       <para>
@@ -741,12 +808,13 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
       <para>
         Det kanskje viktigste med CMake er at den har en variasjon
         av CMAKE_BUILD_TYPE verdier, og disse påvirker flaggene. Standaren
-        er at dette ikke er satt og ingen flagg blir generert. Eventuelle CFLAGS eller
-        CXXFLAGS i miljøet vil bli brukt. Hvis programmereren har kodet
-        eventuelle feilsøkingspåstander, vil de bli aktivert med mindre -DNDEBUG brukes.
-        Følgende CMAKE_BUILD_TYPE verdier vil generere flaggene som vises,
-        og disse vil komme <emphasis>etter</emphasis> eventuelle flagg i
-        miljøet og har derfor forrang.
+        er at dette ikke er satt og ingen flagg blir generert. Eventuelle
+        <envar>CFLAGS</envar> eller <envar>CXXFLAGS</envar> i miljøet
+        vil bli brukt. Hvis programmereren har kodet noen feilsøkingspåstander,
+        disse vil være aktivert med mindre -DNDEBUG brukes. Følgende
+        CMAKE_BUILD_TYPE verdier vil generere flaggene som vises, og disse
+        skal komme <emphasis>etter</emphasis> eventuelle flagg i miljøet
+        og har derfor forrang.
       </para>
 
       <informaltable align="center">
@@ -808,7 +876,7 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
         configure</command>, f.eks. for å angi et alternativ:
       </para>
 
-<screen><userinput>meson configure -D&lt;noen_alternativ&gt;=true</userinput></screen>
+<screen><userinput>meson configure -D&lt;some_option&gt;=true</userinput></screen>
 
       <para>
         Hvis du gjør det, filen <filename>meson-private/cmd_line.txt</filename>
@@ -824,75 +892,88 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
       <itemizedlist>
         <listitem>
           <para>plain : ingen flagg lagt til. Dette er for distributører for å levere sine
-          egne CLFAGS, CXXFLAGS og LDFLAGS. Det er ingen åpenbar grunn til å bruke
+          egne <envar>CFLAGS</envar>, <envar>CXXFLAGS</envar> og
+          <envar>LDFLAGS</envar>. Det er ingen åpenbar grunn til å bruke
           dette i BLFS.</para>
         </listitem>
         <listitem>
-          <para>debug : '-g' - dette er standard hvis ingenting er spesifisert
-          i enten <filename>meson.build</filename> eller kommandolinjen.
-          Men det resulterer i store og langsomme binærfiler, så vi bør overstyre
-          det i BLFS.</para>
+          <para>debug : <option>-g</option> - dette er standard hvis
+           ingenting er spesifisert i enten <filename>meson.build</filename>
+          eller kommandolinjen. Men det resulterer i store og langsomme binærfiler,
+          så vi bør overstyre det i BLFS.</para>
         </listitem>
         <listitem>
-           <para>debugoptimized : '-O2 -g' : dette er standard spesifisert i
-           <filename>meson.build</filename> av noen pakker.</para>
+          <para>debugoptimized : <option>-O2 -g</option> - dette er
+          standard spesifisert i <filename>meson.build</filename> av noen
+          pakker.</para>
         </listitem>
         <listitem>
-           <para>release : '-O3 -DNDEBUG' (men noen ganger vil en pakke tvinge
-           -O2 her)</para>
+          <para>release : <option>-O3</option> (noen ganger vil en pakke
+          tvinge <option>-O2</option> her) - dette er byggetypen vi bruker
+          for de fleste pakker med Meson byggesystem i BLFS.</para>
         </listitem>
       </itemizedlist>
 
+      <!-- From https://mesonbuild.com/Builtin-options.html#core-options:
+           b_ndebug: Default value = false, Mulige verdier er
+           true, false, if-release. Noen pakker setter den til if-release
+           så vi trodde feilaktig at if-release hadde vært standard.  -->
       <para>
-        Selv om 'utgivelse' byggetypene er beskrevet som å aktivere -DNDEBUG, og alle
-        CMake utgivelses byggene sender dette, det har så langt bare blitt observert (i
-        detaljerte bygg) for <xref linkend="mesa"/>. Det tyder på at det kan
-        brukes kun når det er feilsøkingspåstander.
-      </para>
-
-      <para>
-        The -DNDEBUG flag kan også gis ved å sende
-        <command>-Db_ndebug=true</command>.
+        <option>-DNDEBUG</option> flagget antydes av utgivelsen
+        byggetype for noen pakker (for eksempel <xref linkend='mesa'/>).
+        Det kan også gis eksplisitt ved å sende
+        <option>-Db_ndebug=true</option>.
       </para>
 
       <para>
         For å se detaljene for kommandoene som kjøres i en pakke ved hjelp av
-        meson, bruk 'ninja -v'.
-      </para>
+        meson, bruk <command>ninja -v</command>.
+      </para>s
 
     <bridgehead renderas="sect3" id="rust-info">Rustc og Cargo</bridgehead>
 
       <para>
-        De fleste utgitte rustc programmer leveres som cargo (kilde tarballer)
+        De fleste utgitte rustc programmer leveres som crates (kilde tarballer)
         som vil spørre en server om å sjekke gjeldende versjoner av avhengigheter
-        og last dem ned etter behov. Disse pakkene er bygges med
+        og last dem ned etter behov. Disse pakkene er bygget med
         <command>cargo --release</command>. I teorien kan du manipulere
-        RUSTFLAGS for å endre optimaliseringsnivået (standard er 3, som -O3, f.eks.
-        <literal>-Copt-level=3</literal>) eller å tvinge den til å bygge for
-        maskinen den blir kompilert på, ved hjelp av
-        <literal>-Ctarget-cpu=native</literal> men i praksis ser dette ut til å
-        gjøre ingen vesentlig forskjell.
+        RUSTFLAGS for å endre optimaliseringsnivået (standard for
+        <option>--release</option> er 3, dvs
+        <option>-Copt-level=3</option>, er lik <option>-O3</option>) eller for å
+        tvinge den til å bygge for maskinen den blir kompilert på, ved hjelp av
+        <option>-Ctarget-cpu=native</option> men i praksis ser dette ut til å ikke
+        gjøre noen vesentlig forskjell.
       </para>
 
       <para>
-        Hvis du finner et interessant rustc program som kun leveres som
-        utpakket kilde, bør du i det minste spesifisere
-        <literal>RUSTFLAGS=-Copt-level=2</literal> ellers vil det gjøre en
-        uoptimalisert kompilering med feilsøkingsinformasjon og kjøre <emphasis>mye</emphasis>
-        saktere.
+        Hvis du kompilerer et frittstående Rust program (som et upakket
+        <filename class='extension'>.rs</filename> fil) ved å kjøre
+        <command>rustc</command> direkte, bør du spesifisere
+        <option>-O</option> (forkortelsen av
+        <option>-Copt-level=2</option>) eller <option>-Copt-level=3</option>
+        ellers vil den gjøre en uoptimalisert kompilering og kjøre
+        <emphasis>mye</emphasis> langsommere. Hvis du kompilerer programmet
+        for å feilsøke det, bytt ut <option>-O</option> eller
+        <option>-Copt-level=</option> alternativer med <option>-g</option> for å
+        produsere et uoptimalisert program med feilsøkingsinformasjon.
       </para>
 
       <para>
-        Rustutviklerne ser ut til å anta at alle vil kompilere på en
-        maskin dedikert til å produsere bygg, så som standard brukes alle CPUer.
-        Dette kan ofte omgås, enten ved å eksportere
-        CARGO_BUILD_JOBS=&lt;N&gt; eller sende --jobs &lt;N&gt; til cargo. For å
-        kompilere rustc selv, spesifisere --jobs &lt;N&gt; på påkallelser av
-        x.py (sammen med <envar>CARGO_BUILD_JOBS</envar> miljøvariabel,
-        som ser ut som "parenteser", men ser ut til å være
-        nødvendig) fungerer for det meste. Unntaket er å kjøre testene når du bygger
-        rustc, vil noen av dem likevel bruke alle nettbaserte prosessorer, i hvert fall pr
-        rustc-1.42.0.
+        Lik <command>ninja</command>, som standard <command>cargo</command>
+        bruker alle logiske prosessorer. Dette kan ofte omgås,
+        enten ved å eksportere
+        <envar>CARGO_BUILD_JOBS=<replaceable>&lt;N&gt;</replaceable></envar>
+        eller sende
+        <option>--jobs <replaceable>&lt;N&gt;</replaceable></option> til
+        <command>cargo</command>.
+        For å kompilere rustc selv, spesifisere
+        <option>--jobs <replaceable>&lt;N&gt;</replaceable></option> til
+        påkallelser av <command>x.py</command>
+        (sammen med <envar>CARGO_BUILD_JOBS</envar> miljøvariabel,
+        som ser ut som en <quote>belte og seler</quote>
+        tilnærming, men ser ut til å være nødvendig) fungerer for det meste. Unntaket er
+        kjører testene når du bygger rustc, noen av dem vil
+        bruk likevel alle tilgjengelige CPUer, i det minste fra og med rustc-1.42.0.
       </para>
 
   </sect2>
@@ -902,38 +983,73 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
 
       <para>
         Mange mennesker vil foretrekke å optimalisere kompileringer slik de finner passende, ved å tilby
-        CFLAGS eller CXXFLAGS. For en introduksjon til alternativene som er tilgjengelige med gcc
-        og g++ se <ulink
-        url="https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html"/> og <ulink
-        url="https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html"/>
-        og <command>info gcc</command>.
-
+        <envar>CFLAGS</envar> eller <envar>CXXFLAGS</envar>. For en
+        introduksjon til alternativene tilgjengelig med gcc og g++ se <ulink
+        url="https://gcc.gnu.org/onlinedocs/gcc-&gcc-version;/gcc/Optimize-Options.html"/>.
+        Det samme innholdet finnes også i <command>info gcc</command>.
       </para>
 
       <para>
-        Noen pakker er som standard '-O2 -g', andre '-O3 -g', og hvis CFLAGS eller
-        CXXFLAGS leveres, kan de legges til pakkens standardinnstillinger,
-        erstatte pakkens standardinnstillinger, eller til og med bli ignorert. Det er detaljer
-        på noen skrivebordspakker som stort sett var aktuelle i april 2019 på
+        Noen pakker er som standard <option>-O2 -g</option>, andre
+        <option>-O3 -g</option>, og hvis <envar>CFLAGS</envar> eller
+        <envar>CXXFLAGS</envar> leveres, kan de legges til
+        pakkens standardinnstillinger, erstatte pakkens standardinnstillinger, eller til og med bli
+        ignorert. Det er detaljer om noen skrivebordspakker som var
+        stort sett aktuelt i april 2019 på
         <ulink url="https://www.linuxfromscratch.org/~ken/tuning/"/> - i
-        spesielt, README.txt, tuning-1-packages-and-notes.txt, og
-        tuning-notes-2B.txt. Det spesielle å huske er at hvis du
-        ønsker å prøve noen av de mer interessante flaggene må du kanskje tvinge
-        detaljerte bygg for å bekrefte hva som brukes.
+        spesielt, <filename>README.txt</filename>,
+        <filename>tuning-1-packages-and-notes.txt</filename>, og
+        <filename>tuning-notes-2B.txt</filename>. Det spesielle å
+        huske er at hvis du ønsker å prøve noen av de mer interessante
+        flagg trenger du kanskje å tvinge detaljerte bygg for å bekrefte hva som blir
+        brukt.
       </para>
 
       <para>
         Klart, hvis du optimaliserer ditt eget program kan du bruke tid på det
         profilere det og kanskje omkode noe av det hvis det er for tregt. Men for
         å bygge et helt system er det upraktisk. Generelt,
-        -O3 produserer vanligvis raskere programmer enn -O2. Spesifisere
-        -march=native er også gunstig, men betyr at du ikke kan flytte
-        binærfiler til en inkompatibel maskin - dette kan også gjelde for nyere
-        maskiner, ikke bare eldre maskiner. For eksempel programmer kompilert for
-        'amdfam10' kjører på gamle Phenoms, Kaveris og Ryzens: men programmer
-        kompilert for en Kaveri vil ikke kjøre på en Ryzen fordi visse op koder
-        ikke er tilstede. På samme måte, hvis du bygger for en Haswell, vil ikke alt
+        <option>-O3</option> produserer vanligvis raskere programmer enn
+        <option>-O2</option>.  Spesifisere
+        <option>-march=native</option> er også gunstig, men det betyr
+        at du ikke kan flytte binærfilene til en inkompatibel maskin - dette
+        gjelder også for nyere maskiner, ikke bare for eldre maskiner. For
+        eksempelprogrammer kompilert for <literal>amdfam10</literal> kjører på
+        gamle Phenoms, Kaveris og Ryzens: men programmer kompilert for en
+        Kaveri vil ikke kjøre på en Ryzen fordi visse op-koder ikke er
+        tilstede. På samme måte, hvis du bygger for en Haswell, vil ikke alt
         kjøre på en SandyBridge.
+      </para>
+
+      <note>
+        <para>
+          Be careful that the name of a <option>-march</option> setting
+          does not always match the baseline of the microarchitecture
+          with the same name.  For example, the Skylake-based Intel Celeron
+          processors do not support AVX at all, but
+          <option>-march=skylake</option> assumes AVX and even AVX2.
+        </para>
+      </note>
+
+      <para>
+        Når et delt bibliotek bygges av GCC, en funksjon kalt
+        <quote>semantic interposition</quote> er aktivert som standard. Når
+        det delte biblioteket refererer til et symbolnavn med ekstern kobling
+        og standard synlighet, hvis symbolet finnes i begge de delte
+        biblioteket og de viktigste kjørbare, semantiske interposisjonsgarantiene
+        symbolet i den kjørbare hovedfilen brukes alltid. Denne funksjonen
+        ble oppfunnet i et forsøk på å gjøre oppførselen til å koble til en delt
+        bibliotek og koble et statisk bibliotek så likt som mulig. I dag
+        bare et lite antall pakker er fortsatt avhengig av semantikk
+        interposisjon, men funksjonen er fortsatt på som standard for GCC,
+        forårsaker mange optimaliseringer deaktivert for delte biblioteker fordi
+        de er i konflikt med semantisk interposisjon.
+        <option>-fno-semantic-interposition</option> alternativet kan bli sendt
+        til <command>gcc</command> eller <command>g++</command> for å deaktivere
+        semantisk interposisjon og muliggjør flere optimaliseringer for delt
+        biblioteker. Dette alternativet brukes som standard for enkelte pakker
+        (for eksempel <xref linkend='python3'/>), og det er også standard
+        for Clang.
       </para>
 
       <para>
@@ -943,9 +1059,52 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
       </para>
 
       <para>
-        Hvis du bygger Perl- eller Python-moduler, eller Qtpakker som bruker qmake,
-        generelt er CFLAGS og CXXFLAGS som brukes de som ble brukt av
-        disses 'foreldre'-pakker.
+        Hvis du bygger Perl eller Python moduler,
+        generelt <envar>CFLAGS</envar> og <envar>CXXFLAGS</envar>
+        brukt er de som ble brukt av disse <quote>foreldre</quote>
+        pakker.
+      </para>
+
+      <para>
+        For <envar>LDFLAGS</envar>, det er tre alternativer som kan brukes
+        for optimalisering. De er ganske trygge å bruke og byggesystemet
+        for noen pakker bruker noen av disse alternativene som standard.
+      </para>
+
+      <para>
+        Med <option>-Wl,-O1</option>, linkeren vil
+        optimer hash tabellen for å øke hastigheten på den dynamiske koblingen.
+        Noter at <option>-Wl,-O1</option> er helt urelatert til
+        kompilatoroptimaliseringsflagg <option>-O1</option>.
+      </para>
+
+      <para>
+        Med <option>-Wl,--as-needed</option>, linkeren vil se bort fra
+        unødvendige <option>-l<replaceable>foo</replaceable></option> alternativer
+        fra kommandolinjen, dvs. e. det delte biblioteket <systemitem
+        class='library'>lib<replaceable>foo</replaceable></systemitem>
+        vil bare bli koblet hvis et symbol i <systemitem
+        class='library'>lib<replaceable>foo</replaceable></systemitem> er
+        virkelig henvist fra det kjørbare eller delte biblioteket som kobles til.
+        Dette kan noen ganger dempe <quote>overdreven avhengighet til
+        delte biblioteker</quote> problemer forårsaket av
+        <application>libtool</application>.
+      </para>
+
+      <para>
+        Med <option>-Wl,-z,pack-relative-relocs</option>, linkeren
+        genererer en mer komprimert form av de relative flytteoppføringene
+        for PIE-er og delte biblioteker. Det reduserer størrelsen på den tilknyttede
+        PIE eller delt bibliotek, og fremskynder lasting av PIE eller
+        delt bibliotek.
+      </para>
+
+      <para>
+        <option>-Wl,</option> prefiks er nødvendig fordi til tross for at
+        variabelen er navngitt <envar>LDFLAGS</envar>, innholdet er faktisk
+        sendt til <command>gcc</command> (eller <command>g++</command>,
+        <command>clang</command>, etc.) under koblingsstadiet, ikke direkte
+        sendt til <command>ld</command>.
       </para>
 
   </sect2>
@@ -989,8 +1148,8 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
         og kanskje <option>-fstack-clash-protection</option>. Du kan også
         møte den såkalte <quote>userspace retpoline</quote>
         (<option>-mindirect-branch=thunk</option> etc.) hvilken
-        tilsvarer spekter begrensninger som ble tatt i bruk i linux
-        kjernen sent i 2018. Kjernebegrensningene forårsaket mange klager
+        tilsvarer spekter begrensninger som ble tatt i bruk i linuxkjernen
+        sent i 2018. Kjernebegrensningene forårsaket mange klager
         om tapt ytelse, hvis du har en produksjonsserver ønsker du kanskje
          å vurdere å teste det, sammen med de andre tilgjengelige alternativene, å
          se om ytelsen fortsatt er tilstrekkelig.
