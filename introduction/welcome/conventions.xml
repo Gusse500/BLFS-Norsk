@@ -70,7 +70,7 @@ EOF</userinput></screen>
     Husk at kopier og lim er din venn!</para>
   </blockquote>
 
-  <para><replaceable>&lt;ERSTATTET TEKST&gt;</replaceable></para>
+  <para><replaceable>&lt;REPLACED TEXT&gt;</replaceable></para>
 
   <blockquote>
     <para>Denne formen for tekst brukes til å kapsle inn tekst som burde være
@@ -97,28 +97,34 @@ EOF</userinput></screen>
     ønsket pakke kan kompileres. For hver pakke er forutsetninger oppført
     i en eller flere separate seksjoner:  Påkrevd, Anbefalt, og Valgfri.</para>
 
-    <bridgehead renderas="sect3">Påkreve Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">Påkrevde Avhengigheter</bridgehead>
 
     <para>Disse avhengighetene er det minste nødvendig for å
     bygge pakken. Pakker i LFS, og de nødvendige
     avhengigheter av disse nødvendige pakkene, er utelatt fra denne listen.
-    Husk alltid å se etter nestede avhengigheter.</para>
+    Husk alltid å se etter nestede avhengigheter. Hvis en avhengighet
+    sies å være <quote>kjøretid</quote>, da er den ikke nødvendig for å bygge
+    pakken, men bare for å bruke den etter installasjon.</para>
 
     <bridgehead renderas="sect3">Anbefalte Avhengigheter</bridgehead>
 
-    <para>Dette er avhengigheter BLFS redaktørene har bestemt
-    er viktige for å gi pakken rimelige egenskaper. Installasjonsinstruksjonene
-    til pakken  forutsetter at de er installert. Hvis en anbefalt
-    pakken ikke er installert, kan instruksjonene kreve endringer, til
-    å imøtekomme den manglende pakken.</para>
+    <para>Dette er avhengigheter BLFS-redaktørene har bestemt
+    er viktige for å gi pakken rimelige muligheter. Hvis en
+    anbefalt avhengighet sies ikke å være <quote>kjøretid</quote>, pakke
+    installasjonsinstruksjonene forutsetter at den er installert. Hvis den
+    ikke er installert, kan instruksjonene kreve endringer, for å
+    imøtekomme den manglende pakken. En anbefalt <quote>kjøretid</quote>
+    avhengighet trenger ikke å være installert før du bygger pakken, men
+    må bygges i etterkant for å kjøre pakken med rimelig
+    evner.</para>
 
     <bridgehead renderas="sect3">Valgfrie Avhengigheter</bridgehead>
 
     <para>Dette er avhengigheter pakken <emphasis>kan</emphasis> bruke.  Integrering
     av valgfrie avhengigheter kan være automatiske av pakken, eller
     ytterligere trinn som ikke presenteres av BLFS kan være nødvendig. Valgfrie avhengigheter er
-    noen ganger oppført uten eksplisitte BLFS instruksjoner. I dette tilfellet må du
-    bestemme hvordan du skal utføre installasjonen selv. </para>
+    noen ganger oppført uten eksplisitte BLFS- nstruksjoner. I dette tilfellet må du
+    bestemme hvordan du skal utføre installasjonen selv.</para>
 
     <para>&nbsp;</para> <!-- add extra white space to improve readability -->
   </sect2>
@@ -129,17 +135,13 @@ EOF</userinput></screen>
     <para>Noen pakker krever spesifikke kjernekonfigurasjonsalternativer.
     Den generelle layouten for disse ser slik ut:</para>
 
-<screen><literal>Master section ---&gt;
-  Subsection ---&gt;
-    [*]     Required parameter                     [CONFIG_REQU_PAR]
-    &lt;*&gt;     Required parameter (not as module)     [CONFIG_REQU_PAR_NMOD]
-    &lt;*/M&gt;   Required parameter (could be a module) [CONFIG_REQU_PAR_MOD]
-    &lt;*/M/ &gt; Optional parameter                     [CONFIG_OPT_PAR]
-    [ ] Incompatible parameter                     [CONFIG_INCOMP_PAR]
-    &lt; &gt; Incompatible parameter (even as module)    [CONFIG_INCOMP_PAR_MOD]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="conventions-kernel.xml"/>
 
-    <para>[CONFIG_...] til høyre gir navnet på alternativet, slik at du kan
-    enkelt sjekke om det er satt i din <filename>.config</filename> fil.
+    <para>[...] til høyre gir navnet på alternativet, slik at du kan
+    enkelt sjekke om det er satt i din <filename>.config</filename>
+    fil. Merk at <filename>.config</filename> filen inneholder et
+    <literal>CONFIG_</literal> prefiks foran alle symbolske navn.
     Betydningen av de ulike oppføringene er:
 
     <blockquote>
@@ -183,11 +185,34 @@ EOF</userinput></screen>
       </row>
       <row>
         <entry>
+          <emphasis role="bold">Required parameter (som
+          en modul)</emphasis>
+        </entry>
+        <entry>
+          alternativet kan være innebygd, en modul eller ikke valgt:
+          den må velges som en modul; velge den som innebygd
+          kan forårsake uønskede effekter
+        </entry>
+      </row>
+      <row>
+        <entry>
           <emphasis role="bold">Optional parameter</emphasis>
         </entry>
         <entry>
-          sjelden brukt: alternativet kan være innebygd, en modul eller ikke
-          valgt: den kan stilles inn slik du ønsker
+          alternativet kan være innebygd, en modul eller ikke
+          valgt: den kan velges som en modul eller innebygd hvis du
+          trenger det for å drive maskinvaren eller valgfrie kjernefunksjoner
+        </entry>
+      </row>
+      <row>
+        <entry>
+          <emphasis role="bold">Optional parameter</emphasis>
+        </entry>
+        <entry>
+          alternativet kan være innebygd, en modul eller ikke
+          valgt: det kan velges som en modul hvis du trenger det
+          for å drive maskinvaren eller valgfrie kjernefunksjoner, men
+          å velge den som innebygd kan forårsake uønskede effekter
         </entry>
       </row>
       <row>
@@ -217,6 +242,13 @@ EOF</userinput></screen>
     eller til og med som bindestreker (-*- or -M-), når valget er pålagt.
     Hjelpeteksten som beskriver alternativet spesifiserer de andre valgene som dette
     alternativet avhenger av, og hvordan de andre valgene er satt.</para>
+
+    <para>
+      Bokstaven i <emphasis role='blue'>blå</emphasis> er hurtigtasten
+      for dette alternativet. Hvis du kjører
+      <command>make menuconfig</command>, kan du trykke på en tast for å raskt
+      gå gjennom alle alternativene med denne tasten som hurtigtast på skjermen.
+    </para>
 
     <para>&nbsp;</para> <!-- add extra white space to improve readability -->
   </sect2>
