@@ -7,17 +7,17 @@
   <!ENTITY audacious-download-http
            "https://distfiles.audacious-media-player.org/audacious-&audacious-version;.tar.bz2">
   <!ENTITY audacious-download-ftp         " ">
-  <!ENTITY audacious-md5sum               "3f76597aa1d2ea1501a93456b46d870f">
-  <!ENTITY audacious-size                 "600 KB">
-  <!ENTITY audacious-buildsize            "72 MB (med Qt brukergrensesnitt)">
-  <!ENTITY audacious-time                 "0.8 SBU (med Qt brukergrensesnitt)">
+  <!ENTITY audacious-md5sum               "751a002964907c3a8fc2f571ffc00ec7">
+  <!ENTITY audacious-size                 "620 KB">
+  <!ENTITY audacious-buildsize            "16 MB (med Qt5 og GTK3 støtte)">
+  <!ENTITY audacious-time                 "0.2 SBU (med Qt5 og GTK3 støtte)">
 
   <!ENTITY audacious-plugins-download
            "https://distfiles.audacious-media-player.org/audacious-plugins-&audacious-plugins-version;.tar.bz2">
-  <!ENTITY audacious-plugins-md5sum       "029d1ee500e8941812ddbf65b23988c8">
-  <!ENTITY audacious-plugins-size         "1.9 MB">
-  <!ENTITY audacious-plugins-buildsize    "171 MB (med Qt brukergrensesnitt)">
-  <!ENTITY audacious-plugins-time         "1.8 SBU (med Qt brukergrensesnitt)">
+  <!ENTITY audacious-plugins-md5sum       "3e233d8219407218244e684e096236ec">
+  <!ENTITY audacious-plugins-size         "1.7 MB">
+  <!ENTITY audacious-plugins-buildsize    "37 MB (med Qt5 og GTK3 støtte)">
+  <!ENTITY audacious-plugins-time         "1.4 SBU (med Qt5 og GTK3 støtte)">
 ]>
 
 <sect1 id="audacious" xreflabel="Audacious-&audacious-version;">
@@ -37,7 +37,7 @@
       <application>Audacious</application> er en lydspiller.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -107,48 +107,44 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="gtk2"/> eller
-      <xref role="nodep" linkend="qt5"/> (eller begge),
-      <xref linkend="libxml2"/> (programtillegg),
-      <xref linkend="xorg-env"/> (programtillegg), og
-      <xref role="runtime" linkend="x-window-system"/> (kjøretid)
+      <xref role="nodep" linkend="gtk2"/> eller
+      <xref linkend="gtk3"/> eller
+      (<xref role="nodep" linkend="qt5"/> eller
+       <xref linkend="qt5-components"/> med qtmultimedia)
     </para>
-
-    <!-- NOTE: The GTK2 port is deprecated. No GTK3 port is planned.-->
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="optional">
-      <xref linkend="alsa"/> og
-      <xref linkend="dbus"/>, også
-      <xref role="runtime" linkend="gnome-icon-theme"/> (kjøretid)
+      <xref linkend="libarchive"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="libarchive"/> og
       <xref linkend="valgrind"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt (for programtillegg)</bridgehead>
     <para role="recommended">
-      <xref linkend="mpg123"/> og
+      <xref linkend="mpg123"/>,
+      <xref linkend="ffmpeg"/>, og
       <xref linkend="neon"/> (for tilkoblet mpg3 og ogg radio)
     </para>
 
     <bridgehead renderas="sect4">Valgfri (for programtillegg)</bridgehead>
     <para role="optional">
-      <xref linkend="curl"/>,
+      <xref linkend="alsa"/>,
+	  <xref linkend="curl"/>,
       <xref linkend="faad2"/>,
-      <xref linkend="ffmpeg"/>,
       <xref linkend="flac"/>,
       <xref linkend="lame"/>,
+	  <xref linkend="libxml2"/>,
       <xref linkend="libcdio"/> (for å identifisere og spille av CDer),
       <xref linkend="libnotify"/>,
-      <xref linkend="libsamplerate"/>,
       <xref linkend="libsndfile"/>,
       <xref linkend="libvorbis"/>,
+	  <xref linkend="pipewire"/>,
       <xref linkend="pulseaudio"/>,
-      <xref linkend="sdl"/>,
+      <xref linkend="sdl2"/>,
       <ulink url="https://ampache-browser.org/">ampache-browser</ulink>,
       <ulink url="https://adplug.github.io/">adplug</ulink>,
       <ulink url="https://sourceforge.net/projects/bs2b/">The Bauer
@@ -168,7 +164,7 @@
     </para>
 
     <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/audacious"/>
+      Redaktørens notater: <ulink url="&blfs-wiki;/audacious"/>
     </para>
   </sect2>
 
@@ -180,22 +176,30 @@
 
       <para>
         Installer <application>Audacious</application> ved å kjøre følgende
-        kommandoer (du ønsker kanskje å endre å stamp til en annen streng):
+        kommandoer (du ønsker kanskje å endre å buildstamp til en annen streng):
       </para>
 
-<screen><userinput>TPUT=/bin/true ./configure --prefix=/usr \
-                           --with-buildstamp="BLFS" &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -Dgtk3=true         \
+            -Dbuildstamp=BLFS   \
+            -Dlibarchive=true   \
+            ..                  &amp;&amp;
+
+ninja</userinput></screen>
 
       <para>
         Denne pakken kommer ikke med en testpakke.
       </para>
 
       <para>
-        Nå, som <systemitem class="username">root</systemitem> bruker:
+        Nå, som &root; bruker:
       </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     </sect3>
 
@@ -206,19 +210,25 @@ make</userinput></screen>
         Installer de nødvendige programtilleggspakkene ved å utstede følgende kommandoer:
       </para>
 
-<screen><userinput>tar -xf ../audacious-plugins-&audacious-plugins-version;.tar.bz2                &amp;&amp;
-cd audacious-plugins-&audacious-plugins-version;                                &amp;&amp;
-TPUT=/bin/true ./configure --prefix=/usr --disable-wavpack &amp;&amp;
-make</userinput></screen>
+<screen><userinput>tar -xf ../../audacious-plugins-&audacious-plugins-version;.tar.bz2 &amp;&amp;
+cd audacious-plugins-&audacious-plugins-version;                    &amp;&amp;
+
+mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup           \
+  --prefix=/usr       \
+  --buildtype=release \
+  -Dgtk3=true         \
+  ..                  &amp;&amp;
+
++ninja</userinput></screen>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/update-icons-and-desktop.xml"/>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     </sect3>
   </sect2>
@@ -227,48 +237,22 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>TPUT=/bin/true</parameter>: standard for
-      <command>make</command> er å skrive ut tekst i farger. Dette er greit hvis du
-      bygger i en terminal, men hvis du skripter byggeprosessen og videreleder
-      utdataen fra <command>make</command> til en loggfil og da kan kontrolltegnene
-      som brukes til å fargelegge teksten kan gjøre loggfilen uleselig. Dette
-      alternativet forhindrer <command>make</command> fra å fargelegge teksten.
-    </para>
-
-    <para>
-      <parameter>--with-buildstamp</parameter>: Denne bryteren legger til
+      <parameter>-Dbuildstamp=BLFS</parameter>: Denne bryteren legger til
       den gitte teksten til versjonsstrengen.
     </para>
 
     <para>
-      <parameter>--disable-wavpack</parameter>: Denne bryteren er nødvendig
-      med mindre den valgfrie WavPack pakken er installert.
+      <option>-Dgtk3=true</option>: Dette alternativet setter standard grafisk
+      brukergrensesnitt.
     </para>
 
     <para>
-      <option>--enable-gtk</option>: Bruk til å aktivere GTK+ støtte.
-    </para>
-
-    <para>
-      <option>--disable-qt</option>: Bruk denne for å deaktivere qt støtte.
-    </para>
-
-    <para>
-      <option>--disable-mp3</option>: Bruk dette for programtillegg hvis du
-      ikke har installert mpg123 og ikke ønsker å spille mp3 filer.
-    </para>
-
-    <para>
-      <option>--enable-valgrind</option>: Tillat bedre Valgrind lekkasjekontroller.
-    </para>
-
-    <para>
-      <option>--disable-neon</option>: Bruk dette for programtillegg hvis du
-      ikke har installert neon, og ikke ønsker å bruke HTTP/HTTPS transport.
+      <option>-Dvalgrind=true</option>: Alternativet aktiverer Valgrind analysestøtte.
     </para>
 
   </sect2>
 
+<!-- None of this seems valid for audacios-4.3
   <sect2 role="configuration">
     <title>Konfigurere Audacious</title>
 
@@ -280,7 +264,7 @@ make</userinput></screen>
     <para>
       Hvis du bygde med både Gtk og Qt brukergrensesnitt, Qt versjonen
       kan utføres fra en terminal, ved å utstede <command>audacious
-      --qt</command>. Hvis du ønsker en skrivebordsmenyoppføring for å utføre denne Qt
+      - -qt</command>. Hvis du ønsker en skrivebordsmenyoppføring for å utføre denne Qt
       versjon, utstede følgende kommandoer som <systemitem
       class="username">root</systemitem> bruker:
     </para>
@@ -288,11 +272,11 @@ make</userinput></screen>
 <screen role="root"><userinput>cp -v /usr/share/applications/audacious{,-qt}.desktop &amp;&amp;
 
 sed -e '/^Name/ s/$/ Qt/' \
-    -e '/Exec=/ s/audacious/&amp; --qt/' \
+    -e '/Exec=/ s/audacious/&amp; - -qt/' \
     -i /usr/share/applications/audacious-qt.desktop</userinput></screen>
 
   </sect2>
-
+-->
   <sect2 role="content">
     <title>Innhold</title>
 
@@ -315,7 +299,7 @@ sed -e '/^Name/ s/$/ Qt/' \
         </seg>
         <seg>
           /usr/include/{audacious,libaudcore,libaudgui,libaudqt},
-          /usr/lib/audacious og
+          /usr/lib/audacious, og
           /usr/share/audacious
         </seg>
       </seglistitem>
@@ -330,8 +314,7 @@ sed -e '/^Name/ s/$/ Qt/' \
         <term><command>audacious</command></term>
         <listitem>
           <para>
-            er en Qt port av <application>XMMS</application> basert på
-            <application>Beep Media Player</application>
+            er en lydspiller og er en etterkommer etter <application>XMMS</application>
           </para>
           <indexterm zone="audacious audacious-prog">
             <primary sortas="b-audacious">audacious</primary>
