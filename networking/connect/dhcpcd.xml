@@ -4,20 +4,14 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY dhcpcd-download-http "https://roy.marples.name/downloads/dhcpcd/dhcpcd-&dhcpcd-version;.tar.xz">
+  <!ENTITY dhcpcd-download-http "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v&dhcpcd-version;/dhcpcd-&dhcpcd-version;.tar.xz">
 <!--  <!ENTITY dhcpcd-download-ftp  "ftp://roy.marples.name/pub/dhcpcd/dhcpcd-&dhcpcd-version;.tar.xz">-->
   <!ENTITY dhcpcd-download-ftp  " ">
-  <!ENTITY dhcpcd-md5sum        "2b2f46648bc96979f96127f0e0e07d9b">
-  <!ENTITY dhcpcd-size          "251 KB">
-  <!ENTITY dhcpcd-buildsize     "3.6 MB (med tester)">
+  <!ENTITY dhcpcd-md5sum        "1f266e2c32567bc778ea22c599fb06d9">
+  <!ENTITY dhcpcd-size          "260 KB">
+  <!ENTITY dhcpcd-buildsize     "3.1 MB (med tester)">
   <!ENTITY dhcpcd-time          "mindre enn 0.1 SBU (med tester)">
 ]>
-<!--
-  Use this URL as ChangeLog:
-    https://roy.marples.name/blog/dhcpcd-9-2-0-released.html
-    Substitute the 9-2-0 with 9-2-1 or 9-2-2 ...
-pierre: seems that it now returns Error 404 (November 2021).
--->
 
 <sect1 id="dhcpcd" xreflabel="dhcpcd-&dhcpcd-version;">
   <?dbhtml filename="dhcpcd.html"?>
@@ -40,7 +34,7 @@ pierre: seems that it now returns Error 404 (November 2021).
       DHCP klient.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -86,9 +80,6 @@ pierre: seems that it now returns Error 404 (November 2021).
       <ulink url="https://github.com/thkukuk/ypbind-mt/">ypbind</ulink>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-    <ulink url="&blfs-wiki;/dhcpcd"/></para>
-
   </sect2>
 
   <sect2 id='dhcpcd-privsep'>
@@ -121,18 +112,18 @@ chown    -v dhcpcd:dhcpcd /var/lib/dhcpcd </userinput></screen>
 
   <sect2 role="installation">
     <title>Installasjon av dhcpcd</title>
-
+<!--  Now in the code
     <para>Rett opp en kjøretidsfeil forårsaket av en endring i glibc-2.36:</para>
 
 <screen><userinput>sed '/Deny everything else/i SECCOMP_ALLOW(__NR_getrandom),' \
     -i src/privsep-linux.c</userinput></screen>
-
+-->
     <para>
-      Bygg <application>dhcpcd</application> uten rettighetsseparasjon
-      ved å kjøre følgende kommandoer:
+      Alternativt, bygg <application>dhcpcd</application> med privilegium
+      separasjon ved å kjøre følgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr                \
+<screen role="nodump"><userinput>./configure --prefix=/usr                \
             --sysconfdir=/etc            \
             --libexecdir=/usr/lib/dhcpcd \
             --dbdir=/var/lib/dhcpcd      \
@@ -181,43 +172,40 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--libexecdir=/usr/lib/dhcpcd</parameter>: Sett en mer riktig
-      plassering for interne dhcpcd biblioteker.
+      <parameter>--libexecdir=/usr/lib/dhcpcd</parameter>: Denne bryteren setter en
+      bedre plassering for de interne dhcpcd bibliotekene.
     </para>
 
     <para>
-      <parameter>--dbdir=/var/lib/dhcpcd</parameter>: Standard
-      <filename class="directory">/var/db</filename> er ikke FHS kompatibel
+      <parameter>--dbdir=/var/lib/dhcpcd</parameter>: Denne bryteren justerer
+      databasemappen fordi standardmappen,
+      <filename class="directory">/var/db</filename>, ikke er FHS kompatibel.
     </para>
 
     <para>
-      <parameter>--runstatedir=/run</parameter>: Standard
+      <parameter>--runstatedir=/run</parameter>: Denne bryteren stiller inn kjøretidens
+      tilstands mappe fordi standard
       <filename class="directory">/var/run</filename> er en symbolsk
-      link til <filename class="directory">/run</filename>.
+      lenke til <filename class="directory">/run</filename>, og bruke
+      <filename class="directory">/var/run</filename> er avviklet.
+    </para>
+
+    <para>
+      <parameter>--disable-privsep</parameter>: Denne bryteren deaktiverer privilegier
+      separasjon, som er standard i dhcpcd. Denne bryteren brukes ikke i
+      byggekonfigurasjonen der rettighetsseparasjon brukes.
+    </para>
+
+    <para>
+      <parameter>--privsepuser=dhcpcd</parameter>: Denne bryteren stiller inn
+      rettighetsseparasjon bruker i byggekonfigurasjonen hvor rettighet
+      eskalering brukes.
     </para>
 
     <para>
       <option>--with-hook=...</option>: Du kan eventuelt installere flere kroker,
       for eksempel å installere noen konfigurasjonsfiler som f.eks
-      <filename>ntp.conf</filename>. Settet med kroker er i
-      <filename class="directory">dhcpcd-hooks</filename> mappen i
-      byggetreet.
-    </para>
-
-    <para>
-      <parameter>--disable-privsep</parameter>: Ikke bruk rettighetsseparasjon,
-      som er standard.
-    </para>
-
-    <para>
-      <parameter>--privsepuser=dhcpcd</parameter>: Bruk denne uprivilegerte brukeren
-      i et rettighetsseparasjonsoppsett.
-    </para>
-
-    <para>
-      <option>--with-hook=...</option>: Du kan eventuelt installere flere kroker,
-      for eksempel å installere noen konfigurasjonsfiler som f.eks
-      <filename>ntp.conf</filename>. Settet med kroker er i
+      <filename>ntp.conf</filename>. Et sett med kroker finner du i
       <filename class="directory">dhcpcd-hooks</filename> mappen i
       byggetreet.
     </para>
@@ -257,25 +245,13 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
 <screen role='root'><userinput>make install-service-dhcpcd</userinput></screen>
 
       <note>
-        <para id="dhcpcd-config6">
-          nettverkstjenesteskriptet <filename>/usr/lib/services/dhcpcd</filename>
-          med i bootscripts opp til blfs-bootscripts-20191204 er
-          ikke kompatibel med nyeste dhcpcd, siden plasseringen av pidfilen
-          er endret.
-          For å omgå dette, utfør følgende kommando:
-
-<screen role='root'><userinput>sed -i "s;/run/dhcpcd-;/run/dhcpcd/;g" /lib/services/dhcpcd</userinput></screen>
-        </para>
-      </note>
-
-      <note>
         <para id="dhcpcd-config3">
           Standard for <command>dhcpcd</command> er å angi vertsnavnet
           og mtu. Den overskriver også <filename>/etc/resolv.conf </filename>
           og <filename>/etc/ntp.conf</filename>. Disse
           modifikasjonene av systemfiler gjøres av kroker som er lagret i
           <filename class="directory">/usr/lib/dhcpcd/dhcpcd-hooks</filename>.
-          Sett opp <command>dhcpcd</command> ved å fjerne eller legge til kroker fra/til
+          Du kan endre denne virkemåten ved å fjerne eller legge til kroker fra/til
           den mappen. Utførelsen av kroker kan deaktiveres ved å bruke
           <option>--nohook</option> (<option>-C</option>) kommandolinjealternativ
           eller av <option>nohook</option> alternativet i
@@ -377,8 +353,8 @@ EOF</userinput></screen>
           </filename> og <filename>/etc/ntp.conf</filename>. Disse
           endringer i systemkonfigurasjonsfiler gjøres av kroker som
           er lagret i <filename class="directory">
-          /lib/dhcpcd/dhcpcd-hooks</filename>. Sett opp <command>dhcpcd</command>
-          ved å fjerne eller legge til kroker fra/til den mappem. Utførelsen
+          /usr/lib/dhcpcd/dhcpcd-hooks</filename>. Du kan endre denne oppførselen
+          ved å fjerne eller legge til kroker fra/til den mappen. Utførelsen
           av kroker kan deaktiveres ved å bruke <option>--nohook</option>
           (<option>-C</option>) kommandolinjealternativet eller ved hjelp av
           <option>nohook</option> alternativet i <filename>/etc/dhcpcd.conf
