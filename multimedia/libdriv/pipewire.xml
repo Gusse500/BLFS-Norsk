@@ -6,9 +6,9 @@
 
   <!ENTITY pipewire-download-http "https://github.com/PipeWire/pipewire/archive/&pipewire-version;/pipewire-&pipewire-version;.tar.gz">
   <!ENTITY pipewire-download-ftp  " ">
-  <!ENTITY pipewire-md5sum        "8a85d990c159409578b456f8c8dcf075">
-  <!ENTITY pipewire-size          "1.9 MB">
-  <!ENTITY pipewire-buildsize     "62 MB (med tester)">
+  <!ENTITY pipewire-md5sum        "04906e549ffd8feb1caad23f687c5257">
+  <!ENTITY pipewire-size          "2.1 MB">
+  <!ENTITY pipewire-buildsize     "66 MB (med tester)">
   <!ENTITY pipewire-time          "0.5 SBU (med tester, begge med parallellisme=4)">
 ]>
 
@@ -32,7 +32,7 @@
       mellom applikasjoner.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -102,6 +102,7 @@
       <ulink url="https://jackaudio.org/">JACK</ulink>,
       <ulink url="https://github.com/EHfive/ldacBT">ldacBT</ulink>,
       <ulink url="https://libcamera.org/">libcamera</ulink>,
+	  <ulink url="https://github.com/hoene/libmysofa">libmysofa</ulink>,
       <ulink url="https://vulkan.lunarg.com/sdk/home/">Vulkan</ulink>,
       <ulink url="https://gitlab.freedesktop.org/pipewire/wireplumber/">WirePlumber</ulink>
       (kjøretid, for kjøring av Pipewire nissen), og
@@ -109,8 +110,9 @@
     </para>
 
     <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/pipewire"/>
+      Redaktørens notater: <ulink url="&blfs-wiki;/pipewire"/>
     </para>
+
   </sect2>
 
   <sect2 role="installation">
@@ -124,14 +126,23 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr --buildtype=release -Dsession-managers= .. &amp;&amp;
+meson setup ..                \
+      --prefix=/usr           \
+      --buildtype=release     \
+      -Dsession-managers="[]" &amp;&amp;
 ninja</userinput></screen>
 
     <para>
       For å teste resultatene, kjør: <command>ninja test</command>.
-      <phrase revision='systemd'>En test navngitt
-      <filename>test-support</filename> er kjent for å mislykkes.</phrase>
     </para>
+
+    <para>
+      Hvis du oppgraderer fra en tidligere versjon av Pipewire, er det nødvendig
+      å fjerne alle gamle binære kjørbare filer som forstyrrer
+      installasjon. Som &root; bruker:
+    </para>
+
+<screen role='root'><userinput>rm -vf /usr/bin/pipewire-*</userinput></screen>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
@@ -147,8 +158,13 @@ ninja</userinput></screen>
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dsession-managers=</parameter>: Denne bryteren
-      forhindrer automatisk nedlasting av eksterne avhengigheter.
+      <parameter>-Dsession-managers=[]</parameter>: Denne bryteren
+      lar deg spesifisere øktbehandlere som skal bygges som underprosjekter. Siden
+      den anbefalte øktbehandlere (<ulink
+        url="https://gitlab.freedesktop.org/pipewire/wireplumber">
+        WirePlumber</ulink>) er tilgjengelig som et frittstående
+      prosjekt, ikke spesifiser noe her. Dette forhindrer nedlasting av eksterne
+      avhengigheter under meson trinnet.
     </para>
 
     <para>
@@ -180,10 +196,9 @@ ninja</userinput></screen>
       <seglistitem>
         <seg>
           pipewire,
-          pipewire-avb,
-          pipewire-pulse,
           pw-cat,
           pw-cli,
+		  pw-config,
           pw-dot,
           pw-dump,
           pw-jack,
@@ -201,33 +216,15 @@ ninja</userinput></screen>
           spa-json-dump,
           spa-monitor,
           spa-resample, og
-          pw-dsdplay, pw-midiplay, pw-midirecord, pw-play, and pw-record
-          (symbolkobling til pw-cat)
+          pipewire-aes67, pipewire-avb, pipewire-pulse (symbolkobling til pipewire),
+          pw-dsdplay, pw-encplay, pw-midiplay, pw-midirecord, pw-play,
+          pw-record (symbolkobling til pw-cat)
         </seg>
         <seg>
           libpipewire-0.3.so og
-          56 modules below /usr/lib/pipewire-0.3 og /usr/lib/spa-0.2<!--,
-     [pierre July 29th, 2020]: all the following libs are in subdirectories
-     of /usr/lib. I'm not sure they should appear. But if they should, there
-     are many more libs to list...
-          libpulse-mainloop-glib-pw.so,
-          libpulse.so,
-          libpulse-simple.so,
-          libasound_module_pcm_pipewire.so, og
-          libgstpipewire.so
-      [bdubbs Sep 29th, 2020]: add
-          libpipewire-module-{access,adapter,client-device,client-node,
-            link-factory,metadata,portal,profiler,protocol-native,
-            rtkit,session-manager,spa-device,spa-device-factory,spa-node,
-            spa-node-factory}.so
-          libasound_module_ctl_pipewire.so
-          libasound_module_pcm_pipewire.so
-          libspa-{alsa,audioconvert,audiomixer,bluez5,control,dbus,support
-            v4l2,videoconvert}.so
-          -->
+          58 modules below /usr/lib/pipewire-0.3 og /usr/lib/spa-0.2
         </seg>
         <seg>
-          <!--/etc/pipewire,-->
           /usr/include/pipewire-0.3,
           /usr/include/spa-0.2,
           /usr/lib/alsa-lib,
@@ -258,7 +255,7 @@ ninja</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-
+<!-- not installed now: deprecated
       <varlistentry id="pipewire-media-session">
         <term><command>pipewire-media-session</command></term>
         <listitem>
@@ -271,7 +268,7 @@ ninja</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-
+      -->
       <varlistentry id="pipewire-pulse">
         <term><command>pipewire-pulse</command></term>
         <listitem>
@@ -305,6 +302,19 @@ ninja</userinput></screen>
           </para>
           <indexterm zone="pipewire pw-cli">
             <primary sortas="b-pw-cli">pw-cli</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="pw-config">
+        <term><command>pw-config</command></term>
+        <listitem>
+          <para>
+            lar deg samhandle med pipewires konfigurasjonssystem
+            for feilsøkingsformål eller syntakskontroll
+          </para>
+          <indexterm zone="pipewire pw-config">
+            <primary sortas="b-pw-config">pw-config</primary>
           </indexterm>
         </listitem>
       </varlistentry>
@@ -419,20 +429,6 @@ ninja</userinput></screen>
         </listitem>
       </varlistentry>
 
-<!--
-      <varlistentry id="pw-pulse">
-        <term><command>pw-pulse</command></term>
-        <listitem>
-          <para>
-            kjører Pulseaudio applikasjoner på pipewire.
-          </para>
-          <indexterm zone="pipewire pw-pulse">
-            <primary sortas="b-pw-pulse">pw-pulse</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
--->
-
       <varlistentry id="pw-reserve">
         <term><command>pw-reserve</command></term>
         <listitem>
@@ -540,20 +536,7 @@ ninja</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-<!--
-      <varlistentry id="libpulse-mainloop-glib-pw">
-        <term><filename class="libraryfile">libpulse-mainloop-glib-pw.so</filename></term>
-        <listitem>
-          <para>
-            gir en glib main() loop for pulsaudio å rute media gjennom
-            pipewire.
-          </para>
-          <indexterm zone="pipewire libpulse-mainloop-glib-pw">
-            <primary sortas="c-libpulse-mainloop-glib-pw">libpulse-mainloop-glib-pw.so</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
+      <!-- not in /usr/lib
       <varlistentry id="libpulse">
         <term><filename class="libraryfile">libpulse.so</filename></term>
         <listitem>
