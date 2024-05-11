@@ -6,9 +6,9 @@
 
   <!ENTITY serf-download-http "https://archive.apache.org/dist/serf/serf-&serf-version;.tar.bz2">
   <!ENTITY serf-download-ftp  " ">
-  <!ENTITY serf-md5sum        "370a6340ff20366ab088012cd13f2b57">
-  <!ENTITY serf-size          "144 KB">
-  <!ENTITY serf-buildsize     "3.2 MB">
+  <!ENTITY serf-md5sum        "5320087299084c297eff8e1dacfab1af">
+  <!ENTITY serf-size          "148 KB">
+  <!ENTITY serf-buildsize     "2.4 MB">
   <!ENTITY serf-time          "mindre enn 0.1 SBU">
 ]>
 
@@ -33,7 +33,7 @@
       ytelse operasjon.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -68,7 +68,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -78,7 +78,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <bridgehead renderas="sect3">Serf Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -92,21 +92,18 @@
       <xref linkend="mitkrb"/>, for GSSAPI
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/serf"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av Serf</title>
-
+<!--
     <para>
       Først, fiks et problem som forårsaker kompileringsproblemer i andre pakker
       når du bruker OpenSSL-3:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../serf-&serf-version;-openssl3_fixes-1.patch</userinput></screen>
-
+-->
     <para>
       Installer <application>Serf</application> ved å kjøre følgende
       kommandoer:
@@ -119,6 +116,10 @@ sed -i "/  print/{s/print/print(/; s/$/)/}" SConstruct &amp;&amp;
 sed -i "/get_contents()/s/,/.decode()&amp;/"    SConstruct &amp;&amp;
 
 scons PREFIX=/usr</userinput></screen>
+<!--
+sed -i "/  print/{s/print/print(/; s/$/)/}" SConstruct &amp;&amp;
+sed -i "/get_contents()/s/,/.decode()&amp;/"    SConstruct &amp;&amp;
+-->
 
 <!-- I did not find this to be needed as of 1.3.9 -renodr
     <para>
@@ -155,9 +156,9 @@ scons PREFIX=/usr</userinput></screen>
     <para>
       <command>sed -i "..."</command>: Den første kommandoen fjerner kjøretidsbanen
       fra et delt bibliotek og de neste to kommandoene deaktiverer bygging og
-      installasjon av det statiske biblioteket. Den fjerde kommandoen korrigerer for
+      installasjon av det statiske biblioteket. <!--Den fjerde kommandoen korrigerer for
       endringer i scons-3.x. Den siste kommandoen lar deg bruke <application>
-      Python 3</application>.
+      Python 3</application>.-->
     </para>
 
     <para>

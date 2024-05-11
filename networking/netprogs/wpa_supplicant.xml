@@ -36,7 +36,7 @@
       tilgangspunkt.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -74,6 +74,11 @@
 
     <bridgehead renderas="sect3">WPA Supplicant Avhengigheter</bridgehead>
 
+    <bridgehead renderas="sect4">Påkrevd (Kjøretid)</bridgehead>
+    <para role="nodump">
+      <xref linkend="wireless-kernel"/>
+    </para>
+
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="desktop-file-utils"/> (for kjøring av
@@ -85,12 +90,9 @@
     <para role="optional">
       <phrase revision="sysv"><xref linkend="dbus"/>,</phrase>
       <xref linkend="libxml2"/>, og
-      <xref linkend="qt5"/>
+      &qt5-deps;
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/wpa_supplicant"/>
-    </para>
 
   </sect2>
 
@@ -103,19 +105,9 @@
       nødvendig:
     </para>
 
-<screen><literal>[*] Networking support  ---&gt;                              [CONFIG_NET]
-  [*] Wireless  ---&gt;                                      [CONFIG_WIRELESS]
-    &lt;*/M&gt; cfg80211 - wireless configuration API           [CONFIG_CFG80211]
-    [*]     cfg80211 wireless extensions compatibility    [CONFIG_CFG80211_WEXT]
-    &lt;*/M&gt; Generic IEEE 802.11 Networking Stack (mac80211) [CONFIG_MAC80211]
-Device Drivers  ---&gt;
-  [*] Network device support  ---&gt;                        [CONFIG_NETDEVICES]
-    [*] Wireless LAN  ---&gt;                                [CONFIG_WLAN]</literal></screen>
-
-    <para>
-      Åpne undermenyen og velg alternativene som støtter maskinvaren din:
-      <command>lspci</command> fra <xref linkend="pciutils"/> kan brukes til
-      se maskinvarekonfigurasjonen din.
+      For å bruke <application>wpa_supplicant</application>, kjernen må ha
+      passende drivere og annen støtte tilgjengelig. Les
+      <xref linkend='wireless-kernel'/> for detaljer.
     </para>
 
     <indexterm zone="wpa_supplicant wpa_supplicant-kernel">
@@ -177,11 +169,16 @@ CONFIG_CTRL_IFACE_DBUS_NEW=y
 CONFIG_CTRL_IFACE_DBUS_INTRO=y</literal>
 EOF</userinput></screen>
 
+    <para>
+      Installer <application>WPA Supplicant</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
 <screen><userinput>cd wpa_supplicant &amp;&amp;
 make BINDIR=/usr/sbin LIBDIR=/usr/lib</userinput></screen>
 
     <para>
-      Hvis du har installert <xref linkend="qt5"/> og ønsker å bygge
+      Hvis du har installert &qt5-deps; og ønsker å bygge
       <application>WPA Supplicant</application> GUI programmet, kjør
       følgende kommandoer:
     </para>
@@ -189,7 +186,7 @@ make BINDIR=/usr/sbin LIBDIR=/usr/lib</userinput></screen>
     <note>
       <para>
         Følgende mappenavn er merket qt4, men
-         er kompatibel med <xref linkend="qt5"/>.
+         er kompatibel med &qt5-deps;.
       </para>
     </note>
 
@@ -394,37 +391,8 @@ update_config=1</screen>
 
       <para revision="sysv">
         Hvis ruteren/tilgangspunktet bruker DHCP til å tildele IP adresser, kan du
-        installere <xref linkend="dhcp"/> klienten og bruke den til
+        installere <xref linkend="dhcpcd" role="nodep"/> og bruke den til
         å automatisk hente nettverksadresser. Opprett
-        <filename>/etc/sysconfig/ifconfig-<replaceable>wifi0</replaceable>
-        </filename> ved å kjøre følgende kommando som
-        <systemitem class="username">root</systemitem> bruker:
-      </para>
-
-<screen role="root" revision="sysv"><userinput>cat &gt; /etc/sysconfig/ifconfig.<replaceable>wifi0</replaceable> &lt;&lt; "EOF"
-<literal>ONBOOT="yes"
-IFACE="<replaceable>wlan0</replaceable>"
-SERVICE="wpa"
-
-# Additional arguments to wpa_supplicant
-WPA_ARGS=""
-
-WPA_SERVICE="dhclient"
-DHCP_START=""
-DHCP_STOP=""
-
-# Set PRINTIP="yes" to have the script print
-# the DHCP assigned IP address
-PRINTIP="no"
-
-# Set PRINTALL="yes" to print the DHCP assigned values for
-# IP, SM, DG, and 1st NS. This requires PRINTIP="yes".
-PRINTALL="no"</literal>
-EOF</userinput></screen>
-
-      <para revision="sysv">
-        Hvis du foretrekker <xref linkend="dhcpcd"/> i stedet for
-        <xref linkend="dhcp"/> klienten, opprett da
         <filename>/etc/sysconfig/ifconfig-<replaceable>wifi0</replaceable>
         </filename> ved å kjøre følgende kommando som
         <systemitem class="username">root</systemitem> bruker:
