@@ -8,10 +8,10 @@
            "&gnome-download-http;/libsoup/&libsoup3-minor;/libsoup-&libsoup3-version;.tar.xz">
   <!ENTITY libsoup3-download-ftp
            "&gnome-download-ftp;/libsoup/&libsoup3-minor;/libsoup-&libsoup3-version;.tar.xz">
-  <!ENTITY libsoup3-md5sum        "33902089d52f862d6b39680dd4c4e3aa">
+  <!ENTITY libsoup3-md5sum        "cd8b0fc5d53331b9c0b5b22aabac4294">
   <!ENTITY libsoup3-size          "1.5 MB">
-  <!ENTITY libsoup3-buildsize     "24 MB (med tester)">
-  <!ENTITY libsoup3-time          "0.3 SBU (Bruker parallellisme=4; med tester)">
+  <!ENTITY libsoup3-buildsize     "28 MB (med tester)">
+  <!ENTITY libsoup3-time          "0.4 SBU (Bruker parallellisme=4; med tester)">
 ]>
 
 <sect1 id="libsoup3" xreflabel="libsoup-&libsoup3-version;">
@@ -34,7 +34,7 @@
       den har også et asynkront API for bruk i trådede applikasjoner.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -97,13 +97,11 @@
    <!-- It seems that XMLRPC is part of PHP 5.4.10 -->
       <xref linkend="php"/> kompilert med XMLRPC-EPI
       støtte (bare brukt for XMLRPC regresjonstestene),
-      <xref linkend="samba"/> (ntlm_auth kreves for å kjøre testpakken), og
-      <xref linkend="sysprof"/> (for profilering)
+      <xref linkend="samba"/> (ntlm_auth kreves for å kjøre testpakken),
+      <xref linkend="sysprof"/> (for profilering), og
+      <ulink url="https://github.com/posener/wstest">wstest</ulink>
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/libsoup3"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -123,13 +121,13 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr          \
-      --buildtype=release    \
-      -Dvapi=enabled         \
-      -Dgssapi=disabled      \
-      -Dsysprof=disabled     \
-      --wrap-mode=nofallback \
-      ..                     &amp;&amp;
+meson setup --prefix=/usr          \
+            --buildtype=release    \
+            -Dvapi=enabled         \
+            -Dgssapi=disabled      \
+            -Dsysprof=disabled     \
+            --wrap-mode=nofallback \
+            ..                     &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -197,7 +195,8 @@ ninja</userinput></screen>
         </seg>
         <seg>
           /usr/include/libsoup-3.0,
-          /usr/share/gtk-doc/html/libsoup-3.0 (bare installert hvis -Ddocs=enabled er gitt)
+          /usr/share/doc/libsoup-&libsoup3-version;
+          (bare installert hvis -Ddocs=enabled er gitt)
         </seg>
       </seglistitem>
     </segmentedlist>

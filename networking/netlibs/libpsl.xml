@@ -31,7 +31,7 @@
       er et sett med domenenavn utover standardsuffiksene, for eksempel .com.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -71,7 +71,8 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="libidn2"/>
+      <xref linkend="libidn2"/> og
+      <xref linkend='libunistring'/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -80,9 +81,6 @@
       <xref linkend="valgrind"/> (for tester)
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/libpsl"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -93,27 +91,30 @@
       kommandoer:
     </para>
 
-<screen><userinput>sed -i 's/env python/&amp;3/' src/psl-make-dafsa              &amp;&amp;
-./configure --prefix=/usr --disable-static PYTHON=python3 &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release &amp;&amp;
+
+ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For å teste resultatene, utsted: <command>ninja test</command>.
     </para>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -i ...</command>: Denne kommandoen tvinger bruk av
-      <application>Python 3</application> i et verktøy.
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
     </para>
 
   </sect2>
