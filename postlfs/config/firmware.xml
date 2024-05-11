@@ -100,8 +100,8 @@
     </listitem>
     <listitem>
       <para>
-        Fastvareoppdateringer for kablede nettverksporter. Stort sett fungerer de til og med
-        uten oppdateringene, men sannsynligvis vil de fungere bedre med
+        Fastvareoppdateringer for kablede nettverksporter. De fleste av dem fungerer til og med
+        uten oppdateringene, men de vil nok fungere bedre med
         den oppdaterte fastvaren. For noen moderne bærbare datamaskiner, fastvare for begge
         kablet ethernet (f.eks. rtl_nic) og også for bluetooth-enheter (f.eks. qca)
         er <emphasis>påkrevd</emphasis> før det kablede nettverket kan brukes.
@@ -109,7 +109,7 @@
     </listitem>
     <listitem>
       <para>
-        Fastvare for andre enheter, for eksempel wifi. Disse enhetene er ikke
+        Fastvare for andre enheter, for eksempel trådløse NICs. Disse enhetene er ikke
         nødvendug for at PC-en skal starte opp, men trenger fastvaren før disse enhetene
         kan bli brukt.
       </para>
@@ -128,8 +128,6 @@
     </para>
   </note>
 
-  <para condition="html" role="usernotes">Brukernotater:
-  <ulink url="&blfs-wiki;/aboutfirmware"/></para>
 
   <sect2 id="cpu-microcode">
     <title>Mikrokodeoppdateringer for CPUer</title>
@@ -225,8 +223,7 @@
         <!-- på et tidspunkt hadde noen skylakes problemer med en viss revisjon
         sikker versjon av mikrokoden, for de maskinene som kan starte den, -->
         sikker versjon av mikrokoden
-        er microcode-20230214.<!-- Hvis du har en Skylake-maskin, vennligst les
-        Forsiktig i avsnittet "Tidlig lasting av mikrokode" nedenfor.-->  Pakk ut denne
+        er microcode-20230808. Pakk ut denne
         filen på vanlig måte, mikrokoden er i <filename>intel-ucode
         </filename> mappen, som inneholder forskjellige blobs med navn i skjemaet
         XX-YY-ZZ. Det er også forskjellige andre filer, og en utgivelsesmerknad.
@@ -251,22 +248,19 @@
       </para>
 
       <para>
-        For en Icelake bærbar (beskrevet som Intel(R) Core(TM) i7-1065G7
-        CPU) de relevante verdiene er cpu familie 6, modell 126, trinn 5 så
-        i dette tilfellet er påkrevd identifikasjon 06-7e-05.
-        Utgivelsesmerknaden sier at den nyeste mikrokoden for den er versjon 0xb8. Hvis
+        For en Tigerlake bærbar (beskrevet som Intel(R) Core(TM) i5-11300H
+        CPU) de relevante verdiene er cpu familie 6, modell 140, stepping 1 så
+        i dette tilfellet er nødvendig identifikasjon 06-8c-01.
+        Utgivelsesnotat sier at den nyeste mikrokoden for den er versjonert 0xac. Hvis
         verdien av <quote>mikrokode</quote> feltet i
-        <filename>/proc/cpuinfo</filename> er 0xb8 eller høyere, indikerer det
+        <filename>/proc/cpuinfo</filename> er 0xac eller høyere, indikerer det
         at mikrokodeoppdateringen allerede er tatt i bruk av BIOS. Ellers,
         konfigurere kjernen til å støtte lasting av Intel mikrokode, og deretter
         fortsett til <xref linkend='early-microcode'/>:
       </para>
 
-<screen><literal>General Setup ---&gt;
-  [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support [CONFIG_BLK_DEV_INITRD]
-Processor type and features  ---&gt;
-  [*] CPU microcode loading support  [CONFIG_MICROCODE]
-  [*]      Intel microcode loading support [CONFIG_MICROCODE_INTEL]</literal></screen>
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+        href="intel-ucode-kernel.xml"/>
 
     </sect3>
 
@@ -306,11 +300,9 @@ Processor type and features  ---&gt;
         og fortsett deretter til <xref linkend='early-microcode'/>:
       </para>
 
-<screen><literal>General Setup ---&gt;
-  [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support [CONFIG_BLK_DEV_INITRD]
-Processor type and features  ---&gt;
-  [*] CPU microcode loading support  [CONFIG_MICROCODE]
-  [*]      AMD microcode loading support [CONFIG_MICROCODE_AMD]</literal></screen>
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+        href="amd-ucode-kernel.xml"/>
+
     </sect3>
 
     <sect3 id="early-microcode">
@@ -420,15 +412,14 @@ cd initrd</userinput></screen>
 
       <para>
         Stedene og tidspunktene hvor tidlig lasting skjer er svært forskjellige
-        i AMD- og Intel-maskiner. Først et eksempel på en Intel (Icelake
+        i AMD- og Intel-maskiner. Først et eksempel på en Intel (Tigerlake
         bærbar) med tidlig lasting:
       </para>
 
-<screen><literal>[    0.000000] microcode: microcode updated early to revision 0xb8, date = 2022-08-31
-[    0.000000] Linux version 6.1.11 (xry111@stargazer) (gcc (GCC) 12.2.0, GNU ld (GNU Binutils) 2.40) #2 SMP PREEMPT_DYNAMIC Tue Feb 14 23:23:31 CST 2023
-[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.1.11-lfs-11.3-rc1 root=PARTUUID=<replaceable>&lt;CLASSIFIED&gt;</replaceable> ro
-[    0.452924] microcode: sig=0x706e5, pf=0x80, revision=0xb8
-[    0.453197] microcode: Microcode Update Driver: v2.2.</literal></screen>
+<screen><literal>[    0.000000] microcode: microcode updated early: 0x86 -> 0xac, date = 2023-02-27
+[    0.000000] Linux version 6.4.7 (root@stargazer) (gcc (GCC) 13.2.0, GNU ld (GNU Binutils) 2.41) #1 SMP PREEMPT_DYNAMIC Wed Aug  2 19:08:46 CST 2023
+[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-6.4.7 root=PARTUUID=<replaceable>&lt;CLASSIFIED&gt;</replaceable> ro
+[    0.424002] microcode: Microcode Update Driver: v2.2.</literal></screen>
 
 
       <para>
@@ -498,31 +489,15 @@ cd initrd</userinput></screen>
 <screen><userinput>mkdir -pv /lib/firmware/radeon
 cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/radeon</userinput></screen>
 
-      <para>
-        Det er faktisk to måter å installere denne fastvaren på. BLFS, i
-        'Kjernekonfigurasjon for ekstra fastvare' delen av
-        <xref linkend="xorg-ati-driver"/> avsnitt gir et eksempel på å
-        kompilere fastvaren inn i kjernen - det er litt raskere å
-        laste, men bruker mer kjerneminne. Her skal vi bruke den alternative
-        metoden for å gjøre radeon driveren til en modul. I kjernekonfigurasjonen din
-        still inn følgende:
-      </para>
-
-<screen><literal>Device Drivers ---&gt;
-  Graphics support ---&gt;
-      Direct Rendering Manager ---&gt;
-        [*] Direct Rendering Manager (XFree86 ... support)  [CONFIG_DRM]
-      [M] ATI Radeon                                        [CONFIG_DRM_RADEON]</literal></screen>
-
-      <para>
-        Lasting av flere store blober fra /lib/firmware tar et merkbart
-        tid, hvor skjermen vil være tom. Hvis du ikke aktiverer
-        penguin framebuffer logo, eller endre konsollstørrelsen ved å bruke en større
-        font, spiller det nok ingen rolle. Hvis ønskelig, kan du
-        reduser tiden litt hvis du følger den alternative metoden for å spesifisere 'y'
-        for CONFIG_DRM_RADEON dekket i BLFS på lenken ovenfor &mdash; du
-        må spesifisere hver nødvendige radeon blob hvis du gjør det.
-      </para>
+    <para>
+      Det anbefales å bygge kjerne amdgpu driveren som en modul fordi
+      fastvarefilene må være tilgjengelige når den lastes.
+      Hvis du bygger det som en del av kjernebildet av en eller annen grunn,
+      må du enten inkludere fastvarefilene i initramfs (les
+      <xref linkend='initramfs'/> for detaljer), eller inkludere dem i
+      selve kjernebildet (les <xref linkend='firmware-in-kernel-image'/>
+      for detaljer).
+    </para>
 
     </sect3>
 
@@ -566,29 +541,14 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
     </para>
 
     <para>
-      Det anbefales å bygge kjerne amdgpu driveren som en modul.
-      Sett minst følgende alternativer i kjernens .config og se gjennom
-      de andre AMDGPU alternativene i henhold til målmaskinvaren din,
-      for eksempel "ACP (Audio Co-Processor) Configuration":
+      Det anbefales å bygge kjerne amdgpu driveren som en modul fordi
+      fastvarefilene må være tilgjengelige når den lastes.
+      Hvis du bygger det som en del av kjernebildet av en eller annen grunn,
+      må du enten inkludere fastvarefilene i initramfs (les
+      <xref linkend='initramfs'/> for detaljer), eller inkludere dem i
+      selve kjernebildet (les <xref linkend='firmware-in-kernel-image'/>
+      for detaljer).
     </para>
-
-<screen><literal>Device Drivers ---&gt;
-  Graphics support ---&gt;
-      Direct Rendering Manager ---&gt;
-        [*] Direct Rendering Manager (XFree86 ... support)  [CONFIG_DRM]
-        [M] AMD GPU                                         [CONFIG_DRM_AMDGPU]
-        Display Engine Configuration ---&gt;
-          [*] AMD DC - Enable new display engine (NEW)      [CONFIG_DRM_AMD_DC]</literal></screen>
-
-      <para>
-        Som skrevet ovenfor på slutten av avsnittet om 'Fastvare for ATI
-        videobrikker', lasting av store blober fra /lib/firmware kan ta en merkbar tid
-        da skjermen vil være tom. På en treg maskin kan du kanskje
-        ønske å henvise til 'Kjernekonfigurasjon for ekstra fastvare'
-        delen av <xref linkend="xorg-amdgpu-driver"/> og kompiler alle
-        nødvendige moduler inn i kjernen for å redusere denne tiden, på bekostning av
-        bruken av mer kjerneminne.
-      </para>
 
     </sect3>
 
@@ -604,18 +564,8 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
       <para>
         For mer nøyaktig informasjon om hvilke brikker som trenger uttrukket fastvare, se
         <ulink url=
-          "https://nouveau.freedesktop.org/wiki/VideoAcceleration/#firmware"/>.
+          "https://nouveau.freedesktop.org/VideoAcceleration.html"/>.
       </para>
-
-      <para>
-        Først må kjernens Nvidia drivere aktiveres:
-      </para>
-
-<screen><literal>Device Drivers ---&gt;
-  Graphics support ---&gt;
-      Direct Rendering Manager ---&gt;
-        &lt;*&gt; Direct Rendering Manager (XFree86 ... support)  [CONFIG_DRM]
-      &lt;*/M&gt; Nouveau (NVIDIA) cards                          [CONFIG_DRM_NOUVEAU]</literal></screen>
 
       <para>
         Hvis den nødvendige fastvaren er tilgjengelig i
@@ -625,15 +575,14 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
       </para>
       <para>
         Hvis fastvaren ikke er gjort tilgjengelig i linux fastvaren,
-        for de gamle brikkene nevnt i nouveau wiki lenken ovenfor, sørg for at du har
-        installert <xref linkend="python2"/> og kjør følgende kommandoer:
+        for de gamle brikkene nevnt i nouveau wiki lenken ovenfor
+        kjør følgende kommandoer:
       </para>
 
-      <!-- Someone please port this to Python 3.  -->
-<screen><userinput>wget https://raw.github.com/imirkin/re-vp2/master/extract_firmware.py
-wget https://us.download.nvidia.com/XFree86/Linux-x86/325.15/NVIDIA-Linux-x86-325.15.run
-sh NVIDIA-Linux-x86-325.15.run --extract-only
-python2 extract_firmware.py
+<screen><userinput>wget https://anduin.linuxfromscratch.org/BLFS/nvidia-firmware/extract_firmware.py
+wget https://us.download.nvidia.com/XFree86/Linux-x86/340.32/NVIDIA-Linux-x86-340.32.run
+sh NVIDIA-Linux-x86-340.32.run --extract-only
+python3 extract_firmware.py
 mkdir -p /lib/firmware/nouveau
 cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
 
@@ -664,6 +613,75 @@ cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
 
   </sect2>
 
+  <sect2 id="regulatory-db">
+    <title>Fastvare for forskriftsdatabase over trådløse enheter</title>
+
+    <para>
+      Ulike land har ulike regler for radiospekteret
+      brukt av trådløse enheter. Du kan installere en fastvare for å at
+      trådløse enheter overholder lokale spektrumforskrifter, så du ikke vil bli
+      forespurt av lokale myndigheter eller finne ut at det trådløse NIC kortet blokkerer
+      frekvenser til andre enheter (for eksempel fjernkontroller).
+      Forskriftsdatabasens fastvare kan lastes ned fra
+      <ulink url = 'https://kernel.org/pub/software/network/wireless-regdb/'/>.
+      For å installere det, bare pakk ut <filename>regulatory.db</filename> og
+      <filename>regulatory.db.p7s</filename> fra tarballen til
+      <filename class="directory">/lib/firmware</filename>. Merk at enten
+      <option>cfg80211</option> driver må velges som en modul
+      for <filename>regulatory.*</filename>
+      filer som skal lastes, eller må disse filene inkluderes som fastvare i
+      kjernen, som forklart ovenfor i <xref linkend="video-firmware"/>.
+    </para>
+
+    <para>
+      Tilgangspunktet (AP) vil sende en landskode til det trådløse NIC,
+      og <xref linkend='wpa_supplicant'/> ville fortelle kjernen å laste
+      reguleringen av dette landet fra
+      <filename>regulatory.db</filename>, og håndhever det. Merk at flere AP
+      ikke sender denne landskoden, så du kan være låst til en heller
+      begrenset bruk (spesielt hvis du vil bruke grensesnittet ditt som en AP).
+    </para>
+  </sect2>
+
+  <sect2 id="sound-open-firmware">
+    <title>Åpen lyd fastvare</title>
+
+    <para>
+      Noen systemer (spesielt budsjett bærbare datamaskiner) bruker en DSP som leveres med
+      CPU for tilkobling med lydkodeken. Åpen lyd fastvare
+      må lastes inn på DSP for å gjøre den funksjonell. Disse fastvarene
+      filer kan lastes ned fra
+      <ulink url='https://github.com/thesofproject/sof-bin/releases'/>.
+      Pakk ut tarballen og bytt til den utpakkede mappen,
+      deretter som &root; bruker installer fastvaren:
+    </para>
+
+    <screen role="nodump"><userinput>install -vdm755 /usr/lib/firmware/intel       &amp;&amp;
+cp -av -T --no-preserve=ownership sof-v*      \
+   /usr/lib/firmware/intel/sof                &amp;&amp;
+cp -av -T --no-preserve=ownership sof-tplg-v* \
+   /usr/lib/firmware/intel/sof-tplg</userinput></screen>
+
+    <para>
+      <xref linkend="alsa-lib"/> behøver Use Case Manager konfigurasjonsfiler
+      for systemene som bruker Åpen lyd fastvare også. ALSA UCM
+      konfigurasjonsfiler kan lastes ned fra
+      <ulink url='https://github.com/alsa-project/alsa-ucm-conf/tags'/>.
+      Pakk ut tarballen og bytt til den utpakkede mappen,
+      deretter som &root; bruker installer konfigurasjonsfilene:
+    </para>
+
+    <screen role="nodump"><userinput>install -vdm755 /usr/share/alsa &amp;&amp;
+cp -av -T --no-preserve=ownership ucm2 /usr/share/alsa/ucm2</userinput></screen>
+
+    <para>
+      Når fastvaren er lastet inn (kan det hende du trenger en omstart slik at kjernen vil
+      laste dem) og UCM konfigurasjonsfilene installeres, følg
+      <xref linkend="alsa-utils-config-sect"/> for å sette opp lydkortet ditt for
+      ALSA skikkelig.
+    </para>
+  </sect2>
+
   <sect2 id="other-firmware">
     <title>Fastvare for Andre Enheter</title>
 
@@ -678,25 +696,8 @@ cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
     <para>
       Hvis det er mulig, bør du begynne med å bruke en kablet tilkobling når du først
       starter opp LFS systemet. For å bruke en trådløs tilkobling må du
-      bruke et nettverksverktøy som f.eks <xref linkend='wireless_tools'/> og <xref
-      linkend='wpa_supplicant'/>.
-    </para>
-
-    <para>
-      Ulike land har ulike regler for radiospekteret
-      brukt av trådløse enheter. Du kan installere en fastvare for å gjøre at
-      trådløse enheter overholder lokale spektrumforskrifter, så du vil ikke bli
-      forespurt av lokale myndigheter eller finne ut at det trådløse NIC kortet blokkerer
-      frekvenser til andre enheter (for eksempel fjernkontroller).
-      Forskriftsdatabasens fastvare kan lastes ned fra
-      <ulink url = 'https://kernel.org/pub/software/network/wireless-regdb/'/>.
-      For å installere det, bare pakk ut <filename>regulatory.db</filename> og
-      <filename>regulatory.db.p7s</filename> fra tarballen inn i
-      <filename class="directory">/lib/firmware</filename>.
-      Tilgangspunktet vil sende en landskode til det trådløse nettverkskortet ditt,
-      og <xref linkend='wpa_supplicant'/> ville fortelle kjernen å laste
-      reguleringen for dette landet fra
-      <filename>regulatory.db</filename>, og håndheve det.
+      bruke et nettverksverktøy som f.eks <xref linkend="iw"/>,
+      <xref linkend='wireless_tools'/>, eller <xref linkend='wpa_supplicant'/>.
     </para>
 
     <para>
@@ -704,6 +705,50 @@ cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
       kontrollere, bluetooth adaptere eller TV opptakere. De samme prinsippene
       gjelder.
     </para>
+
+  </sect2>
+
+  <sect2 id='firmware-in-kernel-image'>
+    <title>Inkluder fastvare blobber i kjernebildet</title>
+
+    <para>
+      Noen drivere, spesielt driverne for ATI eller AMD GPU, krever
+      fastvarefiler tilgjengelig når den lastes. Den letteste
+      metoden for å håndtere disse driverne er å bygge dem som en kjernemodul.
+      En alternativ metode er å lage en initramfs (les
+      <xref linkend='initramfs'/> for detaljer), inkludert fastvarefilene.
+      Hvis du ikke vil bruke noen av metodene, kan du inkludere fastvare
+      filer i selve kjernebildet. Installer de nødvendige fastvarefilene
+      inn i <filename class='directory'>/lib/firmware</filename> først
+      angi følgende kjernekonfigurasjon og gjenoppbygg kjernen:
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="builtin-fw-kernel.xml"/>
+
+    <para>
+      Erstatt <replaceable>xx/aa.bin xx/bb.bin</replaceable>
+      med en mellomromseparert liste over stier til de nødvendige fastvare
+      filer, i forhold til
+      <filename class='directory'>/lib/firmware</filename>.  En metode
+      enklere enn å manuelt skrive inn listen (den kan være lang) kjør
+      følgende kommando:
+    </para>
+
+    <screen><userinput>echo CONFIG_EXTRA_FIRMWARE='"'$({ cd /lib/firmware; echo <replaceable>amdgpu/*</replaceable> })'"' &gt;&gt; .config
+make oldconfig</userinput></screen>
+
+    <para>
+      Erstatt <replaceable>amdgpu/*</replaceable> med et skallmønster
+      som samsvarer med de nødvendige fastvarefilene.
+    </para>
+
+    <warning>
+      <para>
+        Ikke distribuer et kjernebilde som inneholder fastvaren til andre
+        da kan du bryte GPL.
+      </para>
+    </warning>
 
   </sect2>
 

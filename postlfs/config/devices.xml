@@ -23,9 +23,6 @@
     reglene må endres eller utvides.
   </para>
 
-  <para condition="html" role="usernotes">Brukernotater:
-  <ulink url="&blfs-wiki;/aboutdevices"/></para>
-
   <sect2>
     <title>Flere Lydkort</title>
 
@@ -79,7 +76,7 @@ options snd-ens1371 index=1</literal></screen>
       fungerer som enhetsdriver. Men for at programmet skal lykkes med å åpne enheten,
       må tillatelsene settes riktig. Som standard, pga
       av sikkerhetshensyn eies alle rå USB enheter av bruker root og
-      gruppe usb, og har 0664-tillatelser (lesetilgangen er nødvendig, f.eks.
+      gruppe root, og har 0664-tillatelser (lesetilgangen er nødvendig, f.eks.
       for at lsusb skal fungere og for at programmer skal få tilgang til USB huber). Pakker (f.eks
       som SANE og libgphoto2) som også inneholder USB enhetsdrivere for brukerområdet
       send udev-regler som endrer tillatelsene til den kontrollerte rå USB
@@ -90,39 +87,13 @@ options snd-ens1371 index=1</literal></screen>
     </para>
 
     <para>
-      Det er en situasjon når en slik finmasket adgangskontroll med
-      forhåndsgenererte udev regler ikke fungerer. Nemlig PC emulatorer som KVM,
-      QEMU og VirtualBox bruker rå USB enhetsnoder for å presentere vilkårlig USB
-      enheter til gjesteoperativsystemet (merk: oppdateringer er nødvendig
-      for å få dette til å fungere uten det utdaterte /proc/bus/usb monteringspunktet
-      beskrevet nedenfor). Det er klart at vedlikeholdere av disse pakkene ikke kan vite
-      hvilke USB enheter som skal kobles til gjesten som opererer
-      systemet. Du kan enten selv skrive separate udev regler for all nødvendig USB
-      enheter, eller bruk standard catch-all "usb" gruppen, medlemmer
-      som kan sende vilkårlige kommandoer til alle USB enheter.
-    </para>
-
-    <para>
       Før Linux-2.6.15 ble tilgang til rå USB enheter ikke utført med
       /dev/bus/usb/BBB/DDD enhetsnoder, men med /proc/bus/usb/BBB/DDD
-      pseudofiler. Noen programmer (f.eks. VMware Workstation) bruker fortsatt bare
-      denne foreldede teknikken og kan ikke bruke de nye enhetsnodene. For at de skal
-      virke, bruk "usb" gruppen, men husk at medlemmene vil ha
-      ubegrenset tilgang til alle USB enheter. For å lage fstab oppføringen for
-      det utdaterte usbfs filsystemet:
+      pseudofiles. Noen applikasjoner bruker fortsatt bare
+      denne foreldede teknikken og kan ikke bruke de nye enhetsnodene. De
+      kan ikke fungere med Linux kjerne versjon 3.5 eller nyere. Hvis du trenger å
+      kjøre en slik applikasjon, kontakt utvikleren av den for en løsning.
     </para>
-
-<screen><literal>usbfs  /proc/bus/usb  usbfs  devgid=14,devmode=0660  0  0</literal></screen>
-
-    <note>
-      <para>
-        Å legge til brukere i "usb" gruppen er en iboende usikkert, siden de kan
-        omgå tilgangsbegrensninger pålagt via den driverspesifikke USB
-        enhetsnoden. For eksempel kan de lese sensitive data fra USB
-        harddisker uten å være i "disk" gruppen. Unngå å legge til brukere
-        til denne gruppen, hvis du kan.
-    </para>
-    </note>
 
   </sect2>
 

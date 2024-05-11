@@ -8,10 +8,10 @@
 "&gnome-download-http;/NetworkManager/&NetworkManager-minor;/NetworkManager-&NetworkManager-version;.tar.xz">
   <!ENTITY NetworkManager-download-ftp
 "&gnome-download-ftp;/NetworkManager/&NetworkManager-minor;/NetworkManager-&NetworkManager-version;.tar.xz">
-  <!ENTITY NetworkManager-md5sum        "cfe8c33493d8d2a9d97415a7042a6fe2">
-  <!ENTITY NetworkManager-size          "6.4 MB">
-  <!ENTITY NetworkManager-buildsize     "278 MB (med tester og dokumentasjon)">
-  <!ENTITY NetworkManager-time          "0.8 SBU (med tester, bruker parallellisme=4)">
+  <!ENTITY NetworkManager-md5sum        "2a39852cda0f04bd72c9782839b1dc7d">
+  <!ENTITY NetworkManager-size          "6.6 MB">
+  <!ENTITY NetworkManager-buildsize     "917 MB (med tester og dokumentasjon)">
+  <!ENTITY NetworkManager-time          "1.3  SBU (med tester, bruker parallellisme=4)">
 ]>
 
 <sect1 id="NetworkManager" xreflabel="NetworkManager-&NetworkManager-version;">
@@ -36,7 +36,7 @@
       tilgjengelig.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <note revision="systemd">
       <para>
@@ -91,18 +91,15 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="curl"/>,
-      <!--<xref linkend="dhcpcd"/> or
-          DHCPCD support is known to be broken with dhcpcd-9 -->
-      <xref role="nodep" linkend="dhcp"/> ( bare klient),
+      <xref linkend="dhcpcd"/>,
       <xref linkend="gobject-introspection"/>,
       <xref linkend="iptables"/>,
       <xref linkend="newt"/> (for <command>nmtui</command>),
       <xref linkend="nss"/>,
-      <xref linkend="polkit"/>,
+      <xref role='runtime' linkend="polkit"/> (kjøretid),
       <xref linkend="pygobject3"/>,
       <phrase revision="sysv"><xref linkend="elogind"/>,</phrase>
       <phrase revision="systemd"><xref linkend="systemd"/>,</phrase>
-      <xref linkend="upower"/>,
       <xref linkend="vala"/>, og
       <xref linkend="wpa_supplicant"/> (kjøretid, bygd med D-Bus støtte)
     </para>
@@ -112,11 +109,13 @@
       <xref linkend="bluez"/>,
       <xref linkend="dbus-python"/> (for testpakken),
       <!-- <xref linkend="firewalld"/> (For whenever firewalld is reintroduced) -->
-      <xref linkend="gnutls"/> (brukt hvis <xref linkend="nss"/> ikke er funnet),
+      <xref linkend="gnutls"/> (kan brukes i stedet for <xref linkend="nss"/>),
       <xref linkend="gtk-doc"/>,
       <xref linkend="libpsl"/>,
-      <xref linkend="qt5"/> (for eksempler),
+      (<xref linkend="qt5"/> eller
+       <xref role="node" linkend="qt5-components"/> med qtdoc) (for eksempler),
       <xref linkend="ModemManager"/>,
+	  <xref linkend="upower"/>,
       <xref linkend="valgrind"/>,
       <ulink url="https://thekelleys.org.uk/dnsmasq/doc.html">dnsmasq</ulink>,
       <ulink url="https://firewalld.org/">firewalld</ulink>,
@@ -127,9 +126,6 @@
       <ulink url="https://dianne.skoll.ca/projects/rp-pppoe/">RP-PPPoE</ulink>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/NetworkManager"/>
-    </para>
   </sect2>
 
   <sect2 role="kernel" id="NetworkManager-kernel">
@@ -155,39 +151,11 @@
          available by default and may be necessary. Even with the options
          below still one test (test-route) fails.-->
 
-<screen><literal>[*] Networking support---&gt;                                [CONFIG_NET]
-      Networking options---&gt;
-      [*] TCP/IP networking                               [CONFIG_INET]
-      &lt;*/M&gt;   IP: tunelling                               [CONFIG_NET_IPIP]
-      &lt;*/M&gt;   IP: GRE demultiplexer                       [CONFIG_NET_IPGRE_DEMUX]
-      &lt;*/M&gt;   IP: GRE tunnels over IP                     [CONFIG_NET_IPGRE]
-      &lt;*&gt;   The IPv6 protocol ---&gt;                        [CONFIG_IPV6]
-        &lt;*/M&gt; IPv6: IPv6-in-IPv4 tunnel (SIT driver)      [CONFIG_IPV6_SIT]
-        &lt;*/M&gt; IPv6: GRE tunnel                            [CONFIG_IPV6_GRE]
-        [*] IPv6: Multiple Routing Tables                 [CONFIG_IPV6_MULTIPLE_TABLES]
-      [*]   MPTCP:   Multipath TCP                        [CONFIG_MPTCP]
-      [*]     MPTCP: IPv6 support for Multipath TCP       [CONFIG_MPTCP_IPV6]
-      &lt;*/M&gt; 802.1Q/802.1ad VLAN Support                   [CONFIG_VLAN_8021Q]
-      [*] QoS and/or fair queueing  ---&gt;                  [CONFIG_NET_SCHED]
-        &lt;*/M&gt; Stochastic Fairness Queueing (SFQ)          [CONFIG_NET_SCH_SFQ]
-        &lt;*/M&gt; Token Bucket Filter (TBF)                   [CONFIG_NET_SCH_TBF]
-        &lt;*/M&gt; Fair Queue Controlled Delay AQM (FQ_CODEL)  [CONFIG_NET_SCH_FQ_CODEL]
-        &lt;*/M&gt; Ingress/classifier-action Qdisc             [CONFIG_NET_SCH_INGRESS]
-    Device Drivers ---&gt;
-    [*] Network device support ---&gt;                       [CONFIG_NETDEVICES]
-      [*] Network core driver support                     [CONFIG_NET_CORE]
-      &lt;*&gt;   Bonding driver support                        [CONFIG_BONDING]
-      &lt;*&gt;   Dummy net driver support                      [CONFIG_DUMMY]
-      &lt;*&gt;   Ethernet team driver support ---&gt;             [CONFIG_NET_TEAM]
-      &lt;*&gt;   MAC-VLAN support                              [CONFIG_MACVLAN]
-      &lt;*&gt;     MAC-VLAN based tap driver                   [CONFIG_MACVTAP]
-      &lt;*&gt;   IP-VLAN support                               [CONFIG_IPVLAN]
-      &lt;*&gt;   Virtual eXtensible Local Area Network (VXLAN) [CONFIG_VXLAN]
-      &lt;*&gt;   Virtual ethernet pair device                  [CONFIG_VETH]
-      &lt;*&gt;   Virtual Routing and Forwarding (Lite)         [CONFIG_VRF]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="networkmanager-test-kernel.xml"/>
 
     <indexterm zone="NetworkManager NetworkManager-kernel">
-      <primary sortas="d-NetworkManager">NetworkManager</primary>
+      <primary sortas="d-NetworkManager">NetworkManager (test)</primary>
     </indexterm>
   </sect2>
 
@@ -230,7 +198,7 @@ sed -e 's/Qt/&amp;5/'                  \
 cd    build &amp;&amp;
 
 CXXFLAGS+="-O2 -fPIC"            \
-meson setup                      \
+meson setup ..                   \
       --prefix=/usr              \
       --buildtype=release        \
       -Dlibaudit=no              \
@@ -243,15 +211,14 @@ meson setup                      \
       -Dmodem_manager=false      \
       -Dsystemdsystemunitdir=no  \
       -Dsystemd_journal=false    \
-      -Dqt=false                 \
-      .. &amp;&amp;
+      -Dqt=false                 &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build    &amp;&amp;
 
 CXXFLAGS+="-O2 -fPIC"            \
-meson setup                      \
+meson setup ..                   \
       --prefix=/usr              \
       --buildtype=release        \
       -Dlibaudit=no              \
@@ -262,8 +229,7 @@ meson setup                      \
       -Dselinux=false            \
       -Dqt=false                 \
       -Dsession_tracking=systemd \
-      -Dmodem_manager=false      \
-      .. &amp;&amp;
+      -Dmodem_manager=false      &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -296,7 +262,7 @@ mv -v /usr/share/doc/NetworkManager{,-&NetworkManager-version;}</userinput></scr
 done</userinput></screen>
 
     <para>
-      Fortsatt i tilfelle du ikke har brukt <option>-Ddocs=true</option>,
+      Hvis du ikke har brukt <option>-Ddocs=true</option>,
       forhåndsgenerert HTML dokumentasjon kan også installeres med (som
       &root; bruker):
     </para>
@@ -323,34 +289,28 @@ done</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Dnmtui=true</parameter>: Denne parameteren gjør det mulig å bygge
+      <parameter>-Dnmtui=true</parameter>: Denne bryteren gjør det mulig å bygge
       <command>nmtui</command>.
     </para>
 
     <para revision="sysv">
       <parameter>-Dsystemdsystemunitdir=no</parameter> og
-      <parameter>-Dsystemd_journal=false</parameter>: systemd ikke er
-       brukt til sysv init systemer.
+      <parameter>-Dsystemd_journal=false</parameter>: systemd er ikke
+      brukt til sysv init systemer, så unngå å installere enheter og bruke
+      systemd journal.
     </para>
 
     <para>
       <parameter>-Dlibpsl=false</parameter> og
       <parameter>-Dovs=false</parameter>: Disse bryterne deaktiverer bygging med
-      respektive biblioteker. Fjern hvis du har de nødvendige bibliotekene installert.
+      respektive biblioteker. Fjern disse hvis du har de nødvendige bibliotekene
+      installert på systemet ditt.
     </para>
-
-<!--
-    <para>
-      <parameter>-Dlibpsl=false</parameter>: Denne bryteren er nødvendig hvis
-      <application>libpsl</application> ikke er installert. Utelat denne bryteren hvis
-      du har bygget <application>libpsl</application>.
-    </para>
--->
 
     <para>
       <parameter>-Dmodem_manager=false</parameter>: Denne bryteren er nødvendig hvis
-      <application>ModemManager</application> ikke er installert. Utelat hvis du
-      har bygget <application>ModemManager</application> og
+      <application>ModemManager</application> ikke er installert. Utelat denne bryteren
+      hvis du har bygget <application>ModemManager</application> og
       <application>mobile-broadband-provider-info</application>.
     </para>
 
@@ -373,23 +333,44 @@ done</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Dppp=false</parameter>: Denne parameteren deaktiverer
+      <parameter>-Dppp=false</parameter>: Denne bryteren deaktiverer
       <application>PPP</application> støtte i
-      <application>NetworkManager</application>.
+      <application>NetworkManager</application> siden programmene er nødvendige
+      for det ikke er installert. Fjern denne bryteren hvis du trenger PPP støtte og
+      har <application>PPP</application> installert.
     </para>
 
     <para>
       <parameter>-Dlibaudit=no</parameter> og
-      <parameter>-Dselinux=false</parameter>: libaudit og SELinux er ikke brukt
-      i BLFS.
+      <parameter>-Dselinux=false</parameter>: Denne bryteren deaktiverer støtte for
+      libaudit og SELinux siden de ikke brukes i BLFS.
     </para>
 
     <para>
       <parameter>-Dqt=false</parameter>: deaktiverer
-      <application>QT</application> eksempler. Utelat hvis du har
-      <application>QT</application> tilgjengelig og ønsker å installere eksemplene.
+      <parameter>-Dqt=false</parameter>: Denne bryteren deaktiverer
+      <application>Qt</application> eksempler. Utelat hvis du har
+      <application>Qt</application> tilgjengelig og ønsker å installere eksemplene.
     </para>
 
+    <para>
+      <option>-Dcrypto=gnutls</option>: Bruk denne bryteren hvis du har GnuTLS
+      installert og ønsker å bruke den til sertifikat og nøkkel operasjoner i
+      NetworkManager, i stedet for å bruke NSS (standard).
+    </para>
+
+    <para>
+      <option>-Dcrypto=null</option>: Bruk denne bryteren hvis verken NSS eller
+      GnuTLS er installert, men du vil uansett bygge NetworkManager. Denne
+      bryteren vil få NetworkManager til å mangle noen funksjoner (for eksempel
+      802.1X).
+    </para>
+
+    <para>
+      <option>-Dsuspend_resume=upower</option>: Bruk denne bryteren hvis
+      du har <xref linkend='upower'/> installert og ønsker å bruke den
+      (i stedet for &logind;) for å suspendere og gjenoppta støtte.
+    </para>
   </sect2>
 
   <sect2 role="configuration">
@@ -445,12 +426,12 @@ EOF</userinput></screen>
       <para>
         For å bruke noe annet enn den innebygde dhcp klienten (anbefalt hvis
         du kun bruker <command>nmcli</command>), bruk følgende konfigurasjon
-        (gyldige verdier inkluderer enten dhclient <!--dhcpcd --> eller internal):
+         (gyldige verdier inkluderer enten dhcpcd eller internal):
       </para>
 
 <screen role="nodump"><userinput>cat &gt; /etc/NetworkManager/conf.d/dhcp.conf &lt;&lt; "EOF"
 <literal>[main]
-dhcp=</literal><replaceable>dhclient</replaceable>
+dhcp=</literal><replaceable>dhcpcd</replaceable>
 EOF</userinput></screen>
 
       <para>
