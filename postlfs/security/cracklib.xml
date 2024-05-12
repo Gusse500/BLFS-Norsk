@@ -6,16 +6,16 @@
 
   <!ENTITY cracklib-url "https://github.com/cracklib/cracklib/releases/download">
 
-  <!ENTITY cracklib-download-http "&cracklib-url;/v&cracklib-version;/cracklib-&cracklib-version;.tar.bz2">
+  <!ENTITY cracklib-download-http "&cracklib-url;/v&cracklib-version;/cracklib-&cracklib-version;.tar.xz">
   <!ENTITY cracklib-download-ftp  " ">
-  <!ENTITY cracklib-md5sum        "a242301bad13421476db8eecbbc9536a">
-  <!ENTITY cracklib-size          "600 KB">
-  <!ENTITY cracklib-buildsize     "6.7 MB">
+  <!ENTITY cracklib-md5sum        "a6dfb1766aab43a54e1cbd78abf0a20a">
+  <!ENTITY cracklib-size          "452 KB">
+  <!ENTITY cracklib-buildsize     "6.8 MB">
   <!ENTITY cracklib-time          "0.1 SBU">
 
-  <!ENTITY crackdict-download     "&cracklib-url;/v&cracklib-version;/cracklib-words-&cracklib-version;.bz2">
-  <!ENTITY crackdict-size         "6.7 MB">
-  <!ENTITY crackdict-md5sum       "94e9963e4786294f7fb0f2efd7618551">
+  <!ENTITY crackdict-download     "&cracklib-url;/v&cracklib-version;/cracklib-words-&cracklib-version;.xz">
+  <!ENTITY crackdict-size         "4.0 MB">
+  <!ENTITY crackdict-md5sum       "f27804022dbf2682a7f7c353317f9a53">
 ]>
 
 <sect1 id="cracklib" xreflabel="CrackLib-&cracklib-version;">
@@ -37,7 +37,7 @@
       passord med ord i valgte ordlister.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -76,10 +76,20 @@
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
+        <para>Anbefalt ordliste for engelsktalende land (størrelse:</para>
+       <listitem>
+         <para>
+          Nedlasting (HTTP): <ulink url="&crackdict-download;"/>
+        </para>
+      </listitem>
+      <listitem>
         <para>
-          Anbefalt ordliste for engelsktalende land (størrelse:
-          &crackdict-size;; md5sum: &crackdict-md5sum;):
-          <ulink url="&crackdict-download;"/>
+           Nedlasting MD5 sum: &crackdict-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+            Nedlastingsstørrelse:  &crackdict-size;
         </para>
       </listitem>
     </itemizedlist>
@@ -116,9 +126,6 @@
       </para>
     </important>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/cracklib"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -153,13 +160,13 @@ make</userinput></screen>
       til <command>create-cracklib-dict</command> kommandoen.
     </para>
 
-<screen role="root"><userinput>install -v -m644 -D    ../cracklib-words-&cracklib-version;.bz2 \
-                         /usr/share/dict/cracklib-words.bz2    &amp;&amp;
+<screen role="root"><userinput>install -v -m644 -D    ../cracklib-words-&cracklib-version;.xz \
+                         /usr/share/dict/cracklib-words.xz    &amp;&amp;
 
-bunzip2 -v               /usr/share/dict/cracklib-words.bz2    &amp;&amp;
-ln -v -sf cracklib-words /usr/share/dict/words                 &amp;&amp;
-echo $(hostname) >>      /usr/share/dict/cracklib-extra-words  &amp;&amp;
-install -v -m755 -d      /usr/lib/cracklib                     &amp;&amp;
+unxz -v                  /usr/share/dict/cracklib-words.xz    &amp;&amp;
+ln -v -sf cracklib-words /usr/share/dict/words                &amp;&amp;
+echo $(hostname) >>      /usr/share/dict/cracklib-extra-words &amp;&amp;
+install -v -m755 -d      /usr/lib/cracklib                    &amp;&amp;
 
 create-cracklib-dict     /usr/share/dict/cracklib-words \
                          /usr/share/dict/cracklib-extra-words</userinput></screen>
@@ -190,11 +197,6 @@ create-cracklib-dict     /usr/share/dict/cracklib-words \
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -i '/skipping/d' util/packer.c</command>:
-      Fjern en meningsløs advarsel.
-    </para>
-
-    <para>
       <command>autoreconf -fiv</command>: Konfigurasjonsskriptet som ble levert med
       pakken er for gammel til å få den riktige versjonsstrengen av Python
       3.10 eller senere. Denne kommandoen regenererer den med en nyere versjon
@@ -205,13 +207,7 @@ create-cracklib-dict     /usr/share/dict/cracklib-words \
       <envar>PYTHON=python3</envar>: Dette tvinger installasjonen av
       python bindinger for Python 3, selv om Python 2 er installert.
     </para>
-    <!-- fixed by autoreconf
-    <para>
-      <envar>CPPFLAGS=-I/usr/include/python&python3-majorver;</envar>:
-      Dette løser et problem forårsaket av feil bruk av Python 3
-      deklarasjoner.
-    </para>
-    -->
+ 
     <para>
       <parameter>--with-default-dict=/lib/cracklib/pw_dict</parameter>:
       Denne parameteren tvinger installasjonen av
@@ -264,12 +260,12 @@ create-cracklib-dict     /usr/share/dict/cracklib-words \
 
       <seglistitem>
         <seg>cracklib-check, cracklib-format, cracklib-packer,
-        cracklib-unpacker og create-cracklib-dict</seg>
+        cracklib-unpacker, cracklib-update, og create-cracklib-dict</seg>
 
         <seg>libcrack.so og the _cracklib.so
           (<application>Python</application> modul)</seg>
 
-        <seg>/lib/cracklib, /usr/share/dict and /usr/share/cracklib</seg>
+        <seg>/usr/lib/cracklib, /usr/share/dict og /usr/share/cracklib</seg>
       </seglistitem>
     </segmentedlist>
 

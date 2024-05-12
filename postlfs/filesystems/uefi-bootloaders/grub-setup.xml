@@ -5,11 +5,11 @@
   %general-entities;
 ]>
 
-<sect1 id="grub-setup" xreflabel="Bruke GRUB til å Sette Opp Oppstartsprosessen med UEFI">
+<sect1 id="grub-setup" xreflabel="Using GRUB to Set Up the Boot Process with UEFI">
   <?dbhtml filename="grub-setup.html"?>
 
 
-  <title>Bruke GRUB til å Sette Opp Oppstartsprosessen med UEFI</title>
+  <title>Using GRUB to Set Up the Boot Process with UEFI</title>
 
   <sect2>
     <title>Slå Av Sikker Oppstart</title>
@@ -21,6 +21,54 @@
       fastvaren. Les dokumentasjonen fra produsenten av dtt
       system for å finne ut hvordan.
     </para>
+  </sect2>
+
+  <sect2 role="kernel" id="uefi-kernel">
+    <title>Kjernekonfigurasjon for UEFI støtte</title>
+
+    <para>
+      Aktiver følgende alternativer i kjernekonfigurasjonen og kompiler kjernen på nytt
+      om nødvendig:
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="grub-setup-kernel.xml"/>
+
+    <variablelist>
+      <title>Betydningen av konfigurasjonsalternativene:</title>
+
+      <varlistentry>
+        <term><parameter>CONFIG_PARTITION_ADVANCED</parameter></term>
+        <listitem>
+          <para>Hvis det ikke er aktivert,
+          <parameter>CONFIG_EFI_PARTITION</parameter> vil bli aktivert
+          automatisk. Men når den er aktivert, må du stille inn
+          <parameter>CONFIG_EFI_PARTITION</parameter> til å aktiveres
+          også.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <parameter>CONFIG_SYSFB_SIMPLEFB</parameter>,
+          <parameter>CONFIG_DRM</parameter>,
+          <parameter>CONFIG_DRM_FBDEV_EMULATION</parameter>,
+          <parameter>CONFIG_DRM_SIMPLEDRM</parameter>,
+          <parameter>CONFIG_FB</parameter>, and
+          <parameter>CONFIG_FRAMEBUFFER_CONSOLE</parameter></term>
+        <listitem>
+          <para>Kombinasjonen av disse alternativene gir Linux konsollen
+          støtte på toppen av UEFI rammebufferen. For å tillate kjernen
+          å skrive ut feilsøkingsmeldinger på et tidlig oppstartsstadium, bør de ikke bli
+          bygget som kjernemoduler med mindre en initramfs skal brukes.</para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+    <indexterm zone="grub-setup uefi-kernel">
+      <primary sortas="d-uefi">UEFI</primary>
+    </indexterm>
   </sect2>
 
   <sect2>
@@ -58,7 +106,7 @@
 
 <screen role="nodump"><userinput>fdisk /dev/sdx</userinput>
 <literal>
-Welcome to fdisk (util-linux 2.38.1).
+Welcome to fdisk (util-linux 2.39.1).
 Changes will remain in memory only, until you decide to write them.
 Be careful before using the write command.
 
@@ -70,7 +118,6 @@ Command (m for help): </literal><userinput>t</userinput>
 
 Command (m for help): </literal><userinput>w</userinput>
 <literal>The partition table has been altered.
-Calling ioctl() to re-read partition table.
 Syncing disks.</literal></screen>
 
     <para>
@@ -79,14 +126,15 @@ Syncing disks.</literal></screen>
       og monter den:
     </para>
 
-<screen role="nodump"><userinput>mkdir -pv /mnt/rescue &amp;&amp;
-mount -v -t vfat /dev/sdx1 /mnt/rescue</userinput></screen>
+<screen role="nodump"><userinput>mount --mkdir -v -t vfat /dev/sdx1 -o codepage=437,iocharset=iso8859-1 \
+      /mnt/rescue</userinput></screen>
 
     <para>
       Installer GRUB for EFI på partisjonen:
     </para>
 
-<screen role="nodump"><userinput>grub-install --target=x86_64-efi --removable --efi-directory=/mnt/rescue --boot-directory=/mnt/rescue</userinput></screen>
+<screen role="nodump"><userinput>grub-install --target=x86_64-efi --removable \
+             --efi-directory=/mnt/rescue --boot-directory=/mnt/rescue</userinput></screen>
 
     <para>
       Avmonter partisjonen:
@@ -96,75 +144,11 @@ mount -v -t vfat /dev/sdx1 /mnt/rescue</userinput></screen>
 
     <para>
       Nå kan USB flashstasjonen brukes som en nødoppstartsdisk på hvilken som helst x86-64
-      UEFI plattform. Det vil starte opp systemet og vise GRUB skallet. Så du
-      kan skrive kommandoer for å starte operativsystemet fra harddisken.
+      UEFI plattform. Det vil starte opp systemet og vise GRUB skallet. Så kan
+      du skrive kommandoer for å starte operativsystemet fra harddisken.
       For å lære hvordan du velger oppstartsenhet, les bruksanvisningen til ditt
       hovedkort eller bærbar PC.
     </para>
-
-  </sect2>
-
-  <sect2 role="kernel" id="uefi-kernel">
-    <title>Kjernekonfigurasjon for UEFI støtte</title>
-
-    <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen og kompiler kjernen på nytt
-      om nødvendig:
-    </para>
-
-<screen><literal>Processor type and features ---&gt;
-  [*] EFI runtime service support                               [CONFIG_EFI]
-  [*]   EFI stub support                                        [CONFIG_EFI_STUB]
-Enable the block layer ---&gt;
-  Partition Types ---&gt;
-    [*] Advanced partition selection                            [CONFIG_PARTITION_ADVANCED]
-    [*] EFI GUID Partition support                              [CONFIG_EFI_PARTITION]
-Device Drivers ---&gt;
-  Firmware Drivers ---&gt;
-    [*] Mark VGA/VBE/EFI FB as generic system framebuffer       [CONFIG_SYSFB_SIMPLEFB]
-  Graphics support ---&gt;
-    &lt;*&gt; Direct Rendering Manager                                [CONFIG_DRM]
-    [*] Enable legacy fbdev support for your modesetting driver [CONFIG_DRM_FBDEV_EMULATION]
-    &lt;*&gt; Simple framebuffer driver                               [CONFIG_DRM_SIMPLEDRM]
-    Frame buffer Devices ---&gt;
-      &lt;*&gt; Support for frame buffer devices ---&gt;                 [CONFIG_FB]
-    Console display driver support ---&gt;
-      [*] Framebuffer Console support                           [CONFIG_FRAMEBUFFER_CONSOLE]
-File systems ---&gt;
-  &lt;DOS/FAT/EXFAT/NT Filesystems ---&gt;
-    &lt;*/M&gt; VFAT (Windows-95) fs support                          [CONFIG_VFAT_FS]
-  Pseudo filesystems ---&gt;
-    &lt;*/M&gt; EFI Variable filesystem                               [CONFIG_EFIVAR_FS]</literal></screen>
-
-    <variablelist>
-      <title>Betydningen av konfigurasjonsalternativene:</title>
-
-      <varlistentry>
-        <term><parameter>CONFIG_EFI_STUB</parameter></term>
-        <listitem>
-          <para>På EFI systemer starter GRUB Linuxkjernen ved å påkalle
-          EFI fastvare for å laste den som en EFI applikasjon. Så, EFI stub er
-          nødvendig for å pakke inn kjernen som en EFI applikasjon.</para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term>
-          <parameter>CONFIG_SYSFB_SIMPLEFB</parameter>,
-          <parameter>CONFIG_DRM</parameter>,
-          <parameter>CONFIG_DRM_FBDEV_EMULATION</parameter>,
-          <parameter>CONFIG_DRM_SIMPLEDRM</parameter>,
-          <parameter>CONFIG_FB</parameter>, and
-          <parameter>CONFIG_FRAMEBUFFER_CONSOLE</parameter></term>
-        <listitem>
-          <para>Kombinasjonen av disse alternativene gir Linux konsollen
-          støtte på toppen av UEFI rammebufferen. For å tillate kjernen
-          å skrive ut feilsøkingsmeldinger på et tidlig oppstartsstadium, bør de ikke være
-          bygget som kjernemoduler med mindre en initramfs skal brukes.</para>
-        </listitem>
-      </varlistentry>
-
-    </variablelist>
 
   </sect2>
 
@@ -177,7 +161,7 @@ File systems ---&gt;
       Hvis systemet ditt støtter EFI, og en nyere versjon av en Linux
       distribusjon eller Windows er forhåndsinstallert, er det sannsynlig at ESP
       allerede er opprettet. Som
-      <systemitem class="username">root</systemitem> bruker, liste opp alle
+      <systemitem class="username">root</systemitem> bruker, list opp alle
       partisjoner på harddisken (erstatt <userinput>sda</userinput>
       med enheten som tilsvarer den aktuelle harddisken):
     </para>
@@ -185,14 +169,15 @@ File systems ---&gt;
     <screen role="nodump"><userinput>fdisk -l /dev/sda</userinput></screen>
 
     <para>
-      <quote>Type</quote> kolonnen i ESP skal være
+      The <quote>Type</quote> kolonnen i ESP skal være
       <literal>EFI System</literal>.
     </para>
 
     <para>
       Hvis systemet eller harddisken er ny, eller det er den første
       installasjon av et UEFI oppstartet OS på systemet, kan det hende at ESP ikke eksisterer.
-      Opprett i så fall en ny partisjon, lag et
+      Installer i så fall <xref linkend='dosfstools'/> først. Deretter oppretter du
+      en ny partisjon, lag et
       <systemitem class="filesystem">vfat</systemitem> filsystem på den,
       og sett partisjonstypen til <quote>EFI system</quote>.  Se
       instruksjoner for nødoppstartsenheten ovenfor som referanse.
@@ -212,17 +197,17 @@ File systems ---&gt;
       ESP):
     </para>
 
-<screen role="nodump"><userinput>mkdir -pv /boot/efi &amp;&amp;
-mount -v -t vfat /dev/sda1 /boot/efi</userinput></screen>
+<screen role="nodump"><userinput>mount --mkdir -v -t vfat /dev/sda1 -o codepage=437,iocharset=iso8859-1 \
+      /boot/efi</userinput></screen>
 
     <para>
-      Legg til en oppføring for ESP i
-      <filename>/etc/fstab</filename>, så den monteres automatisk
-      under systemoppstart:
+      Hvis du vil montere ESP automatisk under systemoppstart,
+      som &root; bruker, legg til en oppføring for ESP i
+      <filename>/etc/fstab</filename>:
     </para>
 
 <screen role="nodump"><userinput>cat &gt;&gt; /etc/fstab &lt;&lt; EOF</userinput>
-<literal>/dev/sda1 /boot/efi vfat defaults 0 1</literal>
+<literal>/dev/sda1 /boot/efi vfat codepage=437,iocharset=iso8859-1 0 1</literal>
 <userinput>EOF</userinput></screen>
 
   </sect2>
@@ -251,7 +236,7 @@ mount -v -t vfat /dev/sda1 /boot/efi</userinput></screen>
       </listitem>
       <listitem>
         <para>
-          EFI-fastvaren er 64-bit, men LFS-systemet er 32-bit, noe som gjør
+          EFI fastvaren er 64-bit, men LFS-systemet er 32-bit, noe som gjør
           EFI variabler utilgjengelige fordi kjernen ikke kan påkalle EFI
           kjøretidstjenester med en annen virtuell adresselengde.
         </para>
@@ -280,7 +265,7 @@ mount -v -t vfat /dev/sda1 /boot/efi</userinput></screen>
 
     <para>
       For å installere GRUB med EFI applikasjonen i den hardkodede
-      banen <filename>EFI/BOOT/BOOTX64.EFI</filename>, sørg først for
+      banen <filename>EFI/BOOT/BOOTX64.EFI</filename>, sørg først for at
       oppstartspartisjonen er montert som <filename class="directory">/boot</filename>
       og ESP er montert som
       <filename class="directory">/boot/efi</filename>.  Deretter, som &root;
@@ -317,7 +302,7 @@ mount -v -t vfat /dev/sda1 /boot/efi</userinput></screen>
     </note>
 
     <para>
-      Hvis du har fulgt instruksjonene i denne delen og satt opp en minimal oppstart
+      Hvis du har fulgt instruksjonene i denne delen og satt opp en minimal
       oppstartskonfigurasjon, hopp nå videre til
       <quote>Opprette GRUB Konfigurasjonsfilen</quote>.
     </para>
@@ -374,8 +359,8 @@ mount -v -t vfat /dev/sda1 /boot/efi</userinput></screen>
       På UEFI baserte systemer fungerer GRUB ved å installere en EFI applikasjon
       (en spesiell type kjørbar) i
       <filename class="directory">/boot/efi/EFI/[id]/grubx64.efi</filename>,
-      hvor <filename class="directory">/boot/efi</filename> er montert
-      punktet til ESP, og <literal>[id]</literal> erstattes med en
+      hvor <filename class="directory">/boot/efi</filename> er monteringspunktet
+      til ESP, og <literal>[id]</literal> erstattes med en
       identifikator spesifisert i <command>grub-install</command> kommandolinjen.
       GRUB vil opprette en oppføring i EFI variablene som inneholder
       banen <literal>EFI/[id]/grubx64.efi</literal> så EFI fastvaren
@@ -453,14 +438,13 @@ insmod part_gpt
 insmod ext2
 set root=(hd0,2)
 
+insmod all_video
 if loadfont /boot/grub/fonts/unicode.pf2; then
-  set gfxmode=auto
-  insmod all_video
   terminal_output gfxterm
 fi
 
-menuentry "GNU/Linux, Linux 6.1.11-lfs-11.3"  {
-  linux   /boot/vmlinuz-6.1.11-lfs-11.3 root=/dev/sda2 ro
+menuentry "GNU/Linux, Linux 6.4.10-lfs-12.0"  {
+  linux   /boot/vmlinuz-6.4.10-lfs-12.0 root=/dev/sda2 ro
 }
 
 menuentry "Firmware Setup" {
@@ -469,9 +453,27 @@ menuentry "Firmware Setup" {
 <userinput>EOF</userinput></screen>
 
     <para>
+      Referer til <ulink url='&lfs-root;/chapter10/grub.html'>LFS
+      boken</ulink> for grunnleggende kunnskap om
+      <filename>grub.cfg</filename> filen.
       <literal>(hd0,2)</literal>, <literal>sda2</literal>, og
-      <literal>6.1.11-lfs-11.3</literal> må stemme overens med din
+      <literal>6.4.10-lfs-12.0</literal> må stemme overens med din
       konfigurasjon.
+    </para>
+
+    <para>
+       <command>insmod all_video</command> direktivet laster ulike
+      moduler for videostøtte. Det er nødvendig for å initialisere EFI
+      framebuffer for at kjernen skal skrive ut meldinger riktig før
+      initialisering av kjerne GPU driver.
+    </para>
+
+    <para>
+      <command>terminal_output gfxterm</command> direktivet endrer
+      skjermoppløsningen til GRUB menyen for å matche skjermenheten din.
+      Det vil bryte gjengivelsen hvis <filename>unicode.pf2</filename>
+      fontdatafilen ikke er lastet inn, så den er beskyttet av et
+      <command>if</command> direktiv.
     </para>
 
     <note>
@@ -485,7 +487,7 @@ menuentry "Firmware Setup" {
     </note>
 
     <para>
-      <literal>Firmware Setup</literal> oppføringen kan brukes til å angi
+      The <literal>Firmware Setup</literal> oppføringen kan brukes til å angi
       konfigurasjonsgrensesnitt levert av fastvaren (noen ganger kalt
       <quote>BIOS configuration</quote>).
     </para>

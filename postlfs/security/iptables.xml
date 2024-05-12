@@ -5,7 +5,8 @@
   %general-entities;
 
   <!ENTITY iptables-download-http "https://www.netfilter.org/projects/iptables/files/iptables-&iptables-version;.tar.xz">
-  <!ENTITY iptables-download-ftp  "ftp://ftp.netfilter.org/pub/iptables/iptables-&iptables-version;.tar.xz">
+  <!--<!ENTITY iptables-download-ftp  "ftp://ftp.netfilter.org/pub/iptables/iptables-&iptables-version;.tar.xz">-->
+  <!ENTITY iptables-download-ftp  " ">
   <!ENTITY iptables-md5sum        "ffa00f68d63e723c21b8a091c5c0271b">
   <!ENTITY iptables-size          "633 KB">
   <!ENTITY iptables-buildsize     "16 MB">
@@ -30,7 +31,7 @@
       som brukes til å konfigurere Linux 2.4 og nyere regelsett for kjernepakkefiltrering.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -71,7 +72,7 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
 <!--      <xref linkend="nftables"/>, -->
-      <xref linkend="libpcap"/> (nødvendig for nfsypproxy støtte),
+      <xref linkend="libpcap"/> (kreves for BPFkompilator eller nfsynproxy støtte),
       <ulink url="https://github.com/tadamdam/bpf-utils">bpf-utils</ulink>
       (kreves for støtte for Berkeley Packet Filter),
       <ulink url="https://netfilter.org/projects/libnfnetlink/">libnfnetlink</ulink>
@@ -81,10 +82,6 @@
       <ulink url="https://netfilter.org/projects/nftables/">nftables</ulink>
     </para>
 
-
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/iptables"/>
-    </para>
   </sect2>
 
   <sect2 role="kernel" id="iptables-kernel">
@@ -96,16 +93,8 @@
       Følgende kjernekonfigurasjonsparametere kreves:
     </para>
 
-<screen><literal>[*] Networking support  ---&gt;                                          [CONFIG_NET]
-      Networking Options  ---&gt;
-        [*] Network packet filtering framework (Netfilter) ---&gt;       [CONFIG_NETFILTER]
-          [*] Advanced netfilter configuration                        [CONFIG_NETFILTER_ADVANCED]
-          Core Netfilter Configuration ---&gt;
-            &lt;*/M&gt; Netfilter connection tracking support               [CONFIG_NF_CONNTRACK]
-            &lt;*/M&gt; Netfilter Xtables support (required for ip_tables)  [CONFIG_NETFILTER_XTABLES]
-            &lt;*/M&gt; LOG target support                                  [CONFIG_NETFILTER_XT_TARGET_LOG]
-          IP: Netfilter Configuration ---&gt;
-            &lt;*/M&gt; IP tables support (required for filtering/masq/NAT) [CONFIG_IP_NF_IPTABLES]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="iptables-kernel.xml"/>
 
     <para>
       Inkluder eventuelle tilkoblingssporingsprotokoller som vil bli brukt, så vel som
@@ -296,6 +285,11 @@ iptables -A OUTPUT -j ACCEPT
 # and permit new connections related to established ones
 # (e.g. port mode ftp)
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# Drop any incoming MULTICAST or BROADCAST packet before logging:
+# The box outputs several of them when using netbios or mDNS, and those
+# appear immediately as incoming, which clutters the log.
+iptables -A INPUT -m addrtype --dst-type BROADCAST,MULTICAST -j DROP
 
 # Log everything else.
 iptables -A INPUT -j LOG --log-prefix "FIREWALL:INPUT "
