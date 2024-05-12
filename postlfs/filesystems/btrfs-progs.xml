@@ -6,10 +6,10 @@
 
   <!ENTITY btrfs-progs-download-http "&kernel-dl;/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v&btrfs-progs-version;.tar.xz">
   <!ENTITY btrfs-progs-download-ftp  " ">
-  <!ENTITY btrfs-progs-md5sum        "d5f703b4085dc745003c16d046d32c2b">
-  <!ENTITY btrfs-progs-size          "2.2 MB">
-  <!ENTITY btrfs-progs-buildsize     "53 MB (Legg til 8.2 GB for tester)">
-  <!ENTITY btrfs-progs-time          "0.2 SBU (Legg til 5.0 SBU for tester, men vil være lengre på trege disker)">
+  <!ENTITY btrfs-progs-md5sum        "1b5705b3e9503f09a9598dad1e7bfbc8">
+  <!ENTITY btrfs-progs-size          "3.0 MB">
+  <!ENTITY btrfs-progs-buildsize     "62 MB (midlertidige filer opprettet under tester trenger opptil 10 GB)">
+  <!ENTITY btrfs-progs-time          "0.2 SBU (legg til 3.8 SBU for tester, opptil 80 SBU på trege disker hvis reiserfsprogs er installert)">
 ]>
 
 <sect1 id="btrfs-progs" xreflabel="btrfs-progs-&btrfs-progs-version;">
@@ -30,7 +30,7 @@
       administrasjons- og feilsøkingsverktøy for B-tree filsystemet (btrfs).
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -83,23 +83,21 @@
     <para role="required">
       <xref linkend="lzo"/>
     </para>
-
+    <!-- In v6.2.1 (and maybe previous), sphinx is required for the doc
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="asciidoc"/> (eller <xref role="nodep" linkend="asciidoctor"/>)
       og <xref linkend="xmlto"/> (begge kreves for å generere mansider)
     </para>
-
+    -->
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="lvm2"/> (<command>dmsetup</command> brukes i tester),
       <xref linkend="reiserfs"/> (for tester), og
-      <xref linkend="sphinx"/> (nødvendig for å bygge dokumentasjon),
+      <xref linkend="sphinx"/> (nødvendig for å bygge dokumentasjon)
 
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-    <ulink url="&blfs-wiki;/btrfs-progs"/></para>
 
   </sect2>
 
@@ -111,8 +109,8 @@
       og kompiler kjernen på nytt:
     </para>
 
-<screen><literal>File systems ---&gt;
-  &lt;*/M&gt; Btrfs filesystem support [CONFIG_BTRFS_FS]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="btrfs-progs-kernel.xml"/>
 
     <para>
       I tillegg til ovennevnte og til alternativene som kreves for
@@ -120,10 +118,8 @@
       alternativer være aktivert for å kjøre tester:
     </para>
 
-<screen><literal>File systems  ---&gt;
-  [*]   Btrfs POSIX Access Control Lists      [CONFIG_BTRFS_FS_POSIX_ACL]
-  [*]   ReiserFS extended attributes          [CONFIG_REISERFS_FS_XATTR]
-  [*]     ReiserFS POSIX Access Control Lists [CONFIG_REISERFS_FS_POSIX_ACL]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="btrfs-progs-test-kernel.xml"/>
 
     <indexterm zone="btrfs-progs btrfs-progs-kernel">
       <primary sortas="d-btrfs-progs">BTRFS Programs</primary>
@@ -139,7 +135,9 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-documentation &amp;&amp;
+<screen><userinput>./configure --prefix=/usr           \
+            --disable-static        \
+            --disable-documentation &amp;&amp;
 make</userinput></screen>
 
     <note>
@@ -165,7 +163,10 @@ make</userinput></screen>
    ./fsck-tests.sh
    ./mkfs-tests.sh
    ./cli-tests.sh
+   sed 's/,orphan_file//' /etc/mke2fs.conf >./custom_mke2fs.conf &amp;&amp;
+   export MKE2FS_CONFIG=$PWD/custom_mke2fs.conf                  &amp;&amp;
    ./convert-tests.sh
+   unset MKE2FS_CONFIG &amp;&amp; rm custom_mke2fs.conf
    ./misc-tests.sh
    ./fuzz-tests.sh
 popd</userinput></screen>
@@ -188,36 +189,53 @@ Substitute your test failure with the one above.
     <note>
       <para>
         Hvis de ovennevnte kjernealternativene ikke er aktivert, vil noen tester
-        mislykkes, og forhindre at alle gjenværende tester kjøres fordi testens
+        mislykkes, og forhindre at alle gjenværende tester fra å kjøre fordi testens
         diskbilde ikke er rent avmontert.
       </para>
     </note>
-
+<!--  Now passes in version 6.3.1.
     <para>
       mkfs testen 025-zoned-parallel er kjent for å mislykkes.
     </para>
-
+-->
     <para>
       Installer pakken som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
+    <para>
+      Hvis du har sendt <parameter>--disable-documentation</parameter> til
+      <command>configure</command> og du trenger manualsidene, installer dem
+      ved å kjøre, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>for i in 5 8; do
+   install Documentation/*.$i /usr/share/man/man$i
+done</userinput></screen>
+
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <para>
-      <option>--disable-documentation</option>: Dette alternativet
-      er nødvendig hvis de anbefalte avhengighetene ikke er installert.
-    </para>
-<!-- not anymore in the commands
-    <para>
-      <command>mv tests/{cli,convert,misc,fuzz}-tests/ ...</command>: Deaktiverer
-      tester som mislykkes og hindrer tester i å fullføre.
-    </para>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
 
+    <para>
+      <parameter>--disable-documentation</parameter>: Denne bryteren
+      deaktiverer gjenoppbygging av manuelle sider, fordi det krever
+      <xref linkend="sphinx"/>.
+    </para>
+      <command>sed 's/,orphan_file//" ...</command>: I denne versjonen av
+      <application>btrfs-progs</application>,
+      <command>btrfs-convert</command> programmet produserer et btrfs filsystem
+      som inneholder feil ved konvertering fra et ext4 filsystem opprettet
+      med <quote>orphan_file</quote> funksjonen. Denne kommandoen oppretter
+      en tilpasset konfigurasjonsfil som forhindrer opprettelse av et filsystem
+      med denne funksjonen.
+    </para>
+    <!--
     <para>
       <command>ln -s ... /usr/lib/libbtrfs.so</command>: Skaper en
       symbolsk lenke i mappen der den forventes.
@@ -228,6 +246,24 @@ Substitute your test failure with the one above.
       bibliotekinnlegg.
     </para>
 -->
+  </sect2>
+
+  <sect2 role="using" id="using-btrfs-convert">
+    <title>Bruke btrfs-convert programmet</title>
+
+    <para>
+      Denne versjonen av <application>btrfs-progs</application> konverterer ikke
+      riktig ext4 filsystemer til btrfs hvis ext4
+      <option>orphan_file</option> funksjonen er slått på. Hvis du
+      konvertere et slikt filsystem, må du først kjøre:
+    </para>
+
+<screen role="nodump"><userinput>tune2fs -O ^orphan_file <replaceable>/dev/sdxx</replaceable></userinput></screen>
+
+    <para>
+      hvor <filename>/dev/sdxx</filename> er partisjonen til filsystemet
+      du ønsker å konvertere.
+    </para>
   </sect2>
 
   <sect2 role="content">
@@ -282,7 +318,8 @@ Substitute your test failure with the one above.
         <term><command>btrfs-convert</command></term>
         <listitem>
           <para>
-            konverterer fra et ext2/3/4 eller reiserfs filsystem til btrfs
+            konverterer fra et ext2/3/4 eller reiserfs filsystem til btrfs (se
+            <xref linkend="using-btrfs-convert"/> ovenfor)
           </para>
           <indexterm zone="btrfs-progs btrfs-convert">
             <primary sortas="b-btrfs-convert">btrfs-convert</primary>

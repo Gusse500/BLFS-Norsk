@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY fuse3-download-http "https://github.com/libfuse/libfuse/releases/download/fuse-&fuse3-version;/fuse-&fuse3-version;.tar.xz">
+  <!ENTITY fuse3-download-http "https://github.com/libfuse/libfuse/releases/download/fuse-&fuse3-version;/fuse-&fuse3-version;.tar.gz">
   <!ENTITY fuse3-download-ftp  " ">
-  <!ENTITY fuse3-md5sum        "f2830b775bcba2ab9cb94f2619c077a4">
-  <!ENTITY fuse3-size          "3.9 MB">
-  <!ENTITY fuse3-buildsize     "102 MB (med tester og dokumentasjon)">
-  <!ENTITY fuse3-time          "0.1 SBU (legg til 0.4 SBU for tester)">
+  <!ENTITY fuse3-md5sum        "578498e1035e1039525430c0694f60b7">
+  <!ENTITY fuse3-size          "14 MB">
+  <!ENTITY fuse3-buildsize     "230 MB (med tester og dokumentasjon)">
+  <!ENTITY fuse3-time          "0.2 SBU (legg til 0.3 SBU for tester)">
 ]>
 
 <sect1 id="fuse3" xreflabel="Fuse-&fuse3-version;">
@@ -33,7 +33,7 @@
       filsystemimplementeringer.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -72,13 +72,11 @@
     <bridgehead renderas="sect3">Fuse Avhengigheter</bridgehead>
     <bridgehead renderas="sect4">Optional</bridgehead>
     <para role="optional">
-      <xref linkend="doxygen"/> (for å gjenoppbygge API dokumentasjonen) og
-      <xref linkend="pytest"/> (nødvendig for tester)
+      <xref linkend="doxygen"/> (for å gjenoppbygge API dokumentasjonen)
+      <xref linkend="pytest"/> (nødvendig for tester) og
+	  <ulink url="https://pypi.org/project/looseversion/">looseversion</ulink>
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/fuse"/>
-    </para>
   </sect2>
 
   <sect2 role="kernel" id="fuse-kernel">
@@ -89,17 +87,16 @@
       om nødvendig:
     </para>
 
-<screen><literal>File systems  ---&gt;
-  &lt;*/M&gt; FUSE (Filesystem in Userspace) support [CONFIG_FUSE_FS]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="fuse-kernel.xml"/>
 
     <para>
       Tegnenheter i brukerområdet bør også være aktivert for å kjøre
       tester:
     </para>
 
-<screen><literal>File systems  ---&gt;
-  &lt;*/M&gt; FUSE (Filesystem in Userspace) support  [CONFIG_FUSE_FS]
-  &lt;*/M&gt;   Character device in Userspace support [CONFIG_CUSE]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="fuse-test-kernel.xml"/>
 
     <indexterm zone="fuse3 fuse-kernel">
       <primary sortas="d-fuse3">Fuse 3</primary>
@@ -119,7 +116,7 @@
 mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr --buildtype=release .. &amp;&amp;
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -133,26 +130,40 @@ ninja</userinput></screen>
 popd</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør (som <systemitem
+      For å teste resultatene, utsted følgende kommandoer (som <systemitem
       role="username">root</systemitem> bruker):
     </para>
 
-    <!-- EDITORS NOTE: To view the results of the tests, look for
+    <!-- EDITORS NOTE:
+	
+         Don't use 'pytest' instead of 'python3 -m pytest'.  There is no
+         testenv/bin/pytest (as at pytest-7.4.0) so 'pytest' resolves to
+         /usr/bin/pytest, and the shebang of it is /usr/bin/python3.11.
+         So it won't find the looseversion installed in testenv.
+
+         To view the results of the tests, look for
          "short test summary info" at the end of your log. Below skipped tests,
          you will see "X passed, X skipped, X failed (if any) in X seconds" -->
 
-<screen role="root"
-        remap="test"><userinput>python3 -m pytest test/</userinput></screen>
+<screen role="root" remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
+source testenv/bin/activate                    &amp;&amp;
+pip3 install looseversion                      &amp;&amp;
+python3 -m pytest                              &amp;&amp;
+deactivate</userinput></screen>
 
     <para>
       <xref linkend="pytest"/> Python
       modulen er nødvendig for testene. En test navngitt
       <filename>test_cuse</filename> vil mislykkes hvis
       <parameter>CONFIG_CUSE</parameter> konfigurasjonselementet ikke ble aktivert
-      når kjernen ble bygget. To tester,
-      <filename>test_ctests.py</filename> og
-      <filename>test_examples.py</filename> vil gi en advarsel fordi en
-      utdatert Python modul brukes.
+      når kjernen ble bygget. En test,
+      <filename>test/util.py</filename>, vil gi en advarsel på grunn av bruken
+      av en ukjent mark i pytest.
+      <!-- I really don't know why.  But it always happen for me, maybe
+           kernel configuration issue... -->
+      En test navngitt
+      <filename>test_notify_inval_entry[True-expire_entries]</filename>
+      kan mislykkes under visse omstendigheter.
     </para>
 
     <para>
@@ -163,10 +174,9 @@ popd</userinput></screen>
 chmod u+s /usr/bin/fusermount3 &amp;&amp;
 
 cd ..                          &amp;&amp;
-install -v -m755 -d /usr/share/doc/fuse-&fuse3-version; &amp;&amp;
-install -v -m644    doc/{README.NFS,kernel.txt} \
-                    /usr/share/doc/fuse-&fuse3-version; &amp;&amp;
-cp -Rv doc/html     /usr/share/doc/fuse-&fuse3-version;</userinput></screen>
+cp -Rv doc/html -T /usr/share/doc/fuse-&fuse3-version; &amp;&amp;
+install -v -m644   doc/{README.NFS,kernel.txt} \
+                   /usr/share/doc/fuse-&fuse3-version;</userinput></screen>
 
   </sect2>
 
@@ -177,6 +187,13 @@ cp -Rv doc/html     /usr/share/doc/fuse-&fuse3-version;</userinput></screen>
       <command>sed ... util/meson.build</command>: Denne kommandoen deaktiverer
       installasjonen av et oppstartsskript og en udev regel som ikke er nødvendig.
     </para>
+
+<!--
+    <para>
+      <command>sed ... meson.build</command>: This command fixes a bug with the
+      test_passthrough_hp test.
+    </para>
+-->
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>

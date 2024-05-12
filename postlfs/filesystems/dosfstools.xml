@@ -8,7 +8,7 @@
   <!ENTITY dosfstools-download-ftp  " ">
   <!ENTITY dosfstools-md5sum        "49c8e457327dc61efab5b115a27b087a">
   <!ENTITY dosfstools-size          "314 KB">
-  <!ENTITY dosfstools-buildsize     "3.5 MB">
+  <!ENTITY dosfstools-buildsize     "4.5 MB (med tester)">
   <!ENTITY dosfstools-time          "mindre enn 0.1 SBU">
 ]>
 
@@ -30,7 +30,7 @@
       verktøy for bruk med FAT familien av filsystemer.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -66,8 +66,6 @@
       </listitem>
     </itemizedlist>
 
-    <para condition="html" role="usernotes">Brukernotater:
-    <ulink url="&blfs-wiki;/dosfstools"/></para>
 
   </sect2>
 
@@ -76,16 +74,27 @@
 
     <para>
       Aktiver følgende alternativ i kjernekonfigurasjonen
-      og kompiler kjernen på nytt:
+      og kompiler kjernen på nytt hvis du trenger å montere et FAT familie filsystem:
     </para>
 
-<screen><literal>File systems ---&gt;
-  &lt;DOS/FAT/EXFAT/NT Filesystems ---&gt;
-    &lt;*/M&gt; MSDOS fs support             [CONFIG_MSDOS_FS]
-    &lt;*/M&gt; VFAT (Windows-95) fs support [CONFIG_VFAT_FS]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="dosfstools-kernel.xml"/>
+
+    <para>
+      Merk at <option>CONFIG_MSDOS_FS</option> bevisst ikke støtter
+      lange filnavn.  <option>CONFIG_VFAT_FS</option> bør brukes
+      i stedet med mindre du virkelig ønsker å håndheve DOS stilen
+      <quote>8.3</quote> filnavn.
+    </para>
+
+    <para>
+      Du kan montere et FAT familie filsystem når kjernen støtter det.
+      Hvis du ikke trenger å opprette, sjekke eller ommerke et FAT familiesystem,
+      kan du hoppe over denne pakken.
+    </para>
 
     <indexterm zone="dosfstools dosfstools-kernel">
-      <primary sortas="d-dosfstools">Dosfstools Programs</primary>
+      <primary sortas="d-fat">FAT Støtte i Kjernen</primary>
     </indexterm>
 
   </sect2>
@@ -105,7 +114,7 @@
 make</userinput></screen>
 
     <para>
-      Denne pakken kommer ikke med en testpakke.
+      For å teste resultatene, utsted: <command>make check</command>.
     </para>
 
     <para>
