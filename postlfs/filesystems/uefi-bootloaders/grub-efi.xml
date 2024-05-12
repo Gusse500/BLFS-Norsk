@@ -8,16 +8,12 @@
   <!ENTITY grub-efi-download-ftp  " ">
   <!ENTITY grub-efi-md5sum        "cf0fd928b1e5479c8108ee52cb114363">
   <!ENTITY grub-efi-size          "6.3 MB">
-  <!ENTITY grub-efi-buildsize     "137 MB">
-  <!ENTITY grub-efi-time          "1.0 SBU (on 64-bit LFS)">
+  <!ENTITY grub-efi-buildsize     "183 MB">
+  <!ENTITY grub-efi-time          "0.4 SBU (på 64-bits LFS, ved å bruke parallellisme=4)">
 
   <!ENTITY unifont-download-http  "https://unifoundry.com/pub/unifont/unifont-&unifont-version;/font-builds/unifont-&unifont-version;.pcf.gz">
-  <!ENTITY unifont-md5sum         "c371b9b4a8a51228c468cc7efccec098">
+  <!ENTITY unifont-md5sum         "94ff8cb4d5674cd2f38b00cede5e06d5">
   <!ENTITY unifont-size           "1.4 MB">
-
-  <!ENTITY gcc-download-http      "&gnu-http;/gcc/gcc-&gcc-version;/gcc-&gcc-version;.tar.xz">
-  <!ENTITY gcc-md5sum             "73bafd0af874439dcdb9fc063b6fb069">
-  <!ENTITY gcc-size               "81 MB">
 ]>
 
 <sect1 id="grub-efi" xreflabel="GRUB-&grub-version; for EFI">
@@ -39,7 +35,7 @@
       ikke er aktivert for GRUB innebygd i LFS.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -109,17 +105,7 @@
       <title>GCC (bare nødvendig hvis du bygger på 32-bits LFS)</title>
       <listitem>
         <para>
-          Nedlasting (HTTP): <ulink url="&gcc-download-http;"/>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Nedlasting MD5 sum: &gcc-md5sum;
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Nedlastingsstørrelse: &gcc-size;
+          Referer til <xref linkend='gcc'/> siden for nedlastingsinformasjon.
         </para>
       </listitem>
     </itemizedlist>
@@ -137,8 +123,6 @@
       <xref linkend="lvm2"/>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-    <ulink url="&blfs-wiki;/grub-efi"/></para>
 
   </sect2>
 
@@ -233,11 +217,7 @@ mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions</userin
       hvis <command>grub-mkfont</command> ikke er bygget, eller unicode fontdataen
       ikke er tilgjengelig på det tidspunktet GRUB bygges, vil GRUB ikke installere
       hvilken som helst font for oppstartslasteren. GRUB oppstartsmenyen vil vises
-      ved å bruke en grov skrifttype og det tidlige stadiet av kjerneinitialisering vil være
-      i <quote>blindmodus</quote> &mdash; kan du ikke se noen kjernemeldinger før
-      grafikkortdriveren er initialisert. Det vil være veldig vanskelig å
-      diagnostisere noen oppstartsproblemer, spesielt hvis grafikkdriveren er
-      bygget som modul.</para>
+      ved hjelp av en grov skrift eller i et mindre område på skjermen.</para>
     </warning>
 
     <para>
@@ -247,7 +227,7 @@ mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions</userin
 
     <para>
       <parameter>--target=x86_64</parameter>: Sikrer at GRUB bygges for
-      x86_64 selv om du bygger på et 32-bits LFS system. De fleste EFI fastvarene
+      x86_64 selv om du bygger på et 32-bits LFS system. De fleste EFI fastvare
       på x86_64 støtter ikke 32-biters oppstartslastere.
     </para>
 
