@@ -6,9 +6,9 @@
 
   <!ENTITY polkit-download-http "https://gitlab.freedesktop.org/polkit/polkit/-/archive/&polkit-version;/polkit-&polkit-version;.tar.gz">
   <!ENTITY polkit-download-ftp  " ">
-  <!ENTITY polkit-md5sum        "bbe3e745fc5bc1a41f1b5044f09a0f26">
-  <!ENTITY polkit-size          "728 KB">
-  <!ENTITY polkit-buildsize     "7.0 MB (med tester)">
+  <!ENTITY polkit-md5sum        "36540b837c588e1e77145523bb39f511">
+  <!ENTITY polkit-size          "736 KB">
+  <!ENTITY polkit-buildsize     "6.8 MB (med tester)">
   <!ENTITY polkit-time          "0.3 SBU (med tester, bruke parallellisme=4)">
 ]>
 
@@ -31,7 +31,7 @@
       kommunisere med privilegerte prosesser.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -89,17 +89,16 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="glib2"/> og
-      <xref linkend="duktape"/>
+      <xref linkend="glib2"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="gobject-introspection"/>,
-      <xref linkend="libxslt"/>,
-      <xref linkend="linux-pam"/>
-      <phrase revision="sysv">
-        og <xref role="first" linkend="elogind"/>
+      <!-- For jhalfs just make it required to avoid over-complexity. -->
+      <xref role="required" linkend="duktape"/>,
+      <xref linkend="libxslt"/>,<phrase revision="systemd"> og</phrase>
+      <xref linkend="linux-pam"/><phrase revision="sysv">, og
+        <xref linkend="elogind"/>
       </phrase>
     </para>
 
@@ -165,9 +164,6 @@
       </para>
     </note>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/polkit"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -184,16 +180,15 @@
 useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
         -g polkitd -s /bin/false polkitd</userinput></screen>
 
-<!--
     <para>
-      Først, fikse problemer med å angi tillatelser under installasjon og med
-      meson-0.60.0:
+      Hvis du bruker <xref linkend="js102"/>, gjør følgende endring (se Parameterforklaringer
+      nedenfor for mer informasjon):
     </para>
 
-<screen><userinput remap="pre">sed '/0,/s/^/#/' -i meson_post_install.py &amp;&amp;
-sed '/policy,/d' -i actions/meson.build \
-                 -i src/examples/meson.build</userinput></screen>
+<screen><userinput remap="nodump">sed -e 's/JS_Init/JS::DisableJitBackend(); &amp;/' \
+    -i src/polkitbackend/polkitbackendjsauthority.cpp</userinput></screen>
 
+<!--
     <para>
       Bruk en oppdatering for å fikse to sikkerhetsproblemer:
     </para>
@@ -215,53 +210,54 @@ sed '/policy,/d' -i actions/meson.build \
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr                       \
+meson setup ..                            \
+      --prefix=/usr                       \
       --buildtype=release                 \
       -Dman=true                          \
       -Dsession_tracking=libsystemd-login \
-      -Dtests=true                        \
-      -Djs_engine=duktape                 \
-      ..                                  &amp;&amp;
+      -Dtests=true                        &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr                 \
+meson setup ..                      \
+      --prefix=/usr                 \
       --buildtype=release           \
       -Dman=true                    \
       -Dsession_tracking=libelogind \
-      -Dsystemdsystemunitdir=/tmp   \
-      -Dtests=true                  \
-      -Djs_engine=duktape           \
-      ..                            &amp;&amp;
+      -Dtests=true                  &amp;&amp;
 ninja</userinput></screen>
 
-    <!--
-      "-t3" for raising the timeout to 90s, i. e. 3x the default:
-      https://gitlab.freedesktop.org/polkit/polkit/-/merge_requests/107
-    -->
     <para>
       For å teste resultatene, sørg først for at systemets
       <application>D-Bus</application> nisse kjører,
       og både <xref linkend='dbus-python'/> og
       <xref linkend='python-dbusmock'/> er installert.
-      Kjør så <command>meson test -t3</command>.
+      Kjør så <command>ninja test</command>.
     </para>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root" revision="systemd"><userinput>ninja install</userinput></screen>
-
-<screen role="root" revision="sysv"><userinput>ninja install &amp;&amp;
-rm -v /tmp/*.service</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
+
+    <para>
+      <command>sed -e 's/JS_Init/JS::DisableJitBackend(); &amp;/' ...
+      </command>: JIT kompileringen av JS102 trenger W+X kartlegging som
+      er farlig og er ikke tillatt av
+      <application>systemd</application> enhetsfil sendt i polkit
+      pakken. Denne kommandoen er strengt tatt ikke nødvendig på systemer basert på
+      sysvinit, men det forbedrer fortsatt sikkerheten. Det har ingen effekt hvis det bygges
+      polkit med anbefalt <xref linkend='duktape'/> Javascript
+      motor.
+    </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
@@ -274,10 +270,9 @@ rm -v /tmp/*.service</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Djs_engine=duktape</parameter>: Denne bryteren gjør det mulig å bruke
-      <xref linkend="duktape"/> JavaScript motoren. Erstatt med
-      <option>-Djs_engine=mozjs</option> for å bruke <xref linkend="js102"/>
-      JavaScript motoren.
+      <option>-Djs_engine=mozjs</option>: Denne bryteren tillater bruk av
+      <xref linkend="js102"/> JavaScript motoren i stedet for
+      <xref linkend='duktape'/> JavaScript motoren.
     </para>
 
     <!--
@@ -291,6 +286,13 @@ rm -v /tmp/*.service</userinput></screen>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
     -->
+
+    <para>
+      <option>-Dos_type=lfs</option>: Bruk denne bryteren hvis du ikke opprettet
+      <filename>/etc/lfs-release</filename> filen ellers vil distribusjons automatiske
+      deteksjon mislykkes, og du vil ikke kunne bruke
+      <application>Polkit</application>.
+    </para>
 
     <para>
       <option>-Dauthfw=shadow</option>: Denne bryteren aktiverer
@@ -324,44 +326,6 @@ rm -v /tmp/*.service</userinput></screen>
       <option>-Dgtk_doc=true</option>: Bruk dette alternativet for å aktivere bygging og
       installering av API dokumentasjonen.
     </para>
-
-  </sect2>
-
-  <sect2 role="configuration">
-    <title>Konfigurere Polkit</title>
-
-    <sect3>
-      <title>PAM Konfigurasjon</title>
-
-      <note>
-        <para>
-          Hvis du ikke har bygget <application>Polkit</application> med
-          <application>Linux PAM</application> støtte, kan du hoppe over denne
-          seksjonen.
-        </para>
-      </note>
-
-      <para>
-        Hvis du har bygget <application>Polkit</application> med
-        <application>Linux PAM</application> støtte, må du endre
-        standard PAM konfigurasjonsfilen som ble installert som standard for å få
-        <application>Polkit</application> for å fungere riktig med BLFS. Kjør
-        følgende kommandoer som <systemitem class="username">root</systemitem>
-        bruker og lag konfigurasjonsfilen for <application>Linux PAM</application>:
-      </para>
-
-<screen role="root"><userinput>cat &gt; /etc/pam.d/polkit-1 &lt;&lt; "EOF"
-<literal># Begin /etc/pam.d/polkit-1
-
-auth     include        system-auth
-account  include        system-account
-password include        system-password
-session  include        system-session
-
-# End /etc/pam.d/polkit-1</literal>
-EOF</userinput></screen>
-
-    </sect3>
 
   </sect2>
 
