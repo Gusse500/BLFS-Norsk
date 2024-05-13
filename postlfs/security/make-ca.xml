@@ -48,7 +48,7 @@
         url="https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/">her</ulink>.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -83,8 +83,12 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="p11-kit"/> (kreves ved kjøretid for å
-      generere sertifikatlagre fra tillitsankere)
+      <!-- Attention: no role="runtime" here because jhalfs don't assume
++           runtime dependencies are needed to run commands.  -->
+      <xref linkend="p11-kit"/> (kjøretid, bygget etter
+      <xref role="nodep" linkend="libtasn1"/>, kreves i de følgende
+      instruksjoner for å generere sertifikatlagre fra tillitsankere, og
+      hver gang <command>make-ca</command> kjøres)
     </para>
     <!-- /usr/bin/trust is needed to extract the certs to /etc/ssl/certs -->
 
@@ -93,12 +97,10 @@
       <xref role="runtime" linkend="nss"/> (å generere en delt NSSDB)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-    <ulink url='&blfs-wiki;/make-ca'/></para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av make-ca</title>
+    <title>Installasjon av make-ca og Generering av CA sertifikatlager</title>
 
     <para>
       <application>make-ca</application> skriptet vil laste ned og behandle
@@ -125,9 +127,23 @@
 <screen role="root"><userinput>make install &amp;&amp;
 install -vdm755 /etc/ssl/local</userinput></screen>
 
+   <note>
+     <para>
+       Teknisk sett er denne pakken allerede installert på dette tidspunktet.
+       Men de fleste pakker som lister <application>make-ca</application> som
+       en avhengighet krever faktisk at systemsertifikatlageret er satt opp
+       av denne pakken, i stedet for å kreve <command>make-ca</command>
+       programmet i seg selv. Så instruksjonene for å bruke
+       <command>make-ca</command> for å sette opp systemsertifikatlageret
+       er inkludert i denne delen. Du bør sørge for at nødvendige
+       kjøretidsavhengighet for <application>make-ca</application> er
+       tilfredstilt nå, og fortsett å følge instruksjonene.
+     </para>
+   </note>
+
    <para>
-     Som <systemitem class="username">root</systemitem> bruker, etter
-     installering <xref linkend="p11-kit"/>, last ned sertifikatkilden og
+     Som <systemitem class="username">root</systemitem> bruker,
+     last ned sertifikatkilden og
      klargjør for systembruk med følgende kommando:
    </para>
 

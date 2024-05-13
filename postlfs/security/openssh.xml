@@ -10,14 +10,15 @@
            " "> <!-- at the moment, unable to connect via ftp: ken
            "ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-&openssh-version;.tar.gz"> -->
   <!ENTITY openssh-md5sum        "&openssh-md5sum;">
-  <!ENTITY openssh-size          "1.8 MB">
-  <!ENTITY openssh-buildsize     "44 MB (legg til 22 MB for tester)">
+  <!ENTITY openssh-size          "1.7 MB">
+  <!ENTITY openssh-buildsize     "45 MB (legg til 22 MB for tester)">
   <!ENTITY openssh-time          "0.2 SBU (Bruker parallellisme=4;
                                   å kjøre testene tar omtrent 20 minutter,
                                   uavhengig av prosessorhastighet)">
 ]>
 
-  <!-- make check: real 18m13.005s;  9.2p1 3 Feb 2023 -->
+  <!-- make check: real 18m13.005s;  9.2p1  3 Feb 2023 -->
+  <!-- make check: real 18m08.654s;  9.3p1 17 Mar 2023 -->
 
 <sect1 id="openssh" xreflabel="OpenSSH-&openssh-version;">
   <?dbhtml filename="openssh.html"?>
@@ -40,7 +41,7 @@
       <command>rcp</command> henholdsvis.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -92,7 +93,8 @@
     <para role="optional">
       <xref linkend="gdb"/> (for tester),
       <xref linkend="linux-pam"/>,
-      <xref linkend="x-window-system"/>,
+      <xref linkend="xorg7-app"/> (eller
+      <xref linkend='xorg-env' role='nodep'/>, se Parameterforklaringer),
       <xref linkend="mitkrb"/>,
       <xref linkend="which"/> (for tester),
       <ulink url="https://www.thrysoee.dk/editline/">libedit</ulink>,
@@ -109,7 +111,7 @@
     </para>
 
     <para condition="html" role="usernotes">
-        Brukernotater: <ulink url="&blfs-wiki;/OpenSSH"/>
+        Redaktørens notater: <ulink url="&blfs-wiki;/OpenSSH"/>
     </para>
   </sect2>
 
@@ -125,8 +127,7 @@
       kommandoer som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>install  -v -m700 -d /var/lib/sshd &amp;&amp;
-chown    -v root:sys /var/lib/sshd &amp;&amp;
+<screen role="root"><userinput>install -v -g sys -m700 -d /var/lib/sshd &amp;&amp;
 
 groupadd -g 50 sshd        &amp;&amp;
 useradd  -c 'sshd PrivSep' \
@@ -176,14 +177,14 @@ fi</userinput></screen>
             --with-superuser-path=/usr/sbin:/usr/bin \
             --with-pid-dir=/run                      &amp;&amp;
 make</userinput></screen>
-
+<!--  I got all tests passed without this with 9.3p1, June 12, 2023.
     <para>
       Testpakken krever en installert kopi av <command>scp</command> for å
       fullføre multipleksing testene. For å kjøre testpakken, kopier først
       <command>scp</command> programmet til
       <filename class="directory">/usr/bin</filename>, sørge for at du
       sikkerhetskopiere alle eksisterende kopier først.
-    </para>
+    </para>-->
 <!--  I got all tests passed without this with 9.0p1.  Apr 13, 2022.
     <para>
       Hvis du ønsker å kjøre testene, fjern en testpakke som ikke er gyldig på
@@ -264,10 +265,10 @@ install -v -m644    INSTALL LICENCE OVERVIEW README* \
     </para>
 
     <para>
-      <option>--with-xauth=/usr/bin/xauth</option>: Angi standard
+      <option>--with-xauth=$XORG_PREFIX/bin/xauth</option>: Angi standard
       plassering for <command>xauth</command> binære for X autentisering.
-      Endre plassering hvis <command>xauth</command> vil bli installert til en
-      annen sti. Denne kan også styres fra
+      Miljøvariabelen <envar>XORG_PREFIX</envar> bør settes
+      ved å følge <xref linkend='xorg-env'/>. Denne kan også styres fra
       <filename>sshd_config</filename> med nøkkelordet XAuthLocation. Du kan
       se bort fra denne bryteren hvis <application>Xorg</application> allerede er installert.
     </para>
