@@ -6,10 +6,10 @@
 
   <!ENTITY cups-download-http "https://github.com/OpenPrinting/cups/releases/download/v&cups-version;/cups-&cups-version;-source.tar.gz">
   <!ENTITY cups-download-ftp  " ">
-  <!ENTITY cups-md5sum        "be5241e2c165eeb83b58aa32de26fb16">
+  <!ENTITY cups-md5sum        "b8ca6027eaeeed6171178cc526879ff5">
   <!ENTITY cups-size          "7.8 MB">
-  <!ENTITY cups-buildsize     "60 MB (Legg til 37 MB for tester)">
-  <!ENTITY cups-time          "0.5 SBU (Legg til 1.3 SBU for tester)">
+  <!ENTITY cups-buildsize     "76 MB (Legg til 60 MB for tester)">
+  <!ENTITY cups-time          "0.5 SBU (Legg til 1.6 SBU for tester)">
 ]>
 
 <sect1 id="cups" xreflabel="Cups-&cups-version;">
@@ -32,7 +32,7 @@
       og rasterskrivere.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -105,7 +105,7 @@
       <ulink role="runtime" url="https://developers.hp.com/hp-linux-imaging-and-printing">hplip</ulink> (HP skrivere)
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
+    <para condition="html" role="usernotes">Redaktørens notater:
       <ulink url="&blfs-wiki;/cups"/>
     </para>
   </sect2>
@@ -129,22 +129,16 @@
       og rekompilere kjernen:
     </para>
 
-<screen><literal>Device Drivers  ---&gt;
-  [*] USB support  ---&gt;                          [CONFIG_USB_SUPPORT]
-    &lt;*/M&gt;  OHCI HCD (USB 1.1) support            [CONFIG_USB_OHCI_HCD]
-    &lt;*/M&gt;  UHCI HCD (most Intel and VIA) support [CONFIG_USB_UHCI_HCD]
-    &lt;*/M&gt;  USB Printer support                   [CONFIG_USB_PRINTER]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="usb-printer-kernel.xml"/>
 
     <para>
       Hvis du har en parallellskriver, aktiver følgende alternativer i din
       kjernekonfigurasjon og kompiler kjernen på nytt:
     </para>
 
-<screen><literal>Device Drivers  ---&gt;
-  &lt;*/M&gt; Parallel port support  ---&gt;    [CONFIG_PARPORT]
-    &lt;*/M&gt; PC-style hardware            [CONFIG_PARPORT_PC]
-  Character devices  ---&gt;
-    &lt;*/M&gt; Parallel printer support     [CONFIG_PRINTER]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="parallel-printer-kernel.xml"/>
 
     <indexterm zone="cups cups-kernel">
       <primary sortas="d-cups">cups</primary>
@@ -215,11 +209,13 @@
 <screen revision="sysv"><userinput>./configure --libdir=/usr/lib            \
             --disable-systemd            \
             --with-rcdir=/tmp/cupsinit   \
+			--with-rundir=/run/cups      \
             --with-system-groups=lpadmin \
             --with-docdir=/usr/share/cups/doc-&cups-version; &amp;&amp;
 make</userinput></screen>
 
 <screen revision="systemd"><userinput>./configure --libdir=/usr/lib            \
+            --with-rundir=/run/cups      \
             --with-system-groups=lpadmin \
             --with-docdir=/usr/share/cups/doc-&cups-version; &amp;&amp;
 make</userinput></screen>
@@ -229,7 +225,6 @@ make</userinput></screen>
       aktiv grafisk sesjon med bussadresse er nødvendig for å kjøre testene.
       Pass på at ikke en annen forekomst av <application>Cups</application>
       kjører, ellers vil minst 4 tester mislykkes med "address in use".
-      En test, <filename>httpAddrGetList</filename>, er kjent for å mislykkes.
     </para>
 
     <para>
@@ -263,24 +258,6 @@ ln -svnf ../cups/doc-&cups-version; /usr/share/doc/cups-&cups-version;</userinpu
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <para>
-      <command>sed ... configure</command>: Denne sed fjerner et kompilator
-      alternativ som ikke lenger støttes. Utelater denne endringen
-      kompilering vil kjøre gjennom, men en advarsel om en ugyldig
-      advarselsalternativet sendes ut på hver kompilatoranrop.
-    </para>
-<!--
-    <para>
-      <command>sed ... tools/ipptool.c</command>: Denne sed fikser en feil forårsaket
-      ved å endre userspace API for sockets.
-    </para>
--->
-    <para>
-      <envar>CC=gcc CXX=g++</envar>: Sett dem hvis du foretrekker å bruke
-      <command>gcc</command> i stedet for <command>clang</command>, som nå
-      er foretrukket av oppstrøms.
-    </para>
-
     <para revision="sysv">
       <parameter>--disable-systemd</parameter>: Systemd er ikke støttet av
       denne versjonen av BLFS.
@@ -291,6 +268,12 @@ ln -svnf ../cups/doc-&cups-version; /usr/share/doc/cups-&cups-version;</userinpu
       byggeprosessen å installere det sendte oppstartskriptet i <filename
       class="directory">/tmp</filename> i stedet for <filename
       class="directory">/etc/rc.d</filename>.
+    </para>
+
+    <para>
+      <parameter>--with-rundir=/run/cups</parameter>: This switch prevents
+      the package from referring to the deprecated
+      <filename class='directory'>/var/run</filename> directory.
     </para>
 
     <para>
@@ -433,7 +416,7 @@ EOF</userinput></screen>
         <seg>
            <!--accept,--> cancel, cupsaccept, <!--cupsaddsmb,--> cups-config,
           cupsctl, cupsd, cupsdisable, cupsenable, cupsfilter, cupsreject,
-          <!--cupstestdsc,--> cupstestppd, ippeveprinter,<!-- ippfind--> ipptool, lp,
+          <!--cupstestdsc,--> cupstestppd, ippeveprinter, ippfind, ipptool, lp,
           lpadmin, lpc, lpinfo, lpmove, lpoptions, lpq, lpr, lprm, lpstat, ppdc,
           ppdhtml, ppdi, ppdmerge, og ppdpo <!--and reject-->
         </seg>
@@ -632,19 +615,19 @@ EOF</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-<!--
+
       <varlistentry id="ippfind">
         <term><command>ippfind</command></term>
         <listitem>
           <para>
-            finner Internett utskriftsprotokollskrivere
+            finner Internett utskriftsprotokoll Skrivere
           </para>
           <indexterm zone="cups ippfind">
             <primary sortas="b-ippfind">ippfind</primary>
           </indexterm>
         </listitem>
       </varlistentry>
--->
+
       <varlistentry id="ipptool">
         <term><command>ipptool</command></term>
         <listitem>
