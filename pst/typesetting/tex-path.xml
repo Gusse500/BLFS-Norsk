@@ -69,9 +69,24 @@ unset TEXARCH</userinput></screen>
   </note>
 
   <para>
-    De nye banene kan aktiveres umiddelbart ved å kjøre <command>source
-    /etc/profile</command>.
+    De nye banene kan aktiveres umiddelbart ved å kjøre:
   </para>
+
+<screen><userinput>source /etc/profile</userinput></screen>
+
+  <para>
+    De delte bibliotekene vil bli installert i en texlive mappe.
+    Som <systemitem class="username">root</systemitem> bruker, legg den til
+    din <filename>/etc/ld.so.conf</filename>:
+  </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/ld.so.conf &lt;&lt; EOF
+<literal># Begin texlive addition
+
+$TEXLIVE_PREFIX/lib
+
+# End texlive addition</literal>
+EOF</userinput></screen>
 
   <para>
     Du bør nå fortsette enten til <xref linkend="tl-installer"/> for
