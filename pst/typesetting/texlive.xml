@@ -6,22 +6,22 @@
   <!-- utah -->
   <!ENTITY texlive-download-http "https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/&texlive-year;/texlive-&texlive-version;-source.tar.xz">
   <!ENTITY texlive-download-ftp  "ftp://tug.org/texlive/historic/&texlive-year;/texlive-&texlive-version;-source.tar.xz">
-  <!ENTITY texlive-md5sum        "4f05bbd93004175275f50215a4c51608">
-  <!ENTITY texlive-size          "65 MB">
+  <!ENTITY texlive-md5sum        "bec84c5d6e340967783302f432c78efe">
+  <!ENTITY texlive-size          "66 MB">
 
-  <!ENTITY texlive-buildsize      "8.0 GB inkludert tilleggsnedlastingen og testene, 7,3 GB installert">
-  <!ENTITY texlive-time           "3.9 SBU inkludert tilleggsnedlastingen og testene, bygget med parallellitet=4">
+  <!ENTITY texlive-buildsize      "8.5 GB inkludert tilleggsnedlastingen og testene, 7,7 GB installert">
+  <!ENTITY texlive-time           "2.3  SBU inkludert tilleggsnedlastingen og testene, bygget med parallellitet=4">
 
   <!-- utah -->
   <!ENTITY texlive-texmf-download-http "https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/&texlive-year;/texlive-&texlive-version;-texmf.tar.xz">
   <!ENTITY texlive-texmf-download-ftp  "ftp://tug.org/texlive/historic/&texlive-year;/texlive-&texmf-version;-texmf.tar.xz">
-  <!ENTITY texlive-texmf-md5sum        "9806803f703b6ce4d9845c46806a7a08">
-  <!ENTITY texlive-texmf-size          "3.4 GB">
+  <!ENTITY texlive-texmf-md5sum        "704fb39c69e3710b8e9e9158cec5047a">
+  <!ENTITY texlive-texmf-size          "3.7 GB">
 
   <!ENTITY texlive-tlpdb-download-http "https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/&texlive-year;/texlive-&tex-tlpdb-version;-tlpdb-full.tar.gz">
   <!ENTITY texlive-tlpdb-download-ftp  "ftp://tug.org/texlive/historic/&texlive-year;/texlive-&tex-tlpdb-version;-tlpdb-full.tar.gz">
-  <!ENTITY texlive-tlpdb-md5sum        "1084c37c6775b567ed7babd71e612f75">
-  <!ENTITY texlive-tlpdb-size          "3.1 MB">
+  <!ENTITY texlive-tlpdb-md5sum        "5078a7ddaa7b309b7392e33916b817f7">
+  <!ENTITY texlive-tlpdb-size          "3.2 MB">
 
 ]>
 
@@ -75,7 +75,7 @@
       å initialisere den nye installasjonen vil bli funnet.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -180,12 +180,12 @@
         </para>
       </listitem>
 
-<!--  <listitem>
+  <listitem>
         <para>
           Nødvendig oppdatering: <ulink url=
-          "&patch-root;/texlive-&texlive-version;-upstream_fixes-1.patch"/>
+          "&patch-root;/texlive-&texlive-version;-source-security_fix-1.patch"/>
         </para>
-      </listitem>-->
+      </listitem>
     </itemizedlist>
 
     <bridgehead renderas="sect3">TeX Live fra kilden Avhengigheter</bridgehead>
@@ -216,8 +216,6 @@
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
      href="../../xincludes/texruntime.xml"/>
 
-    <para condition="html" role="usernotes">Brukernotater:
-    <ulink url="&blfs-wiki;/texlive"/></para>
 
   </sect2>
 
@@ -239,20 +237,6 @@
       </para>
     </caution>
 
-    <para>
-      De delte bibliotekene vil bli installert i en texlive mappe.
-      Som <systemitem class="username">root</systemitem> bruker, legg den til
-      din <filename>/etc/ld.so.conf</filename>:
-    </para>
-
-<screen role="root"><userinput>cat &gt;&gt; /etc/ld.so.conf &lt;&lt; EOF
-<literal># Begin texlive addition
-
-$TEXLIVE_PREFIX/lib
-
-# End texlive addition</literal>
-EOF</userinput></screen>
-
     <note>
       <para>
         En vellykket installasjon krever litt texlive
@@ -267,10 +251,12 @@ EOF</userinput></screen>
 
 <screen><userinput>export TEXARCH=$(uname -m | sed -e 's/i.86/i386/' -e 's/$/-linux/') &amp;&amp;
 
+patch -Np1 -i ../texlive-&texlive-version;-source-security_fix-1.patch &amp;&amp;
+
 mkdir texlive-build &amp;&amp;
 cd    texlive-build &amp;&amp;
 
-../configure                                      \
+../configure -C                                   \
     --prefix=$TEXLIVE_PREFIX                      \
     --bindir=$TEXLIVE_PREFIX/bin/$TEXARCH         \
     --datarootdir=$TEXLIVE_PREFIX                 \
@@ -299,7 +285,15 @@ cd    texlive-build &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For å teste resultatene, utsted: <command>make -k check</command>.
+      <!-- It started to fail with libpaper-2.0.10 which rounds differently
+           in the 6th place of decimals, causing diff to fail -->
+      To tester, <filename>psutils.test</filename> og
+      <!-- Upstream say that encoding conversion procedure Encode::from_to()
+      failed in fn-generate.perl, test now skips if that errors: possibly
+      related to changes in perl-5.36 since I understand current slackware
+      also sees this - ken -->
+      <filename>eptexdir/wcfname</filename> er kjent for å mislykkes.
     </para>
 
     <para>
@@ -333,8 +327,8 @@ tar -xf ../../texlive-&tex-tlpdb-version;-tlpdb-full.tar.gz -C $TEXLIVE_PREFIX/t
 <screen role="root"><userinput>tar -xf ../../texlive-&texmf-version;-texmf.tar.xz -C $TEXLIVE_PREFIX --strip-components=1</userinput></screen>
 
     <para>
-      Det har blitt fastslått av debian at <command>python</command>
-      skriptet i <filename class="directory">latex-make</filename> vil fungere
+      Det har blitt fastslått av Debian at <command>python</command>
+      skriptet i <filename class="directory">l\atex-make</filename> vil fungere
       med <command>python3</command>, så oppdater dem for å påkalle det ved å kjøre
       følgende kommando som <systemitem class="username">root</systemitem>
       bruker:
@@ -347,18 +341,81 @@ done
 
     <para>
       Fortsatt som <systemitem class="username">root</systemitem> bruker,
-      initialiser det nye systemet (kommandoene <command>fmtutil-sys
-      --all</command> og <command>mtxrun --generate</command> vil produsere
+      initialiser det nye systemet (kommandoen <command>fmtutil-sys
+      --all</command> vil produsere
       <emphasis>masse</emphasis> utdata):
     </para>
 
-<!-- Editors, fmtutil-sys and mtxrun \-\-generate can apparently only be run on
+<!-- Editors, fmtutil-sys can apparently only be run on
 a real install, as root.  But mktexlsr can be run in a DESTDIR with
 cd /YOUR/TEXMF/ROOT ; ls -LAR ./ >ls-R -->
 
 <screen role="root"><userinput>mktexlsr &amp;&amp;
-fmtutil-sys --all &amp;&amp;
-mtxrun --generate</userinput></screen>
+fmtutil-sys --all</userinput></screen>
+
+    <para>
+      For å tillate <xref linkend="evince"/> or <xref linkend="dvisvgm"/> å
+      lenke til <filename class="libraryfile">libkpathsea.so</filename>,
+      som &root; bruker (gjen)opprette en symbolkobling fra
+      <filename class="directory">/usr/lib</filename>:
+    </para>
+
+<screen role="root"><userinput>ln -svf $TEXLIVE_PREFIX/lib/libkpathsea.so /usr/lib</userinput></screen>
+
+    <note>
+      <!-- following based on fedora, but amended to run in the BLFS
+           layout, where adapting fedora's script for mtxrun did not
+           reliably work. ken -->
+      <para>
+        TeXLive inkluderer noen filer for ConTeXt, men kilden til det er
+        separert og har gått videre fra å bruke luatex i forrige 'mkiv'
+        versjon til å bruke luametatex som kan hentes med git fra <ulink
+        url="https://github.com/contextgarden/luametatex/tags">github luametatex</ulink>.
+        LuaMetaTeX bruker meson og ninja, men det passer ikke lett inn i
+        BLFS oppsettet til TeXLive.
+        <!-- FIXME - when removing, keep that link to luametatex tags, and note
+        that building and installing that to fit with a BLFS install of TeXLive
+        will not be a trivial exercise.-->
+      </para>
+      <para>
+        Men med litt ekstra arbeid kan 'mkiv' filer fortsatt behandles
+        ved å bruke filene som ble sendt i texmf.
+      </para>
+
+      <para>
+        <emphasis>Rettelser for å bruke ConTeXt vil bli fjernet neste gang texlive kilden
+        må oppdateres enten for en sårbarhetsretting som krever tilbakeportering
+        luatex endringer, eller for TeXLive 2024. Hvis du er en BLFS bruker av ConTeXt
+        bør du være forberedt på å bruke den siste taggen fra github (lenken er
+        i første ledd i denne merknaden). Bygge og installere det for å jobbe med
+        en BLFS installasjon av TeXLive vil ikke være en triviell øvelse.</emphasis>
+      </para>
+    </note>
+
+    <para>
+       Følgende trinn, kjør som
+       <systemitem class="username">root</systemitem> bruker, vil opprette
+       <command>mtxrun</command> og <command>context</command>.
+     </para>
+
+<!-- I've put blank lines in this to make it a little less hard to read. ken -->
+<screen role="root"><userinput>sed -e '/local template=\[\[--ini/s/\(primaryflags%\)\(.*\)/\1 --socket --shell-escape \2/' \
+ -e '/local template=\[\[%primaryflags%/s/\(primaryflags%\)\(.*\)/\1 --socket --shell-escape \2/' \
+  -i $TEXLIVE_PREFIX/texmf-dist/scripts/context/lua/mtxrun.lua &amp;&amp;
+
+mkdir -pv $TEXLIVE_PREFIX/texmf-var/luatex-cache/context/ &amp;&amp;
+
+ln -sfv /$TEXLIVE_PREFIX/texmf-dist/scripts/context/lua/mtxrun.lua \
+        /$TEXLIVE_PREFIX/bin/$TEXARCH/mtxrun &amp;&amp;
+
+cat > $TEXLIVE_PREFIX/bin/$TEXARCH/context &lt;&lt; EOF
+#!/bin/sh
+export TEXMF=$TEXLIVE_PREFIX/texmf-dist;
+export TEXMFCNF=$TEXLIVE_PREFIX/texmf-dist/web2c;
+export TEXMFCACHE=$TEXLIVE_PREFIX/texmf-var/luatex-cache/context/;
+$TEXLIVE_PREFIX/bin/$TEXARCH/mtxrun --script context "\$@"
+EOF
+chmod -v 0755 $TEXLIVE_PREFIX/bin/$TEXARCH/context</userinput></screen>
 
     <para>
       Du kan nå gå videre til <xref linkend="asymptote"/>,
@@ -370,6 +427,21 @@ mtxrun --generate</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
+
+    <para>
+      <command>patch -Np1 -i ../texlive-&texlive-version;-source-security_fix-1.patch</command>:
+      dette oppdaterer luatex kilden til v1.17.0 for å fikse sikkerhetsproblemer.
+    </para>
+
+    <para>
+      <command>sed -e '/local template (...)' (...)mtxrun.lua</command>: dette gjør en
+      endring i et texmf-dist skript slik at ConTeXt nå kan kjøres med luatex-v1.17.0.
+    </para>
+
+    <para>
+      <command>-C</command>: opprette config.cache, dette sparer betydelig
+      tid i et parallellbygg.
+    </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
      href="../../xincludes/tex-prefix.xml"/>
@@ -393,10 +465,6 @@ mtxrun --generate</userinput></screen>
       <command>--disable-dvisvgm</command>: Som nevnt ovenfor, den sendte versjonen
       av dvisvgm, som har modifiserte konfigurasjonsfiler, kan ikke bygges med
       delte systembiblioteker.
-    </para>
-
-    <para>
-      <option>--without-x</option>: bruk dette hvis du ikke har Xorg installert.
     </para>
 
     <para>
@@ -428,8 +496,21 @@ mtxrun --generate</userinput></screen>
     </para>
 
     <para>
-      <command>mktexlsr</command>: Opprett <filename>ls-R</filename> filen
-      som viser hva som ble installert - dette brukes av kpathsea for å finne filer.
+      <command>mkdir -pv $TEXLIVE_PREFIX/texmf-var/luatex-cache/context/</command>:
+      kontekstskriptet opprettet etter dette vil ikke kjøre riktig hvis denne
+      mappen ikke er til stede.
+    </para>
+
+    <para>
+      <option>--without-x</option>: bruk dette hvis du ikke har Xorg installert.
+    </para>
+
+    <para>
+      Det er mange andre "--disable" eller "--without" alternativer. Noen av dem slik
+      som <option>--without-texinfo</option> blir akseptert, men ikke lenger gjør noe,
+      andre vil forhindre at et program bygges - men desto større mengde
+      plass brukt til de relaterte elementene i texmf betyr at det ikke er noen åpenbar fordel
+      fra å deaktivere noen av programmene.
     </para>
 
     <para>
