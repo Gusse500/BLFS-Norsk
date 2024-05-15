@@ -23,8 +23,8 @@
     <title>Om TTF og OTF fonter</title>
 
     <para>
-     Opprinnelig ga Xorg kun punktgrafikkfonter. Senere, noen skalerbare
-      Type1 fonter ble lagt til, men skrivebordsverdenen gikk videre til å bruke TrueType
+      Opprinnelig ga Xorg kun punktgrafikkfonter. Senere, ble noen skalerbare
+      Type1 fonter lagt til, men skrivebordsverdenen gikk videre til å bruke TrueType
       og Open Type fonter. For å støtte disse bruker Xorg Xft, X FreeType
       grensesnittbibliotek.
     </para>
@@ -44,16 +44,70 @@
     </para>
 
     <para>
-      Hvis en skrift gir både TTF og OTF skjemaer, foretrekker du OTF skjemaet i
-      linux, kan det gi flere funksjoner for programmer som vet hvordan de skal brukes
+      Hvis en skrift gir både TTF og OTF skjemaer, bør du foretrekke OTF skjemaet i
+      linux, det kan gi flere funksjoner for programmer som vet hvordan de skal brukes
       (som xelatex).
+    </para>
+
+    <para>
+      En font kan ha flere variasjoner. For eksempel Noto Sans
+      har 9 vekter (ExtraLight, Light, Thin, Normal, Medium, SemiBold,
+      Bold, ExtraBold, and Black) og 2 stiler (vanlig og kursiv), altså
+      18 varianter totalt. Normalt leveres hver variant som en
+      separat TTF eller OTF fil. For full dekning må du installere
+      alle disse TTF eller OTF filene. Selv om du har lite diskplass,
+      bør du fortsatt installere to vekter (Regular and Bold) med to stiler
+      (Normal og kursiv) hvis skriften har disse variasjonene. Noen fonter
+      har ikke kursiv stil (for eksempel de fleste CJK fonter og noen
+      monospace fonter), og noen fonter har bare én variant (for eksempel
+      Noto Sans Math, den gir bare glyphen til noen matematikk
+      symboler).
+    </para>
+
+    <para>
+      Noen fonter er også tilgjengelige som <emphasis>variable</emphasis> fontfiler.
+      I motsetning til en vanlig fontfil som bare inneholder én variant,
+      en variabel fontfil inneholder uendelige variasjoner. Hver variant
+      kan defineres av applikasjonen som bruker denne fonten ved å tildele
+      tall til én eller flere variabler. Det er også forhåndsdefinerte
+      <emphasis>navngitte instanser</emphasis> analogt med de tradisjonelle
+      variasjonene. For eksempel, med den variable versjonen av Noto Sans,
+      vektvariabel kan tildeles et hvilket som helst tall som ikke er mindre enn 100 og ikke
+      større enn 900, og 9 navngitte forekomster er forhåndsdefinert: ExtraLight
+      for vekt=100, Regular for vekt=400, Bold for vekt=700 osv. Så
+      når en variabel variabel fontfil for Noto Sans er installert, vil alle
+      9 navngitte forekomster (eller <quote>variasjoner</quote>) være tilgjengelig. Merk
+      at helningen ikke er definert som en variabel i variabelversjonen
+      av Noto Sans, så Regular og Italic er fortsatt tradisjonelle varianter
+      og en separat variabel fontfil er nødvendig for kursiv varianten.
+    </para>
+
+    <para>
+      En fil med variable fonter er åpenbart mer fleksibel enn vanlig
+       statiske) fontfiler. Det er ekstremt nyttig for å finjustere
+      skrift for websider eller publikasjoner. Og størrelsen på en variabel fontfil
+      er vanligvis betydelig mindre enn den totale størrelsen på flere
+      statiske fontfiler for flere varianter. For eksempel den variable
+      fontfilen for Noto Sans SC er bare 11M, mens den totale størrelsen på 9
+      statiske fontfiler for Noto Sans SC er 91M. Men du må sørge for at
+      programmene dine virkelig støtter variable fonter før du installerer en.
+       For eksempel, <command>lualatex</command> støtter variabel font men
+      <command>xelatex</command> gjør det ikke. Så hvis du vil bruke en font for
+      en artikkel og bruker <command>xelatex</command> for setting, må du
+      ikke installere filene med variabel skrift.
+    </para>
+
+    <para>
+      For informasjon om variable fonter, se <ulink
+      url="https://fonts.google.com/knowledge/introducing_type/introducing_variable_fonts/">
+      Variable Fonts</ulink>.
     </para>
 
     <para>
       For noen skript <application>pango</application> er påkrevd for å
       gjengi ting riktig, enten ved å velge forskjellige glyffvarianter, eller ved
       å kombinere glyffer - i begge tilfeller, i henhold til konteksten. Dette gjelder
-      spesielt arabiske og indiske skrifter.
+      spesielt Arabiske og Indiske skrifter.
     </para>
 
     <para>
@@ -86,11 +140,11 @@
 
     <para>
       Tidligere anbefalte alle å kjøre <command>fc-cache</command>
-      som <systemitem class="username">root</systemitem> bruker etter installasjon
-      eller fjerning av fonter, men dette er ikke lenger nødvendig på linux,
-      <application>fontconfig</application> vil gjøre det automatisk om nødvendig og
-      hvis hurtiglagrene er mer enn 30 sekunder gamle. Men hvis du legger til en font og vil
-      bruke den umiddelbart, så kan du kjøre den kommandoen (som en vanlig bruker).
+      som &root; bruker etter installasjon eller fjerning av fonter, men dette er ikke
+      lenger nødvendig på linux, <application>fontconfig</application> vil gjøre
+      det automatisk om nødvendig og hvis hurtiglagrene er mer enn 30
+      sekunder gamle. Men hvis du legger til en font og vil bruke den umiddelbart,
+      så kan du kjøre den kommandoen som en vanlig bruker.
     </para>
 
     <para>
@@ -143,23 +197,23 @@
 
     <para>
       Fonter leveres ofte i zip filer, som krever <xref linkend="unzip"/>
-      for å liste og pakke dem ut, men selv om den nåværende utgivelsen er en tarball
+      for å liste og pakke dem ut, men selv om den nåværende utgivelsen er en tarball,
       bør du fortsatt sjekke om det vil opprette en mappe (å spre
       innholdet i en zip fil eller tarball på tvers av gjeldende mappe kan være
-      veldig rotete, og noen få fonter skaper rare __MACOSX/ mapper. I tillegg,
-      mange fonter leveres med tillatelser som ikke lar "andre" lese
-      dem - hvis en font skal installeres for systemomfattende bruk, eventuelle mapper
-      må være modus 755 og alle filene modus 644, så endre dem om nødvendig.
-      Hvis du glemmer det, kan root brukeren se en bestemt skrift i
-      <command>fc-list</command> men en vanlig bruker vil ikke se den.
+      veldig rotete, og noen få fonter lager __MACOSX/ mapper). I tillegg,
+      mange fonter leveres med tillatelser som ikke tillater "andre" brukere
+      å lese dem - hvis en font skal installeres for systemomfattende bruk, evt
+      mapper må være modus 755 og alle filene modus 644, så du må
+      endre dem hvis tillatelsene er forskjellige. Hvis du glemmer, root
+      brukeren kan kanskje se en bestemt skrift i <command>fc-list</command>,
+      men en vanlig bruker vil ikke kunne bruke dem.
     </para>
 
     <para>
       Som et eksempel på fontinstallasjon, vurder installasjonen av
       <xref linkend="dejavu-fonts"/>. I denne spesielle pakken, TTF filene
       er i en undermappe. Fra den utpakkede kildemappen, kjør
-      følgende kommandoer som <systemitem class="username">root</systemitem>
-      bruker:
+      følgende kommandoer som &root;  bruker:
     </para>
 
 <screen role="root"><userinput>install -v -d -m755 /usr/share/fonts/dejavu &amp;&amp;
@@ -168,30 +222,31 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       Hvis du ønsker det, kan du også installere eventuelle lisenser eller annen dokumentasjon,
-      enten ved siden av fonten eller i en tilsvarende katalog under
+      enten ved siden av fonten eller i en tilsvarende mappe under
       <filename class="directory">/usr/share/doc/</filename>.
     </para>
 
     <para>
       Noen få fonter leveres med kilden så vel som med fullførte TTF eller OTF
       fil(er). Med mindre du har tenkt å endre fonten, og har de riktige verktøyene
-      (noen ganger <xref linkend="fontforge"/>, men ofte kommersielle verktøy), denne
+      (noen ganger <xref linkend="fontforge"/>, men ofte kommersielle verktøy),
       kilden vil ikke gi noen fordel, så ikke installer den. En eller to fonter vil til og med
-      sendes med Web Open Font Format (WOFF) filer - nyttig hvis du kjører en webserver
-      og ønsker å bruke den skriften på den, men ikke nyttig for skrivebord.
+      sendes med Web Open Font Format (WOFF) filer - nyttig hvis du kjører
+      en webserver og ønsker å bruke den fonten på nettstedet ditt, men ikke nyttig for
+      et skrivebordssystem.
     </para>
 
     <para>
-      For å gi større Unicode dekning, anbefales det å installere
-      noen av følgende fonter, avhengig av hvilke nettsteder og språk du
-      ønsker å lese. Den neste delen av denne siden beskriver noen fonter som i det minste dekker
-      latinske alfabeter, den siste delen tar for seg CJK problemer.
+      For å gi større Unicode dekning, bør du installere noen av de
+      følgende fonter, avhengig av hvilke nettsteder og språk du vil
+      lese. Den neste delen av denne siden beskriver noen fonter som dekker minst
+      latinske alfabeter, og den siste delen tar for seg noen CJK problemer.
     </para>
 
     <note>
       <para>
-        Det anbefales på det sterkeste å installere <xref
-        linkend="dejavu-fonts"/>.
+        Installasjon av <xref
+        linkend="dejavu-fonts"/> anbefales på det sterkeste. 
       </para>
     </note>
 
@@ -208,30 +263,22 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
       (opprettet som en ekstra font for Chrome OS)
       er metrisk kompatibel med MS Cambria og kan brukes hvis du
       må redigere et dokument som noen startet i Microsoft Office med
-      Cambria og returner det til dem.
+      Cambria.
     </para>
 
     <bridgehead renderas="sect3" id="cantarell-fonts"
-    xreflabel="Cantarell fonts">Cantarell fonter</bridgehead>
+    xreflabel="Cantarell fonts">Cantarell fonts</bridgehead>
 
     <indexterm zone="TTF-and-OTF-fonts cantarell-fonts">
-      <primary sortas="a-cantarell-fonts">Cantarell fonter</primary>
+      <primary sortas="a-cantarell-fonts">Cantarell fonts</primary>
     </indexterm>
 
     <para>
-      <ulink url=
-      "&gnome-download-http;/cantarell-fonts/">Cantarell fonter</ulink>
+      <ulink url="https://fonts.google.com/specimen/Cantarell">Cantarell fonts</ulink>
       &ndash; Cantarell skrifttypefamilien gir en moderne humanist
-      sans serif. Den er spesielt optimalisert for lesbarhet i små størrelser
+      Sans Serif. Den er spesielt optimalisert for lesbarhet i små størrelser
       og er den foretrukne skriftfamilien for
-      <application>GNOME-3</application> brukergrensesnittet.
-    </para>
-
-    <para>
-      Vær oppmerksom på at den nåværende versjonen inkluderer en VF (Variable Font)
-      filen kan gi alle de individuelle fontene (følger også med), men bryter
-      <application>xelatex</application> hvis den blir funnet av
-      <application>fontconfig</application>. De enkelte fontene fungerer fint.
+      <application>GNOME</application> brukergrensesnittet.
     </para>
 
     <bridgehead renderas="sect3" id="Carlito"
@@ -243,7 +290,7 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
       (opprettet som en ekstra Chrome OS skrifttype)
       er metrisk kompatibel med MS Calibri og
       kan brukes hvis du må redigere et dokument som noen startet i
-      Microsoft Office ved hjelp av Calibri og returner det til dem.
+      Microsoft Office ved hjelp av Calibri.
     </para>
 
     <bridgehead renderas="sect3" id="dejavu-fonts"
@@ -261,8 +308,7 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
       aksenter og tegnsetting som "smarte anførselstegn" og variantavstand
       tegn, samt kyrilliske, greske, arabiske, hebraiske, armenske,
       georgiske og noen andre glyfer. I fravær av Bitstream Vera
-      skrifter (som hadde mye mindre dekning), er disse standard reserve
-      fonter.
+      skrifter (som hadde mye mindre dekning), er disse standard reserve.
     </para>
 
     <bridgehead renderas="sect3" id="freefont"
@@ -271,7 +317,7 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
     <para>
       <ulink url="https://ftpmirror.gnu.org/gnu/freefont/">GNU FreeFont</ulink>
       &ndash; Dette settet med fonttyper dekker mange ikke-CJK tegn,
-      spesielt noen av variantene av latinske og kyrilliske bokstaver som brukes i
+      spesielt noen av variantene av Latinske og Kyrilliske bokstaver som brukes i
       minoritetsspråk, men glyfer er relativt små (i motsetning til DejaVu
       skrifter som er relativt store) og ganske lette ("mindre svarte"
       når svart på hvitt brukes) som betyr at i noen sammenhenger som f.eks
@@ -286,7 +332,7 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
     <para>
       <ulink url="https://fontlibrary.org/en/font/gelasio">Gelasio</ulink> er
       metrisk kompatibel med MS Georgia og
-      <application>fontconfig</application> vil bruke det hvis noen gang Georgia er
+      <application>fontconfig</application> vil bruke det hvis noen gang MS Georgia er
       forespurt, men ikke installert.
     </para>
 
@@ -302,9 +348,9 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
       fonter</ulink> gi libre erstatninger for Arial, Courier New, og Times
       New Roman. <application>Fontconfig</application> vil bruke dem som
       erstatter for disse skriftene, og også for lignende Helvetica, Courier,
-      Times Roman, selv om den for disse sistnevnte kan foretrekke en annen font (se
+      og Times Roman, selv om den for disse sistnevnte kan foretrekke en annen font (se
       eksemplene i 'Erstatninger' PDF-er på <ulink
-      url="http://zarniwhoop.uk/files/PDF-substitutes/"> zarniwhoop.uk).</ulink>
+      url="http://zarniwhoop.uk/files/PDF-substitutes/">zarniwhoop.uk.)</ulink>
     </para>
 
     <para>
@@ -317,11 +363,11 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       <ulink url="https://corefonts.sourceforge.net/">Microsoft
-      Kjernefonter</ulink> er fra 2002. De ble levert med gamle versjoner av
+      Kjernefonter</ulink> De ble levert med gamle versjoner av
       Microsoft Windows og ble tilsynelatende gjort tilgjengelig for generell bruk.
       Du kan pakke dem ut fra 'exe' filene ved å bruke
       <application>bsd-tar</application> fra <xref linkend="libarchive"/>.
-      Sørg for å lese lisensen før du bruker dem. På en gang noen av
+      Sørg for å lese lisensen før du bruker dem. En gang noen av
       disse skriftene (spesielt Arial, Times New Roman, og til en mindre
       utstrekning Courier New) var mye spesifisert på nettsider. Hele settet
       inneholder Andale Mono, Arial, Arial Black, Comic Sans MS, Courier
@@ -338,15 +384,15 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       Selv om mange gamle innlegg anbefaler å installere disse fontene for
-      bedre utseende, det er nyere innlegg om at disse er stygge
-      eller "ødelagt". Et forslag er at de ikke støtter anti-aliasing.
+      utdata som ser bedre ut, det er nyere innlegg som dette er
+       'stygg' eller 'ødelagt'. Et forslag er at de ikke støtter anti-aliasing.
     </para>
 
     <para>
-      De nyere skriftene som Microsoft har gjort som standardinnstillinger i senere utgivelser av
+      De nyere fontene som Microsoft har gjort som sine standardinnstillinger i senere utgivelser av
       MS Windows eller MS Office (Calibri og Cambria) har aldri vært fritt
-      tilgjengelig. Men hvis du ikke har dem installert, kan du finne metrisk
-      ekvivalenter (Carlito, Caladea) ovenfor.
+      tilgjengelig. Men hvis du ikke har dem installert, kan du finne metrikk
+      ekvivalenter (Carlito og Caladea) ovenfor.
     </para>
 
     <bridgehead renderas="sect3" id="noto-fonts"
@@ -358,22 +404,30 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       <ulink
-      url="https://www.google.com/get/noto/">Noto fonter</ulink> ('No Tofu', dvs.
-      unngå bokser med prikker [hex sifre] når en glyph ikke kan bli funnet) er et
+      url="https://fonts.google.com/noto/">Noto fonter</ulink> ('No Tofu', dvs.
+      unngå bokser med prikker [hexadekte sifre] når en glyph ikke kan bli funnet) er et
       sett med fonter som tar sikte på å dekke <emphasis>hver glyph i unicode,
-      uansett hvor obskur</emphasis>. Disse fontene, eller i det minste Sans Serif
-      fonter, brukes av KF5 (i utgangspunktet kun for gtk applikasjoner). Hvis du vil
-      dekke historiske språk, kan du laste ned alle fontene ved å klikke
-      på lenken øverst på siden.
+      uansett hvor obskur</emphasis>. Noto Sans er den foretrukne fonten for KDE
+      Plasma og applikasjoner, bortsett fra monospace fonter hvor <ulink
+      url="https://github.com/source-foundry/Hack">Hack</ulink> er foretrukket.
     </para>
 
     <para>
-      Folk som bruker språk skrevet med latinske, greske eller kyrilliske alfabeter trenger
-      bare å installer selve Noto Sans, og kanskje Noto Sans Symbols for valuta
-      symboler. For mer informasjon om CJK fontene, se <xref
-      linkend="NotoSansCJK"/> under. Det er også separate fonter for hver
-      andre gjeldende skrivesystemer, men også disse vil også kreve Noto Sans
+      Personer som bruker språk skrevet kun med latinske, greske eller kyrilliske alfabeter
+      trenger å installere selve Noto Sans, og kanskje Noto Sans Symbols for
+      valutasymboler. For mer informasjon om organiseringen av Noto fonter, se <ulink
+      url="https://fonts.google.com/noto/use#how-are-noto-fonts-organized/">how
+      are noto fonts organized</ulink>. Det er også separate fonter for hver
+      andre gjeldende skrivesystemer, men disse vil også kreve Noto Sans
       (eller Noto Serif) og kanskje Noto Symbols.
+    </para>
+
+    <para>
+      Det kan være lettere å laste ned en bestemt Noto-font ved å gå til <ulink
+      url="https://fonts.google.com/specimen/Noto+Sans">Noto Sans</ulink>
+      og endre fontnavnet etter behov, med '+' mellom hvert ord,
+      f.eks. 'Noto+Kufi+Arabic', 'Noto+Serif+Georgian' eller hva som helst, og klikk deretter
+      på 'Download family'.
     </para>
 
     <para>
@@ -386,8 +440,7 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
       Serif og Monospace fonter fordi Sans er reserven for ukjente fonter.
     </para>
 
-
-    <bridgehead renderas="sect3" id="oxygen-fonts"
+<!--<bridgehead renderas="sect3" id="oxygen-fonts"
     xreflabel="Oxygen fonts">Oxygen fonter</bridgehead>
 
     <indexterm zone="TTF-and-OTF-fonts oxygen-fonts">
@@ -396,24 +449,14 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       Da KDE Frameworks 5 først ble utgitt, brukte den <ulink url=
-      "https://download.kde.org/stable/plasma/5.4.3/oxygen-fonts-5.4.3.tar.xz">
-      Oxygen fonter</ulink>
+      "https://fonts.google.com/specimen/Oxygen">Oxygen Sans</ulink> og
+      <ulink url=
+      "https://fonts.google.com/specimen/Oxygen+Mono">OxygenMono</ulink> fonter
       som ble designet for integrert bruk med KDE skrivebordet. Disse fontene
-      er ikke lenger aktivt vedlikeholdt, så KDE tok en beslutning om å bytte til
+      er ikke aktivt vedlikeholdt lenger, så KDE tok en beslutning om å bytte til
       <xref linkend="noto-fonts"/>, men for øyeblikket er de forsatt
       <emphasis>påkrevd</emphasis> av 'startkde'.
-    </para>
-
-    <para>
-      Opprinnelig ble disse fontene bare levert som kilde, trenger <xref
-      linkend="cmake"/> og <xref linkend="fontforge"/> for å lage TTF
-      filer. Men en stund har kilden også tatt med den utarbeidede TTF.
-      Den eneste uvanlige funksjonen er at hver TTF fil er i sin egen undermappe
-      (<filename class="directory">oxygen-fonts/{*-?00}/</filename>) med
-      kilden i ytterligere undermapper. Du kan bare installere hele
-      tarballen hvis du foretrekker det, selv om det vil kaste bort plass.
-    </para>
-
+    </para>-->
 
     <bridgehead renderas="sect3" id="source-code-pro"
     xreflabel="Source Code Pro">Source Code Pro</bridgehead>
@@ -442,40 +485,39 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
       Europeiske språk som bruker et latinsk alfabet).
     </para>
 
-
     <bridgehead renderas="sect3" id="CJKfonts"
     xreflabel="CJKfonts">CJK fonter:</bridgehead>
 
     <para>
       Som angitt tidligere, bruk av en kombinasjon av kinesisk, japansk
-      og koreansk kan være vanskelig - hver skrift dekker bare en delmengde av tilgjengelige
-      kodepunkter, kan de foretrukne formene til glyphene variere mellom
-      språk, og mange av CJK skriftene støtter faktisk ikke moderne
-      koreansk.
+      og koreanske tegn kan være vanskelige - hver skrift dekker bare en delmengde
+      av de tilgjengelige kodepunktene kan de foretrukne formene til glyfene variere
+      mellom språkene, og mange av CJK-fontene støtter faktisk ikke
+      moderne koreansk.
     </para>
 
     <para>
-      Også som standard <application>fontconfig</application> foretrekker kinesisk til
-       japansk. Innstille det dekkes på <xref
-      linkend="prefer-chosen-CJK-fonts"/>.
+      Også, <application>fontconfig</application> foretrekker kinesisk fremfor japansk
+      som standard. Tuning dekkes på <xref linkend="prefer-chosen-CJK-fonts"/>.
     </para>
 
     <para>
       Selv om Unicode har blitt utvidet til å tillate et veldig stort antall CJK
-      kodepunkter, de utenfor grunnplanet (større enn U+0xFFFF) er ikke
+      kodepunkter, de utenfor grunnplanet (større enn U+0xFFFF) er det ikke
       ofte brukt på mandarin (den normale formen for skriftlig kinesisk, enten
-      Forenklet (PRC) eller Tradisjonell (Taiwan)), eller japansk.
+      Forenklet (fastlands-Kina, Malaysia og Singapore) eller tradisjonell
+      (Hong Kong og Taiwan)), eller japansk.
     </para>
 
     <para>
       For Hong Kong, som bruker tradisjonell kinesisk og hvor kantonesisk er
       dominerende språk, ble Hong Kong Supplementary Character Set lagt til
       Unicode i 2005 og revidert i 2009 (det er en del av CJK Extension B og
-      inneholder mer enn 1900 tegn). Tidligere fonter vil ikke kunne
-      støtte kantonesisk eller bruk av disse tegnene der lokale navn er
-      skrevet på mandarin. UMing HK, Noto Sans CJK HK og WenQuanYi Zen Hei
+       nneholder mer enn 1900 tegn). Tidligere fonter vil ikke kunne
+      støtter enten kantonesisk eller bruk disse tegnene der lokale navn er
+      skrevet på mandarin. UMing HK, Noto Sans HK og WenQuanYi Zen Hei
       fonter ser alle ut til å dekke bruken i Hong Kong
-      (<application>fontconfig</application> er uenig om Noto Sans CJK HK).
+      (<application>fontconfig</application> er uenig om Noto Sans HK).
     </para>
 
     <para>
@@ -485,7 +527,22 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
     </para>
 
     <para>
-      Hvis alt du ønsker å gjøre er å kunne gjengi CJK glyfer, å installere
+      Hvis du ønsker å bruke Noto fonter, finnes det også Serif versjoner av deres
+      ulike CJK fonter. Noto Sans/Serif SC/TC/HK/JP/KR fontene er
+      avledet fra en monolitikk <ulink
+        url="https://github.com/notofonts/noto-cjk">noto-cjk</ulink>
+      depot, og du kan finne
+      <filename class='extension'>.ttc</filename> filer for hele
+      Noto Sans CJK (inkludert SC/TC/HK/JP/KR) eller Noto Serif CJK fontfamilie
+      der. Google anbefaler vanlige brukere å bruke den separate Noto
+      Sans/Serif SC/TC/HK/JP/KR fonter i stedet, men hvis du er i stand til
+      og villig til å lese tekster i mer enn ett CJK karaktersystem kan det være
+      lettere å bruke en monolittisk
+      <filename class='extension'>.ttc</filename> fil for full dekning.
+    </para>
+
+    <para>
+      Hvis alt du ønsker å gjøre er å gjengi CJK glyfer, å installere
       <xref linkend="wenquanyi-zenhei"/> kan være et godt sted å starte hvis du
       ikke allerede har en preferanse.
     </para>
@@ -494,11 +551,21 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
     xreflabel="Chinese fonts">Kinesiske fonter:</bridgehead>
 
     <para>
-      På kinesisk er det tre skriftstiler i vanlig bruk: Sung (også
-      kjent som Song eller Ming) som er den mest vanlige ornamenterte ("serif")
+      På kinesisk er det tre fontstiler i vanlig bruk: Sung (også
+      kjent som Song eller Ming), som er den mest vanlige ornamenterte ("serif")
       form, Kai ("penselstrøk") som er en tidligere ornamentert stil som
       ser ganske annerledes ut, og moderne Hei ("sans"). Med mindre du setter pris på
       forskjeller, vil du sannsynligvis ikke installere Kai fonter.
+    </para>
+
+    <para>
+      De gjeldende versjonene av kinesiske Noto Sans fonter finner du på <ulink
+      url="https://fonts.google.com/specimen/Noto+Sans+SC">Noto Sans SC</ulink>
+      for Forenklet kinesisk, <ulink
+      url="https://fonts.google.com/specimen/Noto+Sans+TC">Noto Sans TC</ulink>
+      for Tradisjonell kinesisk, og som nevnt ovenfor <ulink
+      url="https://fonts.google.com/specimen/Noto+Sans+HK">Noto Sans HK</ulink>
+      til bruk i Hong Kong.
     </para>
 
 <!-- prefer the less-old Opendesktop-fonts to fireflysung
@@ -508,15 +575,20 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
     <para>
       <ulink url=
       "http://ftp.osuosl.org/pub/blfs/conglomeration/Xorg//fireflysung-1.3.0.tar.gz">fireflysung</ulink>
-      &ndash; Denne fonten ('AR PL New Sung') var en av de første libre fontene for
-      å gi kinesisk dekning. <application>fontconfig</application> vet
-      den skal behandles som en Serif font.
+      &ndash; This font ('AR PL New Sung') was one of the first libre fonts to
+      provides Chinese coverage. <application>fontconfig</application> knows
+      it is to be treated as a Serif font.
     </para> -->
+
+<!-- the get/noto/help/cjk url now gives general info on the organization of
+    Noto fonts, linked from above.  The current versions are no-longer in
+    ttc packages, there is a separate set of files for each CJK language.
+    Therefore, this appears to be redundant.
 
     <bridgehead renderas="sect4" id="NotoSansCJK"
     xreflabel="Noto Sans CJK">Noto Sans CJK</bridgehead>
 
-    <!-- indexterm entry retained for future linkage from kde -->
+    <!\-\- indexterm entry retained for future linkage from kde \-\->
     <indexterm zone="TTF-and-OTF-fonts NotoSansCJK">
       <primary sortas="a-noto-sans-cjk">Noto Sans CJK</primary>
     </indexterm>
@@ -525,11 +597,11 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
       <ulink url="https://www.google.com/get/noto/help/cjk/">
         Noto Sans CJK
       </ulink>
-      &ndash; Sans-Serif sett med alle CJK fonter i en ttc &ndash; som lenken
-      sier, kan du velge å installere TTC og dekke alle språkene i
-      alle vekter i en 110MB fil, eller du kan laste ned undersett. Det er
-      også Monospace versjoner.
-    </para>
+      &ndash; Sans-Serif sets of all CJK fonts in a ttc &ndash; as the link
+      says, you can choose to install the TTC and cover all the languages in
+      all weights in a 110MB file, or you can download subsets. There are
+      also Monospace versions.
+    </para> -->
 
     <bridgehead renderas="sect4" id="Opendesktop-fonts"
     xreflabel="Opendesktop-fonts">Opendesktop fonter</bridgehead>
@@ -537,7 +609,7 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
     <para>
       En kopi av versjon 1.4.2 av
       <ulink url="https://sources.archlinux.org/other/opendesktop-fonts/">
-        opendesktop-fonter
+        opendesktop-fonts
       </ulink>
       er bevart ved Arch. Dette var en senere utvikling av fireflysung som
       BLFS pleide å anbefale, for å legge til Kai og Mono fonter. Navnet på Sung
@@ -546,11 +618,11 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       På et tidspunkt var det en 1.6 utgivelse, og mer nylig noen versjoner på
-      github, som også inkluderte en Sans font (Odohei), men de har blitt
-      fjernet fra nettet, og det er uklart om det var et problem.
+      github, som også inkluderte en Sans font (Odohei), men de har falt
+      utenfor nettet, og det er uklart om det var et problem.
       <application>Fontconfig</application> vet ikke noe om
       senere fonter (AR PL New Kai, AR PL New Sung Mono) og vil som standard
-      behandler dem som Sans.
+      behandle dem som Sans.
     </para>
 
 <!-- comment, because not recommended
@@ -559,12 +631,12 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       <ulink
-      url="http://packages.debian.org/sid/fonts-arphic-ukai">UKai fonter</ulink>
-      &ndash; sett med kinesiske Kai-fonter i en ttc som inneholder varianter av
-      Forenklet og tradisjonell (Taiwanesisk, andre variant for forskjellige
+      url="http://packages.debian.org/sid/fonts-arphic-ukai">UKai fonts</ulink>
+      &ndash; sets of Chinese Kai fonts in a ttc which contain variations of
+      Simplified and Traditional (Taiwanese, second variant for different
       <ulink url="https://en.wikipedia.org/wiki/Bopomofo">bopomofo</ulink>,
-      og kantonesisk). Dette leveres med gamle syntaksfiler som kan installeres til
-      <filename class="directory">/etc/fonts/conf.d/</filename> men se <xref
+      and Cantonese). This ships with old-syntax files which can install to
+      <filename class="directory">/etc/fonts/conf.d/</filename> but see <xref
       linkend="editing-old-style-conf-files"/>.
     </para>
 -->
@@ -574,8 +646,8 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       <ulink url=
-      "https://packages.debian.org/sid/fonts-arphic-uming">UMing fonter</ulink>
-      &ndash; sett med kinesiske Ming fonter (fra Debian, bruk '.orig' tarballen)
+      "http://ftp.debian.org/debian/pool/main/f/fonts-arphic-uming/">UMing fonts</ulink>
+      &ndash; sett med kinesiske Ming fonter (fra Debian, bruk '.orig' tarball)
       i en ttc som inneholder varianter av forenklet og tradisjonell kinesisk
       (Taiwanesisk, med andre variant for forskjellige
       <ulink url="https://en.wikipedia.org/wiki/Bopomofo">bopomofo</ulink>,
@@ -598,26 +670,27 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
       Zen Hei</ulink> gir en Sans-Serif font som dekker alle CJK skript
       inkludert koreansk. Selv om det inkluderer gammeldagse conf filer, er disse
       ikke obligatorisk: <application>fontconfig</application> vil allerede behandle
-      disse skriftene (den "skarpe" inneholder punktgrafikk, monospace ser ikke
-      ut til å være Mono i sin ASCII del) som Sans, Serif og Monospace. Hvis alt
+      disse skriftene (den "skarpe" inneholder punktgrafikk, monospace vises ikke
+      å være Mono i sin ASCII del) som Sans, Serif og Monospace. Hvis alt
       du ønsker å gjøre er å kunne gjengi Han og koreansk tekst uten
       bekymre deg for finhetene til figurene som brukes, hovedfonten fra
-      denne pakken er en god font å bruke.
+      denne pakken er en god font og bruke.
     </para>
-
 
     <bridgehead renderas="sect3" id="Japanese-fonts"
     xreflabel="Japanese fonts">Japanske fonter:</bridgehead>
 
     <para>
-      På japansk er gotiske fonter Sans, Mincho er Serif. BLFS pleide å
-      nevne bare Kochi fontene, men nå ser de ut til å være det
+      På japansk er gotiske fonter Sans, og Mincho er Serif. BLFS pleide å
+      nevne bare Kochi fontene, men de ser ut til å være det nå
       minst foretrukket av de japanske skriftene.
     </para>
 
     <para>
-      Bortsett fra skriftene som er beskrevet nedenfor, bør du også vurdere <xref
-      linkend="NotoSansCJK"/>.
+      Bortsett fra skriftene som er beskrevet nedenfor, bør du også vurdere <ulink
+      url="https://fonts.google.com/specimen/Noto+Sans+JP">Noto Sans
+      JP</ulink>.
+
     </para>
 
     <bridgehead renderas="sect4" id="IPAex"
@@ -629,16 +702,16 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
     </indexterm>
 
     <para>
-      <ulink url="https://moji.or.jp/ipafont/">IPAex fonter</ulink> er
+      <ulink url="https://moji.or.jp/ipafont/">IPAex fonts</ulink> er
       gjeldende versjon av IPA fontene. Bruk
       <ulink url='https://moji-or-jp.translate.goog/ipafont/?_x_tr_sl=auto&amp;_x_tr_tl=en&amp;_x_tr_hl=en&amp;_x_tr_pto=wapp'>Google Translate</ulink>
       på hjemmesiden, klikk deretter på nedlastingslenken for IPAex Font Ver.004.01.
-      Dessverre, <application>fontconfig</application> vet baret om
-      de eldre IPA fontene og den gaffelformede IPA Mona fonten (som ikke er lett
+      Dessverre, <application>fontconfig</application> vet bare om
+      de eldre IPA fontene og den forgrenede IPA Mona fonten (som ikke er lett
       tilgjengelig og som tilsynelatende ikke oppfyller Debians frie programvare
-      retningslinjer). Derfor, hvis du installerer IPAex fontene, kan det hende du ønsker
-      å gjøre det kjent for fontconfig, se <xref
-      linkend="prefer-chosen-CJK-fonts"/> for en mulig måte å gjøre dette på.
+      retningslinjer). Hvis du installerer IPAex fontene, kan det være lurt å gjøre det kjent
+      til fontconfig. Vær snill å se <xref
+      linkend="prefer-chosen-CJK-fonts"/> for en måte å oppnå dette på.
     </para>
 
     <bridgehead renderas="sect4" id="Kochi"
@@ -659,18 +732,17 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       <ulink url="https://osdn.net/projects/vlgothic/releases/">VL
-      Gothic</ulink> font er en moderne japansk font i to varianter med
+      Gothic</ulink> fonten er en moderne japansk font i to varianter med
       monotont eller proporsjonalt mellomrom for ikke-japanske tegn.
     </para>
 
-
     <bridgehead renderas="sect3" id="Korean-fonts"
-    xreflabel="Korean fonts">Korean fonter:</bridgehead>
+    xreflabel="Korean fonts">Koreanske fonter:</bridgehead>
 
     <para>
       På koreansk er Batang eller Myeongjo (det eldre navnet) Serif, Dotum eller
-      Gotisk er de viktigste Sans fontene. BLFS anbefalte tidligere Baekmuk
-      fonter, men Nanum og Un fontene er nå foretrukket fremfor Baekmuk av
+      Gotisk og er de viktigste Sans skriftene. BLFS anbefalte tidligere
+      Baekmuk fontene, men Nanum og Un fontene er nå foretrukket fremfor Baekmuk av
       <application>fontconfig</application> på grunn av brukerforespørsler.
     </para>
 
@@ -680,19 +752,20 @@ fc-cache -v /usr/share/fonts/dejavu</userinput></screen>
 
     <para>
       Et praktisk sted å se eksempler på disse og mange andre koreanske
-      fonter er <ulink url="https://www.freekoreanfont.com/">Frie Koreanske
-      Fonter</ulink>. Klikk på 'Gothic Fonts' eller 'All Categories -> Myeongjo
+      fonter er <ulink url="https://www.freekoreanfont.com/">Free Korean
+      Fonts</ulink>. Klikk på 'Gothic Fonts' eller 'All Categories -> Myeongjo
       Fonts', klikk deretter på fonteksemplet for å se flere detaljer, inkludert
       Lisens, og klikk på lenken for å laste den ned. For Nanum trenger du
       å kunne lese koreansk for å finne nedlastingslenken på siden du kommer
       til. For Un er det direkte lenker og du kan finne un-fonts-core
-      tarballen i <filename class="directory">releases/</filename>
+      tarball i <filename class="directory">releases/</filename>
       mappen.
     </para>
 
     <para>
-      Alternativt, vurder <xref linkend="NotoSansCJK"/> (alle
-      varianter dekker Hangul) eller <xref linkend="wenquanyi-zenhei"/>.
+      Alternativt kan du vurdere <ulink
+      url="https://fonts.google.com/specimen/Noto+Sans+KR">Noto Sans
+      KR</ulink> or <xref linkend="wenquanyi-zenhei"/>.
     </para>
 
   </sect2>

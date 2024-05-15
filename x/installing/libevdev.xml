@@ -4,14 +4,14 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libevdev-version "1.13.0">
+  <!ENTITY libevdev-version "1.13.1">
 
   <!ENTITY libevdev-download-http "https://www.freedesktop.org/software/libevdev/libevdev-&libevdev-version;.tar.xz">
   <!ENTITY libevdev-download-ftp  " ">
-  <!ENTITY libevdev-md5sum        "5b15b4cf97c4f9f1393e499526a57665">
-  <!ENTITY libevdev-size          "444 KB">
-  <!ENTITY libevdev-buildsize     "6.3 MB (med tester)">
-  <!ENTITY libevdev-time          "0.2 SBU (med tester)">
+  <!ENTITY libevdev-md5sum        "58fe71aa6fd5e80d0928e9b691761311">
+  <!ENTITY libevdev-size          "448 KB">
+  <!ENTITY libevdev-buildsize     "6.0 MB (med tester)">
+  <!ENTITY libevdev-time          "0.1 SBU (med tester)">
 ]>
 
   <!-- Begin Xorg libevdev Driver -->
@@ -35,7 +35,7 @@
         funksjoner for Xorg inndatadrivere.
       </para>
 
-      &lfs113_checked;
+      &lfs120_checked;
 
       <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -79,9 +79,6 @@
         <xref linkend="valgrind"/> (valgfri for tester)
       </para>
 
-      <para condition="html" role="usernotes">
-        Brukernotater: <ulink url="&blfs-wiki;/libevdev"/>
-      </para>
     </sect3>
 
     <sect3 role="kernel" id="libevdev-kernel">
@@ -92,17 +89,20 @@
         kjernen på nytt om nødvendig:
       </para>
 
-<screen><literal>Device Drivers  ---&gt;
-  Input device support ---&gt;
-    &lt;*&gt; Generic input layer (needed for keyboard, mouse, ...) [CONFIG_INPUT]
-    &lt;*&gt;   Event interface                   [CONFIG_INPUT_EVDEV]
-    [*]   Miscellaneous devices  ---&gt;       [CONFIG_INPUT_MISC]
-      &lt;*/m&gt;    User level driver support    [CONFIG_INPUT_UINPUT]</literal></screen>
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+        href="libevdev-kernel.xml"/>
 
       <para>
-        Det siste elementet er ikke strengt nødvendig for libevdev. Hvis det er
-        kompilert som en modul, lastes den ikke automatisk.
-        Det er nødvendig for full testdekning.
+        Hvis du vil teste denne pakken med full dekning,
+        følgende alternativer er også nødvendig:
+      </para>
+
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+        href="libevdev-test-kernel.xml"/>
+
+      <para>
+        Hvis du bygger denne som en modul, må den settes inn før testpakken
+        kjører.
       </para>
 
       <indexterm zone="libevdev libevdev-kernel">
@@ -121,7 +121,8 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=$XORG_PREFIX    \
+meson setup ..                 \
+      --prefix=$XORG_PREFIX    \
       --buildtype=release      \
       -Ddocumentation=disabled &amp;&amp;
 ninja</userinput></screen>
