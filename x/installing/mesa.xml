@@ -6,10 +6,10 @@
 
   <!ENTITY mesa-download-http "https://mesa.freedesktop.org/archive/mesa-&mesa-version;.tar.xz">
   <!ENTITY mesa-download-ftp  "ftp://ftp.freedesktop.org/pub/mesa/mesa-&mesa-version;.tar.xz">
-  <!ENTITY mesa-md5sum        "fdb35ae46968ce517702037710db6a3f">
-  <!ENTITY mesa-size          "17 MB">
-  <!ENTITY mesa-buildsize     "369 MB (med dokumenter, legg til 203 MB for tester)">
-  <!ENTITY mesa-time          "2.2 SBU (Bruker parallellisme=4; med dokumenter, legg til 0,6 SBU for tester)">
+  <!ENTITY mesa-md5sum        "5dd176e3f283143cc193b5a8264a206e">
+  <!ENTITY mesa-size          "18 MB">
+  <!ENTITY mesa-buildsize     "462 MB (med dokumenter, legg til 221 MB for tester)">
+  <!ENTITY mesa-time          "2.6 SBU (med dokumenter; legg til 0,6 SBU for tester; begge med parallellitet=4)">
 ]>
 
 <sect1 id="mesa" xreflabel="Mesa-&mesa-version;">
@@ -37,7 +37,7 @@
       </para>
     </note>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -75,10 +75,11 @@
 
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
+    <!-- 9 Apr 23.  Change to unversioned patch since it never changes. -->
       <listitem>
         <para>
           Anbefalt oppdatering:
-          <ulink url="&patch-root;/mesa-&mesa-version;-add_xdemos-1.patch"/>
+          <ulink url="&patch-root;/mesa-add_xdemos-2.patch"/>
           (installerer 2 demoprogrammer for testing av Mesa - ikke nødvendig hvis du
           installer <ulink url="https://archive.mesa3d.org/demos/">
           mesa-demos</ulink> pakken)
@@ -132,7 +133,7 @@
       (for vulkan drivere),
       <ulink url="https://github.com/tizonia/tizonia-openmax-il/wiki/Tizonia-OpenMAX-IL/">
       libtizonia</ulink>,  og
-      <ulink url="https://www.vulkan.org/">libvulkan</ulink>
+      <ulink url="https://github.com/KhronosGroup/Vulkan-Loader">Vulkan-Loader</ulink>
     </para>
 <!--
     <note>
@@ -146,9 +147,60 @@
       </para>
     </note>
 -->
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/mesalib"/>
-    </para>
+  </sect2>
+
+  <sect2 role="kernel" id="mesa-kernel"
+         xreflabel='Mesa Kernel Configuration'>
+    <title>Kjernekonfigurasjon</title>
+
+    <para>
+      Aktiver følgende alternativer i kjernekonfigurasjonen og
+      kompiler kjernen på nytt om nødvendig:
+     </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="mesa-kernel.xml"/>
+
+    <note>
+      <para>
+        Det tilsvarende Mesa Gallium3D drivernavnet er gitt som
+        kommentar for konfigurasjonsoppføringene. Hvis du ikke vet navnet
+        på Mesa Gallium3D driveren for din GPU, se <xref
+        linkend="mesa-gallium-drivers"/> under.
+      </para>
+
+      <para>
+        <option>CONFIG_DRM_RADEON</option>,
+        <option>CONFIG_DRM_AMDGPU</option>,
+        <option>CONFIG_DRM_NOUVEAU</option>, og
+        <option>CONFIG_DRM_I915</option> kan kreve fastvare.
+        Se <xref linkend='postlfs-firmware'/> for detaljer.
+      </para>
+
+      <para>
+        Å velge <option>CONFIG_DRM_RADEON</option> eller
+        <option>CONFIG_DRM_AMDGPU</option> som
+        <quote><literal>y</literal></quote> anbefales ikke. Hvis det er, alle
+        nødvendige fastvare må bygges som en del av kjernebildet eller
+        initramfs for at driveren skal fungere riktig.
+      </para>
+
+      <para>
+        Underpostene under <option>CONFIG_DRM_AMDGPU</option> er brukt
+        for å sikre at AMDGPU kjernedriveren støtter alle GPUer som bruker
+        <literal>radeonsi</literal> driver. De er ikke nødvendig hvis du
+        ikke trenger <option>CONFIG_DRM_AMDGPU</option>. De
+        kan være unødvendig for noen GPU modeller.
+      </para>
+
+      <para>
+        For <literal>swrast</literal>, <option>CONFIG_DRM_VGEM</option>
+        er strengt tatt ikke nødvendig, men anbefales som en optimalisering.
+      </para>
+    </note>
+    <indexterm zone="mesa mesa-kernel">
+      <primary sortas="d-mesa">mesa</primary>
+    </indexterm>
   </sect2>
 
   <sect2 role="installation">
@@ -160,7 +212,8 @@
       kommando:
     </para>
 
-<screen><userinput>patch -Np1 -i ../mesa-&mesa-version;-add_xdemos-1.patch</userinput></screen>
+<!--<screen><userinput>patch -Np1 -i ../mesa-&mesa-version;-add_xdemos-1.patch</userinput></screen>-->
+<screen><userinput>patch -Np1 -i ../mesa-add_xdemos-2.patch</userinput></screen>
 
    <!-- Note that freedreno, vc4, and virgl all need special support from
         libdrm - renodr
@@ -177,24 +230,6 @@
       </para>
     </note>
 
-    <para>
-      Velg nå driverne du ønsker å installere. For X86-arkitekturen er
-      tilgjengelige gallium-drivere er automatiske (<emphasis>i 21.2.1 velges ikke dette
-      krokus </emphasis>), <emphasis>eller alternativt et valg fra</emphasis>
-      krokus, i915, iris, nouveau, r300, r600, radeonsi, svga, swrast og virgl.
-      Sistnevnte kan gi akselerasjon i <xref linkend="qemu"/> hvis det har
-      blitt koblet mot
-      <ulink url="https://gitlab.freedesktop.org/virgl/virglrenderer/~/releases/">virglrenderer</ulink>
-      (du trenger en freedesktop.org-konto for å komme til den siden, det kan du
-      last ned 0.9.1-utgivelsen uten en konto fra
-     <ulink url="https://gitlab.freedesktop.org/virgl/virglrenderer/-/archive/0.9.1/virglrenderer-0.9.1.tar.bz2">virglrenderer-0.9.1</ulink>).-->
-
-<!-- If you wish to build all available gallium drivers,
-      use 'auto'. FIXME : does not build crocus in 21.2.1 -->
-
-      <!-- crocus was added to the default x86/x86_64 drivers for meson in the
-      master branch on 2021-08-31, at some point it will appear in a stable release
-    </para>
 -->
 <!--
     <para>
@@ -254,10 +289,12 @@ meson setup                   \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør:
+      For å teste resultatene, utsted:
       <command>meson configure -Dbuild-tests=true &amp;&amp; ninja test</command>.
+	  Tre tester relatert til mesa:intel er kjent for å mislykkes.
     </para>
 <!-- All 88 tests passed for me for 22.3.3 [pierre]
+     All 90 tests passed for me for 23.1.0 [bdubbs]
 -->
 
     <para>
@@ -289,8 +326,35 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Dgallium-drivers="..."</parameter>: Denne parameteren
+      <anchor id='mesa-gallium-drivers' xreflabel='Mesa Gallium3D Drivers'/>
+      <parameter>-Dgallium-drivers=auto</parameter>: Denne parameteren
       kontrollerer hvilke Gallium3D drivere som skal bygges.
+      <literal>auto</literal> velger alle tilgjengelige Gallium3D drivere
+      for x86: <literal>r300</literal> (for ATI Radeon 9000 eller Radeon X
+      serier), <literal>r600</literal> (for AMD/ATI Radeon HD 2000-6000
+      serier), <literal>radeonsi</literal> (for AMD Radeon HD 7000 eller nyere
+      AMD GPU modeller), <literal>nouveau</literal>
+      (for støttede NVIDIA GPUer er de oppført som alle
+      <quote>3D features</quote> enten <quote>DONE</quote> eller
+      <quote>N/A</quote> in <ulink
+      url='https://nouveau.freedesktop.org/FeatureMatrix.html'>the Nouveau
+      status page</ulink>), <literal>virgl</literal> (for QEMU virtual GPU
+      med <application>virglrender</application> støtte; merk at BLFS
+      <xref linkend='qemu'/> ikke er bygget med
+      <application>virglrender</application>), <literal>svga</literal>
+      (for VMWare virtual GPU), <literal>swrast</literal> (bruker CPU for 3D
+      rasterisering; Vær oppmerksom på at det er mye tregere enn å bruke en moderne
+      3D-kompatibel GPU, så den bør bare brukes hvis GPUen ikke støttes
+      av andre drivere), <literal>iris</literal> (for Intel GPUs sendt
+      med Broadwell eller nyere CPUer), <literal>crocus</literal> (for Intel
+      GMA 3000, X3000 serier, 4000 serier, or X4000 serier GPUer levert med
+      brikkesett, eller Intel HD GPUer levert med pre-Broadwell CPUs),
+      <literal>i915</literal> (for Intel GMA 900, 950, 3100, eller 3150 GPUer
+      leveres med brikkesett eller Atom D/N 4xx/5xx CPUer). Du kan erstatte
+      <literal>auto</literal> med en kommadelt liste kun for å bygge
+      en undergruppe av disse driverne hvis du nøyaktig vet hvilke drivere du
+      trenger for eksempel
+      <option>-Dgallium-drivers=radeonsi,iris,swrast</option>.
     </para>
 <!--
     <para>
@@ -309,9 +373,11 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
     <para>
       <parameter>-Dvulkan-drivers=""</parameter>: Denne bryteren lar deg velge
       hvilke Vulkan drivere som blir bygget. Standard er auto, men dette krever
-      den valgfrie avhengigheten <filename>glslang</filename>. Så det er bedre
-      å sende en tom liste, for å fjerne behovet for den
-      avhengigheten. Ingenting i BLFS bruker Vulkan uansett.
+      den valgfrie avhengigheten <filename>glslang</filename> og
+      <application>Vulkan-Loader</application>.  Vulkan er en nyere API
+      designet for å bruke GPUene med en ytelse som er bedre enn OpenGL,
+      men ingenting i BLFS drar nytte av det foreløpig. Så vi passerer en tom
+      liste for å fjerne behovet for disse avhengighetene.
     </para>
 
     <para>
@@ -359,16 +425,17 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
           libGL.so,
           libGLESv1_CM.so,
           libGLESv2.so,
-<!--          libXvMCnouveau.so,
-          libXvMCr600.so,-->
           libgbm.so,
           libglapi.so, og
           libxatracker.so
         </seg>
         <seg>
-          <!-- Begin gallium DRI drivers : this is the full set -->
-<!--          d3dadapter9.so (optional),   For Windows games. This is DirectX's
-                                          Direct3D -->
+          <!-- d3dadapter9.so (optional)
+               I guess this is useless today, Wine applications use Vulkan
+               through libvkd3d, and new games with native Linux support
+               likely uses Vulkan directly.  -->
+          <!-- Begin gallium DRI drivers (*_dri.so) and VA-API drivers
+               (*_drv_video.so): this is the full set -->
           crocus_dri.so,
           i915_dri.so,
           iris_dri.so,

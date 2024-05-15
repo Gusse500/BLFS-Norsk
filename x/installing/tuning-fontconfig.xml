@@ -37,10 +37,6 @@
       for å forstå endringene du gjør.
     </para>
 
-    <!-- use the existing wiki page for fontconfig -->
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url='&blfs-wiki;/Fontconfig'/>
-    </para>
     </sect2>
 
     <sect2 role="configuration" id="xft-font-protocol" xreflabel="Xft Font Protokoll">
@@ -54,14 +50,14 @@
       <filename>~/.Xresources</filename>, og <xref linkend="abiword"/> som
       bruker kun den angitte fonten). Standard søkesti er <filename
       class="directory">/usr/share/fonts</filename> og <filename
-      class="directory">~/.local/share/fonts</filename> selv om for øyeblikket
+      class="directory">~/.local/share/fonts</filename>, selv om for øyeblikket
       den gamle og utdaterte plasseringen <filename
       class="directory">~/.fonts</filename> virker fortsatt.
       <application>Fontconfig</application> søker mapper i stien sin
       rekursivt og opprettholder en hurtigbuffer med fontkarakteristikkene i hver
       mappe. Hvis hurtiglageret ser ut til å være utdatert, ignoreres den, og
       informasjon hentes fra selve fonten (det kan ta noen få
-      sekunder hvis du har installert mange fontet).
+      sekunder hvis du har mange fonter installert).
     </para>
 
     <para>
@@ -104,16 +100,16 @@
     </para>
 
     <para>
-      <command>fc-match 'Fontnavn'</command> : vil fortelle deg hvilken font
+      <command>fc-match 'Font Name'</command> : forteller deg hvilken font
       som brukes hvis den navngitte fonten er forespurt. Vanligvis vil du bruke dette til
       å se hva som skjer hvis en font du ikke har installert blir forespurt, men du
       kan også bruke den hvis systemet gir deg en annen font enn
       hva du forventet (kanskje fordi <application>fontconfig</application>
-      ikke godtar at skriften støtter språket ditt).
+      tror ikke at fonten støtter språket ditt).
     </para>
 
     <para>
-      <command>fc-match -a 'Type' | less</command> : vil gi en liste over alle
+      <command>fc-match -a 'Type' | less</command> : gir en liste over alle
       fonter som kan brukes for den typen (Monospace, Sans, Serif). Noter at
       i ekstreme tilfeller vil <application>fontconfig</application> ta en glyff fra
       hvilken som helst tilgjengelig font, selv om den ikke er av den angitte typen, og med mindre den
@@ -164,7 +160,7 @@
       </listitem>
       <listitem>
         <para>
-          10-19 systemgjengivelsesstandarder (antialiasing osv.)
+          10-19 systemgjengivelsesstandarder (som kantutjevnelse.)
         </para>
       </listitem>
       <listitem>
@@ -211,8 +207,8 @@
 
     <para>
       Du kan også ha en personlig <filename>fonts.conf</filename> i
-      $XDG_CONFIG_HOME som er <filename
-      class="directory">~/.config/fontconfig/</filename>.
+      $XDG_CONFIG_HOME (which is <filename
+      class="directory">~/.config/fontconfig/</filename>).
     </para>
 
   </sect2>
@@ -228,7 +224,7 @@
     </para>
 
     <para>
-      Men hvis dokumentet eller siden ba om en font som ikke er installert
+      Derimot, hvis dokumentet eller siden ba om en font som ikke er installert
       (eller noen ganger ikke inneholder alle de nødvendige kodepunktene)
       følgende regler kommer inn: Først,
       <filename>30-metric-aliases.conf</filename> brukes til å kartlegge aliaser for
@@ -241,11 +237,11 @@
       behandlet på samme måte. Det finnes lignende filer med et 65- prefiks for
       Persiske og andre ikke-latinske skriftsystemer. Alle disse filene foretrekker
       kommersielle fonter hvis de er til stede, selv om moderne libre fonter er
-      ofte i det minste deres like.
+      ofte minst like.
     </para>
 
     <para>
-      Siden fontconfig-2.12.5 er det også generisk familietilpasning for noen
+      Siden fontconfig-2.12.5, er det også generisk familietilpasning for noen
       emoji og matematiske fonter, se {45,60}-generic.conf.
     </para>
 
@@ -271,9 +267,9 @@
 
     <para>
       For å prøve ut forskjellige innstillinger, må du kanskje avslutte Xorg og deretter
-      kjøre på nytt <command>startx</command> slik at alle applikasjoner bruker de nye
-      innstillingene. Og hvis du bruker Gnome eller KDE kan skrivebordene deres overstyre disse
-      endringene. For å utforske mulighetene, lag en fil for brukeren din:
+      kjøre <command>startx</command> en gang til slik at alle applikasjoner bruker de nye
+      innstillingene. Hvis du bruker Gnome, KDE eller LXQt, kan skrivebordene deres overstyre
+      disse endringene. For å utforske mulighetene, lag en fil for brukeren din:
     </para>
 
 <screen><userinput>mkdir -pv ~/.config/fontconfig &amp;&amp;
@@ -343,9 +339,8 @@ EOF</userinput></screen>
       I tidligere versjoner av BLFS var de stygge gamle Xorg bitmap fontene
       installert. Nå er det mange som ikke trenger å installere noen av dem. Men hvis
       du av en eller annen grunn har installert en eller flere punktgrafikkfonter, kan du
-      hindre at de brukes av <application>fontconfig</application> ved å
-      opprette følgende fil som
-      <systemitem class="username">root</systemitem> bruker :
+      hindre dem i å bli brukt av <application>fontconfig</application> ved å
+      opprette følgende fil som &root; bruker :
     </para>
 
 <screen role="root"><userinput>cat > /etc/fonts/conf.d/70-no-bitmaps.conf &lt;&lt; "EOF"
@@ -474,7 +469,7 @@ EOF</userinput></screen>
 
       <para>
         Hvis du har installert gjeldende versjon, er brukerdokumentasjonen
-        tilgjengelig i html, PDF og tekstversjoner på <filename
+        tilgjengelig i HTML, PDF og tekstversjoner på <filename
         class="directory">/usr/share/doc/fontconfig-&fontconfig-version;/</filename>
         : endre versjonen hvis du installerte en annen.
       </para>
@@ -660,8 +655,8 @@ EOF</userinput></screen>
 
     <para>
       Prosessen for å rette opp dette er grei, men kjedelig - for alle
-      elementer som produserer en feilmelding ved å bruke redigeringsprogrammet (som
-      <systemitem class="username">root</systemitem> bruker) rediger den installerte
+      elementer som produserer en feilmelding ved å bruke redigeringsprogrammet (som &root;
+      bruker) rediger den installerte
       filen for å gjenta hele blokken så mange ganger som det er flere
       variabler, reduser deretter hvert eksempel til å ha bare ett av dem. Du kan
       ønske å jobbe med en feil om gangen, lagre filen etter hver rettelse, og
