@@ -88,6 +88,15 @@
       </para>
     </note>
 
+    <note>
+      <para>
+        På systemer med NVIDIA GPUer som bruker Nouveau kjernedriveren,
+        kan  du støte på sporadiske GPU krasj og henger. Hvis dette problemet
+         oppstår, nedgrader til den nyeste versjonen av Linux 6.1-kjernen.
+        <!--https://gitlab.freedesktop.org/drm/nouveau/-/issues/257-->
+      </para>
+    </note>
+
     <para>
       Vanligvis er det ingen spesifikk konfigurasjon som kreves for
       <application>Xorg</application>, men tilpasning er mulig. For
@@ -116,16 +125,14 @@
       uttalelser som:
     </para>
 
-<screen><literal>(II) intel(0): direct rendering: DRI2 Enabled</literal></screen>
-
-    <para>eller</para>
-
-<screen><literal>(II) NOUVEAU(0): Loaded DRI module</literal></screen>
+<screen><literal>(II) modeset(0): [DRI2] Setup complete
+(II) modeset(0): [DRI2]   DRI driver: crocus
+(II) modeset(0): [DRI2]   VDPAU driver: va_gl</literal></screen>
 
     <note>
       <para>
         DRI konfigurasjonen kan variere hvis du bruker alternative drivere, for eksempel
-        som de fra
+        som tradisjonelle DDX drivere, eller proprietære drivere fra
         <ulink url="https://www.nvidia.com/page/home.html">NVIDIA</ulink> eller
         <ulink url="https://www.amd.com/">AMD</ulink>.
       </para>
@@ -230,8 +237,8 @@ OpenGL version string: 3.0 Mesa 10.4.5</computeroutput></screen>
       Xorg startes fra kommandolinjen, vil den være plassert i
       <filename class="directory">$HOME/.local/share/xorg/</filename> mappen.
       Hvis Xorg startes av en skjermbehandler (f.eks. <xref linkend='lightdm'/>,
-      <xref linkend='lxdm'/>, eller <xref linkend='gdm'/>) eller hvis
-      <filename>$XORG_PREFIX/libexec/Xorg</filename> har suid biten satt,
+      <xref linkend='sddm'/>, or <xref linkend='gdm'/>) eller hvis
+      <filename>$XORG_PREFIX/bin/Xorg</filename> har suid biten satt,
       vil den ligge i <filename class="directory">/var/log/</filename>
       mappen.
     </para>
@@ -257,8 +264,9 @@ OpenGL version string: 3.0 Mesa 10.4.5</computeroutput></screen>
     <para>
       Denne advarselen vises når en vanlig bruker starter Xorg. Biblioteket
       <filename>libpciaccess.so</filename> gir denne advarselen når den
-      prøver å åpne <filename>/dev/vga_arbiter</filename>.  Hvis det bare er
-      ett skjermkort i systemet, kan det trygt ignoreres. Om ønskelig kan
+      prøver å åpne <filename>/dev/vga_arbiter</filename>.  Hvis det ikke er flere
+      enn ett eldre PCI (ikke PCIe) grafikkort på systemet, det
+      kan trygt ignoreres. Hvis det virkelig er nødvendig, kan
       tillatelsene til denne enheten endres ved å legge til en udev regel og
       legge til den lokale brukeren i videogruppen. Som &root; bruker:
     </para>
@@ -270,23 +278,6 @@ ACTION=="add", KERNEL=="vga_arbiter", GROUP="video" MODE="0660"
 EOF
 
 usermod -a -G video &lt;user running xorg&gt;</userinput></screen>
-
-    <bridgehead renderas="sect5">(EE) AIGLX error: dlopen of /opt/xorg/lib/dri/i965_dri.so failed</bridgehead>
-
-  <para>
-    Denne feilen, ledsaget av (EE) AIGLX error: unable to load driver i965, inntreffer
-    i noen systemer med Intel baserte grafikkenheter. Det er forårsaket av misforhold
-    mellom nåværende <xref linkend='xorg-server'/> og <xref linkend='mesa'/>. Xorg
-    bruker ikke lenger i965 driveren og bruker crocus eller iris mesa drivere som
-    angitt av <command>xdriinfo</command> kommandoen. Det kan trygt ignoreres.
-  </para>
-
-  <para>
-    Om ønskelig kan denne advarselen fjernes ved å kommentere ut linjene
-    330-331 og 337-338 (LogMessage) i
-    <filename>glx/glxdricommon.c</filename> i <xref linkend='xorg-server'/>
-    pakken.
-  </para>
 
   </sect2>
 
@@ -319,22 +310,25 @@ usermod -a -G video &lt;user running xorg&gt;</userinput></screen>
     </para>
 
 <screen><computeroutput>Providers: number : 2
-Provider 0: id: 0x7d cap: 0xb, Source Output, Sink Output, Sink Offload crtcs: 3 outputs: 4 associated providers: 1 name:Intel
-Provider 1: id: 0x56 cap: 0xf, Source Output, Sink Output, Source Offload, Sink Offload crtcs: 6 outputs: 1 associated providers: 1 name:radeon</computeroutput></screen>
-
+Provider 0: id: 0x7d cap: 0xb, Source Output, Sink Output, Sink Offload crtcs: 3 outputs: 4 associated providers: 1 name:modesetting
+Provider 1: id: 0x56 cap: 0xf, Source Output, Sink Output, Source Offload, Sink Offload crtcs: 6 outputs: 1 associated providers: 1 name:modesetting</computeroutput></screen>
+ 
+ <!-- Well, both "id" and "name" are supposed to work here but after
+         the xf86-video-* removal all the names will be modesetting unless
+         a proprietary driver used... -->
     <para>
       For å kunne kjøre en GLX applikasjon på en diskret GPU, vil du
-      trenge å kjøre følgende kommando, hvor &lt;provider&gt; er det mer
-      kraftige diskrete kortet, og &lt;sink&gt; er kortet som har en skjerm
-      tilkoblet:
+      må kjøre følgende kommando, hvor &lt;provider&gt; er id-en til
+      det kraftigere diskrete kortet, og &lt;sink&gt; er ID-en til kortet
+      som har en skjerm tilkoblet:
     </para>
 
 <screen><userinput>xrandr --setprovideroffloadsink <replaceable>&lt;provider&gt; &lt;sink&gt;</replaceable></userinput></screen>
 
     <note>
       <para>
-        Med nyere <application>Xorg</application> drivere, som modusinnstilling
-        eller intel, som er DRI3 kompatible, er ikke kommandoen ovenfor lenger
+        Med <application>Xorg</application> modusinnstillingsdriver,
+        som er DRI3 kompatibel, er ikke kommandoen ovenfor lenger
         nødvendig. Det skader imidlertid ikke.
       </para>
     </note>
@@ -398,21 +392,89 @@ EOF</userinput></screen>
       <title>Finjustere Skjerminnstillinger</title>
 
       <para>
-        Igjen, med moderne Xorg, det er liten eller ingen ekstra konfigurasjon
-        nødvendig. Hvis du skulle trenge ekstra alternativer sendt til videodriveren,
-        for eksempel kan du bruke noe som følgende (igjen,
-        utført som <systemitem class="username">root</systemitem> bruker):
+        Hvis du vil angi skjermoppløsningen for Xorg, kjør først
+        <command>xrandr</command> i en X terminal for å liste de støttede
+        oppløsninger og tilsvarende oppdateringsfrekvenser. For eksempel, det
+        gir ut følgende for én skjerm:
       </para>
 
-<screen role="root"><userinput>cat &gt; /etc/X11/xorg.conf.d/videocard-0.conf &lt;&lt; "EOF"
-<literal>Section "Device"
-    Identifier  "Videocard0"
-    Driver      "radeon"
-    VendorName  "Videocard vendor"
-    BoardName   "ATI Radeon 7500"
-    Option      "NoAccel" "true"
+<screen><computeroutput>Screen 0: minimum 16 x 16, current 5760 x 2160, maximum 32767 x 32767
+DP-1 connected primary 3840x2160+0+0 (normal left inverted right x axis y axis) 600mm x 340mm
+   3840x2160     59.98*+
+   2048x1536     59.95
+   1920x1440     59.90
+   1600x1200     59.87
+   1440x1080     59.99
+   1400x1050     59.98
+   1280x1024     59.89
+   1280x960      59.94
+   1152x864      59.96
+   1024x768      59.92
+   800x600       59.86
+   640x480       59.38</computeroutput></screen>
+
+      <para>
+        Fra utdataen kan vi se at skjermen er identifisert
+       <literal>DP-1</literal>.  Velg en passende oppløsning fra
+        utdatalisten, for eksempel <literal>1920x1440</literal>.  Deretter
+        som &root; bruker, opprett en konfigurasjonsfil for Xorg serveren:
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/X11/xorg.conf.d/monitor-DP-1.conf &lt;&lt; "EOF"
+<literal>Section "Monitor"
+    Identifier  "DP-1"
+    Option      "PerferredMode" "1920x1440"
 EndSection</literal>
 EOF</userinput></screen>
+
+      <para>
+        Noen ganger <command>xrandr</command> kan ikke oppdage noen
+        oppløsningsinnstillinger som støttes av skjermen. Det skjer vanligvis
+        med virtuelle skjermer av virtuelle maskinforvaltere som
+        <xref linkend='qemu'/> eller VMWare: en virtuell skjerm faktisk
+        støtter alle par med heltall i et område som oppløsningen, men
+        <command>xrandr</command> vil bare liste noen få. Å bruke en
+        oppløsning ikke oppført av <command>xrandr</command>, først kjør
+        <command>cvt</command> for å få moduslinjen for oppløsningen.
+        For eksempel:
+      </para>
+
+      <screen><userinput>cvt 1600 900</userinput>
+<computeroutput><literal># 1600x900 59.95 Hz (CVT 1.44M9) hsync: 55.99 kHz; pclk: 118.25 MHz
+Modeline "1600x900_60.00"  118.25  1600 1696 1856 2112  900 903 908 934 -hsync +vsync</literal></computeroutput></screen>
+
+      <para>
+        Som &root; bruker, opprette en Xorg serverkonfigurasjonsfil
+        som inneholder denne moduslinjen, og spesifiser modusen som foretrukket modus:
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/X11/xorg.conf.d/monitor-DP-1.conf &lt;&lt; "EOF"
+<literal>Section "Monitor"
+    Identifier  "DP-1"
+    Modeline    "1600x900_60.00"  118.25  1600 1696 1856 2112  900 903 908 934 -hsync +vsync
+    Option      "PerferredMode"   "1600x900_60.00"
+ EndSection</literal>
+ EOF</userinput></screen>
+ 
+      <para>
+        Noen avanserte LCD skjermer støtter en oppdateringsfrekvens høyere enn 100 Hz
+        men <command>xrandr</command> kan ikke gjenkjenne den støttede
+        oppdateringsfrekvens og bruker 60 Hz i stedet. Dette problemet ville hindre deg
+        fra å utnytte skjermens fulle kapasitet, og kan forårsake
+        at skjermen flimrer eller viser <quote>figurer</quote> som mesh
+        eller rutenett. For å løse problemet, bruk igjen <command>cvt</command>
+        for å få moduslinjen med en egendefinert oppdateringsfrekvens:
+      </para>
+
+      <screen><userinput>cvt 3840 2160 144</userinput>
+<computeroutput><literal># 3840x2160 143.94 Hz (CVT) hsync: 338.25 kHz; pclk: 1829.25 MHz
+Modeline "3840x2160_144.00"  1829.25  3840 4200 4624 5408  2160 2163 2168 2350 -hsync +vsync</literal></computeroutput></screen>
+
+      <para>
+        Deretter limer du den inn i Xorg serverens konfigurasjonsfil og setter den inn
+        som den foretrukne modusen.
+      </para>
+
 
       <para>
         Et annet vanlig oppsett er å ha flere serveroppsett for bruk i
@@ -428,6 +490,34 @@ EOF</userinput></screen>
     Option         "Xinerama"
 EndSection</literal>
 EOF</userinput></screen>
+
+      <para>
+        Når du drar et vindu i twm (eller et ikke-sammensatt
+        vindusbehandler) horisontalt, kan du observere at de vertikale grensene
+        av vinduet er delt inn i flere segmenter. Dette er et eksempel
+        av de visuelle artefaktene kalt <emphasis>skjermrivning</emphasis>.
+        Lag en konfigurasjonsfil for å løse problemene med skjermrivning
+        som aktiverer skjermrivningfrie alternativet. Merk at du må ha
+        skjermrivningfrie oppdatering brukt fra <xref role="nodep"
+        linkend="xorg-server"/> for at dette skal fungere ordentlig, og det kan evt
+        øke minnetildelingen og redusere ytelsen.
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/X11/xorg.conf.d/20-tearfree.conf &lt;&lt; "EOF"
+<literal>Section "Device"
+   Identifier "Graphics Adapter"
+   Driver     "modesetting"
+   Option     "TearFree" "true"
+EndSection</literal>
+EOF</userinput></screen>
+
+      <para>
+        Med moderne Xorg, liten eller ingen ekstra grafikkortkonfigurasjon
+        er nødvendig. Hvis du skulle trenge ekstra alternativer sendt til din
+        videodriver, legg dem til i <literal>Device</literal> seksjonen også.
+        Alternativene som støttes av modusinnstillingsdriveren er dokumentert i
+        manualsiden <filename>modesetting(4)</filename>.
+      </para>
 
     </sect3>
   </sect2>
