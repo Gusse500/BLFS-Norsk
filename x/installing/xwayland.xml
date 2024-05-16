@@ -6,10 +6,10 @@
 
   <!ENTITY xwayland-download-http "&xorg-download-http;/xserver/xwayland-&xwayland-version;.tar.xz">
   <!ENTITY xwayland-download-ftp  "&xorg-download-ftp;/xserver/xwayland-&xwayland-version;.tar.xz">
-  <!ENTITY xwayland-md5sum        "96879f938a91b0441ea784220159d843">
+  <!ENTITY xwayland-md5sum        "a6b4e8814d32c080510104888f752d74">
   <!ENTITY xwayland-size          "1.2 MB">
-  <!ENTITY xwayland-buildsize     "76 MB (legg til 358 MB for tester)">
-  <!ENTITY xwayland-time          "0.2 SBU (med parallellitet=4; legg til 1.0 SBU for tester, ikke inkludert klonetid)">
+  <!ENTITY xwayland-buildsize     "27 MB (legg til 364 MB for tester)">
+  <!ENTITY xwayland-time          "0.2 SBU (med parallellitet=4; legg til 1.7 SBU for tester, ikke inkludert klonetid)">
 ]>
 
 <sect1 id="xwayland" xreflabel="Xwayland-&xwayland-version;">
@@ -32,7 +32,7 @@
       wayland økt.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -74,7 +74,8 @@
     <para role="required">
       <xref linkend="libxcvt"/>,
       <xref linkend="pixman"/>,
-      <xref linkend="wayland-protocols"/>, og
+      <xref linkend="wayland-protocols"/>,
+	  <xref role='runtime' linkend="xorg7-app"/> (kjøretid), og
       <xref linkend="xorg7-font"/> (bare font-util)
     </para>
 
@@ -97,9 +98,6 @@
       <ulink url="https://wayland.pages.freedesktop.org/weston/">weston</ulink> (for tester)
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/xwayland"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -115,10 +113,10 @@
 mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=$XORG_PREFIX         \
-      --buildtype=release           \
-      -Dxkb_output_dir=/var/lib/xkb \
-      ..                            &amp;&amp;
+meson setup --prefix=$XORG_PREFIX         \
+            --buildtype=release           \
+            -Dxkb_output_dir=/var/lib/xkb \
+            ..                            &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -130,6 +128,9 @@ ninja</userinput></screen>
       i <ulink
       url="https://gitlab.freedesktop.org/xorg/xserver/-/blob/xwayland-22.1/.gitlab-ci/debian-install.sh">
       Upstream continuous integration build</ulink>.
+<!-- keep 22.1 above: they used to build it in gitlab-ci because debian
+     had an obsolete version of weston, but now they take weston from
+     debian so the command to build it has been removed. -->
     </para>
 <!--
     <para>

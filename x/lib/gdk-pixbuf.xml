@@ -36,7 +36,7 @@
       pakke som forberedelse til endringen til <application>GTK+ 3</application>.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -97,13 +97,16 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <xref role="runtime" linkend="gdk-pixbuf-xlib"/>
+      (kjøretidsavhengighet, nødvendig for å laste XPM bilder),
       <xref linkend="gi-docgen"/>
-      (for å generere dokumentasjon)
+      (for å generere dokumentasjon),
+	  <xref role="runtime" linkend="libavif"/>
+      (kjøretidsavhengighet, nødvendig for å laste AVIF bilder), and
+      <xref role="runtime" linkend="webp-pixbuf-loader"/>
+      (kjøretidsavhengighet, nødvendig for å laste WebP bilder)
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/gdk-pixbuf"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -117,7 +120,10 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr --buildtype=release --wrap-mode=nofallback .. &amp;&amp;
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release \
+      --wrap-mode=nofallback &amp;&amp;
 ninja</userinput></screen>
 
     <para>

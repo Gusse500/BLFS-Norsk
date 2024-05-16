@@ -5,13 +5,13 @@
   %general-entities;
 
   <!ENTITY at-spi2-core-download-http
-           "&gnome-download-http;/at-spi2-core/2.46/at-spi2-core-&at-spi2-core-version;.tar.xz">
+           "&gnome-download-http;/at-spi2-core/2.48/at-spi2-core-&at-spi2-core-version;.tar.xz">
   <!ENTITY at-spi2-core-download-ftp
-           "&gnome-download-ftp;/at-spi2-core/2.46/at-spi2-core-&at-spi2-core-version;.tar.xz">
-  <!ENTITY at-spi2-core-md5sum        "16e85a40442d80be960b4e1e3992fd5b">
-  <!ENTITY at-spi2-core-size          "528 KB">
+           "&gnome-download-ftp;/at-spi2-core/2.48/at-spi2-core-&at-spi2-core-version;.tar.xz">
+  <!ENTITY at-spi2-core-md5sum        "4ef1875d9e7035f672d494b997c892af">
+  <!ENTITY at-spi2-core-size          "541 KB">
   <!ENTITY at-spi2-core-buildsize     "20 MB (med tester)">
-  <!ENTITY at-spi2-core-time          "0.2 SBU (med tester)">
+  <!ENTITY at-spi2-core-time          "mindre enn 0,1 SBU (med tester, bortsett fra hvis det er en timeout)">
 ]>
 
 <sect1 id="at-spi2-core" xreflabel="at-spi2-core-&at-spi2-core-version;">
@@ -35,7 +35,7 @@
       applikasjoner.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -90,12 +90,9 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gtk-doc"/>
+      <xref linkend="gi-docgen"/> og <xref linkend='sphinx'/>
     </para>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/at-spi2-core"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -109,22 +106,24 @@
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr       \
+meson setup ..            \
+      --prefix=/usr       \
       --buildtype=release \
-      -Dsystemd_user_dir=/tmp .. &amp;&amp;
+      -Dsystemd_user_dir=/tmp &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr --buildtype=release .. &amp;&amp;
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      En sesjonsbussadresse, vanligvis tilgjengelig i en Xorg terminal,
-      er nødvendig for å kjøre testene. Testpakken krever også glib
-      skjemaer for pakken som allerede skal installeres. For å teste resultatene,
-      installer pakken først, deretter utsted: <command>ninja test</command>.
+      Testpakken krever også at glib skjemaene til pakken
+      allerede er installert. For å teste resultatene, installer pakken først,
+      deretter utsted: <command>dbus-run-session ninja test</command>.
+      En test, <filename>atk-test</filename>, er kjent for tidsavbrudd på noen
+      systemer.
     </para>
 
     <para>
@@ -138,22 +137,24 @@ rm /tmp/at-spi-dbus-bus.service</userinput></screen>
   </sect2>
 
 
-  <sect2 role="commands" revision="sysv">
-    <title>Parameterforklaringer</title>
-
-    <para>
-      <parameter>-Dsystemd_user_dir=/tmp</parameter>: Dette flagget putter
-      systemd enhetsfilen i /tmp hvor den vil bli fjernet. SysV, kan ikke
-      bruke denne filen.
-    </para>
-
-  </sect2>
-
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para revision="sysv">
+      <parameter>-Dsystemd_user_dir=/tmp</parameter>: Dette flagget putter
+      systemd enhetsfilen i /tmp hvor den vil bli fjernet. SysV kan ikke
+      bruke denne filen.
+    </para>
+
+    <para>
+      <option>-Ddocs=true</option>: Bruk denne bryteren hvis du vil bygge
+      dokumentasjon. Merk at du må ha både
+      <xref role="nodep" linkend="gi-docgen"/>
+      og <xref linkend='sphinx'/> installert på systemet ditt.
+    </para>
 
   </sect2>
 
@@ -184,7 +185,7 @@ rm /tmp/at-spi-dbus-bus.service</userinput></screen>
           /usr/include/at-spi2-atk,
           /usr/lib/gnome-settings-daemon-3.0,
           /usr/share/defaults/at-spi2, og
-          /usr/share/gtk-doc/html/libatspi
+          /usr/share/gtk-doc/html/libatspi (valgfri)
         </seg>
       </seglistitem>
     </segmentedlist>
