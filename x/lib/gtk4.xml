@@ -6,15 +6,14 @@
 
   <!ENTITY gtk4-download-http "&gnome-download-http;/gtk/&gtk4-minor;/gtk-&gtk4-version;.tar.xz">
   <!ENTITY gtk4-download-ftp  "&gnome-download-ftp;/gtk/&gtk4-minor;/gtk-&gtk4-version;.tar.xz">
-  <!ENTITY gtk4-md5sum        "d735b9c2a534f034553e2e27bc5af994">
-  <!ENTITY gtk4-size          "19 MB">
-  <!ENTITY gtk4-buildsize     "484 MB (legg til 12 MB for tester)">
-  <!ENTITY gtk4-time          "1.1 SBU (bruker parallellisme=4, legg til 0,3 SBU for tester)">
+  <!ENTITY gtk4-md5sum        "69372ddb998c125c3a04c44b8c68b339">
+  <!ENTITY gtk4-size          "16 MB">
+  <!ENTITY gtk4-buildsize     "562 MB (med dokumenter; legg til 29 MB for tester)">
+  <!ENTITY gtk4-time          "1.3 SBU (bruker parallellisme=4; med dokumenter; legg til 0.6 SBU for tester)">
 ]>
 
 <sect1 id="gtk4" xreflabel="GTK-&gtk4-version;">
   <?dbhtml filename="gtk4.html"?>
-
 
   <title>GTK-&gtk4-version;</title>
 
@@ -30,7 +29,7 @@
       å lage grafiske brukergrensesnitt for applikasjoner.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -109,17 +108,24 @@
         utheving av demo kildekoden),
       <xref linkend="libcloudproviders"/>,
       <xref linkend="sassc"/>,
-      <xref linkend="tracker3"/>, og
+      <xref linkend="tracker3"/>,
+	  <ulink url="https://github.com/OpenPrinting/cpdb-libs">cpdb</ulink>, og
       <ulink url="https://vulkan.lunarg.com/sdk/home">vulkan</ulink>
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/gtk4"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av GTK 4</title>
+
+    <para>
+      Gjør først noen endringer fra oppstrøms:
+    </para>
+
+<screen><userinput>sed -e '/glib-object.h/a #include &lt;gdk/gdk.h&gt;'        \
+    -e '/ gtk_printer_option/i GDK_AVAILABLE_IN_ALL'  \
+    -e '/\*gtk_printer_option/i GDK_AVAILABLE_IN_ALL' \
+    -i.orig gtk/print/gtkprinteroptionprivate.h</userinput></screen>
 
     <para>
       Installer <application>GTK 4</application> ved å kjøre følgende
@@ -132,6 +138,7 @@ cd    build &amp;&amp;
 meson setup --prefix=/usr           \
             --buildtype=release     \
             -Dbroadway-backend=true \
+			-Dintrospection=enabled \
             .. &amp;&amp;
 ninja</userinput></screen>
 
@@ -140,13 +147,20 @@ ninja</userinput></screen>
       API dokumentasjonen for denne pakken, kjør:
     </para>
 
-<screen role='nodump'><userinput>sed "s@'doc'@&amp; / 'gtk-&gtk4-version;'@" -i ../docs/reference/meson.build &amp;&amp;
-meson configure -Dgtk_doc=true                                  &amp;&amp;
+<screen remap='doc'><userinput>sed "s@'doc'@&amp; / 'gtk-&gtk4-version;'@" -i ../docs/reference/meson.build &amp;&amp;
+meson configure -Dgtk_doc=true                                   &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å kjøre testene, utsted: <command>meson test --setup x11</command>. Hvis du
-      er i en Wayland økt, bytt ut x11 med wayland. Noen få tester kan mislykkes.
+      For å kjøre testene, utsted: <command>dbus-run-session meson test --setup
+      x11</command>. Hvis du er i en Wayland økt, bytt ut x11 med wayland.
+      Ni tester er kjent for å mislykkes hvis
+      <ulink url="https://gitlab.gnome.org/GNOME/cantarell-fonts">Cantrell fonts</ulink>
+      ikke er installert. Mange tester vil mislykkes hvis
+      <filename>~/.config/gtk-4.0/settings.ini</filename> eksisterer og gtk-modules
+      linjen ikke er kommentert ut.
+      På systemer med NVIDIA grafikkort kan testene ta betydelig
+      lengre enn den annonserte testtiden.
     </para>
 <!-- [pierre]: 4.6.0, wayland: 727 ok; 2 Expected Fail;  1 Fail; 1 Skipped
      [bdubbs]: 4.6.3, x11,     724 OK, 2 Expected Fail, 12 Fail. 1 Skipped
@@ -155,7 +169,14 @@ ninja</userinput></screen>
      [bdubbs]: 4.6.7, x11,     758 OK, 2 Expected Fail,  9 Fail. 1 Skipped. 1 Timeout
      [pierre]: 4.8.1, wayland, 765 OK, 2 Expected Fail,  2 Fail. 1 Skipped
      [bdubbs]: 4.8.2, x11,     753 OK, 2 Expected Fail, 14 Fail. 1 Skipped
-     [pierre]: 4.8.3, wayland, 760 OK, 2 Expected Fail,  5 Fail. 3 Skipped-->
+     [pierre]: 4.8.3, wayland, 760 OK, 2 Expected Fail,  5 Fail. 3 Skipped
+     [bdubbs]: 4.10.0, x11,    701 OK, 0 Expected Fail, 15 Fail. 1 Skipped, 2 Timeout
+               above over ssh
+     [bdubbs]: 4.10.0, x11,    712 OK, 0 Expected Fail,  6 Fail. 1 Skipped, 0 Timeout
+               above on native x11
+     [bdubbs]: 4.12.0, x11,   1453 OK, 0 Expected Fail,  9 Fail. 5 Skipped, 0 Timeout
+               above on native x11
+-->
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
@@ -173,6 +194,12 @@ ninja</userinput></screen>
     <para>
       <parameter>-Dbroadway-backend=true</parameter>: Denne bryteren aktiverer
       HTML5 GDK bakstykket.
+    </para>
+
+    <para>
+      <parameter>-Dintrospection=enabled</parameter>: Denne bryteren aktiverer
+      å bruke <xref linkend='gobject-introspection'/> til å generere GIR bindinger
+      av disse pakkene. Disse bindingene kreves av GNOME.
     </para>
 
     <para>
@@ -197,12 +224,6 @@ ninja</userinput></screen>
       <option>-Dcolord=enabled</option>: Bruk denne bryteren hvis du har
       <xref linkend="colord"/> installert og ønsker å bruke colord med CUPS
       utskrifts bakstykket.
-    </para>
-
-    <para>
-      <!-- The tarball ships a copy of gi-docgen but we need the Python
-           dependencies, so we require gi-docgen to be installed. -->
-      <option>-Dgtk_doc=true</option>: &gi-doc-disable;
     </para>
 
     <para>
