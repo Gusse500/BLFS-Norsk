@@ -10,10 +10,10 @@
      URL for a prepared git version -->
   <!ENTITY qtwebengine-download-http "&sources-anduin-http;/qtwebengine/qtwebengine-&qtwebengine-version;.tar.xz">
   <!ENTITY qtwebengine-download-ftp  " ">
-  <!ENTITY qtwebengine-md5sum        "a874390e7987ae5613f4650aab5681e8">
+  <!ENTITY qtwebengine-md5sum        "296f61f84a489088ffd237fbcd052c9e">
   <!ENTITY qtwebengine-size          "307 MB">
-  <!ENTITY qtwebengine-buildsize     "5.1 GB (152 MB installert)">
-  <!ENTITY qtwebengine-time          "79 SBU (på en rask maskin, ved hjelp av parallellitet=4)">
+  <!ENTITY qtwebengine-buildsize     "5.1 GB (153 MB installert)">
+  <!ENTITY qtwebengine-time          "73 SBU (Bruke parallellisme=4)">
 ]>
 
 <sect1 id="qtwebengine" xreflabel="qtwebengine-&qtwebengine-version;">
@@ -43,14 +43,15 @@
       nettsted utviklet for google chrome, eller chromium, nettlesere.
     </para>
 
-    <!-- Note for editors re switching between git versions and releases:
-      If a public release of Qt 5.15.3 (or later) appears in a meaningful
-      time frame, please keep the notes re the git build, as comments, so
-      that updating for later fixes will be easier: in the past, updates
-      of 'stable' versions (i.e. 5.12 when 5.14, 5.15 were the newest)
-      happened much later than updates to the newest version (now Qt6)
-      and it seems likely we might again need to use a git version to fix
-      future chromium vulnerabilities. -->
+    <important>
+      <para>
+        Qt-5.15 nådde End Of Life 26. mai 2023. Forlenget levetid Qt5.15 LTS
+        har blitt forlenget til 26. mai 2025 for de med abonnementslisenser.
+        Fordi qtwebengine bruker chromium kode under LGPL, ser det ut til at noen
+        nye tilbakeporterte CVE reparasjoner for QtWebEngine vil være tilgjengelige etter at Qt lager
+        offentlige utgivelser av gjeldende versjoner.
+      </para>
+    </important>
 
     <warning>
       <para>
@@ -67,14 +68,14 @@
       </para>
 
       <para>
-        Det virker sannsynlig at fremtidige 5.15-serieversjoner også vil bli utgitt
+        Det virker sannsynlig at fremtidige 5.15 serieversjoner også vil bli utgitt
         lenge etter at chromium sårbarhetene er kjent, men fikser for
         QtWebEngine finnes i git, og redaktørene mener at
         kjente sårbarheter i nettlesere bør fikses.
       </para>
 
       <para> <!-- for git versions -->
-        Tarballen lenket nedenfor ble opprettet fra 5.15 git grenen
+        Tarballen lenket nedenfor ble opprettet fra 5.15.15 git grenen
         og 87 grenen til chromium undermodulen (som er utskilt fra
         chromium). Se GIT-VERSIONS filen i tarballen for detaljer om
         siste forpliktelser.
@@ -152,7 +153,7 @@
 
          end of note for editors -->
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <warning>
       <para>
@@ -250,6 +251,14 @@
           <ulink url="&patch-root;/qtwebengine-&qtwebengine-version;-ffmpeg5_fixes-1.patch"/>
         </para>
       </listitem>
+      <!--
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/qtwebengine-&qtwebengine-version;-icu_73-1.patch"/>
+        </para>
+      </listitem>
+      -->
     </itemizedlist>
 
     <bridgehead renderas="sect3">qtwebengine Avhengigheter</bridgehead>
@@ -261,7 +270,8 @@
       <xref linkend="nss"/>,
       <xref linkend="pciutils"/>, og
 <!--  <xref linkend="python2"/>, and -->
-      <xref linkend='qt5'/>
+      <xref linkend='qt5'/> eller
+	  <xref role="nodep" linkend='qt5-components'/> med qtlocation og qtwebchannel)
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -297,7 +307,7 @@
     </para>
 
     <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/qtwebengine"/>
+      Redaktørens notater: <ulink url="&blfs-wiki;/qtwebengine"/>
     </para>
   </sect2>
 
@@ -342,11 +352,18 @@
 <screen><userinput remap="pre">patch -Np1 -i ../qtwebengine-&qtwebengine-version;-build_fixes-1.patch</userinput></screen>
 
     <para>
-      Bruk en oppdatering som løser problemer når du bygger med ffmpeg-5:
+      Bruk en oppdatering som løser problemer når du bygger med ffmpeg-5 og senere:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../qtwebengine-&qtwebengine-version;-ffmpeg5_fixes-1.patch</userinput></screen>
+<!--
+    <para>
+      Apply a patch that resolves problems when building with icu-73 and later:
+    </para>
+ 
+<screen><userinput remap="pre">patch -Np1 -i ../qtwebengine-&qtwebengine-version;-icu_73-1.patch</userinput></screen>
 
+-->
 <!-- start of commands for git versions only -->
     <para>
       Selv om build_fixes oppdateringen har sørget for at git ikke blir påkalt under byggingen,
@@ -606,11 +623,8 @@ make</userinput></screen>
       og kompiler kjernen på nytt om nødvendig:
     </para>
 
-<!-- Spaces are significant in <screen> sections -->
-<screen><literal>General setup ---&gt;
-  -*- Namespaces support ---&gt;
-    [ ]     User namespace                    [CONFIG_USER_NS]
-    [*]     PID namespace                     [CONFIG_PID_NS]</literal></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="qtwebengine-kernel.xml"/>
 
     <indexterm zone="qtwebengine qtwebengine-kernel">
       <primary sortas="d-qtwebengine">qtwebengine</primary>

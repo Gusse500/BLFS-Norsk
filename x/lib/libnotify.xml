@@ -6,9 +6,9 @@
 
   <!ENTITY libnotify-download-http "&gnome-download-http;/libnotify/0.8/libnotify-&libnotify-version;.tar.xz">
   <!ENTITY libnotify-download-ftp  "&gnome-download-ftp;/libnotify/0.8/libnotify-&libnotify-version;.tar.xz">
-  <!ENTITY libnotify-md5sum        "1495f279b255b4493ac3588559823158">
+  <!ENTITY libnotify-md5sum        "ee2d2934a9dcfd5b1305188201e1cd50">
   <!ENTITY libnotify-size          "104 KB">
-  <!ENTITY libnotify-buildsize     "2.5 MB">
+  <!ENTITY libnotify-buildsize     "2.3 MB">
   <!ENTITY libnotify-time          "0.1 SBU">
 ]>
 
@@ -33,7 +33,7 @@
       vei.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -83,7 +83,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gtk-doc"/> og
+      <xref linkend="gi-docgen"/> og
       <xref linkend="xmlto"/>
     </para>
 
@@ -100,9 +100,6 @@
       </para>
     </note>
 
-    <para condition="html" role="usernotes">Brukernotater:
-      <ulink url="&blfs-wiki;/libnotify"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -116,15 +113,27 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr       \
-      --buildtype=release \
-      -Dgtk_doc=false     \
-      -Dman=false .. &amp;&amp;
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -Dgtk_doc=false     \
+            -Dman=false         \
+            ..                  &amp;&amp;
 ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
+
+    <para>
+      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
+      API dokumentasjonen for denne pakken, utsted:
+    </para>
+
+    <!-- No &libnotify-version; here because we'll mv the doc dir anyway -->
+<screen remap='doc'><userinput>sed "/docs_dir =/s@\$@ / 'libnotify'@" \
+    -i ../docs/reference/meson.build   &amp;&amp;
+meson configure -Dgtk_doc=true         &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
@@ -140,12 +149,6 @@ mv -v /usr/share/doc/libnotify{,-&libnotify-version;}</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-
-    <para>
-      <parameter>-Dgtk_doc=false</parameter>: Fjern denne parameteren hvis
-      <application>GTK-Doc</application> er installert og du ønsker å gjenoppbygge
-      og installer API dokumentasjonen.
-    </para>
 
   </sect2>
 

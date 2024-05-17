@@ -9,10 +9,10 @@
 
   <!ENTITY qt5-download-http "&qt5-url;/qt-everywhere-opensource-src-&qt5-version;.tar.xz">
   <!ENTITY qt5-download-ftp  " ">
-  <!ENTITY qt5-md5sum        "86b7b496735df3973a390b0d515c1a0f">
+  <!ENTITY qt5-md5sum        "fb41d86bea6bc4886030a5092c910b09">
   <!ENTITY qt5-size          "629 MB">
-  <!ENTITY qt5-buildsize     "15 GB (258 MB installert)">
-  <!ENTITY qt5-time          "29 SBU (bruke parallellisme=4)">
+  <!ENTITY qt5-buildsize     "15 GB (263 MB installert)">
+  <!ENTITY qt5-time          "23 SBU (bruke parallellisme=8)">
 ]>
 
 <sect1 id="qt5" xreflabel="Qt-&qt5-version;">
@@ -33,12 +33,12 @@
       som er mye brukt for å utvikle applikasjonsprogramvare med et grafikk
       brukergrensesnitt (GUI) (i hvilke tilfeller <application>Qt5</application> er
       klassifisert som et verktøysett for skjermelementer), og brukes også til å utvikle ikke-GUI
-      programmer som kommandolinjeverktøy og konsoller for servere. En av
+      programmer som kommandolinjeverktøy og konsoller for servere. To av
       de store brukere av <application>Qt</application> er <application>KDE
-      Rammeverk 5 (KF5)</application>.
+      Rammeverk 5 (KF5)</application> og <application>LXQt</application>.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -108,6 +108,7 @@
       <xref linkend="alsa-lib"/>,
       <xref linkend="make-ca"/>,
       <xref linkend="cups"/>,
+	  <phrase revision='sysv'><xref linkend="dbus"/>,</phrase>
       <xref linkend="double-conversion"/>,
       <xref linkend="glib2"/>,
       <xref linkend="gst10-plugins-base"/> (QtMultimedia bakstykke),
@@ -136,11 +137,14 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref role="runtime" linkend="bluez"/> (for sdpscanner, og ved kjøretid for
-      QtConnectivity moduler),
+      QtConnectivity modulen),
+	  <xref linkend="gtk3"/>,
       <xref linkend="ibus"/>,
-      <xref linkend="libinput"/>, <!-- needs -libinput switch -->
+      <xref linkend="libinput"/>,
       <xref linkend="mariadb"/>
         eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
+      <xref linkend="mitkrb"/>,
+      <xref linkend="mtdev"/>
       <xref linkend="pciutils"/>,
       <xref linkend="postgresql"/>,
       <!-- we handle QtWebEngine separately
@@ -163,7 +167,7 @@
          to Linux-based platforms. I've selected the ones that do and put
          them in as optional dependencies. -renodr -->
     <para condition="html" role="usernotes">
-       Brukernotater: <ulink url="&blfs-wiki;/qt5"/>
+       Redaktørens notater: <ulink url="&blfs-wiki;/qt5"/>
     </para>
   </sect2>
 
@@ -282,6 +286,15 @@ ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
     </para>
 
     <screen><userinput remap="pre">mkdir -pv qtbase/.git</userinput></screen>
+
+    <para>
+      Legg til en annen fiks for å bygge med GCC-13:
+    </para>
+
+<screen><userinput>sed -e "/pragma once/a#include &lt;cstdint&gt;"                                      \
+    -i qtlocation/src/3rdparty/mapbox-gl-native/include/mbgl/util/geometry.hpp \
+       qtlocation/src/3rdparty/mapbox-gl-native/include/mbgl/util/string.hpp   \
+       qtlocation/src/3rdparty/mapbox-gl-native/src/mbgl/gl/stencil_mode.hpp</userinput></screen>
 
     <para>
       Installer <application>Qt5</application> ved å kjøre følgende kommandoer:
@@ -525,7 +538,6 @@ EOF</userinput></screen>
 
 QT5DIR=/usr
 export QT5DIR
-pathappend $QT5DIR/bin
 
 # End /etc/profile.d/qt5.sh</literal>
 EOF</userinput></screen>
@@ -655,7 +667,7 @@ EOF</userinput></screen>
       </seglistitem>
     </segmentedlist>
 
-    <variablelist>
+    <variablelist id='qt5-descriptions' xreflabel="Qt5 Korte Beskrivelser">
       <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>

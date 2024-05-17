@@ -6,7 +6,7 @@
 
   <!ENTITY pango-download-http "&gnome-download-http;/pango/&pango-minor;/pango-&pango-version;.tar.xz">
   <!ENTITY pango-download-ftp  "&gnome-download-ftp;/pango/&pango-minor;/pango-&pango-version;.tar.xz">
-  <!ENTITY pango-md5sum        "fd4b0b23915d6a0255317f811bea4215">
+  <!ENTITY pango-md5sum        "baa2a0a67c71935165a205a76da25954">
   <!ENTITY pango-size          "4.1 MB">
   <!ENTITY pango-buildsize     "47 MB (med tester)">
   <!ENTITY pango-time          "0.1 SBU (Bruker parallellisme=4; med tester)">
@@ -33,7 +33,7 @@
       <application>GTK+</application> skjermelement verktøysett.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -97,13 +97,17 @@
       <ulink url="https://linux.thai.net/projects/libthai">libthai</ulink>
     </para>
 
-    <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/pango"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av Pango</title>
+
+    <para>
+      Først omgå en feil i gcc-13 som utløser en falsk advarsel
+      som bryter et release bygg:
+    </para>
+
+<screen><userinput>sed -i '/array-bounds/d' meson.build</userinput></screen>
 
     <para>
       Installer <application>Pango</application> ved å kjøre følgende
@@ -113,7 +117,10 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson --prefix=/usr --buildtype=release --wrap-mode=nofallback .. &amp;&amp;
+meson setup --prefix=/usr          \
+            --buildtype=release    \
+            --wrap-mode=nofallback \
+            ..                     &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -126,10 +133,11 @@ meson configure -Dgtk_doc=true                                    &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>. To tester,
-      <filename>test-font</filename> og
-      <filename>test-layout</filename>
-      <!--<filename>test-itemize</filename>, are--> er kjent for å mislykkes. <!--hvis
+      For å teste resultatene, kjør: <command>ninja test</command>. En test,
+      <filename>test-font</filename> er kjent for å mislykkes. Noen tester kan
+      mislykkes hvis ingen Opentype eller Truetype fonter er installert i
+      <filename class='directory'>/usr/share/fonts</filename>.
+      <!--<filename>test-itemize</filename>, are are known to fail. if
       <xref linkend="cantarell-fonts"/> ikke er installert.-->
       <!-- de andre problematiske testene blir hoppet over nå -->
       <!-- Selv med cantarell-fonter, feiler pango-1.50.9 test-font igjen. -->
