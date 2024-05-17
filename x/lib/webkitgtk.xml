@@ -6,10 +6,10 @@
 
   <!ENTITY webkitgtk-download-http "https://webkitgtk.org/releases/webkitgtk-&webkitgtk-version;.tar.xz">
   <!ENTITY webkitgtk-download-ftp  " ">
-  <!ENTITY webkitgtk-md5sum        "de05d314a3ecb5fb3835e4d84f8f466d">
-  <!ENTITY webkitgtk-size          "31 MB">
-  <!ENTITY webkitgtk-buildsize     "1.1 GB (174 MB installert)">
-  <!ENTITY webkitgtk-time          "34 SBU (bruke parallellisme=4)">
+  <!ENTITY webkitgtk-md5sum        "1140f86d9044fb76be974b65f71737d7">
+  <!ENTITY webkitgtk-size          "39 MB">
+  <!ENTITY webkitgtk-buildsize     "1,2 GB (201 MB installert, legg til 152 MB for GTK-4)">
+  <!ENTITY webkitgtk-time          "35 SBU (for GTK-3, bruk parallellisme=4, legg til 34 SBU for GTK-4)">
 ]>
 
 <sect1 id="webkitgtk" xreflabel="WebKitGTK-&webkitgtk-version;">
@@ -32,7 +32,7 @@
       plattformer.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -74,7 +74,7 @@
       <listitem>
         <para>
           Nødvendig oppdatering:
-          <ulink url="&patch-root;/webkitgtk-&webkitgtk-version;-upstream_fix-1.patch"/>
+          <ulink url="&patch-root;/webkitgtk-&webkitgtk-version;-consolidated_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
@@ -89,6 +89,7 @@
       <xref linkend="gst10-plugins-base"/>,
       <xref linkend="gst10-plugins-bad"/>,
       <xref linkend="gtk3"/>,
+	  <xref linkend="gtk4"/>,
       <xref linkend="icu"/>,
       <xref linkend="lcms2"/>,
       <xref linkend="libgudev"/>,
@@ -100,35 +101,39 @@
       <xref linkend="openjpeg2"/>,
       <xref linkend="ruby"/>,
       <xref linkend="sqlite"/>,
+	  <xref linkend="unifdef"/>,
       <xref linkend="which"/>, og
       <xref linkend="wpebackend-fdo"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
+      <xref linkend="bubblewrap"/>,
       <xref linkend="enchant"/>,
       <xref linkend="geoclue2"/>,
-      <xref linkend="gobject-introspection"/>, og
-      <xref linkend="hicolor-icon-theme"/>
+      <xref linkend="gobject-introspection"/>,
+      <xref linkend="hicolor-icon-theme"/>,
+      <xref linkend="libavif"/>, og
+      <xref linkend="xdg-dbus-proxy"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="bubblewrap"/>,
+      <!--<xref linkend="bubblewrap"/>,-->
       <xref linkend="gi-docgen"/>,
-      <xref linkend="gtk4"/>,
       <xref linkend="harfbuzz"/>,
       <xref linkend="wayland"/>,
       <xref linkend="woff2"/>,
       <ulink url="https://ccache.dev/">ccache</ulink>,
       <ulink url="https://sourceforge.net/projects/hunspell/files/Hyphen/">Hyphen</ulink>,
-      <ulink url="https://github.com/AOMediaCodec/libavif">libavif</ulink>,
-      <ulink url="https://gnome.pages.gitlab.gnome.org/libmanette/">libmanette</ulink>, og
-      <ulink url="https://github.com/flatpak/xdg-dbus-proxy">xdg-dbus-proxy</ulink>
+      <!--<ulink url="https://github.com/AOMediaCodec/libavif">libavif</ulink>,-->
+      <ulink url="https://github.com/libjxl/libjxl">libjxl</ulink>, og
+      <ulink url="https://gnome.pages.gitlab.gnome.org/libmanette/">libmanette</ulink>
+      <!--<ulink url="https://github.com/flatpak/xdg-dbus-proxy">xdg-dbus-proxy</ulink>-->
     </para>
 
     <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/webkitgtk"/>
+      Redaktørens notater: <ulink url="&blfs-wiki;/webkitgtk"/>
     </para>
   </sect2>
 
@@ -140,15 +145,35 @@
 
 <!--
     <para>
-      Løs et problem som forårsaker krasj ved å se enkelte nettsider:
+      Først, fiks et problem når du ikke bruker BUBBLEWRAP_SANDBOX:
     </para>
 
-<screen><userinput>patch -Np1 -i ../webkitgtk-&webkitgtk-version;-upstream_fix-1.patch</userinput></screen>
++<screen><userinput>sed -i '39,66 s:^://:' Source/WTF/wtf/glib/Sandbox.cpp</userinput></screen>
+-->
+
+    <important>
+      <para>
+        Denne pakken tillater bygging med enten GTK-3 eller GTK-4, men ikke begge deler
+        i samme bygg. GTK-4-versjonen er nødvendig for pakker som f.eks
+        <xref linkend="epiphany"/>. Andre pakker, som f.eks
+        <xref linkend="balsa"/> eller <xref linkend="evolution"/>, krever
+        GTK-3 versjon. Begge versjonene kan installeres side ved side på
+        samme system. Vi gir byggeinstruksjoner for begge tilfeller nedenfor, men
+        den eneste forskjellen er innstillingen av <command>-DUSE_GTK4</command>
+      </para>
+    </important>
+
+<!--
+    <para>
+      Først må du fikse flere sikkerhetssårbarheter og noen kjøretidsproblemer
+      når du kjører i en virtuell maskin:
+     </para>
++<screen><userinput remap="pre">patch -Np1 -i ../webkitgtk-&webkitgtk-version;-consolidated_fixes-1.patch</userinput></screen>
 -->
 
     <para>
-      Installer <application>WebKitGTK</application> ved å kjøre følgende
-      kommandoer:
+      Hvis du vil installere GTK+-3-versjonen av
+      <application>WebKitGTK</application>, kjør følgende kommandoer:
     </para>
 
 <screen revision="systemd"><userinput>mkdir -vp build &amp;&amp;
@@ -164,8 +189,10 @@ cmake -DCMAKE_BUILD_TYPE=Release  \
       -DENABLE_MINIBROWSER=ON     \
       -DENABLE_DOCUMENTATION=OFF  \
       -DUSE_WOFF2=OFF             \
+	  -DUSE_GTK4=OFF              \
       -DUSE_WPE_RENDERER=ON       \
-      -DENABLE_BUBBLEWRAP_SANDBOX=OFF \
+      -DUSE_JPEGXL=OFF            \
+      -DENABLE_BUBBLEWRAP_SANDBOX=ON \
       -Wno-dev -G Ninja ..        &amp;&amp;
 ninja</userinput></screen>
 
@@ -182,9 +209,11 @@ cmake -DCMAKE_BUILD_TYPE=Release  \
       -DENABLE_MINIBROWSER=ON     \
       -DENABLE_DOCUMENTATION=OFF  \
       -DUSE_WOFF2=OFF             \
+	  -DUSE_GTK4=OFF              \
+      -DUSE_JPEGXL=OFF            \
       -DUSE_WPE_RENDERER=ON       \
       -DENABLE_JOURNALD_LOG=OFF   \
-      -DENABLE_BUBBLEWRAP_SANDBOX=OFF \
+      -DENABLE_BUBBLEWRAP_SANDBOX=ON \
       -Wno-dev -G Ninja ..        &amp;&amp;
 ninja</userinput></screen>
 
@@ -194,16 +223,6 @@ ninja</userinput></screen>
       <application>build/bin/MiniBrowser</application>. Hvis det mislykkes å starte den,
       er det et problem med bygget.
     </para>
-
-<!-- Since we're using Ninja now instead of autotools, this isn't valid anymore
-    <note><para>
-      Når du installerer, gjør Makefile noe ekstra kompilering og kobling.
-      Hvis du ikke har Xorg i /usr, LIBRARY_PATH og PKG_CONFIG_PATH
-      variabler må defineres for root-brukeren. Hvis du bruker sudo å anta
-      root, bruk -E-alternativet for å sende dine nåværende miljøvariabler for
-      installasjonsprosessen.
-    </para></note>
--->
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
@@ -226,6 +245,57 @@ install -vm644  ../Documentation/webkit2gtk-4.1/*            \
                 /usr/share/gtk-doc/html/webkit2gtk-4.1       &amp;&amp;
 install -vm644  ../Documentation/webkit2gtk-web-extension-4.1/* \
                 /usr/share/gtk-doc/html/webkit2gtk-web-extension-4.1</userinput></screen>
+
+    <para>
+      Hvis du vil installere GTK4 versjonen av
+      <application>WebKitGTK</application>, kjør følgende kommandoer:
+    </para>
+
+<screen revision="systemd"><userinput>rm -rf * .[^.]* &amp;&amp;
+
+cmake -DCMAKE_BUILD_TYPE=Release  \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_SKIP_RPATH=ON       \
+      -DPORT=GTK                  \
+      -DLIB_INSTALL_DIR=/usr/lib  \
+      -DUSE_LIBHYPHEN=OFF         \
+      -DENABLE_GAMEPAD=OFF        \
+      -DENABLE_MINIBROWSER=ON     \
+      -DENABLE_DOCUMENTATION=OFF  \
+      -DUSE_WOFF2=OFF             \
+      -DUSE_GTK4=ON               \
+      -DUSE_JPEGXL=OFF            \
+      -DUSE_WPE_RENDERER=ON       \
+      -DENABLE_BUBBLEWRAP_SANDBOX=ON \
+      -Wno-dev -G Ninja ..        &amp;&amp;
+ninja</userinput></screen>
++
+<screen revision="sysv"><userinput>rm -rf * .[^.]* &amp;&amp;
+
+cmake -DCMAKE_BUILD_TYPE=Release  \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_SKIP_RPATH=ON       \
+      -DPORT=GTK                  \
+      -DLIB_INSTALL_DIR=/usr/lib  \
+      -DUSE_LIBHYPHEN=OFF         \
+      -DENABLE_GAMEPAD=OFF        \
+      -DENABLE_MINIBROWSER=ON     \
+      -DENABLE_DOCUMENTATION=OFF  \
+      -DUSE_WOFF2=OFF             \
+      -DUSE_GTK4=ON               \
+      -DUSE_JPEGXL=OFF            \
+      -DUSE_WPE_RENDERER=ON       \
+      -DENABLE_JOURNALD_LOG=OFF   \
+      -DENABLE_BUBBLEWRAP_SANDBOX=ON \
+      -Wno-dev -G Ninja ..        &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
   </sect2>
 
   <sect2 role="commands">
@@ -270,10 +340,19 @@ install -vm644  ../Documentation/webkit2gtk-web-extension-4.1/* \
     </para>
 
     <para>
-      <parameter>-DENABLE_BUBBLEWRAP_SANDBOX=OFF</parameter>: Fjern denne
-      bryteren hvis de valgfrie pakkene <xref linkend="bubblewrap"/> og
-      <ulink url="https://github.com/flatpak/xdg-dbus-proxy">xdg-dbus-proxy</ulink>
-      er installert.
+      <parameter>-DUSE_JPEGXL=OFF</parameter>: Denne bryteren slår av støtten
+      for JPEG-XL bilder. Fjern den hvis du har den valgfrie pakken
+      <ulink url="https://github.com/libjxl/libjxl">libjxl</ulink> installert.
+    </para>
+
+    <para>
+      <parameter>-DENABLE_BUBBLEWRAP_SANDBOX=ON</parameter>: Denne bryteren
+      aktiverer Bubblewrap sandkassen, som bidrar til å dempe virkningen av de fleste
+      sikkerhetssårbarheter i denne pakken. Endre denne bryteren til OFF hvis
+      du ikke vil installere <xref linkend="bubblewrap" role="nodep"/> og
+      <xref linkend="xdg-dbus-proxy" role="nodep"/>, men merk at dette kan
+      sette deg i fare.
+      <!-- Note: This works well on both i686 and x86_64. -renodr -->
     </para>
 
     <para revision="sysv">
@@ -293,16 +372,17 @@ install -vm644  ../Documentation/webkit2gtk-web-extension-4.1/* \
     </para>
 
     <para>
-      <option>-DUSE_WOFF2=ON</option>: Bruk denne bryteren hvis den valgfrie
-      pakken <xref linkend="woff2"/> er installert. Dette legger til ekstra
-      støtte for fonter.
+      <option>-DUSE_AVIF=OFF</option>: Bruk denne bryteren hvis du ikke vil
+      installere <xref linkend="libavif"/>. Merk at du ikke vil ha støtte
+      for AVIF bilder hvis du gjør dette.
     </para>
 
     <!-- Uncomment once GTK4 support works, or when it doesn't require
          a development version of libsoup.
     <para>
-      <option>-DUSE_GTK4=ON</option>: Bruk denne bryteren hvis <xref linkend="gtk4"/>
-      er installert og du ønsker å bygge GTK4 støtte.
+      <option>-DUSE_WOFF2=ON</option>: Bruk denne bryteren hvis den valgfrie
+      pakken <xref linkend="woff2"/> er installert. Dette legger til ekstra
+      støtte for fonter.
     </para>
     -->
 
@@ -324,12 +404,16 @@ install -vm644  ../Documentation/webkit2gtk-web-extension-4.1/* \
           WebKitWebDriver
         </seg>
         <seg>
-          libjavascriptcoregtk-4.1.so og
-          libwebkit2gtk-4.1.so
+          libjavascriptcoregtk-4.1.so,
+          libjavascriptcoregtk-6.0.so,
+          libwebkit2gtk-4.1.so, og
+          libwebkitgtk-6.0.so
         </seg>
         <seg>
           /usr/include/webkitgtk-4.1,
-          /usr/lib{,exec}/webkit2gtk-4.1, og
+          usr/include/webkitgtk-6.0,
+          /usr/lib{,exec}/webkit2gtk-4.1,
+          /usr/lib{,exec}/webkitgtk-6.0, og
           /usr/share/gtk-doc/html/{jsc-glib,webkit2gtk{,-web-extension}}-4.1
         </seg>
       </seglistitem>
@@ -394,6 +478,20 @@ install -vm644  ../Documentation/webkit2gtk-web-extension-4.1/* \
         </listitem>
       </varlistentry>
 
+      <varlistentry id="libjavascriptcoregtk-6.0">
+        <term><filename class="libraryfile">libjavascriptcoregtk-6.0.so</filename></term>
+        <listitem>
+          <para>
+            inneholder kjerne JavaScript API funksjoner som brukes av
+            <command>jsc</command> og
+            <filename class="libraryfile">libwebkitgtk-6.0</filename>
+          </para>
+          <indexterm zone="webkitgtk libjavascriptcoregtk-6.0">
+            <primary sortas="c-libjavascriptcoregtk-6.0">libjavascriptcoregtk-6.0.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
       <varlistentry id="libwebkit2gtk-4">
         <term><filename class="libraryfile">libwebkit2gtk-4.1.so</filename></term>
         <listitem>
@@ -402,6 +500,19 @@ install -vm644  ../Documentation/webkit2gtk-web-extension-4.1/* \
           </para>
           <indexterm zone="webkitgtk libwebkit2gtk-4">
             <primary sortas="c-libwebkit2gtk-4">libwebkit2gtk-4.1.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libwebkitgtk-6">
+        <term><filename class="libraryfile">libwebkitgtk-6.0.so</filename></term>
+        <listitem>
+          <para>
+            inneholder <application>WebKit</application> API funksjoner for
+            GTK-4 applikasjoner
+          </para>
+          <indexterm zone="webkitgtk libwebkitgtk-6">
+            <primary sortas="c-libwebkitgtk-6">libwebkitgtk-6.0.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>
