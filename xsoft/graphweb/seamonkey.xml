@@ -6,9 +6,9 @@
 
   <!ENTITY seamonkey-download-http "&mozilla-http;/seamonkey/releases/&seamonkey-version;/source/seamonkey-&seamonkey-version;.source.tar.xz">
   <!ENTITY seamonkey-download-ftp  " ">
-  <!ENTITY seamonkey-md5sum        "d04916f10d082a503af9a309184365dd">
-  <!ENTITY seamonkey-size          "249 MB">
-  <!ENTITY seamonkey-buildsize     "3.2 GB (159 MB installert)">
+  <!ENTITY seamonkey-md5sum        "5fd91a88005c2cc2a3ba4addfb5ff35e">
+  <!ENTITY seamonkey-size          "254 MB">
+  <!ENTITY seamonkey-buildsize     "4.4 GB (159 MB installert)">
   <!ENTITY seamonkey-time          "11 SBU (med parallellitet=4)">
 ]>
 
@@ -38,7 +38,7 @@
       <xref linkend="firefox"/> og <xref linkend="thunderbird"/>.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -80,7 +80,7 @@
       <listitem>
         <para>
           Nødvendig oppdatering:
-          <ulink url="&patch-root;/seamonkey-&seamonkey-version;-security_fix-1.patch"/>
+          <ulink url="&patch-root;/seamonkey-&seamonkey-version;-upstream_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
@@ -101,6 +101,7 @@
       <xref linkend="autoconf213"/>,
       <xref linkend="cbindgen"/>,
       <xref linkend="gtk3"/>,
+	  <xref linkend="nodejs"/>,
       <xref linkend="python2"/>,
       <xref linkend="unzip"/>,
       <xref linkend="yasm"/>, og
@@ -153,7 +154,7 @@
     </para>
 
     <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/seamonkey"/>
+      Redaktørens notater: <ulink url="&blfs-wiki;/seamonkey"/>
     </para>
 
   </sect2>
@@ -258,45 +259,30 @@ EOF</userinput></screen>
        href="../../xincludes/mozmach.xml"/>
     </note>
 
- <!--
-    <para>
-      Bruk en oppdatering for å fikse et kritisk sikkerhetsproblem i Seamonkey:
-    </para>
-
-<screen><userinput>patch -Np1 -i ../seamonkey-&seamonkey-version;-security_fix-1.patch</userinput></screen>
--->
-
+<!--
     <para>
       Fjern først et foreldet flagg i python kode, som har blitt fjernet
       i python-3.11:
     </para>
 
-<screen><userinput>grep -rl \"rU\" | xargs sed -i 's/"rU"/"r"/'</userinput></screen>
-
-<!-- Causes issues since xpidl is python2 in Seamonkey
-    <para>
-      Løs deretter et problem med regulære uttrykk i python-3.11:
-    </para>
-
-<screen><userinput>sed -e 's/?s)\./?s:.)/'               \
-    -e '/?m)/{s/?m)/?m:/;s/\$"/$)"/}' \
-    -e '/?s)%/{s/?s)/?s:/;s/?"/?)"/}' \
-    -i xpcom/idl-parser/xpidl/xpidl.py</userinput></screen>
+<screen><userinput>grep -rl \'rU\' | xargs sed -i "s/'rU'/'r'/"</userinput></screen>
 -->
-
+<!--
     <para>
       Deretter jobber du rundt et problem i det virtuelle Python miljøet:
     </para>
 
 <screen><userinput>sed -i "/if sys.executable !=/i\    open(join(bin_dir, 'pyvenv.cfg'), 'w').close()" \
     third_party/python/virtualenv/virtualenv.py</userinput></screen>
+-->
 
     <para>
-      Deretter kan du omgå et krasj som oppstår når du spiller av lyd når Seamonkey
-      er kompilert med rustc-1.67 eller høyere:
+      Løs et problem med den medfølgende 'distro' pythonmodulen:
     </para>
 
-<screen><userinput>sed -i '/USE_PULSE_RUST/d' media/libcubeb/src/moz.build</userinput></screen>
+<screen><userinput>sed -e '1012 s/stderr=devnull/stderr=subprocess.DEVNULL/' \
+    -e '1013 s/OSError/(OSError, subprocess.CalledProcessError)/' \
+    -i third_party/python/distro/distro.py</userinput></screen>
 
     <para>
       Kompilere <application>SeaMonkey</application> ved å kjøre følgende
@@ -304,7 +290,7 @@ EOF</userinput></screen>
     </para>
 
 <screen><userinput>export CC=clang CXX=clang++          &amp;&amp;
-./mach configure || ./mach configure &amp;&amp;
+./mach configure &amp;&amp;
 ./mach build</userinput></screen>
 
 
@@ -348,10 +334,10 @@ cp -v $(find -name seamonkey.1 | head -n1) /usr/share/man/man1</userinput></scre
     </para>
 
     <para>
-      <command>./mach configure || ./mach configure</command>: Dette validerer
+      <command>./mach configure</command>: Dette validerer
       de medfølgende avhengighetene og <filename>mozconfig</filename>.
-      Dette kjøres to ganger fordi problemer med mach vil føre til at den svikter
-      første gang.
+      <!--Dette kjøres to ganger fordi problemer med mach vil føre til at den svikter
+      første gang.-->
     </para>
 
     <para>
