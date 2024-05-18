@@ -8,7 +8,7 @@
   <!ENTITY webkitgtk-download-ftp  " ">
   <!ENTITY webkitgtk-md5sum        "1140f86d9044fb76be974b65f71737d7">
   <!ENTITY webkitgtk-size          "39 MB">
-  <!ENTITY webkitgtk-buildsize     "1,2 GB (201 MB installert, legg til 152 MB for GTK-4)">
+  <!ENTITY webkitgtk-buildsize     "1.2 GB (201 MB installert, legg til 152 MB for GTK-4)">
   <!ENTITY webkitgtk-time          "35 SBU (for GTK-3, bruk parallellisme=4, legg til 34 SBU for GTK-4)">
 ]>
 
@@ -89,7 +89,7 @@
       <xref linkend="gst10-plugins-base"/>,
       <xref linkend="gst10-plugins-bad"/>,
       <xref linkend="gtk3"/>,
-	  <xref linkend="gtk4"/>,
+      <xref linkend="gtk4"/>,
       <xref linkend="icu"/>,
       <xref linkend="lcms2"/>,
       <xref linkend="libgudev"/>,
@@ -101,7 +101,7 @@
       <xref linkend="openjpeg2"/>,
       <xref linkend="ruby"/>,
       <xref linkend="sqlite"/>,
-	  <xref linkend="unifdef"/>,
+      <xref linkend="unifdef"/>,
       <xref linkend="which"/>, og
       <xref linkend="wpebackend-fdo"/>
     </para>
@@ -148,7 +148,7 @@
       Først, fiks et problem når du ikke bruker BUBBLEWRAP_SANDBOX:
     </para>
 
-+<screen><userinput>sed -i '39,66 s:^://:' Source/WTF/wtf/glib/Sandbox.cpp</userinput></screen>
+<screen><userinput>sed -i '39,66 s:^://:' Source/WTF/wtf/glib/Sandbox.cpp</userinput></screen>
 -->
 
     <important>
@@ -167,8 +167,9 @@
     <para>
       Først må du fikse flere sikkerhetssårbarheter og noen kjøretidsproblemer
       når du kjører i en virtuell maskin:
-     </para>
-+<screen><userinput remap="pre">patch -Np1 -i ../webkitgtk-&webkitgtk-version;-consolidated_fixes-1.patch</userinput></screen>
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../webkitgtk-&webkitgtk-version;-consolidated_fixes-1.patch</userinput></screen>
 -->
 
     <para>
@@ -189,7 +190,7 @@ cmake -DCMAKE_BUILD_TYPE=Release  \
       -DENABLE_MINIBROWSER=ON     \
       -DENABLE_DOCUMENTATION=OFF  \
       -DUSE_WOFF2=OFF             \
-	  -DUSE_GTK4=OFF              \
+      -DUSE_GTK4=OFF              \
       -DUSE_WPE_RENDERER=ON       \
       -DUSE_JPEGXL=OFF            \
       -DENABLE_BUBBLEWRAP_SANDBOX=ON \
@@ -209,7 +210,7 @@ cmake -DCMAKE_BUILD_TYPE=Release  \
       -DENABLE_MINIBROWSER=ON     \
       -DENABLE_DOCUMENTATION=OFF  \
       -DUSE_WOFF2=OFF             \
-	  -DUSE_GTK4=OFF              \
+      -DUSE_GTK4=OFF              \
       -DUSE_JPEGXL=OFF            \
       -DUSE_WPE_RENDERER=ON       \
       -DENABLE_JOURNALD_LOG=OFF   \
@@ -269,7 +270,7 @@ cmake -DCMAKE_BUILD_TYPE=Release  \
       -DENABLE_BUBBLEWRAP_SANDBOX=ON \
       -Wno-dev -G Ninja ..        &amp;&amp;
 ninja</userinput></screen>
-+
+
 <screen revision="sysv"><userinput>rm -rf * .[^.]* &amp;&amp;
 
 cmake -DCMAKE_BUILD_TYPE=Release  \
@@ -377,14 +378,11 @@ ninja</userinput></screen>
       for AVIF bilder hvis du gjør dette.
     </para>
 
-    <!-- Uncomment once GTK4 support works, or when it doesn't require
-         a development version of libsoup.
     <para>
       <option>-DUSE_WOFF2=ON</option>: Bruk denne bryteren hvis den valgfrie
       pakken <xref linkend="woff2"/> er installert. Dette legger til ekstra
       støtte for fonter.
     </para>
-    -->
 
   </sect2>
 
@@ -400,7 +398,7 @@ ninja</userinput></screen>
         <seg>
 <!-- Moved to /usr/libexec/webkit2gtk-4.0, so shouldn't appear here
           jsc,
-          MiniBrowser, and -->
+          MiniBrowser, og -->
           WebKitWebDriver
         </seg>
         <seg>
@@ -409,9 +407,9 @@ ninja</userinput></screen>
           libwebkit2gtk-4.1.so, og
           libwebkitgtk-6.0.so
         </seg>
-        <seg>
+        <seg>g
           /usr/include/webkitgtk-4.1,
-          usr/include/webkitgtk-6.0,
+          /usr/include/webkitgtk-6.0,
           /usr/lib{,exec}/webkit2gtk-4.1,
           /usr/lib{,exec}/webkitgtk-6.0, og
           /usr/share/gtk-doc/html/{jsc-glib,webkit2gtk{,-web-extension}}-4.1
