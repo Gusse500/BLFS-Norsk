@@ -6,9 +6,9 @@
 
   <!ENTITY transmission-download-http "https://github.com/transmission/transmission/releases/download/&transmission-version;/transmission-&transmission-version;.tar.xz">
   <!ENTITY transmission-download-ftp  " ">
-  <!ENTITY transmission-md5sum        "29521f4373900a3077849e41b16801f9">
-  <!ENTITY transmission-size          "10 MB">
-  <!ENTITY transmission-buildsize     "202 MB">
+  <!ENTITY transmission-md5sum        "1d92edb61c82422211dbc751f4657489">
+  <!ENTITY transmission-size          "9.6 MB">
+  <!ENTITY transmission-buildsize     "347 MB (med GTK og QT5 gui grensesnitt)">
   <!ENTITY transmission-time          "1.4 SBU (med GTK gui grensesnitt; bruker parallellisme=4) 5 SBU med både GTK og QT5">
 ]>
 
@@ -32,7 +32,7 @@
       båndbredde.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -86,7 +86,7 @@
     <bridgehead renderas="sect4">Anbefalt (for å bygge en GUI)</bridgehead>
     <para role="recommended">
       <xref linkend="gtkmm3"/> eller
-      <xref linkend="qt5"/>
+      &qt5-deps;
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -102,14 +102,12 @@
     </para>
 
     <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/transmission"/>
+      Redaktørens notater: <ulink url="&blfs-wiki;/transmission"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av Transmission</title>
-
-
 
     <para>
       Installer <application>Transmission</application> ved å kjøre
@@ -149,7 +147,7 @@ make</userinput></screen>
     <para>
       <option>-DENABLE_QT=OFF</option>: Denne bryteren deaktiverer bygging av
       <application>Qt5</application> klienten. Standard er å bygge den
-      hvis <xref linkend="qt5"/> er installert.
+      hvis &qt5-deps; er installert.
     </para>
 
     <para>
@@ -164,6 +162,11 @@ make</userinput></screen>
       er installert.
     </para>
 
+    <para>
+      <option>-DREBUILD_WEB=ON</option>: Denne bryteren tvinger ombygging av
+      nettklienten. Trenger <xref linkend="nodejs"/> og en nettverkstilkobling.
+      Standard er å ikke gjenoppbygge.
+    </para>
   </sect2>
 
   <sect2 role="content">

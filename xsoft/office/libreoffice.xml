@@ -7,24 +7,24 @@
   <!ENTITY libreoffice-dl "https://download.documentfoundation.org/libreoffice/src/&libreoffice-version;">
 
   <!ENTITY libreoffice-core-download-http "&libreoffice-dl;/libreoffice-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-core-md5sum        "3e7066685b3e786af93ec581ca377496">
-  <!ENTITY libreoffice-core-size          "254 MB">
+  <!ENTITY libreoffice-core-md5sum        "b6994286fa3c274d1beac33aca80c442">
+  <!ENTITY libreoffice-core-size          "267 MB">
 
   <!ENTITY libreoffice-dict-download-http "&libreoffice-dl;/libreoffice-dictionaries-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-dict-md5sum        "92eb0d4314f80097bcc9c42cd209c4b7">
-  <!ENTITY libreoffice-dict-size          "50 MB">
+  <!ENTITY libreoffice-dict-md5sum        "1bada07c06d85ac82587b231a0644676">
+  <!ENTITY libreoffice-dict-size          "51 MB">
 
   <!ENTITY libreoffice-help-download-http "&libreoffice-dl;/libreoffice-help-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-help-md5sum        "0a9ecec80eedd5c01c7b92281f4e4f1a">
-  <!ENTITY libreoffice-help-size          "159 MB">
+  <!ENTITY libreoffice-help-md5sum        "726d9aa6dc1e6041c9b4a936fc62b2bd">
+  <!ENTITY libreoffice-help-size          "160 MB">
 
   <!ENTITY libreoffice-translations-download-http "&libreoffice-dl;/libreoffice-translations-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-translations-md5sum        "52cf1d0f987e4a5dd559dd45ac23fb91">
-  <!ENTITY libreoffice-translations-size          "195 MB">
+  <!ENTITY libreoffice-translations-md5sum        "107f419fe95a42d4698f444397c5e569">
+  <!ENTITY libreoffice-translations-size          "207 MB">
 
   <!-- full size remeasured for 7.0.0.3 -->
 
-  <!ENTITY libreoffice-buildsize  "7.1 GB inkludert tilleggsfilene hvis de ble lastet ned under byggingen (748 MB installert). Å installere hele settet med språk krever mer enn 25 GB (rundt 3 GB installert)">
+  <!ENTITY libreoffice-buildsize  "10 GB inkludert tilleggsfilene hvis de ble lastet ned under byggingen (727 MB installert). Å installere hele settet med språk krever mer enn 25 GB (rundt 3 GB installert)">
 
  <!-- Editors: many updates to poppler will break LO using system poppler until
       somebody is able to provide a patch or sed.  In these cases, please mark
@@ -55,8 +55,9 @@
 
        For 7.2.5.2, It was 58 SBU including DL time.
 
+       For 7.5.4.2, I increased the parallelism to 8.  -bdubbs
   -->
-  <!ENTITY libreoffice-time "48 SBU med parallellitet=4 (vil variere på grunn av nedlastingstid)">
+  <!ENTITY libreoffice-time "40 SBU med parallellitet=8 (vil variere på grunn av nedlastingstid)">
 
 ]>
 
@@ -79,7 +80,7 @@
       og nedstammer fra <application>OpenOffice.org</application>.
     </para>
 
-    &lfs113_checked;
+    &lfs120_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -117,8 +118,8 @@
         Rundt 80 små tarballer og zip filer vil bli lastet ned i løpet av
         bygget. Nedlastingstiden vil variere med den lokale internetthastigheten og
         serverbelastning. Nedlastingstiden er ca. 3 minutter på en fiberforbindelse,
-        sannsynligvis ikke mye mer enn 10 minutter på en ADSL tilkobling.
-        Hvis du ikke har lastet ned en eller flere av følgende, kan de også
+        og sannsynligvis ikke mye mer enn 10 minutter på en ADSL tilkobling.
+        Hvis du ikke har lastet ned en eller flere av følgende, vil de også
         bli lastet ned under byggingen.
       </para>
     </note>
@@ -177,15 +178,7 @@
           Oversettelser størrelse: &libreoffice-translations-size;
         </para>
       </listitem>
-<!--
-      <listitem>
-        <para>
-          Nødvendig oppdatering for å fikse bygging med fast versjon av <xref
-          linkend="boost"/>:
-          <ulink url="&patch-root;/libreoffice-&libreoffice-dlversion;-boost1810-1.patch"/>
-        </para>
-      </listitem>
--->
+
 <!-- keep one commented patch, it's sure to again need one or more in a few months:-->
 
 <!--
@@ -207,6 +200,8 @@
       <xref linkend="which"/>, og
       <xref linkend="zip"/>
     </para>
+
+    &build-use-internet;
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <note>
@@ -268,6 +263,7 @@
       <xref linkend="mariadb"/> eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
       <xref linkend="mitkrb"/>,
       <xref linkend="nasm"/>,
+	  &qt5-deps;,
       <xref linkend="sane"/>,
       <xref linkend="telepathy-glib"/>,
       <xref linkend="valgrind"/>,
@@ -328,7 +324,7 @@
     </para>
 
     <para condition="html" role="usernotes">
-      Brukernotater: <ulink url="&blfs-wiki;/libreoffice"/>
+      Redaktørens notater: <ulink url="&blfs-wiki;/libreoffice"/>
     </para>
   </sect2>
 
@@ -355,13 +351,7 @@ cd libreoffice-&libreoffice-dlversion;</userinput></screen>
 
 <screen><userinput>patch -Np1 -i ../libreoffice-&libreoffice-dlversion;-poppler_22_09_fixes-1.patch</userinput></screen>
 -->
-<!--
-    <para>
-     Først, fiks en byggefeil introdusert av den siste boost versjonen:
-    </para>
 
-<screen><userinput>patch -Np1 -i ../libreoffice-&libreoffice-dlversion;-boost1810-1.patch</userinput></screen>
--->
     <para>
       Hvis du har lastet ned ordbøkene, hjelp og oversettelser tarballene,
       opprett symbolkoblinger til dem fra kildemappen slik at de ikke blir
@@ -375,7 +365,7 @@ ln -sv ../../../libreoffice-translations-&libreoffice-dlversion;.tar.xz external
 
    <para>
       Instruksjonene i pakken pakker ut noen tarballer på et sted
-      den ikke kan finne senere. Lag noen symbolkoblinger for å hjelpe:
+      den ikke kan finne senere. Lag noen symbolkoblinger for å hjelpe byggesystemet:
    </para>
 
 <screen><userinput>ln -sv src/libreoffice-help-&libreoffice-dlversion;/helpcontent2/ &amp;&amp;
@@ -424,20 +414,15 @@ ln -sv src/libreoffice-translations-&libreoffice-dlversion;/translations/</useri
 <screen><userinput>case $(uname -m) in
    i?86) sed /-Os/d -i solenv/gbuild/platform/LINUX_INTEL_GCC.mk ;;
 esac</userinput></screen>
-<!-- Not needed anymore with last version (1.10.13) of apache-ant
+
+    <!-- see the attachment in Ticket #18435 -->
     <para>
-      <xref linkend="openjdk"/> bryter byggingen hvis følgende variabel
-      ikke er satt:
+      Hvis du bestemmer deg for å sende <option>--disable-java</option> til configure,
+      fikse et problem som får byggingen til å mislykkes:
     </para>
 
-<screen><userinput>export ANT_OPTS="-Djava.security.manager=allow"</userinput></screen>
--->
-    <para>
-      Den siste versjonen av GPGME bryter konfigureringen på grunn av en biblioteksendring.
-      Løs det ved å angi følgende variabel:
-    </para>
-
-<screen><userinput remap="pre">export ac_cv_lib_gpgmepp_progress_callback=yes</userinput></screen>
+<screen><userinput>sed -i '940i #if HAVE_FEATURE_JAVA' cui/source/options/optjava.cxx &amp;&amp;
+sed -i '966i #endif'                cui/source/options/optjava.cxx</userinput></screen>
 
     <para>
       Forbered <application>LibreOffice</application> for kompilering ved å kjøre
@@ -463,7 +448,6 @@ sed -e "/distro-install-file-lists/d" -i Makefile.in &amp;&amp;
              --enable-release-build=yes  \
              --enable-python=system      \
              --with-jdk-home=/opt/jdk    \
-             --with-system-boost         \
              --with-system-clucene       \
              --with-system-curl          \
              --with-system-epoxy         \
@@ -579,15 +563,6 @@ fi</userinput></screen>
            commented the description out here. -renodr -->
     </para>
 
-<!--
-    <para>
-      <command>sed -i "s/TRUE/true/" ...</command>: Disse tre sed kommandoene
-      fikser brudd forårsaket av at <application>ICU-68.1</application> fjerner en
-      makro. Den tredje sed er for en fil i libreoffice, de to første
-      er for pakker lastet ned under byggingen og endre '.mk'-filer for
-      de eksterne prosjektene (kildetarballene pakkes ut under byggingen).
-    </para>
--->
     <para>
       <parameter>--with-vendor=BLFS</parameter>: Denne bryteren setter BLFS som
       leverandøren som er nevnt når du klikker "Om" fra Hjelpemenyen
@@ -626,19 +601,16 @@ fi</userinput></screen>
       ordbøker til <application>LibreOffice</application> installasjon
       sett.
     </para>
-    <!-- Unrecognized as of 6.2.0.3
+
+    <!-- The boost issues have resurfaced with boost-1.83.0... this time it's
+         with the locale library.
     <para>
-      <parameter>- -with-alloc=system</parameter>: Denne bryteren forteller
-      <application>LibreOffice</application> å bruke systemallokatoren
-      i stedet for den interne.
-    </para>
-   -->
-    <para>
-      <parameter>--with-system-boost</parameter>: Denne bryteren gjør det mulig å bruke
+      <parameter>- -with-system-boost</parameter>: Denne bryteren gjør det mulig å bruke
       systemets boost. Fra tid til annen bryter nyere versjoner av boost
       byggingen av libreoffice. I dette tilfellet er det mulig å bruke
       medfølgende kopi av boost ved å fjerne dette flagget.
     </para>
+    -->
 
     <para>
       <parameter>--disable-dconf</parameter>: Denne bryteren deaktiverer kompilering av
@@ -733,15 +705,6 @@ fi</userinput></screen>
       installert <xref linkend="gst10-plugins-base"/>.
     </para>
 
-<!-- only gtk3 is referenced in the configure script for 6.4.0.3
-    <para>
-      <option>\-\-disable-gtk3</option>: Bruk denne bryteren hvis du ikke har installert
-      <application>GTK+-3</application>, eller hvis du har installert det, men ønsker
-      å bruke <application>GTK+-2</application> (menyikonene er forskjellige).
- <!\-\- Merk at <application>GTK+-3</application> bygget fortsatt
-      krever <application>GTK+-2</application> for å bygge gtk-plugin.\-\->
-    </para>-->
-
     <para>
       <option>--disable-postgresql-sdbc</option>: Denne bryteren deaktiverer å kompilere
       <application>LibreOffice</application> med muligheten til å koble til en
@@ -778,7 +741,8 @@ fi</userinput></screen>
       <application>LibreOffice</application>. Java er nødvendig for den
       utdaterte HSQLDB driveren, som tillater lesing av databaser opprettet av
       andre programmer eller i tidligere versjoner av libreoffice
-      <application>base</application>.
+      <application>base</application>. Det er også nødvendig for noen valgfrie
+      brukergrensesnittkomponenter.
     </para>
 
     <para>
@@ -791,7 +755,7 @@ fi</userinput></screen>
     <para>
       <!-- Brings in - -enable-qt5 as well. -->
       <option>--enable-kf5</option>: Bygger med KDE/Plasma integrasjon. Hvis
-      <xref linkend="qt5"/> og/eller <xref linkend="kf5-frameworks"/> ikke er
+      &qt5-deps; og/eller <xref linkend="kf5-frameworks"/> ikke er
       installert i <filename class="directory">/usr</filename>, inkludere
       og bibliotek mapper må spesifiseres i <envar>QT5INC</envar>,
       <envar>QT5LIB</envar>, <envar>KF5INC</envar>, og <envar>KF5LIB</envar>,
@@ -802,6 +766,14 @@ fi</userinput></screen>
       <option>--enable-evolution2</option>: Aktiverer støtte for Evolution
       adressebøker gjennom Evolution Data Server. Merk at Evolution Data
       Serveren må være installert for at denne funksjonen skal fungere.
+    </para>
+
+    <para>
+      <option>--enable-qt5</option>: Denne bryteren muliggjør støtte for integrasjon
+      med Qt5 og Qt5 temamotoren. Hvis &qt5-deps; ikke er installert i
+      <filename class="directory">/usr</filename>, include og biblioteker
+      mapper må spesifiseres i <envar>QT5INC</envar> og
+      <envar>QT5LIB</envar> miljøvariabler.
     </para>
 
     <!--
