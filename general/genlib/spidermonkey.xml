@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY spidermonkey-download-http "&mozilla-http;/firefox/releases/&spidermonkey-version;esr/source/firefox-&spidermonkey-version;esr.source.tar.xz">
+  <!ENTITY spidermonkey-download-ftp  " ">
+  <!ENTITY spidermonkey-md5sum        "9105bdf076d457ce5e0aa5628d5acc84">
+  <!ENTITY spidermonkey-size          "492 MB">
+  <!ENTITY spidermonkey-buildsize     "3.6 GB (40 MB installert etter fjerning av 36 MB statisk lib; legg til 34 MB for hovedtestene og 37 MB for jit testene)">
+  <!ENTITY spidermonkey-time          "1.9 SBU (med parallellitet=4; legg til 1,1 SBU for hovedtestene og 3,7 SBU for jit testene)">
+]>
+
+<sect1 id="spidermonkey" xreflabel="SpiderMonkey from Firefox-&spidermonkey-version;">
+  <?dbhtml filename="spidermonkey.html"?>
+
+
+  <title>SpiderMonkey fra Firefox-&spidermonkey-version;</title>
+
+  <indexterm zone="spidermonkey">
+    <primary sortas="a-spidermonkey">SpiderMonkey</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til SpiderMonkey</title>
+
+    <para>
+      <application>SpiderMonkey</application> er Mozillas JavaScript og
+      WebAssembly Engine, skrevet i C++ og Rust.
+      I BLFS er kildekoden til SpiderMonkey hentet fra Firefox.
+    </para>
+
+    <!-- To editors: make sure polkit works with mozjs when
+         tagging SpiderMonkey or upgrading it to a new major version.  -->
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&spidermonkey-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&spidermonkey-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &spidermonkey-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &spidermonkey-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &spidermonkey-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &spidermonkey-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+<!--
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/js-&JS91-version;-python_3_10-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
+    <bridgehead renderas="sect3">SpiderMonkey Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="icu"/>,
+      <xref linkend="rust"/>,
+      <xref linkend="six"/>, og
+      <xref linkend="which"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <!-- If clang is installed, it will be used instead of gcc.
+           gcc does not work for 32-bit system w/o -msse2 -mfpmath=sse:
+           https://bugzilla.mozilla.org/show_bug.cgi?id=1729459 -->
+      <xref linkend="llvm"/> (med <application>Clang</application>,
+      kreves for 32-bits systemer uten SSE2 funksjoner)
+    </para>
+
+    <important>
+      <para>
+        Hvis du bygger denne pakken på et 32-bits system, og Clang
+        ikke er installert eller du overstyrer standard kompilatorvalg
+        med miljøvariabelen <envar>CXX</envar>, vennligst les
+        Parameterforklaringer først.
+      </para>
+    </important>
+
+    <!-- It seems nasm is only used for aarch64-win64. -->
+    <!--bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="nasm"/>
+    </para-->
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av SpiderMonkey</title>
+
+    <note>
+      <para>
+        I motsetning til de fleste andre pakker i BLFS, krever instruksjonene nedenfor
+        deg å untare
+        <filename>firefox-&spidermonkey-version;esr.tar.xz</filename> og
+        gå inn i <filename>firefox-&spidermonkey-version;</filename>
+        mappen.
+      </para>
+
+      <para>
+        Pakke ut tarballen
+        vil tilbakestille tillatelsene til gjeldende mappe til 0755 hvis du
+        har tillatelse til å gjøre det. Hvis du gjør dette i en mappe hvor
+        den klebrige biten er satt, slik
+        som <filename class="directory">/tmp</filename> vil det ende med
+       feilmeldinger:
+      </para>
+
+<literallayout>tar: .: Cannot utime: Operation not permitted
+tar: .: Cannot change mode to rwxr-xr-t: Operation not permitted
+tar: Exiting with failure status due to previous errors
+</literallayout>
+
+      <para>
+        Dette avsluttes med ikke-null status, men det betyr
+        <emphasis>IKKE</emphasis> at det er et reelt problem.
+        Ikke untar som <systemitem class="username">root</systemitem> bruker
+        i en mappe der klebrig biten er satt - det vil deaktivere den.
+      </para>
+
+    </note>
+
+    <para>
+      Byggesystemet sender flere interne kopier av Python 3
+      modulen <filename>six.py</filename>.  De sendte kopiene er for gamle
+      til å fungere godt med Python 3.12 eller nyere. Bytt dem ut med
+      symbolkoblinger til <xref linkend='six'/> allerede installert på systemet:
+    </para>
+
+<screen><userinput>for i in $(find -name six.py); do
+  ln -sfv /usr/lib/python&python3-majorver;/site-packages/six.py $i;
+done</userinput></screen>
+
+    <para>
+      Installer <application>SpiderMonkey</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+    <note>
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+         href="../../xincludes/mozshm.xml"/>
+      <para>
+        Å kompilere C++ koden respekterer $MAKEFLAGS og er standard til 'j1',
+        rust koden vil bruke alle prosessorer.
+      </para>
+    </note>
+
+<screen><userinput>mkdir obj &amp;&amp;
+cd    obj &amp;&amp;
+
+../js/src/configure --prefix=/usr            \
+                    --disable-debug-symbols  \
+                    --disable-jemalloc       \
+                    --enable-readline        \
+                    --enable-rust-simd       \
+                    --with-intl-api          \
+                    --with-system-icu        \
+                    --with-system-zlib       &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      For å kjøre SpiderMonkey testpakken, utsted:
+      <command>make -C js/src check-jstests
+      JSTESTS_EXTRA_ARGS="--timeout 300 --wpt=disabled"</command>.
+      Det anbefales å omdirigere utdataene til en logg.
+      <!-- recheck when ICU gets upgraded -->
+      Fordi vi bygger med systemets ICU, 42 tester
+      (av totalt mer enn 50 000) er kjent for å mislykkes.
+      Testpakken kjøres med alle CPU kjerner tilgjengelig: selv i en
+      cgroup med færre kjerner tildelt, prøver den fortsatt å skape like mange
+      testjobber som <emphasis>alle</emphasis> kjerner i
+      systemet; Heldigvis vil kjernen fortsatt ikke kjøre disse jobbene på kjerner
+      som ikke er tildelt cgroup, så CPU bruken er fortsatt kontrollert.
+    </para>
+    <para>
+      For å kjøre JIT testpakken, utsted: <command>make -C js/src
+      check-jit-test JITTEST_EXTRA_ARGS="--timeout 300"</command>.
+      I likhet med SpiderMonkey testpakken er antallet testjobber det samme som
+      antall CPU kjerner i systemet selv om en cgroup brukes. For å
+      gjøre ting verre, det er seks tester som hver av dem vil bruke 3 GB
+      systemminne, slik at maksimal minnebruk kan være opptil 18 GB hvis
+      antall kjerner er seks eller flere. Å kjører JIT testpakken uten
+      nok minne kan påkalle kjernens OOM-killer og forårsake stabilitets
+      problemer. Hvis du ikke har nok systemminne tilgjengelig, legg til
+      <option>-jN</option> etter <option>--timeout 300</option> med N
+      erstattet av antall parallelle testjobber du ønsker å starte.
+      For eksempel, hvis du har 16 GB systemminne tilgjengelig og 8 CPU kjerner,
+      utsted <command>make -C js/src check-jit-test
+      JITTEST_EXTRA_ARGS="--timeout=300 -j5"</command> for å kjøre testen med
+      5 parallelle jobber slik at minnebruken ikke overskrider 15 GB.
+      <!-- TL;DR: DO NOT REMOVE MEMORY USAGE NOTE W/O MY CONFIRMATION!
+
+           "six tests": bug1782468-ptrdiff-veclen.js, it's ran with 6
+           different configurations.
+
+           "may": this is stochasitic (like all parallelization issue),
+           don't remove the note about memory usage simply because "I cannot
+           reproduce it".
+
+           "peak": the time period using so much memory is very short, so
+           don't just watch the output of "top" or "free" with eyesight.
+           Run the test in a cgroup and read the "memory.peak" psuedo file
+           for a proper measurement.
+
+           Q: Why not just document some test failures?
+           A: This *really* can cause stability issue because the kernel
+              may OOM kill another process if the test is not ran in a
+              cgroup with memory.max set.  Even if running it in a cgroup,
+              the kernel may still OOM kill the "main" process controlling
+              the test process instead of a single test job, causing a
+              incomplete test.
+
+                                                                 - xry111
+      -->
+    </para>
+
+    <caution>
+      <para>
+        Et problem i installasjonsprosessen forårsaker at ethvert program som kjører
+        og lenker til SpiderMonkey delte bibliotek (for eksempel GNOME Shell) til å
+        krasje hvis SpiderMonkey installeres på nytt, eller oppgraderes eller nedgraderes
+        uten endring av hovedversjonsnummeret
+        (&spidermonkey-major; in &spidermonkey-version;).  For å omgå
+        dette problemet, fjern den gamle versjonen av SpiderMonkey delte
+        bibliotek før installasjonen:
+      </para>
+
+<screen role="root"><userinput>rm -fv /usr/lib/libmozjs-&spidermonkey-major;.so</userinput></screen>
+    </caution>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install &amp;&amp;
+rm -v /usr/lib/libjs_static.ajs &amp;&amp;
+sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>--disable-debug-symbols</parameter>: Ikke generer feilsøking
+      symboler siden de er veldig store og de fleste brukere ikke trenger det. Fjern
+      det hvis du vil feilsøke SpiderMonkey.
+    </para>
+
+    <para>
+      <parameter>--disable-jemalloc</parameter>: Denne bryteren deaktiverer
+      intern minneallokator brukt i SpiderMonkey. jemalloc er bare
+      beregnet for nettlesermiljøet Firefox. For andre applikasjoner
+      som bruker SpiderMonkey, kan applikasjonen krasje siden elementer tildelt i
+      jemalloc allokatoren er frigjort på systemets (glibc) allokatoren.
+    </para>
+
+    <para>
+      <parameter>--enable-readline</parameter>: Denne bryteren aktiverer Readline
+      støtte i SpiderMonkey kommandolinjegrensesnittet.
+    </para>
+
+    <para>
+      <parameter>--enable-rust-simd</parameter>: Denne bryteren aktiverer SIMD
+      optimalisering i den leverte encoding_rs crate.
+    </para>
+
+    <para>
+      <parameter>--with-intl-api</parameter>: Dette aktiverer
+      internasjonaliseringsfunksjoner som kreves av
+      <application>Gjs</application>.
+    </para>
+
+    <para>
+      <parameter>--with-system-*</parameter>: Disse parameterne tillater byggesystemet
+      å bruke systemversjoner av bibliotekene ovenfor. Disse kreves for
+      stabilitet.
+    </para>
+
+    <para>
+      <command>rm -v /usr/lib/libjs_static.ajs</command>: Fjern et stort
+      statisk bibliotek som ikke brukes av noen BLFS pakke.
+    </para>
+
+    <para>
+      <command>sed -i '/@NSPR_CFLAGS@/d'
+      /usr/bin/js&spidermonkey-major;-config</command>:
+      Forhindrer <command>js&spidermonkey-major;-config</command> fra å bruke
+      buggy CFLAGS.
+    </para>
+
+    <para>
+      <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide å
+      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstillinger for
+      <application>clang</application> programmer. Med utgivelsen av
+      gcc-12 bygget tar lengre tid med gcc og g++, først og fremst fordi
+      ekstra advarsler, og er større. Send disse miljøvariablene
+      til konfigureringsskriptet hvis du ønsker å fortsette å bruke gcc, g++
+      (ved å eksportere dem og deaktivere dem etter installasjonen, eller ganske enkelt
+      forberede dem før
+      <command>../js/src/configure</command> kommandoen). Hvis du
+      bygger på et 32-bits system, se også nedenfor.
+    </para>
+
+    <para>
+      <option><envar>CXXFLAGS="-msse2 -mfpmath=sse"</envar></option>:
+      Bruk SSE2 i stedet for 387 for flytende komma med dobbel presisjon
+      operasjoner. Det er nødvendig for GCC for å tilfredsstille forventningene til
+      oppstrøms (Mozilla) utviklere med flytende komma aritmetikk.
+      Bruk den hvis du bygger denne pakken på et 32-bits system med
+      GCC (hvis Clang ikke er installert eller GCC er eksplisitt spesifisert).
+      Merk at dette vil føre til at SpiderMonkey krasjer på en prosessor uten
+      SSE2 evne. Hvis du kjører systemet på en så gammel
+      prosessor, er Clang strengt tatt nødvendig. Denne innstillingen er ikke nødvendig på
+      64-bits systemer fordi alle 64-bits x86-prosessorer støtter SSE2 og
+      64-bits kompilatorer (både Clang og GCC) bruker SSE2 som standard.
+    </para>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          js&spidermonkey-major; og js&spidermonkey-major;-config
+        </seg>
+        <seg>
+          libmozjs-&spidermonkey-major;.so
+        </seg>
+        <seg>
+          /usr/include/mozjs-&spidermonkey-major;
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="js&spidermonkey-major;">
+        <term><command>js&spidermonkey-major;</command></term>
+        <listitem>
+          <para>
+            gir et kommandolinjegrensesnitt til
+            <application>JavaScript</application> motoren
+          </para>
+          <indexterm zone="spidermonkey js&spidermonkey-major;">
+            <primary sortas="b-js&spidermonkey-major;">
+              js&spidermonkey-major;
+            </primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="js&spidermonkey-major;-config">
+        <term><command>js&spidermonkey-major;-config</command></term>
+        <listitem>
+          <para>
+            brukes til å finne SpiderMonkey kompilatoren og linkerflaggene
+          </para>
+          <indexterm zone="spidermonkey js&spidermonkey-major;-config">
+            <primary sortas="b-js&spidermonkey-major;-config">i
+              js&spidermonkey-major;-config
+            </primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libmozjs-&spidermonkey-major;">
+        <term>
+          <filename class="libraryfile">
+            libmozjs-&spidermonkey-major;.so
+          </filename>
+        </term>
+        <listitem>
+          <para>
+            inneholder Mozilla JavaScript API funksjoner
+          </para>
+          <indexterm zone="spidermonkey libmozjs-&spidermonkey-major;">
+            <primary sortas="c-libmozjs&spidermonkey-major;">
+              libmozjs-&spidermonkey-major;.so
+            </primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+
+</sect1>

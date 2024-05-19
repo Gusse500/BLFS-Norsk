@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libxmlb-download-http "https://github.com/hughsie/libxmlb/releases/download/&libxmlb-version;/libxmlb-&libxmlb-version;.tar.xz">
+  <!ENTITY libxmlb-download-ftp  " ">
+  <!ENTITY libxmlb-md5sum        "ff8f7cefefc89d8bed97b911cb38fa9c">
+  <!ENTITY libxmlb-size          "100 KB">
+  <!ENTITY libxmlb-buildsize     "3.8 MB">
+  <!ENTITY libxmlb-time          "0.1 SBU">
+]>
+
+<sect1 id="libxmlb" xreflabel="libxmlb-&libxmlb-version;">
+  <?dbhtml filename="libxmlb.html"?>
+
+  <title>libxmlb-&libxmlb-version;</title>
+
+  <indexterm zone="libxmlb">
+    <primary sortas="a-libxmlb">libxmlb</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libxmlb</title>
+
+    <para>
+      <application>libxmlb</application> pakken inneholder et bibliotek og
+      et verktøy som hjelper til med å lage og søke etter binære XML blobber.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libxmlb-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&libxmlb-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libxmlb-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libxmlb-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libxmlb-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libxmlb-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libxmlb Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="glib2"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="gobject-introspection"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="gtk-doc"/> og
+      <ulink url="https://github.com/zvelo/libstemmer">libstemmer</ulink>
+    </para>
+
+    <!--  Only use this if you want to note something in the wiki
+    <para condition="html" role="usernotes">
+      Redaktørens notater: <ulink url="&blfs-wiki;/libxmlb"/>
+    </para>
+    -->
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libxmlb</title>
+
+    <para>
+      Installer <application>libxmlb</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release -Dgtkdoc=false .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja test</command>.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+    
+<!-- Over in meson_options.txt, gtkdoc is set to 'true' by default. This would
+     introduce a dependency on gtk-doc, so let's set it as 'false' and let the
+     user enable it if they want the documentation. -renodr -->
+    <para>
+      <parameter>-Dgtkdoc=false</parameter>: Denne bryteren deaktiverer bygging av
+      API dokumentasjon. Fjern den hvis du har
+      <xref linkend="gtk-doc" role="nodep"/> installert og ønsker å bygge
+      API dokumentasjon.
+    </para>
+
+    <para>
+      <option>-Dintrospection=false</option>: Bruk denne bryteren hvis du ikke
+      har <xref linkend="gobject-introspection" role="nodep"/> installert.
+    </para>
+
+    <para>
+      <option>-Dstemmer=true</option>: Bruk denne bryteren hvis du har
+      <ulink url="https://github.com/zvelo/libstemmer">libstemmer</ulink>
+      installert og ønsker å bygge stemmer støtte.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          xb-tool
+        </seg>
+        <seg>
+          libxmlb.so
+        </seg>
+        <seg>
+          /usr/include/libxmlb-2,
+          /usr/libexec/installed-tests/libxmlb, og
+          /usr/share/gtk-doc/html/libxmlb (if gtk-doc was enabled)
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="xb-tool">
+        <term><command>xb-tool</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å lage, dumpe eller søke etter en binær XML blob
+          </para>
+          <indexterm zone="libxmlb xb-tool">
+            <primary sortas="b-xb-tool">xb-tool</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libxmlb-lib">
+        <term><filename class="libraryfile">libxmlb.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som gjør det mulig å lage og spørre binær XML
+            blobber
+          </para>
+          <indexterm zone="libxmlb libxmlb-lib">
+            <primary sortas="c-libxmlb">libxmlb.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
