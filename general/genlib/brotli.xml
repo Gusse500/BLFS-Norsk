@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,11 +6,11 @@
 
   <!ENTITY brotli-download-http "https://github.com/google/brotli/archive/v&brotli-version;/brotli-&brotli-version;.tar.gz">
   <!ENTITY brotli-download-ftp  " ">
-  <!ENTITY brotli-md5sum        "c2274f0c7af8470ad514637c35bcee7d">
-  <!ENTITY brotli-size          "476 KB">
-  <!ENTITY brotli-buildsize     "24 MB (med python3 bindinger)">
+  <!ENTITY brotli-md5sum        "3a6a3dba82a3604792d3cb0bd41bca60">
+  <!ENTITY brotli-size          "500 KB">
+  <!ENTITY brotli-buildsize     "33 MB (med python3 bindinger)">
   <!-- The python tests for this package are broken.  The tarball is missing a lot of test files -->
-  <!ENTITY brotli-time          "0.4 SBU (med python3 bindinger)">
+  <!ENTITY brotli-time          "0,3 SBU (med python3 bindinger; parallellisme=4)">
 ]>
 
 <sect1 id="brotli" xreflabel="Brotli-&brotli-version;">
@@ -28,13 +28,13 @@
 
     <para>
       <application>Brotli</application> gir en generell tapsfri
-      komprimeringsalgoritme som komprimerer data ved å bruke en kombinasjon av en
+      komprimeringsalgoritme som komprimerer data ved Ã¥ bruke en kombinasjon av en
       moderne variant av LZ77 algoritmen, Huffman koding og 2. orden
       kontekstmodellering. Bibliotekene brukes spesielt til WOFF2 fonter
-      på nettsider.
+      pÃ¥ nettsider.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &brotli-size;
+          NedlastingsstÃ¸rrelse: &brotli-size;
         </para>
       </listitem>
       <listitem>
@@ -72,15 +72,18 @@
 
     <bridgehead renderas="sect3">Brotli Avhengigheter</bridgehead>
 
-    <!-- Not "Required" because we can use
-         "./bootstrap && ./configure ... && make && make install".
-         Doing so can break an optional circular dependency:
-         curl is recommended for cmake, and brotli is optional for curl. -->
-    <bridgehead renderas="sect4">Anbefalt</bridgehead>
-    <para role="recommended">
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
+    <para role="required">
       <xref linkend="cmake"/>
     </para>
 
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <!--<xref linkend="pluggy"/> and-->
+      <!-- Pluggy is a required dependency of pytest -->
+      <xref linkend="pytest"/> (for testing av Python3 bindinger)
+    </para>
+ 
   </sect2>
 
 
@@ -88,51 +91,72 @@
     <title>Installasjon av Brotli</title>
 
     <para>
-      Først, fiks et problem i pkg-config filer:
-    </para>
-
-<screen><userinput>sed -i 's@-R..libdir.@@' scripts/*.pc.in</userinput></screen>
-
-    <para>
-      Installer <application>brotli</application> ved å kjøre følgende
+      Installer <application>brotli</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>mkdir out &amp;&amp;
-cd    out &amp;&amp;
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
 
 cmake -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_BUILD_TYPE=Release  \
       ..  &amp;&amp;
 make</userinput></screen>
 
-
     <para>
-      For å teste resultatene, utsted: <command>make test</command>.
+      For Ã¥ teste resultatene, utsted: <command>make test</command>.
     </para>
 
 <!--  These are broken
     <para>
-      Python testene mangler de fleste nødvendige testdatafiler og
+      Python testene mangler de fleste nÃ¸dvendige testdatafiler og
       derfor mislykkes 240 av 311 tester.
-      Hvis du likevel ønsker å teste bindingene, gå tilbake til mappen på øverste nivå og
+      Hvis du likevel Ã¸nsker Ã¥ teste bindingene, gÃ¥ tilbake til mappen pÃ¥ Ã¸verste nivÃ¥ og
       utsted: <command>python3 setup.py test</command>.
     </para>
 -->
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install &amp;&amp;
-cd ..</userinput></screen>
+<screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      Hvis ønskelig, bygg og installer <application>Python3</application>
+      Bygg om Ã¸nskelig <application>Python3</application>
+      bindinger:
+    </para>
+
+<screen><userinput>cd .. &amp;&amp;
+sed "/c\/.*\.[ch]'/d;\
+     /include_dirs=\[/\
+     i libraries=['brotlicommon','brotlidec','brotlienc']," \
+    -i setup.py &amp;&amp;
+&build-wheel-cmd; $PWD</userinput></screen>
+
+    <para>
+      Installer <application>Python3</application>
       bindinger som &root; bruker:
     </para>
 
-<screen role="root"><userinput>pip3 wheel -w dist --no-build-isolation --no-deps $PWD &amp;&amp;
-pip3 install --no-index --find-links dist --no-cache-dir --no-user Brotli</userinput></screen>
+<screen role="root"><userinput>&install-wheel; Brotli</userinput></screen>
+
+    <!-- "131 passed in 2.76s" for me with 1.1.0 -->
+    <para>
+      For Ã¥ teste <application>Python3</application> binding, utsted:
+      <command>pytest</command>.
+    </para>
+  </sect2>
+
+ <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <!-- https://github.com/google/brotli/issues/933 -->
+    <para>
+      <command>sed ... -i setup.py</command>: Stopp
+      <filename>setup.py</filename> fra Ã¥ gjenoppbygge hele pakken
+      igjen, bruk de allerede installerte bibliotekene for
+      <application>Python3</application> binding i stedet.
+    </para>
 
   </sect2>
 
@@ -149,9 +173,9 @@ pip3 install --no-index --find-links dist --no-cache-dir --no-user Brotli</useri
           brotli
         </seg>
         <seg>
-          libbrotlicommon{-static.a,.so},
-          libbrotlidec{,-static.a,.so}, og
-          libbrotlienc{,-static.a,.so}
+          libbrotlicommon.so,
+          libbrotlidec.so, og
+          libbrotlienc.so
         </seg>
         <seg>
           /usr/include/brotli og
