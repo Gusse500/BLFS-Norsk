@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+<!ENTITY xdg-desktop-portal-gnome-download-http "https://download.gnome.org/sources/xdg-desktop-portal-gnome/&gnome-45;/xdg-desktop-portal-gnome-&xdg-desktop-portal-gnome-version;.tar.xz">
+  <!ENTITY xdg-desktop-portal-gnome-download-ftp  " ">
+  <!ENTITY xdg-desktop-portal-gnome-md5sum        "390b42a8a671ee20e280d69b1e2ae1c6">
+  <!ENTITY xdg-desktop-portal-gnome-size          "138 KB">
+  <!ENTITY xdg-desktop-portal-gnome-buildsize     "15 MB">
+  <!ENTITY xdg-desktop-portal-gnome-time          "mindre enn 0.1 SBU">
+]>
+
+<sect1 id="xdg-desktop-portal-gnome" xreflabel="xdg-desktop-portal-gnome-&xdg-desktop-portal-gnome-version;">
+  <?dbhtml filename="xdg-desktop-portal-gnome.html"?>
+
+  <title>xdg-desktop-portal-gnome-&xdg-desktop-portal-gnome-version;</title>
+
+  <indexterm zone="xdg-desktop-portal-gnome">
+    <primary sortas="a-xdg-desktop-portal-gnome">xdg-desktop-portal-gnome</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til xdg-desktop-portal-gnome</title>
+
+    <para>
+      <application>xdg-desktop-portal-gnome</application> er en bakstykke for
+      <application>xdg-desktop-portal</application>, som bruker GTK og
+      ulike deler av GNOME infrastruktur.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&xdg-desktop-portal-gnome-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&xdg-desktop-portal-gnome-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &xdg-desktop-portal-gnome-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &xdg-desktop-portal-gnome-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &xdg-desktop-portal-gnome-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &xdg-desktop-portal-gnome-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">xdg-desktop-portal-gnome Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="gnome-backgrounds"/>,
+      <xref linkend="gnome-desktop"/>,
+      <xref linkend="gtk4"/>,
+      <xref linkend="libadwaita1"/>,
+      <xref linkend="xdg-desktop-portal"/>, og
+      <xref role="runtime" linkend="xdg-desktop-portal-gtk"/> (ved kjøretid)
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av xdg-desktop-portal-gnome</title>
+
+    <para>
+      Installer <application>xdg-desktop-portal-gnome</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen revision="sysv"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr             \
+            --buildtype=release       \
+            -Dsystemduserunitdir=/tmp \
+            ..                         &amp;&amp;
+ninja</userinput></screen>
+
+<screen revision="systemd"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para revision="sysv">
+      Fjern systemd filer som er ubrukelige (som &root; bruker):
+    </para>
+
+<screen role="root" revision="sysv"><userinput>rm -vf /tmp/*.service</userinput></screen>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+                href="../../xincludes/gsettings-destdir.xml"/>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
+
+      <seglistitem>
+        <seg>
+          en nisse i /usr/libexec
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          /usr/share/xdg-desktop-portal (om ikke annen
+          <application>xdg-desktop-portal</application> bakstykke er installert)
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+  </sect2>
+</sect1>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY snapshot-download-http "&gnome-download-http;/snapshot/&gnome-45;/snapshot-&snapshot-version;.tar.xz">
+  <!ENTITY snapshot-download-ftp  " ">
+  <!ENTITY snapshot-md5sum        "79665eb80c3cd8f1267493fadab5efdb">
+  <!ENTITY snapshot-size          "33 MB">
+  <!ENTITY snapshot-buildsize     "1.6 GB (5.3 MB installert)">
+  <!ENTITY snapshot-time          "4.5 SBU">
+]>
+
+<sect1 id="snapshot" xreflabel="Snapshot-&snapshot-version;">
+  <?dbhtml filename="snapshot.html"?>
+
+  <title>Snapshot-&snapshot-version;</title>
+
+  <indexterm zone="snapshot">
+    <primary sortas="a-snapshot">Snapshot</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Snapshot</title>
+
+    <para>
+      <application>Snapshot</application> pakken inneholder et program som
+      tar bilder og videoer fra et webkamera.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&snapshot-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&snapshot-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &snapshot-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &snapshot-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &snapshot-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &snapshot-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Snapshot Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="libadwaita1"/>,
+      <xref linkend="gst10-plugins-bad"/>, og
+      <xref linkend="rust"/>
+    </para>
+
+    <bridgehead renderas="sect4">Påkrevd ved kjøretid</bridgehead>
+    <para role="required">
+      <xref role="runtime" linkend="pipewire"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Snapshot</title>
+
+    <note>
+      <para>
+        Denne pakken tar lang tid å bygge fordi LTO er aktivert, og
+        LTO passering er ikke parallellisert.
+      </para>
+    </note>
+
+<!-- No longer needed with pango-1.51.0
+    <para>
+      Fjern først en sjekk mot systemets <application>Pango</application>
+      versjon som er for streng:
+    </para>
+    
+<screen><userinput remap="pre">sed '/pango.v1_52/,+1d' -i vendor/pango-sys/Cargo.toml &amp;&amp;
+
+cat &gt;&gt; Cargo.toml &lt;&lt; EOF
+<literal>[patch.crates-io.pango-sys]
+path = "vendor/pango-sys"</literal>
+EOF</userinput></screen>
+-->
+
+    <para>
+      Installer <application>Snapshot</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja test</command>.
+      <!--En test er kjent for å mislykkes på grunn av foreldede konstruksjoner i
+      appstream-1.0+-->
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          snapshot
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          /usr/share/snapshot
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="snapshot-prog">
+        <term><command>snapshot</command></term>
+        <listitem>
+          <para>
+            er et program som brukes til å ta bilder og videoer fra et webkamera
+          </para>
+          <indexterm zone="snapshot snapshot-prog">
+            <primary sortas="b-snapshot">snapshot</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
