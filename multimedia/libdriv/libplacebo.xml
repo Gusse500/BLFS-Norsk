@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libplacebo-download-http "https://github.com/haasn/libplacebo/archive/refs/tags/v&libplacebo-version;/libplacebo-&libplacebo-version;.tar.gz">
+  <!ENTITY libplacebo-download-ftp  " ">
+  <!ENTITY libplacebo-md5sum        "4f5b743ec43c684e6da0d56efed3891c">
+  <!ENTITY libplacebo-size          "824 KB">
+  <!ENTITY libplacebo-buildsize     "34 MB">
+  <!ENTITY libplacebo-time          "0.1 SBU (Med tester, begge ved hjelp av parallellitet=4">
+]>
+
+<sect1 id="libplacebo" xreflabel="libplacebo-&libplacebo-version;">
+  <?dbhtml filename="libplacebo.html"?>
+
+  <title>libplacebo-&libplacebo-version;</title>
+
+  <indexterm zone="libplacebo">
+    <primary sortas="a-libplacebo">libplacebo</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libplacebo</title>
+
+    <para>
+      <application>libplacebo</application> pakken inneholder et bibliotek for
+      å behandle bilde og video primitiver og shaders. Det inkluderer også en
+      høykvalitets gjengivelsespipeline som støtter OpenGL og Vulkan.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libplacebo-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&libplacebo-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libplacebo-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libplacebo-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libplacebo-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libplacebo-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libplacebo Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="ffmpeg"/> og
+      <xref linkend="glad"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="glslang"/> og
+      <xref linkend="vulkan-loader"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="lcms2"/>
+      <xref linkend="libunwind"/>,
+      <ulink url="https://github.com/quietvoid/dovi_tool/">dovi_tool</ulink>,
+      <ulink url="https://github.com/Immediate-Mode-UI/Nuklear">Nuklear</ulink>, og
+      <ulink url="https://github.com/Cyan4973/xxHash">xxHash</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libplacebo</title>
+
+    <para>
+      Installer <application>libplacebo</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release \
+      -Dtests=true        \
+      -Ddemos=false       &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja test</command>.
+      En test, opengl_surfaceless.c, er kjent for å mislykkes.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-Ddemos=false</parameter>: Denne bryteren deaktiverer bygging
+      av demoprogrammene fordi byggingen av <application>plplay</application> er
+      for øyeblikket ødelagt.
+    </para>
+
+    <para>
+      <parameter>-Dtests=true</parameter>: Denne bryteren gjør det mulig å bygge
+      kode som er nødvendig for å kjøre testene.
+    </para>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libplacebo.so
+        </seg>
+        <seg>
+          /usr/include/libplacebo
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libplacebo-lib">
+        <term><filename class="libraryfile">libplacebo.so</filename></term>
+        <listitem>
+          <para>
+            behandler bilde og video primitiver og shaders og gir en
+            høykvalitets gjengivelsespipeline for OpenGL og Vulkan
+          </para>
+          <indexterm zone="libplacebo libplacebo-lib">
+            <primary sortas="c-libplacebo">libplacebo.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>

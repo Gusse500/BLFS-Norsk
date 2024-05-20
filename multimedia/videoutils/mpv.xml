@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY mpv-download-http "https://github.com/mpv-player/mpv/archive/refs/tags/v&mpv-version;/mpv-&mpv-version;.tar.gz">
+  <!ENTITY mpv-download-ftp  " ">
+  <!ENTITY mpv-md5sum        "54bd6864cc831f1fee6dee693a0421eb">
+  <!ENTITY mpv-size          "3.2 MB">
+  <!ENTITY mpv-buildsize     "25 MB">
+  <!ENTITY mpv-time          "0.2 SBU (Bruker parallellisme=4)">
+
+]>
+
+<sect1 id="mpv" xreflabel="mpv-&mpv-version;">
+  <?dbhtml filename="mpv.html"?>
+
+  <title>mpv-&mpv-version;</title>
+
+  <indexterm zone="mpv">
+    <primary sortas="a-mpv">mpv</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til mpv</title>
+
+    <para>
+      <application>mpv</application> er en gratis mediespiller for
+      kommandolinjen. Den støtter et bredt utvalg av mediefilformater,
+      lyd og video kodeker og underteksttyper.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&mpv-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&mpv-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &mpv-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &mpv-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &mpv-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &mpv-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">mpv Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="alsa"/>,
+      <xref linkend="ffmpeg"/>,
+      <xref linkend="libass"/>,
+      <xref linkend="libplacebo"/>,
+      <xref linkend="mesa"/>, og
+      <xref linkend="pulseaudio"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libva"/>,
+      <xref linkend="libvdpau"/>,
+      <xref linkend="lua52"/>,
+      <xref linkend="uchardet"/>, og
+      <xref linkend="vulkan-loader"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfrie Inndata Drivere og Biblioteker</bridgehead>
+    <para role="optional">
+      <xref linkend="libdvdcss"/>,
+      <xref linkend="libdvdread"/>,
+      <xref linkend="libdvdnav"/>, og
+      <ulink url="https://www.videolan.org/developers/libbluray.html">libbluray</ulink>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfrie Lydutdata Drivere og Biblioteker</bridgehead>
+    <para role="optional">
+      <xref linkend="pipewire"/>,
+      <xref linkend="sdl2"/>,
+      <ulink url="https://jackaudio.org/">JACK</ulink>, og
+      <ulink url="https://openal.org/">OpenAL</ulink>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfrie Videoutdata Drivere og Biblioteker</bridgehead>
+    <para role="optional">
+      <ulink url="https://github.com/cacalabs/libcaca">libcaca</ulink> og
+      <ulink url="https://www.svgalib.org/">SVGAlib</ulink>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri (for dokumentasjon)</bridgehead>
+    <para role="optional">
+      <xref linkend="docutils"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av mpv</title>
+
+      <para>
+        Installer <application>mpv</application> ved å kjøre følgende
+        kommandoer:
+      </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -Dx11=enabled       \
+            ..                  &amp;&amp;
+ninja</userinput></screen>
+
+      <para>
+        Denne pakken kommer ikke med en testpakke.
+      </para>
+
+      <para>
+        Nå, som &root; bruker:
+      </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+        href="../../xincludes/update-icons-and-desktop.xml"/>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-Dx11=enabled</parameter>: tillater kobling til X11 bibliotekene.
+    </para>
+
+    <para>
+      <option>-Ddvdnav=enabled</option>: aktiverer støtte for DVD avspilling.
+    </para>
+
+    <para>
+      <option>-Dcdda=enabled</option>: aktiverer støtte for CD lyd.
+    </para>
+
+    <para>
+      <option>-Dsdl2=enabled</option>: aktiverer bruk av SDL2 for
+      lyd og vide utdata.
+    </para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere mpv</title>
+
+    <sect3 id="mpv-config">
+      <title>Konfigurasjonsfiler</title>
+
+      <para>
+        <filename>/etc/mpv/*</filename> og
+        <filename>~/.config/mpv/*</filename>
+      </para>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          mpv
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          /etc/mpv og
+          /usr/share/doc/mpv
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="mpv-prog">
+        <term><command>mpv</command></term>
+        <listitem>
+          <para>
+            er mpv videospilleren
+          </para>
+          <indexterm zone="mpv mpv-prog">
+            <primary sortas="b-mpv">mpv</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

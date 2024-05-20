@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY wireplumber-download-http "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/&wireplumber-version;/wireplumber-&wireplumber-version;.tar.bz2">
+  <!ENTITY wireplumber-download-ftp  " ">
+  <!ENTITY wireplumber-md5sum        "1e90be7d302077e3b7e347c9cd889ff0">
+  <!ENTITY wireplumber-size          "324 KB">
+  <!ENTITY wireplumber-buildsize     "16 MB (legg til 22 MB for tester)">
+  <!ENTITY wireplumber-time          "0.1 SBU (bruker parallellisme=4, med tester)">
+]>
+
+<sect1 id="wireplumber" xreflabel="Wireplumber-&wireplumber-version;">
+  <?dbhtml filename="wireplumber.html"?>
+
+  <title>Wireplumber-&wireplumber-version;</title>
+
+  <indexterm zone="wireplumber">
+    <primary sortas="a-wireplumber">Wireplumber</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Wireplumber</title>
+
+    <para>
+      <application>Wireplumber</application> pakken inneholder en økt og
+      regel behandler for <application>Pipewire</application>.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&wireplumber-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&wireplumber-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &wireplumber-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &wireplumber-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &wireplumber-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &wireplumber-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Wireplumber Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <phrase revision="sysv"><xref linkend="elogind"/>,</phrase>
+      <xref linkend="glib2"/>, <phrase revision="sysv">og</phrase>
+      <xref linkend="pipewire"/><phrase revision="systemd">, og
+        <xref role="runtime" linkend="systemd"/> (kjøretid, gjenoppbygd med
+        <xref role="nodep" linkend="linux-pam"/>)
+      </phrase>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="lua"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="doxygen"/>,
+      <xref linkend="gobject-introspection"/>,
+      <xref linkend="lxml"/>,
+      <xref linkend="sphinx"/>,
+      <xref linkend="sphinx_rtd_theme"/>, og
+      <ulink url="https://pypi.org/project/breathe/">Breathe</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Wireplumber</title>
+
+    <para>
+      Installer <application>Wireplumber</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release -Dsystem-lua=true .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja test</command>.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-Dsystem-lua=true</parameter>: Denne bryteren aktiverer bruk
+      av systemversjonen av Lua. Utelat denne bryteren hvis du ikke har installert Lua,
+      men merk det <application>meson</application> vil laste ned og installere
+      sin egen versjon.
+    </para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere Wireplumber</title>
+
+    <sect3><title>Konfigurasjonsinformasjon</title>
+
+      <para>
+        For at Wireplumber skal brukes av Pipewire, må Wireplumber bli
+        konfigurert til å starte når et skrivebordsmiljø startes.
+      </para>
+
+      <para revision="systemd">
+        For å konfigurere Wireplumber til å starte når et skrivebordsmiljø blir
+        startet, kjør følgende kommandoer som &root; bruker for å aktivere
+        systemd brukerenheter:
+      </para>
+
+<screen role="root" revision="systemd"><userinput>systemctl enable --global pipewire.socket &amp;&amp;
+systemctl enable --global wireplumber</userinput></screen>
+
+      <para revision="sysv">
+        Først lager du et skallskript som vil starte Wireplumber og Pipewire
+        i riktig rekkefølge som &root; bruker:
+      </para>
+
+<screen role="root" revision="sysv"><userinput>cat &gt; /usr/bin/pipewire-launcher.sh &lt;&lt; "EOF"
+<literal>#!/bin/sh
+# Begin /usr/bin/pipewire-launcher.sh
+
+# Start Pipewire first.
+exec /usr/bin/pipewire &amp;
+
+# Wait for a second for Pipewire to launch.
+sleep 1
+
+# Start Wireplumber now that Pipewire has been started.
+exec /usr/bin/wireplumber &amp;
+# End /usr/bin/pipewire-launcher.sh</literal>
+EOF</userinput></screen>
+
+    <para revision="sysv">
+      Deretter gjør du dette skallskriptet kjørbart som &root; bruker:
+    </para>
+
+<screen role="root" revision="sysv"><userinput>chmod +x /usr/bin/pipewire-launcher.sh</userinput></screen>
+
+    <para revision="sysv">
+      Til slutt oppretter du en XDG Autostart fil som vil kjøre
+      <command>/usr/bin/pipewire-launcher.sh</command> når et skrivebordsmiljø
+      blir startet, som &root; bruker:
+    </para>
+    
+<screen role="root" revision="sysv"><userinput>cat &gt; /etc/xdg/autostart/pipewire.desktop &lt;&lt; "EOF"
+<literal>[Desktop Entry]
+Version=1.0
+Name=Pipewire
+Comment=Starts the Pipewire and Wireplumber daemons
+Exec=/usr/bin/pipewire-launcher.sh
+Terminal=false
+Type=Application</literal>
+EOF</userinput></screen>
+
+    <para>
+      Nå som Wireplumber er konfigurert til å starte når et skrivebordsmiljø blir
+      startet, anbefales det at du logger ut av økten og logger tilbake
+      inn igjen.
+    </para>
+    
+    </sect3>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          wireplumber,
+          wpctl, og
+          wpexec
+        </seg>
+        <seg>
+          libwireplumber-0.4.so
+        </seg>
+        <seg>
+          /usr/include/wireplumber-0.4,
+          /usr/lib/wireplumber-0.4, og
+          /usr/share/wireplumber
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="wireplumber-prog">
+        <term><command>wireplumber</command></term>
+        <listitem>
+          <para>
+            er økt og regel behandler for Pipewire
+          </para>
+          <indexterm zone="wireplumber wireplumber-prog">
+            <primary sortas="b-wireplumber">wireplumber</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="wpctl">
+        <term><command>wpctl</command></term>
+        <listitem>
+          <para>
+            kontroller og spør etter informasjon fra Wireplumber
+          </para>
+          <indexterm zone="wireplumber wpctl">
+            <primary sortas="b-wpctl">wpctl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="wpexec">
+        <term><command>wpexec</command></term>
+        <listitem>
+          <para>
+            utfører Wireplumber skript, som ofte er skrevet i Lua
+          </para>
+          <indexterm zone="wireplumber wpexec">
+            <primary sortas="b-wpexec">wpexec</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry id="libwireplumber">
+        <term><filename class="libraryfile">libwireplumber-0.4.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som lar andre programmer styre Wireplumber
+          </para>
+          <indexterm zone="wireplumber libwireplumber">
+            <primary sortas="c-libwireplumber">libwireplumber-0.4.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
