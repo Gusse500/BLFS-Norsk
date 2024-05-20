@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+  <!-- Remove once mozilla programs can use python 3.12 -->
+  <!ENTITY python311-download-http
+           "https://www.python.org/ftp/python/&python311-version;/Python-&python311-version;.tar.xz">
+  <!ENTITY python311-md5sum        "4efe92adf28875c77d3b9b2e8d3bc44a">
+  <!ENTITY python311-size          "19 MB">
+  <!ENTITY python311-buildsize     "301 MB">
+  <!ENTITY python311-time          "1.1 SBU (Bruker parallellisme=4)">
+]>
+
+<sect1 id="python311" xreflabel="Python-&python311-version;">
+  <?dbhtml filename="python311.html" ?>
+
+  <title>Python-&python311-version;</title>
+
+  <indexterm zone="python311">
+    <primary sortas="a-Python3.11">Python3.11</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Python 3.11</title>
+
+    <para>
+      <application>Python 3.11</application> pakken inneholder en
+      eldre versjon av <application>Python</application> utviklingsmiljø.
+      Dette er <emphasis role="bold">bare</emphasis> nødvendig for
+      å bygge spesifikke programmer i BLFS
+      som ikke har oppdatert byggesystemene sine for å støtte 
+      <xref linkend="python3"/> (f.eks <xref linkend="firefox"/>, 
+      <xref linkend="thunderbird"/>, <xref linkend="seamonkey"/>, og 
+      <xref linkend="qtwebengine"/>).
+    </para>
+
+    <note>
+      <para>
+        IKKE installer denne pakken hvis du ikke installerer en av
+        de ovennevnte programmer.
+      </para>
+    </note>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&python311-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &python311-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &python311-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &python311-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &python311-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Python 3.11 Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="sqlite"/> (nødvendig hvis du bygger firefox eller thunderbird)
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Python 3.11</title>
+
+    <para>
+      Installer <application>Python 3.11</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>CXX="/usr/bin/g++"                     \
+./configure --prefix=/opt/python3.11   \
+            --disable-shared           \
+            --with-system-expat        &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Siden denne pakken bare brukes i svært begrensede situasjoner,
+      anbefales ikke tester.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <command> CXX="/usr/bin/g++" ./configure ...</command>: Unngå en irriterende
+      melding under konfigurasjonen.
+    </para>
+
+    <para>
+      <parameter>--prefix=/opt/python3.11</parameter>: Dette installerer python
+      3.11 inn i /opt for å unngå konflikter med systemversjonen av
+      python, og muliggjør enkel fjerning/isolering når programmer oppdateres til
+      python3.12 eller nyere.
+    </para>
+
+    <para>
+      <parameter>--disable-shared</parameter>: Denne bryteren deaktiverer bygging av
+      delte biblioteker. Siden alle pakkene som trenger python-3.11 har bygget
+      i moduler og ikke kobler direkte til python, er det trygt å slå av
+      støtte for delt bibliotek.
+    </para>
+
+    <para>
+      <parameter>--with-system-expat</parameter>: Denne bryteren muliggjør kobling
+      mot systemversjonen av <application>Expat</application>.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          python3.11
+        </seg>
+        <seg>
+          libpython3.11.a
+        </seg>
+        <seg>
+          /opt/python3.11/include/python3.11, og
+          /opt/python3.11/lib/python3.11,
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="python311-ver">
+        <term><command>python3.11</command></term>
+        <listitem>
+          <para>
+            er et versjonsspesifikt navn for <command>python</command>
+            programmet
+          </para>
+          <indexterm zone="python311 python311-ver">
+            <primary sortas="b-python3.11">python3.11</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+  </sect2>
+
+</sect1>

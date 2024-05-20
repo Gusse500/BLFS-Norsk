@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!-- Place this in the packages.ent file
+  <!ENTITY power-profiles-daemon-version "">
+  -->
+
+  <!ENTITY power-profiles-daemon-download-http "https://gitlab.freedesktop.org/upower/power-profiles-daemon/-/archive/&power-profiles-daemon-version;/power-profiles-daemon-&power-profiles-daemon-version;.tar.gz">
+  <!ENTITY power-profiles-daemon-download-ftp  " ">
+  <!ENTITY power-profiles-daemon-md5sum        "92df21de1148ef6e7c30e4a0829e02b1">
+  <!ENTITY power-profiles-daemon-size          "68 KB">
+  <!ENTITY power-profiles-daemon-buildsize     "1.4 MB">
+  <!ENTITY power-profiles-daemon-time          "mindre enn 0.1 SBU (med tester)">
+]>
+
+<sect1 id="power-profiles-daemon" xreflabel="power-profiles-daemon-&power-profiles-daemon-version;">
+  <?dbhtml filename="power-profiles-daemon.html"?>
+
+
+  <title>Power-profiles-daemon-&power-profiles-daemon-version;</title>
+
+  <indexterm zone="power-profiles-daemon">
+    <primary sortas="a-Power-profiles-daemon">power-profiles-daemon</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Power-profiles-daemon</title>
+
+    <para>
+      <application>Power-profiles-daemon</application> pakken gir et program
+      som tillater endring av systemets strøm-/atferdstilstand. Denne brukes på
+      mange bærbare datamaskiner og kan brukes av et skrivebordsmiljø for å aktivere strømsparing
+      eller ytelse CPU regulatorer gjennom dbus.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&power-profiles-daemon-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&power-profiles-daemon-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &power-profiles-daemon-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &power-profiles-daemon-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &power-profiles-daemon-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &power-profiles-daemon-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Power-profiles-daemon Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="gobject-introspection"/>,
+      <xref linkend="libgudev"/>, 
+      <xref linkend="polkit"/>, og
+      <xref linkend="pygobject3"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="gtk-doc"/>,
+      Resten er for testene,
+      <xref linkend="python-dbusmock"/>, 
+      <xref linkend="umockdev"/>,
+      <ulink url="https://github.com/PyCQA/isort">isort</ulink>, og
+      <ulink url="https://github.com/PyCQA/mccabe">mccabe</ulink>
+    </para>
+  </sect2>
+
+    <sect2 role="kernel" id="power-profiles-daemon-kernel">
+    <title>Kjernekonfigurasjon</title>
+
+    <para>
+      Aktiver følgende alternativer i kjernekonfigurasjonen og kompiler kjerne på nytt
+      om nødvendig:
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="power-profiles-daemon-kernel.xml"/>
+
+    <para>
+      Velg de aktuelle underalternativene som vises når alternativene ovenfor er
+      valgt. Så mye som mulig, oppsettet skal være det samme som i
+      kjernekonfigurasjonsmenyer.
+    </para>
+
+    <indexterm zone="power-profiles-daemon power-profiles-daemon-kernel">
+      <primary sortas="d-Power-profiles-daemon">Power-profiles-daemon</primary>
+    </indexterm>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Power-profiles-daemon</title>
+
+    <para>
+      Installer <application>Power-profiles-daemon</application> ved å 
+      kjøre følgende kommandoer:
+    </para>
+<screen revision="sysv"><userinput>mkdir build &amp;&amp;
+cd build &amp;&amp;
+
+meson setup                       \
+      --prefix=/usr               \
+      --buildtype=release         \
+      -Dgtk_doc=false             \
+      -Dtests=false               \
+      -Dsystemdsystemunitdir=/tmp \
+      .. &amp;&amp;
+ninja</userinput></screen>
+
+
+<screen revision="systemd"><userinput>mkdir build &amp;&amp;
+cd build &amp;&amp;
+
+meson setup               \
+      --prefix=/usr       \
+      --buildtype=release \
+      -Dgtk_doc=false     \
+      -Dtests=false       \
+      .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Hvis du har installert de eksterne avhengighetene, for å teste resultatet utsted: <command>
+      ninja test</command>.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para>
+      Rydd nå opp i en unødvendig systemd enhet installert i /tmp:
+    </para>
+
+<screen revision="sysv" role="root">
+<userinput>rm -fv /tmp/power-profiles-daemon.service</userinput>
+</screen>
+
+  </sect2>
+
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-Dgtk_doc=false</parameter>: Hindrer bygging
+      av dokumentasjonen. Fjern denne hvis du har <application>GTK-Doc</application>
+      installert og ønsker å bygge dokumentasjonen.
+    </para>
+
+    <para>
+      <parameter>-Dtests=false</parameter>: Hindrer bygging
+      av tester fordi de ikke kan kjøres innenfor grensene til
+      BLFS. Fjern dette hvis du har installert de eksterne avhengighetene
+      og ønsker å kjøre testene.
+    </para>
+
+    <para revision="sysv">
+      <parameter>-Dsystemdsystemunitdir=/tmp</parameter>: Fjerner
+      avhengigheten av <application>systemd</application>.
+    </para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere Power-profiles-daemon</title>
+
+    <sect3  id="power-profiles-daemon-init" revision="sysv">
+      <title>Oppstartsskript</title>
+
+      <para>
+        For å automatisk starte <command>power-profiles-daemon</command> når
+        systemet startes på nytt, installer
+        <filename>/etc/rc.d/init.d/power-profiles-daemon</filename> oppstartsskript fra
+        <xref linkend="bootscripts" revision="sysv"/> som
+        <systemitem class="username">root</systemitem> bruker:
+      </para>
+
+      <indexterm zone="power-profiles-daemon power-profiles-daemon-init">
+        <primary sortas="f-Power-profiles-daemon">power-profiles-daemon</primary>
+      </indexterm>
+
+<screen role="root"><userinput>make install-power-profiles-daemon</userinput></screen>
+    </sect3>
+
+
+    <sect3 id="power-profiles-daemon-systemd" revision="systemd">
+      <title>Systemd Enhet</title>
+
+      <para>
+        For å starte power-profiles-daemon ved oppstart, aktiver systemd
+        tjenesten som ble installert ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker: 
+      </para>
+
+      <screen role="root"><userinput>systemctl enable power-profiles-daemon</userinput></screen>
+    </sect3>
+
+  </sect2>
+
+
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          powerprofilesctl
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="powerprofilesctl">
+        <term><command>powerprofilesctl</command></term>
+        <listitem>
+          <para>
+            Dette lar brukeren stille inn strømregulatoren til
+            CPU.
+          </para>
+          <indexterm zone="powerprofilesctl">
+            <primary sortas="b-powerprofilesctl">powerprofilesctl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </sect2>
+</sect1>
