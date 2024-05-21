@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,16 +6,16 @@
 
   <!ENTITY firefox-download-http "&mozilla-http;/firefox/releases/&firefox-version;esr/source/firefox-&firefox-version;esr.source.tar.xz">
   <!ENTITY firefox-download-ftp  " ">
-  <!ENTITY firefox-md5sum        "747043bb967bdbc6f4bd3b29b5bdd438">
-  <!ENTITY firefox-size          "491 MB">
+  <!ENTITY firefox-md5sum        "212e126b43e8fb72a7314f2c3256b79f">
+  <!ENTITY firefox-size          "485 MB">
 
   <!-- NB with stylo, much of the build uses rust, and therefore cargo files.
     But the extra cached cargo files, if any, seem to be minimal -->
-  <!ENTITY firefox-buildsize     "6.4 GB (209 MB installert) uten tester">
+  <!ENTITY firefox-buildsize     "6.1 GB (199 MB installert) uten tester">
   <!-- editors: with ff63 and rust-1.29, ./mach build -j4 is probably the
    most practical way to get a timing on a machine with more cores, if taking
    cores offline is not practical. If in doubt, round up -->
-  <!ENTITY firefox-time          "22 SBU bruker -j4, uten tester">
+  <!ENTITY firefox-time          "12 SBU bruker -j8, uten tester">
 ]>
 
 <sect1 id="firefox" xreflabel="Firefox-&firefox-version;">
@@ -35,11 +35,11 @@
     <title>Introduksjon til Firefox</title>
 
     <para>
-      <application>Firefox</application> er en frittstående nettleser basert på
+      <application>Firefox</application> er en frittstÃ¥ende nettleser basert pÃ¥
       <application>Mozilla</application> kodebasen.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -60,7 +60,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &firefox-size;
+          NedlastingsstÃ¸rrelse: &firefox-size;
         </para>
       </listitem>
       <listitem>
@@ -79,13 +79,13 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/firefox-&firefox-version;-consolidated-1.patch"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nødvendig oppdatering for ny <xref linkend="ffmpeg"/> API:
+          NÃ¸dvendig oppdatering for ny <xref linkend="ffmpeg"/> API:
           <ulink url="&patch-root;/firefox-&firefox-version;-ffmpeg_6-1.patch"/>
         </para>
       </listitem>
@@ -97,9 +97,9 @@
       </para>
 
       <para>
-        Å pakke ut tarballen
+        Ã… pakke ut tarballen
         vil tilbakestille tillatelsene til gjeldende mappe til 0755 hvis du
-        har tillatelse til det. Hvis du gjør dette i en mappe hvor
+        har tillatelse til det. Hvis du gjÃ¸r dette i en mappe hvor
         den klebrige biten er satt, slik
         som <filename class="directory">/tmp</filename> vil det ende med 
         feilmeldinger:
@@ -119,20 +119,20 @@ tar: Exiting with failure status due to previous errors
 
       <para>
         Som med andre store pakker som bruker C++ (eller rust), er SBU tiden
-        for å bygge dette varierer mer enn du kanskje forventer. Byggetidene
-        vil øke betydelig hvis maskinen din må bruke vekselminnet.
+        for Ã¥ bygge dette varierer mer enn du kanskje forventer. Byggetidene
+        vil Ã¸ke betydelig hvis maskinen din mÃ¥ bruke vekselminnet.
       </para>
 
       <para>
-        Selv om oppstrøms foretrekker å bruke <application>PulseAudio</application>,
-        for øyeblikket <application>Alsa</application> kan fortsatt brukes. Begge
-        kan trenge kjøretidskonfigurasjon for å få lyden til å fungere.
+        Selv om oppstrÃ¸ms foretrekker Ã¥ bruke <application>PulseAudio</application>,
+        for Ã¸yeblikket <application>Alsa</application> kan fortsatt brukes. Begge
+        kan trenge kjÃ¸retidskonfigurasjon for Ã¥ fÃ¥ lyden til Ã¥ fungere.
       </para>
     </note>
 
     <bridgehead renderas="sect3">Firefox Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cbindgen"/>,
       <xref linkend="dbus-glib"/>,
@@ -143,13 +143,12 @@ tar: Exiting with failure status due to previous errors
       <xref linkend="pulseaudio"/>
       (eller
       <xref linkend="alsa-lib"/> hvis du redigerer mozconfig;
-        nå avviklet av mozilla), i begge tilfeller vennligst les
+        nÃ¥ avviklet av mozilla), i begge tilfeller vennligst les
         Konfigurasjonsinformasjon,
-      <xref linkend="python3"/> (gjenoppbygget etter installasjon <xref linkend="sqlite"/>),
-      <xref linkend="startup-notification"/>,
-      <xref linkend="unzip"/>,
-      <xref linkend="yasm"/>, og
-      <xref linkend="zip"/>
+      <xref linkend="python311"/> (gjenoppbygget etter installasjon <xref linkend="sqlite"/>),
+      <!--<xref linkend="six"/>,-->
+      <xref linkend="startup-notification"/>, og
+      <xref linkend="unzip"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -158,15 +157,15 @@ tar: Exiting with failure status due to previous errors
       <xref linkend="libevent"/>,
       <xref linkend="libvpx"/>,
       <xref linkend="libwebp"/>,
-      <xref linkend="nasm"/>,
+      <xref linkend="nasm"/>, og
       <xref linkend="nss"/>
     </para>
 
     <note>
       <para>
         Hvis du ikke installerer anbefalte avhengigheter, blir interne kopier av
-        disse pakkene brukt. De kan ha blitt testet for å fungere, men de kan
-        være utdatert eller inneholde sikkerhetshull.
+        disse pakkene brukt. De kan ha blitt testet for Ã¥ fungere, men de kan
+        vÃ¦re utdatert eller inneholde sikkerhetshull.
       </para>
     </note>
 
@@ -174,17 +173,18 @@ tar: Exiting with failure status due to previous errors
     <para role="optional">
       <xref linkend="curl"/>,
       <xref linkend="doxygen"/>,
-      <xref role="runtime" linkend="ffmpeg"/> (kjøretid, for å spille mov, mp3 eller mp4 files),
+      <xref role="runtime" linkend="ffmpeg"/> (kjÃ¸retid, for Ã¥ spille mov, mp3 eller mp4 files),
       <xref linkend="liboauth"/>,
-      <xref role="runtime" linkend="pciutils"/> (kjøretid),
+      <xref role="runtime" linkend="pciutils"/> (kjÃ¸retid),
       <xref linkend="valgrind"/>,
       <xref linkend="wget"/>,
       <xref linkend="wireless_tools"/>,
+      <xref linkend="yasm"/>,
       <ulink url="https://github.com/libproxy/libproxy">libproxy</ulink>
     </para>
 
     <para condition="html" role="usernotes">
-      Redaktørens notater: <ulink url="&blfs-wiki;/firefox"/>
+      RedaktÃ¸rens notater: <ulink url="&blfs-wiki;/firefox"/>
     </para>
   </sect2>
 
@@ -192,14 +192,14 @@ tar: Exiting with failure status due to previous errors
     <title>Installasjon av Firefox</title>
 
     <para>
-      Konfigurasjonen av <application>Firefox</application> er oppnådd
-      ved å lage en <filename>mozconfig</filename> fil som inneholder ønsket
+      Konfigurasjonen av <application>Firefox</application> er oppnÃ¥dd
+      ved Ã¥ lage en <filename>mozconfig</filename> fil som inneholder Ã¸nsket
       konfigurasjonsalternativer. En standard <filename>mozconfig</filename> er
-      opprettet nedenfor. For å se hele listen over tilgjengelige konfigurasjonsalternativer
+      opprettet nedenfor. For Ã¥ se hele listen over tilgjengelige konfigurasjonsalternativer
       (og en forkortet beskrivelse av noen av dem), utsted <command>./mach
-      configure -- --help | less</command>. Du kan også
-      se gjennom hele filen og fjerne kommentarer til andre ønskede alternativer.
-      Opprett filen ved å gi følgende kommando:
+      configure -- --help | less</command>. Du kan ogsÃ¥
+      se gjennom hele filen og fjerne kommentarer til andre Ã¸nskede alternativer.
+      Opprett filen ved Ã¥ gi fÃ¸lgende kommando:
     </para>
 
 <screen><userinput>cat &gt; mozconfig &lt;&lt; "EOF"
@@ -236,12 +236,12 @@ ac_add_options --with-system-webp
 # save four megabytes in the installed file it does not make
 # the build faster.
 
-# libdav1d (av1 decoder) requires nasm. Uncomment this if nasm
-# has not been installed. Do not uncomment this if you have
+# The libdav1d library (av1 decoder) requires nasm. Uncomment this
+# if nasm has not been installed. Do not uncomment this if you have
 # ffmpeg installed.
 #ac_add_options --disable-av1
 
-# You cannot distribute the binary if you do this
+# # You cannot distribute the binary if you do this.
 ac_add_options --enable-official-branding
 
 # Stripping is now enabled by default.
@@ -254,22 +254,28 @@ ac_add_options --enable-official-branding
 # required for compilation on i686.
 ac_add_options --disable-debug-symbols
 
+<!-- With Firefox ESR 128 we'd replace the following part with
+"- -enable-elf-hack=relr", or remove it if relr becomes the default. -->
 # The elf-hack is reported to cause failed installs (after successful builds)
 # on some machines. It is supposed to improve startup time and it shrinks
-# libxul.so by a few MB - comment this if you know your machine is not affected.
+# libxul.so by a few MB.  With recent Binutils releases the linker already
+# supports a much safer and generic way for this.
 ac_add_options --disable-elf-hack
+export LDFLAGS="$LDFLAGS -Wl,-z,pack-relative-relocs"
 
 # The BLFS editors recommend not changing anything below this line:
 ac_add_options --prefix=/usr
 ac_add_options --enable-application=browser
 ac_add_options --disable-crashreporter
 ac_add_options --disable-updater
+
 # enabling the tests will use a lot more space and significantly
 # increase the build time, for no obvious benefit.
 ac_add_options --disable-tests
 
 # The default level of optimization again produces a working build with gcc.
-ac_add_options --enable-optimize
+# This enables SIMD optimization in the shipped encoding_rs crate.
+ac_add_options --enable-rust-simd
 
 ac_add_options --enable-system-ffi
 ac_add_options --enable-system-pixman
@@ -299,15 +305,26 @@ unset MOZ_TELEMETRY_REPORTING
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/firefox-build-dir</literal>
 EOF</userinput></screen>
 
+    <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=1859752
+         https://hg.mozilla.org/try/rev/d5f3b0c4f08a -->
     <para>
-      Kompiler <application>Firefox</application> ved å kjøre følgende
+      Hvis du bygger med system ICU, tilpasser du linjeskiftkartleggingen for ICU
+      74 eller senere. Denne konstruksjonen legger til fem oppfÃ¸ringer til en c++ matrise.
+    </para>
+
+<screen><userinput>for i in {43..47}; do
+   sed -i '/ZWJ/s/}/,CLASS_CHARACTER&amp;/' intl/lwbrk/LineBreaker.cpp 
+done</userinput></screen>
+
+    <para>
+      Kompiler <application>Firefox</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 <!-- Not needed with clang. Upstream bug at
      https://bugzilla.mozilla.org/show_bug.cgi?id=1729459
 
     <para>
-      Hvis du bygger på en 32-bits maskin, fungerer følgende sed rundt
+      Hvis du bygger pÃ¥ en 32-bits maskin, fungerer fÃ¸lgende sed rundt
       et problem med en inkompatibel <quote>double</quote> type i en
       deklarasjonsfil:
     </para>
@@ -318,16 +335,16 @@ EOF</userinput></screen>
 esac</userinput></screen>
 -->
     <para>
-      Hvis geolokaliserings APIene er nødvendige:
+      Hvis geolokaliserings APIene er nÃ¸dvendige:
     </para>
 
     <note>
       <para>
         <!-- Taken from Arch Linux - an immensely helpful link - Thanks -->
-        Google og Mozilla API nøkler nedenfor er spesifikke for LFS. Hvis du bruker
-        disse instruksjonene for en annen distro, eller hvis du har tenkt å distribuere
-        binære kopier av programvaren ved å bruke disse instruksjonene,
-        hent dine egne nøkler ved å følge instruksjonene på
+        Google og Mozilla API nÃ¸kler nedenfor er spesifikke for LFS. Hvis du bruker
+        disse instruksjonene for en annen distro, eller hvis du har tenkt Ã¥ distribuere
+        binÃ¦re kopier av programvaren ved Ã¥ bruke disse instruksjonene,
+        hent dine egne nÃ¸kler ved Ã¥ fÃ¸lge instruksjonene pÃ¥
         <ulink url="https://www.chromium.org/developers/how-tos/api-keys"/> og
         <ulink url="https://location.services.mozilla.com/api"/> henholdsvis.
         <!-- BLFS Devs, register an account at Google with your
@@ -341,96 +358,92 @@ esac</userinput></screen>
 echo "613364a7-9418-4c86-bcee-57e32fd70c23" > mozilla-key</userinput></screen>
 
     <note>
-
       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
        href="../../xincludes/mozshm.xml"/>
-
-      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-       href="../../xincludes/mozmach.xml"/>
-
     </note>
 
 <!--<para>
-      Fiks å bygge Firefox med Clang 16 eller C++ deklarasjoner fra GCC 13.
-      Og, omgå en byggefeil med Rustc-1.70.0:
+      Fiks Ã¥ bygge Firefox med Clang 16 eller C++ deklarasjoner fra GCC 13.
+      Og, omgÃ¥ en byggefeil med Rustc-1.70.0:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;-consolidated-1.patch</userinput></screen>
 
     <para>
-      Bruk følgende oppdatering slik at firefox kan spille av H.264-videoer:
+      Bruk fÃ¸lgende oppdatering slik at firefox kan spille av H.264-videoer:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;-ffmpeg_6-1.patch</userinput></screen>-->
 
     <para>
-      Påkall nå Python <command>mach</command> skript for å kompilere pakken.
+      PÃ¥kall nÃ¥ Python <command>mach</command> skript for Ã¥ kompilere pakken.
     </para>
 
 <screen><userinput>export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none &amp;&amp;
 export MOZBUILD_STATE_PATH=${PWD}/mozbuild          &amp;&amp;
-./mach configure                                    &amp;&amp;
-./mach build</userinput></screen>
+export PYTHON311=/opt/python3.11/bin/python3.11     &amp;&amp;
+$PYTHON311 ./mach build</userinput></screen>
 
     <para>
       <filename>mozconfig</filename> ovenfor deaktiverer testene fordi
-      de bruker mye mer tid og diskplass uten noen åpenbar fordel. Hvis
-      du likevel har aktivert dem, kan du kjøre testene ved å kjøre
+      de bruker mye mer tid og diskplass uten noen Ã¥penbar fordel. Hvis
+      du likevel har aktivert dem, kan du kjÃ¸re testene ved Ã¥ kjÃ¸re
       <command>./mach gtest</command>. Dette vil kreve en nettverkstilkobling,
-      og å bli kjørt fra en Xorg økt - det er en sprettopp-dialog
-      når den ikke klarer å koble til ALSA (det skaper ikke en mislykket test).
-      En eller to tester vil mislykkes. For å se detaljene om feilen(e)
-      må du logge utdataene fra den kommandoen slik at du kan se gjennom den.
+      og Ã¥ bli kjÃ¸rt fra en Xorg Ã¸kt - det er en sprettopp-dialog
+      nÃ¥r den ikke klarer Ã¥ koble til ALSA (det skaper ikke en mislykket test).
+      En eller to tester vil mislykkes. For Ã¥ se detaljene om feilen(e)
+      mÃ¥ du logge utdataene fra den kommandoen slik at du kan se gjennom den.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none ./mach install</userinput></screen>
+<screen role="root"><userinput>export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none &amp;&amp;
+export PYTHON311=/opt/python3.11/bin/python3.11     &amp;&amp;
+$PYTHON311 ./mach install</userinput></screen>
 
     <para>
-      Tøm miljøvariablene som ble angitt ovenfor:
+      TÃ¸m miljÃ¸variablene som ble angitt ovenfor:
     </para>
 
-<screen><userinput>unset MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE MOZBUILD_STATE_PATH</userinput></screen>
+<screen><userinput>unset MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE
+unset MOZBUILD_STATE_PATH
+unset PYTHON311</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-<!--<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/SIOCGSTAMP.xml"/>-->
-
     <para>
       <command>export MOZBUILD_STATE_PATH=${PWD}/mozbuild</command>: Bygget
-      er nå ment å fortelle deg at den har til hensikt å opprette <filename
-      class="directory">~/.mozbuild</filename>, og tilby deg et alternativ å
-      trykke &lt;ENTER&gt; for å godta dette, eller Ctrl-C for å avbryte og starte på nytt
-      å bygge etter å ha spesifisert mappen. I praksis kan det hende at meldingen ikke
+      forteller deg at den har til hensikt Ã¥ opprette <filename
+      class="directory">~/.mozbuild</filename>, og tilby deg et alternativ Ã¥
+      trykke &lt;ENTER&gt; for Ã¥ godta dette, eller Ctrl-C for Ã¥ avbryte og starte pÃ¥ nytt
+      Ã¥ bygge etter Ã¥ ha spesifisert mappen. I praksis kan det hende at meldingen ikke
       vises til etter &lt;ENTER&gt; er presset, dvs. bygget stopper.
     </para>
 
     <para>
       Den mappen brukes for en (sannsynligvis tilfeldig) telemetriidentifikator.
-      Opprette dette i byggemappen, og slette det etter
-      installasjon, hindrer den i bruk. Hvis du ønsker å delta
-      telemetri, eksporter MOZBUILD_STATE_PATH for å peke til standardmappen
-      og fjern oppføringen fra <filename>mozconfig</filename>.
+      Opprette denne mappen i byggemappen og slette den etter
+      installasjonen hindrer den i brukes.
     </para>
 
     <para>
       <command>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none</command>: Bruk
-      system python for å lage et virtuelt miljø for <command>mach</command>
-      uten å laste ned noen python wheels og ikke bruke system python modulene.
-      Dette forhindrer versjonsfeil mellom systemmoduler og medfølgende moduler.
+      system python for Ã¥ lage et virtuelt miljÃ¸ for <command>mach</command>
+      uten Ã¥ laste ned noen python wheels og uten Ã¥ bruke systemets python moduler.
+      Dette forhindrer versjonsfeil mellom systemmoduler og medfÃ¸lgende moduler.
     </para>
 
+<!--
     <para>
-      <command>./mach configure</command>: Dette validerer de medfølgende
+      <command>./mach configure</command>: Dette validerer de medfÃ¸lgende
       avhengigheter og <filename>mozconfig</filename>.
     </para>
+-->
 
     <para>
       <option>./mach build --verbose</option>: Bruk dette alternativet hvis du
@@ -441,19 +454,19 @@ export MOZBUILD_STATE_PATH=${PWD}/mozbuild          &amp;&amp;
 
     <para>
       <option>./mach build -jN</option>: Byggingen skal som standard bruke
-      alle tilgjengelige CPU kjerner. Hvis bruk av alle kjernene får bygget til å bruke vekselminne
-      fordi du har utilstrekkelig minne, kan det gå raskere å bruke færre kjerner.
+      alle tilgjengelige CPU kjerner. Hvis bruk av alle kjernene fÃ¥r bygget til Ã¥ bruke vekselminne
+      fordi du har utilstrekkelig minne, kan det gÃ¥ raskere Ã¥ bruke fÃ¦rre kjerner.
     </para>
 
     <para>
-      <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide å
-      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstillinger for
+      <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide Ã¥
+      foretrekke Ã¥ bruke gcc og g++ i stedet for oppstrÃ¸ms standardinnstillinger for
       <application>clang</application> programmer. Med utgivelsen av
-      gcc-12 bygget tar lengre tid med gcc og g++, først og fremst fordi
-      ekstra advarsler, og er større. Angi disse miljøvariablene
-      <emphasis>før du kjører configure skriptet</emphasis>
-      hvis du ønsker å fortsette å bruke gcc, g++. Bygging
-      med GCC på i?86 er for øyeblikket ødelagt.
+      gcc-12 bygget tar lengre tid med gcc og g++, fÃ¸rst og fremst fordi
+      ekstra advarsler, og er stÃ¸rre. Angi disse miljÃ¸variablene
+      <emphasis>fÃ¸r du kjÃ¸rer configure skriptet</emphasis>
+      hvis du Ã¸nsker Ã¥ fortsette Ã¥ bruke gcc, g++. Bygging
+      med GCC pÃ¥ i?86 er for Ã¸yeblikket Ã¸delagt.
     </para>
 
   </sect2>
@@ -462,9 +475,9 @@ export MOZBUILD_STATE_PATH=${PWD}/mozbuild          &amp;&amp;
     <title>Konfigurere Firefox</title>
 
     <para>
-      Hvis du bruker et skrivebordsmiljø som <application>Gnome</application> eller
-      <application>KDE</application> kan det være lurt å opprette en
-      <filename>firefox.desktop</filename> fil sånn at
+      Hvis du bruker et skrivebordsmiljÃ¸ som <application>Gnome</application> eller
+      <application>KDE</application> kan det vÃ¦re lurt Ã¥ opprette en
+      <filename>firefox.desktop</filename> fil sÃ¥nn at
       <application>Firefox</application> vises i panelets menyer.
       Som &root; bruker:
     </para>
@@ -499,22 +512,22 @@ ln -sfv /usr/lib/firefox/browser/chrome/icons/default/default128.png \
     <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Applikasjonsinnstillingene for firefox er tilgjengelige ved å skrive
+        Applikasjonsinnstillingene for firefox er tilgjengelige ved Ã¥ skrive
         <command>about:config</command> i adressefeltet.
       </para>
 
       <para>
-        Av og til, å få fungerende lyd i
-        <application>firefox</application> kan være et problem. Skjønt oppstrøms
+        Av og til, Ã¥ fÃ¥ fungerende lyd i
+        <application>firefox</application> kan vÃ¦re et problem. SkjÃ¸nt oppstrÃ¸ms
         foretrekker pulsaudio,
-        bruk av <application>Alsa</application> kan være lettere.
+        bruk av <application>Alsa</application> kan vÃ¦re lettere.
       </para>
 
       <para>
         Hvis du har aktivert <application>Alsa</application> for lyd, kan det hende du trenger
-        å endre en variabel for å få fungerende lyd. Hvis du kjører
-        <command>firefox</command> fra en terminal og prøv å spille noe
-        med lyd kan du støte på feilmeldinger som:
+        Ã¥ endre en variabel for Ã¥ fÃ¥ fungerende lyd. Hvis du kjÃ¸rer
+        <command>firefox</command> fra en terminal og prÃ¸v Ã¥ spille noe
+        med lyd kan du stÃ¸te pÃ¥ feilmeldinger som:
       </para>
 
       <para>
@@ -523,65 +536,65 @@ ln -sfv /usr/lib/firefox/browser/chrome/icons/default/default128.png \
       </para>
 
       <para>
-        Det var på x86_64, på i686 er syscall nummeret 54. For å tillate denne
+        Det var pÃ¥ x86_64, pÃ¥ i686 er syscall nummeret 54. For Ã¥ tillate denne
         syscall, i <command>about:config</command> forandre
         <command>security.sandbox.content.syscall_whitelist</command> til 16
         (eller 54 hvis du bruker i686).
       </para>
 
       <para>
-        Hvis du bruker <command>pulseaudio</command> i et skrivebordsmiljø, kan det
-        allerede være startet av den DE. Men hvis det ikke er det, skjønt
-        firefox-57 klarte å starte den, firefox-58 gjorde det ikke. Hvis du kjører
+        Hvis du bruker <command>pulseaudio</command> i et skrivebordsmiljÃ¸, kan det
+        allerede vÃ¦re startet av den DE. Men hvis det ikke er det, skjÃ¸nt
+        firefox-57 klarte Ã¥ starte den, firefox-58 gjorde det ikke. Hvis du kjÃ¸rer
         <command>firefox</command> fra en terminal og dette problemet er tilstede,
-        å prøve å spille av lyd vil
-        støte på feilmeldinger advarsel <literal>Can't get cubeb
+        Ã¥ prÃ¸ve Ã¥ spille av lyd vil
+        stÃ¸te pÃ¥ feilmeldinger advarsel <literal>Can't get cubeb
         context!</literal>
       </para>
 
     <para>
-      Løsningen for dette er å lukke firefox, starte pulsaudio for å sjekke om det
+      LÃ¸sningen for dette er Ã¥ lukke firefox, starte pulsaudio for Ã¥ sjekke om det
       starter (hvis ikke, les informasjonen om konfigurering i <xref
-      linkend="pulseaudio"/>) og start firefox på nytt for å sjekke at det fungerer.
-      Hvis det nå fungerer, legg til følgende i din <filename>~/.xinitrc</filename>:
+      linkend="pulseaudio"/>) og start firefox pÃ¥ nytt for Ã¥ sjekke at det fungerer.
+      Hvis det nÃ¥ fungerer, legg til fÃ¸lgende i din <filename>~/.xinitrc</filename>:
 <phrase revision="sysv">
 <literal>pulseaudio --verbose --log-target=syslog&amp;</literal></phrase>
 <phrase revision="systemd">
 <literal>pulseaudio --verbose --log-target=journald&amp;</literal></phrase>
-        (dessverre, på noen systemer fungerer ikke dette).
+        (dessverre, pÃ¥ noen systemer fungerer ikke dette).
       </para>
 
       <para>
-        Det kan være lurt å bruke flere profiler i firefox. For å gjøre det, påkall
-        firefox som <command>firefox --ProfileManager</command>. Du kan også
+        Det kan vÃ¦re lurt Ã¥ bruke flere profiler i firefox. For Ã¥ gjÃ¸re det, pÃ¥kall
+        firefox som <command>firefox --ProfileManager</command>. Du kan ogsÃ¥
         sjekke hvilken profil som er i bruk fra
         <command>about:profiles</command>.
       </para>
 
       <para>
         Selv om WebRender (bruker GPU for komposisjon) ikke brukes av
-        standard, ser det nå ut til å fungere bra på støttet maskinvare (ATI, Nvidia
+        standard, ser det nÃ¥ ut til Ã¥ fungere bra pÃ¥ stÃ¸ttet maskinvare (ATI, Nvidia
         og Intel GPUer med Mesa-18 eller nyere). For en forklaring, se
         <ulink
        url="https://hacks.mozilla.org/2017/10/the-whole-web-at-maximum-fps-how-webrender-gets-rid-of-jank/">hacks.mozilla.org</ulink>.
-       Den eneste ulempen ser ut til å være at på en maskin med begrenset RAM kan det hende det
+       Den eneste ulempen ser ut til Ã¥ vÃ¦re at pÃ¥ en maskin med begrenset RAM kan det hende det
        bruker mer RAM.
      </para>
 
     <para>
-      For å sjekke om WebRender brukes, se i about:support. I grafikk
+      For Ã¥ sjekke om WebRender brukes, se i about:support. I grafikk
       seksjonen, vil Compositing enten vise 'Basic' (dvs. ikke i bruk) eller
-      'WebRender'. For å aktivere det, gå til about:config og endre gfx.webrender.all
-      til True. Du må starte firefox på nytt.
+      'WebRender'. For Ã¥ aktivere det, gÃ¥ til about:config og endre gfx.webrender.all
+      til True. Du mÃ¥ starte firefox pÃ¥ nytt.
     </para>
 
     <para>
-      Det kan være nyttig å nevne prosessene fra firefox som kan dukke opp i
-      <command>top</command> - så vel som firefox selv, kan det være flere
-      Nettinnhold prosesser, og nå en RDD prosess (Remote Data Decoder) som
-      vises når du spiller av nettvideoer kodet med av1 (libdav1d). Hvis WebRender
-      har blitt aktivert, vil en GPU prosess også vises når firefox må
-      oppdatere på nytt (f.eks. bla, åpne en ny fane eller spille av en video).
+      Det kan vÃ¦re nyttig Ã¥ nevne prosessene fra firefox som kan dukke opp i
+      <command>top</command> - sÃ¥ vel som firefox selv, kan det vÃ¦re flere
+      Nettinnhold prosesser, og nÃ¥ en RDD prosess (Remote Data Decoder) som
+      vises nÃ¥r du spiller av nettvideoer kodet med av1 (libdav1d). Hvis WebRender
+      har blitt aktivert, vil en GPU prosess ogsÃ¥ vises nÃ¥r firefox mÃ¥
+      oppdatere pÃ¥ nytt (f.eks. bla, Ã¥pne en ny fane eller spille av en video).
     </para>
 
     </sect3>
