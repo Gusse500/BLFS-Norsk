@@ -1,0 +1,1179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY qt6-major "6.6">
+  <!ENTITY qt6-url   "https://download.qt.io/archive/qt/&qt6-major;/&qt6-version;/single">
+
+  <!ENTITY qt6-download-http "&qt6-url;/qt-everywhere-src-&qt6-version;.tar.xz">
+  <!ENTITY qt6-download-ftp  " ">
+  <!ENTITY qt6-md5sum        "b92112e12298f4b27050ef7060658191">
+  <!ENTITY qt6-size          "764 MB">
+  <!ENTITY qt6-buildsize     "31 GB (354 MB installert)">
+  <!ENTITY qt6-time          "16 SBU (bruker parallellisme=8)">
+]>
+
+<sect1 id="qt6" xreflabel="Qt-&qt6-version;">
+  <?dbhtml filename="qt6.html" ?>
+
+
+  <title>Qt-&qt6-version;</title>
+
+  <indexterm zone="qt6">
+    <primary sortas="a-Qt6">Qt6</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Qt6</title>
+
+    <para>
+      <application>Qt6</application> er et applikasjonsrammeverk på tvers av plattformer
+      som er mye brukt for å utvikle applikasjonsprogramvare med et grafisk
+      brukergrensesnitt (GUI) (i hvilke tilfeller <application>Qt6</application> er
+      klassifisert som et skjermelement verktøysett), og brukes også til å utvikle ikke-GUI
+      programmer som kommandolinjeverktøy og konsoller for servere. <!--To av de
+      store brukere av <application>Qt</application> er <application>KDE
+      Rammerverk 5 (KF5)</application> og <application>LXQt</application>.-->
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&qt6-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&qt6-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &qt6-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &qt6-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &qt6-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &qt6-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+<!--
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nå som <application>Qt5</application> oppdateringer er begrenset til
+          kommersielle kunder, oppstrøms oppdateringer for de ulike modulene er
+          blir kurert hos kde.
+          Oppdateringer for modulene som kreves av pakker i BLFS har vært
+          samlet for den ikke-modulære Qt5 byggingen vi bruker.
+        </para>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/qt-everywhere-opensource-src-&qt6-version;-kf5-1.patch"/>
+        </para>
+        <para>
+          Detaljer om kde kurasjonen kan finnes på
+          <ulink url="https://dot.kde.org/2021/04/06/announcing-kdes-qt-5-patch-collection"/>
+          and <ulink url="https://community.kde.org/Qt5PatchCollection"/>.
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
+    <bridgehead renderas="sect3">Qt6 Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="xorg7-lib"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="alsa-lib"/>,
+      <xref linkend="make-ca"/>,
+      <xref linkend="cups"/>,
+      <phrase revision='sysv'><xref linkend="dbus"/>,</phrase>
+      <xref linkend="double-conversion"/>,
+      <xref linkend="glib2"/>,
+      <xref linkend="gst10-plugins-base"/> (QtMultimedia bakstykke),
+      <xref linkend="harfbuzz"/>,
+      <xref linkend="icu"/>,
+      <xref linkend="jasper"/>,
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libmng"/>,
+      <xref linkend="libpng"/>,
+      <xref linkend="libtiff"/>,
+      <xref linkend="libwebp"/>,
+      <xref linkend="libxkbcommon"/>,
+      <xref linkend="mesa"/>,
+      <xref linkend="mtdev"/>,
+      <xref linkend="pcre2"/>,
+      <xref linkend="sqlite"/>,
+      <xref linkend="wayland"/> (<application>Mesa</application>
+      må bygges med <application>Wayland</application> EGL
+      bakstykke),
+      <xref linkend="xcb-util-cursor"/>,
+      <xref linkend="xcb-util-image"/>,
+      <xref linkend="xcb-util-keysyms"/>,
+      <xref linkend="xcb-util-renderutil"/>, og
+      <xref linkend="xcb-util-wm"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref role="runtime" linkend="bluez"/> (for sdpscanner, og ved kjøretid for
+      QtConnectivity moduler),
+      <xref linkend="gtk3"/>,
+      <xref linkend="ibus"/>,
+      <xref linkend="libinput"/>,
+      <xref linkend="mariadb"/>
+        eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
+      <xref linkend="mitkrb"/>,
+      <xref linkend="pciutils"/>,
+      <xref linkend="postgresql"/>,
+      <xref linkend="pulseaudio"/>,
+      <xref linkend="sdl2"/>,
+      <xref linkend="unixodbc"/>,
+      <ulink url="https://www.assimp.org/">assimp</ulink>,
+      <ulink url="https://github.com/festvox/flite">Flite</ulink>,
+      <ulink url="https://www.firebirdsql.org/">Firebird</ulink>,
+      <ulink url="https://www.freetds.org/">FreeTDS</ulink>,
+      <ulink url="https://libproxy.github.io/libproxy/">libproxy</ulink>,
+      <ulink url="https://openal.org/">OpenAL</ulink>,
+      <ulink url="https://freebsoft.org/speechd/">speech-dispatcher</ulink>, og
+      <ulink url="http:///www.tslib.org/">tslib</ulink>
+      <!--<ulink url="https://vulkan.lunarg.com/sdk/home/">Vulkan</ulink>-->
+    </para>
+
+    <!-- Many of the dependencies in the qmake/configure output do not apply
+         to Linux-based platforms. I've selected the ones that do and put
+         them in as optional dependencies. Not checked yet for Qt6 -->
+
+  </sect2>
+
+  <sect2 role="qt6-prefix">
+    <title>Stille inn installasjonsprefikset</title>
+
+    <bridgehead renderas="sect3">Installere i /opt/qt6</bridgehead>
+
+    <para>
+      BLFS redaktørene anbefaler å installere <application>Qt6</application> i en
+      annen mappe enn <filename class="directory">/usr</filename>, dvs
+      <filename class="directory">/opt/qt6</filename>.  Dette trengs
+      for å unngå konflikter med Qt5. For å gjøre dette, still inn
+      følgende miljøvariabel:
+    </para>
+
+<screen><userinput>export QT6PREFIX=/opt/qt6</userinput></screen>
+
+    <tip>
+      <para>
+        Noen ganger er installasjonsbanene hardkodet til installerte filer.
+        Dette er grunnen til at <filename class="directory">/opt/qt6</filename>
+        brukes som installasjonsprefiks i stedet for <filename
+        class="directory">/opt/qt-&qt6-version;</filename>. For å lage en
+        versjonert <application>Qt6</application> mappe,
+        du kan gi nytt navn til mappen og lage en symbolkobling:
+      </para>
+
+<screen role="root"><userinput>mkdir -pv /opt/qt-&qt6-version;
+ln -sfnv qt-&qt6-version; /opt/qt6</userinput></screen>
+
+      <para>
+        Senere vil du kanskje installere andre versjoner av
+        <application>Qt6</application>. For å gjøre det, fjern bare symbolkoblingen,
+        opprett den nye versjonsmappen, og lag på nytt
+        <filename class="directory">/opt/qt6</filename> symbolkoblingen igjen før
+        du bygger den nye versjonen.
+        Hvilken versjon av <application>Qt6</application> du
+        bruker avhenger bare av hvor symbollinken peker.
+      </para>
+    </tip>
+
+<!-- Not sure about this for Qt6
+    <note>
+      <para>
+        Hvis <xref linkend="qca"/> er installert og du er
+        deretter installere eller oppdatere denne pakken på nytt
+        <application>qca</application> må installeres på nytt.
+      </para>
+    </note>
+-->
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Qt6</title>
+
+    <warning>
+      <para>
+        Hvis <application>Qt6</application> blir reinstallert i
+        samme mappe som en eksisterende økt, kjør kommandoene utført av
+        <systemitem class="username">root</systemitem>, som
+        <command>make install</command>, fra en konsoll eller ikke-Qt6 basert
+        vindusbehandler. Den overskriver <application>Qt6</application>
+        biblioteker som ikke skal være i bruk under installasjonsprosessen.
+      </para>
+    </warning>
+
+    <caution>
+      <para>
+        Hvis du ikke installerte noen av de anbefalte avhengighetene, undersøk
+        <command>./configure --help</command> utdata for å sjekke hvordan du deaktiverer
+        dem eller bruk interne versjoner samlet i kildens tarball.
+      </para>
+    </caution>
+
+    <note>
+      <para>
+        Byggetiden og plassen som kreves for hele
+        <application>Qt6</application> er ganske lang. Instruksjonene nedenfor
+        bygger ikke opplæringen og eksemplene. Fjerning av
+        <parameter>-nomake</parameter> linjen vil skape ekstra ressurser..
+      </para>
+    </note>
+
+    <note>
+      <para>
+        BLFS redaktørene anbefaler ikke å installere <application>Qt6</application>
+        inn i /usr hierarkiet fordi det blir vanskelig å finne
+        komponenter og for å oppdatere til en ny versjon. Det er også noen programmer
+        som er i konflikt med de installert av Qt5.
+        <!--Hvis du ønsker å installere
+        <application>Qt5</application> i /usr, mappene må
+        spesifiseres eksplisitt. I dette tilfellet, sett QT5PREFIX=/usr og legg til
+        følgende til konfigureringsargumentene nedenfor:
+      </para>
+
+<screen role="nodump"><userinput>            -archdatadir    /usr/lib/qt6                \
+            -bindir         /usr/bin                    \
+            -plugindir      /usr/lib/qt6/plugins        \
+            -importdir      /usr/lib/qt6/imports        \
+            -headerdir      /usr/include/qt6            \
+            -datadir        /usr/share/qt6              \
+            -docdir         /usr/share/doc/qt6          \
+            -translationdir /usr/share/qt6/translations \
+            -examplesdir    /usr/share/doc/qt6/examples</userinput></screen>-->
+      </para>
+    </note>
+
+    <para>
+      Installer <application>Qt6</application> ved å kjøre følgende kommandoer:
+    </para>
+
+<screen revision="sysv"><userinput>./configure -prefix $QT6PREFIX      \
+            -sysconfdir /etc/xdg    \
+            -dbus-linked            \
+            -openssl-linked         \
+            -system-sqlite          \
+            -nomake examples        \
+            -no-rpath               \
+            -syslog                 \
+            -skip qt3d              \
+            -skip qtquick3dphysics  \
+            -skip qtwebengine       \
+            -Wno-dev                &amp;&amp;
+ninja</userinput></screen>
+
+<screen revision="systemd"><userinput>./configure -prefix $QT6PREFIX      \
+            -sysconfdir /etc/xdg    \
+            -dbus-linked            \
+            -openssl-linked         \
+            -system-sqlite          \
+            -nomake examples        \
+            -no-rpath               \
+            -journald               \
+            -skip qt3d              \
+            -skip qtquick3dphysics  \
+            -skip qtwebengine       \
+            -Wno-dev                &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+    <!-- Not sure this is correct for Qt6
+
+         EDITORS NOTE: This package uses INSTALL_ROOT= instead of DESTDIR= for
+         installing in a temporary directory. -->
+
+    <para>
+      Fjern referanser til byggemappen fra installerte bibliotekers
+      avhengighet (prl) <!--og profil inkluderer (pri)--> filer ved å kjøre følgende
+      kommando som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>find $QT6PREFIX/ -name \*.prl \
+   -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;</userinput></screen>
+
+    <para>
+      Installer bilder og lag menyoppføringer for installerte applikasjoner.
+      <!--<envar>QT6BINDIR</envar> variabel brukes her for å peke på
+      mappen for de kjørbare programmene. Hvis du har endret bindir
+      ovenfor, <envar>QT5BINDIR</envar> må justeres nedenfor. Vær sikker
+      at <envar>QT5BINDIR</envar> variabel er definert i roots
+      miljø og som &root; bruker:-->
+      Igjen som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>pushd qttools/src &amp;&amp;
+
+install -v -Dm644 assistant/assistant/images/assistant-128.png       \
+                  /usr/share/pixmaps/assistant-qt6.png               &amp;&amp;
+
+install -v -Dm644 designer/src/designer/images/designer.png          \
+                  /usr/share/pixmaps/designer-qt6.png                &amp;&amp;
+
+install -v -Dm644 linguist/linguist/images/icons/linguist-128-32.png \
+                  /usr/share/pixmaps/linguist-qt6.png                &amp;&amp;
+
+install -v -Dm644 qdbus/qdbusviewer/images/qdbusviewer-128.png       \
+                  /usr/share/pixmaps/qdbusviewer-qt6.png             &amp;&amp;
+popd &amp;&amp;
+
+
+cat &gt; /usr/share/applications/assistant-qt6.desktop &lt;&lt; EOF
+<literal>[Desktop Entry]
+Name=Qt6 Assistant
+Comment=Shows Qt6 documentation and examples
+Exec=$QT6PREFIX/bin/assistant
+Icon=assistant-qt6.png
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;Documentation;</literal>
+EOF
+
+cat &gt; /usr/share/applications/designer-qt6.desktop &lt;&lt; EOF
+<literal>[Desktop Entry]
+Name=Qt6 Designer
+GenericName=Interface Designer
+Comment=Design GUIs for Qt6 applications
+Exec=$QT6PREFIX/bin/designer
+Icon=designer-qt6.png
+MimeType=application/x-designer;
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;</literal>
+EOF
+
+cat &gt; /usr/share/applications/linguist-qt6.desktop &lt;&lt; EOF
+<literal>[Desktop Entry]
+Name=Qt6 Linguist
+Comment=Add translations to Qt6 applications
+Exec=$QT6PREFIX/bin/linguist
+Icon=linguist-qt6.png
+MimeType=text/vnd.trolltech.linguist;application/x-linguist;
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;</literal>
+EOF
+
+cat &gt; /usr/share/applications/qdbusviewer-qt6.desktop &lt;&lt; EOF
+<literal>[Desktop Entry]
+Name=Qt6 QDbusViewer
+GenericName=D-Bus Debugger
+Comment=Debug D-Bus applications
+Exec=$QT6PREFIX/bin/qdbusviewer
+Icon=qdbusviewer-qt6.png
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;Debugger;</literal>
+EOF</userinput></screen>
+
+<!--
+    <para>
+      Noen pakker som f.eks <xref linkend='vlc'/> se etter visse
+      kjørbare filer med suffikset -qt6. Kjør følgende kommando som
+      <systemitem class="username">root</systemitem> bruker
+      for å lage de nødvendige symbolkoblingene:
+    </para>
+
+<screen role="root"><userinput>for file in moc uic rcc qmake lconvert lrelease lupdate; do
+  ln -sfvn $QT5BINDIR/$file /usr/bin/$file-qt6
+done</userinput></screen>
+-->
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+    <!--
+    <para>
+      <command>sed ...</command>: Tillater bruk av
+      <application>Python 3</application> i stedet for <application>Python
+      2</application>. Denne kommandoen ødelegger bygget for QtWebEngine, så ikke
+      bruk den hvis du fjerner <parameter>-skip qtwebengine</parameter>
+      bryteren.
+    </para>
+
+    Ignored
+    <para>
+      <parameter>-confirm-license</parameter>: Godta lisens
+      uten å spørre brukeren under konfigurasjonen.
+    </para>
+
+    Ignored
+    <para>
+      <parameter>-opensource</parameter>: Installer åpen kildekode
+      versjon av <application>Qt</application>.
+    </para>
+    -->
+    <para>
+      <parameter>-nomake examples</parameter>: Denne bryteren
+      deaktiverer bygging av eksempelprogrammene inkludert
+      i kilde tarballen. Fjern den hvis du vil bygge
+      dem.
+    </para>
+
+    <para>
+      <parameter>-skip qt3d</parameter>: Denne bryteren
+      deaktiverer bygging av qt3d støtte. Det er et problem
+      å bygge disse filene uten et eksternt bibliotek
+      og ingen pakker i BLFS bruker qt3d.
+    </para>
+<!-- Auto: not for me [pierre 2023/11/20]-->
+    <para>
+      <parameter>-system-sqlite</parameter>: Denne bryteren aktiverer bruk
+      av systemversjonen av <application>SQLite</application>.
+    </para>
+
+    <para>
+      <parameter>-dbus-linked</parameter>
+      <parameter>-openssl-linked</parameter>: Disse
+      brytere aktiverer eksplisitt kobling av
+      <application>D-Bus</application> og
+      <application>OpenSSL</application> biblioteker inn i
+      <application>Qt6</application> biblioteker i stedet for
+      <command>dlopen()</command>-ing dem.
+    </para>
+
+    <para revision="sysv">
+      <parameter>-syslog</parameter>: Denne bryteren lar deg sende Qt meldinger
+      til <command>syslog</command> loggingssystem.
+    </para>
+
+    <para revision="systemd">
+      <parameter>-journald</parameter>: Denne bryteren lar deg sende Qt meldinger
+      til <command>journald</command> loggingssystem.
+    </para>
+
+    <para>
+      <parameter>-skip qtwebengine</parameter>: Denne bryteren deaktiverer bygging
+      av QtWebEngine. BLFS redaksjonen har valgt å bygge <xref
+      linkend="qtwebengine"/> hver for seg.
+    </para>
+
+    <para>
+      <parameter>-skip qtquick3dphysics</parameter>: Denne bryteren deaktiverer
+      bygging av Qt Quick 3D Physics undermodulen. På 32-bits systemer vil dette
+      føre til at byggeprosessen mislykkes med en inlining feil i Qt6 pakkene
+      av PhysX SDK.
+    </para>
+
+<!-- Auto
+    <para>
+      <parameter>-system-harfbuzz</parameter>: Denne bryteren muliggjør bruk
+      av systemversjonen av <application>Harfbuzz</application>.
+    </para>
+-->
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere Qt6</title>
+
+    <sect3 id="qt6-config">
+      <title>Konfigurasjonsinformasjon</title>
+
+      <para>
+        Hvis <xref linkend="sudo"/> er installert, skal QT6DIR være tilgjengelig for
+        superbrukeren også. Utfør følgende kommandoer som
+        &root; bruker:
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/sudoers.d/qt &lt;&lt; "EOF"
+<literal>Defaults env_keep += QT6DIR</literal>
+EOF</userinput></screen>
+<!--
+      <bridgehead renderas="sect4">Hvis du installerte Qt5 i /usr</bridgehead>
+
+      <para>
+        Hvis du installerte <application>Qt5</application> i
+        <filename class="directory">/usr</filename>, opprette en
+        miljøvariabel som kreves av visse pakker.
+        Som <systemitem class="username">root</systemitem> bruker:
+      </para>
+
+<screen role="nodump"><userinput>cat &gt; /etc/profile.d/qt6.sh &lt;&lt; "EOF"
+<literal># Begin /etc/profile.d/qt6.sh
+
+QT5DIR=/usr
+export QT5DIR
+
+# End /etc/profile.d/qt6.sh</literal>
+EOF</userinput></screen>
+
+      <bridgehead renderas="sect4">If you did not install Qt5 in /usr</bridgehead>
+i-->
+      <para>
+        Du må nå oppdatere
+        følgende konfigurasjonsfiler slik at <application>Qt6</application> blir
+        riktig funnet av andre pakker og systemprosesser.
+      </para>
+
+      <para>
+        Som &root; bruker, oppdater
+        <filename>/etc/ld.so.conf</filename> filen og den dynamiske linkeren
+        kjøretidsbufferfil:
+      </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/ld.so.conf &lt;&lt; EOF
+<literal># Begin Qt addition
+
+/opt/qt6/lib
+
+# End Qt addition</literal>
+EOF
+
+ldconfig</userinput></screen>
+
+      <indexterm zone="qt6 qt6-config">
+        <primary sortas="e-etc-ld.so.conf">/etc/ld.so.conf</primary>
+      </indexterm>
+
+      <para>
+        Som &root; bruker, opprett
+        <filename>/etc/profile.d/qt6.sh</filename> filen:
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/profile.d/qt6.sh &lt;&lt; "EOF"
+<literal># Begin /etc/profile.d/qt6.sh
+
+QT6DIR=/opt/qt6
+
+pathappend $QT6DIR/bin           PATH
+pathappend $QT6DIR/lib/pkgconfig PKG_CONFIG_PATH
+
+export QT6DIR
+
+# End /etc/profile.d/qt6.sh</literal>
+EOF</userinput></screen>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          androiddeployqt (hard link til androiddeployqt6),
+          androiddeployqt6,
+          androidtestrunner,
+          assistant,
+          balsam,
+          balsamui,
+          canbusutil,
+          cooker,
+          designer,
+          instancer,
+          lconvert,
+          linguist,
+          lrelease,
+          lupdate,
+          materialeditor,
+          meshdebug,
+          pixeltool,
+          qdbus,
+          qdbuscpp2xml,
+          qdbusviewer,
+          qdbusxml2cpp,
+          qdistancefieldgenerator,
+          qdoc,
+          qmake (hard link til qmake6),
+          qmake6,
+          qml,
+          qmldom,
+          qmleasing,
+          qmlformat,
+          qmllint,
+          qmlls,
+          qmlplugindump,
+          qmlpreview,
+          qmlprofiler,
+          qmlscene,
+          qmltc,
+          qmltestrunner,
+          qmltime,
+          qqem,
+          qsb,
+          qtdiag (hard link til qtdiag6),
+          qtdiag6,
+          qtpaths (hard link til qtpaths6),
+          qtpaths6,
+          qtplugininfo,
+          qt-cmake,
+          qt-cmake-create,
+          qt-configure-module,
+          shadergen, og
+          shapegen
+
+        </seg>
+        <seg>
+          libQt6Bluetooth.so,
+          libQt6Bodymovin.so,
+          libQt6BundledEmbree.a,
+          libQt6BundledPhysX.a,
+          libQt6BundledResonanceAudio.a,
+          libQt6Charts.so,
+          libQt6ChartsQml.so,
+          libQt6Coap.so,
+          libQt6Concurrent.so,
+          libQt6Core.so,
+          libQt6Core5Compat.so,
+          libQt6DBus.so,
+          libQt6DataVisualization.so,
+          libQt6DataVisualizationQml.so,
+          libQt6DeclarativeOpcua.so,
+          libQt6Designer.so,
+          libQt6DesignerComponents.so,
+          libQt6DeviceDiscoverySupport.a,
+          libQt6EglFSDeviceIntegration.so,
+          libQt6EglFsKmsGbmSupport.so,
+          libQt6EglFsKmsSupport.so,
+          libQt6ExampleIcons.a,
+          libQt6FbSupport.a,
+          libQt6Graphs.so,
+          libQt6Grpc.so,
+          libQt6Gui.so,
+          libQt6Help.so,
+          libQt6HttpServer.so,
+          libQt6InputSupport.a,
+          libQt6JsonRpc.so,
+          libQt6KmsSupport.a,
+          libQt6LabsAnimation.so,
+          libQt6LabsFolderListModel.so,
+          libQt6LabsQmlModels.so,
+          libQt6LabsSettings.so,
+          libQt6LabsSharedImage.so,
+          libQt6LabsWavefrontMesh.so,
+          libQt6LanguageServer.so,
+          libQt6Location.so,
+          libQt6Mqtt.so,
+          libQt6Multimedia.so,
+          libQt6MultimediaQuick.so,
+          libQt6MultimediaWidgets.so,
+          libQt6Network.so,
+          libQt6NetworkAuth.so,
+          libQt6Nfc.so,
+          libQt6OpcUa.so,
+          libQt6OpenGL.so,
+          libQt6OpenGLWidgets.so,
+          libQt6PacketProtocol.a,
+          libQt6Positioning.so,
+          libQt6PositioningQuick.so,
+          libQt6PrintSupport.so,
+          libQt6Protobuf.so,
+          libQt6Qml.so,
+          libQt6QmlCompiler.so,
+          libQt6QmlCore.so,
+          libQt6QmlDebug.a,
+          libQt6QmlDom.a,
+          libQt6QmlLocalStorage.so,
+          libQt6QmlLS.a,
+          libQt6QmlModels.so,
+          libQt6QmlToolingSettings.a,
+          libQt6QmlTypeRegistrar.a,
+          libQt6QmlWorkerScript.so,
+          libQt6QmlXmlListModel.so,
+          libQt6Quick.so,
+          libQt6Quick3D.so,
+          libQt6Quick3DAssetImport.so,
+          libQt6Quick3DAssetUtils.so,
+          libQt6Quick3DEffects.so,
+          libQt6Quick3DGlslParser.so,
+          libQt6Quick3DHelpers.so,
+          libQt6Quick3DHelpersImpl.so,
+          libQt6Quick3DIblBaker.so,
+          libQt6Quick3DParticleEffects.so,
+          libQt6Quick3DParticles.so,
+          libQt6Quick3DPhysics.so,
+          libQt6Quick3DPhysicsHelpers.so,
+          libQt6Quick3DRuntimeRender.so,
+          libQt6Quick3DSpatialAudio.so,
+          libQt6Quick3DUtils.so,
+          libQt6QuickControls2.so,
+          libQt6QuickControls2Impl.so,
+          libQt6QuickControlsTestUtils.a,
+          libQt6QuickDialogs2.so,
+          libQt6QuickDialogs2QuickImpl.so,
+          libQt6QuickDialogs2Utils.so,
+          libQt6QuickEffects.so,
+          libQt6QuickLayouts.so,
+          libQt6QuickParticles.so,
+          libQt6QuickShapes.so,
+          libQt6QuickTemplates2.so,
+          libQt6QuickTest.so,
+          libQt6QuickTestUtils.a,
+          libQt6QuickTimeline.so,
+          libQt6QuickWidgets.so,
+          libQt6RemoteObjects.so,
+          libQt6RemoteObjectsQml.so,
+          libQt6Scxml.so,
+          libQt6ScxmlQml.so,
+          libQt6Sensors.so,
+          libQt6SensorsQuick.so,
+          libQt6SerialBus.so,
+          libQt6SerialPort.so,
+          libQt6ShaderTools.so,
+          libQt6SpatialAudio.so,
+          libQt6Sql.so,
+          libQt6StateMachine.so,
+          libQt6StateMachineQml.so,
+          libQt6Svg.so,
+          libQt6SvgWidgets.so,
+          libQt6TextToSpeech.so,
+          libQt6UiTools.so,
+          libQt6VirtualKeyboard.so,
+          libQt6WaylandClient.so,
+          libQt6WaylandCompositor.so,
+          libQt6WaylandEglClientHwIntegration.so,
+          libQt6WaylandEglCompositorHwIntegration.so,
+          libQt6WebChannel.so,
+          libQt6WebChannelQuick.so,
+          libQt6WebSockets.so,
+          libQt6WebView.so,
+          libQt6WebViewQuick.so,
+          libQt6Widgets.so,
+          libQt6WlShellIntegration.so,
+          libQt6XcbQpa.so, og
+          libQt6Xml.so
+        </seg>
+        <seg>
+          <!--/usr/include/qt6,
+          /usr/lib/qt6,
+          /usr/share/doc/qt6, og
+          /usr/share/qt6
+          ELLER-->
+          /opt/qt6 og
+          /opt/qt-&qt6-version;
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist id='qt6-descriptions' xreflabel="Qt6 Short Descriptions">
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="assistant-qt6">
+        <term><command>assistant</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å presentere nettbasert dokumentasjon
+          </para>
+          <indexterm zone="qt6 assistant-qt6">
+            <primary sortas="b-assistant-qt6">assistant</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="balsam-qt6">
+        <term><command>balsam</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å konvertere 3D scener fra ulike opprettelsesverktøy
+            til QML format, for bruk av det nye QtQuick 3D-biblioteket
+          </para>
+          <indexterm zone="qt6 balsam-qt6">
+            <primary sortas="b-balsam-qt6">balsam</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="canbusutil-qt6">
+        <term><command>canbustil</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å håndtere vilkårlige CAN bussrammer.
+            Et Controller Area Network (CAN) er en standard for kjøretøybuss
+            for å tillate mikrokontrollere og enheter å kommunisere med hverandre
+            i applikasjoner uten vertsdatamaskin
+          </para>
+          <indexterm zone="qt6 canbusutil-qt6">
+            <primary sortas="b-canbusutil-qt6">canbusutil</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="designer-qt6">
+        <term><command>designer</command></term>
+        <listitem>
+          <para>
+            er en fullverdig GUI bygger. Det inkluderer
+            kraftige funksjoner som forhåndsvisningsmodus, automatisk skjermelement
+            stil, støtte for egendefinerte skjermelementer og en avansert
+            eiendomsredigerer
+          </para>
+          <indexterm zone="qt6 designer-qt6">
+            <primary sortas="b-designer-qt6">designer</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lconvert-qt6">
+        <term><command>lconvert</command></term>
+        <listitem>
+          <para>
+            er en del av Qt6s Linguist verktøykjede. Den kan brukes som et
+            frittstående verktøy for å konvertere og filtrere oversettelsesdatafiler
+          </para>
+          <indexterm zone="qt6 lconvert-qt6">
+            <primary sortas="b-lconvert-qt6">lconvert</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="linguist-qt6">
+        <term><command>linguist</command></term>
+        <listitem>
+          <para>
+            gir støtte for å oversette applikasjoner til
+            lokale språk
+          </para>
+          <indexterm zone="qt6 linguist-qt6">
+            <primary sortas="b-linguist-qt6">linguist</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lrelease-qt6">
+        <term><command>lrelease</command></term>
+        <listitem>
+          <para>
+            er et enkelt kommandolinjeverktøy. Den leser XML basert oversettelse
+            fil i TS format og produserer meldingsfiler som brukes av
+            applikasjoner
+          </para>
+          <indexterm zone="qt6 lrelease-qt6">
+            <primary sortas="b-lrelease-qt6">lrelease</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lupdate-qt6">
+        <term><command>lupdate</command></term>
+        <listitem>
+          <para>
+            finner oversettelige
+            strenger i den angitte kilden, deklarasjonen og Qt Designer
+            grensesnittfiler, og lagrer de utpakkede meldingene i
+            oversettelsesfiler som skal behandles av lrelease
+          </para>
+          <indexterm zone="qt6 lupdate-qt6">
+            <primary sortas="b-lupdate-qt6">lupdate</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="meshdebug-qt6">
+        <term><command>meshdebug</command></term>
+        <listitem>
+          <para>
+            viser informasjon om qtquick-3d mesh filer
+          </para>
+          <indexterm zone="qt6 meshdebug-qt6">
+            <primary sortas="b-meshdebug-qt6">meshdebug</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="pixeltool-qt6">
+        <term><command>pixeltool</command></term>
+        <listitem>
+          <para>
+            er en skrivebordsforstørrelsesglass og mens du beveger musen rundt
+            skjermen vil den vise det forstørrede innholdet i vinduet
+          </para>
+          <indexterm zone="qt6 pixeltool-qt6">
+            <primary sortas="b-pixeltool-qt6">pixeltool</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdbus-qt6">
+        <term><command>qdbus</command></term>
+        <listitem>
+          <para>
+            viser tilgjengelige tjenester, objektbaner, metoder, signaler og
+            egenskapene til objekter på en buss
+          </para>
+          <indexterm zone="qt6 qdbus-qt6">
+            <primary sortas="b-qdbus-qt6">qdbus</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdbuscpp2xml-qt6">
+        <term><command>qdbuscpp2xml</command></term>
+        <listitem>
+          <para>
+            tar en C++ kildefil og genererer en D-Bus XML definisjon
+            av grensesnittet
+          </para>
+          <indexterm zone="qt6 qdbuscpp2xml-qt6">
+            <primary sortas="b-qdbuscpp2xml-qt6">qdbuscpp2xml</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdbusviewer-qt6">
+        <term><command>qdbusviewer</command></term>
+        <listitem>
+          <para>
+            er en grafisk D-Bus leser
+          </para>
+          <indexterm zone="qt6 qdbusviewer-qt6">
+            <primary sortas="b-qdbusviewer-qt6">qdbusviewer</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdbusxml2cpp-qt6">
+        <term><command>qdbusxml2cpp</command></term>
+        <listitem>
+          <para>
+            er et verktøy som kan brukes til å analysere grensesnittbeskrivelser
+            og produsere statisk kode som representerer disse grensesnittene,
+          </para>
+          <indexterm zone="qt6 qdbusxml2cpp-qt6">
+            <primary sortas="b-qdbusxml2cpp-qt6">qdbusxml2cpp</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdistancefieldgenerator-qt6">
+        <term><command>qdistancefieldgenerator</command></term>
+        <listitem>
+          <para>
+            lar en fontbuffer forhåndsgenereres for at Text.QtRendering skal øke hastigheten
+            oppstart av en applikasjon hvis brukergrensesnittet har mye tekst,
+            eller flere fonter, eller en stor mengde distinkte tegn, f.eks. i
+            CJK skrivesystemer
+          </para>
+          <indexterm zone="qt6 qdistancefieldgenerator-qt6">
+            <primary sortas="b-qdistancefieldgenerator-qt6">qdistancefieldgenerator</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdoc-qt6">
+        <term><command>qdoc</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes av <application>Qt</application> Utviklere for å
+            generere dokumentasjon for programvareprosjekter
+          </para>
+          <indexterm zone="qt6 qdoc-qt6">
+            <primary sortas="b-qdoc-qt6">qdoc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmake-qt6">
+        <term><command>qmake</command></term>
+        <listitem>
+          <para>
+            bruker informasjon som er lagret i prosjektfiler til
+            bestemme hva som skal gå i makefilene det
+            genererer
+          </para>
+          <indexterm zone="qt6 qmake-qt6">
+            <primary sortas="b-qmake-qt6">qmake</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="qml-qt6">
+        <term><command>qml</command></term>
+        <listitem>
+          <para>
+            kjører en QML fil
+          </para>
+          <indexterm zone="qt6 qml-qt6">
+            <primary sortas="b-qml-qt6">qml</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="qmleasing-qt6">
+        <term><command>qmleasing</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å definere lettelseskurvene ved hjelp av en
+            interaktiv kurveredigerer
+          </para>
+          <indexterm zone="qt6 qmleasing-qt6">
+            <primary sortas="b-qmleasing-qt6">qmleasing</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlformat-qt6">
+        <term><command>qmlformat</command></term>
+        <listitem>
+          <para>
+            formaterer QML filer i henhold til QML kodingskonvensjonene
+          </para>
+          <indexterm zone="qt6 qmlformat-qt6">
+            <primary sortas="b-qmlformat-qt6">qmlformat</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmllint-qt6">
+        <term><command>qmllint</command></term>
+        <listitem>
+          <para>
+            er en syntakskontroll for QML filer
+          </para>
+          <indexterm zone="qt6 qmllint-qt6">
+            <primary sortas="b-qmllint-qt6">qmllint</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="qmlplugindump-qt6">
+        <term><command>qmlplugindump</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å lage en qmltypes fil
+          </para>
+          <indexterm zone="qt6 qmlplugindump-qt6">
+            <primary sortas="b-qmlplugindump-qt6">qmlplugindump</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlpreview-qt6">
+        <term><command>qmlpreview</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å analysere QML applikasjoner
+          </para>
+          <indexterm zone="qt6 qmlpreview-qt6">
+            <primary sortas="b-qmlpreviewr-qt6">qmlpreview</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlprofiler-qt6">
+        <term><command>qmlprofiler</command></term>
+        <listitem>
+          <para>
+            er et verktøy som ser på QML og JavaScript filer på disk og
+            oppdaterer applikasjonen live med eventuelle endringer
+          </para>
+          <indexterm zone="qt6 qmlprofiler-qt6">
+            <primary sortas="b-qmlprofiler-qt6">qmlprofiler</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlscene-qt6">
+        <term><command>qmlscene</command></term>
+        <listitem>
+          <para>
+            er et verktøy som laster og viser QML dokumenter selv før
+            applikasjonen er komplett
+          </para>
+          <indexterm zone="qt6 qmlscene-qt6">
+            <primary sortas="b-qmlscene-qt6">qmlscene</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmltestrunner-qt6">
+        <term><command>qmltestrunner</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å lage tester
+          </para>
+          <indexterm zone="qt6 qmltestrunner-qt6">
+            <primary sortas="b-qmltestrunner-qt6">qmltestrunner</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qtdiag-qt6">
+        <term><command>qtdiag</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å rapportere diagnostisk informasjon om Qt og dens
+            miljø
+          </para>
+          <indexterm zone="qt6 qtdiag-qt6">
+            <primary sortas="b-qtdiag-qt6">qtdiag</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qtpaths-qt6">
+        <term><command>qtpaths</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å spørre Qt baneinformasjon
+          </para>
+          <indexterm zone="qt6 qtpaths-qt6">
+            <primary sortas="b-qtpaths-qt6">qtpaths</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qtplugininfo-qt6">
+        <term><command>qtplugininfo</command></term>
+        <listitem>
+          <para>
+            dumper metadata om Qt programtillegg i JSON format
+          </para>
+          <indexterm zone="qt6 qtplugininfo-qt6">
+            <primary sortas="b-qtplugininfo-qt6">qtplugininfo</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

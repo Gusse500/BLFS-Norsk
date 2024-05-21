@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libei-download-http "https://gitlab.freedesktop.org/libinput/libei/-/archive/&libei-version;/libei-&libei-version;.tar.gz">
+  <!ENTITY libei-download-ftp  " ">
+  <!ENTITY libei-md5sum        "39d18e5c56834d0b3e62b1e2af41a7a5">
+  <!ENTITY libei-size          "228 KB">
+  <!ENTITY libei-buildsize     "5.2 MB">
+  <!ENTITY libei-time          "mindre enn 0.1 SBU">
+]>
+
+<sect1 id="libei" xreflabel="libei-&libei-version;">
+  <?dbhtml filename="libei.html"?>
+
+  <title>libei-&libei-version;</title>
+
+  <indexterm zone="libei">
+    <primary sortas="a-libei">libei</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libei</title>
+
+    <para>
+      <application>libei</application> pakken inneholder et sett med biblioteker
+      for håndtering av emulerte inndataer. Den er først og fremst rettet mot Wayland stakken.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libei-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&libei-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libei-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libei-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libei-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libei-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libei Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="attrs"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <phrase revision="sysv"><xref linkend="elogind"/>,</phrase>
+      <xref linkend="libevdev"/>,
+      <xref linkend="libxkbcommon"/>,
+      <xref linkend="libxml2"/>, og
+      <ulink url="https://github.com/nemequ/munit">munit</ulink>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libei</title>
+
+    <para>
+      Installer <application>libei</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release -Dtests=disabled .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Denne pakken kommer med en testpakke, men den krever en ekstern
+      avhengighet. Hvis du har
+      <ulink url="https://github.com/nemequ/munit">munit</ulink> installert og
+      ønsker å kjøre testpakken, kjør følgende kommandoer:
+    </para>
+
+<screen remap="test"><userinput>meson configure -Dtests=enabled .. &amp;&amp;
+ninja test</userinput></screen>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-Dtests=disabled</parameter>: Denne bryteren unngår en avhengighet
+      av <ulink url="https://github.com/nemequ/munit">munit</ulink>. Fjern denne
+      bryteren hvis du har <application>munit</application> installert og ønsker å
+      kjøre testpakken.
+    </para>
+    
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libei.so,
+          libeis.so, og
+          liboeffis.so
+        </seg>
+        <seg>
+          /usr/include/libei-1.0
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libei-lib">
+        <term><filename class="libraryfile">libei.so</filename></term>
+        <listitem>
+          <para>
+            gir en klientsideimplementering for håndtering av Emulert inndata
+          </para>
+          <indexterm zone="libei libei-lib">
+            <primary sortas="c-libei">libei.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry id="libeis">
+        <term><filename class="libraryfile">libeis.so</filename></term>
+        <listitem>
+          <para>
+            gir en implementering på serversiden for håndtering av Emulert inndata
+          </para>
+          <indexterm zone="libei libeis">
+            <primary sortas="c-libeis">libeis.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry id="liboffis">
+        <term><filename class="libraryfile">liboffis</filename></term>
+        <listitem>
+          <para>
+            tilbyr DBus-kommunikasjonstjenester mellom libei og XDG
+            RemoteDesktop portal
+          </para>
+          <indexterm zone="libei liboffis">
+            <primary sortas="c-liboffis">liboffis.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
