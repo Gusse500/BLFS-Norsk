@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libppd-download-http
+  "https://github.com/OpenPrinting/libppd/releases/download/&libppd-version;/libppd-&libppd-version;.tar.xz">
+  <!ENTITY libppd-download-ftp  " ">
+  <!ENTITY libppd-md5sum        "ab889cbcdaa23689d9a425769f208da9">
+  <!ENTITY libppd-size          "567 KB">
+  <!ENTITY libppd-buildsize     "13 MB (med tester)">
+  <!ENTITY libppd-time          "mindre enn 0.1 SBU (Bruker parallellisme=4; med tester)">
+]>
+
+<sect1 id="libppd" xreflabel="libppd-&libppd-version;">
+  <?dbhtml filename="libppd.html"?>
+
+
+  <title>libppd-&libppd-version;</title>
+
+  <indexterm zone="libppd">
+    <primary sortas="a-libppd">libppd</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libppd</title>
+
+    <para>
+      <application>libppd</application> biblioteket inneholder
+      funksjoner for håndtering av eldre skrivere ved hjelp av PPD beskrivelsesfiler.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libppd-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&libppd-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libppd-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libppd-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libppd-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libppd-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libppd Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="libcupsfilters"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libppd</title>
+
+    <para>
+      Installer <application>libppd</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr                   \
+            --disable-static                \
+            --with-cups-rundir=/run/cups    \
+            --enable-ppdc-utils             \
+            --docdir=/usr/share/doc/libppd-&libppd-version; &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted <command>make check</command>.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+    <para>
+      <parameter>--with-cups-rundir=/run/cups</parameter>:
+      Definerer mappen som inneholder forbigående utskriftsdata. Standar
+      <filename class="directory">/var/run/cups</filename> er foreldet.
+    </para>
+
+    <para>
+      <parameter>--enable-ppdc-utils</parameter>:
+      Lar byggingsverktøy manipulere <emphasis>.ppd</emphasis> filer.
+      <!-- This is not required until cups v3 is out, since those utilities
+      are also installed by cups v2. But since cups v3 should be out before
+      our next release, I put it here. Pierre -->
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          ppdc,
+          ppdhtml,
+          ppdi,
+          ppdmerge, og
+          ppdo
+        </seg>
+        <seg>
+          libppd.so
+        </seg>
+        <seg>
+          /usr/include/ppd,
+          /usr/share/ppdc, og
+          /usr/share/doc/libppd-&libppd-version;
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libppd-ppdc">
+        <term><command>ppdc</command></term>
+        <listitem>
+          <para>
+            kompilerer PPDC kildefiler til én eller flere PPD filer
+          </para>
+          <indexterm zone="libppd libppd-ppdc">
+            <primary sortas="b-ppdc">ppdc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libppd-ppdhtml">
+        <term><command>ppdhtml</command></term>
+        <listitem>
+          <para>
+            leser en driverinformasjonsfil og lager et HTML sammendragside
+            som viser alle driverne i en fil og
+            støttede alternativer
+          </para>
+          <indexterm zone="libppd libppd-ppdhtml">
+            <primary sortas="b-ppdhtml">ppdhtml</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libppd-ppdi">
+        <term><command>ppdi</command></term>
+        <listitem>
+          <para>
+            importerer en eller flere PPD filer til en PPD kompilatorkildefil
+          </para>
+          <indexterm zone="libppd libppd-ppdi">
+            <primary sortas="b-ppdi">ppdi</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libppd-ppdmerge">
+        <term><command>ppdmerge</command></term>
+        <listitem>
+          <para>
+            slår sammen to eller flere PPD filer til en enkel flerspråklig
+            PPD fil
+          </para>
+          <indexterm zone="libppd libppd-ppdmerge">
+            <primary sortas="b-ppdmerge">ppdmerge</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libppd-ppdpo">
+        <term><command>ppdpo</command></term>
+        <listitem>
+          <para>
+            trekker ut UI strenger fra PPDC kildefiler og
+            oppdaterer enten en GNU gettext eller Mac OS X strenger
+            formatmeldings katalogkildefil for oversettelse
+          </para>
+          <indexterm zone="libppd libppd-ppdpo">
+            <primary sortas="b-ppdpo">ppdpo</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libppd-lib">
+        <term><filename class="libraryfile">libppd.so</filename></term>
+        <listitem>
+          <para>
+            inneholder API funksjoner for manipulering av <emphasis>.ppd</emphasis>
+            filer
+          </para>
+          <indexterm zone="libppd libppd-lib">
+            <primary sortas="c-libppd">libppd.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
