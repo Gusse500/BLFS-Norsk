@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY xdg-desktop-portal-download-http "https://github.com/flatpak/xdg-desktop-portal/releases/download/&xdg-desktop-portal-version;/xdg-desktop-portal-&xdg-desktop-portal-version;.tar.xz">
+  <!ENTITY xdg-desktop-portal-download-ftp  " ">
+  <!ENTITY xdg-desktop-portal-md5sum        "20e0b28c1528e57b13cc236ba7840e03">
+  <!ENTITY xdg-desktop-portal-size          "683 KB">
+  <!ENTITY xdg-desktop-portal-buildsize     "51 MB (med tester)">
+  <!ENTITY xdg-desktop-portal-time          "0.1 SBU (legg til 0,4 SBU for tester; med parallellitet=4)">
+]>
+
+<sect1 id="xdg-desktop-portal" xreflabel="xdg-desktop-portal-&xdg-desktop-portal-version;">
+  <?dbhtml filename="xdg-desktop-portal.html"?>
+
+  <title>xdg-desktop-portal-&xdg-desktop-portal-version;</title>
+
+  <indexterm zone="xdg-desktop-portal">
+    <primary sortas="a-xdg-desktop-portal">xdg-desktop-portal</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til xdg-desktop-portal</title>
+
+    <para>
+      <application>xdg-desktop-portal</application> er en D-Bus tjeneste som
+      lar programmer samhandle med skrivebordet på en sikker måte. Flere
+      aspekter ved skrivebordsinteraksjon, som filvelger, skrivebordsstil, etc
+      er implementert i forskjellige D-Bus APIer, kjent som
+      <emphasis>portals</emphasis>. Sandkasse
+      applikasjoner drar mest nytte av denne tjenesten siden de ikke trenger
+      spesielle tillatelser for å bruke portal APIene, men alle applikasjoner kan bruke
+      den. <application>xdg-desktop-portal</application> ivaretar mange
+      ressurser og funksjoner med et brukerkontrollert tillatelsessystem. Denne
+      tjenesten trenger et bakstykke som implementerer skrivebordsspesifikke portalgrensesnitt.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&xdg-desktop-portal-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&xdg-desktop-portal-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &xdg-desktop-portal-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &xdg-desktop-portal-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &xdg-desktop-portal-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &xdg-desktop-portal-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">xdg-desktop-portal Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="fuse3"/>,
+      <xref linkend="gdk-pixbuf"/>,
+      <xref linkend="json-glib"/>,
+      <xref linkend="pipewire"/>, og
+      <xref role="runtime" linkend="dbus"/> (ved kjøretid).
+      Videre er det nødvendig med et bakstykke ved kjøretid for at denne pakken skal være
+      nyttig, enten
+      <xref role="runtime" linkend="xdg-desktop-portal-gtk"/> eller
+      <xref role="nodep" linkend="xdg-desktop-portal-gnome"/> eller
+      <xref role="nodep" linkend="xdg-desktop-portal-lxqt"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="bubblewrap"/> og
+      <xref linkend="docutils"/> (for å bygge manualsidene)
+    </para>
+
+    <note>
+      <para>
+        Selv om det er en mulighet for å bygge pakken
+        uten <application>bubblewrap</application>, oppstrøms
+        utviklere og LFS redaktører anbefaler på det sterkeste å la være
+        å bruke denne muligheten, det vil skape et stort
+        sikkerhetshull.
+      </para>
+    </note>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="geoclue2"/> (for <quote>lokasjons</quote> portal), og
+      <xref linkend="pytest"/> med
+      <xref linkend="libportal"/> og
+      <xref linkend="python-dbusmock"/> (for å kjøre tester)
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri (for å bygge
+      dokumentasjonen)</bridgehead>
+    <para role="optional">
+      <xref linkend="sphinx"/> med
+      <ulink url="https://pypi.org/project/sphinxext-opengraph/">sphinxext.opengraph</ulink>,
+      <ulink url="https://pypi.org/project/sphinx-copybutton/">sphinx_copybutton</ulink>,
+      <ulink url="https://pypi.org/project/furo/">furo</ulink>, and
+      <ulink url="https://github.com/flatpak/flatpak">flatpak</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av xdg-desktop-portal</title>
+
+    <para>
+      Installer <application>xdg-desktop-portal</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Hvis du har installert de nødvendige avhengighetene, kan du teste resultatene
+      ved å kjøre <command>ninja test</command>.<phrase revision="systemd">
+      Seks tester er kjent for å mislykkes hvis du ikke bruker
+      <xref linkend="gnome-terminal"/> og er i GNOME.</phrase>
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para revision="sysv">
+      Fjern systemd filer som er ubrukelige (som &root; bruker):
+    </para>
+
+<screen role="root" revision="sysv"><userinput>rm -rvf /usr/lib/systemd</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere xdg-desktop-portal</title>
+
+    <sect3 id="xdg-desktop-portal-config">
+      <title>Konfigurasjonsfiler</title>
+      <para>
+        De viktigste konfigurasjonsfilene er
+        <filename>~/.config/xdg-desktop-portal/portals.conf</filename>,
+        <filename>/etc/xdg-desktop-portal/portals.conf</filename>, og
+        <filename>/usr/share/xdg-desktop-portal/portals.conf</filename>.
+        Flere andre steder kan søkes etter konfigurasjonsfiler. Se
+        <ulink role='man' url='&man;portals.conf.5'>portals.conf(5)</ulink>.
+      </para>
+
+      <indexterm zone="xdg-desktop-portal xdg-desktop-portal-config">
+        <primary sortas="e-AA.config-xdg-desktop-portal-portals.conf">~/.config/xdg-desktop-portal/portals.conf</primary>
+      </indexterm>
+
+      <indexterm zone="xdg-desktop-portal xdg-desktop-portal-config">
+        <primary
+        sortas="e-etc-xdg-desktop-portal-portals.conf">/etc/xdg-desktop-portal/portals.conf</primary>
+      </indexterm>
+
+      <indexterm zone="xdg-desktop-portal xdg-desktop-portal-config">
+        <primary
+        sortas="e-usr-share-xdg-desktop-portal-portals.conf">/usr/share/xdg-desktop-portal/portals.conf</primary>
+      </indexterm>
+    </sect3>
+
+    <sect3><title>Konfigurasjonsinformasjon</title>
+
+      <para>
+        De ulike konfigurasjonsfilene brukes til å velge bakstykke
+        avhengiget av ulike forhold. Se
+        <ulink role='man' url='&man;portals.conf.5'>portals.conf(5)</ulink>
+        for detaljer.
+      </para>
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert(e) Bibliotek(er)</segtitle>
+      <segtitle>Installert(e) Mappe(r)</segtitle>
+
+      <seglistitem>
+        <seg>
+          flere nisser i /usr/libexec
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+  </sect2>
+</sect1>

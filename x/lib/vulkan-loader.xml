@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY vulkan-loader-download-http "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v&vulkan-loader-version;/Vulkan-Loader-&vulkan-loader-version;.tar.gz">
+  <!ENTITY vulkan-loader-download-ftp  " ">
+  <!ENTITY vulkan-loader-md5sum        "a2ec480f108abfcd0ad50df3883926c6">
+  <!ENTITY vulkan-loader-size          "1.6 MB">
+  <!ENTITY vulkan-loader-buildsize     "9.7 MB">
+  <!ENTITY vulkan-loader-time          "0.1 SBU">
+]>
+
+<sect1 id="vulkan-loader" xreflabel="Vulkan-Loader-&vulkan-loader-version;">
+  <?dbhtml filename="vulkan-loader.html"?>
+
+  <title>Vulkan-Loader-&vulkan-loader-version;</title>
+
+  <indexterm zone="vulkan-loader">
+    <primary sortas="a-vulkan-loader">Vulkan-Loader</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Vulkan-Loader</title>
+
+    <para>
+      <application>Vulkan-Loader</application> pakken inneholder et bibliotek
+      som gir Vulkan API og gir kjernestøtte for
+      grafikkdrivere for Vulkan.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&vulkan-loader-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&vulkan-loader-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &vulkan-loader-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &vulkan-loader-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &vulkan-loader-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &vulkan-loader-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Vulkan-loader Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="cmake"/>,
+      <xref linkend="vulkan-headers"/>,
+      <xref linkend="wayland"/>, og
+      <xref linkend="xorg7-lib"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt (Kjøretid)</bridgehead>
+    <para role="runtime">
+      <xref linkend="mesa"/> (for Vulkan drivere)
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Vulkan-Loader</title>
+
+    <note>
+      <para>
+        Hvis denne pakken blir installert på et system der Mesa allerede er
+        installert tidligere, vennligst gjenoppbygg <xref linkend="mesa"/> etter
+        denne pakken for å installere Vulkan grafikkdrivere.
+      </para>
+    </note>
+
+    <para>
+      Installer <application>Vulkan-Loader</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr       \
+      -DCMAKE_BUILD_TYPE=Release        \
+      -DCMAKE_SKIP_RPATH=TRUE           \
+      -G Ninja .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en fungerende testpakke.
+      <!-- For å kjøre testene må vi følge en kompleks prosess for å laste ned en
+      tilpasset kopi av googletest.-->
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libvulkan.so
+        </seg>
+        <seg>
+          /usr/lib/cmake/VulkanLoader
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libvulkan">
+        <term><filename class="libraryfile">libvulkan.so</filename></term>
+        <listitem>
+          <para>
+            gir Vulkan API og kjernestøtte for grafikkdrivere
+          </para>
+          <indexterm zone="vulkan-loader libvulkan">
+            <primary sortas="c-libvulkan">libvulkan.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
