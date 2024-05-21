@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY glslang-download-http "https://github.com/KhronosGroup/glslang/archive/refs/tags/&glslang-version;/glslang-&glslang-version;.tar.gz">
+  <!ENTITY glslang-download-ftp  " ">
+  <!ENTITY glslang-md5sum        "bfbf7fb0d18d00306ef229f289a8d593">
+  <!ENTITY glslang-size          "3.6 MB">
+  <!ENTITY glslang-buildsize     "161 MB (med tester">
+  <!ENTITY glslang-time          "0.2 SBU (med parallellitet=8; med tester)">
+]>
+
+<sect1 id="glslang" xreflabel="Glslang-&glslang-version;">
+  <?dbhtml filename="glslang.html"?>
+
+  <title>Glslang-&glslang-version;</title>
+
+  <indexterm zone="glslang">
+    <primary sortas="a-glslang">Glslang</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Glslang</title>
+
+    <para>
+      <application>Glslang</application> Pakken inneholder et grensesnitt og
+      en validator for OpenGL, OpenGL ES og Vulkan shaders.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&glslang-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&glslang-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &glslang-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &glslang-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &glslang-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &glslang-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Glslang Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="cmake"/> og
+      <xref linkend="spirv-tools"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Glslang</title>
+
+    <para>
+      Installer <application>Glslang</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr     \
+      -DCMAKE_BUILD_TYPE=Release      \
+      -DALLOW_EXTERNAL_SPIRV_TOOLS=ON \
+      -DBUILD_SHARED_LIBS=ON          \
+      -DGLSLANG_TESTS=ON              \
+      -G Ninja .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja test</command>.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-DALLOW_EXTERNAL_SPIRV_TOOLS=ON</parameter>: Denne bryteren tillater
+      byggesystemet å bruke den systeminstallerte kopien av
+      <xref linkend="spirv-tools" role="nodep"/>, i stedet for å laste ned og
+      installerer sin egen kopi.
+    </para>
+
+    <para>
+      <parameter>-DBUILD_SHARED_LIBS=ON</parameter>: Denne bryteren bygger delte
+      versjoner av bibliotekene, og installerer ikke statiske versjoner av dem.
+    </para>
+
+    <para>
+      <parameter>-DGLSLANG_TESTS=ON</parameter>: Denne bryteren bygger
+      tester for pakken.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          glslang,
+          glslang-validator (symbolkobling til glslang), og
+          spirv-remap
+        </seg>
+        <seg>
+          libglslang.so,
+          libglslang-default-resource-limits.so,
+          libSPIRV.so, og
+          libSPVRemapper.so
+        </seg>
+        <seg>
+          /usr/include/glslang og
+          /usr/lib/cmake/glslang
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="glslang-prog">
+        <term><command>glslang</command></term>
+        <listitem>
+          <para>
+            gir et grensesnitt og en validator for OpenGL, OpenGL ES og
+            Vulkan shaders
+          </para>
+          <indexterm zone="glslang glslang-prog">
+            <primary sortas="b-glslang">glslang</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libglslang">
+        <term><filename class="libraryfile">libglslang.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som gir et grensesnitt og en validator for
+            OpenGL, OpenGL ES og Vulkan shaders til andre programmer
+          </para>
+          <indexterm zone="glslang libglslang">
+            <primary sortas="c-libglslang">libglslang.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+<!-- Library removed in glslang-14.0.0
+      <varlistentry id="libHLSL">
+        <term><filename class="libraryfile">libHLSL.so</filename></term>
+        <listitem>
+          <para>
+            gir et grensesnitt for shaders som er i HLSL format
+          </para>
+          <indexterm zone="glslang libHLSL">
+            <primary sortas="c-libHLSL">libHLSL.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+-->
+
+      <varlistentry id="libSPIRV">
+        <term><filename class="libraryfile">libSPIRV.so</filename></term>
+        <listitem>
+          <para>
+            gir et grensesnitt og en generator for SPIR-V binærfiler
+          </para>
+          <indexterm zone="glslang libSPIRV">
+            <primary sortas="c-libSPIRV">libSPIRV.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libSPVRemapper">
+        <term><filename class="libraryfile">libSPVRemapper.so</filename></term>
+        <listitem>
+          <para>
+            gir en remapper for SPIR-V binærfiler
+          </para>
+          <indexterm zone="glslang libSPVRemapper">
+            <primary sortas="c-libSPVRemapper">libSPVRemapper.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </sect2>
+</sect1>
