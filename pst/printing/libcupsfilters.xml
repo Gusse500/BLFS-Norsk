@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libcupsfilters-download-http
+  "https://github.com/OpenPrinting/libcupsfilters/releases/download/&libcupsfilters-version;/libcupsfilters-&libcupsfilters-version;.tar.xz">
+  <!ENTITY libcupsfilters-download-ftp  " ">
+  <!ENTITY libcupsfilters-md5sum        "267e569145bd20615fa18ae65ea6f870">
+  <!ENTITY libcupsfilters-size          "1.2 MB">
+  <!ENTITY libcupsfilters-buildsize     "38 MB (med tester)">
+  <!ENTITY libcupsfilters-time          "0.1 SBU (Bruker parallellisme=4; med tester)">
+]>
+
+<sect1 id="libcupsfilters" xreflabel="libcupsfilters-&libcupsfilters-version;">
+  <?dbhtml filename="libcupsfilters.html"?>
+
+
+  <title>libcupsfilters-&libcupsfilters-version;</title>
+
+  <indexterm zone="libcupsfilters">
+    <primary sortas="a-libcupsfilters">libcupsfilters</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libcupsfilters</title>
+
+    <para>
+      <application>libcupsfilters</application> biblioteket inneholder
+      filterfunksjoner for dataformatkonverteringsoppgavene som trengs i
+      Skriverapplikasjoner. Den inneholder også flere API funksjoner for
+      å utvikle skriverdrivere/skriverapplikasjoner.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libcupsfilters-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&libcupsfilters-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libcupsfilters-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libcupsfilters-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libcupsfilters-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libcupsfilters-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+    <!--
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/libcupsfilters-&libcupsfilters-version;-security_fix-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+    -->
+    <bridgehead renderas="sect3">libcupsfilters Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="cups"/>,
+      <xref linkend="glib2"/>,
+      <xref linkend="gs"/> eller <xref linkend="mupdf"/>,
+      <xref linkend="lcms2"/>,
+      <xref linkend="poppler"/>, og
+      <xref linkend="qpdf"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="dejavu-fonts"/> (byggingen mislykkes hvis de ikke er
+      installert, selv om de bare er nødvendige for testene),
+      <xref linkend="libexif"/>,
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libpng"/>, og
+      <xref linkend="libtiff"/>
+    </para>
+    <!--
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="avahi"/> (kreves for å bygge DNSSD bakstykket av
+      <command>cups-browsed</command> nissen, som er nødvendig for drifte
+      noen nettverksskrivere),
+      <xref linkend="openldap"/>,
+      <xref linkend="php"/> (bruken av dette kan være ødelagt),
+      <ulink url="https://liblouis.github.io/downloads/">Liblouis (Braille)</ulink>, og
+      <ulink url="https://liblouis.github.io/downloads/">Liblouisutdml (Braille)</ulink>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfrie skriverdrivere (kjøretid)</bridgehead>
+    <para role="optional">
+      <xref role="runtime" linkend="gutenprint"/> (for støttede skrivere),
+      eller andre skriverdrivere, for eksempel <ulink role="runtime"
+      url="https://sourceforge.net/projects/hplip/files/hplip/">hplip</ulink>
+    </para>
+    -->
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libcupsfilters</title>
+
+    <!--
+    <para>
+      Først må du fikse et sikkerhetsproblem som kan tillate ekstern kode
+      kjøring med 'beh' skriverens bakstykke:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../libcupsfilters-&libcupsfilters-version;-security_fix-1.patch</userinput></screen>
+-->
+    <para>
+      Installer <application>libcupsfilters</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr                   \
+            --disable-static                \
+            --docdir=/usr/share/doc/libcupsfilters-&libcupsfilters-version; &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted <command>make check</command>. DejaVu fonter
+      trengs for testene.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+    <para>
+      <option>--with-test-font-path=<replaceable>VALUE</replaceable></option>:
+      Hvis du ønsker å kjøre testene, men
+      du har ikke standard
+      <filename>/usr/share/fonts/dejavu/DejaVuSans.ttf</filename> bruk denne
+      bryteren for å angi hvor <filename>DejaVuSans.ttf</filename> (eller kanskje
+      en annen tekst TTF font - ikke testet) er plassert.
+    </para>
+
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libcupsfilters.so
+        </seg>
+        <seg>
+          /usr/include/cupsfilters,
+          /usr/share/cups/{banners,charsets,data}, og
+          /usr/share/doc/libcupsfilters-&libcupsfilters-version;
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libcupsfilters-lib">
+        <term><filename class="libraryfile">libcupsfilters.so</filename></term>
+        <listitem>
+          <para>
+            inneholder CUPS filtre API funksjoner
+          </para>
+          <indexterm zone="libcupsfilters libcupsfilters-lib">
+            <primary sortas="c-libcupsfilters">libcupsfilters.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

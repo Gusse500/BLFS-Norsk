@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY cups-browsed-download-http
+  "https://github.com/OpenPrinting/cups-browsed/releases/download/&cups-browsed-version;/cups-browsed-&cups-browsed-version;.tar.xz">
+  <!ENTITY cups-browsed-download-ftp  " ">
+  <!ENTITY cups-browsed-md5sum        "1f8dc0c5a08d8a410df0713c5adbaee9">
+  <!ENTITY cups-browsed-size          "416 KB">
+  <!ENTITY cups-browsed-buildsize     "6.3 MB">
+  <!ENTITY cups-browsed-time          "mindre enn 0.1 SBU (Bruker parallellisme=4)">
+]>
+
+<sect1 id="cups-browsed" xreflabel="cups-browsed-&cups-browsed-version;">
+  <?dbhtml filename="cups-browsed.html"?>
+
+
+  <title>cups-browsed-&cups-browsed-version;</title>
+
+  <indexterm zone="cups-browsed">
+    <primary sortas="a-cups-browsed">cups-browsed</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til cups-browsed</title>
+
+    <para>
+      <application>cups-browsed</application> nissen er brukt for å
+      bla gjennom nettverket for eksterne CUPS køer og IPP nettverksskrivere
+      og automatisk opprette lokale køer som peker til dem.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&cups-browsed-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&cups-browsed-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &cups-browsed-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &cups-browsed-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &cups-browsed-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &cups-browsed-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">cups-browsed Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="avahi"/>,
+      <xref linkend="libcupsfilters"/> og
+      <xref linkend="libppd"/>
+    </para>
+
+<!-- as of 2.0.0 \-\-disable-avahi is still accepted by configure,
+  but make fails.https://github.com/OpenPrinting/cups-browsed/issues/21
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="avahi"/>
+    </para>-->
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="openldap"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av cups-browsed</title>
+
+    <para>
+      Installer <application>cups-browsed</application> ved å kjøre
+      følgende kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr                   \
+            --with-cups-rundir=/run/cups    \
+            --without-rcdir                 \
+            --disable-static                \
+            --docdir=/usr/share/doc/cups-browsed-&cups-browsed-version; &amp;&amp;
+make</userinput></screen>
+<!-- Tests seem to hang, not sure why
+    <para>
+      For å teste resultatene, utsted <command>make check</command>.
+    </para>
+    -->
+    <para>
+      Denne pakken kommer ikke med en funksjonell testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <para revision="systemd">
+      Installer systemd enheten ved å kjøre følgende kommando som
+      <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root" revision="systemd"><userinput>install -v -m644 daemon/cups-browsed.service /lib/systemd/system/cups-browsed.service</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+    <para>
+      <parameter>--with-cups-rundir=/run/cups</parameter>: Definerer
+      mappen som inneholder forbigående utskriftsdata. Standaren
+      <filename class="directory">/var/run/cups</filename> er foreldet.
+    </para>
+
+    <para>
+      <parameter>--without-rcdir</parameter>: Denne bryteren deaktiverer
+      installasjon av det medfølgende oppstartsskriptet som ikke er kompatibelt med BLFS.
+    </para>
+
+  </sect2>
+
+<!-- TODO: Write a bootscript for cups-browsed -->
+
+  <sect2 role="configuration" revision="systemd">
+    <title>Konfigurere cups-browsed</title>
+
+    <sect3 id="cups-browsed-init">
+      <title>Systemd Enhet</title>
+
+      <para>
+        For å starte <command>cups-browsed</command> nissen ved oppstart, aktiver
+        den tidligere installerte systemd enheten ved å kjøre følgende kommando
+        som <systemitem class="username">root</systemitem> bruker:
+      </para>
+
+      <indexterm zone="cups-browsed cups-browsed-init">
+        <primary sortas="f-cups-browsed">cups-browsed</primary>
+      </indexterm>
+
+<screen role="root"><userinput>systemctl enable cups-browsed</userinput></screen>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          cups-browsed
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="cups-browsed-prog">
+        <term><command>cups-browsed</command></term>
+        <listitem>
+          <para>
+            er en nisse for å bla gjennom Bonjour og CUPS sendingene til
+            delte, eksterne CUPS skrivere
+          </para>
+          <indexterm zone="cups-browsed cups-browsed-prog">
+            <primary sortas="b-cups-browsed">cups-browsed</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
