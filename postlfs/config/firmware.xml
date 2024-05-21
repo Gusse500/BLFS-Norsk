@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
+  <!ENTITY linux-firmware-git "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git">
 ]>
 
 <sect1 id="postlfs-firmware" xreflabel="Om Fastvare">
@@ -16,37 +17,41 @@
   </indexterm>
 
   <para>
-    På noen nyere PC-er kan det være nødvendig, eller ønskelig, å laste fastvare
-    for å få dem til å fungere på sitt beste. Det er en mappe, <filename
+    PÃ¥ noen nyere PC-er kan det vÃ¦re nÃ¸dvendig, eller Ã¸nskelig, Ã¥ laste fastvare
+    for Ã¥ fÃ¥ dem til Ã¥ fungere pÃ¥ sitt beste. Det er en mappe, <filename
     class="directory">/lib/firmware</filename>, hvor kjernen eller
     kjernedrivere ser etter fastvarebilder.
   </para>
 
   <para>
-    For øyeblikket kan det meste av fastvaren finnes på et <userinput>git</userinput>
-    depot: <ulink url=
-      "https://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/"/>.
+    For Ã¸yeblikket kan det meste av fastvaren finnes pÃ¥ et <userinput>git</userinput>
+    depoet som kan vises i nettleseren med URLen
+	<ulink url="&linux-firmware-git;/plain"/>.
     For enkelhets skyld har LFS prosjektet laget et speil, som oppdateres daglig, hvor
-    disse fastvarefilene kan nås via <userinput>wget</userinput> eller en
-    nettleser på <ulink url="&sources-anduin-http;/linux-firmware/"/>.
+    disse fastvarefilene kan nÃ¥s via <userinput>wget</userinput> eller en
+    nettleser pÃ¥ <ulink url="&sources-anduin-http;/linux-firmware/"/>.
   </para>
 
   <para>
-    For å få fastvaren, pek enten en nettleser til en av de ovennevnte
-    depoter og last ned elementet(e) du trenger, eller installer
-    <xref linkend="git"/> og klone det depotet.
+    For Ã¥ fÃ¥ fastvaren, pek enten en nettleser til en av de ovennevnte
+    depoer og last ned varen(e) du trenger. Hvis du vil
+    ha alle disse fastvarefilene (for eksempel distribuerer du systemet
+    pÃ¥ flere maskinvaresystemer), installere <xref linkend="git"/> og klone
+    <ulink url='&linux-firmware-git;'/>, eller Ã¥pne denne URLen i en nettleser og
+    last ned det siste Ã¸yeblikksbildet som er oppfÃ¸rt i <literal>Tag</literal>
+    tabellen.
   </para>
 
   <para>
     For noen annen fastvare, spesielt for Intel mikrokode og visse
-    wifi enheter, den nødvendige fastvaren er ikke tilgjengelig i depotet ovenfor.
-    Noe av dette vil bli behandlet nedenfor, men et søk på Internett etter
-    nødvendig fastvare er noen ganger nødvendig.
+    wifi enheter, den nÃ¸dvendige fastvaren er ikke tilgjengelig i depotet ovenfor.
+    Noe av dette vil bli behandlet nedenfor, men et sÃ¸k pÃ¥ Internett etter
+    nÃ¸dvendig fastvare er noen ganger nÃ¸dvendig.
   </para>
 
   <para>
     Fastvarefiler blir konvensjonelt referert til som blobs fordi du ikke kan
-    bestemme hva de vil gjøre. Merk at fastvaren er distribuert under
+    bestemme hva de vil gjÃ¸re. Merk at fastvaren er distribuert under
     ulike lisenser som ikke tillater demontering eller
     revers-engineering.
   </para>
@@ -58,32 +63,32 @@
   <itemizedlist spacing="compact">
     <listitem>
       <para>
-        Oppdateringer til CPU for å omgå errata, vanligvis referert til som
+        Oppdateringer til CPU for Ã¥ omgÃ¥ errata, vanligvis referert til som
         mikrokode.
       </para>
     </listitem>
     <listitem>
       <para>
-        Firmware for videokontrollere. På x86-maskiner kreves dette for
-        ATI-enheter (Radeon- og AMDGPU-brikker) og kan være nyttige for Intel (Skylake
+        Firmware for videokontrollere. PÃ¥ x86-maskiner kreves dette for
+        ATI-enheter (Radeon- og AMDGPU-brikker) og kan vÃ¦re nyttige for Intel (Skylake
         og senere) og Nvidia (Kepler og senere) GPUer.
       </para>
 
       <para>
-        ATI Radeon- og AMDGPU-enheter krever alle fastvare for å kunne bruke KMS
-        (kjernemodusinnstilling - det foretrukne alternativet) så vel som for Xorg. Til
-        gamle radeon-brikker (før R600), er fastvaren fortsatt i
+        ATI Radeon- og AMDGPU-enheter krever alle fastvare for Ã¥ kunne bruke KMS
+        (kjernemodusinnstilling - det foretrukne alternativet) sÃ¥ vel som for Xorg. Til
+        gamle radeon-brikker (fÃ¸r R600), er fastvaren fortsatt i
          kjernekilden.
       </para>
 
       <para>
         Intel integrerte GPUer fra Skylake og utover kan bruke fastvare for GuC
-        (grafikkmikrokontrolleren), og også for HuC (HEVC/H265
+        (grafikkmikrokontrolleren), og ogsÃ¥ for HuC (HEVC/H265
         mikrokontroller som avlastes til GPUen) og DMC (skjerm
-        Mikrokontroller) for å gi ytterligere laveffekttilstander. GuC og
+        Mikrokontroller) for Ã¥ gi ytterligere laveffekttilstander. GuC og
         HuC har hatt en kontrollert historikk i kjernen og oppdatert firmware
-        kan være deaktivert som standard, avhengig av kjerneversjonen din. Lengre
-        detaljer kan finnes på <ulink
+        kan vÃ¦re deaktivert som standard, avhengig av kjerneversjonen din. Lengre
+        detaljer kan finnes pÃ¥ <ulink
         url="https://01.org/linuxgraphics/downloads/firmware/">01.org</ulink>
         og <ulink
         url="https://wiki.archlinux.org/index.php/intel_graphics">Arch
@@ -92,8 +97,8 @@
 
       <para>
         Nvidia GPUer fra Kepler og utover krever signert fastvare, ellers er
-        nouveau-driveren ikke i stand til å gi maskinvareakselerasjon. Nvidia har
-        nå utgitt firmware opp til Ampere (GeForce30-serien) til linux-firmware.
+        nouveau-driveren ikke i stand til Ã¥ gi maskinvareakselerasjon. Nvidia har
+        nÃ¥ utgitt firmware opp til Ampere (GeForce30-serien) til linux-firmware.
         Merk at raskere klokker enn standard ikke er aktivert
         av den utgitte fastvaren.
       </para>
@@ -102,15 +107,15 @@
       <para>
         Fastvareoppdateringer for kablede nettverksporter. De fleste av dem fungerer til og med
         uten oppdateringene, men de vil nok fungere bedre med
-        den oppdaterte fastvaren. For noen moderne bærbare datamaskiner, fastvare for begge
-        kablet ethernet (f.eks. rtl_nic) og også for bluetooth-enheter (f.eks. qca)
-        er <emphasis>påkrevd</emphasis> før det kablede nettverket kan brukes.
+        den oppdaterte fastvaren. For noen moderne bÃ¦rbare datamaskiner, fastvare for begge
+        kablet ethernet (f.eks. rtl_nic) og ogsÃ¥ for bluetooth-enheter (f.eks. qca)
+        er <emphasis>pÃ¥krevd</emphasis> fÃ¸r det kablede nettverket kan brukes.
       </para>
     </listitem>
     <listitem>
       <para>
-        Fastvare for andre enheter, for eksempel trådløse NICs. Disse enhetene er ikke
-        nødvendug for at PC-en skal starte opp, men trenger fastvaren før disse enhetene
+        Fastvare for andre enheter, for eksempel trÃ¥dlÃ¸se NICs. Disse enhetene er ikke
+        nÃ¸dvendug for at PC-en skal starte opp, men trenger fastvaren fÃ¸r disse enhetene
         kan bli brukt.
       </para>
     </listitem>
@@ -118,9 +123,9 @@
 
   <note>
     <para>
-      Selv om det ikke er nødvendig for å laste inn en fastvareblob, kan følgende
-      verktøy være nyttige for å bestemme, skaffe eller forberede den nødvendige
-      fastvaren for å laste den inn i systemet:
+      Selv om det ikke er nÃ¸dvendig for Ã¥ laste inn en fastvareblob, kan fÃ¸lgende
+      verktÃ¸y vÃ¦re nyttige for Ã¥ bestemme, skaffe eller forberede den nÃ¸dvendige
+      fastvaren for Ã¥ laste den inn i systemet:
       <xref linkend="cpio"/>,
       <xref linkend="git"/>,
       <xref linkend="pciutils"/>, og
@@ -134,64 +139,66 @@
 
     <para>
       Generelt kan mikrokode lastes av BIOS eller UEFI, og det kan bli
-      oppdatert ved å oppgradere til en nyere versjon av disse. På linux kan du også
+      oppdatert ved Ã¥ oppgradere til en nyere versjon av disse. PÃ¥ linux kan du ogsÃ¥
       laste inn mikrokoden fra kjernen hvis du bruker en AMD-familie 10h eller
-      senere prosessor (først introdusert sent i 2007), eller en Intel-prosessor fra
-      1998 og senere (Pentium4, Core, etc), hvis oppdatert mikrokode har vært
-      utgitt. Disse oppdateringene varer bare til maskinen slås av, så
-       de må brukes på hver oppstart.
+      senere prosessor (fÃ¸rst introdusert sent i 2007), eller en Intel-prosessor fra
+      1998 og senere (Pentium4, Core, etc), hvis oppdatert mikrokode har vÃ¦rt
+      utgitt. Disse oppdateringene varer bare til maskinen slÃ¥s av, sÃ¥
+       de mÃ¥ brukes pÃ¥ hver oppstart.
     </para>
 
     <para>
       Intel tilbyr oppdateringer av mikrokoden deres for Skylake og senere
-      prosessorer etter som nye sårbarheter dukker opp, og har tidligere
+      prosessorer etter som nye sÃ¥rbarheter dukker opp, og har tidligere
       gitt oppdateringer for prosessorer fra SandyBridge og utover, selv om de
-      ikke støttes for nye rettelser lenger. Nye versjoner av AMD
-      fastvare er sjeldne og gjelder vanligvis bare for noen få modeller
-      hovedkortprodusenter får AGESA (AMD Generic Encapsulated Software
-       Architecture) oppdateringer for å endre BIOS verdier, f.eks. for å støtte flere
-       minnevarianter, nye sårbarhetsrettinger eller nyere CPUer.
+      ikke stÃ¸ttes for nye rettelser lenger. Nye versjoner av AMD
+      fastvare er sjeldne og gjelder vanligvis bare for noen fÃ¥ modeller
+      hovedkortprodusenter fÃ¥r AGESA (AMD Generic Encapsulated Software
+       Architecture) oppdateringer for Ã¥ endre BIOS verdier, f.eks. for Ã¥ stÃ¸tte flere
+       minnevarianter, nye sÃ¥rbarhetsrettinger eller nyere CPUer.
     </para>
 
     <para>
-      Det var to måter å laste mikrokoden på, beskrevet som "tidlig" og
-      'sent'. Tidlig lasting skjer før brukerområdet er startet, sen
-      lasting skjer etter at brukerområdet har startet. Men sen lasting er
-      kjent for å være problematisk og støttes ikke lenger (se kjerne-commit
+      Det var to mÃ¥ter Ã¥ laste mikrokoden pÃ¥, beskrevet som "tidlig" og
+      'sent'. Tidlig lasting skjer fÃ¸r brukeromrÃ¥det er startet, sen
+      lasting skjer etter at brukeromrÃ¥det har startet. Men sen lasting er
+      kjent for Ã¥ vÃ¦re problematisk og stÃ¸ttes ikke lenger (se kjerne-commit
       <ulink url="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d23d33e">
         x86/microcode: Taint and warn on late loading</ulink>.)  Faktisk tidlig
-      lasting er nødvendig for å omgå en bestemt feil i tidlig Intel
+      lasting er nÃ¸dvendig for Ã¥ omgÃ¥ en bestemt feil i tidlig Intel
       Haswell-prosessorer som hadde TSX aktivert. (Se <ulink url=
       "https://www.anandtech.com/show/8376/intel-disables-tsx-instructions-erratum-found-in-haswell-haswelleep-broadwelly/">
         Intel Disables TSX Instructions: Erratum Found in Haswell,
         Haswell-E/EP, Broadwell-Y</ulink>.)
-      Uten denne oppdateringen kan glibc gjøre feil ting i uvanlig
+      Uten denne oppdateringen kan glibc gjÃ¸re feil ting i uvanlig
       situasjoner.
     </para>
 
     <para>
-      I tidligere versjoner av denne boken, sen lasting av mikrokode for å se om
-      det ble brukt ble anbefalt, etterfulgt av bruk av en initrd for å tvinge
-      tidlig lasting. Men nå som innholdet i Intel mikrokode tarballen
-      er dokumentert, og AMD-mikrokode kan leses av et Python skript til å
-      bestemme hvilke maskiner det dekker, er det ingen reell grunn til å bruke sen
+      I tidligere versjoner av denne boken, sen lasting av mikrokode for Ã¥ se om
+      det ble brukt ble anbefalt, etterfulgt av bruk av en initrd for Ã¥ tvinge
+      tidlig lasting. Men nÃ¥ som innholdet i Intel mikrokode tarballen
+      er dokumentert, og AMD-mikrokode kan leses av et Python skript til Ã¥
+      bestemme hvilke maskiner det dekker, er det ingen reell grunn til Ã¥ bruke sen
       lasting.
     </para>
 
     <para>
-      Det kan fortsatt være mulig å manuelt tvinge sen innlasting av mikrokode.
-      Men det kan forårsake kjernefeil, og du bør ta risikoen selv.
-      Du må rekonfigurere kjernen for begge metodene.
+      Det kan fortsatt vÃ¦re mulig Ã¥ manuelt tvinge sen innlasting av mikrokode.
+      Men det kan forÃ¥rsake kjernefeil, og du bÃ¸r ta risikoen selv.
+      Du mÃ¥ rekonfigurere kjernen for sen lasting, men
+      tidlig lasting stÃ¸ttes alltid av Linux kjerneversjon 6.6
+      eller senere pÃ¥ et x86 (uansett 32-bit eller 64-bit) system.
       Instruksjonene her vil vise deg hvordan du oppretter en initrd for tidlig
-      lasting. Det er også mulig å bygge inn den samme mikrokode bin-filen
+      lasting. Det er ogsÃ¥ mulig Ã¥ bygge inn den samme mikrokode bin-filen
       i kjernen, som tillater tidlig lasting, men krever at kjernen blir
-      kompilert på nytt for å oppdatere mikrokoden.
+      kompilert pÃ¥ nytt for Ã¥ oppdatere mikrokoden.
     </para>
 
     <para>
-      For å bekrefte hvilken(e) prosessor(er) du har (hvis flere enn én, vil de være
+      For Ã¥ bekrefte hvilken(e) prosessor(er) du har (hvis flere enn Ã©n, vil de vÃ¦re
       identisk) se i /proc/cpuinfo. Bestem desimalverdiene til cpuen
-      familie, modell og stepping ved å kjøre følgende kommando (det vil også
+      familie, modell og stepping ved Ã¥ kjÃ¸re fÃ¸lgende kommando (det vil ogsÃ¥
       rapportere gjeldende mikrokodeversjon):
     </para>
 
@@ -200,15 +207,15 @@
     <para>
       Konverter cpu familien, modellen og stepping til par med heksadesimal
       sifre, og husk verdien av <quote>mikrokode</quote> feltet.
-      Du kan nå sjekke om det er en tilgjengelig mikrokode.
+      Du kan nÃ¥ sjekke om det er en tilgjengelig mikrokode.
     </para>
 
     <para>
-      Hvis du oppretter en initrd for å oppdatere fastvare for forskjellige maskiner,
-      som en distro ville gjort, gå ned til 'Tidlig lasting av mikrokode' og cat alle
+      Hvis du oppretter en initrd for Ã¥ oppdatere fastvare for forskjellige maskiner,
+      som en distro ville gjort, gÃ¥ ned til 'Tidlig lasting av mikrokode' og cat alle
       Intel blobs til GenuineIntel.bin eller cat alle AMD blobs til
-      AuthenticAMD.bin. Dette skaper en større initrd - for alle Intel maskiner i
-      20200609 oppdateringen var størrelsen 3,0 MB sammenlignet med typisk 24 KB for en
+      AuthenticAMD.bin. Dette skaper en stÃ¸rre initrd - for alle Intel maskiner i
+      20200609 oppdateringen var stÃ¸rrelsen 3,0 MB sammenlignet med typisk 24 KB for en
       maskin.
     </para>
 
@@ -216,51 +223,47 @@
       <title>Intel Mikrokode for CPUen</title>
 
       <para>
-        Det første trinnet er å få den nyeste versjonen av Intel
-        mikrokode. Dette må gjøres ved å navigere til <ulink url=
+        Det fÃ¸rste trinnet er Ã¥ fÃ¥ den nyeste versjonen av Intel
+        mikrokode. Dette mÃ¥ gjÃ¸res ved Ã¥ navigere til <ulink url=
         'https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/'/>
-        og laster ned den nyeste filen der. Når dette skrives den mest
-        <!-- på et tidspunkt hadde noen skylakes problemer med en viss revisjon
+        og laster ned den nyeste filen der. NÃ¥r dette skrives den mest
+        <!-- pÃ¥ et tidspunkt hadde noen skylakes problemer med en viss revisjon
         sikker versjon av mikrokoden, for de maskinene som kan starte den, -->
         sikker versjon av mikrokoden
-        er microcode-20230808. Pakk ut denne
-        filen på vanlig måte, mikrokoden er i <filename>intel-ucode
+        er microcode-20231114. Pakk ut denne
+        filen pÃ¥ vanlig mÃ¥te, mikrokoden er i <filename>intel-ucode
         </filename> mappen, som inneholder forskjellige blobs med navn i skjemaet
-        XX-YY-ZZ. Det er også forskjellige andre filer, og en utgivelsesmerknad.
+        XX-YY-ZZ. Det er ogsÃ¥ forskjellige andre filer, og en utgivelsesmerknad.
       </para>
 
       <para>
         Tidligere ga ikke Intel noen detaljer om hvilke blobs som hadde
-        endret versjoner, men nå beskriver utgivelsesmerknaden dette. Du kan
+        endret versjoner, men nÃ¥ beskriver utgivelsesmerknaden dette. Du kan
         sammenligne mikrokodeversjonen i <filename>/proc/cpuinfo</filename>
-        med versjonen for din CPU modell i utgivelsesmerknaden for å vite om
+        med versjonen for din CPU modell i utgivelsesmerknaden for Ã¥ vite om
         det er en oppdatering.
       </para>
 
       <para>
-        Den nylige fastvaren for eldre prosessorer er tilgjengelig for å håndtere
-        sårbarheter som nå er offentliggjort, og for noen av disse
+        Den nylige fastvaren for eldre prosessorer er tilgjengelig for Ã¥ hÃ¥ndtere
+        sÃ¥rbarheter som nÃ¥ er offentliggjort, og for noen av disse
         for eksempel Microarchitectural Data Sampling (MDS) vil du kanskje
-        øke beskyttelsen ved å deaktivere hyperthreading, eller alternativt
-        å deaktivere kjernens standardredusering på grunn av dens innvirkning på
-        kompileringstider. Vennligst les dokumentasjonen på <ulink url=
+        Ã¸ke beskyttelsen ved Ã¥ deaktivere hyperthreading, eller alternativt
+        Ã¥ deaktivere kjernens standardredusering pÃ¥ grunn av dens innvirkning pÃ¥
+        kompileringstider. Vennligst les dokumentasjonen pÃ¥ <ulink url=
         'https://www.kernel.org/doc/html/latest/admin-guide/hw-vuln/index.html'/>.
       </para>
 
       <para>
-        For en Tigerlake bærbar (beskrevet som Intel(R) Core(TM) i5-11300H
-        CPU) de relevante verdiene er cpu familie 6, modell 140, stepping 1 så
-        i dette tilfellet er nødvendig identifikasjon 06-8c-01.
-        Utgivelsesnotat sier at den nyeste mikrokoden for den er versjonert 0xac. Hvis
+        For en Tigerlake bÃ¦rbar (beskrevet som Intel(R) Core(TM) i5-11300H
+        CPU) de relevante verdiene er cpu familie 6, modell 140, stepping 1 sÃ¥
+        i dette tilfellet er nÃ¸dvendig identifikasjon 06-8c-01.
+        Utgivelsesnotat sier at den nyeste mikrokoden for den er versjonert 0xb4. Hvis
         verdien av <quote>mikrokode</quote> feltet i
-        <filename>/proc/cpuinfo</filename> er 0xac eller høyere, indikerer det
+        <filename>/proc/cpuinfo</filename> er 0xb4 eller hÃ¸yere, indikerer det
         at mikrokodeoppdateringen allerede er tatt i bruk av BIOS. Ellers,
-        konfigurere kjernen til å støtte lasting av Intel mikrokode, og deretter
         fortsett til <xref linkend='early-microcode'/>:
       </para>
-
-      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-        href="intel-ucode-kernel.xml"/>
 
     </sect3>
 
@@ -268,22 +271,22 @@
       <title>AMD Mikrokode for CPUen</title>
 
       <para>
-        Begynn med å laste ned en beholder med fastvare for CPU familien din
+        Begynn med Ã¥ laste ned en beholder med fastvare for CPU familien din
         fra <ulink url=
           '&sources-anduin-http;/linux-firmware/amd-ucode/'/>.
         Familien er alltid spesifisert i hex. Familier 10-14 (16-20)
         er i microcode_amd.bin. Familier 15t, 16t, 17t (Zen, Zen+, Zen2) og
-        19h (Zen3) har sine egne beholdere, men sannsynligvis er det få maskiner
-        som får oppdatert mikrokode. I stedet gir AMD en oppdatert AGESA til
-        hovedkortprodusenter, som kan gi en oppdatert BIOS ved å bruke dette.
-        Det er et Python3 skript på <ulink url=
+        19h (Zen3) har sine egne beholdere, men sannsynligvis er det fÃ¥ maskiner
+        som fÃ¥r oppdatert mikrokode. I stedet gir AMD en oppdatert AGESA til
+        hovedkortprodusenter, som kan gi en oppdatert BIOS ved Ã¥ bruke dette.
+        Det er et Python3 skript pÃ¥ <ulink url=
         'https://github.com/AMDESE/amd_ucode_info/blob/master/amd_ucode_info.py'/>.
-        Last ned det skriptet og kjør det mot bin filen for å sjekke hvilke
+        Last ned det skriptet og kjÃ¸r det mot bin filen for Ã¥ sjekke hvilke
         prosessorer som har oppdateringer.
       </para>
 
       <para>
-        For den svært gamle Athlon(tm) II X2 i disse eksemplene var verdiene
+        For den svÃ¦rt gamle Athlon(tm) II X2 i disse eksemplene var verdiene
         cpu familie 16, modell 5, trinn 3 gir en identifikasjon av
         Familie=0x10 Modell=0x05 Stepping=0x03. En linje av
         <command>amd_ucode_info.py</command> skriptutdataen beskriver
@@ -294,14 +297,10 @@
 
       <para>
         Hvis verdien av <quote>mikrokode</quote> feltet i
-        <filename>/proc/cpuinfo</filename> er 0x10000c8 eller høyere,
+        <filename>/proc/cpuinfo</filename> er 0x10000c8 eller hÃ¸yere,
         indikerer det at BIOS allerede har tatt i bruk mikrokodeoppdateringen.
-        Ellers, konfigurer kjernen til å støtte lasting av AMD mikrokode,
-        og fortsett deretter til <xref linkend='early-microcode'/>:
+        Ellers, fortsett deretter til <xref linkend='early-microcode'/>:
       </para>
-
-      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-        href="amd-ucode-kernel.xml"/>
 
     </sect3>
 
@@ -310,31 +309,31 @@
 
       <para>
         Hvis du har etablert at en oppdatert mikrokode er tilgjengelig for
-        systemet ditt, er det på tide å forberede det for tidlig lasting. Dette krever
+        systemet ditt, er det pÃ¥ tide Ã¥ forberede det for tidlig lasting. Dette krever
         en ekstra pakke, <xref linkend='cpio'/> og opprettelsen av en
-        initrd som må legges til grub.cfg.
+        initrd som mÃ¥ legges til grub.cfg.
       </para>
 
       <para>
-        Det spiller ingen rolle hvor du forbereder initrd, og når det
+        Det spiller ingen rolle hvor du forbereder initrd, og nÃ¥r det
         virker kan du bruke samme initrd til senere LFS systemer eller nyere
-        kjerner på samme maskin, i det minste inntil en nyere mikrokode er
-        utgitt. Bruk følgende kommandoer:
+        kjerner pÃ¥ samme maskin, i det minste inntil en nyere mikrokode er
+        utgitt. Bruk fÃ¸lgende kommandoer:
       </para>
 
 <screen><userinput>mkdir -p initrd/kernel/x86/microcode
 cd initrd</userinput></screen>
 
       <para>
-        For en AMD maskin, bruk følgende kommando (erstatt
-        &lt;MYCONTAINER&gt; med navnet på beholderen for CPU
+        For en AMD maskin, bruk fÃ¸lgende kommando (erstatt
+        &lt;MYCONTAINER&gt; med navnet pÃ¥ beholderen for CPU
         familien din):
       </para>
 
 <screen><userinput>cp -v ../&lt;MYCONTAINER&gt; kernel/x86/microcode/AuthenticAMD.bin</userinput></screen>
 
       <para>
-        Eller for en Intel maskin, kopier den aktuelle bloben ved å bruke denne kommandoen:
+        Eller for en Intel maskin, kopier den aktuelle bloben ved Ã¥ bruke denne kommandoen:
       </para>
 
 <screen><userinput>cp -v ../intel-ucode/&lt;XX-YY-ZZ&gt; kernel/x86/microcode/GenuineIntel.bin</userinput></screen>
@@ -343,34 +342,34 @@ cd initrd</userinput></screen>
    But complaints about previous version took some days to appear, so keep as a comment for now.
       <caution>
         <para>
-          På noen Skylake-maskiner med sekskantmodellnummer '4e' (78 desimaler) er
-          oppgradering til mikrokodeversjon '0xdc' rapportert å forårsake at maskinen gjør
-          heng i tidlig oppstart, og løsningen er å gå tilbake til versjon 0xd6 som var
-          først sendt i 20191115 mikrokodeutgivelsen.
+          PÃ¥ noen Skylake-maskiner med sekskantmodellnummer '4e' (78 desimaler) er
+          oppgradering til mikrokodeversjon '0xdc' rapportert Ã¥ forÃ¥rsake at maskinen gjÃ¸r
+          heng i tidlig oppstart, og lÃ¸sningen er Ã¥ gÃ¥ tilbake til versjon 0xd6 som var
+          fÃ¸rst sendt i 20191115 mikrokodeutgivelsen.
         </para>
 
         <para>
-          Minst én modell '5e' Skylake starter opp vellykket med versjon
-          0xdc, men Intel har nå sendt en 20200616 utgivelse som er beregnet på
-          distroer som trenger en initrd som vil starte opp på alles maskin: det
+          Minst Ã©n modell '5e' Skylake starter opp vellykket med versjon
+          0xdc, men Intel har nÃ¥ sendt en 20200616 utgivelse som er beregnet pÃ¥
+          distroer som trenger en initrd som vil starte opp pÃ¥ alles maskin: det
           tilbakestiller begge Skylake-variantene ('4e' og '5e') til den gamle 0xd6.
         </para>
 
         <para>
-          For en Skylake som ikke starter opp med 0xdc, vil det å gå tilbake til 0xd6
-          gjøre maskinen brukbar, men uten SRBDS-begrensningene.
+          For en Skylake som ikke starter opp med 0xdc, vil det Ã¥ gÃ¥ tilbake til 0xd6
+          gjÃ¸re maskinen brukbar, men uten SRBDS-begrensningene.
         </para>
       </caution>-->
 
       <para>
-        Forbered nå initrd:
+        Forbered nÃ¥ initrd:
       </para>
 
 <screen><userinput>find . | cpio -o -H newc &gt; /boot/microcode.img</userinput></screen>
 
       <para>
-        Du må nå legge til en ny oppføring i /boot/grub/grub.cfg og
-        her bør du legge til en ny linje etter linux linjen i strofen.
+        Du mÃ¥ nÃ¥ legge til en ny oppfÃ¸ring i /boot/grub/grub.cfg og
+        her bÃ¸r du legge til en ny linje etter linux linjen i strofen.
         Hvis /boot er et separat monteringspunkt:
        </para>
 
@@ -384,41 +383,41 @@ cd initrd</userinput></screen>
 
       <para>
         Hvis du allerede starter opp med en initrd (se <xref
-        linkend="initramfs"/>), bør du bør kjøre <command>mkinitramfs</command>
-        igjen etter å ha puttet den riktige bloben eller beholderen i <filename
+        linkend="initramfs"/>), bÃ¸r du bÃ¸r kjÃ¸re <command>mkinitramfs</command>
+        igjen etter Ã¥ ha puttet den riktige bloben eller beholderen i <filename
           class="directory">/lib/firmware</filename>. Mer presist, putt en
         intel blob i <filename
           class="directory">/lib/firmware/intel-ucode</filename> mappen
         eller en AMD beholder i <filename
-          class="directory">/lib/firmware/amd-ucode</filename> mappen før
-        du kjører <command>mkinitramfs</command>.
-        Alternativt kan du ha begge initrd på samme linje, som f.eks
+          class="directory">/lib/firmware/amd-ucode</filename> mappen fÃ¸r
+        du kjÃ¸rer <command>mkinitramfs</command>.
+        Alternativt kan du ha begge initrd pÃ¥ samme linje, som f.eks
         <userinput>initrd /microcode.img /other-initrd.img</userinput> (tilpass
         som ovenfor hvis /boot ikke er et separat monteringspunkt).
       </para>
 
       <para>
-        Du kan nå starte på nytt med den ekstra initrd, og deretter bruke følgende
-        kommando for å sjekke at den tidlige lastingen fungerte:
+        Du kan nÃ¥ starte pÃ¥ nytt med den ekstra initrd, og deretter bruke fÃ¸lgende
+        kommando for Ã¥ sjekke at den tidlige lastingen fungerte:
       </para>
 
 <screen><userinput>dmesg | grep -e 'microcode' -e 'Linux version' -e 'Command line'</userinput></screen>
 
       <para>
-        Hvis du oppdaterte for å adressere sårbarheter, kan du se på
-        utdataen til <command>lscpu</command> kommandoen for å se hva som er
-        rapportert nå.
+        Hvis du oppdaterte for Ã¥ adressere sÃ¥rbarheter, kan du se pÃ¥
+        utdataen til <command>lscpu</command> kommandoen for Ã¥ se hva som er
+        rapportert nÃ¥.
       </para>
 
       <para>
-        Stedene og tidspunktene hvor tidlig lasting skjer er svært forskjellige
-        i AMD- og Intel-maskiner. Først et eksempel på en Intel (Tigerlake
-        bærbar) med tidlig lasting:
+        Stedene og tidspunktene hvor tidlig lasting skjer er svÃ¦rt forskjellige
+        i AMD- og Intel-maskiner. FÃ¸rst et eksempel pÃ¥ en Intel (Tigerlake
+        bÃ¦rbar) med tidlig lasting:
       </para>
 
-<screen><literal>[    0.000000] microcode: microcode updated early: 0x86 -> 0xac, date = 2023-02-27
-[    0.000000] Linux version 6.4.7 (root@stargazer) (gcc (GCC) 13.2.0, GNU ld (GNU Binutils) 2.41) #1 SMP PREEMPT_DYNAMIC Wed Aug  2 19:08:46 CST 2023
-[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-6.4.7 root=PARTUUID=<replaceable>&lt;CLASSIFIED&gt;</replaceable> ro
+<screen><literal>[    0.000000] microcode: microcode updated early: 0x86 -> 0xb4, date = 2023-09-07
+[    0.000000] Linux version 6.6.1 (xry111@stargazer) (gcc (GCC) 13.2.0, GNU ld (GNU Binutils) 2.41) #36 SMP PREEMPT_DYNAMIC Tue Nov 14 01:56:04 CST 2023
+[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-6.6.1 root=PARTUUID=<replaceable>&lt;CLASSIFIED&gt;</replaceable> ro
 [    0.424002] microcode: Microcode Update Driver: v2.2.</literal></screen>
 
 
@@ -445,55 +444,55 @@ cd initrd</userinput></screen>
       <title>Fastvare for ATI videobrikker (R600 og nyere)</title>
 
       <para>
-        Disse instruksjonene gjelder IKKE gamle radeoner før R600
+        Disse instruksjonene gjelder IKKE gamle radeoner fÃ¸r R600
         familien. For dem er fastvaren i kjernen sin <filename
-        class='directory'>/lib/firmware/</filename> mappen. Det gjør det heller ikke
-        hvis du har tenkt å unngå et grafisk oppsett som Xorg og er
-        komfortabel med å bruke standard 80x25-skjerm i stedet for en rammebuffer.
+        class='directory'>/lib/firmware/</filename> mappen. Det gjÃ¸r det heller ikke
+        hvis du har tenkt Ã¥ unngÃ¥ et grafisk oppsett som Xorg og er
+        komfortabel med Ã¥ bruke standard 80x25-skjerm i stedet for en rammebuffer.
       </para>
 
       <para>
         Tidlige radeon enheter trengte bare en enkelt 2K blob med fastvare. Nylige
-        enheter trenger flere forskjellige blobs, og noen av dem er mye større.
-        Den totale størrelsen på radeon fastvarekatalogen er over 500K &mdash;
-        på et stort moderne system kan du nok spare plassen, men det er
-        fortsatt overflødig å installere alle ubrukte filer hver gang du bygger
+        enheter trenger flere forskjellige blobs, og noen av dem er mye stÃ¸rre.
+        Den totale stÃ¸rrelsen pÃ¥ radeon fastvarekatalogen er over 500K &mdash;
+        pÃ¥ et stort moderne system kan du nok spare plassen, men det er
+        fortsatt overflÃ¸dig Ã¥ installere alle ubrukte filer hver gang du bygger
         et system.
       </para>
 
       <para>
-        En bedre tilnærming er å installere <xref linkend='pciutils'/> og så
-        bruke <userinput>lspci</userinput> for å identifisere hvilken VGA kontroller som er
+        En bedre tilnÃ¦rming er Ã¥ installere <xref linkend='pciutils'/> og sÃ¥
+        bruke <userinput>lspci</userinput> for Ã¥ identifisere hvilken VGA kontroller som er
         installert.
       </para>
 
       <para>
         Med den informasjonen, sjekk RadeonFeature siden til Xorg wikien
          <ulink url="https://wiki.x.org/wiki/RadeonFeature/#index5h2">Decoder
-        ring for engineering vs marketing names</ulink> for å identifisere familien
-        (det kan hende du må vite dette for Xorg driveren i BLFS &mdash;
+        ring for engineering vs marketing names</ulink> for Ã¥ identifisere familien
+        (det kan hende du mÃ¥ vite dette for Xorg driveren i BLFS &mdash;
         Southern Islands og Sea Islands bruker radeonsi driveren) og den
         spesifikke modellen.
       </para>
 
       <para>
-        Nå som du vet hvilken kontroller du bruker, se
+        NÃ¥ som du vet hvilken kontroller du bruker, se
         <ulink url="https://wiki.gentoo.org/wiki/Radeon#Firmware">
            Radeon</ulink> siden til Gentoo wikien som har en tabellliste
-        over de nødvendige fastvare blobene for de forskjellige brikkesettene. Merk at
+        over de nÃ¸dvendige fastvare blobene for de forskjellige brikkesettene. Merk at
         Southern Islands og Sea Islands chips bruker forskjellig fastvare for
         kernel 3.17 og senere sammenlignet med tidligere kjerner. Identifiser og
-        last ned de nødvendige blobene og installer dem:
+        last ned de nÃ¸dvendige blobene og installer dem:
       </para>
 
 <screen><userinput>mkdir -pv /lib/firmware/radeon
 cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/radeon</userinput></screen>
 
     <para>
-      Det anbefales å bygge kjerne amdgpu driveren som en modul fordi
-      fastvarefilene må være tilgjengelige når den lastes.
+      Det anbefales Ã¥ bygge kjerne amdgpu driveren som en modul fordi
+      fastvarefilene mÃ¥ vÃ¦re tilgjengelige nÃ¥r den lastes.
       Hvis du bygger det som en del av kjernebildet av en eller annen grunn,
-      må du enten inkludere fastvarefilene i initramfs (les
+      mÃ¥ du enten inkludere fastvarefilene i initramfs (les
       <xref linkend='initramfs'/> for detaljer), eller inkludere dem i
       selve kjernebildet (les <xref linkend='firmware-in-kernel-image'/>
       for detaljer).
@@ -507,28 +506,28 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/radeon</userinput></screen>
       <para>
         Alle videokontrollere som bruker amdgpu kjernedriveren krever fastvare,
         om du skal bruke xorg amdgpu driveren, xserverens modusinnstillings
-        driver, eller bare kjernemodusinnstilling for å få en konsollrammebuffer større enn
+        driver, eller bare kjernemodusinnstilling for Ã¥ fÃ¥ en konsollrammebuffer stÃ¸rre enn
         80 x 25.
       </para>
 
       <para>
-        Installer <xref linkend="pciutils"/> og bruk det for å sjekke modellnavnet
+        Installer <xref linkend="pciutils"/> og bruk det for Ã¥ sjekke modellnavnet
         (se etter 'VGA-kompatibel kontroller:'). Hvis du har en APU (akselerert
-        Processing Unit, dvs. CPU og video på samme brikke) som sannsynligvis vil
+        Processing Unit, dvs. CPU og video pÃ¥ samme brikke) som sannsynligvis vil
         fortelle deg navnet. Hvis du har et eget amdgpu skjermkort trenger du
-        å søke for å finne ut hvilket navn den bruker (f.eks. et kort beskrevet som
+        Ã¥ sÃ¸ke for Ã¥ finne ut hvilket navn den bruker (f.eks. et kort beskrevet som
         Advanced Micro Devices, Inc. [AMD/ATI] Baffin [Radeon RX 550 640SP / RX
         560/560X] trenger Polaris11 fastvare. Det er en tabell med "Familie, Chipset
-        navn, produktnavn og fastvare" på slutten av kjernedelene i
+        navn, produktnavn og fastvare" pÃ¥ slutten av kjernedelene i
         <ulink url="https://wiki.gentoo.org/wiki/AMDGPU#Known_firmware_blobs">
         AMDGPU</ulink> siden til Gentoo wikien.
     </para>
 
     <para>
-      Når du har identifisert fastvarenavnet, installer alle relevante
+      NÃ¥r du har identifisert fastvarenavnet, installer alle relevante
       filer for det. For eksempel har Baffin kortet nevnt ovenfor 21 forskjellige
       polaris11*-filer, APUer som renoir og picasso har minst 12 filer og
-      kan få mer i fremtidige oppdateringer (f.eks. har raven APU nå en 13. fil,
+      kan fÃ¥ mer i fremtidige oppdateringer (f.eks. har raven APU nÃ¥ en 13. fil,
       raven_ta.bin).
     </para>
 
@@ -537,14 +536,14 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
 
     <para>
       Hvis diskplass ikke er et problem, kan du installere all gjeldende amdgpu
-      fastvarefiler og ikke bekymre deg for nøyaktig hvilket brikkesett som er installert.
+      fastvarefiler og ikke bekymre deg for nÃ¸yaktig hvilket brikkesett som er installert.
     </para>
 
     <para>
-      Det anbefales å bygge kjerne amdgpu driveren som en modul fordi
-      fastvarefilene må være tilgjengelige når den lastes.
+      Det anbefales Ã¥ bygge kjerne amdgpu driveren som en modul fordi
+      fastvarefilene mÃ¥ vÃ¦re tilgjengelige nÃ¥r den lastes.
       Hvis du bygger det som en del av kjernebildet av en eller annen grunn,
-      må du enten inkludere fastvarefilene i initramfs (les
+      mÃ¥ du enten inkludere fastvarefilene i initramfs (les
       <xref linkend='initramfs'/> for detaljer), eller inkludere dem i
       selve kjernebildet (les <xref linkend='firmware-in-kernel-image'/>
       for detaljer).
@@ -557,18 +556,18 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
 
       <para>
         Nvidia har gitt ut grunnleggende signert fastvare for nyere grafikkbrikker,
-        men betydelig etter at chipene og dens egne binære drivere var først
-        tilgjengelig. For andre brikker har det vært nødvendig å trekke ut fastvaren
-        fra den binære driveren.
+        men betydelig etter at chipene og dens egne binÃ¦re drivere var fÃ¸rst
+        tilgjengelig. For andre brikker har det vÃ¦rt nÃ¸dvendig Ã¥ trekke ut fastvaren
+        fra den binÃ¦re driveren.
       </para>
       <para>
-        For mer nøyaktig informasjon om hvilke brikker som trenger uttrukket fastvare, se
+        For mer nÃ¸yaktig informasjon om hvilke brikker som trenger uttrukket fastvare, se
         <ulink url=
           "https://nouveau.freedesktop.org/VideoAcceleration.html"/>.
       </para>
 
       <para>
-        Hvis den nødvendige fastvaren er tilgjengelig i
+        Hvis den nÃ¸dvendige fastvaren er tilgjengelig i
         <filename class="directory">nvidia/</filename> mappen over
         linux fastvare, kopier den til
         <filename class="directory">/lib/firmware/nouveau</filename>.
@@ -576,7 +575,7 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
       <para>
         Hvis fastvaren ikke er gjort tilgjengelig i linux fastvaren,
         for de gamle brikkene nevnt i nouveau wiki lenken ovenfor
-        kjør følgende kommandoer:
+        kjÃ¸r fÃ¸lgende kommandoer:
       </para>
 
 <screen><userinput>wget https://anduin.linuxfromscratch.org/BLFS/nvidia-firmware/extract_firmware.py
@@ -593,18 +592,18 @@ cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
     <title>Fastvare for Nettverksgrensesnitt</title>
 
     <para>
-      Kjernen liker å laste fastvare for noen nettverksdrivere, spesielt
+      Kjernen liker Ã¥ laste fastvare for noen nettverksdrivere, spesielt
       de fra Realtek (/lib/linux-firmware/rtl_nic/) mappen, men
-      de ser vanligvis ut til å fungere uten. Derfor kan du starte opp
+      de ser vanligvis ut til Ã¥ fungere uten. Derfor kan du starte opp
       kjernen, sjekke dmesg for meldinger om denne manglende fastvaren, og hvis
-      nødvendig last ned fastvaren og legg den i den angitte katalogen i
+      nÃ¸dvendig last ned fastvaren og legg den i den angitte katalogen i
       <filename class="directory">/lib/firmware</filename> slik at det vil
-      finnes på neste oppstart. Merk at med nåværende kjerne fungerer dette
+      finnes pÃ¥ neste oppstart. Merk at med nÃ¥vÃ¦rende kjerne fungerer dette
       uansett om driveren er kompilert eller bygget som en modul,
-      det er ikke nødvendig å bygge denne fastvaren inn i kjernen.
+      det er ikke nÃ¸dvendig Ã¥ bygge denne fastvaren inn i kjernen.
       Her er et eksempel hvor R8169 driveren har blitt kompilert inn men
-      fastvaren ble ikke gjort tilgjengelig. Når fastvaren ble levert,
-      var det var ingen omtale av det på senere oppstarter.
+      fastvaren ble ikke gjort tilgjengelig. NÃ¥r fastvaren ble levert,
+      var det var ingen omtale av det pÃ¥ senere oppstarter.
     </para>
 
 <screen><literal>dmesg | grep firmware | grep r8169
@@ -614,59 +613,59 @@ cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
   </sect2>
 
   <sect2 id="regulatory-db">
-    <title>Fastvare for forskriftsdatabase over trådløse enheter</title>
+    <title>Fastvare for forskriftsdatabase over trÃ¥dlÃ¸se enheter</title>
 
     <para>
       Ulike land har ulike regler for radiospekteret
-      brukt av trådløse enheter. Du kan installere en fastvare for å at
-      trådløse enheter overholder lokale spektrumforskrifter, så du ikke vil bli
-      forespurt av lokale myndigheter eller finne ut at det trådløse NIC kortet blokkerer
+      brukt av trÃ¥dlÃ¸se enheter. Du kan installere en fastvare for Ã¥ at
+      trÃ¥dlÃ¸se enheter overholder lokale spektrumforskrifter, sÃ¥ du ikke vil bli
+      forespurt av lokale myndigheter eller finne ut at det trÃ¥dlÃ¸se NIC kortet blokkerer
       frekvenser til andre enheter (for eksempel fjernkontroller).
       Forskriftsdatabasens fastvare kan lastes ned fra
       <ulink url = 'https://kernel.org/pub/software/network/wireless-regdb/'/>.
-      For å installere det, bare pakk ut <filename>regulatory.db</filename> og
+      For Ã¥ installere det, bare pakk ut <filename>regulatory.db</filename> og
       <filename>regulatory.db.p7s</filename> fra tarballen til
       <filename class="directory">/lib/firmware</filename>. Merk at enten
-      <option>cfg80211</option> driver må velges som en modul
+      <option>cfg80211</option> driver mÃ¥ velges som en modul
       for <filename>regulatory.*</filename>
-      filer som skal lastes, eller må disse filene inkluderes som fastvare i
+      filer som skal lastes, eller mÃ¥ disse filene inkluderes som fastvare i
       kjernen, som forklart ovenfor i <xref linkend="video-firmware"/>.
     </para>
 
     <para>
-      Tilgangspunktet (AP) vil sende en landskode til det trådløse NIC,
-      og <xref linkend='wpa_supplicant'/> ville fortelle kjernen å laste
+      Tilgangspunktet (AP) vil sende en landskode til det trÃ¥dlÃ¸se NIC,
+      og <xref linkend='wpa_supplicant'/> ville fortelle kjernen Ã¥ laste
       reguleringen av dette landet fra
-      <filename>regulatory.db</filename>, og håndhever det. Merk at flere AP
-      ikke sender denne landskoden, så du kan være låst til en heller
+      <filename>regulatory.db</filename>, og hÃ¥ndhever det. Merk at flere AP
+      ikke sender denne landskoden, sÃ¥ du kan vÃ¦re lÃ¥st til en heller
       begrenset bruk (spesielt hvis du vil bruke grensesnittet ditt som en AP).
     </para>
   </sect2>
 
   <sect2 id="sound-open-firmware">
-    <title>Åpen lyd fastvare</title>
+    <title>Ã…pen lyd fastvare</title>
 
     <para>
-      Noen systemer (spesielt budsjett bærbare datamaskiner) bruker en DSP som leveres med
-      CPU for tilkobling med lydkodeken. Åpen lyd fastvare
-      må lastes inn på DSP for å gjøre den funksjonell. Disse fastvarene
+      Noen systemer (spesielt budsjett bÃ¦rbare datamaskiner) bruker en DSP som leveres med
+      CPU for tilkobling med lydkodeken. Ã…pen lyd fastvare
+      mÃ¥ lastes inn pÃ¥ DSP for Ã¥ gjÃ¸re den funksjonell. Disse fastvarene
       filer kan lastes ned fra
       <ulink url='https://github.com/thesofproject/sof-bin/releases'/>.
       Pakk ut tarballen og bytt til den utpakkede mappen,
       deretter som &root; bruker installer fastvaren:
     </para>
 
-    <screen role="nodump"><userinput>install -vdm755 /usr/lib/firmware/intel       &amp;&amp;
-cp -av -T --no-preserve=ownership sof-v*      \
-   /usr/lib/firmware/intel/sof                &amp;&amp;
-cp -av -T --no-preserve=ownership sof-tplg-v* \
+    <screen role="nodump"><userinput>install -vdm755 /usr/lib/firmware/intel    &amp;&amp;
+cp -av -T --no-preserve=ownership sof      \
+   /usr/lib/firmware/intel/sof             &amp;&amp;
+cp -av -T --no-preserve=ownership sof-tplg \
    /usr/lib/firmware/intel/sof-tplg</userinput></screen>
 
     <para>
-      <xref linkend="alsa-lib"/> behøver Use Case Manager konfigurasjonsfiler
-      for systemene som bruker Åpen lyd fastvare også. ALSA UCM
+      <xref linkend="alsa-lib"/> behÃ¸ver Use Case Manager konfigurasjonsfiler
+      for systemene som bruker Ã…pen lyd fastvare ogsÃ¥. ALSA UCM
       konfigurasjonsfiler kan lastes ned fra
-      <ulink url='https://github.com/alsa-project/alsa-ucm-conf/tags'/>.
+      <ulink url='https://www.alsa-project.org/files/pub/lib/alsa-ucm-conf-&alsa-lib-version;.tar.bz2'/>.
       Pakk ut tarballen og bytt til den utpakkede mappen,
       deretter som &root; bruker installer konfigurasjonsfilene:
     </para>
@@ -675,9 +674,9 @@ cp -av -T --no-preserve=ownership sof-tplg-v* \
 cp -av -T --no-preserve=ownership ucm2 /usr/share/alsa/ucm2</userinput></screen>
 
     <para>
-      Når fastvaren er lastet inn (kan det hende du trenger en omstart slik at kjernen vil
-      laste dem) og UCM konfigurasjonsfilene installeres, følg
-      <xref linkend="alsa-utils-config-sect"/> for å sette opp lydkortet ditt for
+      NÃ¥r fastvaren er lastet inn (kan det hende du trenger en omstart slik at kjernen vil
+      laste dem) og UCM konfigurasjonsfilene installeres, fÃ¸lg
+      <xref linkend="alsa-utils-config-sect"/> for Ã¥ sette opp lydkortet ditt for
       ALSA skikkelig.
     </para>
   </sect2>
@@ -686,22 +685,22 @@ cp -av -T --no-preserve=ownership ucm2 /usr/share/alsa/ucm2</userinput></screen>
     <title>Fastvare for Andre Enheter</title>
 
     <para>
-      Å identifisere riktig firmware vil vanligvis kreve at du installerer
+      Ã… identifisere riktig firmware vil vanligvis kreve at du installerer
       <xref linkend='pciutils'/>, og deretter bruke <userinput>lspci</userinput>
-      for å identifisere enheten. Du bør deretter søke på nettet for å sjekke hvilken
-      modul den bruker, hvilken fastvare og hvor du kan få tak i fastvaren &mdash;
+      for Ã¥ identifisere enheten. Du bÃ¸r deretter sÃ¸ke pÃ¥ nettet for Ã¥ sjekke hvilken
+      modul den bruker, hvilken fastvare og hvor du kan fÃ¥ tak i fastvaren &mdash;
       ikke alt er i linux fastvare.
     </para>
 
     <para>
-      Hvis det er mulig, bør du begynne med å bruke en kablet tilkobling når du først
-      starter opp LFS systemet. For å bruke en trådløs tilkobling må du
-      bruke et nettverksverktøy som f.eks <xref linkend="iw"/>,
+      Hvis det er mulig, bÃ¸r du begynne med Ã¥ bruke en kablet tilkobling nÃ¥r du fÃ¸rst
+      starter opp LFS systemet. For Ã¥ bruke en trÃ¥dlÃ¸s tilkobling mÃ¥ du
+      bruke et nettverksverktÃ¸y som f.eks <xref linkend="iw"/>,
       <xref linkend='wireless_tools'/>, eller <xref linkend='wpa_supplicant'/>.
     </para>
 
     <para>
-      Fastvare kan også være nødvendig for andre enheter, for eksempel noen SCSI
+      Fastvare kan ogsÃ¥ vÃ¦re nÃ¸dvendig for andre enheter, for eksempel noen SCSI
       kontrollere, bluetooth adaptere eller TV opptakere. De samme prinsippene
       gjelder.
     </para>
@@ -713,14 +712,14 @@ cp -av -T --no-preserve=ownership ucm2 /usr/share/alsa/ucm2</userinput></screen>
 
     <para>
       Noen drivere, spesielt driverne for ATI eller AMD GPU, krever
-      fastvarefiler tilgjengelig når den lastes. Den letteste
-      metoden for å håndtere disse driverne er å bygge dem som en kjernemodul.
-      En alternativ metode er å lage en initramfs (les
+      fastvarefiler tilgjengelig nÃ¥r den lastes. Den letteste
+      metoden for Ã¥ hÃ¥ndtere disse driverne er Ã¥ bygge dem som en kjernemodul.
+      En alternativ metode er Ã¥ lage en initramfs (les
       <xref linkend='initramfs'/> for detaljer), inkludert fastvarefilene.
       Hvis du ikke vil bruke noen av metodene, kan du inkludere fastvare
-      filer i selve kjernebildet. Installer de nødvendige fastvarefilene
-      inn i <filename class='directory'>/lib/firmware</filename> først
-      angi følgende kjernekonfigurasjon og gjenoppbygg kjernen:
+      filer i selve kjernebildet. Installer de nÃ¸dvendige fastvarefilene
+      inn i <filename class='directory'>/lib/firmware</filename> fÃ¸rst
+      angi fÃ¸lgende kjernekonfigurasjon og gjenoppbygg kjernen:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -728,19 +727,19 @@ cp -av -T --no-preserve=ownership ucm2 /usr/share/alsa/ucm2</userinput></screen>
 
     <para>
       Erstatt <replaceable>xx/aa.bin xx/bb.bin</replaceable>
-      med en mellomromseparert liste over stier til de nødvendige fastvare
+      med en mellomromseparert liste over stier til de nÃ¸dvendige fastvare
       filer, i forhold til
       <filename class='directory'>/lib/firmware</filename>.  En metode
-      enklere enn å manuelt skrive inn listen (den kan være lang) kjør
-      følgende kommando:
+      enklere enn Ã¥ manuelt skrive inn listen (den kan vÃ¦re lang) kjÃ¸r
+      fÃ¸lgende kommando:
     </para>
 
     <screen><userinput>echo CONFIG_EXTRA_FIRMWARE='"'$({ cd /lib/firmware; echo <replaceable>amdgpu/*</replaceable> })'"' &gt;&gt; .config
 make oldconfig</userinput></screen>
 
     <para>
-      Erstatt <replaceable>amdgpu/*</replaceable> med et skallmønster
-      som samsvarer med de nødvendige fastvarefilene.
+      Erstatt <replaceable>amdgpu/*</replaceable> med et skallmÃ¸nster
+      som samsvarer med de nÃ¸dvendige fastvarefilene.
     </para>
 
     <warning>
