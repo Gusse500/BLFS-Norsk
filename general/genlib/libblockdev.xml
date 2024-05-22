@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -7,9 +7,9 @@
   <!ENTITY libblockdev-download-http
     "https://github.com/storaged-project/libblockdev/releases/download/&libblockdev-version;-1/libblockdev-&libblockdev-version;.tar.gz">
   <!ENTITY libblockdev-download-ftp " ">
-  <!ENTITY libblockdev-md5sum        "b03d1b4def6962aa2e3eb93b50c22163">
+  <!ENTITY libblockdev-md5sum        "033f2098a13f9dae6105d0337470efd3">
   <!ENTITY libblockdev-size          "1.0 MB">
-  <!ENTITY libblockdev-buildsize     "14 MB">
+  <!ENTITY libblockdev-buildsize     "13 MB">
   <!ENTITY libblockdev-time          "0.1 SBU">
 ]>
 
@@ -27,14 +27,14 @@
     <title>Introduksjon til libblockdev</title>
 
     <para>
-      libblockdev er et C bibliotek som støtter GObject Introspection for
+      libblockdev er et C bibliotek som stÃ¸tter GObject Introspection for
       manipulering av blokkenheter. Den har et programtillegg basert arkitektur hvor
       hver teknologi (som LVM, Btrfs, MD RAID, Swap,...) er implementert i et
-      separat programtillegg, muligens med flere implementeringer (f.eks. ved å bruke LVM
+      separat programtillegg, muligens med flere implementeringer (f.eks. ved Ã¥ bruke LVM
       CLI eller den nye LVM DBus API).
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libblockdev-size;
+          NedlastingsstÃ¸rrelse: &libblockdev-size;
         </para>
       </listitem>
       <listitem>
@@ -72,7 +72,7 @@
 
     <bridgehead renderas="sect3">libblockdev Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>
     </para>
@@ -80,7 +80,7 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="cryptsetup"/>,
-      <xref linkend="gobject-introspection"/> (påkrevd for GNOME),
+      <xref linkend="gobject-introspection"/> (pÃ¥krevd for GNOME),
       <xref linkend="keyutils"/>,
       <xref linkend="libbytesize"/>,
       <xref linkend="libnvme"/>, og
@@ -93,7 +93,8 @@
       <xref linkend="gtk-doc"/>,
       <xref linkend="mdadm"/>,
       <xref linkend="parted"/>,
-      <xref linkend="volume_key"/>,
+      <ulink url="https://github.com/felixonmars/volume_key">volume_key</ulink>,
+<!--      <xref linkend="volume_key"/>,-->
 <!--      <ulink url="https://people.redhat.com/~heinzm/sw/dmraid/">dmraid</ulink>, -->
 <!--      <ulink url="https://bcachefs.org/">bcachefs</ulink>, -->
       <ulink url="https://github.com/pmem/ndctl">ndctl</ulink>, og
@@ -115,8 +116,8 @@
     src/plugins/vdo.c</userinput></screen>
 -->
     <para>
-      Installer <application>libblockdev</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>libblockdev</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr      \
@@ -136,7 +137,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -147,20 +148,19 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--without-escrow</parameter>: Denne bryteren tillater bygging av
-      <application>libblockdev</application> uten
-      <xref linkend="volume_key"/> installert.  Fjern den hvis du har installert
-      <xref linkend="volume_key"/>.
+      <application>libblockdev</application> uten volume_key installert. 
     </para>
 
     <para>
-      <parameter>--without-lvm --without-lvm_dbus
-      --without-tools</parameter>: Kombinasjonen av disse bryterne tillater
+      <parameter>--without-lvm</parameter>
+      <parameter>--without-lvm_dbus</parameter>
+      <parameter>--without-tools</parameter>: Kombinasjonen av disse
+      brytere tillater
       bygging av <application>libblockdev</application> uten
       <xref linkend="parted"/> installert.  Fjern den hvis du har installert
-      <xref linkend="parted"/> og ønsker å bygge
+      <xref linkend="parted"/> og Ã¸nsker Ã¥ bygge
       <command>lvm-cache-stats</command> eller <command>vfat-resize</command>
-      verktøy, eller ønsker <application>libblockdev</application> å støtte
+      verktÃ¸y, eller Ã¸nsker <application>libblockdev</application> Ã¥ stÃ¸tte
       logiske volumer.
     </para>
 
@@ -170,16 +170,16 @@ make</userinput></screen>
       <application>libblockdev</application> uten
       <xref linkend="libbytesize"/> installert. 
       <option>--without-mdraid</option> alternativet vil bryte
-      <xref linkend="udisks2"/>, så ikke bruk det med mindre du virkelig vet hva
-      du gjør.
+      <xref linkend="udisks2"/>, sÃ¥ ikke bruk det med mindre du virkelig vet hva
+      du gjÃ¸r.
     </para>
 
     <para>
       <option>--without-crypto</option>: Denne bryteren tillater bygging av
       <application>libblockdev</application> uten
       <xref linkend="cryptsetup"/> eller <xref linkend="keyutils"/> installert.
-      Denne bryteren vil bryte <xref linkend="udisks2"/>, så ikke bruk det
-      med mindre du virkelig vet hva du gjør.
+      Denne bryteren vil bryte <xref linkend="udisks2"/>, sÃ¥ ikke bruk det
+      med mindre du virkelig vet hva du gjÃ¸r.
     </para>
 
     <para>
@@ -188,7 +188,7 @@ make</userinput></screen>
       bygging av <application>libblockdev</application> uten
       <xref linkend="lvm2"/> installert.  <option>--without-dm</option>
       og <option>--without-mpath</option> alternativene er ikke i instruksjonene
-      gitt av boken fordi <xref linkend="lvm2"/> er påkrevd for
+      gitt av boken fordi <xref linkend="lvm2"/> er pÃ¥krevd for
       <xref linkend="cryptsetup"/> og <xref linkend="cryptsetup"/> er uansett en
       anbefalt avhengighet av <application>libblockdev</application>.
     </para>
@@ -197,8 +197,8 @@ make</userinput></screen>
       <option>--without-nvme</option>: Denne bryteren tillater bygging av
       <application>libblockdev</application> uten
       <xref linkend="libnvme"/> installert.  Denne bryteren vil bryte
-      <xref linkend="udisks2"/>, så ikke bruk det med mindre du virkelig vet hva
-      du gjør.
+      <xref linkend="udisks2"/>, sÃ¥ ikke bruk det med mindre du virkelig vet hva
+      du gjÃ¸r.
     </para>
 
   </sect2>
@@ -248,7 +248,7 @@ make</userinput></screen>
         <term><command>lvm-cache-stats</command></term>
         <listitem>
           <para>
-            skriver ut statistikk over hurtiglagre på LVM Logiske Volumer
+            skriver ut statistikk over hurtiglagre pÃ¥ LVM Logiske Volumer
           </para>
           <indexterm zone="libblockdev lvm-cache-stats">
             <primary sortas="b-lvm-cache-stats">lvm-cache-stats</primary>
@@ -260,7 +260,7 @@ make</userinput></screen>
         <term><command>vfat-resize</command></term>
         <listitem>
           <para>
-            endrer størrelse på <systemitem class="filesystem">vfat</systemitem>
+            endrer stÃ¸rrelse pÃ¥ <systemitem class="filesystem">vfat</systemitem>
             filsystemer
           </para>
           <indexterm zone="libblockdev vfat-resize">
