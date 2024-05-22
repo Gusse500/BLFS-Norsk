@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!-- Also update the download, md5, size entities in libxml2py2.xml -->
-  <!ENTITY libxml2-download-http "https://download.gnome.org/sources/libxml2/2.10/libxml2-&libxml2-version;.tar.xz">
+  <!ENTITY libxml2-download-http "https://download.gnome.org/sources/libxml2/2.12/libxml2-&libxml2-version;.tar.xz">
 <!--  <!ENTITY libxml2-download-http "http://xmlsoft.org/sources/libxml2-&libxml2-version;.tar.xz">-->
   <!ENTITY libxml2-download-ftp  " ">
-  <!ENTITY libxml2-md5sum        "76808c467a58c31e2dbd511e71d5fd13">
+  <!ENTITY libxml2-md5sum        "329138464b69422815c11e62acbc10dd">
   <!ENTITY libxml2-size          "2.5 MB">
-  <!ENTITY libxml2-buildsize     "106 MB (med tester)">
+  <!ENTITY libxml2-buildsize     "103 MB (med tester)">
   <!ENTITY libxml2-time          "0.4 SBU (Bruker parallellisme=4; med tester)">
   <!ENTITY testsuite-version     "20130923">
 ]>
@@ -30,10 +30,10 @@
 
     <para>
       <application>libxml2</application> pakken inneholder biblioteker
-      og verktøy som brukes til å analysere XML filer.
+      og verktÃ¸y som brukes til Ã¥ analysere XML filer.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libxml2-size;
+          NedlastingsstÃ¸rrelse: &libxml2-size;
         </para>
       </listitem>
       <listitem>
@@ -75,39 +75,29 @@
         <para>
           Valgfri testpakke:
           <ulink url="https://www.w3.org/XML/Test/xmlts&testsuite-version;.tar.gz"/> - Dette
-          aktiverer <command>make check</command> å gjøre fullstendig testing.
+          aktiverer <command>make check</command> Ã¥ gjÃ¸re fullstendig testing.
         </para>
       </listitem>
     </itemizedlist>
 
     <bridgehead renderas="sect3">libxml2 Avhengigheter</bridgehead>
-<!-- do not advertize python2 here, except in the note below
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
-    <para role="optional">
-      <xref linkend="python2"/>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="icu"/>
     </para>
--->
+
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="icu"/> (se under) og
       <xref linkend="valgrind"/> (kan brukes i testene)
     </para>
-
-    <note>
-      <para>
-        Den gamle <application>Python2</application> modulen kan bygges etter at
-        <filename class="libraryfile">libxml2.so</filename> har blitt installert,
-        se <xref linkend="libxml2py2"/>.
-      </para>
-    </note>
-
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av libxml2</title>
 
     <para>
-      Installer <application>libxml2</application> ved å kjøre følgende
+      Installer <application>libxml2</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -115,20 +105,25 @@
             --sysconfdir=/etc       \
             --disable-static        \
             --with-history          \
+            --with-icu              \
             PYTHON=/usr/bin/python3 \
             --docdir=/usr/share/doc/libxml2-&libxml2-version; &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Hvis du lastet ned testpakken, kjør følgende kommando:
+      Hvis du lastet ned testpakken, kjÃ¸r fÃ¸lgende kommando:
     </para>
 
 <screen><userinput>tar xf ../xmlts&testsuite-version;.tar.gz</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check &gt; check.log</command>.
-      En oppsummering av resultatene kan fås med <command>grep -E
-      '^Total|expected' check.log</command>. Hvis <xref linkend="valgrind"/> er
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make check &gt; check.log</command>.
+      Denne kommandoen vil skrive ut flere linjer med feilmeldinger som
+      <quote><computeroutput>Failed to parse
+      xstc/...</computeroutput></quote> fordi noen testfiler mangler
+      og disse meldingene kan trygt ignoreres.
+      En oppsummering av resultatene kan fÃ¥s med <command>grep -E
+       '^Total|expected|Ran' check.log</command>. Hvis <xref linkend="valgrind"/> er
       installert og du vil se etter minnelekkasjer, bytt ut
       <command>check</command> med <command>check-valgrind</command>.
     </para>
@@ -136,9 +131,9 @@ make</userinput></screen>
     <note>
       <para>
         Testene bruker <ulink url="http://localhost/">http://localhost/</ulink>
-        for å teste parsing av eksterne enheter. Hvis maskinen der du kjører
+        for Ã¥ teste parsing av eksterne enheter. Hvis maskinen der du kjÃ¸rer
         testene fungerer som et nettsted, kan testene henge, avhengig av
-        innholdet i filen som vises. Det anbefales derfor å stenge
+        innholdet i filen som vises. Det anbefales derfor Ã¥ stenge
         serveren under testene, som <systemitem
         class="username">root</systemitem> bruker:
       </para>
@@ -149,10 +144,19 @@ make</userinput></screen>
     </note>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
+
+    <para>
+      Til slutt, forhindre at noen pakker unÃ¸dvendig kobles til ICU, bruk
+      fÃ¸lgende kommandoer som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>rm -vf /usr/lib/libxml2.la &amp;&amp;
+sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config</userinput></screen>
+
   </sect2>
 
   <sect2 role="commands">
@@ -163,8 +167,14 @@ make</userinput></screen>
 
     <para>
       <parameter>--with-history</parameter>: Denne bryteren aktiverer
-      <application>Readline</application> støtte når du kjører
+      <application>Readline</application> stÃ¸tte nÃ¥r du kjÃ¸rer
       <command>xmlcatalog</command> eller <command>xmllint</command> i skallmodus.
+    </para>
+
+    <para>
+      <parameter>--with-icu</parameter>: Denne bryteren aktiverer stÃ¸tte for
+      <application>ICU</application>, som gir ekstra Unicode stÃ¸tte.
+      Dette er nÃ¸dvendig for noen pakker i BLFS, for eksempel for QtWebEngine.
     </para>
 
     <para>
@@ -172,24 +182,26 @@ make</userinput></screen>
       libxml2 modulen med Python3 i stedet for Python2.
     </para>
 
+<!--
     <para>
-      <option>--with-icu</option>: Legg til denne bryteren hvis du har bygget
-      <xref linkend="icu"/>, for bedre unicode støtte.
+      <option>- -with-icu</option>: Legg til denne bryteren hvis du har bygget
+      <xref linkend="icu"/>, for bedre unicode stÃ¸tte.
     </para>
 
     <note>
       <para>
-        Hvis <option>--with-icu</option> bryteren brukes, BLFS redaktørene
-        anbefaler å fjerne unødvendige referanser til ICU bibliotekene. Dette
-        vil forhindre at mange pakker som bruker libxml2 kobles unødvendig
+        Hvis <option>- -with-icu</option> bryteren brukes, BLFS redaktÃ¸rene
+        anbefaler Ã¥ fjerne unÃ¸dvendige referanser til ICU bibliotekene. Dette
+        vil forhindre at mange pakker som bruker libxml2 kobles unÃ¸dvendig
         til ICU bibliotekene. Dette vil igjen forhindre behovet for
-        å gjenoppbygge mange pakker ved oppgradering av ICU til en ny hovedversjon.
-        Etter å ha installert libxml2, som &root; bruker, utsted:
+        Ã¥ gjenoppbygge mange pakker ved oppgradering av ICU til en ny hovedversjon.
+        Etter Ã¥ ha installert libxml2, som &root; bruker, utsted:
       </para>
 
 <screen role="nodump"><userinput>rm -vf /usr/lib/libxml2.la &amp;&amp;
 sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config</userinput></screen>
     </note>
+-->
 
   </sect2>
 
@@ -228,7 +240,7 @@ sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config</userinput></screen>
         <term><command>xml2-config</command></term>
         <listitem>
           <para>
-            bestemmer kompilerings- og linkerflaggene som skal brukes til å
+            bestemmer kompilerings- og linkerflaggene som skal brukes til Ã¥
             kompilere og koble programmer som bruker
             <filename class="libraryfile">libxml2</filename>
           </para>
@@ -242,7 +254,7 @@ sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config</userinput></screen>
         <term><command>xmlcatalog</command></term>
         <listitem>
           <para>
-            brukes til å overvåke og manipulere XML og SGML mapper
+            brukes til Ã¥ overvÃ¥ke og manipulere XML og SGML mapper
           </para>
           <indexterm zone="libxml2 xmlcatalog">
             <primary sortas="b-xmlcatalog">xmlcatalog</primary>
@@ -254,7 +266,7 @@ sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config</userinput></screen>
         <term><command>xmllint</command></term>
         <listitem>
           <para>
-            analyserer XML filer og sender ut rapporter (basert på alternativer) for å oppdage
+            analyserer XML filer og sender ut rapporter (basert pÃ¥ alternativer) for Ã¥ oppdage
             feil i XML koding
           </para>
           <indexterm zone="libxml2 xmllint">
@@ -267,7 +279,7 @@ sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config</userinput></screen>
         <term><filename class="libraryfile">libxml2.so</filename></term>
         <listitem>
           <para>
-            gir funksjoner for programmer for å analysere filer som bruker XML
+            gir funksjoner for programmer for Ã¥ analysere filer som bruker XML
             formatet
           </para>
           <indexterm zone="libxml2 libxml2-lib">
