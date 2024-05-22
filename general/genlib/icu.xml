@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -7,10 +7,10 @@
   <!ENTITY icu-download-http
            "https://github.com/unicode-org/icu/releases/download/release-&icu-major;-&icu-minor;/icu4c-&icu-major;_&icu-minor;-src.tgz">
   <!ENTITY icu-download-ftp  " ">
-  <!ENTITY icu-md5sum        "b8a4b8cf77f2e2f6e1341eac0aab2fc4">
+  <!ENTITY icu-md5sum        "94c0b370f43123ea92b146ebea9c709d">
   <!ENTITY icu-size          "25 MB">
-  <!ENTITY icu-buildsize     "389 MB (legg til 43 MB for tester)">
-  <!ENTITY icu-time          "0.5 SBU (Bruker parallellisme=4; legg til 1.0 SBU for tester)">
+  <!ENTITY icu-buildsize     "339 MB (legg til 42 MB for tester)">
+  <!ENTITY icu-time          "0.7 SBU (Bruker parallellisme=4; legg til 1.5 SBU for tester)">
 ]>
 
 <sect1 id="icu" xreflabel="ICU-&icu-version;">
@@ -29,9 +29,9 @@
     <para>
       <application>Internasjonale Komponenter for Unicode</application> (ICU)
       pakken er et modent, mye brukt sett med C/C++ biblioteker som gir Unicode
-      og globaliseringsstøtte for programvareapplikasjoner.
-      <application>ICU</application> er veldig overførbar og gir applikasjoner
-      de samme resultatene på alle plattformer.
+      og globaliseringsstÃ¸tte for programvareapplikasjoner.
+      <application>ICU</application> er veldig overfÃ¸rbar og gir applikasjoner
+      de samme resultatene pÃ¥ alle plattformer.
     </para>
 
     <warning>
@@ -43,33 +43,33 @@
         gjeldende pakker vil bruke de tidligere bibliotekene. Hvis Linux
         applikasjonslaster
         (<filename class='libraryfile'>/usr/lib/ld-linux-x86-64.so.2</filename>)
-        bestemmer at både det gamle og det nye biblioteket er nødvendig, og et
-        symbol (navn på data eller funksjon) finnes i begge versjoner av
-        biblioteket, vil alle referanser til symbolet bli løst til
-        versjonen som vises tidligere i bredde-første sekvensen av
-        avhengighetsgrafen. Dette kan føre til at applikasjonen mislykkes hvis
-        definisjonen av dataene eller oppførselen til funksjonen det henvises til
-        ved symbolet er forskjellig i to versjoner. For å unngå problemet, brukere
-        må gjenoppbygge hver pakke som er knyttet til et ICU bibliotek så snart
-        som mulig når ICU er oppdatert til en ny hovedversjon.
+        bestemmer at bÃ¥de det gamle og det nye biblioteket er nÃ¸dvendig, og et
+        symbol (navn pÃ¥ data eller funksjon) finnes i begge versjoner av
+        biblioteket, vil alle referanser til symbolet bli lÃ¸st til
+        versjonen som vises tidligere i bredde-fÃ¸rste sekvensen av
+        avhengighetsgrafen. Dette kan fÃ¸re til at applikasjonen mislykkes hvis
+        definisjonen av dataene eller oppfÃ¸rselen til funksjonen det henvises til
+        ved symbolet er forskjellig i to versjoner. For Ã¥ unngÃ¥ problemet, brukere
+        mÃ¥ gjenoppbygge hver pakke som er knyttet til et ICU bibliotek sÃ¥ snart
+        som mulig nÃ¥r ICU er oppdatert til en ny hovedversjon.
       </para>
 
       <para>
-        For å finne ut hvilke eksterne biblioteker som trengs (direkte eller indirekte)
-        av en applikasjon eller et bibliotek, kjør:
+        For Ã¥ finne ut hvilke eksterne biblioteker som trengs (direkte eller indirekte)
+        av en applikasjon eller et bibliotek, kjÃ¸r:
       </para>
 
 <screen><userinput>ldd &lt;application or library&gt; </userinput></screen>
 
       <para>
-        eller bare se de direkte nødvendige bibliotekene:
+        eller bare se de direkte nÃ¸dvendige bibliotekene:
       </para>
 
 <screen><userinput>readelf -d  &lt;application or library&gt; | grep NEEDED</userinput></screen>
 
     </warning>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -90,7 +90,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &icu-size;
+          NedlastingsstÃ¸rrelse: &icu-size;
         </para>
       </listitem>
       <listitem>
@@ -109,7 +109,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/icu4c-&icu-version;-fix_enumeration-1.patch"/>
         </para>
       </listitem>
@@ -138,22 +138,22 @@
     <note>
       <para>
         Hvis <command>clang++</command> er tilgjengelig, vil den bli brukt i
-        feil tro at <command>g++</command> støtter kanskje ikke C++11,
+        feil tro at <command>g++</command> stÃ¸tter kanskje ikke C++11,
         selv om <command>configure</command> har testet for det. Hvis
-        <command>g++</command> brukes vil det bli en unødvendig advarsel i
+        <command>g++</command> brukes vil det bli en unÃ¸dvendig advarsel i
         slutten av <command>configure</command>.  Bygge med
-        <command>g++</command> tar også lengre tid enn estimert SBU vist.
+        <command>g++</command> tar ogsÃ¥ lengre tid enn estimert SBU vist.
       </para>
     </note>
 <!--
     <para>
-      Først, fiks en regresjon i versjon 58.1:
+      FÃ¸rst, fiks en regresjon i versjon 58.1:
     </para>
 
 <screen><userinput>patch -p1 -i ../icu4c-&icu-version;-fix_enumeration-1.patch</userinput></screen>
 -->
     <para>
-      Installer <application>ICU</application> ved å kjøre følgende kommandoer:
+      Installer <application>ICU</application> ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <!-- Review comments at:
@@ -167,11 +167,11 @@ sed '/fdef U_CHARSET_I/i#define U_CHARSET_IS_UTF8 1' -i common/unicode/platform.
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>make check</command>.
+      For Ã¥ teste resultatene, utsted: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -238,7 +238,7 @@ make</userinput></screen>
         <term><command>genbrk</command></term>
         <listitem>
           <para>
-            kompilerer kildefiler for ICU bryte iterasjonsregler til binære data
+            kompilerer kildefiler for ICU bryte iterasjonsregler til binÃ¦re data
             filer
           </para>
           <indexterm zone="icu genbrk">
@@ -265,7 +265,7 @@ make</userinput></screen>
         <listitem>
           <para>
             leser i Unicode forvirrende tegndefinisjoner og skriver ut
-            binære data
+            binÃ¦re data
           </para>
           <indexterm zone="icu gencfu">
             <primary sortas="b-gencfu">gencfu</primary>
@@ -301,7 +301,7 @@ make</userinput></screen>
         <term><command>gendict</command></term>
         <listitem>
           <para>
-            kompilerer ordlister til ICU strengprøveordbøker
+            kompilerer ordlister til ICU strengprÃ¸veordbÃ¸ker
           </para>
           <indexterm zone="icu gendict">
             <primary sortas="b-gendict">gendict</primary>
@@ -313,7 +313,7 @@ make</userinput></screen>
         <term><command>gennorm2</command></term>
         <listitem>
           <para>
-            bygger binære datafiler med Unicode normaliseringsdata
+            bygger binÃ¦re datafiler med Unicode normaliseringsdata
           </para>
           <indexterm zone="icu gennorm2">
             <primary sortas="b-gennorm2">gennorm2</primary>
@@ -493,7 +493,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libicutu.so</filename></term>
         <listitem>
           <para>
-            er verktøybiblioteket
+            er verktÃ¸ybiblioteket
           </para>
           <indexterm zone="icu libicutu">
             <primary sortas="c-libicutu">libicutu.so</primary>

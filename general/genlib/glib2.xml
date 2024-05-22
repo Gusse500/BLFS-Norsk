@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY glib2-download-http "&gnome-download-http;/glib/&glib2-minor;/glib-&glib2-version;.tar.xz">
-  <!ENTITY glib2-download-ftp  "&gnome-download-ftp;/glib/&glib2-minor;/glib-&glib2-version;.tar.xz">
-  <!ENTITY glib2-md5sum        "b0df5864ec08248e79c13f71a717aa03">
-  <!ENTITY glib2-size          "5.0 MB">
-  <!ENTITY glib2-buildsize     "150 MB (med tester)">
-  <!ENTITY glib2-time          "0.7 SBU (legg til 0,4 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY glib2-download-ftp  " ">
+  <!ENTITY glib2-md5sum        "0781e889cab64f1f7dbb6e8357c6a95f">
+  <!ENTITY glib2-size          "5.1 MB">
+  <!ENTITY glib2-buildsize     "130 MB (legg til 20 MB for tester)">
+  <!ENTITY glib2-time          "0.8 SBU (legg til 0,5 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="glib2" xreflabel="GLib-&glib2-version;">
@@ -26,13 +26,13 @@
     <title>Introduksjon til GLib</title>
 
     <para>
-      <application>GLib</application> pakken inneholder lavt nivå
-      biblioteker som er nyttige for å gi datastrukturhåndtering for C, portabilitet
-      innpakninger og grensesnitt for slik kjøretidsfunksjonalitet som en
-      hendelsesløkke, tråder, dynamisk lasting og et objektsystem.
+      <application>GLib</application> pakken inneholder lavt nivÃ¥
+      biblioteker som er nyttige for Ã¥ gi datastrukturhÃ¥ndtering for C, portabilitet
+      innpakninger og grensesnitt for slik kjÃ¸retidsfunksjonalitet som en
+      hendelseslÃ¸kke, trÃ¥der, dynamisk lasting og et objektsystem.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &glib2-size;
+          NedlastingsstÃ¸rrelse: &glib2-size;
         </para>
       </listitem>
       <listitem>
@@ -95,18 +95,19 @@
       <xref linkend="gdb"/> (for bindinger),
       <xref linkend="DocBook"/>,
       <xref linkend="docbook-xsl"/>,
-      <xref linkend="gtk-doc"/> (for å bygge API dokumentasjonen),
-      <xref linkend="glib-networking"/> (for noen tester, men dette er en sirkulær
+      <xref linkend="gtk-doc"/> (for Ã¥ bygge API dokumentasjonen),
+      <xref linkend="glib-networking"/> (for noen tester, men dette er en sirkulÃ¦r
       avhengighet), og
-      <xref linkend="sysprof"/>
+      <!--<xref linkend="sysprof"/>-->
+      <ulink url="&sysprof-url;">sysprof</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Ytterligere Kjøretids Avhengigheter</bridgehead>
+    <bridgehead renderas="sect4">Ytterligere KjÃ¸retids Avhengigheter</bridgehead>
     <para role="recommended">
       <xref role="runtime" linkend="gobject-introspection"/>
-      (burde bli installert før gtk+, atk, etc.)
+      (burde bli installert fÃ¸r gtk+, atk, etc.)
     </para>
-    <para role="optional">
+    <para role="recommended">
       Sitert direkte fra <filename>INSTALL</filename> filen:
       <quote>Some of the mimetype-related functionality in GIO requires the
       <command>update-mime-database</command> and
@@ -123,11 +124,11 @@
     <title>Installasjon av GLib</title>
 
     <para>
-      Hvis ønskelig, bruk den valgfrie oppdateringen. I mange tilfeller applikasjoner som
+      Hvis Ã¸nskelig, bruk den valgfrie oppdateringen. I mange tilfeller applikasjoner som
       bruker dette biblioteket, enten direkte eller indirekte via andre biblioteker som f.eks
-      som <xref linkend="gtk3"/>, gi ut mange advarsler når du kjører fra
-      kommandolinjen. Denne oppdateringen muliggjør bruk av en miljøvariabel,
-      <envar>GLIB_LOG_LEVEL</envar>, som undertrykker uønskede meldinger.
+      som <xref linkend="gtk3"/>, gi ut mange advarsler nÃ¥r du kjÃ¸rer fra
+      kommandolinjen. Denne oppdateringen muliggjÃ¸r bruk av en miljÃ¸variabel,
+      <envar>GLIB_LOG_LEVEL</envar>, som undertrykker uÃ¸nskede meldinger.
       Verdien av variabelen er et siffer som tilsvarer:
     </para>
 
@@ -141,9 +142,9 @@
 
     <para>
       For eksempel <userinput>export GLIB_LOG_LEVEL=4</userinput> vil hoppe over
-      utdata av advarsels- og varselmeldinger (og info/feilsøkingsmeldinger hvis de
-      er slått på). Hvis <envar>GLIB_LOG_LEVEL</envar> ikke er definert, normal
-      meldingsutdata vil ikke bli påvirket.
+      utdata av advarsels- og varselmeldinger (og info/feilsÃ¸kingsmeldinger hvis de
+      er slÃ¥tt pÃ¥). Hvis <envar>GLIB_LOG_LEVEL</envar> ikke er definert, normal
+      meldingsutdata vil ikke bli pÃ¥virket.
     </para>
 
 <screen><userinput>patch -Np1 -i ../glib-skip_warnings-1.patch</userinput></screen>
@@ -151,7 +152,7 @@
     <warning>
       <para>
         Hvis en tidligere versjon av glib er installert, flytter du deklarasjonene ut av
-        veien slik at senere pakker ikke møter konflikter:
+        veien slik at senere pakker ikke mÃ¸ter konflikter:
       </para>
 
 <screen role="root"><userinput remap="pre">if [ -e /usr/include/glib-2.0 ]; then
@@ -162,7 +163,7 @@ fi</userinput></screen>
     </warning>
 
     <para>
-      Installer <application>GLib</application> ved å kjøre følgende
+      Installer <application>GLib</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -178,20 +179,20 @@ ninja</userinput></screen>
     <note><para>
       Hvis <xref linkend="libxslt"/> er installert, kan kommandoen ovenfor
       angi flere (ca. 33) feil som starter med "Error: no ID for
-      constraint linkend:" når man genererer manualsidene. Disse er ufarlige.
+      constraint linkend:" nÃ¥r man genererer manualsidene. Disse er ufarlige.
     </para></note>
 
     <para>
       <application>GLib</application> testpakken krever
       <application>desktop-file-utils</application> for noen tester. Derimot,
       <application>desktop-file-utils</application> krever
-      <application>GLib</application> for å kompilere; derfor må du
-      først installere <application>GLib</application> og deretter kjøre
+      <application>GLib</application> for Ã¥ kompilere; derfor mÃ¥ du
+      fÃ¸rst installere <application>GLib</application> og deretter kjÃ¸re
       testpakken.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install &amp;&amp;
@@ -200,27 +201,22 @@ mkdir -p /usr/share/doc/glib-&glib2-version; &amp;&amp;
 cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</userinput></screen>
 
     <para>
-      Du bør nå installere <xref linkend="desktop-file-utils"/> og
-      <xref linkend="shared-mime-info"/> og fortsette for å
-      kjøre testpakken.
+      Du bÃ¸r nÃ¥ installere <xref linkend="desktop-file-utils"/> og
+      <xref linkend="shared-mime-info"/> og fortsette for Ã¥
+      kjÃ¸re testpakken.
     </para>
 
     <warning>
       <para>
-        Ikke kjør testpakken som &root; da vil noen tester mislykkes
-        uventet og la noen ikke-FHS kompatible mapper være i
+        Ikke kjÃ¸r testpakken som &root; da vil noen tester mislykkes
+        uventet og la noen ikke-FHS kompatible mapper vÃ¦re i
         <filename class='directory'>/usr</filename> hierarkiet.
       </para>
     </warning>
 
     <para>
-      For å teste resultatene, etter å ha installert pakken, utsted:
+      For Ã¥ teste resultatene, etter Ã¥ ha installert pakken, utsted:
       <command>LC_ALL=C ninja test</command> som ikke-&root; bruker.
-      <!-- https://gitlab.gnome.org/GNOME/glib/-/issues/2965
-           Fixed for 2.78, but NOT any 2.76.x patch releases.
-           PLEASE DO NOT REMOVE UNLESS YOU'VE TESTED WITH COREUTILS 9.2 OR
-           LATER! -->
-      En test navngitt <literal>glib:gio / file</literal> er kjent for å mislykkes.
     </para>
   </sect2>
 
@@ -231,12 +227,12 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dman=true</parameter>: Denne bryteren gjør at
+      <parameter>-Dman=true</parameter>: Denne bryteren gjÃ¸r at
       bygget lager og installerer pakkens manualsider.
     </para>
 
     <para>
-      <option>-Dgtk_doc=true</option>: Denne bryteren gjør at
+      <option>-Dgtk_doc=true</option>: Denne bryteren gjÃ¸r at
       bygget lager og installerer API dokumentasjonen.
     </para>
 
@@ -288,8 +284,8 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gapplication</command></term>
         <listitem>
           <para>
-            kan brukes til å starte applikasjoner og sende
-            meldinger til allerede kjørende økter av andre applikasjoner
+            kan brukes til Ã¥ starte applikasjoner og sende
+            meldinger til allerede kjÃ¸rende Ã¸kter av andre applikasjoner
           </para>
           <indexterm zone="glib2 gapplication">
             <primary sortas="b-gapplication">application</primary>
@@ -300,7 +296,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gdbus</command></term>
         <listitem>
           <para>
-            er et enkelt verktøy som brukes til å jobbe med
+            er et enkelt verktÃ¸y som brukes til Ã¥ jobbe med
             <application>D-Bus</application> objekter
           </para>
           <indexterm zone="glib2 gdbus">
@@ -313,7 +309,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gdbus-codegen</command></term>
         <listitem>
           <para>
-            brukes til å generere kode og/eller dokumentasjon for en eller
+            brukes til Ã¥ generere kode og/eller dokumentasjon for en eller
             flere <application>D-Bus</application> grensesnitt
           </para>
           <indexterm zone="glib2 gdbus-codegen">
@@ -326,7 +322,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gio</command></term>
         <listitem>
           <para>
-            er et verktøy som gjør mange <application>GIO</application>
+            er et verktÃ¸y som gjÃ¸r mange <application>GIO</application>
             funksjoner tilgjengelig fra kommandolinjen
           </para>
           <indexterm zone="glib2 gio">
@@ -339,7 +335,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gio-querymodules</command></term>
         <listitem>
           <para>
-            brukes til å opprette en <filename>giomodule.cache</filename> fil i
+            brukes til Ã¥ opprette en <filename>giomodule.cache</filename> fil i
             de listede mappene. Denne filen viser den implementerte utvidelsen
             punktet for hver modul som er funnet
           </para>
@@ -353,8 +349,8 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>glib-compile-resources</command></term>
         <listitem>
           <para>
-            brukes til å lese ressursbeskrivelsen fra en fil og
-            filene den refererer til for å lage en binær ressurs
+            brukes til Ã¥ lese ressursbeskrivelsen fra en fil og
+            filene den refererer til for Ã¥ lage en binÃ¦r ressurs
             bunt som er egnet for bruk med GResource API
           </para>
           <indexterm zone="glib2 glib-compile-resources">
@@ -367,8 +363,8 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>glib-compile-schemas</command></term>
         <listitem>
           <para>
-            brukes til å kompilere alle XML skjemafilene for GSettings
-            i en mappe til en binær fil med navnet
+            brukes til Ã¥ kompilere alle XML skjemafilene for GSettings
+            i en mappe til en binÃ¦r fil med navnet
             <filename>gschemas.compiled</filename> som kan brukes av GSettings
           </para>
           <indexterm zone="glib2 glib-compile-schemas">
@@ -381,7 +377,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>glib-genmarshal</command></term>
         <listitem>
           <para>
-            er et C kode marshaller genereringsverktøy for GLib lukkinger
+            er et C kode marshaller genereringsverktÃ¸y for GLib lukkinger
           </para>
           <indexterm zone="glib2 glib-genmarshal">
             <primary sortas="b-glib-genmarshal">glib-genmarshal</primary>
@@ -394,7 +390,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <listitem>
           <para>
             er en variant av <application>gettext</application>
-            internasjonaliseringsverktøyet
+            internasjonaliseringsverktÃ¸yet
           </para>
           <indexterm zone="glib2 glib-gettextize">
             <primary sortas="b-glib-gettextize">glib-gettextize</primary>
@@ -406,7 +402,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>glib-mkenums</command></term>
         <listitem>
           <para>
-            er et verktøy for generering av enumbeskrivelse i C språk
+            er et verktÃ¸y for generering av enumbeskrivelse i C sprÃ¥k
           </para>
           <indexterm zone="glib2 glib-mkenums">
             <primary sortas="b-glib-mkenums">glib-mkenums</primary>
@@ -418,7 +414,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gobject-query</command></term>
         <listitem>
           <para>
-            er et lite verktøy som tegner et tre med typer
+            er et lite verktÃ¸y som tegner et tre med typer
           </para>
           <indexterm zone="glib2 gobject-query">
             <primary sortas="b-gobject-query">gobject-query</primary>
@@ -454,7 +450,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gtester</command></term>
         <listitem>
           <para>
-            er et testverktøy
+            er et testverktÃ¸y
           </para>
           <indexterm zone="glib2 gtester">
             <primary sortas="b-gtester">gtester</primary>
@@ -466,7 +462,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term><command>gtester-report</command></term>
         <listitem>
           <para>
-            er et testrapportformateringsverktøy
+            er et testrapportformateringsverktÃ¸y
           </para>
           <indexterm zone="glib2 gtester-report">
             <primary sortas="b-gtester-report">gtester-report</primary>
@@ -478,7 +474,7 @@ cp -r ../docs/reference/{gio,glib,gobject} /usr/share/doc/glib-&glib2-version;</
         <term>GLib libraries</term>
           <listitem>
           <para>
-            inneholder kjernebiblioteker på lavt nivå for
+            inneholder kjernebiblioteker pÃ¥ lavt nivÃ¥ for
             <application>GIMP</application> Toolkit
           </para>
           <indexterm zone="glib2 GLib-libraries">

@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY keyutils-download-http "https://people.redhat.com/~dhowells/keyutils/keyutils-&keyutils-version;.tar.bz2">
+  <!ENTITY keyutils-download-http "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-&keyutils-version;.tar.gz">
   <!ENTITY keyutils-download-ftp  " ">
-  <!ENTITY keyutils-md5sum        "919af7f33576816b423d537f8a8692e8">
-  <!ENTITY keyutils-size          "96 KB">
-  <!ENTITY keyutils-buildsize     "1.9 MB (med tester)">
-  <!ENTITY keyutils-time          "mindre enn 0.1 SBU (legg til 0.6 SBU for tester)">
+  <!ENTITY keyutils-md5sum        "6b70b2b381c1b6d9adfaf66d5d3e7c00">
+  <!ENTITY keyutils-size          "136 KB">
+  <!ENTITY keyutils-buildsize     "2.6 MB (med tester)">
+  <!ENTITY keyutils-time          "mindre enn 0.1 SBU (legg til 0.4 SBU for tester)">
 ]>
 
 <sect1 id="keyutils" xreflabel="keyutils-&keyutils-version;">
@@ -26,13 +26,13 @@
     <title>Introduksjon til keyutils</title>
 
     <para>
-      <application>Keyutils</application> er et sett med verktøy for å administrere
-      nøkkeloppbevaringsfasiliteten i kjernen, som kan brukes av
-      filsystemer, blokk enheter og mer for å få og beholde autorisasjonen
-      og krypteringsnøkler som kreves for å utføre sikre operasjoner.
+      <application>Keyutils</application> er et sett med verktÃ¸y for Ã¥ administrere
+      nÃ¸kkeloppbevaringsfasiliteten i kjernen, som kan brukes av
+      filsystemer, blokk enheter og mer for Ã¥ fÃ¥ og beholde autorisasjonen
+      og krypteringsnÃ¸kler som kreves for Ã¥ utfÃ¸re sikre operasjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &keyutils-size;
+          NedlastingsstÃ¸rrelse: &keyutils-size;
         </para>
       </listitem>
       <listitem>
@@ -68,57 +68,84 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">keyutils Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">Keyutils Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
-    <para role="required">
-      <xref linkend="mitkrb"/>
-      <!-- Uten krb5 installert, oppstår en FTBFS under forsøk på å kompilere dns.afsdb.c.
-      Den ser etter profile.h, som er installert av krb5. -->
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="lsb-tools"/> (henvist av testpakken)
+     </para>
+  </sect2>
+ 
+  <sect2 role="kernel" id="keyutils-test-kernel">
+    <title>Kjernekonfigurasjon</title>
     </para>
 
+    <para>
+      Hvis du kjÃ¸rer testpakken, trenger noen tester fÃ¸lgende kjerne
+      funksjoner aktivert:
+    </para>
 
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="keyutils-test-kernel.xml"/>
+ 
+    <indexterm zone="keyutils keyutils-test-kernel">
+      <primary sortas="d-keyutils">keyutils (testing)</primary>
+    </indexterm>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av keyutils</title>
 
     <para>
-      Installer <application>keyutils</application> ved å kjøre følgende
+      Installer <application>keyutils</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>sed -i 's:$(LIBDIR)/$(PKGCONFIG_DIR):/usr/lib/pkgconfig:' Makefile &amp;&amp;
-make</userinput></screen>
+<screen><userinput>make</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted, som
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>make NO_ARLIB=1 LIBDIR=/usr/lib BINDIR=/usr/bin SBINDIR=/usr/sbin install</userinput></screen>
+
+    <para>
+      Testpakken kan bare kjÃ¸res etter at denne pakken er installert.
+      For Ã¥ teste resultatene, utsted, som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" remap="test"><userinput>make -k test</userinput></screen>
 
     <para>
-      Merk at flere tester vil mislykkes hvis visse uvanlige kjernealternativer
-      ikke ble brukt da kjernen ble bygget. Disse inkluderer CONFIG_BIG_KEYS,
-      CONFIG_KEY_DH_OPERATIONS, og CONFIG_CRYPTO_DH.
+      Hvis <xref linkend='lsb-tools'/> ikke er installert, vil testpakken
+      gi noen linjer klage pÃ¥ at <command>lsb_release</command>
+      kommandoen ikke er tilgjengelig, men den vil ikke pÃ¥virke testresultatet. En test
+      navngitt <literal>TRY ADDING ASYMMETRIC KEYS</literal> er kjent for Ã¥ mislykkes
+      pÃ¥ grunn av fjerning av stÃ¸tten for SHA1 med RSA signatur
+      algoritme fra Linux kjerneversjonen 6.7 <!-- commit 16ab7cb5825f -->
+      eller nyere.
     </para>
-
-    <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>make NO_ARLIB=1 LIBDIR=/usr/lib BINDIR=/usr/bin SBINDIR=/usr/sbin install</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
+<!--
     <para>
       <command>sed ... Makefile</command>: Denne kommandoen sikrer at pkgconfig
       filen er plassert i riktig mappe.
     </para>
+
+    <para>
+      <command>sed ... tests/toolbox.inc.sh</command>: I LFS har GCC blitt
+      konfigurert med <option>- -enable-default-pie</option> sÃ¥
+      <command>/usr/bin/bash</command> er en PIE, men testskriptet
+      forutser ikke det. Rett opp denne forglemmelsen slik at testen kan kjÃ¸res pÃ¥ et LFS
+      system.
+    </para>
+-->
 
     <para>
       <parameter>NO_ARLIB=1</parameter>: Dette make flagget deaktiverer installasjonen av
@@ -161,7 +188,9 @@ make</userinput></screen>
       <seglistitem>
         <seg>keyctl, key.dns_resolver, og request-key</seg>
         <seg>libkeyutils.so</seg>
-        <seg>/etc/request-key.d og /usr/share/keyutils</seg>
+        <seg>/etc/keyutils,
+        /etc/request-key.d,
+        og /usr/share/keyutils</seg>
       </seglistitem>
     </segmentedlist>
 
@@ -174,7 +203,7 @@ make</userinput></screen>
         <term><command>keyctl</command></term>
         <listitem>
           <para>
-            kontrollerer nøkkeladministrasjonsfasilitetet med en rekke underkommandoer
+            kontrollerer nÃ¸kkeladministrasjonsfasilitetet med en rekke underkommandoer
           </para>
           <indexterm zone="keyutils keyctl">
             <primary sortas="b-keyctl">keyctl</primary>
@@ -186,10 +215,10 @@ make</userinput></screen>
         <term><command>key.dns_resolver</command></term>
         <listitem>
           <para>
-            er påkalt av <command>request-key</command> på vegne av
-            kjernen når kjernetjenester (som NFS, CIFS og AFS) trenger å
-            utføre et vertsnavnoppslag og kjernen ikke har nøkkelen
-            bufret. Det er vanligvis ikke ment å bli påkalt direkte
+            er pÃ¥kalt av <command>request-key</command> pÃ¥ vegne av
+            kjernen nÃ¥r kjernetjenester (som NFS, CIFS og AFS) trenger Ã¥
+            utfÃ¸re et vertsnavnoppslag og kjernen ikke har nÃ¸kkelen
+            bufret. Det er vanligvis ikke ment Ã¥ bli pÃ¥kalt direkte
           </para>
           <indexterm zone="keyutils key.dns_resolver">
             <primary sortas="b-key.dns_resolver">key.dns_resolver</primary>
@@ -201,10 +230,10 @@ make</userinput></screen>
         <term><command>request-key</command></term>
         <listitem>
           <para>
-            påkalles av kjernen når kjernen blir bedt om en nøkkel som den
+            pÃ¥kalles av kjernen nÃ¥r kjernen blir bedt om en nÃ¸kkel som den
             ikke har tilgjengelig umiddelbart. Kjernen oppretter en midlertidig
-            nøkkel og kaller deretter til dette programmet for å instansiere det. Det er
-            ikke ment å bli påkalt direkte
+            nÃ¸kkel og kaller deretter til dette programmet for Ã¥ instansiere det. Det er
+            ikke ment Ã¥ bli pÃ¥kalt direkte
           </para>
           <indexterm zone="keyutils request-key">
             <primary sortas="b-request-keyt-key">request-key</primary>

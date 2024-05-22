@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY gobject-introspection-download-http
-    "&gnome-download-http;/gobject-introspection/1.76/gobject-introspection-&gobject-introspection-version;.tar.xz">
-  <!ENTITY gobject-introspection-download-ftp
-    "&gnome-download-ftp;/gobject-introspection/1.76/gobject-introspection-&gobject-introspection-version;.tar.xz">
-  <!ENTITY gobject-introspection-md5sum        "5cb554fdd139db79f9b1be13892fddac">
+    "&gnome-download-http;/gobject-introspection/1.78/gobject-introspection-&gobject-introspection-version;.tar.xz">
+  <!ENTITY gobject-introspection-download-ftp  " ">
+  <!ENTITY gobject-introspection-md5sum        "da2677e6b9c91b33c036d2233a96cec3">
   <!ENTITY gobject-introspection-size          "1.0 MB">
-  <!ENTITY gobject-introspection-buildsize     "49 MB (med tester)">
+  <!ENTITY gobject-introspection-buildsize     "48 MB (med tester)">
   <!ENTITY gobject-introspection-time          "0.3 SBU (Med tester; begge bruker parallellisme=4)">
 ]>
 <sect1 id="gobject-introspection" xreflabel="gobject-introspection-&gobject-introspection-version;">
@@ -28,11 +27,11 @@
 
     <para>
       <application>GObject Introspection</application> benyttes til
-      å beskrive program API-ene og samle dem i et enhetlig,
+      Ã¥ beskrive program API-ene og samle dem i et enhetlig,
       maskinlesbart format.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gobject-introspection-size;
+          NedlastingsstÃ¸rrelse: &gobject-introspection-size;
         </para>
       </listitem>
       <listitem>
@@ -70,26 +69,18 @@
 
     <bridgehead renderas="sect3">GObject Introspection Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="cairo"/> (påkrevd for testene),
-      <xref linkend="gjs"/> (for å tilfredsstille en test),
+      <xref linkend="cairo"/> (pÃ¥krevd for testene),
+      <xref linkend="gjs"/> (for Ã¥ tilfredsstille en test),
       <xref linkend="gtk-doc"/>,
       <xref linkend="Mako"/>, og
       <xref linkend="markdown"/>
-      <!--<ulink url="https://pypi.org/project/Markdown/">Markdown</ulink> (for å tilfredsstille en test)-->
-      <!-- There was talk of this being required in the release notes. Can someone
-      who doesn't have this installed verify?
-      It is only needed for one test.  bdubbs March 3, 2019
-      I do not have Markdown and all tests pass for 1.74.0.  Sep 2022
-      More investigation notes that Markdown and Mako are needed for gi-doc-tool.
-      January 2023
-      -->
     </para>
 
   </sect2>
@@ -98,8 +89,8 @@
     <title>Installasjon av GObject Introspection</title>
 
     <para>
-      Installer <application>GObject Introspection</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>GObject Introspection</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -109,11 +100,15 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>ninja test</command>.
+      For Ã¥ teste resultatene, fiks en inkompatibilitet av testpakken med
+      Python 3.12 eller nyere, og kjÃ¸r deretter testpakken:
     </para>
 
+<screen remap='test'><userinput>sed "/PYTHONPATH/a'/usr/lib/python&python3-majorver;'," -i ../tests/warn/meson.build &amp;&amp;
+ninja test</userinput></screen>
+
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -131,17 +126,21 @@ ninja</userinput></screen>
       dokumentasjonen.
     </para>
 
+<!-- This is now autodetected
     <para>
       <option>-Dcairo=enabled</option>: Bruk cairo for tester.
     </para>
+-->
 
+<!-- This is now autodetected
     <para>
       <option>-Ddoctool=enabled</option>: Installer g-ir-doc-tool
-      og kjør relaterte tester. Du må ha
+      og kjÃ¸r relaterte tester. Du mÃ¥ ha
       <xref linkend="Mako" role="nodep"/> og
       <xref linkend="markdown" role="nodep"/> installert for
-      å installere dette verktøyet.
+      Ã¥ installere dette verktÃ¸yet.
     </para>
+-->
 
   </sect2>
 
@@ -221,7 +220,7 @@ ninja</userinput></screen>
         <term><command>g-ir-inspect</command></term>
         <listitem>
           <para>
-            er et verktøy som gir informasjon om en GI typelib
+            er et verktÃ¸y som gir informasjon om en GI typelib
           </para>
           <indexterm zone="gobject-introspection g-ir-inspect">
             <primary sortas="b-g-ir-inspect">g-ir-inspect</primary>
@@ -245,7 +244,7 @@ ninja</userinput></screen>
         <term><command>g-ir-scanner</command></term>
         <listitem>
           <para>
-            er et verktøy som genererer GIR XML filer ved å analysere deklarasjoner og
+            er et verktÃ¸y som genererer GIR XML filer ved Ã¥ analysere deklarasjoner og
             introspekterende GObject baserte biblioteker
           </para>
           <indexterm zone="gobject-introspection g-ir-scanner">
@@ -258,7 +257,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libgirepository-1.0.so</filename></term>
         <listitem>
           <para>
-            gir et API for å få tilgang til typelib metadataene
+            gir et API for Ã¥ fÃ¥ tilgang til typelib metadataene
           </para>
           <indexterm zone="gobject-introspection libgirepository-1.0">
             <primary sortas="c-libgirepository-1.0">libgirepository-1.0.so</primary>
