@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY libical-download-http "https://github.com/libical/libical/releases/download/v&libical-version;/libical-&libical-version;.tar.gz">
   <!ENTITY libical-download-ftp  " ">
-  <!ENTITY libical-md5sum        "3799f9dde1db6f7eb0cb112b5e14ab60">
-  <!ENTITY libical-size          "900 KB">
-  <!ENTITY libical-buildsize     "24 MB (med tester og API dokumentasjon)">
-  <!ENTITY libical-time          "0.3 SBU (med tester og API dokumentasjon)">
+  <!ENTITY libical-md5sum        "aab3e2c80a5a61c744204675bff19ae0">
+  <!ENTITY libical-size          "888 KB">
+  <!ENTITY libical-buildsize     "38 MB (med tester og API dokumentasjon)">
+  <!ENTITY libical-time          "0.4 SBU (med tester og API dokumentasjon)">
 <!-- run at -j1 because it fails at -j4 -->
 ]>
 
@@ -31,7 +31,7 @@
       av iCalendar protokollene og dataformatene.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
 
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libical-size;
+          NedlastingsstÃ¸rrelse: &libical-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
 
     <bridgehead renderas="sect3">libical Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>
     </para>
@@ -87,8 +87,9 @@
       <xref linkend="doxygen"/> (for API dokumentasjon),
       <xref linkend="graphviz"/> (for API dokumentasjon),
       <xref linkend="gtk-doc"/> (for API dokumentasjon),
-      <xref linkend="icu"/>, og
-      <xref linkend="pygobject3"/> (for noen tester)
+      <xref linkend="icu"/>,
+      <xref linkend="pygobject3"/> (for noen tester), og
+      &berkeley-db;
     </para>
 
   </sect2>
@@ -97,7 +98,7 @@
     <title>Installasjon av libical</title>
 
 <!-- Not needed with 3.0.9
-    <para>Gjør først noen rettelser for de nyeste versjonene av icu og Python:</para>
+    <para>GjÃ¸r fÃ¸rst noen rettelser for de nyeste versjonene av icu og Python:</para>
 
 <screen><userinput>sed -i '/define LEAP_MONTH/a #define FALSE 0' src/libical/icalrecur.c &amp;&amp;
 sed -i 's/array/arraytest/'       src/test/libical-glib/CMakeLists.txt &amp;&amp;
@@ -105,8 +106,8 @@ mv src/test/libical-glib/array.py src/test/libical-glib/arraytest.py</userinput>
 -->
 
     <para>
-      Installer <application>libical</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>libical</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
   <!-- Needs confirmation, but I got a race condition at -j8,
@@ -128,7 +129,7 @@ make -j1</userinput></screen>
     <para>
       Hvis du har <xref linkend="doxygen"/>, <xref linkend="graphviz"/>,
       og <xref linkend="gtk-doc"/>
-      installert og ønsker å bygge API dokumentasjonen, bør du
+      installert og Ã¸nsker Ã¥ bygge API dokumentasjonen, bÃ¸r du
       fjerne <parameter>-DICAL_BUILD_DOCS=false</parameter> parameteren
       og utstede:
     </para>
@@ -136,21 +137,21 @@ make -j1</userinput></screen>
 <screen remap="doc"><userinput>make docs</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>make test</command>.
-      <!-- En test, timezones, er kjent for å mislykkes på SysV systemer. -->
-      <!-- På systemd symlinker vi gjeldende tidssone til
+      For Ã¥ teste resultatene, utsted: <command>make test</command>.
+      <!-- En test, timezones, er kjent for Ã¥ mislykkes pÃ¥ SysV systemer. -->
+      <!-- PÃ¥ systemd symlinker vi gjeldende tidssone til
            /etc/localtime, som er det libical forventer.
-           Dette gjøres nå også på SysV.-->
+           Dette gjÃ¸res nÃ¥ ogsÃ¥ pÃ¥ SysV.-->
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      Hvis du har bygget API dokumentasjonen, installer ved å utstede, som
+      Hvis du har bygget API dokumentasjonen, installer ved Ã¥ utstede, som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -165,12 +166,12 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
 
     <para>
       <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren brukes
-      for å bruke høyere nivå av kompilatoroptimaliseringer.
+      for Ã¥ bruke hÃ¸yere nivÃ¥ av kompilatoroptimaliseringer.
     </para>
 
     <para>
       <parameter>-DSHARED_ONLY=yes</parameter>: Denne bryteren brukes
-      for kun å bygge de delte bibliotekene.
+      for kun Ã¥ bygge de delte bibliotekene.
     </para>
 
     <para>
@@ -181,17 +182,17 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
 
     <para>
       <parameter>-DGOBJECT_INTROSPECTION=true</parameter>: Denne bryteren brukes
-      for å generere GObject metadatabindinger.
+      for Ã¥ generere GObject metadatabindinger.
     </para>
 
     <para>
       <parameter>-DICAL_GLIB_VAPI=true</parameter>: Denne bryteren brukes
-      for å bygge bindinger for <xref linkend="vala"/>.
+      for Ã¥ bygge bindinger for <xref linkend="vala"/>.
     </para>
 
     <para>
       <option>-DUSE_BUILTIN_TZDATA=yes</option>: Denne bryteren brukes
-      for å bygge med dine egne tidssonedata.
+      for Ã¥ bygge med dine egne tidssonedata.
     </para>
 
     <!-- No CMake equivalents
@@ -285,7 +286,7 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <listitem>
           <para>
             er et bibliotek som lar deg lagre iCal komponentdata
-            til disk på en rekke måter
+            til disk pÃ¥ en rekke mÃ¥ter
           </para>
           <indexterm zone="libical libicalss">
             <primary sortas="c-libicalss">libicalss.so</primary>
