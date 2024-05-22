@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
-  <!ENTITY inkscape-download-http "https://inkscape.org/gallery/item/42328/inkscape-&inkscape-minor-version;.tar.xz">
+  <!ENTITY inkscape-download-http "https://inkscape.org/gallery/item/44615/inkscape-&inkscape-minor-version;.tar.xz">
 
   <!-- When updating, remember to change the numeric part of the URL -->
 
   <!ENTITY inkscape-download-ftp  " ">
-  <!ENTITY inkscape-md5sum        "3b16db43ffdae2156c4f318a44c32bbd">
-  <!ENTITY inkscape-size          "82 MB">
-  <!ENTITY inkscape-buildsize     "870 MB (190 MB installert)">
-  <!ENTITY inkscape-time          "3.5 SBU (med parallellisme=8)">
+  <!ENTITY inkscape-md5sum        "76ed1f4b13065e80de8b2d77b6427b83">
+  <!ENTITY inkscape-size          "43 MB">
+  <!ENTITY inkscape-buildsize     "817 MB (189 MB installert)">
+  <!ENTITY inkscape-time          "4.6 SBU (med parallellisme=8)">
 
   <!-- To find newer tarballs, look here:
        https://inkscape.org/release/all/source/archive/?pre=0
@@ -32,12 +32,12 @@
     <title>Introduksjon til Inkscape</title>
 
     <para>
-      <application>Inkscape</application> er en det du ser er det du får
-      Skalerbar vektorgrafikkredigerer. Det er nyttig for å lage, se og
+      <application>Inkscape</application> er en det du ser er det du fÃ¥r
+      Skalerbar vektorgrafikkredigerer. Det er nyttig for Ã¥ lage, se og
       endre SVG bilder.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -58,7 +58,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &inkscape-size;
+          NedlastingsstÃ¸rrelse: &inkscape-size;
         </para>
       </listitem>
       <listitem>
@@ -77,7 +77,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering: <ulink
+          NÃ¸dvendig oppdatering: <ulink
           url="&patch-root;/inkscape-&inkscape-version;-poppler_22_09_fixes-1.patch"/>
         </para>
       </listitem>
@@ -93,7 +93,7 @@
 
     <bridgehead renderas="sect3">Inkscape Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="boost"/>,
       <xref linkend="double-conversion"/>,
@@ -104,7 +104,7 @@
       <xref linkend="libxslt"/>,
       <xref linkend="poppler"/>,
       <xref linkend="popt"/> og
-      <xref linkend="wget"/> (for å laste ned testavhengighetene)
+      <xref linkend="wget"/> (for Ã¥ laste ned testavhengighetene)
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -117,12 +117,11 @@
                  inkscape to Imagemagick 7 API.
            For WebSlicer export to JPG or GIF, Imagemagick program
            "convert" is needed and this is only a runtime dependency.  -->
-      <xref role="runtime" linkend="imagemagick"/> (kjøretid),
-      <xref linkend="lcms2"/> eller
-      <xref role="nodep" linkend="lcms"/>,
-      <xref linkend="libcanberra"/> (for å eliminere programtilleggs advarsler),
-      <xref linkend="potrace"/> (for bucket-fill verktøyet), også
-      ulike Python moduler under kjøretid for kjerneutvidelsene:
+      <xref role="runtime" linkend="imagemagick"/> (kjÃ¸retid),
+      <xref linkend="lcms2"/>,
+      <xref linkend="libcanberra"/> (for Ã¥ eliminere programtilleggs advarsler),
+      <xref linkend="potrace"/> (for bucket-fill verktÃ¸yet), ogsÃ¥
+      ulike Python moduler under kjÃ¸retid for kjerneutvidelsene:
       <!-- there might be others, or other needed dependencies:
        needs someone who knows how to use *all" the core extensions -->
       <xref role="runtime" linkend="cachecontrol"/>,
@@ -136,7 +135,7 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="aspell"/>,
-      <xref linkend="dbus"/> (for å kjøre inkscape fra skript),
+      <xref linkend="dbus"/> (for Ã¥ kjÃ¸re inkscape fra skript),
       <xref linkend="doxygen"/>,
       <xref linkend="gspell"/>,
 
@@ -168,27 +167,20 @@
     <title>Installasjon av Inkscape</title>
 <!--
     <para>
-      Først fikser du Inkscape for å bygge med poppler-22.09.0:
+      FÃ¸rst fikser du Inkscape for Ã¥ bygge med poppler-22.09.0:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../inkscape-&inkscape-version;-poppler_22_09_fixes-1.patch</userinput></screen>
 -->
 
-<!-- If there is no test suite, then this is not needed.
-     There is none if the command below is not run.
-     With 1.0, this support is broken, so let's comment it out for now to
-     prevent confusion.
     <para>
-      Hvis du ønsker å kjøre testpakken, last ned de nødvendige versjonene av
-      <application>googletest</application> og
-      <application>googlemock</application> ved å kjøre:
+      FÃ¸rst, fiks en byggefeil forÃ¥rsaket av libxml2-2.12.0:
     </para>
 
-<screen remap="test"><userinput>./download-gtest.sh</userinput></screen>
--->
+<screen><userinput remap="pre">sed -i '/uri.h/a #include &lt;libxml/xmlmemory.h&gt;' src/object/uri.h</userinput></screen>
 
     <para>
-      Installer <application>Inkscape</application> ved å kjøre følgende
+      Installer <application>Inkscape</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 <!--
@@ -208,7 +200,7 @@ make</userinput></screen>
 
 <!--
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.<!- - Ken or
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make check</command>.<!- - Ken or
       other devs, there is no test suite in this package. -renodr
       A small test suite is built if you download the necessary programs
       with the command above (bash download-gtest.sh) -pierre
@@ -224,7 +216,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -239,11 +231,11 @@ make</userinput></screen>
 
     <para>
       <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren er brukt til
-      å bygge utgivelsesbiblioteket uten noen feilsøkings 'assert' i koden.
+      Ã¥ bygge utgivelsesbiblioteket uten noen feilsÃ¸kings 'assert' i koden.
     </para>
 
     <para>
-      <option>-DWITH_DBUS=ON</option>: bruk denne hvis du ønsker å bruke
+      <option>-DWITH_DBUS=ON</option>: bruk denne hvis du Ã¸nsker Ã¥ bruke
       <command>inkscape</command> i interaktive skript som manipulerer
       bilder.
     </para>
@@ -263,11 +255,11 @@ make</userinput></screen>
           inkscape og inkview
         </seg>
         <seg>
-          lib2geom.so og
+          <!--lib2geom.so og-->
           libinkscape_base.so (i /usr/lib/inkscape)
         </seg>
         <seg>
-          /usr/include/2geom-&lib2geom-version;,
+          <!--/usr/include/2geom-&lib2geom-version;,-->
           /usr/lib/inkscape, og
           /usr/share/inkscape
         </seg>
@@ -295,7 +287,7 @@ make</userinput></screen>
         <term><command>inkview</command></term>
         <listitem>
           <para>
-            er et enkelt program for å vise SVG filer
+            er et enkelt program for Ã¥ vise SVG filer
           </para>
           <indexterm zone="inkscape inkview">
             <primary sortas="b-inkview">inkview</primary>

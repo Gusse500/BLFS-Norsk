@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY thunderbird-download-http "&mozilla-http;/thunderbird/releases/&thunderbird-version;/source/thunderbird-&thunderbird-version;.source.tar.xz">
   <!ENTITY thunderbird-download-ftp  " ">
-  <!ENTITY thunderbird-md5sum        "71242ab653ce087d137ccc1b3c6bdeb3">
-  <!ENTITY thunderbird-size          "507 MB">
-  <!ENTITY thunderbird-buildsize     "6.7 GB (236 MB installert)">
-  <!ENTITY thunderbird-time          "22 SBU (på en 4-kjerne maskin)">
+  <!ENTITY thunderbird-md5sum        "00100df1feb11016fed632db29fbcfb8">
+  <!ENTITY thunderbird-size          "516 MB">
+  <!ENTITY thunderbird-buildsize     "6.4 GB (229 MB installert)">
+  <!ENTITY thunderbird-time          "12 SBU (pÃ¥ en 8 kjernes maskin)">
   <!-- Removed the -j1 time because python and rust do not obey it, although
        the C/C++ code appears to obey it.
 
@@ -31,12 +31,12 @@
     <title>Introduksjon til Thunderbird</title>
 
     <para>
-      <application>Thunderbird</application> er en frittstående post-/nyhetsklient
-      basert på <application>Mozilla</application> kodebase. Den bruker
-      Gecko gjengivelsesmotor for å gjøre det mulig for den å vise og skrive HTML e-poster.
+      <application>Thunderbird</application> er en frittstÃ¥ende post-/nyhetsklient
+      basert pÃ¥ <application>Mozilla</application> kodebase. Den bruker
+      Gecko gjengivelsesmotor for Ã¥ gjÃ¸re det mulig for den Ã¥ vise og skrive HTML e-poster.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -57,7 +57,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &thunderbird-size;
+          NedlastingsstÃ¸rrelse: &thunderbird-size;
         </para>
       </listitem>
       <listitem>
@@ -75,19 +75,17 @@
 
     <bridgehead renderas="sect3">Thunderbird Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cbindgen"/>,
       <xref linkend="dbus-glib"/>,
       <xref linkend="gtk3"/>,
-      <!--and <xref linkend="gtk2"/>,-->
       <xref linkend="llvm"/> inkludert clang, <!-- used by default if found -->
       <xref linkend="nodejs"/>,
       <xref linkend="pulseaudio"/> (or <xref linkend="alsa-lib"/> hvis du redigerer
-      mozconfig; selv om det nå er avviklet av mozilla),
-      <xref linkend="python3"/> (gjenoppbygd med sqlite modulen),
-      <xref linkend="startup-notification"/>,
-      <xref linkend="zip"/>, og
+      mozconfig; selv om det nÃ¥ er avviklet av mozilla),
+      <xref linkend="python311"/> (gjenoppbygd med sqlite modulen),
+      <xref linkend="startup-notification"/>, og
       <xref linkend="unzip"/>
       <!--<xref linkend="yasm"/>-->
     </para>
@@ -101,6 +99,7 @@
       <!--<xref linkend="icu"/>,-->
       <xref linkend="libevent"/>,
       <xref linkend="libvpx"/>,
+	  <xref linkend="libwebp"/>,
       <xref linkend="nasm"/>,
       <xref linkend="nspr"/>, og
       <xref linkend="nss"/>
@@ -109,27 +108,21 @@
     <note>
       <para>
         Hvis du ikke installerer anbefalte avhengigheter,
-        så vil interne kopier av disse pakkene
-        bli brukt. De kan bli testet for å fungere, men
-        de kan være utdaterte eller inneholde 
+        sÃ¥ vil interne kopier av disse pakkene
+        bli brukt. De kan bli testet for Ã¥ fungere, men
+        de kan vÃ¦re utdaterte eller inneholde 
         sikkerhetshull.
       </para>
     </note>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <!--<xref linkend="cyrus-sasl"/>,-->
-      <!--<xref linkend="doxygen"/>,-->
-      <!--<xref linkend="GConf"/>,-->
-	  <xref role="runtime" linkend="pciutils"/> (kjøretid),
+	  <xref role="runtime" linkend="pciutils"/> (kjÃ¸retid),
       <xref linkend="wget"/>,
       <xref linkend="wireless_tools"/>, og
       <ulink url="https://facebook.github.io/watchman/">watchman</ulink>
     </para>
 
-    <para condition="html" role="usernotes">
-      Redaktørens notater: <ulink url="&blfs-wiki;/Thunderbird"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
@@ -138,18 +131,61 @@
     <note>
       <para>
         Byggeprosessen for Thunderbird kan bruke 8 GB+ RAM ved kobling.
-        Sørg for at du har tilstrekkelig vekselminne eller RAM før du fortsetter.
+        SÃ¸rg for at du har tilstrekkelig vekselminne eller RAM fÃ¸r du fortsetter.
       </para>
     </note>
 
+ <!-- Restore after Python 3.12 is usable for this package again
+    <para>
+      Byggesystemet sender flere interne kopier av Python 3
+      moduler <application>setuptools</application> og
+      <filename>six.py</filename>.  De sendte kopiene er for gamle
+      for Ã¥ fungere godt med Python 3.12 eller nyere. Erstatt dem med
+      symbolkoblinger til LFS <application>setuptools</application> pakken og
+      <xref linkend='six'/> allerede installert pÃ¥ systemet, og tilpasse
+      byggesystemet for disse oppdaterte Python modulene. Vi mÃ¥ ogsÃ¥
+      omskrive koden basert pÃ¥ <filename>imp</filename> modulen fjernet
+      i Python 3.12 og senere ved Ã¥ bruke <filename>importlib</filename>
+      modulen:
+    </para>
+
+<screen><userinput>(for i in $(find -name six.py); do
+   ln -sfv /usr/lib/python&python3-majorver;/site-packages/six.py $i
+   [ $? = 0 ] || exit $?
+ done) &amp;&amp;
+
+sed '/ConfigParser/s/Safe//'                          \
+    -i testing/mozbase/mozprofile/mozprofile/prefs.py &amp;&amp;
+
+(for i in setuptools distutils-precedence.pth  \
+          pkg_resources _distutils_hack; do
+   rm -rf third_party/python/setuptools/$i     &amp;&amp;
+   ln -sv /usr/lib/python&python3-majorver;/site-packages/$i \
+          third_party/python/setuptools
+   [ $? = 0 ] || exit $?
+ done) &amp;&amp;
+
+sed 's/distutils/setuptools._&amp;/'            \
+    -i python/mozbuild/mozbuild/nodeutil.py &amp;&amp;
+
+sed -e '/^import/s/imp$/importlib.util/'             \
+    -e 's/imp.new_module/__import__/'                \
+    -e "s/imp.load_source\(.*\)/spec =               \
+        importlib.util.spec_from_file_location\1;    \
+        mod = importlib.util.module_from_spec(spec); \
+        spec.loader.exec_module(mod)/" -i python/mach/mach/main.py &amp;&amp;
+sed '/import imp/d' -i netwerk/dns/prepare_tlds.py
+</userinput></screen>
+-->
+
     <para>
       Konfigurasjonen av <application>Thunderbird</application> 
-      oppnås ved å lage en <filename>mozconfig</filename> fil som inneholder
-      de ønskede konfigurasjonsalternativene. En standard
-      <filename>mozconfig</filename> er opprettet nedenfor. For å se hele listen
+      oppnÃ¥s ved Ã¥ lage en <filename>mozconfig</filename> fil som inneholder
+      de Ã¸nskede konfigurasjonsalternativene. En standard
+      <filename>mozconfig</filename> er opprettet nedenfor. For Ã¥ se hele listen
       av tilgjengelige konfigurasjonsalternativer (og en kort beskrivelse av hver),
-      kjør <command>./mach configure -- --help | less</command>. Opprett filen med
-      følgende kommando:
+      kjÃ¸r <command>./mach configure -- --help | less</command>. Opprett filen med
+      fÃ¸lgende kommando:
     </para>
 
 <screen><userinput>cat &gt; mozconfig &lt;&lt; "EOF"
@@ -167,11 +203,14 @@ ac_add_options --with-system-libevent
 ac_add_options --with-system-libvpx
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
-
-# The elf-hack causes failed installs on some machines.
-# It is supposed to improve startup time and it shrinks libxul.so
-# by a few MB - comment this if you know your machine is not affected.
+ac_add_options --with-system-webp
+<!-- With Thunderbird ESR 128 we'd replace the following part with
+"- -enable-elf-hack=relr", or remove it if relr becomes the default. -->
+# on some machines. It is supposed to improve startup time and it shrinks
+# libxul.so by a few MB.  With recent Binutils releases the linker already
+# supports a much safer and generic way for this.
 ac_add_options --disable-elf-hack
+export LDFLAGS="$LDFLAGS -Wl,-z,pack-relative-relocs"
 
 # The BLFS editors recommend not changing anything below this line:
 ac_add_options --prefix=/usr
@@ -183,11 +222,13 @@ ac_add_options --disable-debug
 ac_add_options --disable-debug-symbols
 ac_add_options --disable-tests
 
-ac_add_options --enable-optimize=-O2
-ac_add_options --enable-linker=gold
+# This enables SIMD optimization in the shipped encoding_rs crate.
+ac_add_options --enable-rust-simd
+
 ac_add_options --enable-strip
 ac_add_options --enable-install-strip
 
+# You cannot distribute the binary if you do this.
 ac_add_options --enable-official-branding
 
 ac_add_options --enable-system-ffi
@@ -202,38 +243,9 @@ ac_add_options --with-system-zlib
 # and was reported to seriously slow the build. Disable it.
 ac_add_options --without-wasm-sandboxed-libraries</literal>
 EOF</userinput></screen>
-<!-- Fixed in 102.9
-    <para>
-      En endring i cbindgen-0.24.2 fører til at et symbol nå sendes ut av
-      cbindgen, men den er allerede definert i en deklarasjon. Denne sed
-      forhindrer at byggingen til slutt mislykkes:
-    </para>
-
-<screen><userinput>sed -i '/ROOT_CLIP_CHAIN/d' gfx/webrender_bindings/webrender_ffi.h</userinput></screen>
--->
-<!-- Not needed with clang
-     https://bugzilla.mozilla.org/show_bug.cgi?id=1729459
-    <para>
-      If building on a 32 bit machine, the following sed works around
-      an issue with an incompatible <quote>double</quote> type in one
-      header file:
-    </para>
-
-<screen><userinput>case "$(uname -m)" in
-    i?86) sed -e '/typedef[ ]*double/s/double/long double/' \
-              -i modules/fdlibm/src/math_private.h ;;
-esac</userinput></screen>
--->
 
     <para>
-      Løs et problem som oppstår når du bygger med GCC-13:
-    </para>
-
-<screen><userinput>sed -e '/&lt;exception&gt;/i#include &lt;cstdint&gt;' \
-    -i comm/third_party/rnp/src/libsexp/include/sexp/sexp-error.h</userinput></screen>
-
-    <para>
-      Påkall nå Python <command>mach</command> skriptet for å kompilere
+      PÃ¥kall nÃ¥ Python <command>mach</command> skriptet for Ã¥ kompilere
       <application>Thunderbird</application>:
     </para>
 
@@ -248,25 +260,28 @@ esac</userinput></screen>
 
 <screen><userinput>export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none &amp;&amp;
 export MOZBUILD_STATE_PATH=./mozbuild               &amp;&amp;
-./mach configure                                    &amp;&amp;
-./mach build</userinput></screen>
+export PYTHON311=/opt/python3.11/bin/python3.11     &amp;&amp;
+$PYTHON311 ./mach build</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Installer <application>Thunderbird</application> ved å kjøre følgende
+      Installer <application>Thunderbird</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none ./mach install</userinput></screen>
-<!-- devs: For DESTDIR install, prepend DESTDIR=<dest> to the above -->
+<screen role="root"><userinput>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none $PYTHON311 ./mach install</userinput></screen>
+ <!-- devs: For DESTDIR install, prepend DESTDIR=<dest> to the above -->
+
     <para>
-      Tøm miljøvariablene som ble angitt ovenfor:
+      TÃ¸m miljÃ¸variablene som ble angitt ovenfor:
     </para>
 
-<screen><userinput>unset MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE MOZBUILD_STATE_PATH</userinput></screen>
+<screen><userinput>unset MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE &amp;&amp;
+unset MOZBUILD_STATE_PATH                     &amp;&amp;
+unset PYTHON311</userinput></screen>
 
   </sect2>
 
@@ -275,15 +290,17 @@ export MOZBUILD_STATE_PATH=./mozbuild               &amp;&amp;
 
     <para>
       <command>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none</command>: Bruk
-      systemets python for å lage et virtuelt miljø for <command>mach</command>
-      uten å laste ned noen python wheels og heller ikke bruke systemets python modulene.
-      Dette forhindrer versjonsfeil mellom systemmoduler og medfølgende.
+      systemets python for Ã¥ lage et virtuelt miljÃ¸ for <command>mach</command>
+      uten Ã¥ laste ned noen python wheels og heller ikke bruke systemets python modulene.
+      Dette forhindrer versjonsfeil mellom systemmoduler og medfÃ¸lgende.
     </para>
 
+<!--
     <para>
-      <command>./mach configure</command>: Dette validerer de medfølgende
+      <command>./mach configure</command>: Dette validerer de medfÃ¸lgende
       avhengigheter og <filename>mozconfig</filename>.
     </para>
+-->
 
     <para>
       <option>./mach build --verbose</option>: Bruk dette alternativet hvis du
@@ -293,19 +310,19 @@ export MOZBUILD_STATE_PATH=./mozbuild               &amp;&amp;
 
     <para>
       <option>./mach build -jN</option>: Byggingen skal som standard bruke
-      alle tilgjengelige CPU-kjerner. Hvis bruk av alle kjernene får bygget til å bruke vekselminne
-      fordi du har utilstrekkelig minne, kan det gå raskere å bruke færre kjerner.
+      alle tilgjengelige CPU-kjerner. Hvis bruk av alle kjernene fÃ¥r bygget til Ã¥ bruke vekselminne
+      fordi du har utilstrekkelig minne, kan det gÃ¥ raskere Ã¥ bruke fÃ¦rre kjerner.
     </para>
 
     <para>
-      <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide å
-      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstillinger for
+      <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide Ã¥
+      foretrekke Ã¥ bruke gcc og g++ i stedet for oppstrÃ¸ms standardinnstillinger for
       <application>clang</application> programmer. Med utgivelsen av
-      gcc-12 tar bygget lengre tid med gcc og g++, først og fremst fordi
-      ekstra advarsler, og er større. Angi disse miljøvariablene
-      <emphasis>før du kjører configure skriptet</emphasis>
-      hvis du ønsker å fortsette å bruke gcc, g++. Bygging
-      med GCC på i?86 er for øyeblikket ødelagt.
+      gcc-12 tar bygget lengre tid med gcc og g++, fÃ¸rst og fremst fordi
+      ekstra advarsler, og er stÃ¸rre. Angi disse miljÃ¸variablene
+      <emphasis>fÃ¸r du kjÃ¸rer configure skriptet</emphasis>
+      hvis du Ã¸nsker Ã¥ fortsette Ã¥ bruke gcc, g++. Bygging
+      med GCC pÃ¥ i?86 er for Ã¸yeblikket Ã¸delagt.
     </para>
 
   </sect2>
@@ -316,36 +333,36 @@ export MOZBUILD_STATE_PATH=./mozbuild               &amp;&amp;
     <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Hvis Vindusbehandleren eller skrivebordsmiljøet ikke tillater å
+        Hvis Vindusbehandleren eller skrivebordsmiljÃ¸et ikke tillater Ã¥
         konfigurere en standard nettleser, kan du legge til en konfigurasjonsparameter til
-        <application>Thunderbird</application> slik at en nettleser starter når
-        du klikker på en Internett/intranett/lokal URL. Prosedyren for å sjekke
+        <application>Thunderbird</application> slik at en nettleser starter nÃ¥r
+        du klikker pÃ¥ en Internett/intranett/lokal URL. Prosedyren for Ã¥ sjekke
         eller endre noen av konfigurasjonsparametrene er ganske enkelt og
-        instruksjonene her kan brukes til å vise eller endre noen av parameterne.
+        instruksjonene her kan brukes til Ã¥ vise eller endre noen av parameterne.
       </para>
 
       <para>
-        Først åpner du konfigurasjonsdialogen ved å åpne <quote>Edit</quote>
+        FÃ¸rst Ã¥pner du konfigurasjonsdialogen ved Ã¥ Ã¥pne <quote>Edit</quote>
         nedtrekksmenyen. Velg <quote>Preferences</quote> og bla nedover
-        til bunnen av siden. Klikk deretter på <quote>Config Editor</quote>
-        knappen. Klikk på <quote>I accept the risk!</quote> knappen.
+        til bunnen av siden. Klikk deretter pÃ¥ <quote>Config Editor</quote>
+        knappen. Klikk pÃ¥ <quote>I accept the risk!</quote> knappen.
         Dette vil vise en liste over konfigurasjonspreferansene og
         informasjon knyttet til hver enkelt. Du kan bruke <quote>Filter:</quote>
-        bar for å angi søkekriterier og begrense de oppførte elementene. Endre
-        en preferanse kan gjøres ved hjelp av to metoder. En, hvis preferansen har en
-        boolsk verdi (True/False), dobbeltklikk ganske enkelt på preferansen for å
-        veksle mellom verdien og to, for andre preferanser er det bare å høyreklikke på
-        ønsket linje, velg <quote>Modify</quote> fra menyen og endre
-        verdien. Oppretting av nye preferanseelementer utføres på samme måte
-        måte, bortsett fra velg <quote>New</quote> fra menyen og gi
-        ønskede data i feltene når du blir bedt om det.
+        bar for Ã¥ angi sÃ¸kekriterier og begrense de oppfÃ¸rte elementene. Endre
+        en preferanse kan gjÃ¸res ved hjelp av to metoder. En, hvis preferansen har en
+        boolsk verdi (True/False), dobbeltklikk ganske enkelt pÃ¥ preferansen for Ã¥
+        veksle mellom verdien og to, for andre preferanser er det bare Ã¥ hÃ¸yreklikke pÃ¥
+        Ã¸nsket linje, velg <quote>Modify</quote> fra menyen og endre
+        verdien. Oppretting av nye preferanseelementer utfÃ¸res pÃ¥ samme mÃ¥te
+        mÃ¥te, bortsett fra velg <quote>New</quote> fra menyen og gi
+        Ã¸nskede data i feltene nÃ¥r du blir bedt om det.
       </para>
 
       <para>
-        Konfigurasjons preferanseelementet du må sjekke slik at
+        Konfigurasjons preferanseelementet du mÃ¥ sjekke slik at
         <application>Thunderbird</application> bruker en spesifisert nettleser er
-        <parameter>network.protocol-handler.app.http</parameter> som bør
-        settes til banen til ønsket nettleser, f.eks.
+        <parameter>network.protocol-handler.app.http</parameter> som bÃ¸r
+        settes til banen til Ã¸nsket nettleser, f.eks.
         <option>/usr/bin/firefox</option>.
       </para>
 <!--  Bad URL
@@ -360,13 +377,13 @@ export MOZBUILD_STATE_PATH=./mozbuild               &amp;&amp;
 -->
     <para>
 
-      Hvis du bruker et skrivebordsmiljø som f.eks <application>GNOME</application>
+      Hvis du bruker et skrivebordsmiljÃ¸ som f.eks <application>GNOME</application>
       eller <application>KDE</application>, en skrivebordsfil
-      <filename>thunderbird.desktop</filename> kan opprettes for å
+      <filename>thunderbird.desktop</filename> kan opprettes for Ã¥
       inkludere en <quote><application>Thunderbird</application></quote> inntreden i
       menyen. <!--If you didn't enable
       <application>startup-notification</application> in your mozconfig, then
-      change the StartupNotify line to false.--> Kjør følgende kommandoer som
+      change the StartupNotify line to false.--> KjÃ¸r fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
 
     </para>
