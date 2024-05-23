@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY openldap-download-http "https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-&openldap-version;.tgz">
-  <!ENTITY openldap-download-ftp  "ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-&openldap-version;.tgz">
-  <!ENTITY openldap-md5sum        "5259e75484be71563e3f5c33d64a274d">
+  <!ENTITY openldap-download-ftp  " ">
+  <!ENTITY openldap-md5sum        "cf71b4b455ab8dfc8fdd4e247d697ccd">
   <!ENTITY openldap-size          "6.2 MB">
-  <!ENTITY openldap-buildsize     "60 MB (klient og server)">
+  <!ENTITY openldap-buildsize     "82 MB (klient og server)">
   <!ENTITY openldap-time          "0.4 SBU (klient), 1.1 SBU (server)">
 ]>
 
@@ -26,11 +26,11 @@
     <title>Introduksjon til OpenLDAP</title>
 
     <para>
-      <application>OpenLDAP</application> pakken gir en åpen
+      <application>OpenLDAP</application> pakken gir en Ã¥pen
       kildeimplementering av Lightweight Directory Access Protocol.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &openldap-size;
+          NedlastingsstÃ¸rrelse: &openldap-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/openldap-&openldap-version;-consolidated-1.patch"/>
         </para>
       </listitem>
@@ -86,14 +86,13 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gnutls"/>,
-      <xref linkend="pth"/>,
       <xref linkend="unixodbc"/>,
         <xref linkend="mariadb"/> eller
         <xref linkend="postgresql"/> eller
         <ulink url="https://www.mysql.com/">MySQL</ulink>,
       <ulink url="http://www.openslp.org/">OpenSLP</ulink>,
       <ulink url="https://docs.mongodb.com/manual/core/wiredtiger/">WiredTiger</ulink>, og
-      <xref linkend="db"/> (for slapd, men avviklet)
+      &berkeley-db; (for slapd, ogsÃ¥ avviklet)
     </para>
 
   </sect2>
@@ -103,21 +102,20 @@
 
     <note>
       <para>
-        Hvis du bare trenger å installere klientsiden <command>ldap*</command>
-        binærfiler, tilsvarende manualsider, biblioteker og deklarasjonsfiler (referert
-        til som en <quote>bare klient</quote> installering), kjør disse kommandoene
-        i stedet for de følgende (ingen testpakke tilgjengelig):
+        Hvis du bare trenger Ã¥ installere klientsiden <command>ldap*</command>
+        binÃ¦rfiler, tilsvarende manualsider, biblioteker og deklarasjonsfiler (referert
+        til som en <quote>bare klient</quote> installering), kjÃ¸r disse kommandoene
+        i stedet for de fÃ¸lgende (ingen testpakke tilgjengelig):
       </para>
 
 <screen role="nodump"><userinput>patch -Np1 -i ../openldap-&openldap-version;-consolidated-1.patch &amp;&amp;
 autoconf &amp;&amp;
 
-./configure --prefix=/usr     \
-            --sysconfdir=/etc \
-            --disable-static  \
-            --enable-dynamic  \
-            --enable-versioning=yes  \
-            --disable-debug   \
+./configure --prefix=/usr        \
+            --sysconfdir=/etc    \
+            --disable-static     \
+            --enable-dynamic     \
+            --disable-debug      \
             --disable-slapd &amp;&amp;
 
 make depend &amp;&amp;
@@ -132,9 +130,9 @@ make</userinput></screen>
     </note>
 
     <para>
-      Det bør være en dedikert bruker og gruppe til å ta kontroll
+      Det bÃ¸r vÃ¦re en dedikert bruker og gruppe til Ã¥ ta kontroll
       over <command>slapd</command> nissen etter at den er
-      startet. Utfør følgende kommandoer som
+      startet. UtfÃ¸r fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -144,8 +142,8 @@ useradd  -c "OpenLDAP Daemon Owner" \
          -g ldap -s /bin/false ldap</userinput></screen>
 
     <para>
-      Installer <application>OpenLDAP</application> ved å
-      kjøre følgende kommandoer:
+      Installer <application>OpenLDAP</application> ved Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>patch -Np1 -i ../openldap-&openldap-version;-consolidated-1.patch &amp;&amp;
@@ -156,7 +154,6 @@ autoconf &amp;&amp;
             --localstatedir=/var  \
             --libexecdir=/usr/lib \
             --disable-static      \
-            --enable-versioning=yes \
             --disable-debug       \
             --with-tls=openssl    \
             --with-cyrus-sasl     \
@@ -176,16 +173,16 @@ make depend &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Testene er skjøre, og feil kan føre til at testene avbrytes
-      før ferdigstillelse. Noen feil kan oppstå på grunn av tidsproblemer.
+      Testene er skjÃ¸re, og feil kan fÃ¸re til at testene avbrytes
+      fÃ¸r ferdigstillelse. Noen feil kan oppstÃ¥ pÃ¥ grunn av tidsproblemer.
       Testene tar rundt en time, og tiden er CPU uavhengig pga
-      forsinkelser i testene. På de fleste systemer vil testene kjøre opp til
+      forsinkelser i testene. PÃ¥ de fleste systemer vil testene kjÃ¸re opp til
       <filename>test065-proxyauth for mdb</filename> testen.
-      For å teste resultatene, kjør: <command>make test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -212,24 +209,18 @@ cp      -vfr      doc/{drafts,rfc,guide} \
 
     <para>
       <parameter>--disable-debug</parameter>: Denne bryteren deaktiverer
-      feilsøkingskoden i <application>OpenLDAP</application>.
+      feilsÃ¸kingskoden i <application>OpenLDAP</application>.
     </para>
 
     <para>
       <parameter>--enable-dynamic</parameter>: Denne bryteren tvinger
-      <application>OpenLDAP</application> biblioteker å være dynamisk
-      koblet til de kjørbare programmene.
+      <application>OpenLDAP</application> biblioteker Ã¥ vÃ¦re dynamisk
+      koblet til de kjÃ¸rbare programmene.
     </para>
 
     <para>
-      <parameter>--enable-versioning</parameter>: Denne bryteren aktiverer
-      symbolversjonering i <application>OpenLDAP</application> biblioteker.
-      Uten dette kan noen applikasjoner generere en advarsel om manglende symbolversjoner.
-    </para>
-
-    <para>
-      <parameter>--enable-crypt</parameter>: Denne bryteren gjør det mulig å bruke
-      <command>crypt(3)</command> passord.
+      <parameter>--enable-crypt</parameter>: Denne bryteren gjÃ¸r det mulig Ã¥ bruke
+      <ulink role='man' url='&man;crypt.3'>crypt(3)</ulink> passord.
     </para>
 
     <para>
@@ -239,7 +230,7 @@ cp      -vfr      doc/{drafts,rfc,guide} \
 
     <para>
       <parameter>--enable-modules</parameter>: Denne bryteren aktiverer dynamisk
-      modulstøtte.
+      modulstÃ¸tte.
     </para>
 
     <para>
@@ -261,7 +252,7 @@ cp      -vfr      doc/{drafts,rfc,guide} \
     <para>
       <parameter>- -disable-ndb</parameter>: Denne bryteren deaktiverer
       <application>MySQL</application> NDB Cluster bakstykke
-      som får konfigureringen til å mislykkes hvis
+      som fÃ¥r konfigureringen til Ã¥ mislykkes hvis
       <application>MySQL</application> er tilstede.
     </para>
 -->
@@ -281,32 +272,40 @@ cp      -vfr      doc/{drafts,rfc,guide} \
     <para>
      <parameter>--libexecdir=/usr/lib</parameter>: Denne bryteren kontrollerer hvor
      <filename class="directory">/usr/lib/openldap</filename> mappen er
-     installert.  Alt i den mappen er et bibliotek, så det hører hjemme under
+     installert.  Alt i den mappen er et bibliotek, sÃ¥ det hÃ¸rer hjemme under
      <filename class="directory">/usr/lib</filename> i stedet for
      <filename class="directory">/usr/libexec</filename>.
     </para>
 
     <para>
       <option>--enable-slp</option>: Denne bryteren aktiverer
-      SLPv2 støtte. Bruk den hvis du har installert
+      SLPv2 stÃ¸tte. Bruk den hvis du har installert
       <ulink url="http://www.openslp.org/">OpenSLP</ulink>.
+    </para>
+
+    <para>
+      <option>--disable-versioning</option>: Denne bryteren deaktiverer
+      symbolversjonering i <application>OpenLDAP</application> biblioteker.
+      Standard er Ã¥ ha symbolversjonering. Merk at hvis du har
+      bygde applikasjoner som bruker denne pakken med symbolversjonering, og
+      fjerner symbolene, kan det hende at applikasjonene ikke kjÃ¸rer.
     </para>
 
     <note>
       <para>
-        Du kan kjøre <command>./configure --help</command> for å se om det
+        Du kan kjÃ¸re <command>./configure --help</command> for Ã¥ se om det
         er andre brytere du kan sende til <command>configure</command>
-        kommandoen for å aktivere andre alternativer eller avhengighetspakker.
+        kommandoen for Ã¥ aktivere andre alternativer eller avhengighetspakker.
       </para>
     </note>
 
     <para>
       <command>install ...</command>, <command>chown ...</command>,
       og <command>chmod ...</command>:
-      Å ha slapd konfigurasjonsfiler og ldap databaser i /var/lib/openldap
+      Ã… ha slapd konfigurasjonsfiler og ldap databaser i /var/lib/openldap
       lesbart av alle er et SIKKERHETSPROBLEM, spesielt siden en fil lagrer
       administratorpassord i REN TEKST. Det er derfor modus 640 og root:ldap eierskap
-      ble brukt. Eieren er root, så bare root kan endre filen, og gruppen er
+      ble brukt. Eieren er root, sÃ¥ bare root kan endre filen, og gruppen er
       ldap, slik at gruppen som eier slapd nissen kan lese, men ikke endre
       filen i tilfelle et sikkerhetsbrudd.
     </para>
@@ -363,13 +362,13 @@ cp      -vfr      doc/{drafts,rfc,guide} \
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Konfigurering av <command>slapd</command> servere kan være komplekse.
+        Konfigurering av <command>slapd</command> servere kan vÃ¦re komplekse.
         Sikring av LDAP mappen, spesielt hvis du lagrer ikke-offentlig
-        data som passorddatabaser kan også være en utfordrende oppgave. For
-        å sette opp <application>OpenLDAP</application>, må du
+        data som passorddatabaser kan ogsÃ¥ vÃ¦re en utfordrende oppgave. For
+        Ã¥ sette opp <application>OpenLDAP</application>, mÃ¥ du
         endre enten <filename>/etc/openldap/slapd.conf</filename>
         filen (gammel metode), eller <filename>/etc/openldap/slapd.ldif</filename>
-        filen og deretter bruke <command>ldapadd</command> for å opprette LDAP
+        filen og deretter bruke <command>ldapadd</command> for Ã¥ opprette LDAP
         konfigurasjonsdatabasen i
         <filename class="directory">/etc/openldap/slapd.d</filename>
         (anbefalt av OpenLDAP dokumentasjonen).
@@ -389,42 +388,45 @@ cp      -vfr      doc/{drafts,rfc,guide} \
         <para>
           Instruksjonene ovenfor installerer en tom LDAP struktur og en standard
           <filename>/etc/openldap/slapd.conf</filename> fil, som er
-          egnet for å teste bygget og andre pakker ved bruk av LDAP. Ikke
-          bruke dem på en produksjonsserver.
+          egnet for Ã¥ teste bygget og andre pakker ved bruk av LDAP. Ikke
+          bruke dem pÃ¥ en produksjonsserver.
         </para>
       </warning>
 
       <para>
-        Ressurser for å hjelpe deg med emner som å velge en mappekonfigurasjon,
+        Ressurser for Ã¥ hjelpe deg med emner som Ã¥ velge en mappekonfigurasjon,
         bakstykke og database definisjoner, tilgangskontrollinnstillinger,
-        kjøre som en annen bruker enn
+        kjÃ¸re som en annen bruker enn
         <systemitem class="username">root</systemitem>
-        og sette opp et <command>chroot</command> miljø inkluderer:
+        og sette opp et <command>chroot</command> miljÃ¸ inkluderer:
       </para>
 
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            <emphasis role="strong">slapd(8)</emphasis> manside.
+            <ulink role='man' url='&man;slapd.8'>slapd(8)</ulink>
+            manualside.
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="strong">slapd.conf(5)</emphasis> og
-            <emphasis role="strong">slapd-config(5)</emphasis> mansider.
+            <ulink role='man'
+            url='&man;slapd.conf.5'>slapd.conf(5)</ulink> og
+            <ulink role='man'
+            url='&man;slapd-config.5'>slapd-config(5)</ulink> manualsider.
           </para>
         </listitem>
         <listitem>
           <para>
             <ulink url="https://www.openldap.org/doc/admin26/"> OpenLDAP 2.6
-            Administrator's Guide</ulink> (også installert lokalt i
+            Administrator's Guide</ulink> (ogsÃ¥ installert lokalt i
             <filename class="directory">
             /usr/share/doc/openldap-&openldap-version;/guide/admin</filename>).
           </para>
         </listitem>
         <listitem>
           <para>
-            Dokumenter som ligger på
+            Dokumenter som ligger pÃ¥
             <ulink url="https://www.openldap.org/pub/"/>.
           </para>
         </listitem>
@@ -437,10 +439,10 @@ cp      -vfr      doc/{drafts,rfc,guide} \
       <title>Mozilla Addressemappe</title>
 
       <para>
-        Som standard, LDAPv2 støtte er deaktivert i
-        <filename>slapd.conf</filename> filen. Når databasen er riktig
-        satt opp og <application>Mozilla</application> er konfigurert til å bruke
-        mappen, må du legge til <option>allow bind_v2</option> til
+        Som standard, LDAPv2 stÃ¸tte er deaktivert i
+        <filename>slapd.conf</filename> filen. NÃ¥r databasen er riktig
+        satt opp og <application>Mozilla</application> er konfigurert til Ã¥ bruke
+        mappen, mÃ¥ du legge til <option>allow bind_v2</option> til
         <filename>slapd.conf</filename> filen.
       </para>
 
@@ -452,7 +454,7 @@ cp      -vfr      doc/{drafts,rfc,guide} \
              <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para>
-        For å automatisere oppstarten av LDAP serveren ved oppstart av systemet,
+        For Ã¥ automatisere oppstarten av LDAP serveren ved oppstart av systemet,
         installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/slapd</filename>
         init skriptet</phrase>
@@ -460,7 +462,7 @@ cp      -vfr      doc/{drafts,rfc,guide} \
         enheten</phrase> inkludert i
         <xref linkend="bootscripts" revision="sysv"/>
         <xref linkend="systemd-units" revision="systemd"/>
-        pakken ved å bruke følgende kommando:
+        pakken ved Ã¥ bruke fÃ¸lgende kommando:
       </para>
 
       <indexterm zone="openldap openldap-init">
@@ -471,10 +473,10 @@ cp      -vfr      doc/{drafts,rfc,guide} \
 
       <note>
         <para>
-          Du må endre
+          Du mÃ¥ endre
           <phrase revision="sysv"><filename>/etc/sysconfig/slapd</filename></phrase>
           <phrase revision="systemd"><filename>/etc/default/slapd</filename></phrase>
-          for å inkludere parametrene som trengs for din spesifikke konfigurasjon. Se
+          for Ã¥ inkludere parametrene som trengs for din spesifikke konfigurasjon. Se
           <command>slapd</command> manside for parameterinformasjon.
         </para>
       </note>
@@ -495,7 +497,7 @@ cp      -vfr      doc/{drafts,rfc,guide} \
 <screen role="root" revision="systemd"><userinput>systemctl start slapd</userinput></screen>
 
       <para>
-        Bekreft tilgangen til LDAP serveren med følgende kommando:
+        Bekreft tilgangen til LDAP serveren med fÃ¸lgende kommando:
       </para>
 
 <screen><userinput>ldapsearch -x -b '' -s base '(objectclass=*)' namingContexts</userinput></screen>
@@ -562,7 +564,7 @@ result: 0 Success
         <term><command>ldapadd</command></term>
         <listitem>
           <para>
-            åpner en tilkobling til en LDAP server, binder og legger til oppføringer
+            Ã¥pner en tilkobling til en LDAP server, binder og legger til oppfÃ¸ringer
           </para>
           <indexterm zone="openldap ldapadd">
             <primary sortas="b-ldapadd">ldapadd</primary>
@@ -574,7 +576,7 @@ result: 0 Success
         <term><command>ldapcompare</command></term>
         <listitem>
           <para>
-            åpner en tilkobling til en LDAP server, binder og utfører
+            Ã¥pner en tilkobling til en LDAP server, binder og utfÃ¸rer
             en sammenligning med spesifiserte parametere
           </para>
           <indexterm zone="openldap ldapcompare">
@@ -587,8 +589,8 @@ result: 0 Success
         <term><command>ldapdelete</command></term>
         <listitem>
           <para>
-            åpner en tilkobling til en LDAP server, binder og sletter
-            en eller flere oppføringer
+            Ã¥pner en tilkobling til en LDAP server, binder og sletter
+            en eller flere oppfÃ¸ringer
           </para>
           <indexterm zone="openldap ldapdelete">
             <primary sortas="b-ldapdelete">ldapdelete</primary>
@@ -601,7 +603,7 @@ result: 0 Success
         <listitem>
           <para>
             utsteder den utvidede LDAP operasjonen spesifisert av
-            oid eller et av de spesielle søkeordene  whoami,
+            oid eller et av de spesielle sÃ¸keordene  whoami,
             cancel, eller refresh
           </para>
           <indexterm zone="openldap ldapexop">
@@ -614,7 +616,7 @@ result: 0 Success
         <term><command>ldapmodify</command></term>
         <listitem>
           <para>
-            åpner en tilkobling til en LDAP server, binder og modifiserer oppføringer
+            Ã¥pner en tilkobling til en LDAP server, binder og modifiserer oppfÃ¸ringer
           </para>
           <indexterm zone="openldap ldapmodify">
             <primary sortas="b-ldapmodify">ldapmodify</primary>
@@ -626,8 +628,8 @@ result: 0 Success
         <term><command>ldapmodrdn</command></term>
         <listitem>
           <para>
-            åpner en tilkobling til en LDAP server, binder og modifiserer
-            RDN for oppføringer
+            Ã¥pner en tilkobling til en LDAP server, binder og modifiserer
+            RDN for oppfÃ¸ringer
           </para>
           <indexterm zone="openldap ldapmodrdn">
             <primary sortas="b-ldapmodrdn">ldapmodrdn</primary>
@@ -639,7 +641,7 @@ result: 0 Success
         <term><command>ldappasswd</command></term>
         <listitem>
           <para>
-            er et verktøy som brukes til å angi passordet til en LDAP bruker
+            er et verktÃ¸y som brukes til Ã¥ angi passordet til en LDAP bruker
           </para>
           <indexterm zone="openldap ldappasswd">
             <primary sortas="b-ldappasswd">ldappasswd</primary>
@@ -651,8 +653,8 @@ result: 0 Success
         <term><command>ldapsearch</command></term>
         <listitem>
           <para>
-            åpner en tilkobling til en LDAP server, binder og utfører
-            et søk med spesifiserte parametere
+            Ã¥pner en tilkobling til en LDAP server, binder og utfÃ¸rer
+            et sÃ¸k med spesifiserte parametere
           </para>
           <indexterm zone="openldap ldapsearch">
             <primary sortas="b-ldapsearch">ldapsearch</primary>
@@ -664,7 +666,7 @@ result: 0 Success
         <term><command>ldapurl</command></term>
         <listitem>
           <para>
-            er en kommando som gjør det mulig å enten komponere eller
+            er en kommando som gjÃ¸r det mulig Ã¥ enten komponere eller
             dekomponere LDAP URIs
           </para>
           <indexterm zone="openldap ldapurl">
@@ -689,7 +691,7 @@ result: 0 Success
         <term><command>ldapwhoami</command></term>
         <listitem>
           <para>
-            åpner en tilkobling til en LDAP server, binder og viser
+            Ã¥pner en tilkobling til en LDAP server, binder og viser
             whoami informasjon
           </para>
           <indexterm zone="openldap ldapwhoami">
@@ -702,7 +704,7 @@ result: 0 Success
         <term><command>slapacl</command></term>
         <listitem>
           <para>
-            brukes til å sjekke atferden til slapd ved å verifisere
+            brukes til Ã¥ sjekke atferden til slapd ved Ã¥ verifisere
             tilgang til mappedata i henhold til tilgangskontrollen
             liste direktiver definert i konfigurasjonen
           </para>
@@ -716,7 +718,7 @@ result: 0 Success
         <term><command>slapadd</command></term>
         <listitem>
           <para>
-            brukes til å legge til oppføringer spesifisert i LDAP Directory Interchange
+            brukes til Ã¥ legge til oppfÃ¸ringer spesifisert i LDAP Directory Interchange
             Format (LDIF) til en LDAP database
           </para>
           <indexterm zone="openldap slapadd">
@@ -729,9 +731,9 @@ result: 0 Success
         <term><command>slapauth</command></term>
         <listitem>
           <para>
-            brukes til å sjekke oppførselen til slapd
+            brukes til Ã¥ sjekke oppfÃ¸rselen til slapd
             i kartlegging av identiteter for autentisering og
-            autorisasjonsformål, som spesifisert i slapd.conf
+            autorisasjonsformÃ¥l, som spesifisert i slapd.conf
           </para>
           <indexterm zone="openldap slapauth">
             <primary sortas="b-slapauth">slapauth</primary>
@@ -743,7 +745,7 @@ result: 0 Success
         <term><command>slapcat</command></term>
         <listitem>
           <para>
-            brukes til å generere LDAP LDIF utdata basert på
+            brukes til Ã¥ generere LDAP LDIF utdata basert pÃ¥
             innholdet i en slapd database
           </para>
           <indexterm zone="openldap slapcat">
@@ -756,7 +758,7 @@ result: 0 Success
         <term><command>slapd</command></term>
         <listitem>
           <para>
-            er den frittstående LDAP serveren
+            er den frittstÃ¥ende LDAP serveren
           </para>
           <indexterm zone="openldap slapd">
             <primary sortas="b-slapd">slapd</primary>
@@ -768,7 +770,7 @@ result: 0 Success
         <term><command>slapdn</command></term>
         <listitem>
           <para>
-            sjekker en liste over strengrepresenterte DN-er basert på skjemasyntaks
+            sjekker en liste over strengrepresenterte DN-er basert pÃ¥ skjemasyntaks
           </para>
           <indexterm zone="openldap slapdn">
             <primary sortas="b-slapdn">slapdn</primary>
@@ -780,7 +782,7 @@ result: 0 Success
         <term><command>slapindex</command></term>
         <listitem>
           <para>
-            brukes til å regenerere slapd indekser basert på gjeldende
+            brukes til Ã¥ regenerere slapd indekser basert pÃ¥ gjeldende
             innhold i en database
           </para>
           <indexterm zone="openldap slapindex">
@@ -793,7 +795,7 @@ result: 0 Success
         <term><command>slapmodify</command></term>
         <listitem>
           <para>
-            modifiserer oppføringer i en slapd database
+            modifiserer oppfÃ¸ringer i en slapd database
           </para>
           <indexterm zone="openldap slapmodify">
             <primary sortas="b-slapmodify">slapmodify</primary>
@@ -805,7 +807,7 @@ result: 0 Success
         <term><command>slappasswd</command></term>
         <listitem>
           <para>
-            er <application>OpenLDAP</application> passordverktøy
+            er <application>OpenLDAP</application> passordverktÃ¸y
           </para>
           <indexterm zone="openldap slappasswd">
             <primary sortas="b-slappasswd">slappasswd</primary>
@@ -817,7 +819,7 @@ result: 0 Success
         <term><command>slapschema</command></term>
         <listitem>
           <para>
-            brukes til å kontrollere skjemasamsvar for innholdet
+            brukes til Ã¥ kontrollere skjemasamsvar for innholdet
             i en slapd database
           </para>
           <indexterm zone="openldap slapschema">
@@ -830,7 +832,7 @@ result: 0 Success
         <term><command>slaptest</command></term>
         <listitem>
           <para>
-            sjekker om <filename>slapd.conf</filename> filen er ødelagt
+            sjekker om <filename>slapd.conf</filename> filen er Ã¸delagt
           </para>
           <indexterm zone="openldap slaptest">
             <primary sortas="b-slaptest">slaptest</primary>
@@ -843,10 +845,10 @@ result: 0 Success
         <listitem>
           <para>
             er et sett med Lightweight Basic Encoding Rules rutiner. Disse
-            rutinene brukes av LDAP biblioteksrutinene til å kode og dekode
+            rutinene brukes av LDAP biblioteksrutinene til Ã¥ kode og dekode
             LDAP protokollelementer som bruker (litt forenklet) Basic
             Kodingsregler definert av LDAP. De brukes vanligvis ikke direkte
-            av et LDAP applikasjonsprogram bortsett fra ved håndtering av kontroller
+            av et LDAP applikasjonsprogram bortsett fra ved hÃ¥ndtering av kontroller
             og utvidet drift
           </para>
           <indexterm zone="openldap liblber">
@@ -859,7 +861,7 @@ result: 0 Success
         <term><filename class="libraryfile">libldap.so</filename></term>
         <listitem>
           <para>
-            støtter LDAP programmene og gir funksjonalitet for
+            stÃ¸tter LDAP programmene og gir funksjonalitet for
              andre programmer som samhandler med LDAP
           </para>
           <indexterm zone="openldap libldap">
@@ -873,8 +875,8 @@ result: 0 Success
         <term><filename class="libraryfile">libldap_r.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjonene som kreves av LDAP programmene for å
-            produsere resultatene fra LDAP forespørsler
+            inneholder funksjonene som kreves av LDAP programmene for Ã¥
+            produsere resultatene fra LDAP forespÃ¸rsler
           </para>
           <indexterm zone="openldap libldap_r">
             <primary sortas="c-libldap_r">libldap_r.so</primary>

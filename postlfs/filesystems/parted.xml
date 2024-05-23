@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY parted-download-http "&gnu-http;/parted/parted-&parted-version;.tar.xz">
-  <!ENTITY parted-download-ftp  "&gnu-ftp;/parted/parted-&parted-version;.tar.xz">
+  <!ENTITY parted-download-ftp  " ">
   <!ENTITY parted-md5sum        "93d2d8f22baebc5eb65b85da05a79e4e">
   <!ENTITY parted-size          "1.8 MB">
   <!ENTITY parted-buildsize     "29 MB (ytterligere 3 MB for testene og ytterligere 2 MB for valgfri PDF- og Postscript-dokumentasjon)">
@@ -26,11 +26,11 @@
     <title>Introduksjon til parted</title>
 
     <para>
-      <application>Parted</application> pakken er et verktøy for diskpartisjonering og
-      endre størrelsen på en partisjon.
+      <application>Parted</application> pakken er et verktÃ¸y for diskpartisjonering og
+      endre stÃ¸rrelsen pÃ¥ en partisjon.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &parted-size;
+          NedlastingsstÃ¸rrelse: &parted-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-             Valgfritt, for å fikse bygget uten støtte for enhetskartlegging: <ulink
+             Valgfritt, for Ã¥ fikse bygget uten stÃ¸tte for enhetskartlegging: <ulink
                url="&patch-root;/parted-&parted-version;-devmapper-1.patch"/>
           </para>
         </listitem>
@@ -80,14 +80,13 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="lvm2"/> (enhetskartlegging, nødvendig hvis du bygger
+      <xref linkend="lvm2"/> (enhetskartlegging, nÃ¸dvendig hvis du bygger
       <application>udisks</application>)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="dosfstools"/>,
-      <xref linkend="pth"/>,
       <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>), og
       <ulink url="https://metacpan.org/pod/Digest::CRC">Digest::CRC</ulink> (for testene)
     </para>
@@ -98,7 +97,7 @@
     <title>Valgfri Kjernekonfigurasjon for Tester</title>
 
     <para>
-      Omtrent 20 % flere tester kjøres hvis følgende kjernemodul er bygget:
+      Omtrent 20 % flere tester kjÃ¸res hvis fÃ¸lgende kjernemodul er bygget:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -113,13 +112,13 @@
     <title>Installasjon av parted</title>
     <!--
     <para>
-      Hvis du vil bygge uten støtte for enhetskartlegging, er en fiks nødvendig:
+      Hvis du vil bygge uten stÃ¸tte for enhetskartlegging, er en fiks nÃ¸dvendig:
     </para>
 
 <screen><userinput>patch -Np1 -i ../parted-&parted-version;-devmapper-1.patch</userinput></screen>
     -->
     <para>
-      Installer <application>Parted</application> ved å kjøre følgende
+      Installer <application>Parted</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -131,8 +130,8 @@ makeinfo --html      -o doc/html       doc/parted.texi &amp;&amp;
 makeinfo --plaintext -o doc/parted.txt doc/parted.texi</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend="texlive"/> installert og ønsker å lage
-      PDF og Postscript dokumentasjon kjør følgende kommandoer:
+      Hvis du har <xref linkend="texlive"/> installert og Ã¸nsker Ã¥ lage
+      PDF og Postscript dokumentasjon kjÃ¸r fÃ¸lgende kommandoer:
     </para>
 
 <screen remap="doc"><userinput>cp build-aux/texinfo.tex doc               &amp;&amp;
@@ -141,7 +140,7 @@ texi2dvi -o doc/parted.dvi doc/parted.texi &amp;&amp;
 dvips    -o doc/parted.ps  doc/parted.dvi</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted, som <systemitem
+      For Ã¥ teste resultatene, utsted, som <systemitem
       class="username">root</systemitem> bruker:
     </para>
 
@@ -160,13 +159,13 @@ dvips    -o doc/parted.ps  doc/parted.dvi</userinput></screen>
 -->
     <note>
       <para>
-        Mange tester blir hoppet over hvis de ikke kjøres som <systemitem
+        Mange tester blir hoppet over hvis de ikke kjÃ¸res som <systemitem
         class="username">root</systemitem> bruker.
       </para>
     </note>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -177,8 +176,8 @@ install -v -m644    doc/{FAT,API,parted.{txt,html}} \
                     /usr/share/doc/parted-&parted-version;</userinput></screen>
 
     <para>
-      Installer den valgfrie PDF- og Postscript-dokumentasjonen ved å kjøre
-      følgende kommando som <systemitem class="username">root</systemitem>
+      Installer den valgfrie PDF- og Postscript-dokumentasjonen ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommando som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
@@ -194,7 +193,7 @@ install -v -m644    doc/{FAT,API,parted.{txt,html}} \
       href="../../xincludes/static-libraries.xml"/>
 
     <para>
-      <option>--disable-device-mapper</option>: Dette alternativet deaktiverer støtte for
+      <option>--disable-device-mapper</option>: Dette alternativet deaktiverer stÃ¸tte for
       enhetskartlegging. Legg til denne parameteren hvis du ikke har installert
       <application>LVM2</application>.
     </para>
