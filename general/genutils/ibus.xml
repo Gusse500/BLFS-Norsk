@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY ibus-download-http "https://github.com/ibus/ibus/releases/download/&ibus-version;/ibus-&ibus-version;.tar.gz">
+  <!ENTITY ibus-download-http "https://github.com/ibus/ibus/archive/refs/tags/&ibus-version;/ibus-&ibus-version;.tar.gz">
   <!ENTITY ibus-download-ftp  " ">
-  <!ENTITY ibus-md5sum        "e788203d60e2b9cf56d95f1ee73a6898">
-  <!ENTITY ibus-size          "3.7 MB">
-  <!ENTITY ibus-buildsize     "66 MB (legg til 5 MB for tester)">
-  <!ENTITY ibus-time          "0.2 SBU (Bruker parallellisme=4; legg til 0,6 SBU for tester)">
+  <!ENTITY ibus-md5sum        "2e29a7fb0f8c5ffcf42462fda45348fd">
+  <!ENTITY ibus-size          "1.4 MB">
+  <!ENTITY ibus-buildsize     "54 MB (legg til 3 MB for tester)">
+  <!ENTITY ibus-time          "0.3 SBU (Bruker parallellisme=4; legg til 0,6 SBU for tester)">
 <!-- Since UCD.zip can be used by gucharmap too, let's use the same version:
      This prevents version mismatches, since UCD.zip filename is not versioned.
 -->
@@ -35,7 +35,7 @@
       inndatametode brukergrensesnitt.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +56,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &ibus-size;
+          NedlastingsstÃ¸rrelse: &ibus-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +71,7 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Valgfri nedlasting</bridgehead>
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
 
     <itemizedlist spacing="compact">
       <listitem>
@@ -84,9 +84,10 @@
 
     <bridgehead renderas="sect3">ibus Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="dconf"/>,
+      <!-- needed since we're using autogen.sh -->
       <xref linkend="iso-codes"/>, og
       <xref linkend="vala"/>
     </para>
@@ -94,23 +95,24 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="gobject-introspection"/>,
-      <xref linkend="gtk2"/>, og
+      <xref linkend="gtk3"/>, og
       <xref linkend="libnotify"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gtk3"/> (for å bygge IM modul for det),
-      <xref linkend="gtk4"/> (for å bygge IM modul for det),
+      <xref linkend="gtk4"/> (for Ã¥ bygge IM modul for det),
+      <xref linkend="gtk-doc"/> (for Ã¥ generere API dokumentasjon)
       <xref linkend="dbus-python"/> og
-      <xref linkend="pygobject3"/> (begge for å bygge Python støttebiblioteket),
+      <xref linkend="pygobject3"/> (begge for Ã¥ bygge Python stÃ¸ttebiblioteket),
       <xref linkend="gtk-doc"/>, og
       <!--<xref linkend="pyxdg" role="runtime"/>
       (runtime, for the <command>ibus-setup</command>), og
       NOTE: The reference to the 'xdg' python module is commented out in the source -->
       <xref linkend="libxkbcommon"/>,
-      <xref linkend="wayland"/> (begge for å bygge Wayland støtteprogrammene), og
-      <ulink url="https://www.joypixels.com/">EmojiOne</ulink>
+      <xref linkend="wayland"/> (begge for Ã¥ bygge Wayland stÃ¸tteprogrammene),
+      <ulink url="https://www.joypixels.com/">EmojiOne</ulink>, og
+      <ulink url="https://github.com/AyatanaIndicators/libdbusmenu">libdbusmenu</ulink>
     </para>
 
   </sect2>
@@ -118,68 +120,89 @@
   <sect2 role="installation">
     <title>Installasjon av ibus</title>
 
+<!--
     <para>
       Hvis den valgfrie Unicode Character Database ble lastet ned, installer den
-      nå som <systemitem class="username">root</systemitem> bruker:
+      nÃ¥ som <systemitem class="username">root</systemitem> bruker:
     </para>
+-->
 
-<screen role="root"><userinput>mkdir -p                /usr/share/unicode/ucd &amp;&amp;
-unzip -uo ../UCD.zip -d /usr/share/unicode/ucd</userinput></screen>
+    <para>
+      Installer fÃ¸rst Unicode Character Database som &root; bruker:
+    </para>
+ 
+<screen role="root"><userinput>mkdir -p               /usr/share/unicode/ucd &amp;&amp;
+unzip -o ../UCD.zip -d /usr/share/unicode/ucd</userinput></screen>
+
+<!--
 
     <note>
       <para>
-        Pass på å også fjerne --disable-unicode-dict in
+        Pass pÃ¥ Ã¥ ogsÃ¥ fjerne - -disable-unicode-dict in
         konfigureringstrinnet nedenfor.
       </para>
     </note>
++-->
+    <para>
+      LÃ¸s et problem med utdaterte skjemaoppfÃ¸ringer:
+    </para>
+
+<screen><userinput>sed -e 's@/desktop/ibus@/org/freedesktop/ibus@g' \
+    -i data/dconf/org.freedesktop.ibus.gschema.xml</userinput></screen>
 
     <para>
-      Løs et problem med utdaterte skjemaoppføringer:</para>
+      Hvis <xref linkend='gtk-doc'/> ikke er installert, fjern referansene
+      til det:
+    </para>
 
-<screen><userinput>sed -i 's@/desktop/ibus@/org/freedesktop/ibus@g' \
-    data/dconf/org.freedesktop.ibus.gschema.xml</userinput></screen>
+<screen><userinput>if ! [ -e /usr/bin/gtkdocize ]; then
+  sed '/docs/d;/GTK_DOC/d' -i Makefile.am configure.ac
+fi</userinput></screen>
 
     <para>
-      Installer <application>ibus</application> ved å kjøre følgende
+      Installer <application>ibus</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen revision='sysv'><userinput>./configure --prefix=/usr              \
-            --sysconfdir=/etc          \
-            --disable-python2          \
-            --disable-emoji-dict       \
-            --disable-unicode-dict     \
-            --disable-systemd-services &amp;&amp;
-rm -f tools/main.c                     &amp;&amp;
-make</userinput></screen>
+<screen revision='sysv'><userinput>SAVE_DIST_FILES=1 NOCONFIGURE=1 ./autogen.sh &amp;&amp;
 
-<screen revision='systemd'><userinput>./configure --prefix=/usr          \
+PYTHON=python3                     \
+./configure --prefix=/usr          \
             --sysconfdir=/etc      \
             --disable-python2      \
+            --disable-appindicator \
             --disable-emoji-dict   \
-            --disable-unicode-dict &amp;&amp;
-rm -f tools/main.c                 &amp;&amp;
+            --disable-gtk2         \
+            --disable-systemd-services &amp;&amp;
+make</userinput></screen>
+
+<screen revision='systemd'><userinput>SAVE_DIST_FILES=1 NOCONFIGURE=1 ./autogen.sh &amp;&amp;
+
+PYTHON=python3                     \
+./configure --prefix=/usr          \<screen revision='systemd'><userinput>./configure --prefix=/usr          \
+            --sysconfdir=/etc      \
+            --disable-python2      \
+            --disable-appindicator \
+            --disable-gtk2         \
+            --disable-emoji-dict   &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make -k check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make -k check</command>.
       Testen kalt ibus-compose mislykkes fordi den bruker noen lokaler
       ikke installert i LFS.
       <!-- Loggen sier "No idea to simulate key events in Wayland"
-           in a Mutter wayland session.  -->
-      Testen kalt ibus-keypress er kjent for å mislykkes i en Wayland basert
-      grafisk miljø.
-      <!-- https://github.com/ibus/ibus/issues/2542 -->
-      Testen kalt xkb-latin-layouts er kjent for å mislykkes med en nylig
-      xkeyboard-config utgivelse.
+           in a Mutter wayland session.  DO NOT REMOVE UNLESS TESTED
++           IN WAYLAND.  -->
+      Testen som heter ibus-keypress vil mislykkes hvis den kjÃ¸res i et Wayland
+      Ã¸kt.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som &root; bruker:
     </para>
 
-<screen role="root"><userinput>make install &amp;&amp;
-gzip -dfv /usr/share/man/man{{1,5}/ibus*.gz,5/00-upstream-settings.5.gz}</userinput></screen>
+<screen role="root"><userinput>make install</userinput></screen>
 
   </sect2>
 
@@ -187,26 +210,19 @@ gzip -dfv /usr/share/man/man{{1,5}/ibus*.gz,5/00-upstream-settings.5.gz}</userin
     <title>Parameterforklaringer</title>
 
     <para>
+      <parameter>--disable-appindicator</parameter>: Denne bryteren deaktiverer
+      bruk av libdbusmenu. Utelat hvis du installerte den valgfrie avhengigheten.
+    </para>
+
+    <para>
       <parameter>--disable-emoji-dict</parameter>: Denne bryteren deaktiverer
-      bruk av uttrykksikonordbøker. Utelat hvis du installerte valgfrie
+      bruk av uttrykksikonordbÃ¸ker. Utelat hvis du installerte valgfrie
       pakker.
     </para>
 
     <para>
-      <parameter>--disable-unicode-dict</parameter>: Denne bryteren deaktiverer bruken
-      av unicode ordbøker. Utelat hvis du installerte den valgfrie
-      Unicode karakterdatabase.
-    </para>
-
-    <para>
-      <command>rm -f tools/main.c</command>: Denne kommandoen fjerner en generert
-      fil som ikke ble fjernet ved pakking.
-    </para>
-
-    <para>
-      <option>--disable-gtk2</option>: Denne bryteren deaktiverer bygging av
-      <application>GTK+ 2</application> immodul. Bruk den hvis
-      du ikke har installert <application>GTK+ 2</application>.
+      <parameter>--disable-gtk2</parameter>: Denne bryteren fjerner avhengigheten
+      av <application>GTK+-2</application>.
     </para>
 
     <para>
@@ -217,33 +233,57 @@ gzip -dfv /usr/share/man/man{{1,5}/ibus*.gz,5/00-upstream-settings.5.gz}</userin
 
     <para>
       <option>--enable-python-library</option>: Denne bryteren aktiverer
-      byggingen av <application>Python</application> støttebibliotek.
-      Bruk den hvis du har installert de valgfrie avhengighetene.
+      byggingen av <application>Python</application> stÃ¸ttebibliotek.
+      Bruk den hvis du har installert de valgfrie Python modulene.
     </para>
 
     <para>
       <option>--enable-wayland</option>: Denne bryteren aktiverer bygging av
-      <application>Wayland</application> støtteprogrammer.
-      Bruk den hvis du har installert de valgfrie avhengighetene.
+      <application>Wayland</application> stÃ¸tteprogrammer.
+      Den aktiveres automatisk hvis bÃ¥de <xref linkend='libxkbcommon'/> og
+      <xref linkend='wayland'/> er installert.
     </para>
 
     <para>
-      <option>--with-python=python3</option>: Denne bryteren gjør at
+      <envar>NOCONFIGURE=1</envar>: Forhindrer <command>autogen.sh</command>
+      fra Ã¥ kjÃ¸re det genererte <command>configure</command> skriptet.   Vi vil
+      kjÃ¸re skriptet manuelt i stedet for Ã¥ stole pÃ¥
+      <command>autogen.sh</command> Ã¥ kjÃ¸re det, fordi
+      <command>autogen.sh</command> vil sette <option>-fsanitize=address
+      -fsanitize=leak</option> i <envar>CFLAGS</envar> nÃ¥r den kjÃ¸rer
+      <command>configure</command>, men de kompilatoralternativene er ikke
+      egnet for produktiv bruk, og de kan ogsÃ¥ forÃ¥rsake byggefeil.
+      <!-- GCC security policy: "Libraries like libvtv and the sanitizers
+           are intended to be used in diagnostic cases and not intended for
+           use in sensitive environments."  In my build it also causes
+           "compose/sequences-little-endian" bail out with a sanitizer
+           warning and the package to FTBFS.  -->
+    </para>
+
+    <para>
+      <envar>PYTHON=python3</envar>: Denne miljÃ¸variabelen gjÃ¸r at
       <command>configure</command> skriptet ser etter
       <application>Python 3</application>. Bruk den hvis du vil
-      bygge <application>Python 3</application> støttebibliotek
-      ved siden av <application>Python 2</application>
-      sitt.
+      bygge <application>Python 3</application>
+      stÃ¸ttebibliotek.
+    </para>
+
+    <para>
+      <envar>SAVE_DIST_FILES=1</envar>: Denne miljÃ¸variabelen gjÃ¸r at
+      <command>autogen.sh</command> skriptet lagrer noen forhÃ¥ndsgenererte
+      deklarasjonsfiler i stedet for Ã¥ overskrive dem nÃ¥r den kjÃ¸res. Dette forhindrer
+      byggefeil ved generering av <filename>ibusemojigen.h</filename>.
+      <!-- This is needed because we do not have the Emoji dictionary.-->
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/gtk-doc-rebuild.xml"/>
-
+<!--
     <para>
       <command>gzip -dfv ...</command>: Dekomprimer installerte mansider
       i samsvar med andre mansider.
     </para>
-
+-->
   </sect2>
 
   <sect2 role="configuration">
@@ -316,7 +356,7 @@ gzip -dfv /usr/share/man/man{{1,5}/ibus*.gz,5/00-upstream-settings.5.gz}</userin
         <term><command>ibus-setup</command></term>
         <listitem>
           <para>
-            er et <application>GTK+</application> program som brukes til å konfigurere
+            er et <application>GTK+</application> program som brukes til Ã¥ konfigurere
             <command>ibus-daemon</command>
           </para>
           <indexterm zone="ibus ibus-setup">
