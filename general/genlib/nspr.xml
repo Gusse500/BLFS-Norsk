@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -27,10 +27,10 @@
 
     <para>
       <application>Netscape Portable Runtime</application> (NSPR) gir en
-      plattformnøytral API for systemnivå og libc lignende funksjoner.
+      plattformnÃ¸ytral API for systemnivÃ¥ og libc lignende funksjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-         Nedlastingsstørrelse: &nspr-size;
+         NedlastingsstÃ¸rrelse: &nspr-size;
         </para>
       </listitem>
       <listitem>
@@ -72,29 +72,30 @@
     <title>Installasjon av NSPR</title>
 
     <para>
-      Installer <application>NSPR</application> ved å kjøre følgende kommandoer:
+      Installer <application>NSPR</application> ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
-<screen><userinput>cd nspr                                                     &amp;&amp;
-sed -ri '/^RELEASE/s/^/#/' pr/src/misc/Makefile.in &amp;&amp;
-sed -i 's#$(LIBRARY) ##'   config/rules.mk         &amp;&amp;
+<screen><userinput>cd nspr &amp;&amp;
 
-./configure --prefix=/usr \
-            --with-mozilla \
+sed -i '/^RELEASE/s|^|#|' pr/src/misc/Makefile.in &amp;&amp;
+sed -i 's|$(LIBRARY) ||'  config/rules.mk         &amp;&amp;
+
+./configure --prefix=/usr   \
+            --with-mozilla  \
             --with-pthreads \
             $([ $(uname -m) = x86_64 ] &amp;&amp; echo --enable-64bit) &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Testpakken er designet for å teste endringer i nss eller nspr og er
-      ikke spesielt nyttig for å sjekke en utgitt versjon (f.eks. den trenger
-      å kjøres på en ikke-optimalisert bygg med både nss- og nspr-mapper
-      til stede ved siden av hverandre). For ytterligere detaljer, se redaktørens merknader
-      for nss på <ulink url="&blfs-wiki;/nss"/>
+      Testpakken er designet for Ã¥ teste endringer i nss eller nspr og er
+      ikke spesielt nyttig for Ã¥ sjekke en utgitt versjon (f.eks. den trenger
+      Ã¥ kjÃ¸res pÃ¥ en ikke-optimalisert bygg med bÃ¥de nss- og nspr-mapper
+      til stede ved siden av hverandre). For ytterligere detaljer, se redaktÃ¸rens merknader
+      for nss pÃ¥ <ulink url="&blfs-wiki;/nss"/>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -105,7 +106,7 @@ make</userinput></screen>
 
     <para>
       <command>sed -ri '/^RELEASE/s/^/#/' pr/src/misc/Makefile.in</command>:
-      Denne sed deaktiverer installasjon av to unødvendige skript.
+      Denne sed deaktiverer installasjon av to unÃ¸dvendige skript.
     </para>
 
     <para>
@@ -114,8 +115,8 @@ make</userinput></screen>
     </para>
 
     <para>
-      <parameter>--with-mozilla</parameter>: Denne parameteren legger til Mozilla støtte
-      til bibliotekene (påkrevd hvis du vil bygge andre Mozilla
+      <parameter>--with-mozilla</parameter>: Denne parameteren legger til Mozilla stÃ¸tte
+      til bibliotekene (pÃ¥krevd hvis du vil bygge andre Mozilla
       produkter og koble dem til disse bibliotekene).
     </para>
 
@@ -125,12 +126,11 @@ make</userinput></screen>
     </para>
 
     <para>
-      <parameter>$([ $(uname -m) = x86_64 ] &amp;&amp; echo
-      --enable-64bit)</parameter>: --enable-64bit parameteren er
-      <emphasis>påkrevd</emphasis> på et x86_64 system for å forhindre
-      <command>configure</command> å mislykkes med en påstand om at dette er et system
-      uten pthread-støtte. Testen [$(uname -m) = x86_64] sikrer at den ikke har
-      effekt på et 32 bit system.
+      <parameter>--enable-64bit</parameter>: --enable-64bit parameteren er
+      <emphasis>pÃ¥krevd</emphasis> pÃ¥ et x86_64 system for Ã¥ forhindre
+      <command>configure</command> Ã¥ mislykkes med en pÃ¥stand om at dette er et system
+      uten pthread-stÃ¸tte. Testen [$(uname -m) = x86_64] sikrer at den ikke har
+      effekt pÃ¥ et 32 bit system.
     </para>
 
   </sect2>
@@ -179,7 +179,7 @@ make</userinput></screen>
         <listitem>
           <para>
             inneholder funksjoner som gir plattformuavhengighet for ikke-GUI
-            operativsystemfasiliteter som tråder, trådsynkronisering,
+            operativsystemfasiliteter som trÃ¥der, trÃ¥dsynkronisering,
             normal fil og nettverks I/O, intervalltiming og kalendertid,
             grunnleggende minneadministrasjon og delt bibliotekkobling
           </para>

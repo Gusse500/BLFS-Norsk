@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -31,7 +31,7 @@
       innhold (kropp).
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &bogofilter-size;
+          NedlastingsstÃ¸rrelse: &bogofilter-size;
         </para>
       </listitem>
       <listitem>
@@ -69,22 +69,24 @@
 
     <bridgehead renderas="sect3">Bogofilter Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="db"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="gsl"/> og
-      <xref linkend="libxml2"/>
+      <xref linkend="gsl"/>,
+      <xref linkend="libxml2"/>, og
+      <!-- 'required' to make this strong to jhalfs -->
+      <xref role='required' linkend="sqlite"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="lmdb"/>,
-      <xref linkend="sqlite"/>,
       <xref linkend="xmlto"/>,
+      &berkeley-db;,
       <ulink url="https://dbmx.net/qdbm/">QDBM</ulink> og
       <ulink url="https://dbmx.net/tokyocabinet/">TokyoCabinet</ulink>
     </para>
@@ -103,26 +105,28 @@
 
     <note>
       <para>
-        Hvis du planlegger å endre versjonen av databasebiblioteket på en
-        eksisterende installasjon, eller for å bytte til en annen database, les
-        advarsel øverst i RELEASE.NOTES filen.
+        Hvis du planlegger Ã¥ endre versjonen av databasebiblioteket pÃ¥ en
+        eksisterende installasjon, eller for Ã¥ bytte til en annen database, les
+        advarsel Ã¸verst i RELEASE.NOTES filen.
       </para>
     </note>
 
     <para>
-      Installer <application>Bogofilter</application> ved å kjøre følgende
+      Installer <application>Bogofilter</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --sysconfdir=/etc/bogofilter &amp;&amp;
+<screen><userinput>./configure --prefix=/usr                \
+            --sysconfdir=/etc/bogofilter \
+            --with-database=sqlite3      &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -133,8 +137,14 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <option>--with-database=</option>: Denne bryteren lar deg endre
-      standarddatabasen fra db til enten qdbm, sqlite3 eller tokyocabinet.
+      <parameter>--with-database=sqlite3</parameter>: Denne bryteren gjÃ¸r at
+      Bogofilter bruker <xref linkend='sqlite'/> som databasen, i stedet for
+      Berkeley DB<!-- which is beyond the scope of BLFS (slated for removal)-->.
+    </para>
+
+    <para>
+      <option>--with-database={lmdb,qdbm,tokyocabinet}</option>: Denne bryteren
+      tillater ogsÃ¥ bruk av lmdb, qdbm eller tokyocabinet som database.
     </para>
 
   </sect2>
@@ -208,7 +218,7 @@ make</userinput></screen>
         <term><command>bogofilter</command></term>
         <listitem>
           <para>
-            er et raskt Bayesiansk søppelpostfilter
+            er et raskt Bayesiansk sÃ¸ppelpostfilter
           </para>
           <indexterm zone="bogofilter bogofilter-prog">
             <primary sortas="b-bogofilter">bogofilter</primary>
@@ -220,7 +230,7 @@ make</userinput></screen>
         <term><command>bogolexer</command></term>
         <listitem>
           <para>
-            brukes til å dele meldinger i tokens og til å teste nye
+            brukes til Ã¥ dele meldinger i tokens og til Ã¥ teste nye
             versjoner av lexer.l koden
           </para>
           <indexterm zone="bogofilter bogolexer">
@@ -233,7 +243,7 @@ make</userinput></screen>
         <term><command>bogotune</command></term>
         <listitem>
           <para>
-            forsøker å finne optimale parameterinnstillinger for bogofilter
+            forsÃ¸ker Ã¥ finne optimale parameterinnstillinger for bogofilter
           </para>
           <indexterm zone="bogofilter bogotune">
             <primary sortas="b-bogotune">bogotune</primary>
