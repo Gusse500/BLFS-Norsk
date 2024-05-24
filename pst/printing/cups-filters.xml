@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY cups-filters-download-http
-  "https://www.openprinting.org/download/cups-filters/cups-filters-&cups-filters-version;.tar.xz">
+  "https://github.com/OpenPrinting/cups-filters/releases/download/&cups-filters-version;/cups-filters-&cups-filters-version;.tar.xz">
   <!ENTITY cups-filters-download-ftp  " ">
-  <!ENTITY cups-filters-md5sum        "24bed15110499fd652d65d6baab85ca6">
-  <!ENTITY cups-filters-size          "1.4 MB">
-  <!ENTITY cups-filters-buildsize     "56 MB (med tester), 16 MB installert">
-  <!ENTITY cups-filters-time          "0.2 SBU (Bruker parallellisme=4; med tester)">
+  <!ENTITY cups-filters-md5sum        "1d9ac8b601ea5e25a42767856a48c4d7">
+  <!ENTITY cups-filters-size          "437 KB">
+  <!ENTITY cups-filters-buildsize     "9.1 MB">
+  <!ENTITY cups-filters-time          "mindre enn 0.1 SBU (Bruker parallellisme=4)">
 ]>
 
 <sect1 id="cups-filters" xreflabel="cups-filters-&cups-filters-version;">
@@ -27,13 +27,12 @@
     <title>Introduksjon til CUPS Filtre</title>
 
     <para>
-      <application>CUPS Filtre</application> pakken inneholder bakstykker,
-      filtre og annen programvare som en gang var en del av kjerne
-      <application>CUPS</application> distribusjon, men er ikke lenger
-      vedlikeholdt av Apple Inc.
+      <application>CUPS Filters</application> pakke er bare nÃ¸dvendig
+      for Ã¥ tilpasse <xref linkend="libcupsfilters"/> og <xref linkend="libppd"/>
+      filterfunksjoner for cups-2.x. Det skal ikke vÃ¦re nÃ¸dvendig for cups-3.x.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &cups-filters-size;
+          NedlastingsstÃ¸rrelse: &cups-filters-size;
         </para>
       </listitem>
       <listitem>
@@ -69,211 +68,68 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/cups-filters-&cups-filters-version;-security_fix-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
-
     <bridgehead renderas="sect3">CUPS Filtre Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
-      <xref linkend="cups"/>,
-      <xref linkend="glib2"/>,
-      <xref linkend="gs"/>,
-      <xref linkend="lcms2"/>,
-      <xref linkend="poppler"/>, og
-      <xref linkend="qpdf"/>
+      <xref linkend="libcupsfilters"/> og
+      <xref linkend="libppd"/>
     </para>
-
+<!--
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="dejavu-fonts"/> (byggingen mislykkes hvis de ikke er
-      installert, selv om de bare er nødvendige for testene),
-      <xref linkend="libexif"/>,
-      <xref linkend="libjpeg"/>,
-      <xref linkend="libpng"/>,
-      <xref linkend="libtiff"/>, og
-      <xref linkend="mupdf"/> (mutool)
+      <xref linkend="avahi"/>
     </para>
-
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
-    <para role="optional">
-      <xref linkend="avahi"/> (kreves for å bygge DNSSD bakstykket av
-      <command>cups-browsed</command> nissen, som er nødvendig for drift
-      av noen nettverksskrivere),
-      <xref linkend="openldap"/>,
-      <xref linkend="php"/> (bruken av dette kan være ødelagt),
-      <ulink url="https://liblouis.github.io/downloads/">Liblouis (Braille)</ulink>, og
-      <ulink url="https://liblouis.github.io/downloads/">Liblouisutdml (Braille)</ulink>
-    </para>
-
-    <bridgehead renderas="sect4">Valgfrie skriverdrivere (kjøretid)</bridgehead>
-    <para role="optional">
-      <xref role="runtime" linkend="gutenprint"/> (for støttede skrivere),
-      eller andre skriverdrivere, for eksempel <ulink role="runtime"
-      url="https://sourceforge.net/projects/hplip/files/hplip/">hplip</ulink>
-    </para>
-
+-->
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av CUPS Filtre</title>
 
-<!--
-    <para revision="systemd">
-      Først må du fikse systemd enhetsfilen til å virke med
-      <application>CUPS</application> 2.0 og senere:
-    </para>
-
-<screen revision="systemd"><userinput>sed -i "s:cups.service:org.cups.cupsd.service:g" utils/cups-browsed.service</userinput></screen>
--->
-
     <para>
-      Først må du fikse et sikkerhetsproblem som kan tillate ekstern kjøring
-      av kode med 'beh' skriverens bakstykke:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../cups-filters-&cups-filters-version;-security_fix-1.patch</userinput></screen>
-
-    <para>
-      Installer <application>CUPS Filtre</application> ved å kjøre følgende
+      Installer <application>CUPS Filtre</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>CXXFLAGS="$CXXFLAGS -std=c++17"  \
-./configure --prefix=/usr        \
-            --sysconfdir=/etc    \
-            --localstatedir=/var \
-            --without-rcdir      \
-            --disable-static     \
-            --disable-avahi      \
+<screen><userinput>./configure --prefix=/usr                   \
+            --disable-static                \
+            --disable-avahi                 \
             --docdir=/usr/share/doc/cups-filters-&cups-filters-version; &amp;&amp;
 make</userinput></screen>
 
-<!-- The test suite still bombs out for me. I'll leave the instructions for it
-     here though. I didn't have the Dejavu font installed, but used one of the
-     ones installed by X.
-     Version 1.16.0: test worked for me with "make check >testlog 2>&1",
-     that is, the other way around. I have DejaVu fonts. Pierre L
-     With 1.17.2 (and DejaVu) the test output is clean, no need for a log. Ken
-
-     Tests are clean for version 1.21.0 (and version 1.21.5):  - Bruce
-     # TOTAL: 6
-     # PASS:  6
-     real    0m2.504s -->
-
     <para>
-      For å teste resultatene, kjør:
-      <!--<command>make check &gt;testlog 2&gt;&amp;1</command>.-->
-      <command>make check</command>. DejaVu fonter
-      er nødvendig for testene.
+      Denne pakken kommer ikke med en funksjonell testpakke.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
-
-    <para revision="systemd">
-      Installer systemd enheten ved å kjøre følgende kommando som
-      <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root" revision="systemd"><userinput>install -v -m644 utils/cups-browsed.service /lib/systemd/system/cups-browsed.service</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-<!-- please comment this if no patches are currently needed -->
-<!--<para>
-      <parameter>patch -Np1 -i ../cups-filters-&cups-filters-version;-poppler71-1.patch</parameter>:
-      Betinget bruk endringer for nyere versjoner av poppler.
-    </para>
-    Poppler-0.72.0, cups-filters-1.21.5 - no longer needed.-->
-
-    <para>
-      <envar>CXXFLAGS="$CXXFLAGS -std=c++17"</envar>: Denne miljøvariabelen
-      er nødvendig for å fikse et problem introdusert av qpdf-11.3.0.
-    </para>
-
-    <para>
-      <parameter>--disable-avahi</parameter>: Denne bryteren er nødvendig
-      hvis det valgfrie <xref linkend="avahi"/> ikke er installert. Fjern
-      det hvis avahi er installert og du trenger nettverksskriveroppdagelse
-      evner.
-    </para>
-
-    <para>
-      <parameter>--without-rcdir</parameter>: Denne bryteren deaktiverer
-      installasjon av det medfølgende oppstartsskriptet som ikke er kompatibelt
-      med BLFS.
-    </para>
-
-<!-- Those are hard dependencies now
-    <para>
-      <parameter>- -with-gs-path=/usr/bin/gs</parameter>: Denne bryteren
-      definerer veien til <application>GhostScript</application>
-      binær i tilfelle <xref linkend="gs"/> ikke er installert på byggetidspunktet.
-    </para>
-
-    <para>
-      <parameter>- -with-pdftops-path=/usr/bin/gs</parameter>: Denne bryteren
-      definerer veien til <application>GhostScript</application>
-      binær i tilfelle <xref linkend="gs"/> ikke er installert på byggetidspunktet.
-    </para>
--->
-
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
+
+    <para>
+      <parameter>--disable-avahi</parameter>: Denne bryteren bÃ¸r bli
+      gitt selv om <application>Avahi</application> er installert. Dette trengs
+      pÃ¥ grunn av en feil i konfigureringsskriptet til
+      <application>CUPS Filters</application>, hvor det vil avslutte hvis
+      <application>Avahi</application> ikke er installert. Merk dog at Avahi
+      brukes ikke av denne pakken.
+    </para>
+
     <!--
     <para>
       <option>- -enable-ijs</option>: Denne bryteren vil tillate pdftoijs
-      filter, å sende PDF-er til en HP InkJet Server, som skal bygges.
+      filter, Ã¥ sende PDF-er til en HP InkJet Server, som skal bygges.
     </para>
     -->
-
-    <para>
-      <option>--with-test-font-path=<replaceable>VALUE</replaceable></option>:
-      Hvis du ønsker å kjøre testene, men
-      du har ikke standard
-      <filename>/usr/share/fonts/dejavu/DejaVuSans.ttf</filename> bruk denne
-      bryteren for å angi hvor <filename>DejaVuSans.ttf</filename> (eller kanskje
-      en annen tekst TTF-font - ikke testet) er plassert.
-    </para>
-
-
-  </sect2>
-
-<!-- TODO: Write a bootscript for cups-browsed -->
-
-  <sect2 role="configuration" revision="systemd">
-    <title>Konfigurere CUPS Filtre</title>
-
-    <sect3 id="cups-filters-init">
-      <title>Systemd Enheter</title>
-
-      <para>
-        For å starte <command>cups-browsed</command> nissen ved oppstart, aktiver
-        den tidligere installerte systemd enheten ved å kjøre følgende kommando
-        som <systemitem class="username">root</systemitem> bruker:
-      </para>
-
-      <indexterm zone="cups-filters cups-filters-init">
-        <primary sortas="f-cups-browsed">cups-browsed</primary>
-      </indexterm>
-
-<screen role="root"><userinput>systemctl enable cups-browsed</userinput></screen>
-
-    </sect3>
 
   </sect2>
 
@@ -287,16 +143,13 @@ make</userinput></screen>
 
       <seglistitem>
         <seg>
-          cups-browsed, driverless, driverless-fax, og foomatic-rip
-          <!-- and ttfread -->
+          driverless, driverless-fax, and foomatic-rip
         </seg>
         <seg>
-          libcupsfilters.so og libfontembed.so
+          Ingen
         </seg>
         <seg>
-          /usr/include/{cupsfilters,fontembed},
-           /usr/lib/cups/{backend,driver,filter},
-          /usr/share/cups/{braille,charsets},
+          /usr/lib/cups/{backend,driver,filter},
           /usr/share/doc/cups-filters-&cups-filters-version;, og
           /usr/share/ppd/cupsfilters
         </seg>
@@ -308,24 +161,11 @@ make</userinput></screen>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
-      <varlistentry id="cups-browsed">
-        <term><command>cups-browsed</command></term>
-        <listitem>
-          <para>
-            er en nisse for å bla gjennom Bonjour og CUPS sendingene av delte,
-            eksterne CUPS skrivere
-          </para>
-          <indexterm zone="cups-filters cups-browsed">
-            <primary sortas="b-cups-browsed">cups-browsed</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
       <varlistentry id="driverless">
         <term><command>driverless</command></term>
         <listitem>
           <para>
-            er et PPD generatorverktøy for driverløs utskrift
+            er et PPD generatorverktÃ¸y for driverlÃ¸s utskrift
           </para>
           <indexterm zone="cups-filters driverless">
             <primary sortas="b-driverless">driverless</primary>
@@ -350,14 +190,14 @@ make</userinput></screen>
         <listitem>
           <para>
             er et universelt printfilter/RIP innpakning som kan brukes som CUPS
-            filter eller frittstående for spoolerfri, direkte utskrift
+            filter eller frittstÃ¥ende for spoolerfri, direkte utskrift
           </para>
           <indexterm zone="cups-filters foomatic-rip">
             <primary sortas="b-foomatic-rip">foomatic-rip</primary>
           </indexterm>
         </listitem>
       </varlistentry>
-
+      <!--
       <varlistentry id="libcupsfilters">
         <term><filename class="libraryfile">libcupsfilters.so</filename></term>
         <listitem>
@@ -371,7 +211,7 @@ make</userinput></screen>
       </varlistentry>
 
     </variablelist>
-
+      -->
   </sect2>
 
 </sect1>

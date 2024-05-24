@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY cups-download-http "https://github.com/OpenPrinting/cups/releases/download/v&cups-version;/cups-&cups-version;-source.tar.gz">
   <!ENTITY cups-download-ftp  " ">
-  <!ENTITY cups-md5sum        "b8ca6027eaeeed6171178cc526879ff5">
+  <!ENTITY cups-md5sum        "e0a5ddbf53dfad41da26fc1ef60b2256">
   <!ENTITY cups-size          "7.8 MB">
-  <!ENTITY cups-buildsize     "76 MB (Legg til 60 MB for tester)">
-  <!ENTITY cups-time          "0.5 SBU (Legg til 1.6 SBU for tester)">
+  <!ENTITY cups-buildsize     "77 MB (Legg til 49 MB for tester)">
+  <!ENTITY cups-time          "0.4 SBU (Legg til 1.0 SBU for tester)">
 ]>
 
 <sect1 id="cups" xreflabel="Cups-&cups-version;">
@@ -26,13 +26,13 @@
     <title>Introduksjon til Cups</title>
 
     <para>
-      Common Unix Printing System (CUPS) er en utskriftskø og
-      tilhørende verktøy. Den er basert på "Internet Printing
+      Common Unix Printing System (CUPS) er en utskriftskÃ¸ og
+      tilhÃ¸rende verktÃ¸y. Den er basert pÃ¥ "Internet Printing
       Protocol" og gir utskriftstjenester til de fleste PostScript
       og rasterskrivere.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &cups-size;
+          NedlastingsstÃ¸rrelse: &cups-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
 
     <bridgehead renderas="sect3">Cups Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="gnutls"/>
     </para>
@@ -94,20 +94,17 @@
       <xref linkend="python2"/>
     </para>
 
-    <bridgehead renderas="sect4">Påkrevd (Etterinstallasjon)</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd (Etter installasjon)</bridgehead>
     <para role="required">
       <xref role="runtime" linkend="cups-filters"/>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri (Etterinstallasjon)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (Etter installasjon)</bridgehead>
     <para role="optional">
       <xref role="runtime" linkend="gutenprint"/> og
       <ulink role="runtime" url="https://developers.hp.com/hp-linux-imaging-and-printing">hplip</ulink> (HP skrivere)
     </para>
 
-    <para condition="html" role="usernotes">Redaktørens notater:
-      <ulink url="&blfs-wiki;/cups"/>
-    </para>
   </sect2>
 
   <sect2 role="kernel" id="cups-kernel">
@@ -115,7 +112,7 @@
 
     <note>
       <para>
-        Det pleide å være en konflikt mellom <application>Cups</application>
+        Det pleide Ã¥ vÃ¦re en konflikt mellom <application>Cups</application>
         <application>libusb</application> bakstykke og usblp kjernedriveren.
         Dette er ikke lenger tilfelle, og Cups vil fungere med begge disse
         aktivert.
@@ -123,9 +120,9 @@
     </note>
 
     <para>
-      Hvis du vil bruke kjernens usblp driver (for eksempel hvis du ønsker å
+      Hvis du vil bruke kjernens usblp driver (for eksempel hvis du Ã¸nsker Ã¥
       bruke <application>escputil</application> fra <xref
-      linkend="gutenprint"/>) aktiver følgende alternativer i kjernekonfigurasjonen din
+      linkend="gutenprint"/>) aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen din
       og rekompilere kjernen:
     </para>
 
@@ -133,8 +130,8 @@
       href="usb-printer-kernel.xml"/>
 
     <para>
-      Hvis du har en parallellskriver, aktiver følgende alternativer i din
-      kjernekonfigurasjon og kompiler kjernen på nytt:
+      Hvis du har en parallellskriver, aktiver fÃ¸lgende alternativer i din
+      kjernekonfigurasjon og kompiler kjernen pÃ¥ nytt:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -150,21 +147,21 @@
     <title>Installasjon av Cups</title>
 
     <para>
-      Du må legge til en <systemitem class="username">lp</systemitem>
+      Du mÃ¥ legge til en <systemitem class="username">lp</systemitem>
       bruker, siden <application>Cups</application> vil opprette noen filer som eies
       av denne brukeren. (<systemitem class="username">lp</systemitem> brukeren
       er standard som brukes av <application>Cups</application>, men kan bli
-      endret til en annen bruker ved å sende en parameter til
-      <command>configure</command> skriptet.) Bruk følgende kommando som
+      endret til en annen bruker ved Ã¥ sende en parameter til
+      <command>configure</command> skriptet.) Bruk fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>useradd -c "Print Service User" -d /var/spool/cups -g lp -s /bin/false -u 9 lp</userinput></screen>
 
     <para>
-      Du trenger også en dedikert gruppe som vil inneholde brukere som har tillatelse til å
-      gjøre <application>Cups</application> administrative oppgaver. Legg til gruppen
-      ved å kjøre følgende kommando som
+      Du trenger ogsÃ¥ en dedikert gruppe som vil inneholde brukere som har tillatelse til Ã¥
+      gjÃ¸re <application>Cups</application> administrative oppgaver. Legg til gruppen
+      ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -172,38 +169,27 @@
 
     <para>
       Hvis du vil legge til en bruker i <application>Cups</application>
-      administrativ gruppe, kjør følgende kommando som
+      administrativ gruppe, kjÃ¸r fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>usermod -a -G lpadmin <replaceable>&lt;username&gt;</replaceable></userinput></screen>
 
     <para>
-      Hvis du ikke installerte <xref linkend="xdg-utils"/>, bruk følgende
-      <command>sed</command> for å endre standard nettleser som skal brukes
-      for å få tilgang til <application>Cups</application> nettgrensesnitt:
+      Hvis du ikke installerte <xref linkend="xdg-utils"/>, bruk fÃ¸lgende
+      <command>sed</command> for Ã¥ endre standard nettleser som skal brukes
+      for Ã¥ fÃ¥ tilgang til <application>Cups</application> nettgrensesnitt:
     </para>
 
 <screen><userinput>sed -i 's#@CUPS_HTMLVIEW@#firefox#' desktop/cups.desktop.in</userinput></screen>
 
     <para>
       Erstatt <command>firefox</command> med nettleseren du
-      ønsker å bruke.
+      Ã¸nsker Ã¥ bruke.
     </para>
-
-<!-- Fixed in 2.4.1
-    <para revision="systemd">
-      Rett opp en feil som forårsaker <filename>cups.service</filename> systemd enheten
-      å bli plassert i et ikke-eksisterende mål:
-    </para>
-
-<screen revision="systemd"><userinput remap="pre">sed -e "s/printers.target/printer.target/" \
-    -i configure \
-       config-scripts/cups-defaults.m4</userinput></screen>
--->
 
     <para>
-      Bygg <application>Cups</application> ved å kjøre følgende kommandoer:
+      Bygg <application>Cups</application> ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>./configure --libdir=/usr/lib            \
@@ -221,14 +207,14 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>LC_ALL=C make -k check</command>. En allerede
-      aktiv grafisk sesjon med bussadresse er nødvendig for å kjøre testene.
-      Pass på at ikke en annen forekomst av <application>Cups</application>
-      kjører, ellers vil minst 4 tester mislykkes med "address in use".
+      For Ã¥ teste resultatene, kjÃ¸r: <command>LC_ALL=C make -k check</command>. En allerede
+      aktiv grafisk sesjon med bussadresse er nÃ¸dvendig for Ã¥ kjÃ¸re testene.
+      Pass pÃ¥ at ikke en annen forekomst av <application>Cups</application>
+      kjÃ¸rer, ellers vil minst 4 tester mislykkes med "address in use".
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <!-- dev note: make BUILDROOT=<DESTDIR> install -->
@@ -240,11 +226,11 @@ ln -svnf ../cups/doc-&cups-version; /usr/share/doc/cups-&cups-version;</userinpu
       Fjern det leverte oppstartskriptet, som er inkompatibelt med LFS:
     </para>
 
-<screen role="root" revision="sysv"><userinput>rm -rf /tmp/cupsinit &amp;&amp;</userinput></screen>
+<screen role="root" revision="sysv"><userinput>rm -rf /tmp/cupsinit</userinput></screen>
 
     <para>
       Opprett et grunnleggende <application>Cups</application> klientkonfigurasjonsfil
-      ved å kjøre følgende kommando som <systemitem
+      ved Ã¥ kjÃ¸re fÃ¸lgende kommando som <systemitem
       class="username">root</systemitem> bruker:
     </para>
 
@@ -259,13 +245,13 @@ ln -svnf ../cups/doc-&cups-version; /usr/share/doc/cups-&cups-version;</userinpu
     <title>Parameterforklaringer</title>
 
     <para revision="sysv">
-      <parameter>--disable-systemd</parameter>: Systemd er ikke støttet av
+      <parameter>--disable-systemd</parameter>: Systemd er ikke stÃ¸ttet av
       denne versjonen av BLFS.
     </para>
 
     <para revision="sysv">
       <parameter>--with-rcdir=/tmp/cupsinit</parameter>: Denne bryteren forteller
-      byggeprosessen å installere det sendte oppstartskriptet i <filename
+      byggeprosessen Ã¥ installere det sendte oppstartskriptet i <filename
       class="directory">/tmp</filename> i stedet for <filename
       class="directory">/etc/rc.d</filename>.
     </para>
@@ -284,12 +270,12 @@ ln -svnf ../cups/doc-&cups-version; /usr/share/doc/cups-&cups-version;</userinpu
 
     <para>
       <option>--disable-libusb</option>: Bruk denne bryteren hvis du har installert
-      <xref linkend="libusb"/>, men ønsker å bruke kjernens usblp driver.
+      <xref linkend="libusb"/>, men Ã¸nsker Ã¥ bruke kjernens usblp driver.
     </para>
 
     <para>
       <option>--enable-libpaper</option>: Bruk denne bryteren hvis du har installert
-      <application>libpaper</application> og ønsker å bruke den med
+      <application>libpaper</application> og Ã¸nsker Ã¥ bruke den med
       <application>Cups</application>.
     </para>
 
@@ -319,28 +305,28 @@ ln -svnf ../cups/doc-&cups-version; /usr/share/doc/cups-&cups-version;</userinpu
         <application>Cups</application> serveren vil normalt koble til via
         url http://localhost:631. Derfra skrivere, utskrifts
         jobber, og serverkonfigurasjonen kan settes opp og administreres.
-        Ekstern systemadministrasjon kan også settes opp. Konfigurasjon
-        kan også gjøres fra kommandolinjen via
+        Ekstern systemadministrasjon kan ogsÃ¥ settes opp. Konfigurasjon
+        kan ogsÃ¥ gjÃ¸res fra kommandolinjen via
         <command>lpadmin</command>, <command>lpoptions</command>,
         og <command>lpstat</command> kommandoene.
       </para>
 
       <para>
         Konfigurasjon av <application>Cups</application> er avhengig av
-        skrivertypen og kan være kompleks. Vanligvis er PostScript skrivere
+        skrivertypen og kan vÃ¦re kompleks. Vanligvis er PostScript skrivere
         enklere. For detaljerte instruksjoner om konfigurasjon og bruk av
         <application>Cups</application>, se <ulink
         url="https://www.cups.org/documentation.html"/>.
       </para>
 
       <para>
-        For ikke-PostScript skrivere for å skrive ut med
-        <application>Cups</application>, må du installere <xref
-        linkend="gs"/> for å konvertere PostScript til rasterbilder og en driver
-        (f.eks. fra <xref linkend="gutenprint"/>) for å konvertere det resulterende
-        rasterbildet til en form som skriveren forstår.  <ulink
+        For ikke-PostScript skrivere for Ã¥ skrive ut med
+        <application>Cups</application>, mÃ¥ du installere <xref
+        linkend="gs"/> for Ã¥ konvertere PostScript til rasterbilder og en driver
+        (f.eks. fra <xref linkend="gutenprint"/>) for Ã¥ konvertere det resulterende
+        rasterbildet til en form som skriveren forstÃ¥r.  <ulink
         url="https://wiki.linuxfoundation.org/openprinting/database/foomatic">Foomatic</ulink>
-        drivere bruker <xref linkend="gs"/> for å konvertere PostScript til en utskrivbar
+        drivere bruker <xref linkend="gs"/> for Ã¥ konvertere PostScript til en utskrivbar
         form direkte, men dette anses som suboptimalt av
         <application>Cups</application> utviklere.
       </para>
@@ -352,14 +338,14 @@ ln -svnf ../cups/doc-&cups-version; /usr/share/doc/cups-&cups-version;</userinpu
 
       <para>
         Hvis <application>CUPS</application> er bygget med
-        <application>Linux PAM</application> støtte, må du opprette en
-        <application>PAM</application> konfigurasjonsfil for å få den til å fungere
+        <application>Linux PAM</application> stÃ¸tte, mÃ¥ du opprette en
+        <application>PAM</application> konfigurasjonsfil for Ã¥ fÃ¥ den til Ã¥ fungere
         riktig med BLFS.
       </para>
 
       <para>
-        Utfør følgende kommando som <systemitem
-        class="username">root</systemitem> bruker for å opprette konfigurasjonensfilen
+        UtfÃ¸r fÃ¸lgende kommando som <systemitem
+        class="username">root</systemitem> bruker for Ã¥ opprette konfigurasjonensfilen
         for <application>Linux PAM</application>:
       </para>
 
@@ -381,14 +367,14 @@ EOF</userinput></screen>
 
       <para revision="sysv">
         Hvis du vil at <application>Cups</application> utskriftstjeneste skal starte
-        automatisk når systemet startes opp, installer init skriptet
+        automatisk nÃ¥r systemet startes opp, installer init skriptet
         inkludert i <xref linkend="bootscripts"/> pakken:
       </para>
 
       <para revision="systemd">
-        For å starte <command>cupsd</command> nissen når noe prøver
-        få tilgang til den, aktiver de tidligere installerte systemd enhetene ved å kjøre
-        følgende kommando som
+        For Ã¥ starte <command>cupsd</command> nissen nÃ¥r noe prÃ¸ver
+        fÃ¥ tilgang til den, aktiver de tidligere installerte systemd enhetene ved Ã¥ kjÃ¸re
+        fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -414,21 +400,21 @@ EOF</userinput></screen>
 
       <seglistitem>
         <seg>
-           <!--accept,--> cancel, cupsaccept, <!--cupsaddsmb,--> cups-config,
-          cupsctl, cupsd, cupsdisable, cupsenable, cupsfilter, cupsreject,
-          <!--cupstestdsc,--> cupstestppd, ippeveprinter, ippfind, ipptool, lp,
-          lpadmin, lpc, lpinfo, lpmove, lpoptions, lpq, lpr, lprm, lpstat, ppdc,
-          ppdhtml, ppdi, ppdmerge, og ppdpo <!--and reject-->
+           cancel, cupsaccept, cups-config, cupsctl, cupsd, cupsdisable,
+          cupsenable, cupsfilter, cupsreject, cupstestppd, ippeveprinter,
+          ippfind, ipptool, lp, lpadmin, lpc, lpinfo, lpmove, lpoptions, lpq,
+          lpr, lprm, lpstat, ppdc, ppdhtml, ppdi, ppdmerge, og ppdpo
         </seg>
         <seg>
-          <!--libcupscgi.so,--> libcupsimage.so <!--libcupsmime.so,-->
-          <!--libcupsppdc.so,--> og libcups.so
+          libcupsimage.so
+          og libcups.so
         </seg>
         <seg>
           /etc/cups,
           /usr/{include,lib,share}/cups,
-          /usr/share/doc/cups-&cups-version;, og
-          /var/{cache,log,run,spool}/cups
+          /usr/share/doc/cups-&cups-version;,
+          /run/cups, og
+          /var/{cache,log,spool}/cups
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -438,26 +424,11 @@ EOF</userinput></screen>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
-      <!--
-      <varlistentry id="accept">
-        <term><command>accept</command></term>
-        <listitem>
-          <para>
-            instruerer utskriftssystemet til å godta utskriftsjobber til
-            angitte destinasjoner.
-          </para>
-          <indexterm zone="cups accept">
-            <primary sortas="b-accept">accept</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-     -->
-
      <varlistentry id="cancel-cups">
         <term><command>cancel</command></term>
         <listitem>
           <para>
-            kansellerer eksisterende utskriftsjobber fra utskriftskøene
+            kansellerer eksisterende utskriftsjobber fra utskriftskÃ¸ene
           </para>
           <indexterm zone="cups cancel-cups">
             <primary sortas="b-cancel">cancel</primary>
@@ -477,27 +448,12 @@ EOF</userinput></screen>
         </listitem>
       </varlistentry>
 
-<!--
-      <varlistentry id="cupsaddsmb">
-        <term><command>cupsaddsmb</command></term>
-        <listitem>
-          <para>
-            eksporterer skrivere til <application>Samba</application>
-            programvare for bruk med Windows-klienter.
-          </para>
-          <indexterm zone="cups cupsaddsmb">
-            <primary sortas="b-cupsaddsmb">cupsaddsmb</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
--->
-
       <varlistentry id="cups-config-prog">
         <term><command>cups-config</command></term>
         <listitem>
           <para>
             er et <application>Cups</application>
-            programkonfigurasjonsverktøy
+            programkonfigurasjonsverktÃ¸y
           </para>
           <indexterm zone="cups cups-config-prog">
             <primary sortas="b-cups-config">cups-config</primary>
@@ -509,7 +465,7 @@ EOF</userinput></screen>
         <term><command>cupsctl</command></term>
         <listitem>
           <para>
-            oppdaterer eller spør cupsd.conf filen for en server
+            oppdaterer eller spÃ¸r cupsd.conf filen for en server
           </para>
           <indexterm zone="cups cupsctl">
             <primary sortas="b-cupsctl">cupsctl</primary>
@@ -578,19 +534,6 @@ EOF</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-<!--
-      <varlistentry id="cupstestdsc">
-        <term><command>cupstestdsc</command></term>
-        <listitem>
-          <para>
-            tester samsvar med PostScript filer.
-          </para>
-          <indexterm zone="cups cupstestdsc">
-            <primary sortas="b-cupstestdsc">cupstestdsc</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
--->
 
       <varlistentry id="cupstestppd">
         <term><command>cupstestppd</command></term>
@@ -632,7 +575,7 @@ EOF</userinput></screen>
         <term><command>ipptool</command></term>
         <listitem>
           <para>
-            sender IPP forespørsler til spesifisert URI og tester
+            sender IPP forespÃ¸rsler til spesifisert URI og tester
             og/eller viser resultatene
           </para>
           <indexterm zone="cups ipptool">
@@ -657,7 +600,7 @@ EOF</userinput></screen>
         <term><command>lpadmin</command></term>
         <listitem>
           <para>
-            konfigurerer skriver og klasse køer levert av
+            konfigurerer skriver og klasse kÃ¸er levert av
             <application>Cups</application>
           </para>
           <indexterm zone="cups lpadmin">
@@ -670,7 +613,7 @@ EOF</userinput></screen>
         <term><command>lpc</command></term>
         <listitem>
           <para>
-            gir begrenset kontroll over skriver og klasse køer
+            gir begrenset kontroll over skriver og klasse kÃ¸er
             levert av <application>Cups</application>
           </para>
           <indexterm zone="cups lpc-cups">
@@ -720,7 +663,7 @@ EOF</userinput></screen>
         <term><command>lpq</command></term>
         <listitem>
           <para>
-            viser gjeldende utskriftskøstatus på den navngitte skriveren
+            viser gjeldende utskriftskÃ¸status pÃ¥ den navngitte skriveren
           </para>
           <indexterm zone="cups lpq-cups">
             <primary sortas="b-lpq">lpq</primary>
@@ -744,7 +687,7 @@ EOF</userinput></screen>
         <term><command>lprm</command></term>
         <listitem>
           <para>
-            avbryter utskriftsjobber som har stått i kø for utskrift
+            avbryter utskriftsjobber som har stÃ¥tt i kÃ¸ for utskrift
           </para>
           <indexterm zone="cups lprm-cups">
             <primary sortas="b-lprm">lprm</primary>
@@ -783,7 +726,7 @@ EOF</userinput></screen>
           <para>
             leser en driverinformasjonsfil og lager et HTML sammendragsside
             som viser alle driverne i en fil og
-            støttede alternativer
+            stÃ¸ttede alternativer
           </para>
           <indexterm zone="cups ppdhtml">
             <primary sortas="b-ppdhtml">ppdhtml</primary>
@@ -807,7 +750,7 @@ EOF</userinput></screen>
         <term><command>ppdmerge</command></term>
         <listitem>
           <para>
-            slår sammen to eller flere PPD filer til en enkel flerspråklig
+            slÃ¥r sammen to eller flere PPD filer til en enkel flersprÃ¥klig
             PPD fil
           </para>
           <indexterm zone="cups ppdmerge">
@@ -829,20 +772,7 @@ EOF</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-<!--
-      <varlistentry id="reject">
-        <term><command>reject</command></term>
-        <listitem>
-          <para>
-            instruerer utskriftssystemet til å avvise utskriftsjobber til
-            angitte destinasjoner.
-          </para>
-          <indexterm zone="cups reject">
-            <primary sortas="b-reject">reject</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
--->
+
       <varlistentry id="libcups">
         <term><filename class="libraryfile">libcups.so</filename></term>
         <listitem>
