@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -8,15 +8,15 @@
 
   <!ENTITY git-download-http "&git-root;/git-&git-version;.tar.xz">
   <!ENTITY git-download-ftp  " ">
-  <!ENTITY git-md5sum        "c1f58a12b891ad73927b8e4a3aa29c7b">
+  <!ENTITY git-md5sum        "7e4eb7c45e9ba7c90fa51deeea49732f">
 
-  <!ENTITY git-size          "11 MB">
+  <!ENTITY git-size          "7.1 MB">
   <!-- but people keep forgetting that an install not only needs the net build
        space, it also needs the install space (or DESTDIR) -->
-  <!ENTITY git-buildsize     "252 MB (med nedlastet dokumentasjon)">
+  <!ENTITY git-buildsize     "252 MB (307 MB (med nedlastet dokumentasjon; legg til 18 MB for Ã¥ bygge dokumenter)">
   <!-- With 2.23.0, there was a large increase in time for tests. Possibly disk related? -->
   <!-- Confirmed that it is disk related.-->
-  <!ENTITY git-time          "0.3 SBU (med parallellitet=4; legge opp til 1,6 SBU (diskhastighetsavhengig) for tester, begge med parallellitet=4)">
+  <!ENTITY git-time          "0.3 SBU (med parallellitet=4; legg til 0,4 SBU for Ã¥ bygge dokumenter, og opptil 5 SBU (avhengig av diskhastighet) for tester)">
 ]>
 
 <sect1 id="git" xreflabel="git-&git-version;">
@@ -33,21 +33,21 @@
     <title>Introduksjon til Git</title>
 
     <para>
-      <application>Git</application> er en gratis og åpen kildekode, distribuert
-      versjonskontrollsystem designet for å håndtere alt fra små til veldig
+      <application>Git</application> er en gratis og Ã¥pen kildekode, distribuert
+      versjonskontrollsystem designet for Ã¥ hÃ¥ndtere alt fra smÃ¥ til veldig
       store prosjekter med fart og effektivitet. Hver
       <application>Git</application> clone er et fullverdig depot med
       fullstendig historikk og full revisjonssporing, ikke avhengig
-      av nettverkstilgang eller en sentral server. Forgrening og sammenslåing går raskt og
-      er lett å gjøre. <application>Git</application> brukes til versjonskontroll av
-      filer, omtrent som verktøy som f.eks <xref linkend="mercurial"/>,
+      av nettverkstilgang eller en sentral server. Forgrening og sammenslÃ¥ing gÃ¥r raskt og
+      er lett Ã¥ gjÃ¸re. <application>Git</application> brukes til versjonskontroll av
+      filer, omtrent som verktÃ¸y som f.eks <xref linkend="mercurial"/>,
       <application>Bazaar</application>, <xref linkend="subversion"/>,
       <ulink url="https://www.nongnu.org/cvs/">CVS</ulink>,
       <application>Perforce</application>, og
       <application>Team Foundation Server</application>.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -68,7 +68,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &git-size;
+          NedlastingsstÃ¸rrelse: &git-size;
         </para>
       </listitem>
       <listitem>
@@ -89,16 +89,16 @@
         <para>
           <ulink url="&git-root;/git-manpages-&git-version;.tar.xz">
           &git-root;/git-manpages-&git-version;.tar.xz</ulink>
-          (ikke nødvendig hvis du har installert <xref linkend="asciidoc"/>,
-          <xref linkend="xmlto"/>, og foretrekker å bygge dem opp igjen)
+          (ikke nÃ¸dvendig hvis du har installert <xref linkend="asciidoc"/>,
+          <xref linkend="xmlto"/>, og foretrekker Ã¥ bygge dem opp igjen)
         </para>
       </listitem>
       <listitem>
         <para>
           <ulink url="&git-root;/git-htmldocs-&git-version;.tar.xz">
           &git-root;/git-htmldocs-&git-version;.tar.xz</ulink>
-          og andre dokumenter (ikke nødvendig hvis du har installert
-          <xref linkend="asciidoc"/> og ønsker å gjenoppbygge dokumentasjonen).
+          og andre dokumenter (ikke nÃ¸dvendig hvis du har installert
+          <xref linkend="asciidoc"/> og Ã¸nsker Ã¥ gjenoppbygge dokumentasjonen).
         </para>
       </listitem>
     </itemizedlist>
@@ -107,45 +107,51 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="curl"/> (nødvendig for å bruke <application>Git</application> over
+      <xref linkend="curl"/> (nÃ¸dvendig for Ã¥ bruke <application>Git</application> over
       http, https, ftp eller ftps)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="apache"/> (for noen tester),
-      <xref role="runtime" linkend="gnupg2"/> (kjøretid, kan brukes til å signere
-      <application>Git</application> utførelser eller tagger, eller verifisere signaturene
+      <xref role='runtime' linkend='fcron'/> (kjÃ¸retid, for planlegging av
+      <command>git maintenance</command> jobber),
+      <xref role="runtime" linkend="gnupg2"/> (kjÃ¸retid, kan brukes til Ã¥ signere
+      <application>Git</application> utfÃ¸relser eller tagger, eller verifisere signaturene
       av dem),
-      <xref role="runtime" linkend="openssh"/> (kjøretid, nødvendig for å bruke
+      <xref role="runtime" linkend="openssh"/> (kjÃ¸retid, nÃ¸dvendig for Ã¥ bruke
       <application>Git</application> over ssh),
       <xref linkend="pcre2"/> (<emphasis>eller</emphasis> den avviklede <xref
       role="nodep" linkend="pcre"/>), i begge tilfeller konfigurert med
       <literal>--enable-jit</literal>,
       <xref role="runtime" linkend="subversion"/> med Perl bindinger
-         (kjøretid, for <command>git svn</command>),
+         (kjÃ¸retid, for <command>git svn</command>),
       <xref role="runtime" linkend="tk"/>
       (gitk, en enkel <application>Git</application>
-      arkivvisningsprogram, bruker <application>Tk</application> ved kjøretid),
+      arkivvisningsprogram, bruker <application>Tk</application> ved kjÃ¸retid),
       <xref linkend="valgrind"/>,
       <ulink url="https://metacpan.org/pod/Authen::SASL">Authen::SASL</ulink> og
       <ulink url="https://metacpan.org/pod/MIME::Base64">MIME::Base64</ulink>
-      (begge kjøretid, for <command>git send-email</command>),
-      og <xref linkend='perl-io-socket-ssl'/> (kjøretid, for
-      <command>git send-email</command> for å koble til en SMTP server med
-      SSL kryptering)
+      (begge kjÃ¸retid, for <command>git send-email</command>),
+      <phrase revision='sysv'>og </phrase><xref
+      linkend='perl-io-socket-ssl'/> (kjÃ¸retid, for
+      <command>git send-email</command> for Ã¥ koble til en SMTP server med
+      SSL kryptering)<phrase revision='systemd'>, og
+      <xref role='runtime' linkend='systemd'/>
+      (kjÃ¸retid, gjenoppbygg med <xref role='nodep' linkend='linux-pam'/>, for
+      planlegging av <command>git maintenance</command> jobber)</phrase>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri (for å lage mansidene, html dokumenter
+    <bridgehead renderas="sect4">Valgfri (for Ã¥ lage mansidene, html dokumenter
     og andre dokumenter)</bridgehead>
     <para role="optional">
       <xref linkend="xmlto"/> og
       <xref linkend="asciidoc"/>
       <!-- or xref linkend="asciidoctor", doesn't work now because it needs docbook-xsl-ns -->,
-      og også
+      og ogsÃ¥
       <ulink url="https://dblatex.sourceforge.net/">dblatex</ulink>
-      (for PDF versjonen av brukerhåndboken), og
-      <ulink url="https://docbook2x.sourceforge.net/">docbook2x</ulink> for å
+      (for PDF versjonen av brukerhÃ¥ndboken), og
+      <ulink url="https://docbook2x.sourceforge.net/">docbook2x</ulink> for Ã¥
       lage infosider
     </para>
 
@@ -155,7 +161,7 @@
     <title>Installasjon av Git</title>
 
     <para>
-      Installer <application>Git</application> ved å kjøre følgende
+      Installer <application>Git</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -166,7 +172,7 @@ make</userinput></screen>
 
     <para>
       Du kan bygge mansidene og/eller html dokumentene, eller
-      bruke nedlastede. Hvis du velger å bygge dem, bruk de to neste
+      bruke nedlastede. Hvis du velger Ã¥ bygge dem, bruk de to neste
       instruksjonene.
     </para>
 
@@ -185,23 +191,21 @@ make</userinput></screen>
 <screen remap="doc"><userinput>make man</userinput></screen>
 
     <para>
-      Testpakken kan kjøres i parallell modus. For å kjøre testpakken, kjør:
-      <command>make -k test</command>. <!--Hvis den kjøres som en vanlig bruker, bør 0 tester være
-      rapportert som mislykket i det endelige sammendraget.-->
-	  Hvis <xref linkend="apache"/> er installert,
-      tre tester i <filename>t5559-http-fetch-smart-http2.sh</filename> er
-      kjent å mislykkes pga cURL-8.1.x.
+      Testpakken kan kjÃ¸res i parallell modus. For Ã¥ kjÃ¸re testpakken, kjÃ¸r:
+      <command>make test -k |&amp; tee test.log</command>.  Hvis noen tester
+      mislykkes, kan listen over mislykkede tester vises via
+      <command>grep '^not ok' test.log | grep -v TODO</command>.
+      <!-- It looks like I'd misdiagnosed the issue.  -->
+      <!--phrase revision='systemd'>En test navngitt <literal>start and stop
+      Linux/systemd maintenance</literal> er kjent for Ã¥ mislykkes hvis den nÃ¥vÃ¦rende
+      pÃ¥loggingsÃ¸kten ikke startes etter gjenoppbygging
+      <xref linkend='systemd'/> med <xref linkend='linux-pam'/>
+      stÃ¸tte, eller det er en SSH Ã¸kt, men SSH serveren ikke er konfigurert
+      med <option>UsePAM</option> aktivert.</phrase-->
     </para>
-	
-	<!-- The tests in question are "GIT_TRACE_CURL redirects auth details",
-         "GIT_CURL_VERBOSE redacts auth details", and "cookies are redacted by
-         default". I sent upstream a bug report:
-         https://lore.kernel.org/git/3843d97f-0073-e2d4-b98d-5a38c33b25f3@linuxfromscratch.org/T/#u
-         and hopefully will hear back soon. -renodr -->
-
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem>
+      NÃ¥, som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
@@ -286,11 +290,11 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
     </para>
 
     <para>
-      <parameter>--with-python=python3</parameter>: Bruk denne bryteren for å bruke
+      <parameter>--with-python=python3</parameter>: Bruk denne bryteren for Ã¥ bruke
       <application>Python 3</application>, i stedet for EOL
       <application>Python 2</application>. Python brukes til
       <command>git p4</command> grensesnitt til Perforce repositories,
-      og brukes også i noen tester.
+      og brukes ogsÃ¥ i noen tester.
     </para>
 
     <para>
@@ -309,17 +313,17 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
       <command>tar -xf ../git-manpages-&git-version;.tar.gz -C
       /usr/share/man --no-same-owner</command>: Dette untarer
       <filename>git-manpages-&git-version;.tar.gz</filename>. 
-      <option>-C</option> alternativet gjør at tar endrer mappe til
-      <filename class="directory">/usr/share/man</filename> før
-      den begynner å dekomprimere dokumentene. <option>--no-same-owner</option>
-      alternativet stopper tar fra å bevare bruker- og gruppedetaljene til
-      filer. Dette er nyttig siden brukeren eller gruppen kanskje ikke eksisterer på ditt
-      system; dette kan (potensielt) være en sikkerhetsrisiko.
+      <option>-C</option> alternativet gjÃ¸r at tar endrer mappe til
+      <filename class="directory">/usr/share/man</filename> fÃ¸r
+      den begynner Ã¥ dekomprimere dokumentene. <option>--no-same-owner</option>
+      alternativet stopper tar fra Ã¥ bevare bruker- og gruppedetaljene til
+      filer. Dette er nyttig siden brukeren eller gruppen kanskje ikke eksisterer pÃ¥ ditt
+      system; dette kan (potensielt) vÃ¦re en sikkerhetsrisiko.
     </para>
 
     <para>
       <command>mv /usr/share/doc/git-&git-version; ...</command>: Disse
-      kommandoene flytter noen av filene til undermapper for å gjøre det enklere å sortere
+      kommandoene flytter noen av filene til undermapper for Ã¥ gjÃ¸re det enklere Ã¥ sortere
       gjennom dokumentene og finn det du leter etter.
     </para>
 
@@ -370,7 +374,8 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
           Ingen
         </seg>
         <seg>
-          /usr/libexec/git-core, og
+           /usr/libexec/git-core,
+          /usr/lib/perl5/&lfs-perl-version;/site_perl/Git, og
           /usr/share/{doc/git-&git-version;,git-core,git-gui,gitk,gitweb}
         </seg>
       </seglistitem>
@@ -422,7 +427,7 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
         <term><command>git-receive-pack</command></term>
         <listitem>
           <para>
-            påkalles av <command>git send-pack</command> og oppdaterer
+            pÃ¥kalles av <command>git send-pack</command> og oppdaterer
             depoet med informasjonen matet fra den eksterne enden
           </para>
           <indexterm zone="git git-receive-pack">
@@ -435,7 +440,7 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
         <term><command>git-shell</command></term>
         <listitem>
           <para>
-            er et påloggingsskall for SSH kontoer for å gi begrenset Git
+            er et pÃ¥loggingsskall for SSH kontoer for Ã¥ gi begrenset Git
             adgang
           </para>
           <indexterm zone="git git-shell">
@@ -448,7 +453,7 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
         <term><command>git-upload-archive</command></term>
         <listitem>
           <para>
-            påkalles av <command>git archive --remote</command> og sender
+            pÃ¥kalles av <command>git archive --remote</command> og sender
             et generert arkiv til den andre enden over git protokollen
           </para>
           <indexterm zone="git git-upload-archive">
@@ -461,7 +466,7 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
         <term><command>git-upload-pack</command></term>
         <listitem>
           <para>
-            påkalles av <command>git fetch-pack</command>, det oppdager
+            pÃ¥kalles av <command>git fetch-pack</command>, det oppdager
             hvilke objekter den andre siden mangler, og sender de etter
             pakking
           </para>
@@ -475,7 +480,7 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
         <term><command>scalar</command></term>
         <listitem>
           <para>
-            er et lagringsadministrasjonsverktøy som optimerer Git for bruk i
+            er et lagringsadministrasjonsverktÃ¸y som optimerer Git for bruk i
             store depoter
           </para>
           <indexterm zone="git scalar">

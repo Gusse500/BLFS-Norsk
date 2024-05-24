@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY mercurial-download-http "https://www.mercurial-scm.org/release/mercurial-&mercurial-version;.tar.gz">
   <!ENTITY mercurial-download-ftp  " ">
-  <!ENTITY mercurial-md5sum        "fccff6981f362466b8e9e0fa0de0ddb6">
+  <!ENTITY mercurial-md5sum        "b6c1716150b0da35d44d1155cb3ae853">
   <!ENTITY mercurial-size          "7.9 MB">
   <!ENTITY mercurial-buildsize     "115 MB (med dokumenter, legg til 1.5 GB for tester)">
-  <!ENTITY mercurial-time          "0.3 SBU (med dokumenter, legg til 30 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY mercurial-time          "0.3 SBU (med dokumenter, legg til 14 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="mercurial" xreflabel="Mercurial-&mercurial-version;">
@@ -27,13 +27,13 @@
 
     <para>
       <application>Mercurial</application> er en distribuert kildekontroll
-      styringsverktøy som ligner på <application>Git</application> og
+      styringsverktÃ¸y som ligner pÃ¥ <application>Git</application> og
       <application>Bazaar</application>. <application>Mercurial</application>
       er skrevet i <application>Python</application> og brukes av prosjekter
       som Mozilla for Firefox og Thunderbird.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &mercurial-size;
+          NedlastingsstÃ¸rrelse: &mercurial-size;
         </para>
       </listitem>
       <listitem>
@@ -74,11 +74,11 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
     <xref linkend="docutils"/>
-      (nødvendig for å bygge dokumentasjonen),
+      (nÃ¸dvendig for Ã¥ bygge dokumentasjonen),
     <xref linkend="git"/>,
     <xref linkend="gpgme"/> (med Python bindinger),
     <xref role="runtime" linkend="openssh"/>
-      (kjøretid, for å få tilgang ssh://... depoter),
+      (kjÃ¸retid, for Ã¥ fÃ¥ tilgang ssh://... depoter),
     <xref linkend="pygments"/>,
     <xref linkend="rust"/> (se <filename>rust/README.rst</filename> og <filename>rust/rhg/README.md</filename>),
     <xref linkend="subversion"/> (med Python bindinger),
@@ -98,27 +98,27 @@
     <!-- Rust port is now part of the standard tests -->
 
     <para>
-      Bygg <application>Mercurial</application> ved å kjøre følgende
+      Bygg <application>Mercurial</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
 <screen><userinput>make build</userinput></screen>
 
     <para>
-      For å bygge dokumentasjonen (krever <xref linkend="docutils"/>), utsted:
+      For Ã¥ bygge dokumentasjonen (krever <xref linkend="docutils"/>), utsted:
     </para>
 
 <screen remap="doc"><userinput>make doc</userinput></screen>
 
     <para>
-      Hvis du ønsker å kjøre testene, må rusttestene fjernes siden de
-      for øyeblikket er ødelagt på grunn av syntaksfeil. For å gjøre dette, utsted:
+      Hvis du Ã¸nsker Ã¥ kjÃ¸re testene, mÃ¥ rusttestene fjernes siden de
+      for Ã¸yeblikket er Ã¸delagt pÃ¥ grunn av syntaksfeil. For Ã¥ gjÃ¸re dette, utsted:
     </para>
 
 <screen><userinput>sed -i '138,142d' Makefile</userinput></screen>
 
     <para>
-      For å kjøre testpakken, utsted:
+      For Ã¥ kjÃ¸re testpakken, utsted:
     </para>
 <screen remap="test"><userinput>TESTFLAGS="-j<replaceable>&lt;N&gt;</replaceable> --tmpdir tmp" make check</userinput></screen>
 <!-- The blacklists have to be checked every release of Mercurial, do a listing
@@ -127,8 +127,8 @@
      although blacklists/fsmonitor and blacklists/linux-vfat still exist. -->
 
     <para>
-      hvor <replaceable>&lt;N&gt;</replaceable> er et heltall mellom én
-      og antall ( prosessor X tråder ), inkludert. Flere tester
+      hvor <replaceable>&lt;N&gt;</replaceable> er et heltall mellom Ã©n
+      og antall ( prosessor X trÃ¥der ), inkludert. Flere tester
       mislykkes fordi noen feilmeldinger har endret seg i Python eller
       noen avskrivningsadvarsler skrives ut som ikke var til stede da
       testen ble designet.
@@ -141,13 +141,15 @@
       # Ran 935 tests, 69 skipped,  8 failed. real  26m15.875s -bdubbs 10 Jun 23.
       # Ran 940 tests, 64 skipped,  8 failed. real  omitted    -bdubbs 26 Jun 23.
       # Ran 948 tests, 66 skipped, 0 failed. -pierre 12 Jul 23 (mercurial-6.5).
+      # Ran 950 tests, 65 skipped, 1 failed. -pierre 8  Nov 23 (mercurial-6.5.3).
+      # Ran 948 tests, 66 skipped, 0 failed. -renodr 22 Nov 23 (mercurial-6.6).
       -->
-      For å
-      undersøke eventuelle tilsynelatende mislykkede tester, kan du bruke
-      <command>run-tests.py</command> skriptet. For å se de nesten førti bryterne,
-      noen av dem veldig nyttige, kjør <command>tests/run-tests.py
-      --help</command>.  Når du kjører følgende kommandoer, vil du bare kjøre
-      testene som mislyktes før:
+      For Ã¥
+      undersÃ¸ke eventuelle tilsynelatende mislykkede tester, kan du bruke
+      <command>run-tests.py</command> skriptet. For Ã¥ se de nesten fÃ¸rti bryterne,
+      noen av dem veldig nyttige, kjÃ¸r <command>tests/run-tests.py
+      --help</command>.  NÃ¥r du kjÃ¸rer fÃ¸lgende kommandoer, vil du bare kjÃ¸re
+      testene som mislyktes fÃ¸r:
     </para>
 
 <screen remap="test"><userinput>pushd tests  &amp;&amp;
@@ -156,31 +158,31 @@
 popd</userinput></screen>
 
     <para>
-      Normalt vil de tidligere feilene være reproduserbare. Imidlertid, hvis
-      du legger til bryteren <option>--debug</option> før
-      <option>--tmpdir</option>, og kjør testene på nytt, kan det kan at noen feil
+      Normalt vil de tidligere feilene vÃ¦re reproduserbare. Imidlertid, hvis
+      du legger til bryteren <option>--debug</option> fÃ¸r
+      <option>--tmpdir</option>, og kjÃ¸r testene pÃ¥ nytt, kan det kan at noen feil
       forsvinner, noe som er et problem med testpakken. Hvis dette skjer,
-      vil det ikke være flere av disse feilene selv om du ikke bruker
+      vil det ikke vÃ¦re flere av disse feilene selv om du ikke bruker
       --debug bryteren igjen.
     </para>
 
     <para>
       En interessant bryter er <option>--time</option>, som vil generere en
-      tabell over alle utførte tester og deres respektive start, slutt, bruker,
-      system og sanntid når testene er fullført. Merk at disse
-      brytere kan brukes med <command>make check</command> ved å inkludere
-      dem i <envar>TESTFLAGS</envar> miljøvariabelen.
+      tabell over alle utfÃ¸rte tester og deres respektive start, slutt, bruker,
+      system og sanntid nÃ¥r testene er fullfÃ¸rt. Merk at disse
+      brytere kan brukes med <command>make check</command> ved Ã¥ inkludere
+      dem i <envar>TESTFLAGS</envar> miljÃ¸variabelen.
     </para>
 
     <para>
-      Installer <application>Mercurial</application> ved å kjøre følgende
+      Installer <application>Mercurial</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommando (som <systemitem class="username">root</systemitem>):
     </para>
 
 <screen role="root"><userinput>make PREFIX=/usr install-bin</userinput></screen>
 
     <para>
-      Hvis du har laget dokumentasjonen, installer den ved å kjøre følgende
+      Hvis du har laget dokumentasjonen, installer den ved Ã¥ kjÃ¸re fÃ¸lgende
       kommando (som <systemitem class="username">root</systemitem>):
     </para>
 
@@ -189,7 +191,7 @@ popd</userinput></screen>
 
     <para>
       Etter installasjonen to veldig raske og enkle tester
-      burde kjøres riktig. Den første trenger litt konfigurasjon:
+      burde kjÃ¸res riktig. Den fÃ¸rste trenger litt konfigurasjon:
     </para>
 
 <screen><userinput>cat &gt;&gt; ~/.hgrc &lt;&lt; "EOF"
@@ -198,8 +200,8 @@ username = <replaceable>&lt;user_name&gt; &lt;user@mail&gt;</replaceable></liter
 EOF</userinput></screen>
 
     <para>
-      hvor du må erstatte &lt;user_name&gt; and &lt;your@mail&gt; (mail
-      er valgfritt og kan utelates). Med brukeridentiteten definert, kjør
+      hvor du mÃ¥ erstatte &lt;user_name&gt; and &lt;your@mail&gt; (mail
+      er valgfritt og kan utelates). Med brukeridentiteten definert, kjÃ¸r
       <command>hg debuginstall</command> og flere linjer vil vises,
       den siste leser "no problems detected". En annen rask og enkel
       test er bare <command>hg</command>, som skal gi grunnleggende kommandoer
@@ -214,8 +216,8 @@ EOF</userinput></screen>
 
       <para>
         <command>2to3 -w doc/hgmanpage.py</command>: Siden <application>
-        Python 3</application> brukes med docutils, må én fil være
-        konvertert for å være kompatible.
+        Python 3</application> brukes med docutils, mÃ¥ Ã©n fil vÃ¦re
+        konvertert for Ã¥ vÃ¦re kompatible.
       </para>
 
    </sect2>
@@ -241,17 +243,17 @@ EOF</userinput></screen>
       </indexterm>
 
       <para>
-        De aller fleste utvidelser er deaktivert som standard. Kjør
-        <command>hg help extensions</command> hvis du trenger å aktivere noen, f.eks.
-        når man undersøker testfeil. Dette vil sende ut en liste over aktiverte
+        De aller fleste utvidelser er deaktivert som standard. KjÃ¸r
+        <command>hg help extensions</command> hvis du trenger Ã¥ aktivere noen, f.eks.
+        nÃ¥r man undersÃ¸ker testfeil. Dette vil sende ut en liste over aktiverte
         og deaktiverte utvidelser, samt mer informasjon som hvordan
         aktivere eller deaktivere utvidelser ved hjelp av konfigurasjonsfiler.
       </para>
 
       <para>
-        Hvis du har installert <xref linkend="make-ca"/> og ønsker
-        <application>Mercurial</application> å bruke sertifikatene,
-        som <systemitem class="username">root</systemitem> bruker, kjør:
+        Hvis du har installert <xref linkend="make-ca"/> og Ã¸nsker
+        <application>Mercurial</application> Ã¥ bruke sertifikatene,
+        som <systemitem class="username">root</systemitem> bruker, kjÃ¸r:
       </para>
 
 <screen role="root"><userinput>install -v -d -m755 /etc/mercurial &amp;&amp;

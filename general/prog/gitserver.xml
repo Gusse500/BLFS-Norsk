@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -7,11 +7,11 @@
   <!ENTITY gituid "58">
 ]>
 
-<sect1 id="gitserver" xreflabel="Kjøre en Git server">
+<sect1 id="gitserver" xreflabel="KjÃ¸re en Git server">
   <?dbhtml filename="gitserver.html"?>
 
 
-  <title>Kjøre en Git server</title>
+  <title>KjÃ¸re en Git server</title>
 
   <sect2 role="package">
     <title>Introduksjon</title>
@@ -25,7 +25,7 @@
 
     <bridgehead renderas="sect3">Server Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="git"/> og
       <xref linkend="openssh"/>
@@ -37,24 +37,24 @@
     <title>Sette opp en Git Server</title>
 
     <para>
-      Følgende instruksjoner vil installere en
+      FÃ¸lgende instruksjoner vil installere en
       <application>git</application> server. Det vil bli satt
-      opp til å bruke <application>OpenSSH</application> som sikker
+      opp til Ã¥ bruke <application>OpenSSH</application> som sikker
       ekstern tilgangsmetode.
     </para>
 
     <para>
-      Konfigurasjon av serveren består av følgende trinn:
+      Konfigurasjon av serveren bestÃ¥r av fÃ¸lgende trinn:
     </para>
 
     <sect3>
       <title>1. Sette opp brukere, grupper og tillatelser</title>
 
       <para>
-        Du må være bruker <systemitem class='username'>root</systemitem>
-        for den første delen av konfigurasjonen. Opprett <systemitem
+        Du mÃ¥ vÃ¦re bruker <systemitem class='username'>root</systemitem>
+        for den fÃ¸rste delen av konfigurasjonen. Opprett <systemitem
         class="username">git</systemitem> bruker og gruppe og sett en ubrukelig
-        passordhash med følgende kommandoer:
+        passordhash med fÃ¸lgende kommandoer:
       </para>
 
 <screen role="root"><userinput>groupadd -g &gitgid; git &amp;&amp;
@@ -63,31 +63,31 @@ sed -i '/^git:/s/^git:[^:]:/git:NP:/' /etc/shadow</userinput></screen>
 
       <para>
         Sett inn en ubrukelig passordhash (erstatter <literal>!</literal>
-        med <literal>NP</literal>) låser opp kontoen, men den kan ikke brukes
-         for å logge på via passordautentisering. Det kreves av
-        <application>sshd</application> for å fungere skikkelig.
+        med <literal>NP</literal>) lÃ¥ser opp kontoen, men den kan ikke brukes
+         for Ã¥ logge pÃ¥ via passordautentisering. Det kreves av
+        <application>sshd</application> for Ã¥ fungere skikkelig.
         Deretter oppretter du noen filer og mapper i hjemmemappen til git brukeren
-        som gir tilgang til git depotet ved å bruke ssh nøkler.
+        som gir tilgang til git depotet ved Ã¥ bruke ssh nÃ¸kler.
       </para>
 
 <screen role="root"><userinput>install -o git -g git -dm0700 /home/git/.ssh &amp;&amp;
 install -o git -g git -m0600 /dev/null /home/git/.ssh/authorized_keys</userinput></screen>
 
       <para>
-        For enhver utvikler som bør ha tilgang til depotet
-        legg til hans/hennes offentlige ssh nøkkel til <filename>/home/git/.ssh/authorized_keys</filename>.
-        Først må du legge til noen alternativer for å hindre brukere fra å bruke
+        For enhver utvikler som bÃ¸r ha tilgang til depotet
+        legg til hans/hennes offentlige ssh nÃ¸kkel til <filename>/home/git/.ssh/authorized_keys</filename>.
+        FÃ¸rst mÃ¥ du legge til noen alternativer for Ã¥ hindre brukere fra Ã¥ bruke
         tilkobling til git for portvideresending til andre maskiner
-        som git serveren kan nå.
+        som git serveren kan nÃ¥.
       </para>
 
 <screen role="nodump"><userinput>echo -n "no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty " >> /home/git/.ssh/authorized_keys &amp;&amp;
 cat &lt;user-ssh-key&gt; &gt;&gt; /home/git/.ssh/authorized_keys</userinput></screen>
 
       <para>
-        Det er også nyttig å angi standardnavnet til den første grenen
-        av nye depoter ved å endre git konfigurasjonen. Som
-        <systemitem class='username'>root</systemitem> bruker, kjør:
+        Det er ogsÃ¥ nyttig Ã¥ angi standardnavnet til den fÃ¸rste grenen
+        av nye depoter ved Ã¥ endre git konfigurasjonen. Som
+        <systemitem class='username'>root</systemitem> bruker, kjÃ¸r:
       </para>
 
 <screen role="nodump"><userinput>git config --system init.defaultBranch trunk</userinput></screen>
@@ -96,8 +96,8 @@ cat &lt;user-ssh-key&gt; &gt;&gt; /home/git/.ssh/authorized_keys</userinput></sc
         Legg til slutt til <filename>/usr/bin/git-shell</filename> inngang til
         <filename>/etc/shells</filename> konfigurasjonsfil. Dette skallet
         har blitt satt i <systemitem class='username'>git</systemitem>
-        brukerprofil og sørger for at kun git relaterte handlinger
-        kan utføres:
+        brukerprofil og sÃ¸rger for at kun git relaterte handlinger
+        kan utfÃ¸res:
       </para>
 
 <screen role="root"><userinput>echo "/usr/bin/git-shell" &gt;&gt; /etc/shells</userinput></screen>
@@ -108,18 +108,18 @@ cat &lt;user-ssh-key&gt; &gt;&gt; /home/git/.ssh/authorized_keys</userinput></sc
       <title>2. Lag et git depot</title>
 
       <para>
-        Depotet kan være hvor som helst på filsystemet. Det er
+        Depotet kan vÃ¦re hvor som helst pÃ¥ filsystemet. Det er
         viktig at git brukeren har lese-/skrivetilgang til den
         plasseringen. Vi bruker <filename class="directory">/srv/git</filename>
         som basismappe. Lag et nytt <application>git</application>
-        depot med følgende kommandoer (som
+        depot med fÃ¸lgende kommandoer (som
         <systemitem class="username">root</systemitem> bruker):
       </para>
 
       <note>
         <para>
           I alle instruksjonene nedenfor bruker vi <emphasis>project1</emphasis>
-          som et eksempel på depotnavn. Du bør navngi depotet ditt
+          som et eksempel pÃ¥ depotnavn. Du bÃ¸r navngi depotet ditt
           som et kort beskrivende navn for ditt spesifikke prosjekt.
         </para>
       </note>
@@ -136,22 +136,22 @@ chown -R git:git .</userinput></screen>
 
       <note>
         <para>
-          Alle instruksjonene i denne delen og den neste bør
-          gjøres på et brukersystem, ikke på serversystemet.
+          Alle instruksjonene i denne delen og den neste bÃ¸r
+          gjÃ¸res pÃ¥ et brukersystem, ikke pÃ¥ serversystemet.
         </para>
       </note>
 
       <para>
-        Nå som depotet er opprettet, kan det brukes av
-        utviklere til å legge inn noen filer i den. Når ssh nøkkelen til
+        NÃ¥ som depotet er opprettet, kan det brukes av
+        utviklere til Ã¥ legge inn noen filer i den. NÃ¥r ssh nÃ¸kkelen til
         brukeren er importert til git sin <filename>authorized_keys</filename>
         fil, kan brukeren samhandle med depotet.
       </para>
 
       <para>
-        En minimal konfigurasjon bør være tilgjengelig på utviklerens
+        En minimal konfigurasjon bÃ¸r vÃ¦re tilgjengelig pÃ¥ utviklerens
         system som spesifiserer brukernavnet og e-postadressen.
-        Lag denne minimale konfigurasjonsfilen på klientsiden:
+        Lag denne minimale konfigurasjonsfilen pÃ¥ klientsiden:
       </para>
 
 <screen role="nodump"><userinput>cat &gt; ~/.gitconfig &lt;&lt;EOF
@@ -161,14 +161,14 @@ chown -R git:git .</userinput></screen>
 EOF</userinput></screen>
 
       <para>
-        På utviklerens maskin, sett opp noen filer som skal skyves
-        til depotet som det første innholdet:
+        PÃ¥ utviklerens maskin, sett opp noen filer som skal skyves
+        til depotet som det fÃ¸rste innholdet:
       </para>
 
       <note>
         <para>
           <emphasis>gitserver</emphasis> begrepet som brukes nedenfor
-           skal være vertsnavnet (eller ip adressen) til git serveren.
+           skal vÃ¦re vertsnavnet (eller ip adressen) til git serveren.
         </para>
       </note>
 
@@ -183,19 +183,19 @@ git add README
 git commit -m 'Initial creation of README'
 git push --set-upstream origin trunk</userinput></screen>
 
-      <para>Det første innholdet blir nå sendt til serveren og
-        er tilgjengelig for andre brukere. På den gjeldende maskinen er
+      <para>Det fÃ¸rste innholdet blir nÃ¥ sendt til serveren og
+        er tilgjengelig for andre brukere. PÃ¥ den gjeldende maskinen er
         argumentet <literal>--set-upstream origin trunk</literal> er
-        ikke lenger nødvendig siden det lokale depotet er
-        koblet til det eksterne depotet. Påfølgende dytt
-        kan utføres som
+        ikke lenger nÃ¸dvendig siden det lokale depotet er
+        koblet til det eksterne depotet. PÃ¥fÃ¸lgende dytt
+        kan utfÃ¸res som
       </para>
 
 <screen role="nodump"><userinput>git push</userinput></screen>
 
       <para>
-        Andre utviklere kan nå klone depotet og gjøre
-        endringer i innholdet (så lenge ssh nøklene deres
+        Andre utviklere kan nÃ¥ klone depotet og gjÃ¸re
+        endringer i innholdet (sÃ¥ lenge ssh nÃ¸klene deres
         har blitt installert):
       </para>
 
@@ -207,10 +207,10 @@ git push</userinput></screen>
 
       <note>
         <para>
-          Dette er et veldig grunnleggende serveroppsett basert på
+          Dette er et veldig grunnleggende serveroppsett basert pÃ¥
           <application>OpenSSH</application> adgang. Alle utviklere bruker
-          <systemitem class="username">git</systemitem> brukeren for å utføre
-          handlinger på depotet og endringene brukere foretar kan
+          <systemitem class="username">git</systemitem> brukeren for Ã¥ utfÃ¸re
+          handlinger pÃ¥ depotet og endringene brukere foretar kan
           skilles ut som det lokale brukernavnet (se
           <filename>~/.gitconfig</filename>) er registrert i
           endringssett.
@@ -218,25 +218,25 @@ git push</userinput></screen>
       </note>
 
       <para>
-        Tilgangen er begrenset av de offentlige nøklene som er lagt til git sin
+        Tilgangen er begrenset av de offentlige nÃ¸klene som er lagt til git sin
         <filename>authorized_keys</filename> filen og det er ingen
-        mulighet for publikum til å eksportere/klone depotet. For å
-        aktiver dette, fortsett med trinn 4 for å sette opp git serveren
+        mulighet for publikum til Ã¥ eksportere/klone depotet. For Ã¥
+        aktiver dette, fortsett med trinn 4 for Ã¥ sette opp git serveren
         for offentlig lesetilgang.
       </para>
 
       <para>
-        I URLen som brukes til å klone prosjektet, den absolutte banen (her
-        <filename>/srv/git/project1.git</filename>) må spesifiseres
+        I URLen som brukes til Ã¥ klone prosjektet, den absolutte banen (her
+        <filename>/srv/git/project1.git</filename>) mÃ¥ spesifiseres
         da depotet ikke er i git sin hjemmemappe, men i
-        <filename class="directory">/srv/git</filename>. For å bli kvitt
-        eksponeringen som avslører strukturen til serverinstallasjonen, en symbolkobling
+        <filename class="directory">/srv/git</filename>. For Ã¥ bli kvitt
+        eksponeringen som avslÃ¸rer strukturen til serverinstallasjonen, en symbolkobling
         kan legges til i git sin hjemmemappe for hvert prosjekt som dette:
       </para>
 <screen role="nodump"><userinput>ln -svf /srv/git/project1.git /home/git/</userinput></screen>
 
       <para>
-        Nå kan depotet klones ved bruk av
+        NÃ¥ kan depotet klones ved bruk av
       </para>
 <screen role="nodump"><userinput>git clone git@gitserver:project1.git</userinput></screen>
 
@@ -246,10 +246,10 @@ git push</userinput></screen>
       <title>4. Konfigure Serveren</title>
 
       <para>
-        Oppsettet beskrevet ovenfor gjør et depot tilgjengelig for
-        autentiserte brukere (med å gi den offentlige ssh nøkkelfilen).
-        Det er også en enkel måte å publisere
-        depotet til uautentiserte brukere &mdash; selvfølgelig uten
+        Oppsettet beskrevet ovenfor gjÃ¸r et depot tilgjengelig for
+        autentiserte brukere (med Ã¥ gi den offentlige ssh nÃ¸kkelfilen).
+        Det er ogsÃ¥ en enkel mÃ¥te Ã¥ publisere
+        depotet til uautentiserte brukere &mdash; selvfÃ¸lgelig uten
         skriveadgang.
       </para>
 
@@ -261,14 +261,14 @@ git push</userinput></screen>
 
       <note>
         <para>
-          Nissen vil være tilgjengelig på port <literal>9418</literal>
-          som standard. Sørg for at brannmuroppsettet tillater
+          Nissen vil vÃ¦re tilgjengelig pÃ¥ port <literal>9418</literal>
+          som standard. SÃ¸rg for at brannmuroppsettet tillater
           tilgang til denne porten.
         </para>
       </note>
 
       <para revision="sysv">
-        For å starte serveren ved oppstart, installer git-daemon
+        For Ã¥ starte serveren ved oppstart, installer git-daemon
         oppstartskriptet inkludert i <xref linkend="bootscripts"/> pakken:
       </para>
 
@@ -279,7 +279,7 @@ git push</userinput></screen>
 <screen role="root" revision="sysv"><userinput>make install-git-daemon</userinput></screen>
 
       <para revision="systemd">
-        For å starte serveren ved oppstart, installer
+        For Ã¥ starte serveren ved oppstart, installer
         <filename>git-daemon.service</filename> enheten fra
         <xref linkend="systemd-units"/> pakken:
       </para>
@@ -291,22 +291,22 @@ git push</userinput></screen>
 <screen role="root" revision="systemd"><userinput>make install-git-daemon</userinput></screen>
 
       <para>
-        For å tillate <application>git</application> å eksportere et
+        For Ã¥ tillate <application>git</application> Ã¥ eksportere et
         depot, en fil som heter <filename>git-daemon-export-ok</filename>
-        kreves i hver depotmappe på serveren.
-        Filen trenger ikke noe innhold, bare dens eksistens muliggjør, dens fravær
+        kreves i hver depotmappe pÃ¥ serveren.
+        Filen trenger ikke noe innhold, bare dens eksistens muliggjÃ¸r, dens fravÃ¦r
         deaktiverer eksporten av det depotet.
       </para>
 
 <screen role="root"><userinput>touch /srv/git/project1.git/git-daemon-export-ok</userinput></screen>
 
       <para revision="sysv">
-        Skriptet for å starte git nissen bruker noen standardverdier
+        Skriptet for Ã¥ starte git nissen bruker noen standardverdier
         internt. Det viktigste er veien til depotmappen
         som er satt til <filename class="directory">/srv/git</filename>.
         I tilfelle du av en eller annen grunn har opprettet depotet i en
-        annen plassering, må du fortelle oppstartsskriptet hvor
-        depot er å finne. Dette kan oppnås ved å lage en
+        annen plassering, mÃ¥ du fortelle oppstartsskriptet hvor
+        depot er Ã¥ finne. Dette kan oppnÃ¥s ved Ã¥ lage en
         konfigurasjonsfilen navngitt <filename>/etc/sysconfig/git-daemon</filename>.
         Denne konfigurasjonsfilen vil bli importert hvis den eksisterer, noe som betyr at den er det
         valgfri. Filen kan se ut som:</para>
@@ -328,19 +328,19 @@ GIT_DAEMON_OPTS=""
       <para revision="systemd">
         Sammen med <filename>git-daemon.service</filename> enheten, en
         konfigurasjonsfil navngitt <filename>/etc/default/git-daemon</filename>
-        har blitt installert. Se gjennom denne konfigurasjonsfilen for å matche dine
+        har blitt installert. Se gjennom denne konfigurasjonsfilen for Ã¥ matche dine
         behov.
       </para>
 
       <para>
-        Det er bare tre alternativer å angi i konfigurasjonsfilen:
+        Det er bare tre alternativer Ã¥ angi i konfigurasjonsfilen:
         <itemizedlist>
           <listitem>
             <para>
               GIT_BASE_DIR=&lt;dirname&gt;
             </para>
             <para>Spesifiser plasseringen av git depoene.
-              Relative stier som brukes når du får tilgang til nissen vil
+              Relative stier som brukes nÃ¥r du fÃ¥r tilgang til nissen vil
               oversettes i forhold til denne mappen.
             </para>
           </listitem>
@@ -359,11 +359,11 @@ GIT_DAEMON_OPTS=""
             </para>
             <para>
               I tilfelle spesielle alternativer til <command>git daemon</command>
-              kommandoen er nødvendig, må de spesifiseres i denne innstillingen.
-              Et eksempel kan være å justere portnummeret som nissen
-              lytter på. I dette tilfellet, legg til <literal>--port=&lt;port
+              kommandoen er nÃ¸dvendig, mÃ¥ de spesifiseres i denne innstillingen.
+              Et eksempel kan vÃ¦re Ã¥ justere portnummeret som nissen
+              lytter pÃ¥. I dette tilfellet, legg til <literal>--port=&lt;port
               number&gt;</literal> til denne variabelen. For mer informasjon
-              om hvilke alternativer som kan angis, ta en titt på utdataene til
+              om hvilke alternativer som kan angis, ta en titt pÃ¥ utdataene til
               <command>git daemon --help</command>.
             </para>
           </listitem>
@@ -371,8 +371,8 @@ GIT_DAEMON_OPTS=""
       </para>
 
       <para>
-        Etter å ha startet nissen, kan uautentiserte brukere klone eksporterte
-        depoer ved å bruke
+        Etter Ã¥ ha startet nissen, kan uautentiserte brukere klone eksporterte
+        depoer ved Ã¥ bruke
       </para>
 <screen role="nodump"><userinput>git clone git://gitserver/project1.git</userinput></screen>
 
