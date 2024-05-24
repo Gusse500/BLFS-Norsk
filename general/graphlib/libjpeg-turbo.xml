@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,7 +6,7 @@
 
   <!ENTITY libjpeg-download-http "&sourceforge-dl;/libjpeg-turbo/libjpeg-turbo-&libjpeg-turbo-version;.tar.gz">
   <!ENTITY libjpeg-download-ftp  " ">
-  <!ENTITY libjpeg-md5sum        "aa1f0a1c72cb6772e34d9d5136267f56">
+  <!ENTITY libjpeg-md5sum        "1fdc6494521a8724f5f7cf39b0f6aff3">
   <!ENTITY libjpeg-size          "2.7 MB">
   <!ENTITY libjpeg-buildsize     "55 MB (med tester)">
   <!ENTITY libjpeg-time          "0.5 SBU (med tester; begge bruker parallellisme=4)">
@@ -27,13 +27,13 @@
 
     <para>
       <application>libjpeg-turbo</application> er en forgrening av originalen
-      IJG <application>libjpeg</application> som bruker SIMD for å akselerere
+      IJG <application>libjpeg</application> som bruker SIMD for Ã¥ akselerere
       grunnleggende JPEG komprimering og dekompresjon.
       <application>libjpeg</application> er et bibliotek som implementerer JPEG
       bildekoding, dekoding og transkoding.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libjpeg-size;
+          NedlastingsstÃ¸rrelse: &libjpeg-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +71,7 @@
 
     <bridgehead renderas="sect3">libjpeg-turbo Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>
     </para>
@@ -79,7 +79,7 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="nasm"/> eller <xref linkend="yasm"/>
-      (for å bygge pakken med optimaliserte sammenstillingsrutiner)
+      (for Ã¥ bygge pakken med optimaliserte sammenstillingsrutiner)
     </para>
 
   </sect2>
@@ -88,29 +88,29 @@
     <title>Installasjon av libjpeg-turbo</title>
 
     <para>
-      Installer <application>libjpeg-turbo</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>libjpeg-turbo</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr \
-      -DCMAKE_BUILD_TYPE=RELEASE  \
-      -DENABLE_STATIC=FALSE       \
+cmake -DCMAKE_INSTALL_PREFIX=/usr        \
+      -DCMAKE_BUILD_TYPE=RELEASE         \
+      -DENABLE_STATIC=FALSE              \
+      -DCMAKE_INSTALL_DEFAULT_LIBDIR=lib \
       -DCMAKE_INSTALL_DOCDIR=/usr/share/doc/libjpeg-turbo-&libjpeg-turbo-version; \
-      -DCMAKE_INSTALL_DEFAULT_LIBDIR=lib  \
       .. &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make test</command>.
     </para>
 <!--
     <note><para>
       Hvis du installerer <application>libjpeg-turbo</application> over en eldre jpeg
-      installasjon, er ikke alle symbolske lenker til biblioteket riktig oppdatert. Å fikse
-      dette før installasjon, kjør følgende som <systemitem
+      installasjon, er ikke alle symbolske lenker til biblioteket riktig oppdatert. Ã… fikse
+      dette fÃ¸r installasjon, kjÃ¸r fÃ¸lgende som <systemitem
       class="username">root</systemitem> bruker:</para>
 
 <screen role="root"><userinput>rm -f /usr/lib/libjpeg.so*</userinput></screen>
@@ -118,7 +118,7 @@ make</userinput></screen>
     </note>
 -->
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -129,7 +129,7 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <option>-DWITH_JPEG8=ON</option>: Denne bryteren muliggjør kompatibilitet
+      <option>-DWITH_JPEG8=ON</option>: Denne bryteren muliggjÃ¸r kompatibilitet
       med <application>libjpeg</application> versjon 8.
     </para>
   </sect2>
@@ -164,9 +164,9 @@ make</userinput></screen>
         <term><command>cjpeg</command></term>
         <listitem>
           <para>
-            komprimerer bildefiler for å produsere en JPEG/JFIF fil på
-            standard utgang. For øyeblikket støttede inndatafilformater er: PPM
-            (PBMPLUS fargeformat), PGM (PBMPLUS gråskalaformat),
+            komprimerer bildefiler for Ã¥ produsere en JPEG/JFIF fil pÃ¥
+            standard utgang. For Ã¸yeblikket stÃ¸ttede inndatafilformater er: PPM
+            (PBMPLUS fargeformat), PGM (PBMPLUS grÃ¥skalaformat),
             BMP og Targa
           </para>
           <indexterm zone="libjpeg cjpeg">
@@ -180,7 +180,7 @@ make</userinput></screen>
         <listitem>
           <para>
             dekomprimerer bildefiler fra JPEG/JFIF format til enten
-            PPM (PBMPLUS fargeformat), PGM (PBMPLUS gråskalaformat),
+            PPM (PBMPLUS fargeformat), PGM (PBMPLUS grÃ¥skalaformat),
             BMP eller Targa format
           </para>
           <indexterm zone="libjpeg djpeg">
@@ -217,7 +217,7 @@ make</userinput></screen>
         <term><command>tjbench</command></term>
         <listitem>
           <para>
-            brukes til å ytelsesteste ytelsen til libjpeg-turbo
+            brukes til Ã¥ ytelsesteste ytelsen til libjpeg-turbo
           </para>
           <indexterm zone="libjpeg tjbench">
             <primary sortas="b-tjbench">tjbench</primary>
@@ -241,7 +241,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libjpeg.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som brukes til å lese og skrive JPEG bilder
+            inneholder funksjoner som brukes til Ã¥ lese og skrive JPEG bilder
         </para>
           <indexterm zone="libjpeg libjpeg-lib">
             <primary sortas="c-libjpeg">libjpeg.so</primary>

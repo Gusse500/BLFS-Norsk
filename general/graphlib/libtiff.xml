@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,13 +6,11 @@
 
   <!ENTITY libtiff-download-http
            "https://download.osgeo.org/libtiff/tiff-&libtiff-version;.tar.gz">
-<!--  <!ENTITY libtiff-download-ftp
-           "ftp://ftp.remotesensing.org/libtiff/tiff-&libtiff-version;.tar.gz">-->
   <!ENTITY libtiff-download-ftp  " ">
-  <!ENTITY libtiff-md5sum        "d08c5f9eee6350fffc239e5993d92779">
-  <!ENTITY libtiff-size          "3.6 MB">
-  <!ENTITY libtiff-buildsize     "63 MB (med tester)">
-  <!ENTITY libtiff-time          "0.3 SBU (med tester)">
+  <!ENTITY libtiff-md5sum        "fc7d49a9348b890b29f91a4ecadd5b49">
+  <!ENTITY libtiff-size          "3.4 MB">
+  <!ENTITY libtiff-buildsize     "46 MB (med tester)">
+  <!ENTITY libtiff-time          "0.2 SBU (med tester)">
 ]>
 
 <sect1 id="libtiff" xreflabel="libtiff-&libtiff-version;">
@@ -30,12 +28,12 @@
 
     <para>
       <application>libtiff</application> pakken inneholder TIFF
-      biblioteker og tilhørende verktøy. Bibliotekene brukes av mange
-      programmer for lesing og skriving av TIFF filer og verktøyene
+      biblioteker og tilhÃ¸rende verktÃ¸y. Bibliotekene brukes av mange
+      programmer for lesing og skriving av TIFF filer og verktÃ¸yene
       brukes til generelt arbeid med TIFF filer.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libtiff-size;
+          NedlastingsstÃ¸rrelse: &libtiff-size;
         </para>
       </listitem>
       <listitem>
@@ -76,7 +74,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/tiff-&libtiff-version;-upstream_fixes-1.patch"/>
         </para>
       </listitem>
@@ -92,7 +90,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="freeglut"/> (påkrevd for <command>tiffgt</command>),
+      <xref linkend="freeglut"/> (pÃ¥krevd for <command>tiffgt</command>),
       <xref linkend="libjpeg"/>,
       <xref linkend="sphinx"/>,
       <xref linkend="libwebp"/>,
@@ -107,14 +105,14 @@
 
 <!--
     <para>
-      Først fiks flere sikkerhetsproblemer identifisert oppstrøms:
+      FÃ¸rst fiks flere sikkerhetsproblemer identifisert oppstrÃ¸ms:
     </para>
 
 <screen><userinput>patch -Np1 -i ../tiff-&libtiff-version;-upstream_fixes-1.patch</userinput></screen>
 -->
 
     <para>
-      Installer <application>libtiff</application> ved å kjøre følgende
+      Installer <application>libtiff</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -127,31 +125,25 @@ cmake -DCMAKE_INSTALL_DOCDIR=/usr/share/doc/libtiff-&libtiff-version; \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem>
+      NÃ¥, som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
-  <!--
-  <sect2 role="commands">
-    <title>Parameterforklaringer</title>
 
-    <para>
-      <command>sed -i /Version/...</command>: Når du bygger med cmake/ninja,
-      versjonfeltet i pkgconfig filen er tomt. Denne kommandoen
-      fikser det feltet.
-    </para>
-
-  </sect2>
-  -->
   <sect2 role="content">
     <title>Innhold</title>
+
+<!-- libtiff-4.6.0 removed most of the programs that this package
+     previously installed due to lack of maintenance and security concerns. The
+     only ones remaining are tiffcp, tiffdump, tiffinfo, tiffset, and tiffsplit.
+     See Ticket #18550 for more details. -->
 
     <segmentedlist>
       <segtitle>Installerte Programmer</segtitle>
@@ -160,10 +152,11 @@ ninja</userinput></screen>
 
       <seglistitem>
         <seg>
-          fax2ps, fax2tiff, pal2rgb, ppm2tiff,
-          raw2tiff, tiff2bw, tiff2pdf, tiff2ps,
-          tiff2rgba, tiffcmp, tiffcp, tiffcrop, tiffdither, tiffdump, tiffgt,
-          tiffinfo, tiffmedian, tiffset og tiffsplit
+          tiffcp,
+          tiffdump,
+          tiffinfo,
+          tiffset, og
+          tiffsplit
         </seg>
         <seg>
           libtiff.so og libtiffxx.so
@@ -179,189 +172,6 @@ ninja</userinput></screen>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
-<!--      <varlistentry id="bmp2tiff">
-        <term><command>bmp2tiff</command></term>
-        <listitem>
-          <para>
-            konverterer et Microsoft Windows Device Independent Bitmap bildefil
-            til et TIFF bilde.
-          </para>
-          <indexterm zone="libtiff bmp2tiff">
-            <primary sortas="b-bmp2tiff">bmp2tiff</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry> -->
-
-      <varlistentry id="fax2ps">
-        <term><command>fax2ps</command></term>
-        <listitem>
-          <para>
-            konverterer en TIFF faksimile til komprimert PostScript fil
-          </para>
-          <indexterm zone="libtiff fax2ps">
-            <primary sortas="b-fax2ps">fax2ps</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="fax2tiff">
-        <term><command>fax2tiff</command></term>
-        <listitem>
-          <para>
-            oppretter en TIFF Class F faksfil fra rå faksdata
-          </para>
-          <indexterm zone="libtiff fax2tiff">
-            <primary sortas="b-fax2tiff">fax2tiff</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-<!--      <varlistentry id="gif2tiff">
-        <term><command>gif2tiff</command></term>
-        <listitem>
-          <para>
-            oppretter en TIFF fil fra en bildefil i GIF87 format.
-          </para>
-          <indexterm zone="libtiff gif2tiff">
-            <primary sortas="b-gif2tiff">gif2tiff</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry> -->
-
-      <varlistentry id="pal2rgb">
-        <term><command>pal2rgb</command></term>
-        <listitem>
-          <para>
-            konverterer et palettfarge TIFF bilde til en full farge
-            bilde
-          </para>
-          <indexterm zone="libtiff pal2rgb">
-            <primary sortas="b-pal2rgb">pal2rgb</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="ppm2tiff">
-        <term><command>ppm2tiff</command></term>
-        <listitem>
-          <para>
-            oppretter en TIFF fil fra en PPM bildefil
-          </para>
-          <indexterm zone="libtiff ppm2tiff">
-            <primary sortas="b-ppm2tiff">ppm2tiff</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-<!--      <varlistentry id="ras2tiff">
-        <term><command>ras2tiff</command></term>
-        <listitem>
-          <para>
-            oppretter en TIFF fil fra en Sun rasterfil.
-          </para>
-          <indexterm zone="libtiff ras2tiff">
-            <primary sortas="b-ras2tiff">ras2tiff</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry> -->
-
-      <varlistentry id="raw2tiff">
-        <term><command>raw2tiff</command></term>
-        <listitem>
-          <para>
-            konverterer en rå bytesekvens til TIFF
-          </para>
-          <indexterm zone="libtiff raw2tiff">
-            <primary sortas="b-raw2tiff">raw2tiff</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-<!--      <varlistentry id="rgb2ycbcr">
-        <term><command>rgb2ycbcr</command></term>
-        <listitem>
-          <para>
-            konverterer ikke-YCbCr TIFF bilder til YCbCr TIFF bilder.
-          </para>
-          <indexterm zone="libtiff rgb2ycbcr">
-            <primary sortas="b-rgb2ycbcr">rgb2ycbcr</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="thumbnail">
-        <term><command>thumbnail</command></term>
-        <listitem>
-          <para>
-            oppretter en TIFF fil med miniatyrbilder.
-          </para>
-          <indexterm zone="libtiff thumbnail">
-            <primary sortas="b-thumbnail">thumbnail</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry> -->
-
-      <varlistentry id="tiff2bw">
-        <term><command>tiff2bw</command></term>
-        <listitem>
-          <para>
-            konverterer et TIFF fargebilde til gråtoner
-          </para>
-          <indexterm zone="libtiff tiff2bw">
-            <primary sortas="b-tiff2bw">tiff2bw</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="tiff2pdf">
-        <term><command>tiff2pdf</command></term>
-        <listitem>
-          <para>
-            konverterer et TIFF bilde til et PDF dokument
-          </para>
-          <indexterm zone="libtiff tiff2pdf">
-            <primary sortas="b-tiff2pdf">tiff2pdf</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="tiff2ps">
-        <term><command>tiff2ps</command></term>
-        <listitem>
-          <para>
-            konverterer et TIFF bilde til en PostScript fil
-          </para>
-          <indexterm zone="libtiff tiff2ps">
-            <primary sortas="b-tiff2ps">tiff2ps</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="tiff2rgba">
-        <term><command>tiff2rgba</command></term>
-        <listitem>
-          <para>
-            konverterer et bredt utvalg av TIFF bilder til en RGBA
-            TIFF bilde
-          </para>
-          <indexterm zone="libtiff tiff2rgba">
-            <primary sortas="b-tiff2rgba">tiff2rgba</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="tiffcmp">
-        <term><command>tiffcmp</command></term>
-        <listitem>
-          <para>
-            sammenligner to TIFF filer
-          </para>
-          <indexterm zone="libtiff tiffcmp">
-            <primary sortas="b-tiffcmp">tiffcmp</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
       <varlistentry id="tiffcp">
         <term><command>tiffcp</command></term>
         <listitem>
@@ -370,31 +180,6 @@ ninja</userinput></screen>
           </para>
           <indexterm zone="libtiff tiffcp">
             <primary sortas="b-tiffcp">tiffcp</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="tiffcrop">
-        <term><command>tiffcrop</command></term>
-        <listitem>
-          <para>
-            velger, kopierer, beskjærer, konverterer, trekker ut og/eller behandler
-            en eller flere TIFF filer
-          </para>
-          <indexterm zone="libtiff tiffcrop">
-            <primary sortas="b-tiffcrop">tiffcrop</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="tiffdither">
-        <term><command>tiffdither</command></term>
-        <listitem>
-          <para>
-            konverterer et gråtonebilde til bilevel ved hjelp av dithering
-          </para>
-          <indexterm zone="libtiff tiffdither">
-            <primary sortas="b-tiffdither">tiffdither</primary>
           </indexterm>
         </listitem>
       </varlistentry>
@@ -411,18 +196,6 @@ ninja</userinput></screen>
         </listitem>
       </varlistentry>
 
-      <varlistentry id="tiffgt">
-        <term><command>tiffgt</command></term>
-        <listitem>
-          <para>
-            viser et bilde som er lagret i en TIFF fil
-          </para>
-          <indexterm zone="libtiff tiffgt">
-            <primary sortas="b-tiffgt">tiffgt</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
       <varlistentry id="tiffinfo">
         <term><command>tiffinfo</command></term>
         <listitem>
@@ -431,18 +204,6 @@ ninja</userinput></screen>
           </para>
           <indexterm zone="libtiff tiffinfo">
             <primary sortas="b-tiffinfo">tiffinfo</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="tiffmedian">
-        <term><command>tiffmedian</command></term>
-        <listitem>
-          <para>
-            bruker median cut algoritmen på data i en TIFF fil
-          </para>
-          <indexterm zone="libtiff tiffmedian">
-            <primary sortas="b-tiffmedian">tiffmedian</primary>
           </indexterm>
         </listitem>
       </varlistentry>
@@ -476,8 +237,8 @@ ninja</userinput></screen>
         <listitem>
           <para>
             inneholder API funksjonene som brukes av
-            <application>libtiff</application> programmer så vel som andre
-            programmer for å lese og skrive TIFF filer
+            <application>libtiff</application> programmer sÃ¥ vel som andre
+            programmer for Ã¥ lese og skrive TIFF filer
           </para>
           <indexterm zone="libtiff libtiff-lib">
             <primary sortas="c-libtiff">libtiff.so</primary>
@@ -490,7 +251,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
             inneholder C++ API funksjonene som brukes
-            av programmer for å lese og skrive TIFF filer
+            av programmer for Ã¥ lese og skrive TIFF filer
           </para>
           <indexterm zone="libtiff libtiffxx">
             <primary sortas="c-libtiffxx">libtiffxx.so</primary>

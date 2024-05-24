@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY librsvg-download-http "&gnome-download-http;/librsvg/&librsvg-minor;/librsvg-&librsvg-version;.tar.xz">
-  <!ENTITY librsvg-download-ftp  "&gnome-download-ftp;/librsvg/&librsvg-minor;/librsvg-&librsvg-version;.tar.xz">
-  <!ENTITY librsvg-md5sum        "8055142a6c9d0d21d42e40bc08dff814">
+  <!ENTITY librsvg-download-ftp  " ">
+  <!ENTITY librsvg-md5sum        "0a9d809a4bdd371c894792e4c2eb94e9">
   <!ENTITY librsvg-size          "5.4 MB">
-  <!ENTITY librsvg-buildsize     "747 MB (16 MB installert), legg til 378 MB for tester">
-  <!ENTITY librsvg-time          "0.7 SBU (Legg til 0,8 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY librsvg-buildsize     "998 MB (16 MB installert), legg til 589 MB for tester">
+  <!ENTITY librsvg-time          "1.2 SBU (Legg til 0,5 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="librsvg" xreflabel="librsvg-&librsvg-version;">
@@ -27,11 +27,11 @@
 
     <para>
       <application>librsvg</application> pakken inneholder
-      et bibliotek og verktøy som brukes til å manipulere, konvertere og vise
+      et bibliotek og verktÃ¸y som brukes til Ã¥ manipulere, konvertere og vise
       Scalable Vector Graphic (SVG) bilder.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &librsvg-size;
+          NedlastingsstÃ¸rrelse: &librsvg-size;
         </para>
       </listitem>
       <listitem>
@@ -69,7 +69,7 @@
 
     <bridgehead renderas="sect3">librsvg Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cairo"/>,
       <xref linkend="gdk-pixbuf"/>,
@@ -98,7 +98,7 @@
     <title>Installasjon av librsvg</title>
 
     <para>
-      Installer <application>librsvg</application> ved å kjøre følgende
+      Installer <application>librsvg</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -108,24 +108,24 @@
             --docdir=/usr/share/doc/librsvg-&librsvg-version; &amp;&amp;
 make</userinput></screen>
 
+    <!-- With some locales (zh_CN.UTF-8) 31 tests fail.  With LC_ALL=C only
+         one failure.
+         https://gitlab.gnome.org/GNOME/librsvg/-/issues/1021 -->
     <para>
-      For å teste resultatene, utsted:
-
-<screen remap='test'><userinput>make check</userinput></screen>
-
+      For Ã¥ teste resultatene, utsted: <command>LC_ALL=C make -k check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make DOC_INSTALL_DIR='$(docdir)' install</userinput></screen>
 
     <note>
       <para>
-        Hvis du installerte pakken på systemet ditt ved hjelp av en
+        Hvis du installerte pakken pÃ¥ systemet ditt ved hjelp av en
         <quote>DESTDIR</quote> metode, en viktig fil ble ikke installert og
-        skal kopieres og/eller genereres. Generer den ved å bruke følgende
+        skal kopieres og/eller genereres. Generer den ved Ã¥ bruke fÃ¸lgende
         kommando som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -149,7 +149,7 @@ make</userinput></screen>
 
     <para>
       <parameter>DOC_INSTALL_DIR='$(docdir)'</parameter>: Denne overstyringen
-      sikrer at installasjon av API dokumentasjonen på forventet plassering
+      sikrer at installasjon av API dokumentasjonen pÃ¥ forventet plassering
       hvis <xref linkend='gi-docgen'/> er installert.
     </para>
 
@@ -160,8 +160,8 @@ make</userinput></screen>
 
     <para>
       <option>--disable-gtk-doc</option>: Denne bryteren hindrer bygging
-      av API dokumentasjonen, selv om <xref linkend="gi-docgen"/> (på tross av
-      navnet på alternativet) er tilgjengelig.
+      av API dokumentasjonen, selv om <xref linkend="gi-docgen"/> (pÃ¥ tross av
+      navnet pÃ¥ alternativet) er tilgjengelig.
     </para>
 
   </sect2>
@@ -179,7 +179,8 @@ make</userinput></screen>
           rsvg-convert
         </seg>
         <seg>
-          librsvg-2.so
+          librsvg-2.so og
+          libpixbufloader-svg.so (installert i /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders)
         </seg>
         <seg>
           /usr/include/librsvg-2.0 og
@@ -199,7 +200,7 @@ make</userinput></screen>
         <term><command>rsvg-convert</command></term>
         <listitem>
           <para>
-            brukes til å konvertere bilder til PNG, PDF, PS, SVG og andre formater
+            brukes til Ã¥ konvertere bilder til PNG, PDF, PS, SVG og andre formater
           </para>
           <indexterm zone="librsvg rsvg-convert">
             <primary sortas="b-rsvg-convert">rsvg-convert</primary>
@@ -211,7 +212,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">librsvg-2.so</filename></term>
         <listitem>
           <para>
-            gir funksjonene for å gjengi skalerbar vektorgrafikk
+            gir funksjonene for Ã¥ gjengi skalerbar vektorgrafikk
           </para>
           <indexterm zone="librsvg librsvg-2">
             <primary sortas="c-librsvg-2">librsvg-2.so</primary>
@@ -224,7 +225,7 @@ make</userinput></screen>
         <listitem>
           <para>
             er <application>Gdk Pixbuf</application> programtillegg som tillater
-            <application>GTK+</application> applikasjoner for å gjengi skalerbar
+            <application>GTK+</application> applikasjoner for Ã¥ gjengi skalerbar
             Vektorgrafikkbilder
           </para>
           <indexterm zone="librsvg libpixbufloader-svg">
