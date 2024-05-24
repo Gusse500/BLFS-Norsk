@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY cmake-download-http "https://cmake.org/files/v&cmake-major-version;/cmake-&cmake-version;.tar.gz">
   <!ENTITY cmake-download-ftp  " ">
-  <!ENTITY cmake-md5sum        "07786cd23c3d0aa9c2fef69efb13662b">
-  <!ENTITY cmake-size          "10 MB">
-  <!ENTITY cmake-buildsize     "424 MB (legg til 1.2 GB for tester)">
-  <!ENTITY cmake-time          "2.0 SBU (legg til 3.2 SBU for tester, begge bruker parallellisme=4)">
+  <!ENTITY cmake-md5sum        "6b16c82b81e1fd80b63bee9696846b21">
+  <!ENTITY cmake-size          "11 MB">
+  <!ENTITY cmake-buildsize     "435 MB (legg til 1.2 GB for tester)">
+  <!ENTITY cmake-time          "2.2 SBU (legg til 3,9 SBU for tester, begge med parallellisme=4)">
 ]>
 
 <sect1 id="cmake" xreflabel="CMake-&cmake-version;">
@@ -27,14 +27,14 @@
 
     <para>
       <application>CMake</application> pakken inneholder en moderne
-      verktøysett som brukes til å generere Makefiler. Det er en etterfølger av
-      automatisk generert <command>configure</command> skript og har som mål å
-      være plattform- og kompilatoruavhengig. En betydelig bruker av
+      verktÃ¸ysett som brukes til Ã¥ generere Makefiler. Det er en etterfÃ¸lger av
+      automatisk generert <command>configure</command> skript og har som mÃ¥l Ã¥
+      vÃ¦re plattform- og kompilatoruavhengig. En betydelig bruker av
       <application>CMake</application> er <application>KDE</application>
       siden versjon 4.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &cmake-size;
+          NedlastingsstÃ¸rrelse: &cmake-size;
         </para>
       </listitem>
       <listitem>
@@ -75,7 +75,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/cmake-&cmake-version;-upstream_fix-1.patch"/>
         </para>
       </listitem>
@@ -97,7 +97,8 @@
       <xref linkend="gcc"/> (for gfortran),
       <xref linkend="git"/> (for bruk under tester),
       <xref linkend="mercurial"/> (for bruk under tester),
-      &qt5-deps; (for Qt basert GUI),
+      <xref linkend="openjdk"/> (for bruk under tester),
+      &qt5-deps; eller <xref linkend="qt6" role="nodep"/> (for Qt basert GUI),
       <xref linkend="sphinx"/> (for byggedokumenter),
       <xref linkend="subversion"/> (for testing),
       <ulink url="https://github.com/google/cppdap/">cppdap</ulink>,
@@ -112,14 +113,14 @@
 
  <!--
     <para>
-      Tilpass først FindBoost modulen til å bruke Boost-1.80.0:
+      Tilpass fÃ¸rst FindBoost modulen til Ã¥ bruke Boost-1.80.0:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../cmake-&cmake-version;-upstream_fix-1.patch</userinput></screen>
 -->
 
     <para>
-      Installer <application>CMake</application> ved å kjøre følgende
+      Installer <application>CMake</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -135,33 +136,33 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>LC_ALL=en_US.UTF-8 bin/ctest
+      For Ã¥ teste resultatene, kjÃ¸r: <command>LC_ALL=en_US.UTF-8 bin/ctest
       -j<replaceable>&lt;N&gt;</replaceable> -O
       cmake-&cmake-version;-test.log</command>, hvor
       <replaceable>&lt;N&gt;</replaceable> er et heltall mellom 1 og
-      antall systemkjerner. Innstilling <envar>LC_ALL</envar> er nødvendig for å
-      forhindre noen testfeil når noen av lokalitetsvariablene er
-      satt til ikke-engelsk språk.
+      antall systemkjerner. Innstilling <envar>LC_ALL</envar> er nÃ¸dvendig for Ã¥
+      forhindre noen testfeil nÃ¥r noen av lokalitetsvariablene er
+      satt til ikke-engelsk sprÃ¥k.
       <!--
-        En test, RunCMake.FindBoost, er kjent for å mislykkes.
-        Nå cmake-3.27.0. Alle tester består.
+        En test, RunCMake.FindBoost, er kjent for Ã¥ mislykkes.
+        NÃ¥ cmake-3.27.0. Alle tester bestÃ¥r.
       -->
     </para>
 
     <para>
-      Hvis du ønsker å undersøke et problem med en gitt "problem1-test",
-      bruk <command>bin/ctest -R "problem1-test"</command> og for å utelate det, bruk
+      Hvis du Ã¸nsker Ã¥ undersÃ¸ke et problem med en gitt "problem1-test",
+      bruk <command>bin/ctest -R "problem1-test"</command> og for Ã¥ utelate det, bruk
       <command>bin/ctest -E "problem1-test"</command>. Disse alternativene kan bli
       brukt sammen:
       <command>bin/ctest -R "problem1-test" -E "problem2-test"</command>.
-      Alternativ <option>-N</option> kan brukes til å vise alle
-      tilgjengelige tester, og du kan kjøre <command>bin/ctest</command> for en
-      undersett av tester ved å bruke adskilt med mellomrom navn eller tall som
-      alternativer. Alternativ <option>--help</option> kan brukes til å vise alle alternativer.
+      Alternativ <option>-N</option> kan brukes til Ã¥ vise alle
+      tilgjengelige tester, og du kan kjÃ¸re <command>bin/ctest</command> for en
+      undersett av tester ved Ã¥ bruke adskilt med mellomrom navn eller tall som
+      alternativer. Alternativ <option>--help</option> kan brukes til Ã¥ vise alle alternativer.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -173,30 +174,28 @@ make</userinput></screen>
 
     <para>
       <command>sed ... Modules/GNUInstallDirs.cmake</command>:
-      Denne kommandoen deaktiverer programmer som bruker cmake fra å prøve å
+      Denne kommandoen deaktiverer programmer som bruker cmake fra Ã¥ prÃ¸ve Ã¥
       installere filer i /usr/lib64/.
     </para>
 
     <para>
       <parameter>--system-libs</parameter>: Denne bryteren tvinger byggesystemet
-      å lenke mot <application>Zlib</application>,
-      <application>Bzip2</application>, <application>cURL</application>,
-      <application>nghttp2</application>,
-      <application>Expat</application> og <application>libarchive</application>
-      installert på systemet.
+      Ã¥ koble til den systeminstallerte versjonen for alle nÃ¸dvendige
+      biblioteker, uten de som er eksplisitt spesifisert via en
+      <option>--no-system-*</option> valg.
     </para>
 
     <para>
       <parameter>--no-system-jsoncpp</parameter> og
       <parameter>--no-system-cppdap</parameter>: Denne bryteren fjerner
       <application>JSON-C++</application> biblioteket fra listen over
-      systembiblioteker. En medfølgende versjon av biblioteket brukes i stedet.
+      systembiblioteker. En medfÃ¸lgende versjon av biblioteket brukes i stedet.
     </para>
 
     <para>
       <parameter>--no-system-librhash</parameter>: Denne bryteren fjerner
       <application>librhash</application> biblioteket fra listen over
-      systembiblioteker. En medfølgende versjon av biblioteket brukes i stedet.
+      systembiblioteker. En medfÃ¸lgende versjon av biblioteket brukes i stedet.
     </para>
 
     <para>
@@ -207,15 +206,15 @@ make</userinput></screen>
     </para>
 
     <para>
-      <option>--qt-gui</option>: Denne bryteren gjør det mulig å bygge
+      <option>--qt-gui</option>: Denne bryteren gjÃ¸r det mulig Ã¥ bygge
       <application>Qt</application>-basert  GUI for
       <application>CMake</application>.
     </para>
 
     <para>
-      <option>--parallel=</option>: Denne bryteren gjør det mulig å utføre
+      <option>--parallel=</option>: Denne bryteren gjÃ¸r det mulig Ã¥ utfÃ¸re
       <application>CMake</application> bootstrap med flere jobber
-      på en gang.
+      pÃ¥ en gang.
     </para>
 
   </sect2>
@@ -302,7 +301,7 @@ make</userinput></screen>
         <term><command>ctest</command></term>
         <listitem>
           <para>
-            er et testverktøy for cmake genererte byggetrær
+            er et testverktÃ¸y for cmake genererte byggetrÃ¦r
           </para>
           <indexterm zone="cmake ctest">
             <primary sortas="b-ctest">ctest</primary>

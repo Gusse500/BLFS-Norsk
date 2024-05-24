@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY gdb-download-http "&gnu-http;/gdb/gdb-&gdb-version;.tar.xz">
-  <!ENTITY gdb-download-ftp  "&gnu-ftp;/gdb/gdb-&gdb-version;.tar.xz">
-  <!ENTITY gdb-md5sum        "fbd3cdae16c581e8a742cb766ba35076">
+  <!ENTITY gdb-download-ftp  " ">
+  <!ENTITY gdb-md5sum        "4a084d03915b271f67e9b8ea2ab24972">
   <!ENTITY gdb-size          "23 MB">
-  <!ENTITY gdb-buildsize     "914 MB (legg til 805 MB for dokumenter; legg til 575 MB for tester)">
+  <!ENTITY gdb-buildsize     "966 MB (legg til 805 MB for dokumenter; legg til 710 MB for tester)">
   <!ENTITY gdb-time          "2.1 SBU (legg til 0,4 SBU for dokumenter; legg til 18 SBU for tester; alle bruker parallellisme=4)">
 ]>
 
@@ -27,14 +27,14 @@
 
     <para>
       <application>GDB</application>, GNU Project debugger, lar deg
-      se hva som skjer <quote>på innsiden</quote> i et annet program mens det
-      kjører -- eller hva et annet program gjorde i det øyeblikket det krasjet.
+      se hva som skjer <quote>pÃ¥ innsiden</quote> i et annet program mens det
+      kjÃ¸rer -- eller hva et annet program gjorde i det Ã¸yeblikket det krasjet.
       Merk at <application>GDB</application> er mest effektiv ved sporing av
-      programmer og biblioteker som ble bygget med feilsøkingssymboler og ikke
+      programmer og biblioteker som ble bygget med feilsÃ¸kingssymboler og ikke
       er strippet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gdb-size;
+          NedlastingsstÃ¸rrelse: &gdb-size;
         </para>
       </listitem>
       <listitem>
@@ -74,7 +74,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/gdb-&gdb-version;-upstream_fixes-1.patch"/>
         </para>
       </listitem>
@@ -82,10 +82,10 @@
     -->
     <bridgehead renderas="sect3">GDB Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Anbefalt kjøretidsavhengighet</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt kjÃ¸retidsavhengighet</bridgehead>
     <para role="recommended">
-      <xref linkend="six"/> (Python 3 modul, kreves ved kjøring for
-      å bruke GDB skript fra ulike LFS/BLFS pakker med Python 3
+      <xref linkend="six"/> (Python 3 modul, kreves ved kjÃ¸ring for
+      Ã¥ bruke GDB skript fra ulike LFS/BLFS pakker med Python 3
       installert i LFS)
     </para>
 
@@ -94,12 +94,10 @@
       <xref linkend="doxygen"/>,
       <xref linkend="gcc"/> (ada, gfortran, og go er brukt for tester),
       <xref linkend="guile"/>,
-      <!-- don't advertise python2...
-      <xref linkend="python2"/>,-->
       <xref linkend="rust"/> (brukt for noen tester),
       <xref linkend="valgrind"/>, og
       <ulink url="https://sourceware.org/systemtap/">SystemTap</ulink>
-      (kjøretid, brukt til tester)
+      (kjÃ¸retid, brukt til tester)
     </para>
 
   </sect2>
@@ -108,14 +106,14 @@
     <title>Installasjon av GDB</title>
     <!--
     <para>
-      Først bruker du en oppdatering som løser problemer når programmer debugges kompilert
+      FÃ¸rst bruker du en oppdatering som lÃ¸ser problemer nÃ¥r programmer debugges kompilert
       med <xref linkend="rust" role="nodep"/>:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../gdb-&gdb-version;-upstream_fixes-1.patch</userinput></screen>
 -->
     <para>
-      Installer <application>GDB</application> ved å kjøre følgende
+      Installer <application>GDB</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -128,14 +126,14 @@ cd    build &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Eventuelt for å bygge API dokumentasjonen ved hjelp av
-      <xref linkend="doxygen"/>, kjør:
+      Eventuelt for Ã¥ bygge API dokumentasjonen ved hjelp av
+      <xref linkend="doxygen"/>, kjÃ¸r:
     </para>
 
 <screen remap="doc"><userinput>make -C gdb/doc doxy</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør:
+      For Ã¥ teste resultatene, kjÃ¸r:
     </para>
 
 <screen remap="test"><userinput>pushd gdb/testsuite &amp;&amp;
@@ -153,9 +151,9 @@ popd</userinput></screen>
     <itemizedlist>
       <listitem>
         <para>
-          Rene mapper er nødvendig hvis du kjører testene på nytt. For den
+          Rene mapper er nÃ¸dvendig hvis du kjÃ¸rer testene pÃ¥ nytt. For den
           grunnen, lag en kopi av den kompilerte kildekodemappen
-          før testene i tilfelle du må kjøre testene på nytt.
+          fÃ¸r testene i tilfelle du mÃ¥ kjÃ¸re testene pÃ¥ nytt.
         </para>
       </listitem>
 
@@ -168,9 +166,9 @@ popd</userinput></screen>
       <listitem>
         <para>
           Det er et stort antall tidsavbrudd (det er en variabel
-          som kan settes til å øke tiden for timeout, men
-          å endre det vil resultere i et annet antall tester
-          kjøres).
+          som kan settes til Ã¥ Ã¸ke tiden for timeout, men
+          Ã¥ endre det vil resultere i et annet antall tester
+          kjÃ¸res).
         </para>
       </listitem>
 or this
@@ -183,7 +181,7 @@ or this
 <!--
       <listitem>
         <para>
-          Noen få tester antar at deklarasjonsfilen
+          Noen fÃ¥ tester antar at deklarasjonsfilen
           <filename>&lt;sys/sdt.h&gt;</filename>, del av <ulink
           url="https://sourceware.org/systemtap/">SystemTap</ulink>, er
           tilstede.
@@ -193,8 +191,8 @@ or this
 <!-- I don't know if this is true or not.  I tested on a Haswell.
       <listitem>
         <para>
-          Hvis testpakken kjøres på en Skylake basert Intel CPU eller nyere,
-          mange tester vil mislykkes på grunn av fjerning av det foreldede/problematiske
+          Hvis testpakken kjÃ¸res pÃ¥ en Skylake basert Intel CPU eller nyere,
+          mange tester vil mislykkes pÃ¥ grunn av fjerning av det foreldede/problematiske
           libmpx biblioteket i GCC.
         </para>
       </listitem>
@@ -209,40 +207,40 @@ or this
           A test run of the test suite had a little over 200 unexpected failures
           out of over 94000 tests.-->
 <!-- for gdb-13.0, gcc-12.2.0 - bdubbs
-          En testkjøring av testpakken hadde 33 uventede feil
-          av over 106 000 tester. -->
-<!-- for gdb-13.2, gcc-13.1.0 - pierre -->
-          En testkjøring av testpakken hadde 183 uventede feil
-          av over 105 000 tester.
+          En testkjÃ¸ring av testpakken hadde 33 uventede feil
+          out of over 105000 tests. -->
+<!-- for gdb-14.1, gcc 13.2.0 - rahul -->
+          En testkjÃ¸ring av testpakken hadde 51 uventede feil
+          av de over 106 000 testene.
         </para>
       </listitem>
 
       <listitem>
         <para>
-          På noen systemer vil gdb.tui testpakken mislykkes hvis den kjører over
+          PÃ¥ noen systemer vil gdb.tui testpakken mislykkes hvis den kjÃ¸rer over
           SSH.
         </para>
       </listitem>
 
       <listitem>
         <para>
-          På noen AMD baserte systemer, over 200 ekstra tester
-          kan mislykkes på grunn av en forskjell i trådimplementeringen
-          på disse CPUene.
+          PÃ¥ noen AMD baserte systemer, over 200 ekstra tester
+          kan mislykkes pÃ¥ grunn av en forskjell i trÃ¥dimplementeringen
+          pÃ¥ disse CPUene.
         </para>
       </listitem>
 
     </itemizedlist>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make -C gdb install &amp;&amp;
 make -C gdbserver install</userinput></screen>
 
     <para>
-      Hvis du har bygget API dokumentasjonen, er den nå i gdb/doc/doxy.
+      Hvis du har bygget API dokumentasjonen, er den nÃ¥ i gdb/doc/doxy.
       Du kan installere den (som <systemitem class="username">root</systemitem>
       bruker):
     </para>
@@ -259,16 +257,13 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
 
     <para>
       <parameter>--with-system-readline</parameter>: Denne bryteren tvinger
-      <application>GDB</application> å bruke kopien av
+      <application>GDB</application> Ã¥ bruke kopien av
       <application>Readline</application> installert i LFS.
     </para>
 
     <para>
       <parameter>--with-python=/usr/bin/python3</parameter>: Denne bryteren
-      tvinger <application>GDB</application> å bruke Python 3.
-      <!-- Vi anbefaler ikke å bruke python2 lenger
-      Fjern denne bryteren hvis du har installert
-      <xref linkend="python2"/> og vil bruke den i stedet for Python 3.-->
+      tvinger <application>GDB</application> Ã¥ bruke Python 3.
     </para>
 
   </sect2>
@@ -303,7 +298,7 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
         <term><command>gcore</command></term>
         <listitem>
           <para>
-            genererer en kjernedump av et program som kjører
+            genererer en kjernedump av et program som kjÃ¸rer
           </para>
           <indexterm zone="gdb gcore">
             <primary sortas="b-gcore">gcore</primary>
@@ -328,7 +323,7 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
         <listitem>
           <para>
             er en ekstern server for GNU debugger (den tillater programmer
-            å feilsøkes fra en annen maskin)
+            Ã¥ feilsÃ¸kes fra en annen maskin)
           </para>
           <indexterm zone="gdb gdbserver">
             <primary sortas="b-gdbserver">gdbserver</primary>
@@ -340,7 +335,7 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
         <term><command>gdb-add-index</command></term>
         <listitem>
           <para>
-            Tillater å legge til indeksfiler til ELF binærfiler. Dette setter fart på
+            Tillater Ã¥ legge til indeksfiler til ELF binÃ¦rfiler. Dette setter fart pÃ¥
             <command>gdb</command> starting av store programmer.
           </para>
           <indexterm zone="gdb gdb-add-index">
@@ -354,9 +349,9 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
         <listitem>
           <para>
             inneholder funksjoner for sporingsmiddelet i prosessen. Agenten
-            gjør det mulig å installere raske sporingspunkter, og viser statiske sporpunkter
-            markører, sondering av statiske sporingsmarkører og startsporing
-            overvåkning.
+            gjÃ¸r det mulig Ã¥ installere raske sporingspunkter, og viser statiske sporpunkter
+            markÃ¸rer, sondering av statiske sporingsmarkÃ¸rer og startsporing
+            overvÃ¥kning.
           </para>
           <indexterm zone="gdb libinproctrace">
             <primary sortas="c-libinproctrace">libinproctrace.so</primary>
