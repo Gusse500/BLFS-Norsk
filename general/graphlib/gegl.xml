@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY gegl-download-http "https://download.gimp.org/pub/gegl/0.4/gegl-&gegl-version;.tar.xz">
   <!ENTITY gegl-download-ftp  " ">
-  <!ENTITY gegl-md5sum        "241bde22f9204515121e5fb03a2b9fbd">
-  <!ENTITY gegl-size          "5.6 MB">
-  <!ENTITY gegl-buildsize     "103 MB (Legg til 4 MB for tester)">
-  <!ENTITY gegl-time          "0.9 SBU (Bruker parallellisme=4; legg til 0,4 for tester)">
+  <!ENTITY gegl-md5sum        "a96ae32d46855ab4eefa1fce2dbefda1">
+  <!ENTITY gegl-size          "5.5 MB">
+  <!ENTITY gegl-buildsize     "80 MB (Legg til 4 MB for tester)">
+  <!ENTITY gegl-time          "0.7 SBU (legg til 0,1 SBU for tester, begge med parallellitet=4)">
 ]>
 
 <sect1 id="gegl" xreflabel="gegl-&gegl-version;">
@@ -30,7 +30,7 @@
       bildebehandlingsformat.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gegl-size;
+          NedlastingsstÃ¸rrelse: &gegl-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/gegl-&gegl-version;-ffmpeg5_fixes-1.patch"/>
         </para>
       </listitem>
@@ -78,18 +78,19 @@
 -->
     <bridgehead renderas="sect3">gegl Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
-      <xref linkend="babl"/>,
-      <xref linkend="json-glib"/>,
+      <xref linkend="babl"/> og 
+      <xref linkend="json-glib"/>
+      <!-- These are marked obsolete - no effect in meson_options.txt
       <xref linkend="libjpeg"/>, og
-      <xref linkend="libpng"/>
+      <xref linkend="libpng"/>-->
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="gobject-introspection"/>,
-      <xref linkend="graphviz"/>,
+      <xref linkend="graphviz"/> (bygget med pango),
       <!-- EDITORS NOTE: Graphviz is required for the gegl:introspect
       function. Without this function, GIMP will not start. You'll get the
       following error:
@@ -147,14 +148,14 @@
 
     <para>
       Hvis du installerer over en tidligere versjon av <application>gegl</application>,
-      må en modul fjernes. Som <systemitem class="username">root</systemitem>
-      bruker, kjør:
+      mÃ¥ en modul fjernes. Som <systemitem class="username">root</systemitem>
+      bruker, kjÃ¸r:
     </para>
 
-<screen><userinput>rm -f /usr/lib/gegl-0.4/vector-fill.so</userinput></screen>
+<screen role="root"><userinput>rm -f /usr/lib/gegl-0.4/vector-fill.so</userinput></screen>
 
     <para>
-      Installer <application>gegl</application> ved å kjøre følgende kommandoer:
+      Installer <application>gegl</application> ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -164,15 +165,15 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør:  <command>ninja test</command>.  <!--Dette burde
+      For Ã¥ teste resultatene, kjÃ¸r:  <command>ninja test</command>.  <!--Dette burde
       ikke indikerer noen feil, men vil hoppe over mange tester avhengig av valgfrie
-      avhengigheter installert på systemet.--> 7 tester i
+      avhengigheter installert pÃ¥ systemet.--> 7 tester i
       <filename>gegl:ff-load-save</filename> delen av testpakken er
-      kjent for å mislykkes på grunn av inkompatibiliteter med ffmpeg-6.0.
+      kjent for Ã¥ mislykkes pÃ¥ grunn av inkompatibiliteter med ffmpeg-6.0.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -220,7 +221,7 @@ ninja</userinput></screen>
         <term><command>gegl</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy for å arbeide med XML datamodellen
+            er et kommandolinjeverktÃ¸y for Ã¥ arbeide med XML datamodellen
           </para>
           <indexterm zone="gegl gegl-prog">
             <primary sortas="b-gegl">gegl</primary>
@@ -232,7 +233,7 @@ ninja</userinput></screen>
         <term><command>gegl-imgcmp</command></term>
         <listitem>
           <para>
-            er et enkelt bildeforskjell deteksjonsverktøy for bruk i
+            er et enkelt bildeforskjell deteksjonsverktÃ¸y for bruk i
             regresjontesting
           </para>
           <indexterm zone="gegl gegl-imgcmp">
@@ -245,8 +246,8 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libgegl-0.4.so</filename></term>
         <listitem>
           <para>
-            gir infrastruktur for å gjøre etterspørselsbasert bufret ikke-destruktivt
-            bilderedigering på større enn RAM buffere
+            gir infrastruktur for Ã¥ gjÃ¸re etterspÃ¸rselsbasert bufret ikke-destruktivt
+            bilderedigering pÃ¥ stÃ¸rre enn RAM buffere
           </para>
           <indexterm zone="gegl libgegl-0.4">
             <primary sortas="c-libgegl-0.4">libgegl-0.4.so</primary>

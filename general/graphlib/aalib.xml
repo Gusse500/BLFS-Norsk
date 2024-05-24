@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -26,11 +26,11 @@
     <title>Introduksjon til AAlib</title>
 
     <para>
-      <application>AAlib</application> er et bibliotek for å gjengi grafikk til
+      <application>AAlib</application> er et bibliotek for Ã¥ gjengi grafikk til
       ASCII Art.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &aalib-size;
+          NedlastingsstÃ¸rrelse: &aalib-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +71,7 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="xorg7-lib"/>,
-      <xref linkend="xorg7-legacy"/> (kjøretid),
+      <xref linkend="xorg7-font"/> (kjÃ¸retid),
       <xref linkend="slang"/>, og
       <xref linkend="gpm"/>
     </para>
@@ -82,13 +82,21 @@
     <title>Installasjon av AAlib</title>
 
     <para>
-      Løs et mindre problem med den medfølgende m4 filen:
+      LÃ¸s et mindre problem med den medfÃ¸lgende m4 filen:
     </para>
 
 <screen><userinput>sed -i -e '/AM_PATH_AALIB,/s/AM_PATH_AALIB/[&amp;]/' aalib.m4</userinput></screen>
 
     <para>
-      Installer <application>AAlib</application> ved å kjøre følgende
+      Endre standard X11 font fra <xref linkend='xorg7-legacy'/> til
+      <xref linkend='xorg7-font'/>:
+    </para>
+
+<screen><userinput>sed -e 's/8x13bold/-*-luxi mono-bold-r-normal--13-120-*-*-m-*-*-*/' \
+    -i src/aax.c</userinput></screen>
+
+    <para>
+      Installer <application>AAlib</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -104,7 +112,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -198,7 +206,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libaa.so</filename></term>
         <listitem>
           <para>
-            er en samling av rutiner for å gjengi grafisk inndata i
+            er en samling av rutiner for Ã¥ gjengi grafisk inndata i
             flyttbart format til ASCII Art. Den kan brukes gjennom mange programmer
             og har et veldig godt dokumentert API, slik at du enkelt kan sette det inn
             i dine egne programmer
