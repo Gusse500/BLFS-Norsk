@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY poppler-download-http "https://poppler.freedesktop.org/poppler-&poppler-version;.tar.xz">
   <!ENTITY poppler-download-ftp  " ">
-  <!ENTITY poppler-md5sum        "b369afc9511198de5a604ca3baea1ddd">
+  <!ENTITY poppler-md5sum        "a02d3b32e956bef66a5108fcaabe1c63">
   <!ENTITY poppler-size          "1.8 MB">
-  <!ENTITY poppler-buildsize     "91 MB (med Qt5 biblioteket og tester)">
-  <!ENTITY poppler-time          "0.6 SBU (med parallellisme=4, Qt5 biblioteket og tester)">
+  <!ENTITY poppler-buildsize     "79 MB (med Qt5 bibliotek; legg til 13 MB for tester)">
+  <!ENTITY poppler-time          "0.9 SBU (med parallellisme=4 og Qt5-bibliotek; legg til 2,7 SBU for tester)">
   <!-- Time increase might be due to git.freedesktop.org -->
 
   <!ENTITY poppler-data-version       "0.4.12">
@@ -36,11 +36,11 @@
 
     <para>
       <application>Poppler</application> pakken inneholder et PDF gjengivelses
-      bibliotek og kommandolinjeverktøy som brukes til å manipulere PDF filer. Dette er
-      nyttig for å tilby PDF gjengivelsesfunksjonalitet som et delt bibliotek.
+      bibliotek og kommandolinjeverktÃ¸y som brukes til Ã¥ manipulere PDF filer. Dette er
+      nyttig for Ã¥ tilby PDF gjengivelsesfunksjonalitet som et delt bibliotek.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -61,7 +61,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &poppler-size;
+          NedlastingsstÃ¸rrelse: &poppler-size;
         </para>
       </listitem>
       <listitem>
@@ -92,7 +92,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &poppler-data-size;
+          NedlastingsstÃ¸rrelse: &poppler-data-size;
         </para>
       </listitem>
       <listitem>
@@ -108,16 +108,16 @@
     </itemizedlist>
 
     <para>
-      Tilleggspakken består av kodingsfiler for bruk med
+      Tilleggspakken bestÃ¥r av kodingsfiler for bruk med
       <application>Poppler</application>. Kodingsfilene er valgfrie og
       <application>Poppler</application> vil automatisk lese dem hvis de
-      er tilstede. Når de er installert, aktiverer de
-      <application>Poppler</application> til å gjengi CJK og kyrillisk riktig.
+      er tilstede. NÃ¥r de er installert, aktiverer de
+      <application>Poppler</application> til Ã¥ gjengi CJK og kyrillisk riktig.
     </para>
 
     <bridgehead renderas="sect3">Poppler Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>,
       <xref linkend="fontconfig"/>, og
@@ -128,11 +128,15 @@
     <para role="recommended">
       <xref linkend="boost"/>,
       <xref linkend="cairo"/>,
+      <xref linkend="gpgme"/>,
       <xref linkend="lcms2"/>,
       <xref linkend="libjpeg"/>,
       <xref linkend="libpng"/>,
-      <xref linkend="nss"/>, og
-      <xref linkend="openjpeg2"/>
+      <xref linkend="libtiff"/>,
+      <xref linkend="nss"/>,
+      <xref linkend="openjpeg2"/>, og
+      &qt5-deps;
+      (pÃ¥krevd for PDF stÃ¸tte i <xref role="nodep" linkend="okular5"/>)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -140,13 +144,9 @@
       <xref linkend="curl"/>,
       <xref linkend="gdk-pixbuf"/>,
       <xref linkend="git"/> (for nedlasting av testfiler),
-      <xref linkend="gpgme"/>,
-      <xref linkend="gtk-doc"/>,
-      <xref linkend="gtk3"/>,
-      <xref linkend="libtiff"/>,
-      &qt5-deps;
-      (nødvendig for PDF støtte i <xref role="nodep" linkend="okular5"/>), og
-      <ulink url="https://download.qt.io/archive/qt/">Qt-6.1 eller senere</ulink>.
+      <xref linkend="gtk3"/>, og
+      <xref linkend="qt6"/>
+      <!-- Nothing really uses this yet, but it will be used in KDE 6 -->
 
     </para>
 
@@ -156,7 +156,7 @@
     <title>Installasjon av Poppler</title>
 
     <para>
-      Installer <application>Poppler</application> ved å kjøre følgende
+      Installer <application>Poppler</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -166,34 +166,28 @@ cd    build                         &amp;&amp;
 cmake  -DCMAKE_BUILD_TYPE=Release   \
        -DCMAKE_INSTALL_PREFIX=/usr  \
        -DTESTDATADIR=$PWD/testfiles \
+       -DENABLE_QT6=OFF             \
        -DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
        ..                           &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å kjøre testpakken, er noen testcaser nødvendig og kan
-      kun hentes fra et git lager. Kommandoen for å laste ned
+      For Ã¥ kjÃ¸re testpakken, er noen testcaser nÃ¸dvendig og kan
+      kun hentes fra et git lager. Kommandoen for Ã¥ laste ned
       de er:
 <command>git clone --depth 1 https://gitlab.freedesktop.org/poppler/test.git testfiles</command>.
-      Kjør deretter: <command>LC_ALL=en_US.UTF-8 make test</command>.
+      KjÃ¸r deretter: <command>LC_ALL=en_US.UTF-8 make test</command>.
+      En test, check_qt5_signature_basics, er kjent for Ã¥ mislykkes.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
-<!-- Seems makeinstall does the job now:
-    <para>
-      Hvis du har Qt installert, igjen som
-      <systemitem class="username">root</systemitem> bruker:
-    </para>
 
-<screen role="root"><userinput>make -C qt5 install &amp;&amp;
-install -m644 poppler-qt5.pc /usr/lib/pkgconfig</userinput></screen>
--->
     <para>
-      For å installere dokumentasjonen, kjør følgende kommandoer som
+      For Ã¥ installere dokumentasjonen, kjÃ¸r fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem>:
     </para>
 
@@ -204,15 +198,15 @@ cp -vr ../glib/reference/html /usr/share/doc/poppler-&poppler-version;</userinpu
     <bridgehead renderas="sect3">Poppler Data</bridgehead>
 
     <para>
-      Hvis du lastet ned den ekstra kodingsdatapakken, installer den med å
-      kjøre følgende kommandoer:
+      Hvis du lastet ned den ekstra kodingsdatapakken, installer den med Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>tar -xf ../../poppler-data-&poppler-data-version;.tar.gz &amp;&amp;
 cd poppler-data-&poppler-data-version;</userinput></screen>
 
     <para>
-      Nå,som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥,som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make prefix=/usr install</userinput></screen>
@@ -224,7 +218,7 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
 
     <para>
       <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren brukes
-      for å bruke et høyere nivå av kompilatoroptimaliseringer.
+      for Ã¥ bruke et hÃ¸yere nivÃ¥ av kompilatoroptimaliseringer.
     </para>
 
     <para>
@@ -233,22 +227,26 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
     </para>
 
     <para>
+      <parameter>-DENABLE_QT6=OFF</parameter>: Denne bryteren er nÃ¸dvendig for Ã¥
+      forhindre en feil nÃ¥r Qt6 ikke er installert. Fjern den hvis du
+      har installert <xref linkend="qt6" role="nodep"/>.
+    </para>
+
+    <para>
       <parameter>-DENABLE_UNSTABLE_API_ABI_HEADERS=ON</parameter>: Installerer noen gamle
       <application>Xpdf</application> deklarasjoner som kreves av visse programmer.
       <!--(e.g. <application>Inkscape</application>).-->
     </para>
 
-<!--  This was broken for me - Bruce
-      Still broken with 0.69.0 - Doug
-      Seems to work with 0.73.0 - Pierre
-      Works with 20.09.0 but without the
-         sed -i '1s/python/&3/' make-glib-api-docs
-         and pygments is required - Thomas
--->
     <para>
       <option>-DENABLE_GTK_DOC=ON</option>: Bruk denne parameteren hvis
-      GTK-Doc <!--and Pygments--> er installert og du ønsker å gjenoppbygge og
+      GTK-Doc <!--and Pygments--> er installert og du Ã¸nsker Ã¥ gjenoppbygge og
       installere API dokumentasjonen.
+    </para>
+
+    <para>
+      <option>-DENABLE_QT5=OFF</option>: Bruk denne parameteren hvis
+      &qt5-deps; ikke er installert. 
     </para>
 
     <para>
@@ -258,8 +256,23 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
     </para>
 
     <para>
-      <command>LC_ALL=en_US.UTF-8 make test</command>: Kjører testpakken.
-      miljøvariabelen LC_ALL=en_US.UTF-8 er bare nødvendig hvis
+      <option>-DENABLE_NSS3=OFF</option>: Bruk denne parameteren hvis du ikke
+      har installert <application>nss</application>.
+    </para>
+
+    <para>
+      <option>-DENABLE_GPGME=OFF</option>: Bruk denne parameteren hvis du ikke
+      har installert <application>gpgme</application>.
+    </para>
+
+    <para>
+      <option>-DENABLE_LIBTIFF=OFF</option>: Bruk denne parameteren hvis du ikke
+      har installert <application>libtiff</application>.
+    </para>
+
+    <para>
+      <command>LC_ALL=en_US.UTF-8 make test</command>: KjÃ¸rer testpakken.
+      miljÃ¸variabelen LC_ALL=en_US.UTF-8 er bare nÃ¸dvendig hvis
       standard lokalitet ikke inkluderer UTF-8.
     </para>
 
@@ -282,8 +295,9 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
         <seg>
           libpoppler.so,
           libpoppler-cpp.so,
-          libpoppler-glib.so, og
-          libpoppler-qt5.so
+          libpoppler-glib.so,
+          libpoppler-qt5.so, og
+          (valgfritt) libpoppler-qt6.so
         </seg>
         <seg>
           /usr/include/poppler,
@@ -389,7 +403,7 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
         <listitem>
           <para>
             konverterer en PDF fil til ett av flere formater (PNG, JPEG, PDF, PS,
-            EPS, SVG) ved å bruke cairo utdataenheten til poppler biblioteket
+            EPS, SVG) ved Ã¥ bruke cairo utdataenheten til poppler biblioteket
           </para>
           <indexterm zone="poppler pdftocairo">
             <primary sortas="b-pdftocairo">pdftocairo</primary>
@@ -449,7 +463,7 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
         <term><command>pdfunite</command></term>
         <listitem>
           <para>
-            slår sammen flere PDF filer, i den rekkefølgen de forekommer på
+            slÃ¥r sammen flere PDF filer, i den rekkefÃ¸lgen de forekommer pÃ¥
             kommandolinjen, til en PDF utdatafil
           </para>
           <indexterm zone="poppler pdfunite">
@@ -462,7 +476,7 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
         <term><filename class="libraryfile">libpoppler.so</filename></term>
         <listitem>
           <para>
-            inneholder API funksjonene for å gjengi PDF filer
+            inneholder API funksjonene for Ã¥ gjengi PDF filer
           </para>
           <indexterm zone="poppler libpoppler">
             <primary sortas="c-libpoppler">libpoppler.so</primary>
@@ -486,7 +500,7 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
         <term><filename class="libraryfile">libpoppler-glib.so</filename></term>
         <listitem>
           <para>
-            er et innpakningsbibliotek som brukes til å samhandle PDF gjengivelsesfunksjonene
+            er et innpakningsbibliotek som brukes til Ã¥ samhandle PDF gjengivelsesfunksjonene
             med <application>GTK+</application>
           </para>
           <indexterm zone="poppler libpoppler-glib">
@@ -499,7 +513,7 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
         <term><filename class="libraryfile">libpoppler-qt5.so</filename></term>
         <listitem>
           <para>
-            er et innpakningsbibliotek som brukes til å samhandle PDF gjengivelsesfunksjonene
+            er et innpakningsbibliotek som brukes til Ã¥ samhandle PDF gjengivelsesfunksjonene
             med <application>Qt</application>5
           </para>
           <indexterm zone="poppler libpoppler-qt5">
@@ -508,6 +522,18 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
         </listitem>
       </varlistentry>
 
+      <varlistentry id="libpoppler-qt6">
+        <term><filename class="libraryfile">libpoppler-qt6.so</filename></term>
+        <listitem>
+          <para>
+            er et innpakningsbibliotek som brukes til PDF gjengivelsesfunksjonenes grensesnitt
+            med <application>Qt</application>6
+          </para>
+          <indexterm zone="poppler libpoppler-qt6">
+            <primary sortas="c-libpoppler-qt6">libpoppler-qt6.so</primary>
+          </indexterm>
+        </listitem>
+      
     </variablelist>
 
   </sect2>
