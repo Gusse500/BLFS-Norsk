@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY ruby-download-http "https://cache.ruby-lang.org/pub/ruby/&ruby-minor-version;/ruby-&ruby-version;.tar.xz">
   <!ENTITY ruby-download-ftp  " ">
-  <!ENTITY ruby-md5sum        "377853f31d10bfe37c58b8537fc3e05d">
-  <!ENTITY ruby-size          "14 MB">
-  <!ENTITY ruby-buildsize     "694 MB (legg til 1,0 GB for C API dokumenter)">
-  <!ENTITY ruby-time          "1.2 SBU (bruker parallellisme=4; legge til 4.6 SBU for tester; legg til 0,6 SBU for C API dokumenter)">
+  <!ENTITY ruby-md5sum        "b5e59d56faf25b1ec6445abdf203affa">
+  <!ENTITY ruby-size          "16 MB">
+  <!ENTITY ruby-buildsize     "774 MB (legg til 1,0 GB for C API dokumenter)">
+  <!ENTITY ruby-time          "3.4 SBU (bruker parallellisme=4; med tester og C API dokumenter)">
 ]>
 
 <sect1 id="ruby" xreflabel="Ruby-&ruby-version;">
@@ -27,11 +27,11 @@
 
     <para>
       <application>Ruby</application> pakken inneholder
-      <application>Ruby</application> utviklingsmiljø. Dette
+      <application>Ruby</application> utviklingsmiljÃ¸. Dette
       er nyttig for objektorientert skripting.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &ruby-size;
+          NedlastingsstÃ¸rrelse: &ruby-size;
         </para>
       </listitem>
       <listitem>
@@ -69,19 +69,19 @@
 
     <bridgehead renderas="sect3">Ruby Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libyaml"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="db"/>,
       <xref linkend="doxygen"/>,
       <xref linkend="graphviz"/>,
       <xref linkend="rust"/>,
       <xref linkend="tk"/>,
-      <xref linkend="valgrind"/>, og
+      <xref linkend="valgrind"/>, 
+      &berkeley-db; og 
       <ulink url="http://dtrace.org/blogs/about/">DTrace</ulink>
     </para>
 
@@ -89,71 +89,57 @@
 
   <sect2 role="installation">
     <title>Installasjon av Ruby</title>
-<!--
-    <para>
-      Hvis du ønsker å kjøre testene etter å ha installert denne pakken, fikser du et problem
-      som resulterer i en krasj under testpakken, på grunn av en udefinert
-      variabel:
-    </para>
 
-<screen><userinput>sed -i '283d' tool/lib/leakchecker.rb</userinput></screen>
--->
     <para>
-      Installer <application>Ruby</application> ved å kjøre følgende
+      Installer <application>Ruby</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr      \
-            --enable-shared    \
-            --without-valgrind \
-            --without-baseruby \
+<screen><userinput>./configure --prefix=/usr         \
+            --disable-rpath       \
+            --enable-shared       \
+            --without-valgrind    \
+            --without-baseruby    \
+            ac_cv_func_qsort_r=no \
             --docdir=/usr/share/doc/ruby-&ruby-version; &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Valgfritt bygg CAPI dokumentene ved å kjøre følgende
+      Valgfritt bygg CAPI dokumentene ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
 <screen><userinput>make capi</userinput></screen>
 
     <para>
-      Testene krever at den nye versjonen av Ruby allerede er installert for å
-      kjøre riktig. Hvis du vil kjøre testene, utfør dem etter installasjonen
-      av pakken. <!-- Ticket #17887 -->
+      For Ã¥ teste resultatene, utsted: <command>make -j1 -k check</command>.
+      Merk at Ã¥ kjÃ¸re testpakken med parallelle jobber kan fÃ¸re til
+      testfeil skrevet som kryptiske <computeroutput>unknown
+      object</computeroutput> meldinger, noe som resulterer i et sammendrag som feilaktig pÃ¥stÃ¥r
+      <quote>all tests passed</quote>.  Hvis miljÃ¸et har variabler
+      relatert til proxy innstillinger (<envar>all_proxy</envar>,
+      <envar>ALL_PROXY</envar>, <envar>http_proxy</envar>, og etc.) aktivert,
+      testpakken vil avslutte tidlig med meldinger som
+      <computeroutput>net/ftp is not found</computeroutput>.  SÃ¥ pass pÃ¥
+      Ã¥ deaktivere dem for testpakken.   Det er over 26 000 tester.
+      <!-- https://bugs.ruby-lang.org/issues/20106 -->
+      12 tester er kjent for Ã¥ mislykkes pÃ¥ grunn av utlÃ¸pte sertifikater i
+      testdataen. Noen tester relatert til ipv6 kan indikere feil. Hvis
+      tester kjÃ¸res i en mappe som har en skrivbar komponent (f.eks.
+      /tmp) sÃ¥ kan flere ekstra tester mislykkes.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
-    <para>
-      For å teste resultatene, utsted: <command>make -k check</command>. Det er over
-      25 000 tester. Noen tester relatert til ipv6 kan indikere feil. Hvis
-      tester kjøres i en mappe som har en skrivbar komponent (f.eks.
-      /tmp), så kan flere ekstra tester mislykkes. Noen få tester kan mislykkes pga
-      systemkonfigurasjonsforventninger.
-    </para>
-
-<!-- With 3.0.2:
-Finished tests in 443.541527s, 47.5739 tests/s, 6031.9921 assertions/s.
-21101 tests, 2675439 assertions, 4 failures, 1 errors, 45 skips
-
-with 3.2.0 there are several summaries:
-* PASS all 1789 tests
-* Finished tests in 6.815561s, 45.6309 tests/s, 264.2482 assertions/s.
-  311 tests, 1801 assertions, 0 failures, 0 errors, 12 skips
-* Finished tests in 462.613063s, 50.5649 tests/s, 12069.0885 assertions/s.
-  23392 tests, 5583318 assertions, 3 failures, 0 errors, 79 skips
--->
-
     <note>
       <para>
         Hvis du har installert Ruby-On-Rails applikasjoner og gjorde en
-        oppgradering av <application>Ruby</application> ved å installere denne
-        pakken, må du kanskje kjøre en oppdatering der også
+        oppgradering av <application>Ruby</application> ved Ã¥ installere denne
+        pakken, mÃ¥ du kanskje kjÃ¸re en oppdatering der ogsÃ¥
         (som &root; bruker):
       </para>
 
@@ -161,7 +147,7 @@ with 3.2.0 there are several summaries:
 bundle update rake</userinput></screen>
 
       <para>
-        og start nettserveren som betjener applikasjonen på nytt.
+        og start nettserveren som betjener applikasjonen pÃ¥ nytt.
       </para>
 
     </note>
@@ -172,7 +158,17 @@ bundle update rake</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--enable-shared</parameter>: Denne bryteren gjør det mulig å bygge
+      <parameter>--disable-rpath</parameter>: Denne bryteren deaktiverer innebygging av
+      <filename class='directory'>/usr/lib</filename> som et bibliotek
+      sÃ¸kesti inn i <command>ruby</command> programmet.   Ã… gjÃ¸re det er ikke nÃ¸dvendig
+      (fordi <filename class='directory'>/usr/lib</filename> er et system
+      biblioteksbane), og det kan fÃ¸re til at testpakken kjÃ¸rer med systemets
+      <filename class='libraryfile'>libruby.so</filename> i stedet for
+      det nettopp bygde nÃ¥r Ruby er installert.
+    </para>
+
+    <para>
+      <parameter>--enable-shared</parameter>: Denne bryteren gjÃ¸r det mulig Ã¥ bygge
       <filename class="libraryfile">libruby</filename> delte bibliotek.
     </para>
 
@@ -180,6 +176,15 @@ bundle update rake</userinput></screen>
       <parameter>--without-baseruby</parameter>: Denne bryteren forhindrer bruk av
       systemets <command>ruby</command> hvis den allerede er installert.
       Byggesystemet vil bruke den nybygde versjonen i stedet.
+    </para>
+
+    <para>
+      <parameter>ac_cv_func_qsort_r=no</parameter>: Denne bryteren forhindrer
+      Ã¥ bruke <function>qsort_r</function> funksjonen fra Glibc. Ruby
+      gjÃ¸r litt aggressiv optimalisering forutsatt en viss implementeringsdetaljer
+      om sorteringsalgoritmen, men antagelsen stemmer ikke med
+      Glibc implementeringen.   Med denne bryteren vil Ruby bruke sin egen
+      sorteringsimplementering i stedet.
     </para>
 
     <para>
@@ -308,7 +313,7 @@ bundle update rake</userinput></screen>
         <term><command>rake</command></term>
         <listitem>
           <para>
-            er et make lignende byggeverktøy for <application>Ruby</application>
+            er et make lignende byggeverktÃ¸y for <application>Ruby</application>
           </para>
           <indexterm zone="ruby rake">
             <primary sortas="b-rake">rake</primary>
@@ -320,7 +325,7 @@ bundle update rake</userinput></screen>
         <term><command>rdbg</command></term>
         <listitem>
           <para>
-            er en interaktiv feilsøking for <application>Ruby</application>
+            er en interaktiv feilsÃ¸king for <application>Ruby</application>
           </para>
           <indexterm zone="ruby rdbg">
             <primary sortas="b-rdbg">rdbg</primary>
@@ -344,7 +349,7 @@ bundle update rake</userinput></screen>
         <term><command>ri</command></term>
         <listitem>
           <para>
-            viser dokumentasjon fra en database på
+            viser dokumentasjon fra en database pÃ¥
             <application>Ruby</application> klasser, moduler og metoder
           </para>
           <indexterm zone="ruby ri">
@@ -357,7 +362,7 @@ bundle update rake</userinput></screen>
         <term><command>ruby</command></term>
         <listitem>
           <para>
-            er et tolket skriptspråk for raskt
+            er et tolket skriptsprÃ¥k for raskt
             og enkel objektorientert programmering
           </para>
           <indexterm zone="ruby ruby-prog">

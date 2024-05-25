@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,9 +6,9 @@
 
   <!ENTITY scons-download-http "&sourceforge-dl;/scons/SCons-&scons-version;.tar.gz">
   <!ENTITY scons-download-ftp  " ">
-  <!ENTITY scons-md5sum        "4b868f068d568b42b975d7cb357c65d6">
-  <!ENTITY scons-size          "3.0 MB">
-  <!ENTITY scons-buildsize     "52 MB">
+  <!ENTITY scons-md5sum        "30dcc2563af408c04812a8de88ce2c2e">
+  <!ENTITY scons-size          "3.1 MB">
+  <!ENTITY scons-buildsize     "50 MB">
   <!ENTITY scons-time          "mindre enn 0.1 SBU">
 ]>
 
@@ -26,11 +26,11 @@
     <title>Introduksjon til SCons</title>
 
     <para>
-      <application>SCons</application> er et verktøy for å bygge programvare
+      <application>SCons</application> er et verktÃ¸y for Ã¥ bygge programvare
       (og andre filer) implementert i <application>Python</application>.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &scons-size;
+          NedlastingsstÃ¸rrelse: &scons-size;
         </para>
       </listitem>
       <listitem>
@@ -79,18 +79,27 @@
   <sect2 role="installation">
     <title>Installasjon av SCons</title>
 
+    <!-- Commented out because I don't think it's still needed.  If
+         something bad happens please uncomment.
+    <screen><userinput>sed -i 's/env python/&amp;3/' SCons/Utilities/*.py &amp;&amp;</userinput></screen> -->
+
     <para>
-      Installer <application>SCons</application> ved å kjøre følgende
-      kommandoer som <systemitem class="username">root</systemitem> bruker:
+     Fiks installasjonsplasseringen til manualsidene:
     </para>
 
-<screen role="root"><userinput>sed -i 's/env python/&amp;3/' SCons/Utilities/*.py &amp;&amp;
+    <screen><userinput>sed -i '/scons.1/s@^.@share/man/man1@' -i setup.cfg</userinput></screen>
 
-python3 setup.py install --prefix=/usr \
-                         --optimize=1  &amp;&amp;
+    <para>
+      Bygg pakken:
+    </para>
 
-mv -v /usr/lib/python&python3-majorver;/site-packages/SCons-&scons-version;-py&python3-majorver;.egg/*.1 \
-      /usr/share/man/man1</userinput></screen>
+    &build-wheel;
+
+    <para>
+      Som &root; bruker, installer pakken:
+    </para>
+ 
+    <screen role='root'><userinput>&install-wheel; SCons</userinput></screen>
 
   </sect2>
 
@@ -110,7 +119,7 @@ mv -v /usr/lib/python&python3-majorver;/site-packages/SCons-&scons-version;-py&p
           Ingen
         </seg>
         <seg>
-          /usr/lib/python&python3-majorver;/site-packages/SCons
+          /usr/lib/python&python3-majorver;/site-packages/SCons{,-&scons-version;.dist-info}
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -124,7 +133,7 @@ mv -v /usr/lib/python&python3-majorver;/site-packages/SCons-&scons-version;-py&p
         <term><command>scons</command></term>
         <listitem>
           <para>
-            er et programvarekonstruksjonsverktøy
+            er et programvarekonstruksjonsverktÃ¸y
           </para>
           <indexterm zone="scons scons-prog">
             <primary sortas="b-scons">scons</primary>

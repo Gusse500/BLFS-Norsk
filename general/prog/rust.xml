@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,9 +6,9 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "b6f9973de878e37a589f0989e4138480">
-  <!ENTITY rust-size          "145 MB">
-  <!ENTITY rust-buildsize     "8.9 GB (292 MB installert); legg til 6,4 GB hvis du kjører testene">
+  <!ENTITY rust-md5sum        "14a8ac688b461a3127090cad513aee05">
+  <!ENTITY rust-size          "155 MB">
+  <!ENTITY rust-buildsize     "8.9 GB (298 MB installert); legg til 6,4 GB hvis du kjÃ¸rer testene">
   <!ENTITY rust-time          "6.7 SBU (inkludert nedlastingstid; legg til 6,2 SBU for tester, begge med parallellisme=8)">
 ]>
 
@@ -25,98 +25,91 @@
   <sect2 role="package">
     <title>Introduksjon til Rust</title>
     <para>
-      <application>Rust</application> programmeringsspråket er utformet
-      for å være et trygt, samtidig, praktisk språk.
+      <application>Rust</application> programmeringssprÃ¥ket er utformet
+      for Ã¥ vÃ¦re et trygt, samtidig, praktisk sprÃ¥k.
     </para>
 
     <para>
       Denne pakken oppdateres i en seksukers utgivelsessyklus. Fordi den er
-      en så stor og treg pakke å bygge, er for øyeblikket bare nødvendig
-      av noen få pakker i denne boken, og spesielt fordi nyere versjoner
-      har en tendens til å bryte eldre mozilla pakker, mener BLFS redaktørene at
-      den skal bare oppdateres når det er nødvendig (enten for å fikse problemer,
-      eller for å la en ny versjon av en pakke bygges).
+      en sÃ¥ stor og treg pakke Ã¥ bygge, er for Ã¸yeblikket bare nÃ¸dvendig
+      av noen fÃ¥ pakker i denne boken, og spesielt fordi nyere versjoner
+      har en tendens til Ã¥ bryte eldre mozilla pakker, mener BLFS redaktÃ¸rene at
+      den skal bare oppdateres nÃ¥r det er nÃ¸dvendig (enten for Ã¥ fikse problemer,
+      eller for Ã¥ la en ny versjon av en pakke bygges).
     </para>
 
     <para>
-      Som med mange andre programmeringsspråk, rustc (rustkompilatoren)
-      trenger en binær for oppstartssekvensen. Den vil laste ned en stage0
-      binær ved starten av bygningen, så du kan ikke kompilere den uten en
+      Som med mange andre programmeringssprÃ¥k, rustc (rustkompilatoren)
+      trenger en binÃ¦r for oppstartssekvensen. Den vil laste ned en stage0
+      binÃ¦r ved starten av bygningen, sÃ¥ du kan ikke kompilere den uten en
       Internett tilkobling.
     </para>
 
     <note>
       <para>
         Selv om BLFS vanligvis installeres i <filename
-        class="directory">/usr</filename>, når du senere oppgraderer til en nyere
+        class="directory">/usr</filename>, nÃ¥r du senere oppgraderer til en nyere
         versjon av <application>rust</application> de gamle bibliotekene i <filename
         class="directory">/usr/lib/rustlib</filename> vil forbli, med div
-        hasher i navnene deres, men vil ikke være brukbare og vil kaste bort plass.
-        Redaktører anbefaler å plassere filene i <filename
+        hasher i navnene deres, men vil ikke vÃ¦re brukbare og vil kaste bort plass.
+        RedaktÃ¸rer anbefaler Ã¥ plassere filene i <filename
         class="directory">/opt</filename> mappen.  Spesielt hvis du
-        har grunn til å gjenoppbygge med en modifisert konfigurasjon (f.eks. ved å bruke
-        sendt LLVM etter å ha bygget med delt LLVM, kanskje for å kompilere crates
-        for arkitekturer som BLFS LLVM bygget ikke støtter)
-        det er mulig for installasjonen å etterlate et ødelagt
+        har grunn til Ã¥ gjenoppbygge med en modifisert konfigurasjon (f.eks. ved Ã¥ bruke
+        sendt LLVM etter Ã¥ ha bygget med delt LLVM, kanskje for Ã¥ kompilere crates
+        for arkitekturer som BLFS LLVM bygget ikke stÃ¸tter)
+        det er mulig for installasjonen Ã¥ etterlate et Ã¸delagt
         <command>cargo</command> program. I en slik situasjon, fjern enten
-        den eksisterende installasjonen først, eller bruk et annet prefiks som f.eks
+        den eksisterende installasjonen fÃ¸rst, eller bruk et annet prefiks som f.eks
         /opt/rustc-&rust-version;-build2.
       </para>
 
       <para>
-        Hvis du foretrekker det, kan du selvfølgelig endre prefikset til <filename
+        Hvis du foretrekker det, kan du selvfÃ¸lgelig endre prefikset til <filename
         class="directory">/usr</filename>.
       </para>
     </note>
 
     <para>
-      Det nåværende <application>rustbuild</application> byggesystemet vil bruke
+      Det nÃ¥vÃ¦rende <application>rustbuild</application> byggesystemet vil bruke
       alle prosessorer, selv om den ikke skalerer godt og ofte faller
-      tilbake til bare å bruke én kjerne mens du venter på at et bibliotek skal kompileres.
+      tilbake til bare Ã¥ bruke Ã©n kjerne mens du venter pÃ¥ at et bibliotek skal kompileres.
       Imidlertid kan det stort sett begrenses til et spesifisert antall prosessorer av
-      en kombinasjon av å legge til bryteren <literal>--jobs &lt;N&gt;</literal>
-      (f.eks. '--jobs 4' for å begrense til 4 prosessorer) på hver påkalling av
-      <command>python3 ./x.py</command> <emphasis>og</emphasis> ved hjelp av en
-      miljøvariabel <envar>CARGO_BUILD_JOBS=&lt;N&gt;</envar>. For
-      øyeblikket er dette ikke effektivt når noen av rustc testene kjøres.
+      en kombinasjon av Ã¥ legge til bryteren <literal>--jobs &lt;N&gt;</literal>
+      (f.eks. '--jobs 4' for Ã¥ begrense til 4 prosessorer) pÃ¥ hver pÃ¥kalling av
+      <command>python3 x.py</command> <emphasis>og</emphasis> ved hjelp av en
+      miljÃ¸variabel <envar>CARGO_BUILD_JOBS=&lt;N&gt;</envar>. For
+      Ã¸yeblikket er dette ikke effektivt nÃ¥r noen av rustc testene kjÃ¸res.
     </para>
 
     <para>
-      Den nåværende versjonen av rusts num_cpus crate gjenkjenner nå at cgroups
-      kan brukes til å begrense hvilke prosessorer det er tillatt å bruke. Så hvis din
-      maskin mangler DRAM (vanligvis mindre enn 2 GB DRAM per kjerne) som kan være
-      et alternativ til å ta CPUer offline.
-      <phrase revision="sysv">I sysv systemer krever cgroups <ulink
-      url="https://sourceforge.net/projects/libcg/">libcgroup</ulink>.</phrase>
-      <phrase revision="systemd">Det kan oppnås ved å bruke
-      <command>systemd-run</command> kommandoen med
-      <parameter>-p User=$(whoami)</parameter> og
-      <parameter>-p AllowedCPUs=0-<replaceable>x</replaceable></parameter>
-      (med <replaceable>x</replaceable> erstattet med antall CPU
-      kjerner du vil bruke minus én) alternativer.</phrase>
+      Den nÃ¥vÃ¦rende versjonen av rusts num_cpus crate gjenkjenner nÃ¥ at cgroups
+      kan brukes til Ã¥ begrense hvilke prosessorer det er tillatt Ã¥ bruke. SÃ¥ hvis din
+      maskin mangler DRAM (vanligvis mindre enn 2 GB DRAM per kjerne) som kan vÃ¦re
+      et alternativ til Ã¥ ta CPUer offline.
+      Les <xref linkend='build-in-cgroup'/> for hvordan du bruker en cgroup.
     </para>
 
     <para>
-      For øyeblikket <application>Rust</application> gir ingen
+      For Ã¸yeblikket <application>Rust</application> gir ingen
       garantier for en stabil ABI.
     </para>
 
     <note>
       <para>
-        Rustc bygger som standard for ALLE støttede arkitekturer, ved å bruke en
+        Rustc bygger som standard for ALLE stÃ¸ttede arkitekturer, ved Ã¥ bruke en
         sendt kopi av LLVM. I BLFS er bygget bare for X86
         arkitektur.
-        Hvis du har tenkt å utvikle rust crates, kan det hende at denne konstruksjonen ikke er bra
-        nok til dine formål.
+        Hvis du har tenkt Ã¥ utvikle rust crates, kan det hende at denne konstruksjonen ikke er bra
+        nok til dine formÃ¥l.
       </para>
       <para>
-        Byggetidene for denne versjonen når den gjentas på samme maskin er
+        Byggetidene for denne versjonen nÃ¥r den gjentas pÃ¥ samme maskin er
         ofte rimelig konsekvent, men som med alle kompilatorer som bruker
-        <command>rustc</command> det kan være noen veldig langsomme avvikere.
+        <command>rustc</command> det kan vÃ¦re noen veldig langsomme avvikere.
       </para>
     </note>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -137,7 +130,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &rust-size;
+          NedlastingsstÃ¸rrelse: &rust-size;
         </para>
       </listitem>
       <listitem>
@@ -152,19 +145,19 @@
       </listitem>
     </itemizedlist>
 
-<!--<bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+<bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/rustc-&rust-version;-llvm9_fixes-1.patch"/>
+          Valgfri oppdatering (anbefales hvis du kjÃ¸rer testpakken):
+          <ulink url="&patch-root;/rustc-&rust-version;-testsuite_fix-1.patch"/>
         </para>
       </listitem>
-    </itemizedlist>-->
+    </itemizedlist>
 
     <bridgehead renderas="sect3">Rust Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/> og
       <!-- Required for downloading stage 0 binaries.
@@ -180,7 +173,7 @@
       <xref linkend="libssh2"/> og
       <xref linkend="llvm"/>
       (bygget med -DLLVM_LINK_LLVM_DYLIB=ON slik at rust kan lenke til
-      systemets LLVM i stedet for å bygge den sendte versjonen)
+      systemets LLVM i stedet for Ã¥ bygge den sendte versjonen)
     </para>
 
     <note>
@@ -193,12 +186,16 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gdb"/> (brukes av testpakken hvis den er til stede),
-      <xref linkend="git"/> (kreves av testpakken), og
+      <xref linkend="git"/> (kreves av testpakken),
+      <ulink url="https://github.com/bytecodealliance/wasmtime/tree/main/cranelift">cranelift</ulink>,
+      <ulink url="https://jemalloc.net/">jemalloc</ulink>,
+      libgccjit (les parameterforklaringer i
+      <xref role="nodep" linkend="gcc"/>), og
       <ulink url='https://libgit2.org/'>libgit2</ulink>
     </para>
 
     <para condition="html" role="usernotes">
-      Redaktørens notater: <ulink url="&blfs-wiki;/rust"/>
+      RedaktÃ¸rens notater: <ulink url="&blfs-wiki;/rust"/>
     </para>
   </sect2>
 
@@ -207,14 +204,14 @@
 
     <note>
       <para>
-        For øyeblikket produserer rustkompilatoren SSE2 instruksjoner for 32-bit x86,
-        som forårsaker at den genererte koden blir ødelagt på 32-bits systemer uten en
+        For Ã¸yeblikket produserer rustkompilatoren SSE2 instruksjoner for 32-bit x86,
+        som forÃ¥rsaker at den genererte koden blir Ã¸delagt pÃ¥ 32-bits systemer uten en
         SSE2 kompatibel prosessor. Alle x86 prosessormodeller utgitt etter
-        2004 skal være SSE2 kompatibel. Kjør
+        2004 skal vÃ¦re SSE2 kompatibel. KjÃ¸r
         <command>lscpu | grep sse2</command> som en test. Hvis den gir ut
-        noe, er CPUen din SSE2 kompatibel og OK. Ellers kan du prøve
-        å bygge denne pakken <emphasis>på et SSE2 kompatibelt system</emphasis>
-        med følgende rettelse brukt:
+        noe, er CPUen din SSE2 kompatibel og OK. Ellers kan du prÃ¸ve
+        Ã¥ bygge denne pakken <emphasis>pÃ¥ et SSE2 kompatibelt system</emphasis>
+        med fÃ¸lgende rettelse brukt:
       </para>
 
       <!-- computeroutput used deliberately to stop anyone from copying
@@ -226,15 +223,15 @@
         Og kopiere resultatet
         <filename class="directory">/opt/rustc-&rust-version;</filename>
         til systemet uten SSE2 kapasitet. Men denne endringen er fortsatt
-        under oppstrøms gjennomgang og ikke testet av BLFS redaktører.
+        under oppstrÃ¸ms gjennomgang og ikke testet av BLFS redaktÃ¸rer.
       </para>
     </note>
 
     <para>
-      For å installere i
+      For Ã¥ installere i
       <filename class="directory">/opt</filename> mappen, fjerne evt
       eksisterende <filename>/opt/rustc</filename> symbolkobling
-      og opprett en ny mappe (dvs. med et annet navn hvis du prøver en
+      og opprett en ny mappe (dvs. med et annet navn hvis du prÃ¸ver en
       modifisert versjon av samme versjon).
       Som <systemitem class="username">root</systemitem>
       bruker:
@@ -247,10 +244,17 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
       <para>
         Hvis flere versjoner av <application>Rust</application> er installert
         i <filename class="directory">/opt</filename>, endre til en annen
-        versjonen krever bare å endre <filename> /opt/rustc</filename>
-        symbolsk lenke og deretter kjøre <command>ldconfig</command>.
+        versjonen krever bare Ã¥ endre <filename> /opt/rustc</filename>
+        symbolsk lenke og deretter kjÃ¸re <command>ldconfig</command>.
       </para>
     </note>
+
+    <para>
+      Hvis du kjÃ¸rer testpakken, bruk en oppdatering for Ã¥ forhindre
+      byggesystemet fra Ã¥ gjenoppbygge kompilatoren unÃ¸dvendig:
+    </para>
+
+    <screen><userinput>patch -Np1 -i ../rustc-&rust-version;-testsuite_fix-1.patch</userinput></screen>
 
     <para>
       Opprett en passende <filename>config.toml</filename> fil som vil
@@ -262,8 +266,10 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
 # See the 8.4 book for an old example using shipped LLVM
 # e.g. if not installing clang, or using a version before 13.0
 
-# tell x.py to not keep printing an annoying warning
-changelog-seen = 2
+# Tell x.py the editors have reviewed the content of this file
+# and updated it to follow the major changes of the building system,
+# so x.py will not warn us to do such a review.
+change-id = 118703
 
 [llvm]
 # by default, rust will build for a myriad of architectures
@@ -304,6 +310,10 @@ description = "for BLFS &version;"
 # FileCheck has not been installed.
 #codegen-tests = false
 
+# Enable the same optimizations as the official upstream build.
+lto = "thin"
+codegen-units = 1
+
 [target.x86_64-unknown-linux-gnu]
 # NB the output of llvm-config (i.e. help options) may be
 # dumped to the screen when config.toml is parsed.
@@ -312,19 +322,25 @@ llvm-config = "/usr/bin/llvm-config"
 [target.i686-unknown-linux-gnu]
 # NB the output of llvm-config (i.e. help options) may be
 # dumped to the screen when config.toml is parsed.
-llvm-config = "/usr/bin/llvm-config"
-
-</literal>
+lvm-config = "/usr/bin/llvm-config"</literal>
 EOF</userinput></screen>
 
-<!--<para>
-     Tilpass rustc for å la den bygge og fungere med endringene i LLVM-9:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../rustc-&rust-version;-llvm9_fixes-1.patch</userinput></screen>-->
+    <note>
+      <para>
+        <command>python3 x.py</command> kommandoer kan gi en advarselsmelding
+        klagende pÃ¥ <quote><computeroutput>no codegen-backends
+        config matched the requested path to build a codegen
+        backend</computeroutput></quote>.  Og det gitte
+        <quote>forslaget</quote> (<computeroutput>add backend to
+        codegen-backends in config.toml</computeroutput>) vil ikke stilne
+        det.   Denne advarselen er <ulink
+        url='https://github.com/rust-lang/rust/issues/110692'>bogus</ulink>
+        og det bÃ¸r ignoreres.
+      </para>
+    </note>
 
     <para>
-      Kompiler <application>Rust</application> ved å kjøre følgende
+      Kompiler <application>Rust</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -335,39 +351,31 @@ EOF</userinput></screen>
 
 <screen><userinput>{ [ ! -e /usr/include/libssh2.h ] ||
   export LIBSSH2_SYS_USE_PKG_CONFIG=1; } &amp;&amp;
-python3 ./x.py build</userinput></screen>
+python3 x.py build</userinput></screen>
 
     <note>
       <para>
         Testpakken vil generere noen meldinger i
         <phrase revision="sysv">system log</phrase>
         <phrase revision="systemd">systemd journal</phrase>
-        for feller på ugyldige opkoder, og for segmenteringsfeil.
-        I seg selv er disse ingenting å bekymre seg for, bare en måte for
-        test å avslutte.
+        for feller pÃ¥ ugyldige opkoder, og for segmenteringsfeil.
+        I seg selv er disse ingenting Ã¥ bekymre seg for, bare en mÃ¥te for
+        test Ã¥ avslutte.
       </para>
     </note>
 
     <para>
-      Å kjøre testene (igjen ved å bruke alle tilgjengelige CPUer) utsted:
+      Ã… kjÃ¸re testene (igjen ved Ã¥ bruke alle tilgjengelige CPUer) utsted:
     </para>
 
 <screen remap="test"><userinput>SSL_CERT_DIR=/etc/ssl/certs \
 python3 ./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
 
-    <!-- https://github.com/rust-lang/rust/issues/112209
-         I only saw 2 failures with 1.71.1, but Rainer saw 6 ones.
-         I don't want to find out the maximum number (by building rustc
-         in somewhere like /a/very/long/long/long/.../long/path) so I'd
-         just omit the exact number of failures here. -->
+    <!-- https://github.com/rust-lang/rust/pull/115869 -->
     <para>
-      Noen <literal>ui</literal> tester kan mislykkes (antall feil
-      avhenger av lengden på den absolutte banen til
-      <filename class='directory'>rustc-&rust-version;-src</filename>
-      mappen).  Disse feilene kan identifiseres ved å se
-      <filename>rustc-testlog</filename> filen og søke etter
-      <computeroutput>note: the full type name has been written
-      to</computeroutput>... meldinger og de kan trygt ignoreres.
+      To tester,<filename>tests/ui/issues/issue-21763.rs</filename> og
+      <filename>tests/debuginfo/regression-bad-location-list-67992.rs</filename>,
+      er kjent for Ã¥ mislykkes.
     </para>
 
     <para>
@@ -377,16 +385,7 @@ python3 ./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></sc
     </para>
 
     <para>
-      På noen systemer kan skripting av testene føre til at testene henger på
-      <filename>test: combine_install_with_separate_uninstall</filename>. Hvis
-      dette skjer, kan problemet løses ved å trykke på Enter tasten.
-      Testen kan også fjernes med:
-    </para>
-
-<screen role="nodump"><userinput>sed -e '/runtest combine_install_with/s/^/#/g' -i src/tools/rust-installer/test.sh</userinput></screen>
-
-    <para>
-      Som med alle store testserier, kan andre tester mislykkes på noen maskiner -
+      Som med alle store testserier, kan andre tester mislykkes pÃ¥ noen maskiner -
       hvis antallet ekstra feil er lavt,
       sjekk loggen for "failures:" og se gjennom linjene over det, spesielt
       'stderr:' linjer. Enhver omtale av
@@ -394,21 +393,21 @@ python3 ./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></sc
     </para>
 
     <para>
-      Hvis du får noen <emphasis>andre</emphasis> sviktende tester som rapporterer et
-      utgavenummer, så bør du søke etter det problemet. For eksempel når
-      rustc &gt;= 1.41.1 ble bygget med en versjon av sysllvm før 10.0 testen
+      Hvis du fÃ¥r noen <emphasis>andre</emphasis> sviktende tester som rapporterer et
+      utgavenummer, sÃ¥ bÃ¸r du sÃ¸ke etter det problemet. For eksempel nÃ¥r
+      rustc &gt;= 1.41.1 ble bygget med en versjon av sysllvm fÃ¸r 10.0 testen
       for problem 69225 mislyktes <ulink
-      url="https://github.com/rust-lang/rust/issues/69225"/> og det burde være
-      betraktet som en kritisk feil (de ga ut 1.41.1 på grunn av det).
-      De fleste andre feil vil ikke være kritiske.
+      url="https://github.com/rust-lang/rust/issues/69225"/> og det burde vÃ¦re
+      betraktet som en kritisk feil (de ga ut 1.41.1 pÃ¥ grunn av det).
+      De fleste andre feil vil ikke vÃ¦re kritiske.
     </para>
 
     <para>
-      Derfor bør du bestemme antall feil.
+      Derfor bÃ¸r du bestemme antall feil.
     </para>
 
     <para>
-      Antall tester som har bestått og ikke bestått finner du ved å kjøre:
+      Antall tester som har bestÃ¥tt og ikke bestÃ¥tt finner du ved Ã¥ kjÃ¸re:
     </para>
 
 <!-- split into two lines for narrower screen windows -->
@@ -417,34 +416,34 @@ python3 ./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></sc
 
     <para>
       De andre tilgjengelige feltene er $8 for de som ble ignorert
-      (dvs. hoppet over), $10 for "målt" og $12 for "filtrert ut", men begge
+      (dvs. hoppet over), $10 for "mÃ¥lt" og $12 for "filtrert ut", men begge
       de to siste er sannsynligvis null.
     </para>
 
     <para>
-      Nå, som &root; bruker, installer pakken:
+      NÃ¥, som &root; bruker, installer pakken:
     </para>
 
     <note>
       <para>
-        Hvis <command>sudo</command> eller <command>su</command> er påberopt for
-        å bytte til &root; bruker, sikre at
+        Hvis <command>sudo</command> eller <command>su</command> er pÃ¥beropt for
+        Ã¥ bytte til &root; bruker, sikre at
         <envar>LIBSSH2_SYS_USE_PKG_CONFIG</envar> er korrekt sendt ellers
-        vil følgende kommando gjenoppbygge denne pakken fullstendig.  For
+        vil fÃ¸lgende kommando gjenoppbygge denne pakken fullstendig.  For
         <command>sudo</command>, bruk
         <option>--preserve-env=LIBSSH2_SYS_USE_PKG_CONFIG</option> alternativet.
         For <command>su</command>, <emphasis>ikke</emphasis> bruk
-        <option>-</option> eller <option>--login</option>.
+        <option>-</option> eller <option>--login</option> alternativene.
       </para>
     </note>
 
-<screen role='root'><userinput>python3 ./x.py install</userinput></screen>
+<screen role='root'><userinput>python3 x.py install</userinput></screen>
 
-    <!-- TODO: Report to upstream if this persists in the next release -->
+    <!-- https://github.com/rust-lang/rust/issues/115213 -->
     <para>
-      Bygningssystemet prøver å installere noen filer to ganger, og under
-      det andre forsøket gir det nytt navn til den gamle (installert i det første
-      forsøk) med <filename class='extension'>.old</filename> suffiks.
+      Bygningssystemet prÃ¸ver Ã¥ installere noen filer to ganger, og under
+      det andre forsÃ¸ket gir det nytt navn til den gamle (installert i det fÃ¸rste
+      forsÃ¸k) med <filename class='extension'>.old</filename> suffiks.
       Som &root; bruker, fjern disse filene:
     </para>
 
@@ -452,12 +451,18 @@ python3 ./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></sc
 
     <para>
       Fortsatt som &root; bruker, symbolkoble en <application>Zsh</application>
-      fullføringsfilen på riktig plassering:
+      fullfÃ¸ringsfilen pÃ¥ riktig plassering:
     </para>
 
 <screen role='root'><userinput>install -vdm755 /usr/share/zsh/site-functions      &amp;&amp;
 ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
         /usr/share/zsh/site-functions</userinput></screen>
+
+    <para>
+      Til slutt, deaktiver <envar>LIBSSH2_SYS_USE_PKG_CONFIG</envar> variabelen:
+    </para>
+
+<screen><userinput>unset LIBSSH2_SYS_USE_PKG_CONFIG</userinput></screen>
 
   </sect2>
 
@@ -466,35 +471,35 @@ ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
 
     <para>
       <command>ln -svfn rustc-&rust-version; /opt/rustc</command>: hvis dette ikke
-      er den første bruken av <filename class="directory">/opt/rustc</filename>
-      symbolkobling, overskriv den ved å tvinge, og bruk '-n'-flagget for å unngå å få
+      er den fÃ¸rste bruken av <filename class="directory">/opt/rustc</filename>
+      symbolkobling, overskriv den ved Ã¥ tvinge, og bruk '-n'-flagget for Ã¥ unngÃ¥ Ã¥ fÃ¥
       forvirrende resultater fra f.eks. <command>ls -l</command>.
     </para>
 
     <para>
-      <literal>targets = "X86"</literal>: dette unngår å bygge alt tilgjengelig
+      <literal>targets = "X86"</literal>: dette unngÃ¥r Ã¥ bygge alt tilgjengelig
       linux krysskompilatorer (AArch64, MIPS, PowerPC, SystemZ, etc). Dessverre,
-      rust insisterer på å installere kildefiler for disse nedenfor
+      rust insisterer pÃ¥ Ã¥ installere kildefiler for disse nedenfor
       <filename class="directory">/opt/rustc/lib/src</filename>.
     </para>
 
     <para>
-      <literal>extended = true</literal>: dette installerer flere verktøy
-      (spesifisert av <literal>tools</literal> oppføring) ved siden av
+      <literal>extended = true</literal>: dette installerer flere verktÃ¸y
+      (spesifisert av <literal>tools</literal> oppfÃ¸ring) ved siden av
       <command>rustc</command>.
     </para>
 
     <para>
       <literal>tools = ["cargo", "clippy", "rustdoc", "rustfmt"]</literal>:
-      bygg bare verktøyene fra 'standard' profilen i binær kommando
+      bygg bare verktÃ¸yene fra 'standard' profilen i binÃ¦r kommando
       <command>rustup</command> som anbefales for de fleste brukere.
-      De andre verktøyene er neppe nyttige med mindre du bruker (gammel) kode
+      De andre verktÃ¸yene er neppe nyttige med mindre du bruker (gammel) kode
       analysatorer eller redigering av standardbiblioteket.
     </para>
 
     <para>
       <literal>channel = "stable"</literal>: dette sikrer at kun stabile funksjoner
-      kan brukes, standard i <filename>config.toml</filename> er å bruke
+      kan brukes, standard i <filename>config.toml</filename> er Ã¥ bruke
       utviklingsfunksjoner, som ikke passer for en utgitt versjon.
     </para>
 
@@ -502,11 +507,11 @@ ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
     <para>
       <literal>[target.x86_64-unknown-linux-gnu]</literal>: syntaksen til
       <filename>config.toml</filename> krever en <literal>llvm-config</literal>
-      oppføring for hvert mål som system-llvm skal brukes for. Endre målet
+      oppfÃ¸ring for hvert mÃ¥l som system-llvm skal brukes for. Endre mÃ¥let
       til <literal>[target.i686-unknown-linux-gnu]</literal> hvis du bygger
-      på 32-bit x86. Hele denne delen kan utelates hvis du ønsker å bygge
+      pÃ¥ 32-bit x86. Hele denne delen kan utelates hvis du Ã¸nsker Ã¥ bygge
       mot den sendte llvm, eller ikke har clang, men den resulterende bygget vil
-      være større og ta lengre tid.
+      vÃ¦re stÃ¸rre og ta lengre tid.
     </para>
 
 <!--<para>
@@ -514,28 +519,28 @@ ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
       som normalt lastes ned for denne utgivelsen, initialiseres ikke riktig
       <application>curl</application>hvis du bruker
       <application>openssl-3.0.0</application>. Upstream har fikset det for en
-      fremtidig utgivelse, forårsaker denne sed at de faste versjonene brukes.
+      fremtidig utgivelse, forÃ¥rsaker denne sed at de faste versjonene brukes.
     </para>-->
 
     <!-- https://github.com/alexcrichton/ssh2-rs/issues/173 -->
     <para>
       <command>export LIBSSH2_SYS_USE_PKG_CONFIG=1</command>: tillat
-      <command>cargo</command> å koble til systemets libssh2.
+      <command>cargo</command> Ã¥ koble til systemets libssh2.
     </para>
 
 <!--<para>
       <command>export RUSTFLAGS="$RUSTFLAGS -C link-args=-lffi"</command>:
       Dette legger til en lenke til libffi til eventuelle RUSTFLAGS du allerede passerer
-      til bygget. På noen systemer unnlater kobling å inkludere libffi med mindre
-      dette brukes. Årsaken til at dette er nødvendig er ikke klarlagt.
-      2023-01-14 : antas ikke lenger å være nødvendig, men det er noen år
-      siden en person rapporterte å trenge dette, hold det kommentert for øyeblikket.
+      til bygget. PÃ¥ noen systemer unnlater kobling Ã¥ inkludere libffi med mindre
+      dette brukes. Ã…rsaken til at dette er nÃ¸dvendig er ikke klarlagt.
+      2023-01-14 : antas ikke lenger Ã¥ vÃ¦re nÃ¸dvendig, men det er noen Ã¥r
+      siden en person rapporterte Ã¥ trenge dette, hold det kommentert for Ã¸yeblikket.
     </para>-->
 
     <!-- https://github.com/alexcrichton/openssl-probe/issues/25 -->
     <para>
       <envar>SSL_CERT_DIR=/etc/ssl/certs</envar>: Arbeid rundt et problem
-      som forårsaker testfeil med CA sertifikatlageroppsettet som brukes av
+      som forÃ¥rsaker testfeil med CA sertifikatlageroppsettet som brukes av
       <xref linkend='make-ca'/>.
     </para>
 
@@ -546,7 +551,7 @@ ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
 
     <para>
       <parameter>--no-fail-fast</parameter>: denne bryteren sikrer at testpakken
-      ikke vil stoppe ved den første feilen.
+      ikke vil stoppe ved den fÃ¸rste feilen.
     </para>
 
   </sect2>
@@ -559,8 +564,8 @@ ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
 
       <para>
         Hvis du har installert <application>rustc</application> i
-        <filename class="directory">/opt</filename>, må du oppdatere
-        følgende konfigurasjonsfiler slik at <application>rustc</application>
+        <filename class="directory">/opt</filename>, mÃ¥ du oppdatere
+        fÃ¸lgende konfigurasjonsfiler slik at <application>rustc</application>
         er riktig funnet av andre pakker og systemprosesser.
       </para>
 
@@ -582,7 +587,7 @@ EOF</userinput></screen>
 
       <para>
         Oppdater gjeldende PATH umiddelbart etter installasjonen
-        for ditt nåværende skall som en vanlig bruker:
+        for ditt nÃ¥vÃ¦rende skall som en vanlig bruker:
       </para>
 
 <screen><userinput>source /etc/profile.d/rustc.sh</userinput></screen>
@@ -651,7 +656,7 @@ EOF</userinput></screen>
         <term><command>cargo-miri</command></term>
         <listitem>
           <para>
-            er til bruk av Miri til å tolke bin crates og tester. Det er
+            er til bruk av Miri til Ã¥ tolke bin crates og tester. Det er
             ikke installert som standard.
           </para>
           <indexterm zone="rust cargo-miri">
@@ -688,7 +693,7 @@ EOF</userinput></screen>
         <term><command>miri</command></term>
         <listitem>
           <para>
-            er tolk for Rusts mellomrepresentasjon på mellomnivå
+            er tolk for Rusts mellomrepresentasjon pÃ¥ mellomnivÃ¥
             (MIR). Den er ikke installert som standard.
           </para>
           <indexterm zone="rust miri">
@@ -701,8 +706,8 @@ EOF</userinput></screen>
         <term><command>rls</command></term>
         <listitem>
           <para>
-            er Rust Language Server. Dette kan kjøre i bakgrunnen til
-            gi IDE-er, redaktører og andre verktøy informasjon om Rust
+            er Rust Language Server. Dette kan kjÃ¸re i bakgrunnen til
+            gi IDE-er, redaktÃ¸rer og andre verktÃ¸y informasjon om Rust
             programmer
           </para>
           <indexterm zone="rust rls">
@@ -716,7 +721,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er en implementering av Language Server Protocol for the Rust
-            programmeringsspråk.
+            programmeringssprÃ¥k.
           </para>
           <indexterm zone="rust rust-analyzer">
             <primary sortas="b-rust-analyzer">rust-analyzer</primary>
@@ -755,7 +760,7 @@ EOF</userinput></screen>
         <term><command>rust-gdbgui</command></term>
         <listitem>
           <para>
-            er et innpakningsskript for et grafisk grensesnitt til gdb som kjører i en
+            er et innpakningsskript for et grafisk grensesnitt til gdb som kjÃ¸rer i en
              nettleser
           </para>
           <indexterm zone="rust rust-gdbgui">
@@ -768,7 +773,7 @@ EOF</userinput></screen>
         <term><command>rust-lldb</command></term>
         <listitem>
           <para>
-            er et innpakningsskript for LLDB (LLVM-feilsøkeren)
+            er et innpakningsskript for LLDB (LLVM-feilsÃ¸keren)
              rekke inn Python pretty-printing modulene
           </para>
           <indexterm zone="rust rust-lldb">
