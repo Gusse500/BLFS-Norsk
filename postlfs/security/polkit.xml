@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY polkit-download-http "https://gitlab.freedesktop.org/polkit/polkit/-/archive/&polkit-version;/polkit-&polkit-version;.tar.gz">
   <!ENTITY polkit-download-ftp  " ">
-  <!ENTITY polkit-md5sum        "36540b837c588e1e77145523bb39f511">
-  <!ENTITY polkit-size          "736 KB">
-  <!ENTITY polkit-buildsize     "6.8 MB (med tester)">
-  <!ENTITY polkit-time          "0.3 SBU (med tester, bruke parallellisme=4)">
+  <!ENTITY polkit-md5sum        "97db655618e1483706fbc764787c7d6e">
+  <!ENTITY polkit-size          "744 KB">
+  <!ENTITY polkit-buildsize     "7.2 MB (med tester)">
+  <!ENTITY polkit-time          "0.3 SBU (med tester; bruke parallellisme=4)">
 ]>
 
 <sect1 id="polkit" xreflabel="Polkit-&polkit-version;">
@@ -26,12 +26,12 @@
     <title>Introduksjon til Polkit</title>
 
     <para>
-      <application>Polkit</application> er et verktøysett for å definere og håndtere
-      autorisasjoner. Den brukes for å tillate uprivilegerte prosesser å
+      <application>Polkit</application> er et verktÃ¸ysett for Ã¥ definere og hÃ¥ndtere
+      autorisasjoner. Den brukes for Ã¥ tillate uprivilegerte prosesser Ã¥
       kommunisere med privilegerte prosesser.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &polkit-size;
+          NedlastingsstÃ¸rrelse: &polkit-size;
         </para>
       </listitem>
       <listitem>
@@ -78,7 +78,7 @@
       </listitem>
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/polkit-&polkit-version;-js91-1.patch"/>
         </para>
       </listitem>
@@ -87,7 +87,7 @@
 
     <bridgehead renderas="sect3">Polkit Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>
     </para>
@@ -106,11 +106,11 @@
       <para>
         Siden <phrase revision="sysv"><command>elogind</command></phrase>
         <phrase revision="systemd"><command>systemd-logind</command></phrase>
-        bruker PAM til å registrere brukerøkter, er det en god idé å bygge
-        <application>Polkit</application> med PAM støtte så
+        bruker PAM til Ã¥ registrere brukerÃ¸kter, er det en god idÃ© Ã¥ bygge
+        <application>Polkit</application> med PAM stÃ¸tte sÃ¥
         <phrase revision="sysv"><command>elogind</command></phrase>
         <phrase revision="systemd"><command>systemd-logind</command></phrase>
-        kan spore <application>Polkit</application> økter.
+        kan spore <application>Polkit</application> Ã¸kter.
       </para>
     </note>
 
@@ -120,7 +120,7 @@
          of users ignoring a command explanation and then sending in mails
          regarding KDE or GNOME not working after installing polkit, let's move
          it to recommended. See #15640 for logic
-    <bridgehead renderas="sect4">Valgfri (Påkrevd hvis du bygger GNOME)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (PÃ¥krevd hvis du bygger GNOME)</bridgehead>
     <para role="optional">
       <xref linkend="gobject-introspection"/>
     </para>
@@ -129,37 +129,36 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gtk-doc"/>,
-      <xref linkend="js102"/> (kan brukes i stedet for duktape), og
-      <xref linkend="python-dbusmock"/> (for tester)
+      <xref linkend="python-dbusmock"/>, og
+      <xref linkend="spidermonkey"/> (kan brukes i stedet for duktape)
     </para>
 
-    <bridgehead renderas="sect4" revision="systemd">Nødvendige Kjøretidsavhengigheter</bridgehead>
+    <bridgehead renderas="sect4" revision="systemd">NÃ¸dvendige KjÃ¸retidsavhengigheter</bridgehead>
     <para role="required" revision="systemd">
       <xref role="runtime" linkend="systemd"/>
     </para>
 
     <bridgehead renderas="sect4" id="polkit-agent" xreflabel="Polkit Authentication Agent">
-      Valgfrie Kjøretidsavhengigheter
+      Valgfrie KjÃ¸retidsavhengigheter
     </bridgehead>
     <para role="optional">
-      Én polkit autentiseringsagent for bruk av polkit i et grafiske
-      miljø:
+      Ã‰n polkit autentiseringsagent for bruk av polkit i et grafiske
+      miljÃ¸:
       <application>polkit-kde-agent</application> i
       <xref role="runtime" linkend="plasma5-build"/> for KDE,
       agenten bygd inn
       <xref role="runtime" linkend="gnome-shell"/> for GNOME3,
       <xref role="runtime" linkend="polkit-gnome"/> for XFCE, og
-      <application>lxpolkit</application> i
-      <xref role="runtime" linkend="lxsession"/> for LXDE
+      <xref role="runtime" linkend="lxqt-policykit"/> for LXQt
     </para>
 
     <note>
       <para>
         Hvis <xref linkend="libxslt"/> er installert,
         da er <xref linkend="DocBook"/> og <xref linkend="docbook-xsl"/> 
-        nødvendig. Hvis du har installert <xref linkend="libxslt"/>, men du
-        ikke ønsker å installere noen av DocBook pakkene som er nevnt, vil du
-        trenge å bruke <option>-Dman=false</option> i instruksjonene
+        nÃ¸dvendig. Hvis du har installert <xref linkend="libxslt"/>, men du
+        ikke Ã¸nsker Ã¥ installere noen av DocBook pakkene som er nevnt, vil du
+        trenge Ã¥ bruke <option>-Dman=false</option> i instruksjonene
         under.
       </para>
     </note>
@@ -170,9 +169,9 @@
     <title>Installasjon av Polkit</title>
 
     <para>
-      Det bør være en dedikert bruker og gruppe til å ta kontroll
-      på <command>polkitd</command> nissen etter at det er
-      startet. Utfør følgende kommandoer som
+      Det bÃ¸r vÃ¦re en dedikert bruker og gruppe til Ã¥ ta kontroll
+      pÃ¥ <command>polkitd</command> nissen etter at det er
+      startet. UtfÃ¸r fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -180,30 +179,14 @@
 useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
         -g polkitd -s /bin/false polkitd</userinput></screen>
 
-    <para>
-      Hvis du bruker <xref linkend="js102"/>, gjør følgende endring (se Parameterforklaringer
-      nedenfor for mer informasjon):
+    <para revision='sysv'>
+      LÃ¸s fÃ¸rst et byggeproblem for sysV baserte systemer:
     </para>
 
-<screen><userinput remap="nodump">sed -e 's/JS_Init/JS::DisableJitBackend(); &amp;/' \
-    -i src/polkitbackend/polkitbackendjsauthority.cpp</userinput></screen>
-
-<!--
-    <para>
-      Bruk en oppdatering for å fikse to sikkerhetsproblemer:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../polkit-&polkit-version;-security_fixes-1.patch</userinput></screen>
+<screen revision="sysv"><userinput>sed -i '/systemd_sysusers_dir/s/^/#/' meson.build</userinput></screen>
 
     <para>
-      Porter denne pakken for å bruke JS-91:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../polkit-&polkit-version;-js91-1.patch</userinput></screen>
--->
-
-    <para>
-      Installer <application>Polkit</application> ved å kjøre følgende
+      Installer <application>Polkit</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -230,15 +213,15 @@ meson setup ..                      \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, sørg først for at systemets
-      <application>D-Bus</application> nisse kjører,
-      og både <xref linkend='dbus-python'/> og
+      For Ã¥ teste resultatene, sÃ¸rg fÃ¸rst for at systemets
+      <application>D-Bus</application> nisse kjÃ¸rer,
+      og bÃ¥de <xref linkend='dbus-python'/> og
       <xref linkend='python-dbusmock'/> er installert.
-      Kjør så <command>ninja test</command>.
+      KjÃ¸r sÃ¥ <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -248,37 +231,26 @@ ninja</userinput></screen>
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <para>
-      <command>sed -e 's/JS_Init/JS::DisableJitBackend(); &amp;/' ...
-      </command>: JIT kompileringen av JS102 trenger W+X kartlegging som
-      er farlig og er ikke tillatt av
-      <application>systemd</application> enhetsfil sendt i polkit
-      pakken. Denne kommandoen er strengt tatt ikke nødvendig på systemer basert på
-      sysvinit, men det forbedrer fortsatt sikkerheten. Det har ingen effekt hvis det bygges
-      polkit med anbefalt <xref linkend='duktape'/> Javascript
-      motor.
-    </para>
-
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dtests=true</parameter>: Denne bryteren lar deg kjøre
+      <parameter>-Dtests=true</parameter>: Denne bryteren lar deg kjÃ¸re
       testpakken av denne pakken. Siden <application>Polkit</application> er
-      brukt for autorisasjoner, kan integriteten påvirke systemsikkerheten.
-      Så det anbefales å kjøre testpakken som bygger denne pakken.
+      brukt for autorisasjoner, kan integriteten pÃ¥virke systemsikkerheten.
+      SÃ¥ det anbefales Ã¥ kjÃ¸re testpakken som bygger denne pakken.
     </para>
 
     <para>
       <option>-Djs_engine=mozjs</option>: Denne bryteren tillater bruk av
-      <xref linkend="js102"/> JavaScript motoren i stedet for
+      <xref linkend="spidermonkey"/> JavaScript motoren i stedet for
       <xref linkend='duktape'/> JavaScript motoren.
     </para>
 
     <!--
     <para revision="sysv">
       <parameter>- -disable-libsystemd-login</parameter>: Denne bryteren tvinger
-      polkit å bygge med elogind støtte (hvis tilgjengelig) i stedet for
+      polkit Ã¥ bygge med elogind stÃ¸tte (hvis tilgjengelig) i stedet for
       systemd-login.
     </para>
 
@@ -296,7 +268,7 @@ ninja</userinput></screen>
 
     <para>
       <option>-Dauthfw=shadow</option>: Denne bryteren aktiverer
-      pakken til å bruke <application>Shadow</application> i stedet for
+      pakken til Ã¥ bruke <application>Shadow</application> i stedet for
       <application>Linux PAM</application> Autentiseringsrammeverk. Bruk det
       hvis du ikke har installert <application>Linux PAM</application>.
     </para>
@@ -308,22 +280,22 @@ ninja</userinput></screen>
 
     <para>
       <option>-Dintrospection=false</option>: Bruk dette alternativet hvis du er sikker
-      på at du ikke trenger gobject-introspection filer for polkit, eller ikke har
+      pÃ¥ at du ikke trenger gobject-introspection filer for polkit, eller ikke har
       gobject-introspection installert.
     </para>
 
     <para>
-      <option>-Dman=false</option>: Bruk dette alternativet til å deaktivere generering og
+      <option>-Dman=false</option>: Bruk dette alternativet til Ã¥ deaktivere generering og
       installasjon av manualsider. Dette er nyttig hvis libxslt ikke er installert.
     </para>
 
     <para>
-      <option>-Dexamples=true</option>: Bruk dette alternativet til å bygge eksempel
+      <option>-Dexamples=true</option>: Bruk dette alternativet til Ã¥ bygge eksempel
       programmer.
     </para>
 
     <para>
-      <option>-Dgtk_doc=true</option>: Bruk dette alternativet for å aktivere bygging og
+      <option>-Dgtk_doc=true</option>: Bruk dette alternativet for Ã¥ aktivere bygging og
       installering av API dokumentasjonen.
     </para>
 
@@ -365,7 +337,7 @@ ninja</userinput></screen>
         <term><command>pkaction</command></term>
         <listitem>
           <para>
-            brukes til å innhente informasjon om registrerte PolicyKit handlinger
+            brukes til Ã¥ innhente informasjon om registrerte PolicyKit handlinger
           </para>
           <indexterm zone="polkit pkaction">
             <primary sortas="b-pkaction">pkaction</primary>
@@ -377,7 +349,7 @@ ninja</userinput></screen>
         <term><command>pkcheck</command></term>
         <listitem>
           <para>
-            brukes til å sjekke om en prosess er autorisert for handling
+            brukes til Ã¥ sjekke om en prosess er autorisert for handling
           </para>
           <indexterm zone="polkit pkcheck">
             <primary sortas="b-pkcheck">pkcheck</primary>
@@ -390,7 +362,7 @@ ninja</userinput></screen>
         <term><command>pk-example-frobnicate</command></term>
         <listitem>
           <para>
-            er et eksempelprogram for å teste <command>pkexec</command>
+            er et eksempelprogram for Ã¥ teste <command>pkexec</command>
             kommandoen
           </para>
           <indexterm zone="polkit pk-example-frobnicate">
@@ -404,7 +376,7 @@ ninja</userinput></screen>
         <term><command>pkexec</command></term>
         <listitem>
           <para>
-            lar en autorisert bruker utføre en kommando som en annen bruker
+            lar en autorisert bruker utfÃ¸re en kommando som en annen bruker
           </para>
           <indexterm zone="polkit pkexec">
             <primary sortas="b-pkexec">pkexec</primary>
@@ -416,7 +388,7 @@ ninja</userinput></screen>
         <term><command>pkttyagent</command></term>
         <listitem>
           <para>
-            brukes til å starte en tekstlig autentiseringsagent for emnet
+            brukes til Ã¥ starte en tekstlig autentiseringsagent for emnet
           </para>
           <indexterm zone="polkit pkttyagent">
             <primary sortas="b-pkttyagent">pkttyagent</primary>
@@ -429,7 +401,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
             gir org.freedesktop.PolicyKit1 <application>D-Bus</application>
-            tjeneste på systemmeldingsbussen
+            tjeneste pÃ¥ systemmeldingsbussen
           </para>
           <indexterm zone="polkit polkitd">
             <primary sortas="b-polkitd">polkitd</primary>

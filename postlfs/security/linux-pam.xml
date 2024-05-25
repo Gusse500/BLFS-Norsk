@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,13 +6,13 @@
 
   <!ENTITY linux-pam-download-http "https://github.com/linux-pam/linux-pam/releases/download/v&linux-pam-version;/Linux-PAM-&linux-pam-version;.tar.xz">
   <!ENTITY linux-pam-download-ftp  " ">
-  <!ENTITY linux-pam-md5sum        "a913bd5fbf9edeafaacf3eb1eb86fd83">
-  <!ENTITY linux-pam-size          "967 KB">
+  <!ENTITY linux-pam-md5sum        "41a10af5fc35a7be472ae9864338e64a">
+  <!ENTITY linux-pam-size          "1.0 MB">
   <!ENTITY linux-pam-buildsize     "39 MB (med tester)">
   <!ENTITY linux-pam-time          "0.4 SBU (med tester)">
 
   <!ENTITY linux-pam-docs-download "https://github.com/linux-pam/linux-pam/releases/download/v&linux-pam-version;/Linux-PAM-&linux-pam-docs-version;-docs.tar.xz">
-  <!ENTITY linux-pam-docs-md5sum   "c3771fdc447be78b4c1756b875235965">
+  <!ENTITY linux-pam-docs-md5sum   "db41b71435df078658b3db1f57bb2a49">
   <!ENTITY linux-pam-docs-size     "456 KB">
   <!--
   <!ENTITY debian-pam-docs         "http://debian.securedservers.com/kernel/pub/linux/libs/pam">
@@ -35,11 +35,11 @@
     <para>
       <application>Linux PAM</application> pakken inneholder
       pluggbare autentiseringsmoduler brukt av den lokale
-      systemadministratoren for å kontrollere hvordan applikasjonsprogrammer autentiseres
+      systemadministratoren for Ã¥ kontrollere hvordan applikasjonsprogrammer autentiseres
       brukere.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -60,7 +60,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &linux-pam-size;
+          NedlastingsstÃ¸rrelse: &linux-pam-size;
         </para>
       </listitem>
       <listitem>
@@ -90,7 +90,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse &linux-pam-docs-size;
+          NedlastingsstÃ¸rrelse: &linux-pam-docs-size;
         </para>
       </listitem>
     </itemizedlist>
@@ -99,16 +99,18 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="db"/>,
       <xref linkend="libnsl"/>,
       <xref linkend="libtirpc"/>,
-      <ulink url="https://github.com/linux-audit/audit-userspace">libaudit</ulink>, og
+      <xref linkend="rpcsvc-proto"/>,
+      &berkeley-db;,
+      <ulink url="https://github.com/linux-audit/audit-userspace">libaudit</ulink>,
+      <ulink url="https://github.com/openSUSE/libeconf">libeconf</ulink>, og
       <ulink url="https://www.prelude-siem.org">Prelude</ulink>
     </para>
 <!-- With 1.5.3, building the doc requires the namespaced version of
      docbook-xsl, which is beyond BLFS.
 
-    <bridgehead renderas="sect4">Valgfri (For å Gjenoppbygge Dokumentasjonen)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (For Ã¥ Gjenoppbygge Dokumentasjonen)</bridgehead>
     <para role="optional">
       <xref linkend="DocBook"/>,
       <xref linkend="docbook-xsl"/>,
@@ -122,15 +124,15 @@
       <para role="required">
         <xref role="runtime" linkend="shadow"/>
         <phrase revision="systemd"> og <xref role="runtime" linkend="systemd"/>
-        må</phrase><phrase revision="sysv">må</phrase> installeres på nytt
+        mÃ¥</phrase><phrase revision="sysv">mÃ¥</phrase> installeres pÃ¥ nytt
         og rekonfigurert
          etter installasjon og konfigurering av <application>Linux PAM</application>.
       </para>
 
       <para role="recommended">
-         Med Linux-PAM-1.4.0 og høyere er ikke pam_cracklib modulen
+         Med Linux-PAM-1.4.0 og hÃ¸yere er ikke pam_cracklib modulen
          installert som standard. Bruk <xref role="runtime" linkend="libpwquality"/>
-         å håndheve sterke passord.
+         Ã¥ hÃ¥ndheve sterke passord.
       </para>
     </note>
 
@@ -140,7 +142,7 @@
     <title>Installasjon av Linux PAM</title>
 
     <para revision="sysv">
-      Først, forhindre installasjon av en unødvendig systemd fil:
+      FÃ¸rst, forhindre installasjon av en unÃ¸dvendig systemd fil:
     </para>
 
 <screen revision="sysv"><userinput>sed -e /service_DATA/d \
@@ -148,14 +150,14 @@
 autoreconf</userinput></screen>
 
     <para>
-      Hvis du lastet ned dokumentasjonen, pakk ut tarballen ved å kjøre
-      følgende kommando.
+      Hvis du lastet ned dokumentasjonen, pakk ut tarballen ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommando.
     </para>
 
 <screen><userinput>tar -xf ../Linux-PAM-&linux-pam-docs-version;-docs.tar.xz --strip-components=1</userinput></screen>
 <!--
     <para>
-      Hvis du ønsker å regenerere dokumentasjonen selv, fiks
+      Hvis du Ã¸nsker Ã¥ regenerere dokumentasjonen selv, fiks
       <command>configure</command> skriptet slik at det vil oppdage lynx:
     </para>
 
@@ -164,8 +166,8 @@ autoreconf</userinput></screen>
     -i configure</userinput></screen>
 -->
     <para>
-      Kompiler og link <application>Linux PAM</application> med å
-      kjøre følgende kommandoer:
+      Kompiler og link <application>Linux PAM</application> med Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr                        \
@@ -177,33 +179,33 @@ autoreconf</userinput></screen>
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, må en passende <filename>/etc/pam.d/other</filename>
+      For Ã¥ teste resultatene, mÃ¥ en passende <filename>/etc/pam.d/other</filename>
       konfigurasjonsfil eksistere.
     </para>
 
     <caution>
       <title>Reinstallering eller Oppgradering av Linux PAM</title>
       <para>
-        Hvis du har et system med Linux PAM installert og som fungerer, vær forsiktig
-        når du endrer filene i
+        Hvis du har et system med Linux PAM installert og som fungerer, vÃ¦r forsiktig
+        nÃ¥r du endrer filene i
         <filename class="directory">/etc/pam.d</filename>, siden systemet ditt
-        kan bli helt ubrukelig. Hvis du vil kjøre testene, trenger du ikke
-        å lage en annen <filename>/etc/pam.d/other</filename> fil.
+        kan bli helt ubrukelig. Hvis du vil kjÃ¸re testene, trenger du ikke
+        Ã¥ lage en annen <filename>/etc/pam.d/other</filename> fil.
         Eksisterende fil kan brukes til testene.
       </para>
 
       <para>
-         Du også være klar over at <command>make install</command>
+         Du ogsÃ¥ vÃ¦re klar over at <command>make install</command>
          overskriver konfigurasjonsfilene i
          <filename class="directory">/etc/security</filename> i tillegg til
          <filename>/etc/environment</filename>. Hvis du
-         har endret disse filene, sørg for å sikkerhetskopiere dem.
+         har endret disse filene, sÃ¸rg for Ã¥ sikkerhetskopiere dem.
       </para>
     </caution>
 
     <para>
-      For førstegangsinstallasjon oppretter du en konfigurasjonsfil ved å kjøre
-      følgende kommandoer som <systemitem class="username">root</systemitem>
+      For fÃ¸rstegangsinstallasjon oppretter du en konfigurasjonsfil ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
@@ -217,22 +219,22 @@ session  required       pam_deny.so</literal>
 EOF</userinput></screen>
 
     <para>
-      Kjør nå testene ved å kjøre <command>make check</command>.
-      Pass på at testene ikke produserer noe feil før du fortsetter
+      KjÃ¸r nÃ¥ testene ved Ã¥ kjÃ¸re <command>make check</command>.
+      Pass pÃ¥ at testene ikke produserer noe feil fÃ¸r du fortsetter
       installasjonen. Merk at testene er veldig lange.
       Omdiriger utdataene til en loggfil, slik at du kan inspisere den grundig.
     </para>
 
     <para>
-      For førstegangsinstallasjon fjerner du konfigurasjonsfilen
-      opprettet tidligere ved å utstede følgende kommando som
+      For fÃ¸rstegangsinstallasjon fjerner du konfigurasjonsfilen
+      opprettet tidligere ved Ã¥ utstede fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>rm -fv /etc/pam.d/other</userinput></screen>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem>
+      NÃ¥, som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
@@ -251,21 +253,21 @@ chmod -v 4755 /usr/sbin/unix_chkpwd</userinput></screen>
     </para>
 <!--
     <para>
-      <option>- -disable-regenerate-docu</option> : Hvis de nødvendige avhengighetene
+      <option>- -disable-regenerate-docu</option> : Hvis de nÃ¸dvendige avhengighetene
       (<xref linkend="DocBook"/>, <xref linkend="docbook-xsl"/>, <xref
       linkend="libxslt"/>, og <xref linkend="lynx"/> eller <ulink
       url="&w3m-url;">W3m</ulink>) er installert, manualsidene og
       html- og tekstdokumentasjonsfiler, genereres og installeres.
       Videre, hvis <xref linkend="fop"/> er installert, PDF
       dokumentasjon genereres og installeres. Bruk denne bryteren hvis du ikke
-      ønsker å gjenoppbygge dokumentasjonen.
+      Ã¸nsker Ã¥ gjenoppbygge dokumentasjonen.
     </para>
 -->
     <para>
       <command>chmod -v 4755 /usr/sbin/unix_chkpwd</command>:
-      setuid biten for <command>unix_chkpwd</command> hjelpeprogram må være
-      slått på, slik at ikke-<systemitem class="username">root</systemitem>
-      prosesser kan få tilgang til shadow filen.
+      setuid biten for <command>unix_chkpwd</command> hjelpeprogram mÃ¥ vÃ¦re
+      slÃ¥tt pÃ¥, slik at ikke-<systemitem class="username">root</systemitem>
+      prosesser kan fÃ¥ tilgang til shadow filen.
     </para>
 
   </sect2>
@@ -310,7 +312,7 @@ password        required        pam_unix.so     nullok
 # End /etc/pam.d/other</literal></screen>
 
       <para>
-        Lag nå noen generiske konfigurasjonsfiler. Som
+        Lag nÃ¥ noen generiske konfigurasjonsfiler. Som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -352,16 +354,16 @@ EOF
 </userinput></screen>
 
      <para>
-       Hvis du ønsker å aktivere sterk passordstøtte, installer
-       <xref linkend="libpwquality"/>, og følg
-       instruksjoner på siden for å konfigurere pam_pwquality
-       PAM modulen med sterk passordstøtte.
+       Hvis du Ã¸nsker Ã¥ aktivere sterk passordstÃ¸tte, installer
+       <xref linkend="libpwquality"/>, og fÃ¸lg
+       instruksjoner pÃ¥ siden for Ã¥ konfigurere pam_pwquality
+       PAM modulen med sterk passordstÃ¸tte.
      </para>
 
       <para>
         Deretter legger du til en restriktiv <filename>/etc/pam.d/other</filename>
         konfigurasjonsfil. Med denne filen vil programmer som er klar over PAM
-        ikke kjøre med mindre en konfigurasjonsfil spesifikt for det programmet
+        ikke kjÃ¸re med mindre en konfigurasjonsfil spesifikt for det programmet
         finnes.
       </para>
 
@@ -382,8 +384,8 @@ EOF</userinput></screen>
 
       <para>
         <application>PAM</application> man side (<command>man
-        pam</command>) gir et godt utgangspunkt for å lære
-        om de mange feltene og tillatte oppføringer.
+        pam</command>) gir et godt utgangspunkt for Ã¥ lÃ¦re
+        om de mange feltene og tillatte oppfÃ¸ringer.
         <!-- not accessible 2022-09-08 -->
         <!-- it's available at a different address 2022-10-23-->
         
@@ -394,7 +396,7 @@ EOF</userinput></screen>
 
       <important>
         <para>
-          Du bør nå installere på nytt <xref linkend="shadow"/>
+          Du bÃ¸r nÃ¥ installere pÃ¥ nytt <xref linkend="shadow"/>
           <phrase revision="sysv">pakken</phrase>
           <phrase revision="systemd"> og <xref linkend="systemd"/>
           pakkene</phrase>.
@@ -452,7 +454,7 @@ EOF</userinput></screen>
         <term><command>mkhomedir_helper</command></term>
         <listitem>
           <para>
-            er en hjelpebinær som lager hjemmemapper
+            er en hjelpebinÃ¦r som lager hjemmemapper
           </para>
           <indexterm zone="linux-pam mkhomedir_helper">
             <primary sortas="b-mkhomedir_helper">mkhomedir_helper</primary>
@@ -464,8 +466,8 @@ EOF</userinput></screen>
         <term><command>pam_namespace_helper</command></term>
         <listitem>
           <para>
-            er et hjelpeprogram som brukes til å konfigurere et privat navneområde for en
-            brukerøkt
+            er et hjelpeprogram som brukes til Ã¥ konfigurere et privat navneomrÃ¥de for en
+            brukerÃ¸kt
           </para>
           <indexterm zone="linux-pam pam_namespace_helper">
             <primary sortas="b-pam_namespace_helper">pam_namespace_helper</primary>
@@ -477,7 +479,7 @@ EOF</userinput></screen>
         <term><command>pwhistory_helper</command></term>
         <listitem>
           <para>
-            er et hjelpeprogram som overfører passordhasher fra passwd eller
+            er et hjelpeprogram som overfÃ¸rer passordhasher fra passwd eller
             shadow til opasswd
           </para>
           <indexterm zone="linux-pam pwhistory_helper">
@@ -490,7 +492,7 @@ EOF</userinput></screen>
         <term><command>pam_tally</command></term>
         <listitem>
           <para>
-            brukes til å spørre og manipulere innloggingstellerfilen.
+            brukes til Ã¥ spÃ¸rre og manipulere innloggingstellerfilen.
           </para>
           <indexterm zone="linux-pam pam_tally">
             <primary sortas="b-pam_tally">pam_tally</primary>
@@ -502,7 +504,7 @@ EOF</userinput></screen>
         <term><command>pam_tally2</command></term>
         <listitem>
           <para>
-            brukes til å spørre og manipulere innloggingstellerfilen, men
+            brukes til Ã¥ spÃ¸rre og manipulere innloggingstellerfilen, men
             har ikke noen begrensninger som <command>pam_tally</command>
             har.
           </para>
@@ -517,7 +519,7 @@ EOF</userinput></screen>
         <term><command>pam_timestamp_check</command></term>
         <listitem>
           <para>
-            brukes til å sjekke om standard tidsstempel er gyldig
+            brukes til Ã¥ sjekke om standard tidsstempel er gyldig
           </para>
           <indexterm zone="linux-pam pam_timestamp_check">
             <primary sortas="b-pam_timestamp_check">pam_timestamp_check</primary>
@@ -529,7 +531,7 @@ EOF</userinput></screen>
         <term><command>unix_chkpwd</command></term>
         <listitem>
           <para>
-            er en hjelpebinær som bekrefter passordet til gjeldende bruker
+            er en hjelpebinÃ¦r som bekrefter passordet til gjeldende bruker
           </para>
           <indexterm zone="linux-pam unix_chkpwd">
             <primary sortas="b-unix_chkpwd">unix_chkpwd</primary>
@@ -541,7 +543,7 @@ EOF</userinput></screen>
         <term><command>unix_update</command></term>
         <listitem>
           <para>
-            er en hjelpebinær som oppdaterer passordet til en gitt bruker
+            er en hjelpebinÃ¦r som oppdaterer passordet til en gitt bruker
           </para>
           <indexterm zone="linux-pam unix_update">
             <primary sortas="b-unix_update">unix_update</primary>

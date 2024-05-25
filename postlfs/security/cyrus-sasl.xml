@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -27,15 +27,15 @@
 
     <para>
       <application>Cyrus SASL</application> pakken inneholder en enkel
-      autentiserings og sikkerhetslags implementering, en metode for å legge til
-      autentiseringsstøtte til tilkoblingsbaserte protokoller. For å bruke SASL,
-      protokollen inkluderer en kommando for å identifisere og autentisere en bruker til
-      en server og for eventuelt å forhandle beskyttelse av etterfølgende protokoll
+      autentiserings og sikkerhetslags implementering, en metode for Ã¥ legge til
+      autentiseringsstÃ¸tte til tilkoblingsbaserte protokoller. For Ã¥ bruke SASL,
+      protokollen inkluderer en kommando for Ã¥ identifisere og autentisere en bruker til
+      en server og for eventuelt Ã¥ forhandle beskyttelse av etterfÃ¸lgende protokoll
       interaksjoner. Hvis bruken er forhandlet, settes et sikkerhetslag inn
       mellom protokollen og forbindelsen.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <!-- To test this package at freeze, run the following command:
          testsaslauthd -u <current user> -p <password>
@@ -59,7 +59,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &cyrus-sasl-size;
+          NedlastingsstÃ¸rrelse: &cyrus-sasl-size;
         </para>
       </listitem>
       <listitem>
@@ -85,7 +85,7 @@
       </listitem>
       <!- -<listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/cyrus-sasl-&cyrus-sasl-version;-openssl-1.1.0-1.patch"/>
        </para>
     </listitem>- ->
@@ -96,7 +96,7 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="db"/>
+      <xref linkend="lmdb"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -108,6 +108,7 @@
       <xref linkend="postgresql"/>,
       <xref linkend="sphinx"/>,
       <xref linkend="sqlite"/>,
+      &berkeley-db;,
       <ulink url="https://stuff.mit.edu/afs/net.mit.edu/project/attic/krb4/">krb4</ulink>,
       <ulink url="https://dmalloc.com/">Dmalloc</ulink>, og
       <ulink url="https://metacpan.org/pod/Pod::POM::View::Restructured">Pod::POM::View::Restructured</ulink>
@@ -120,7 +121,7 @@
 
     <note>
       <para>
-        Denne pakken støtter ikke parallellbygging.
+        Denne pakken stÃ¸tter ikke parallellbygging.
       </para>
     </note>
 
@@ -130,21 +131,22 @@
          Sphinx-3.0.
 
     <para>
-      Først, fikse en byggefeil hvis Sphinx eller
-      <xref role="nodep" linkend="docutils"/> er installert på systemet:
+      FÃ¸rst, fikse en byggefeil hvis Sphinx eller
+      <xref role="nodep" linkend="docutils"/> er installert pÃ¥ systemet:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../cyrus-sasl-2.1.27-doc_fixes-1.patch</userinput></screen>
     -->
 
     <para>
-      Installer <application>Cyrus SASL</application> ved å
-      kjøre følgende kommandoer:
+      Installer <application>Cyrus SASL</application> ved Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr        \
             --sysconfdir=/etc    \
             --enable-auth-sasldb \
+            --with-dblib=lmdb    \
             --with-dbpath=/var/lib/sasl/sasldb2 \
             --with-sphinx-build=no              \
             --with-saslauthd=/var/run/saslauthd &amp;&amp;
@@ -153,14 +155,14 @@ make -j1</userinput></screen>
     <para>
       Denne pakken kommer ikke med en testpakke. Hvis du planlegger
       bruk av GSSAPI autentiseringsmekanismen, test
-      det etter å ha installert pakken ved å bruke eksempelserveren og klient
-      programmet som ble bygget i det foregående trinnet. Instruksjoner for
-      å utføre testene finner du på
+      det etter Ã¥ ha installert pakken ved Ã¥ bruke eksempelserveren og klient
+      programmet som ble bygget i det foregÃ¥ende trinnet. Instruksjoner for
+      Ã¥ utfÃ¸re testene finner du pÃ¥
       <ulink url="&hints-root;/downloads/files/cyrus-sasl.txt"/>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -176,16 +178,16 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
 
     <para>
       <parameter>--with-dbpath=/var/lib/sasl/sasldb2</parameter>: Denne
-      bryteren tvinger <command>sasldb</command> database å bli opprettet
+      bryteren tvinger <command>sasldb</command> database Ã¥ bli opprettet
       i <filename class="directory">/var/lib/sasl</filename> i stedet for
       <filename class="directory">/etc</filename>.
     </para>
 
     <para>
       <parameter>--with-saslauthd=/var/run/saslauthd</parameter>: Denne
-      bryteren tvinger <command>saslauthd</command> å bruke FHS kompatibel
+      bryteren tvinger <command>saslauthd</command> Ã¥ bruke FHS kompatibel
       mappe <filename class="directory">/var/run/saslauthd</filename>
-      for variable kjøretidsdata.
+      for variable kjÃ¸retidsdata.
     </para>
 
     <para>
@@ -196,12 +198,12 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
     <para>
       <option>--with-dblib=gdbm</option>: Denne bryteren tvinger at
       <application>GDBM</application> skal brukes i stedet for
-      <application>Berkeley DB</application>.
+      <application>LMDB</application>.
     </para>
 
     <para>
       <option>--with-ldap</option>: Denne bryteren aktiverer
-      <application>OpenLDAP</application> støtte.
+      <application>OpenLDAP</application> stÃ¸tte.
     </para>
 
     <para>
@@ -211,18 +213,18 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
 
 <!-- Removed in 2.1.28
     <para>
-      <option>- -enable-java</option>: Denne bryteren muliggjør kompilering av
-      <application>Java</application> støttebiblioteker.
+      <option>- -enable-java</option>: Denne bryteren muliggjÃ¸r kompilering av
+      <application>Java</application> stÃ¸ttebiblioteker.
     </para>
 -->
 
     <para>
-      <option>--enable-login</option>: Dette alternativet aktiverer ustøttet
+      <option>--enable-login</option>: Dette alternativet aktiverer ustÃ¸ttet
       LOGIN autentisering.
     </para>
 
     <para>
-      <option>--enable-ntlm</option>:  Dette alternativet aktiverer ustøttet
+      <option>--enable-ntlm</option>:  Dette alternativet aktiverer ustÃ¸ttet
       NTLM autentisering.
     </para>
 
@@ -234,8 +236,8 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
 
     <para>
       <command>install -v -m700 -d /var/lib/sasl</command>: Denne mappen
-      må eksistere ved oppstart av <command>saslauthd</command> eller ved bruk av
-      sasldb programtillegget. Hvis du ikke skal kjøre nissen eller
+      mÃ¥ eksistere ved oppstart av <command>saslauthd</command> eller ved bruk av
+      sasldb programtillegget. Hvis du ikke skal kjÃ¸re nissen eller
       bruke programtillegg, kan du utelate opprettelsen av denne katalogen.
     </para>
 
@@ -251,7 +253,7 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
         <filename>/etc/saslauthd.conf</filename>
         (for <command>saslauthd</command> LDAP konfigurasjon) og
         <filename>/etc/sasl2/Appnavn.conf</filename>
-        (hvor "Appnavn" er det applikasjonsdefinerte navnet på applikasjonen)
+        (hvor "Appnavn" er det applikasjonsdefinerte navnet pÃ¥ applikasjonen)
       </para>
 
       <indexterm zone="cyrus-sasl cyrus-sasl-config">
@@ -272,14 +274,14 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
       <para>
         Se
         <ulink url="file:///usr/share/doc/cyrus-sasl-&cyrus-sasl-version;/LDAP_SASLAUTHD"/>
-        for å konfigurere <command>saslauthd</command> med
+        for Ã¥ konfigurere <command>saslauthd</command> med
         <application>OpenLDAP</application>.
       </para>
 
       <para>
         Se
         <ulink url="https://www.cyrusimap.org/sasl/sasl/gssapi.html#gssapi"/>
-        for å konfigurere <command>saslauthd</command> med <application>Kerberos</application>.
+        for Ã¥ konfigurere <command>saslauthd</command> med <application>Kerberos</application>.
       </para>
 
     </sect3>
@@ -289,17 +291,17 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
              <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        Hvis du trenger å kjøre <command>saslauthd</command> nissen ved systemets
+        Hvis du trenger Ã¥ kjÃ¸re <command>saslauthd</command> nissen ved systemets
         oppstart, installer <filename>/etc/rc.d/init.d/saslauthd</filename>
         init skriptet inkludert i
-        <xref linkend="bootscripts"/> pakken ved å bruke følgende kommando:
+        <xref linkend="bootscripts"/> pakken ved Ã¥ bruke fÃ¸lgende kommando:
       </para>
 
       <para revision="systemd">
-        Hvis du trenger å kjøre <command>saslauthd</command> nissen ved systemets
+        Hvis du trenger Ã¥ kjÃ¸re <command>saslauthd</command> nissen ved systemets
         oppstart, installer <filename>saslauthd.service</filename> enheten
-        inkludert i <xref linkend="systemd-units"/> pakken ved å bruke
-        følgende kommando:
+        inkludert i <xref linkend="systemd-units"/> pakken ved Ã¥ bruke
+        fÃ¸lgende kommando:
       </para>
 
       <indexterm zone="cyrus-sasl cyrus-sasl-init">
@@ -310,13 +312,13 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
 
       <note>
         <para>
-          Du må modifiserer
+          Du mÃ¥ modifiserer
           <filename revision="sysv">/etc/sysconfig/saslauthd</filename>
           <filename revision="systemd">/etc/default/saslauthd</filename>
           og modifiserer
           <option revision="sysv">AUTHMECH</option>
           <option revision="systemd">MECHANISM</option>
-          parameter med ønsket autentiseringsmekanisme.
+          parameter med Ã¸nsket autentiseringsmekanisme.
           <phrase revision="systemd">Standard autentisering
           mekanisme er "shadow".</phrase>
         </para>
@@ -360,7 +362,7 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
         <term><command>pluginviewer</command></term>
         <listitem>
           <para>
-            brukes til å liste opp lastbare SASL programtillegg og deres egenskaper
+            brukes til Ã¥ liste opp lastbare SASL programtillegg og deres egenskaper
           </para>
           <indexterm zone="cyrus-sasl pluginviewer">
             <primary sortas="b-pluginviewer">pluginviewer</primary>
@@ -384,7 +386,7 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
         <term><command>sasldblistusers2</command></term>
         <listitem>
           <para>
-            brukes til å liste brukerne i SASL passorddatabasen
+            brukes til Ã¥ liste brukerne i SASL passorddatabasen
             <filename>sasldb2</filename>
           </para>
           <indexterm zone="cyrus-sasl sasldblistusers2">
@@ -397,7 +399,7 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
         <term><command>saslpasswd2</command></term>
         <listitem>
           <para>
-            brukes til å angi og slette en brukers SASL passord og
+            brukes til Ã¥ angi og slette en brukers SASL passord og
             mekanismespesifikke hemmeligheter i SASL passordets
             database <filename>sasldb2</filename>
           </para>
@@ -411,7 +413,7 @@ install -v -dm700 /var/lib/sasl</userinput></screen>
         <term><command>testsaslauthd</command></term>
         <listitem>
           <para>
-            er et testverktøy for SASL autentiseringsserveren
+            er et testverktÃ¸y for SASL autentiseringsserveren
           </para>
           <indexterm zone="cyrus-sasl testsaslauthd">
             <primary sortas="b-testsaslauthd">testsaslauthd</primary>
