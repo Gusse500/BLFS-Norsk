@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY lvm2-download-http "https://sourceware.org/ftp/lvm2/LVM2.&lvm2-version;.tgz">
-  <!ENTITY lvm2-download-ftp  "ftp://sourceware.org/pub/lvm2/LVM2.&lvm2-version;.tgz">
-  <!ENTITY lvm2-md5sum        "a97cf533222a5760225dbd26c3982ca6">
-  <!ENTITY lvm2-size          "2.6 MB">
-  <!ENTITY lvm2-buildsize     "38 MB (legg til 20 MB for tester; midlertidige filer kan vokse opp til rundt 300 MB i /tmp mappen under tester)">
+  <!ENTITY lvm2-download-ftp  " ">
+  <!ENTITY lvm2-md5sum        "0535b5e638b6f0b48f7b259e0ec0ba65">
+  <!ENTITY lvm2-size          "2.7 MB">
+  <!ENTITY lvm2-buildsize     "39 MB (legg til 20 MB for tester; midlertidige filer kan vokse opp til rundt 300 MB i /tmp mappen under tester)">
   <!-- My build size was 124 MB with tests, but I'll leave this here. -renodr
        The files in /tmp are transient. I monitor /tmp with a loop during
        tests. -pierre, August 2020
@@ -16,6 +16,10 @@
        Build size with tests was 58M.  The largest size of /tmp I saw was 289MB.
        ### 412 tests: 245 passed, 155 skipped, 0 timed out, 1 warned, 11 failed
        Aug 2023 LVM2.2.03.22 - bdubbs
+
+
+       ### 424 tests: 261 passed, 153 skipped, 0 timed out, 1 warned, 9 failed
+       Nov 2023 LVM2.2.03.23 - bdubbs
        -->
   <!ENTITY lvm2-time          "0.1 SBU (bruker parallellisme=4; legg til 9 til 48 SBU for tester, avhengig av diskhastighet og om ram-blokkeringsenhet er aktivert i kjernen)">
 ]>
@@ -34,14 +38,14 @@
     <title>Introduksjon til LVM2</title>
 
     <para>
-      <application>LVM2</application> pakken er et sett med verktøy som administrerer
-      logiske partisjoner. Det tillater spenning over filsystemer på tvers av flere
-      fysiske disker og diskpartisjoner og sørger for dynamisk vekst eller
+      <application>LVM2</application> pakken er et sett med verktÃ¸y som administrerer
+      logiske partisjoner. Det tillater spenning over filsystemer pÃ¥ tvers av flere
+      fysiske disker og diskpartisjoner og sÃ¸rger for dynamisk vekst eller
       krymping av logiske partisjoner, speiling og lavt lagringsfotavtrykk
-      av øyeblikksbilder.
+      av Ã¸yeblikksbilder.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -62,7 +66,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &lvm2-size;
+          NedlastingsstÃ¸rrelse: &lvm2-size;
         </para>
       </listitem>
       <listitem>
@@ -79,7 +83,7 @@
 
     <bridgehead renderas="sect3">LVM2 Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend='libaio'/>
      </para>
@@ -87,16 +91,17 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend='mdadm'/>,
-      <xref linkend='reiserfs'/>,
       <xref linkend='valgrind'/>,
       <xref linkend='which'/>,
-      <xref linkend='xfsprogs'/> (alle fem kan brukes, men er ikke påkrevd,
+      <xref linkend='xfsprogs'/> (alle fire kan brukes, men er ikke pÃ¥krevd,
         for tester),
+      <ulink 
+        url='https://mirrors.edge.kernel.org/pub/linux/kernel/people/jeffm/reiserfsprogs/'>
+        reiserfsprogs</ulink>,
       <ulink url='https://github.com/jthornber/thin-provisioning-tools'>
         thin-provisioning-tools</ulink>, og
         <ulink url="https://github.com/dm-vdo/vdo">vdo</ulink>
     </para>
-
 
   </sect2>
 
@@ -104,15 +109,15 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen
-      og kompiler kjernen på nytt:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen
+      og kompiler kjernen pÃ¥ nytt:
     </para>
 
     <note><para>
       Det er flere andre Device Mapper alternativer i kjernen utover disse
-      oppført nedenfor. For å få rimelige resultater hvis du kjører
-      regresjonstester, må alle være aktivert enten internt eller som en modul.
-      Testene vil alltid stoppe hvis Magic SysRq nøkkelen ikke er aktivert.
+      oppfÃ¸rt nedenfor. For Ã¥ fÃ¥ rimelige resultater hvis du kjÃ¸rer
+      regresjonstester, mÃ¥ alle vÃ¦re aktivert enten internt eller som en modul.
+      Testene vil alltid stoppe hvis Magic SysRq nÃ¸kkelen ikke er aktivert.
     </para></note>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -128,7 +133,7 @@
     <title>Installasjon av LVM2</title>
 
     <para>
-      Installer <application>LVM2</application> ved å kjøre følgende
+      Installer <application>LVM2</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -141,11 +146,11 @@ make</userinput></screen>
 
     <para>
       Testene bruker <application>udev</application> for logisk volum
-      synkronisering, så LVM udev reglene og noen verktøy trenger å
-      installeres før testene kjøres. Hvis du installerer
-      <application>LVM2</application> for første gang, og ikke
-      ønsker å installere hele pakken før du kjører testene, minimum
-      sett med verktøy kan installeres ved å kjøre følgende instruksjoner
+      synkronisering, sÃ¥ LVM udev reglene og noen verktÃ¸y trenger Ã¥
+      installeres fÃ¸r testene kjÃ¸res. Hvis du installerer
+      <application>LVM2</application> for fÃ¸rste gang, og ikke
+      Ã¸nsker Ã¥ installere hele pakken fÃ¸r du kjÃ¸rer testene, minimum
+      sett med verktÃ¸y kan installeres ved Ã¥ kjÃ¸re fÃ¸lgende instruksjoner
       som <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -155,7 +160,7 @@ make -C udev  install               &amp;&amp;
 make -C libdm install</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør, som
+      For Ã¥ teste resultatene, kjÃ¸r, som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -163,12 +168,12 @@ make -C libdm install</userinput></screen>
         remap="test"><userinput>LC_ALL=en_US.UTF-8 make check_local</userinput></screen>
 
     <para>
-      Noen tester kan henge. I dette tilfellet kan de hoppes over ved å legge til
+      Noen tester kan henge. I dette tilfellet kan de hoppes over ved Ã¥ legge til
       <command>S=&lt;testname&gt;</command> til <command>make</command>
       kommandoen.
-      Andre mål er tilgjengelige og kan listes med
+      Andre mÃ¥l er tilgjengelige og kan listes med
       <command>make -C test help</command>. Testtiden er veldig avhengig
-      av hastigheten til disken(e), og på antall aktiverte kjernealternativer.
+      av hastigheten til disken(e), og pÃ¥ antall aktiverte kjernealternativer.
     </para>
 
     <!-- Results for LVM2.2.02.176:
@@ -201,17 +206,17 @@ make -C libdm install</userinput></screen>
 
     <para>
       Testene implementerer ikke <quote>expected fail</quote> mulighet,
-      og et lite antall testfeil forventes oppstrøms.
+      og et lite antall testfeil forventes oppstrÃ¸ms.
       <!-- 1 -->Flere feil kan skje fordi noen kjernealternativer mangler.
-      For eksempel mangelen på <emphasis>dm-delay</emphasis> enhets
-      kartleggermålet forklarer noen feil.
+      For eksempel mangelen pÃ¥ <emphasis>dm-delay</emphasis> enhets
+      kartleggermÃ¥let forklarer noen feil.
       <!-- 2 -->Noen tester kan mislykkes hvis det ikke er nok ledig plass
-       i partisjonen med /tmp mappen. Minst én test mislykkes hvis 16 TB
+       i partisjonen med /tmp mappen. Minst Ã©n test mislykkes hvis 16 TB
        ikke er tilgjengelig.
       <!-- 3 -->Noen tester er flagget  <quote>warned</quote> hvis
       <ulink url='https://github.com/jthornber/thin-provisioning-tools'>
-      thin-provisioning-tools</ulink> ikke er installert. En løsning er å
-      legge til følgende flagg i <command>configure</command>:
+      thin-provisioning-tools</ulink> ikke er installert. En lÃ¸sning er Ã¥
+      legge til fÃ¸lgende flagg i <command>configure</command>:
     </para>
 
 <screen role="nodump"><userinput>     --with-thin-check=    \
@@ -224,11 +229,11 @@ make -C libdm install</userinput></screen>
      --with-cache-restore= \</userinput></screen>
 
     <para>
-      Noen tester kan henge. De kan fjernes om nødvendig, for eksempel:
+      Noen tester kan henge. De kan fjernes om nÃ¸dvendig, for eksempel:
       <command>rm test/shell/lvconvert-raid-reshape.sh</command>. Testene
       generere mange kjernemeldinger, som kan rote til terminalen din. Du
-      kan deaktivere dem ved å utstede <command>dmesg -D</command> før du kjører
-      testene (ikke glem å utstede <command>dmesg -E</command> når testene
+      kan deaktivere dem ved Ã¥ utstede <command>dmesg -D</command> fÃ¸r du kjÃ¸rer
+      testene (ikke glem Ã¥ utstede <command>dmesg -E</command> nÃ¥r testene
       er ferdig).
 
       <note><simpara>Kontrollene oppretter enhetsnoder i /tmp mappen.
@@ -237,7 +242,7 @@ make -C libdm install</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="sysv"><userinput>make install
@@ -253,21 +258,21 @@ make install_systemd_units</userinput></screen>
 
     <para>
       <command>PATH+=:/usr/sbin</command>: Stien
-      må inneholde
-      <filename class='directory'>/usr/sbin</filename> for riktig systemverktøy
-      påvisning av <command>configure</command> skriptet. Denne instruksen
+      mÃ¥ inneholde
+      <filename class='directory'>/usr/sbin</filename> for riktig systemverktÃ¸y
+      pÃ¥visning av <command>configure</command> skriptet. Denne instruksen
       sikrer at PATH er riktig satt selv om du bygger som en uprivilegert bruker.
     </para>
 
     <para>
       <parameter>--enable-cmdlib</parameter>: Denne bryteren aktiverer
       bygging av det delte kommandobiblioteket. Det kreves
-      når du bygger hendelsesnissen.
+      nÃ¥r du bygger hendelsesnissen.
     </para>
 
     <para>
       <parameter>--enable-pkgconfig</parameter>: Denne bryteren aktiverer
-      installasjon av <command>pkg-config</command> støttefiler.
+      installasjon av <command>pkg-config</command> stÃ¸ttefiler.
     </para>
 
     <para>
@@ -284,12 +289,12 @@ make install_systemd_units</userinput></screen>
     <para revision="sysv">
       <command>rm .../69-dm-lvm.rules</command>: Under visse omstendigheter,
       denne udev regelen kaller <command>systemd-run</command>, som ikke er
-      tilgjengelig på sysv. Den utfører handlinger som gjøres av en annen oppstartsskript
-      uansett, så det er ikke nødvendig.
+      tilgjengelig pÃ¥ sysv. Den utfÃ¸rer handlinger som gjÃ¸res av en annen oppstartsskript
+      uansett, sÃ¥ det er ikke nÃ¸dvendig.
     </para>
 
     <para revision="systemd">
-      <command>make install_systemd_units</command>: Dette er nødvendig for å installere
+      <command>make install_systemd_units</command>: Dette er nÃ¸dvendig for Ã¥ installere
       en enhet som aktiverer logiske volumer ved oppstart. Den er ikke installert
       som standard.
     </para>
@@ -315,7 +320,7 @@ make install_systemd_units</userinput></screen>
       <para>
         Standardkonfigurasjonen refererer fortsatt til den foreldede <filename
         class="directory">/var/lock</filename> mappen. Dette skaper
-        en vranglås ved oppstart. Endre dette (som <systemitem
+        en vranglÃ¥s ved oppstart. Endre dette (som <systemitem
         class="username">root</systemitem> bruker):
       </para>
 
@@ -337,7 +342,7 @@ make install_systemd_units</userinput></screen>
         <seg>
           blkdeactivate, dmeventd (valgfri), dmsetup, fsadm, lvm, lvmdump,
           og lvm_import_vdo.
-          Det er også mange symbolske lenker til lvm som implementerer spesifikke
+          Det er ogsÃ¥ mange symbolske lenker til lvm som implementerer spesifikke
           funksjoner
         </seg>
         <seg>
@@ -364,7 +369,7 @@ make install_systemd_units</userinput></screen>
         <term><command>blkdeactivate</command></term>
         <listitem>
           <para>
-            er et verktøy for å deaktivere blokkenheter
+            er et verktÃ¸y for Ã¥ deaktivere blokkenheter
           </para>
           <indexterm zone="lvm2 blkdeactivate">
             <primary sortas="b-blkdeactivate">blkdeactivate</primary>
@@ -388,7 +393,7 @@ make install_systemd_units</userinput></screen>
         <term><command>dmsetup</command></term>
         <listitem>
           <para>
-            er et logisk volum styringsverktøy på lavt nivå
+            er et logisk volum styringsverktÃ¸y pÃ¥ lavt nivÃ¥
           </para>
           <indexterm zone="lvm2 dmsetup">
             <primary sortas="b-dmsetup">dmsetup</primary>
@@ -400,7 +405,7 @@ make install_systemd_units</userinput></screen>
         <term><command>fsadm</command></term>
         <listitem>
           <para>
-            er et verktøy som brukes til å endre størrelse på eller sjekke filsystemet på en enhet
+            er et verktÃ¸y som brukes til Ã¥ endre stÃ¸rrelse pÃ¥ eller sjekke filsystemet pÃ¥ en enhet
           </para>
           <indexterm zone="lvm2 fsadm">
             <primary sortas="b-fsadm">fsadm</primary>
@@ -412,8 +417,8 @@ make install_systemd_units</userinput></screen>
         <term><command>lvm</command></term>
         <listitem>
           <para>
-            gir kommandolinjeverktøy for <application>LVM2</application>.
-            Kommandoer implementeres via symbolske lenker til dette programmet for å
+            gir kommandolinjeverktÃ¸y for <application>LVM2</application>.
+            Kommandoer implementeres via symbolske lenker til dette programmet for Ã¥
             administrere fysiske enheter (pv*), volumgrupper (vg*) og logiske
             volumer (lv*)
           </para>
@@ -428,7 +433,7 @@ make install_systemd_units</userinput></screen>
         <term><command>lvmconf</command></term>
         <listitem>
           <para>
-            er et skript som endrer låsekonfigurasjonen i
+            er et skript som endrer lÃ¥sekonfigurasjonen i
             <application>LVM2</application> konfigurasjonsfil.
           </para>
           <indexterm zone="lvm2 lvmconf">
@@ -442,7 +447,7 @@ make install_systemd_units</userinput></screen>
         <term><command>lvmdump</command></term>
         <listitem>
           <para>
-            er et verktøy som brukes til å dumpe diverse informasjon om
+            er et verktÃ¸y som brukes til Ã¥ dumpe diverse informasjon om
             <application>LVM2</application>
           </para>
           <indexterm zone="lvm2 lvmdump">
@@ -455,7 +460,7 @@ make install_systemd_units</userinput></screen>
         <term><command>vgimportclone</command></term>
         <listitem>
           <para>
-            brukes til å importere en duplisert VG (f.eks. maskinvare øyeblikksbilde)
+            brukes til Ã¥ importere en duplisert VG (f.eks. maskinvare Ã¸yeblikksbilde)
           </para>
           <indexterm zone="lvm2 vgimportclone">
             <primary sortas="b-vgimportclone">vgimportclone</primary>
