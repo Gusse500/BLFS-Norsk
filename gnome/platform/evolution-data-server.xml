@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY evolution-data-server-download-http
-           "&gnome-download-http;/evolution-data-server/&gnome-minor-48;/evolution-data-server-&evolution-data-server-version;.tar.xz">
-  <!ENTITY evolution-data-server-download-ftp
-           "&gnome-download-ftp;/evolution-data-server/&gnome-minor-48;/evolution-data-server-&evolution-data-server-version;.tar.xz">
-  <!ENTITY evolution-data-server-md5sum        "b387f584adf2318e958d7928925d1e37">
+           "&gnome-download-http;/evolution-data-server/&gnome-minor-50;/evolution-data-server-&evolution-data-server-version;.tar.xz">
+  <!ENTITY evolution-data-server-download-ftp  " ">
+  <!ENTITY evolution-data-server-md5sum        "3aca3ad79c9ee833f25d68e6097b46ee">
   <!ENTITY evolution-data-server-size          "4.7 MB">
-  <!ENTITY evolution-data-server-buildsize     "147 MB (med tester)">
-  <!ENTITY evolution-data-server-time          "0.6 SBU (bruke parallellisme=4, legg til 0.1 SBU for tester)">
+  <!ENTITY evolution-data-server-buildsize     "177 MB (med tester)">
+  <!ENTITY evolution-data-server-time          "0.7 SBU (bruke parallellisme=4, legg til 0.2 SBU for tester)">
 ]>
 
 <sect1 id="evolution-data-server"
@@ -32,11 +31,11 @@ xreflabel="evolution-data-server-&evolution-data-server-version;">
       <application>Evolution Data Server</application> pakken gir
       et enhetlig bakstykke for programmer som fungerer med kontakter, oppgaver og kalender
       informasjon. Den ble opprinnelig utviklet for
-      <application>Evolution</application> (derav navnet), men brukes nå av
-      andre pakker også.
+      <application>Evolution</application> (derav navnet), men brukes nÃ¥ av
+      andre pakker ogsÃ¥.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -57,7 +56,7 @@ xreflabel="evolution-data-server-&evolution-data-server-version;">
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &evolution-data-server-size;
+          NedlastingsstÃ¸rrelse: &evolution-data-server-size;
         </para>
       </listitem>
       <listitem>
@@ -74,7 +73,7 @@ xreflabel="evolution-data-server-&evolution-data-server-version;">
 
     <bridgehead renderas="sect3">Evolution Dataserver Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libical"/>,
       <xref linkend="libsecret"/>,
@@ -95,18 +94,18 @@ xreflabel="evolution-data-server-&evolution-data-server-version;">
     </para>
 
     <bridgehead renderas="sect4"
-                revision="sysv">Anbefalt (Kjøretid)</bridgehead>
+                revision="sysv">Anbefalt (KjÃ¸retid)</bridgehead>
     <para role="recommended" revision="sysv">
       <xref linkend="blocaled" role="runtime"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="db"/>,
       <xref linkend="gtk-doc"/>,
       <xref linkend="mitkrb"/>,
       en <xref linkend="server-mail"/> (som gir en <command>sendmail</command> kommando),
-      <xref linkend="openldap"/>, og
+      <xref linkend="openldap"/>,
+      &berkeley-db;, og
       <ulink url="https://github.com/googlei18n/libphonenumber/">libphonenumber</ulink>
     </para>
 
@@ -115,9 +114,17 @@ xreflabel="evolution-data-server-&evolution-data-server-version;">
   <sect2 role="installation">
     <title>Installasjon av Evolution Dataserver</title>
 
+<!-- Fixed in 3.50.2
     <para>
-      Installer <application>Evolution Dataserver</application> ved å kjøre
-      følgende kommandoer:
+      FÃ¸rst fikser du en byggingsfeil ved bruk av libxml2-2.12.x:
+    </para>
+
+<screen><userinput remap="pre">sed -i '/xpathInternals.h/a #include &lt;libxml/globals.h&gt;' src/libedataserver/e-xml-utils.c</userinput></screen>
+-->
+
+    <para>
+      Installer <application>Evolution Dataserver</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
@@ -151,13 +158,13 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr    \
 ninja</userinput></screen>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>ninja test</command>.
+      For Ã¥ teste resultatene, utsted: <command>ninja test</command>.
     </para>
 
     <!-- The tests need to be run after the package is installed due to
@@ -173,7 +180,7 @@ ninja</userinput></screen>
     <para>
       <parameter>-DENABLE_GOOGLE=ON</parameter>: Denne bryteren aktiverer
       tilgang til Google tjenester via <xref linkend="libgdata"/> og aktiverer
-      også Google autentiseringsalternativet.
+      ogsÃ¥ Google autentiseringsalternativet.
     </para>
 -->
 
@@ -185,24 +192,17 @@ ninja</userinput></screen>
 
     <para>
       <parameter>-DENABLE_GTK_DOC=OFF</parameter>: Denne bryteren
-      deaktiverer bygging av API dokumentasjonen. Det er ødelagt for
-      denne pakken på grunn av bruken av et lenge utdatert gtk-doc program
+      deaktiverer bygging av API dokumentasjonen. Det er Ã¸delagt for
+      denne pakken pÃ¥ grunn av bruken av et lenge utdatert gtk-doc program
       som ikke lenger er tilgjengelig.
     </para>
 
     <para>
       <parameter>-DWITH_LIBDB=OFF</parameter>: Denne bryteren tillater bygging
-      av denne pakken uten <xref linkend="db"/>.  Denne pakken bruker kun
-      <xref linkend="db"/> å importere data fra svært utdaterte utgivelser.
+      av denne pakken uten &berkeley-db;.  <!--Denne pakken bruker kun
+      &berkeley-db; for Ã¥ importere data fra svÃ¦rt utdaterte utgivelser.-->
       <xref linkend="sqlite"/> brukes til normal drift.
     </para>
-
-<!--
-    <para>
-      <parameter>-DWITH_GWEATHER4=ON</parameter>: Denne bryteren tillater å bygge
-      denne pakken med <xref linkend="libgweather"/>.
-    </para>
--->
 
     <para>
       <option>-DENABLE_OAUTH2_WEBKITGTK4=OFF</option>: Bruk denne bryteren hvis
@@ -217,9 +217,9 @@ ninja</userinput></screen>
 
     <note>
       <para>
-        For å aktivere mange av de valgfrie avhengighetene, se gjennom informasjonen
-        fra <command>cmake -L CMakeLists.txt</command> for de nødvendige
-        parametere du må sende til <command>cmake</command> kommandoen.
+        For Ã¥ aktivere mange av de valgfrie avhengighetene, se gjennom informasjonen
+        fra <command>cmake -L CMakeLists.txt</command> for de nÃ¸dvendige
+        parametere du mÃ¥ sende til <command>cmake</command> kommandoen.
       </para>
     </note>
 
@@ -275,7 +275,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
             er <application>Evolution</application> MIME meldings
-            håndteringsbibliotek
+            hÃ¥ndteringsbibliotek
           </para>
           <indexterm zone="evolution-data-server libcamel-1">
             <primary sortas="c-libcamel-1">libcamel-1.2.so</primary>
@@ -301,7 +301,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
             er klientbiblioteket for <application>Evolution</application>
-            addressebøker
+            addressebÃ¸ker
           </para>
           <indexterm zone="evolution-data-server libebook-1">
             <primary sortas="c-libebook-1">libebook-1.2.so</primary>
@@ -340,7 +340,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
             er bakstykkebiblioteket for <application>Evolution</application>
-            addressebøker
+            addressebÃ¸ker
           </para>
           <indexterm zone="evolution-data-server libedata-book-1">
             <primary sortas="c-libedata-book-1">libedata-book-1.2.so</primary>
@@ -378,7 +378,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libedataserverui-3.0.so</filename></term>
         <listitem>
           <para>
-            er GUI verktøybiblioteket for
+            er GUI verktÃ¸ybiblioteket for
             <application>Evolution Data Server</application>
           </para>
           <indexterm zone="evolution-data-server libedataserverui-3">
@@ -391,7 +391,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libedataserverui4-1.0.so</filename></term>
         <listitem>
           <para>
-            er det GTK-4 baserte GUI verktøybiblioteket for
+            er det GTK-4 baserte GUI verktÃ¸ybiblioteket for
             <application>Evolution Data Server</application>
           </para>
           <indexterm zone="evolution-data-server libedataserverui4-1">
@@ -404,7 +404,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libetestserverutils.so</filename></term>
         <listitem>
           <para>
-            er server testverktøy biblioteket for
+            er server testverktÃ¸y biblioteket for
             <application>Evolution Data Server</application>
           </para>
           <indexterm zone="evolution-data-server libetestserverutils-1">

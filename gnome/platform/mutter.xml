@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-44;/mutter-&mutter-version;.tar.xz">
-  <!ENTITY mutter-download-ftp  "&gnome-download-ftp;/mutter/&gnome-44;/mutter-&mutter-version;.tar.xz">
-  <!ENTITY mutter-md5sum        "c9a692911a8ff849c6bbfb44eca7a92f">
-  <!ENTITY mutter-size          "2.7 MB">
-  <!ENTITY mutter-buildsize     "99 MB (med tester)">
-  <!ENTITY mutter-time          "0.8 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
+  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-45;/mutter-&mutter-version;.tar.xz">
+  <!ENTITY mutter-download-ftp  " ">
+  <!ENTITY mutter-md5sum        "74e84722518707c0768f9753fc3492d7">
+  <!ENTITY mutter-size          "2.8 MB">
+  <!ENTITY mutter-buildsize     "70 MB (med tester)">
+  <!ENTITY mutter-time          "0.7 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
 ]>
 
 <sect1 id="mutter" xreflabel="Mutter-&mutter-version;">
@@ -27,12 +27,12 @@
 
     <para>
       <application>Mutter</application> er vindusbehandleren for
-      <application>GNOME</application>. Den påberopes ikke direkte,
-      men fra <application>GNOME Økt</application> (på en
+      <application>GNOME</application>. Den pÃ¥beropes ikke direkte,
+      men fra <application>GNOME Ã˜kt</application> (pÃ¥ en
       maskin med en maskinvareakselererte videodrivere).
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &mutter-size;
+          NedlastingsstÃ¸rrelse: &mutter-size;
         </para>
       </listitem>
       <listitem>
@@ -70,10 +70,11 @@
 
     <bridgehead renderas="sect3">Mutter Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="gnome-settings-daemon"/>,
       <xref linkend="graphene"/>,
+      <xref linkend="libei"/>,
       <xref linkend="libxcvt"/>,
       <xref linkend="libxkbcommon"/>, og
       <xref linkend="pipewire"/>
@@ -86,26 +87,27 @@
       <xref linkend="startup-notification"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt (Påkrevd for å
+    <bridgehead renderas="sect4">Anbefalt (PÃ¥krevd for Ã¥
     bygge Wayland sammensetteren)</bridgehead>
     <para role="recommended">
       <xref linkend="libinput"/>,
       <xref linkend="wayland"/>,
       <xref linkend="wayland-protocols"/>, og
-      <xref linkend="xwayland"/>.
+      <xref linkend="xwayland"/>
     </para>
 
     <bridgehead renderas="sect4"
-                revision="sysv">Anbefalt (Kjøretid)</bridgehead>
+                revision="sysv">Anbefalt (KjÃ¸retid)</bridgehead>
     <para role="recommended" revision="sysv">
       <xref linkend="blocaled" role="runtime"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="python-dbusmock"/> (påkrevd for tester),
-	  <xref linkend="sysprof"/>,
-      <xref linkend="xorg-server"/> (for X11 økter)
+      <xref linkend="python-dbusmock"/> (pÃ¥krevd for tester),
+	  <!--<xref linkend="sysprof"/>,-->
+      <xref linkend="xorg-server"/> (for X11 Ã¸kter), og
+      <ulink url="&sysprof-url;">sysprof</ulink>
     </para>
 
     <!-- NOTE: Mutter compiles shipped Cogl and Clutter for it's own
@@ -121,7 +123,7 @@
     <title>Installasjon av Mutter</title>
 
     <para>
-      Installer <application>Mutter</application> ved å kjøre følgende
+      Installer <application>Mutter</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -137,57 +139,57 @@ ninja</userinput></screen>
 
 <!--
     <para>
-      For å teste resultatene, kjør:
+      For Ã¥ teste resultatene, kjÃ¸r:
       <command>dbus-run-session ninja test</command>. Testene
-      krever en aktiv X økt for å kjøre riktig. Det er ikke nødvendig å
-      kjøre en egen D-bus økt hvis ikke i en GNOME økt, men det
-      gir et rent miljø i alle fall. En test,
-      <filename>native-headless</filename>, er kjent for å mislykkes.
+      krever en aktiv X Ã¸kt for Ã¥ kjÃ¸re riktig. Det er ikke nÃ¸dvendig Ã¥
+      kjÃ¸re en egen D-bus Ã¸kt hvis ikke i en GNOME Ã¸kt, men det
+      gir et rent miljÃ¸ i alle fall. En test,
+      <filename>native-headless</filename>, er kjent for Ã¥ mislykkes.
     </para>
     -->
     <!-- there are no added problems in sysv, AFAICT. Running the tests is
     not easy whatever the init system. But using the instructions below in
     a gnome session on sysv works (no test failure)...
     <para revision='sysv'>
-       Denne pakken kommer ikke med en testpakke som kjører riktig i
-       SystemV miljø.
+       Denne pakken kommer ikke med en testpakke som kjÃ¸rer riktig i
+       SystemV miljÃ¸.
     </para>
     -->
 
     <para>
       Testpakken krever et
-      eksternt program kalt <command>xvfb-run</command>.  Hvis du ønsker å kjøre
-      testene, bør du laste ned og installere den før du kjører
+      eksternt program kalt <command>xvfb-run</command>.  Hvis du Ã¸nsker Ã¥ kjÃ¸re
+      testene, bÃ¸r du laste ned og installere den fÃ¸r du kjÃ¸rer
       <command>meson</command>.
 
-      Du kan få det fra <ulink
+      Du kan fÃ¥ det fra <ulink
       url="&sources-anduin-http;/mutter/xvfb-run">xvfb-run</ulink>, og installere
-      det med kjørbare tillatelser i <filename
+      det med kjÃ¸rbare tillatelser i <filename
       class="directory">/usr/bin</filename>.  <command>xvfb-run</command> trenger
-      <command>Xvfb</command> ved kjøretid, og <command>Xvfb</command> kan bli
+      <command>Xvfb</command> ved kjÃ¸retid, og <command>Xvfb</command> kan bli
       installert fra <xref linkend='xorg-server'/> eller <xref
       linkend='xwayland'/>.
 
-      Du bør også bytte ut <parameter>-Dtests=false</parameter> i
+      Du bÃ¸r ogsÃ¥ bytte ut <parameter>-Dtests=false</parameter> i
       <command>meson</command> kommandoen, med
       <parameter>-Dtests=true -Dclutter_tests=false</parameter>.  Testpakken
-      krever at mutter skjemaet er installert på systemet, så det er
-      bedre å kjøre testene etter installasjon av pakken.
+      krever at mutter skjemaet er installert pÃ¥ systemet, sÃ¥ det er
+      bedre Ã¥ kjÃ¸re testene etter installasjon av pakken.
     </para>
 
     <para>
-      Du kan også teste grunnleggende funksjoner til <application>Mutter</application>
-      ved å følge <xref linkend='mutter-starting'/>, etter å ha installert den.
+      Du kan ogsÃ¥ teste grunnleggende funksjoner til <application>Mutter</application>
+      ved Ã¥ fÃ¸lge <xref linkend='mutter-starting'/>, etter Ã¥ ha installert den.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
-      Hvis du ønsker å kjøre testene, fjern referansen til
+      Hvis du Ã¸nsker Ã¥ kjÃ¸re testene, fjern referansen til
       <application>Zenity</application> som ikke er en del av BLFS
       fra en test:
     </para>
@@ -195,25 +197,24 @@ ninja</userinput></screen>
 <screen role='test'><userinput>sed 's/zenity --[a-z]*/gtk4-demo/' -i ../src/tests/x11-test.sh</userinput></screen>
 
     <para>
-      Kjør nå testpakken:
+      KjÃ¸r nÃ¥ testpakken:
     </para>
 
-    <!-- Without "HOME=" one test can fail with certain monitor
-         configuration in $HOME/.config/monitors.xml. -->
-<screen role='test'><userinput>HOME= ninja test</userinput></screen>
+<screen role='test'><userinput>ninja test</userinput></screen>
 
     <para>
-      Testene krever en aktiv X eller wayland økt.
-      To tester navngitt
+      Testene krever en aktiv X eller wayland Ã¸kt.
+      En test navngitt
       <!-- https://gitlab.gnome.org/GNOME/mutter/-/issues/2848 -->
-      <filename>cogl-test-framebuffer-get-bits-gl3</filename> og
+      <!--<filename>cogl-test-framebuffer-get-bits-gl3</filename> og-->
       <!-- This needs a pipewire daemon running.  As at Aug 2023
            the method to run a pipewire daemon is not in BLFS
            (but in editor notes), so claim this a known failure.  -->
-      <filename>native-unit</filename> er kjent for å mislykkes.
-      Noen få andre tester kan mislykkes avhengig av konfigurasjonen.
-      Ikke gjør noen mus eller tastatur inndata mens testpakken
-      kjører ellers kan noen tester mislykkes.
+      <filename>input-capture</filename> er kjent for Ã¥ mislykkes.
+      <!-- As Xi noted in #18580, this test is flaky. -->
+      Noen fÃ¥ andre tester kan mislykkes avhengig av konfigurasjonen.
+      Ikke gjÃ¸r noen mus eller tastatur inndata mens testpakken
+      kjÃ¸rer ellers kan noen tester mislykkes.
     </para>
 
   </sect2>
@@ -225,12 +226,12 @@ ninja</userinput></screen>
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dtests=false</parameter>: Hindrer å bygge testene,
-      og fjerner et hardt krav på <command>xvfb-run</command>.
+      <parameter>-Dtests=false</parameter>: Hindrer Ã¥ bygge testene,
+      og fjerner et hardt krav pÃ¥ <command>xvfb-run</command>.
     </para>
 
     <para>
-      <parameter>-Dprofiler=false</parameter>: Tillater å bygge denne pakken
+      <parameter>-Dprofiler=false</parameter>: Tillater Ã¥ bygge denne pakken
       uten <application>Sysprof</application>.  Fjern dette alternativet hvis
       du har installert <application>Sysprof</application> og vil
       analysere gjengivelsesytelsen til
@@ -241,7 +242,7 @@ ninja</userinput></screen>
       <option>-Dtests=true -Dclutter_tests=false</option>: Bygger alle
       tester, uten testene for det sendte <application>Clutter</application>
       biblioteket. <application>Clutter</application> tester er kjent for
-      mislykkes med <option>--buildtype=release</option>.
+      mislykkes med <parameter>--buildtype=release</parameter>.
     </para>
 
   </sect2>
@@ -258,29 +259,29 @@ ninja</userinput></screen>
     <para>
       <application>Mutter</application> brukes vanligvis som en del av
       <application>gnome-shell</application>, men den kan brukes som et
-      frittstående Wayland sammensetter også. Å kjøre
+      frittstÃ¥ende Wayland sammensetter ogsÃ¥. Ã… kjÃ¸re
       <application>Mutter</application> som en Wayland sammensetter, i en
-      virtuell konsoll, kjør:
+      virtuell konsoll, kjÃ¸r:
     </para>
 
     <screen role='nodump'><userinput>mutter --wayland -- vte-2.91</userinput></screen>
 
     <para>
       Erstatt <command>vte-2.91</command> med kommandolinjen for
-      første applikasjonen du vil ha i Wayland økten. Merk at med en gang denne
-      applikasjonenen avsluttes, vil Wayland økten bli avsluttet.
+      fÃ¸rste applikasjonen du vil ha i Wayland Ã¸kten. Merk at med en gang denne
+      applikasjonenen avsluttes, vil Wayland Ã¸kten bli avsluttet.
     </para>
 
     <para>
-      <application>Mutter</application> kan også fungere som en nestet
-      sammensetter i en annen Wayland økt. I en terminalemulator, kjør:
+      <application>Mutter</application> kan ogsÃ¥ fungere som en nestet
+      sammensetter i en annen Wayland Ã¸kt. I en terminalemulator, kjÃ¸r:
     </para>
 
     <screen role='nodump'><userinput>MUTTER_DEBUG_DUMMY_MODE_SPECS=1920x1080 mutter --wayland --nested -- vte-2.91</userinput></screen>
 
     <para>
-      Erstatt <replaceable>1920x1080</replaceable> med den størrelsen du ønsker
-      for den nestede Wayland økten.
+      Erstatt <replaceable>1920x1080</replaceable> med den stÃ¸rrelsen du Ã¸nsker
+      for den nestede Wayland Ã¸kten.
     </para>
   </sect2>
 
@@ -297,10 +298,10 @@ ninja</userinput></screen>
           mutter
         </seg>
         <seg>
-          libmutter-12.so and libmutter-test-12.so (valgfri)
+          libmutter-13.so og libmutter-test-13.so (valgfri)
         </seg>
         <seg>
-          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-12
+          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-13
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -324,28 +325,28 @@ ninja</userinput></screen>
       </varlistentry>
 
       <varlistentry id="libmutter">
-        <term><filename class="libraryfile">libmutter-12.so</filename></term>
+        <term><filename class="libraryfile">libmutter-13.so</filename></term>
         <listitem>
           <para>
             inneholder <application>Mutter</application> API funksjoner
           </para>
           <indexterm zone="mutter libmutter">
-            <primary sortas="c-libmutter">libmutter-12.so</primary>
+            <primary sortas="c-libmutter">libmutter-13.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>
 
       <varlistentry id="libmutter-test">
-        <term><filename class="libraryfile">libmutter-test-12.so</filename></term>
+        <term><filename class="libraryfile">libmutter-test-13.so</filename></term>
         <listitem>
           <para>
             inneholder <application>Mutter</application> testpakke API
             funksjoner; dette biblioteket er bare installert hvis testpakken til
-            denne pakken er aktivert og den er nødvendig av
+            denne pakken er aktivert og den er nÃ¸dvendig av
             <application>gnome-shell</application> testpakken
           </para>
           <indexterm zone="mutter libmutter-test">
-            <primary sortas="c-libmutter-test">libmutter-test-12.so</primary>
+            <primary sortas="c-libmutter-test">libmutter-test-13.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>

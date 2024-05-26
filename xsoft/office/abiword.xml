@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -8,7 +8,7 @@
   <!ENTITY AbiWord-docs-version "3.0.2">
 
   <!ENTITY AbiWord-download-http
-           "https://www.abisource.com/downloads/abiword/&AbiWord-version;/source/abiword-&AbiWord-version;.tar.gz">
+           "&sources-anduin-http;/abiword/abiword-&AbiWord-version;.tar.gz">
   <!ENTITY AbiWord-download-ftp  " ">
   <!ENTITY AbiWord-md5sum        "a8f218b711450e4ccae43a0522e0e806">
   <!ENTITY AbiWord-size          "11 MB">
@@ -37,10 +37,10 @@
 
     <para>
       <application>AbiWord</application> er en tekstbehandler som er nyttig for
-      å skrive rapporter, brev og andre formaterte dokumenter.
+      Ã¥ skrive rapporter, brev og andre formaterte dokumenter.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -61,7 +61,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &AbiWord-size;
+          NedlastingsstÃ¸rrelse: &AbiWord-size;
         </para>
       </listitem>
       <listitem>
@@ -90,13 +90,13 @@
       </listitem>
       <listitem>
         <para>
-          AbiWord Dokumenter størrelse: &AbiWordDocs-size;
+          AbiWord Dokumenter stÃ¸rrelse: &AbiWordDocs-size;
         </para>
       </listitem>
 <!--
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/abiword-&AbiWord-version;-gcc11_fixes-1.patch"/>
         </para>
       </listitem>
@@ -106,7 +106,7 @@
 
     <bridgehead renderas="sect3">AbiWord Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="boost"/>,
       <xref linkend="curl"/>,
@@ -125,7 +125,6 @@
       <xref linkend="dbus-glib"/>,
       <xref linkend="evolution-data-server"/>,
       <xref linkend="gobject-introspection"/>,
-      <xref linkend="libchamplain"/>,
       <xref linkend="libgcrypt"/>,
       <xref linkend="libical"/>,
       <xref linkend="libsoup"/>,
@@ -134,6 +133,7 @@
       <xref linkend="valgrind"/>.
       <ulink url="https://aiksaurus.sourceforge.net/">Aiksaurus</ulink>,
       <ulink url="https://github.com/AbiWord/gtkmathview">GtkMathView</ulink>,
+      <ulink url="https://gitlab.gnome.org/GNOME/libchamplain/">libchamplain</ulink>,
       <ulink url="https://sourceforge.net/projects/wvware">libwmf</ulink>,
       <ulink url="https://sourceforge.net/projects/libwpd/">libwpd</ulink>,
       <ulink url="https://sourceforge.net/projects/libwpg/">libwpg</ulink>,
@@ -141,37 +141,36 @@
       <ulink url="https://www.abisource.com/projects/link-grammar/">
       Link Grammar Parser</ulink>,
       <ulink url="&gnome-download-http;/loudmouth">Loudmouth</ulink>,
-      <ulink url="https://sourceforge.net/projects/otslibrary/">OTS</ulink>, og
+      <ulink url="https://packages.ubuntu.com/focal/libots-dev">OTS</ulink>, og
       <ulink url="https://software.frodo.looijaard.name/psiconv/">Psiconv</ulink>
     </para>
 
     <note>
       <para>
-        For å aktivere mange av de valgfrie avhengighetene, se gjennom informasjonen
-        fra <command>./configure --help</command> for nødvendige brytere
-        du må gi til <command>configure</command> skriptet.
+        For Ã¥ aktivere mange av de valgfrie avhengighetene, se gjennom informasjonen
+        fra <command>./configure --help</command> for nÃ¸dvendige brytere
+        du mÃ¥ gi til <command>configure</command> skriptet.
       </para>
     </note>
 
 
     <para condition="html" role="usernotes">
-      Redaktørens notater: <ulink url="&blfs-wiki;/abiword"/>
+      RedaktÃ¸rens notater: <ulink url="&blfs-wiki;/abiword"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av AbiWord</title>
 
-<!--
     <para>
-      Først må du fikse en byggefeil når du bruker GCC-11:
+      FÃ¸rst mÃ¥ du fikse en byggefeil nÃ¥r du bruker libxml-2.12.x:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../abiword-&AbiWord-version;-gcc11_fixes-1.patch</userinput></screen>
--->
+<screen><userinput>sed -e '/libxml/a #include &lt;libxml/xmlmemory.h&gt;' \
+    -i src/af/util/xp/ut_stringbuf.cpp</userinput></screen>
 
     <para>
-      Installer <application>AbiWord</application> ved å kjøre følgende
+      Installer <application>AbiWord</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -188,25 +187,25 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <note>
       <para>
-        For å installere de lokale hjelpefilene,
-        en grafisk økt anbefales.
+        For Ã¥ installere de lokale hjelpefilene,
+        en grafisk Ã¸kt anbefales.
       </para>
     </note>
 
     <para>
-      Hvis du ønsker å installere de lokale hjelpefilene, må du først pakke dem ut og bygge dem:
+      Hvis du Ã¸nsker Ã¥ installere de lokale hjelpefilene, mÃ¥ du fÃ¸rst pakke dem ut og bygge dem:
     </para>
 
     <note>
       <para>
-        Den nåværende versjonen av dokumentene utvides til abiword-docs-3.0.1
+        Den nÃ¥vÃ¦rende versjonen av dokumentene utvides til abiword-docs-3.0.1
         og ikke det forventede abiword-docs-3.0.2.
       </para>
     </note>
@@ -237,15 +236,15 @@ make</userinput></screen>
     <para>
       <parameter>- -without-evolution-data-server</parameter>: Denne bryteren
       deaktiverer <application>AbiWord</application>
-      <application>Evolution Data Server</application> støtte som er kjent
-      å mislykkes når du bruker nyere versjoner av
+      <application>Evolution Data Server</application> stÃ¸tte som er kjent
+      Ã¥ mislykkes nÃ¥r du bruker nyere versjoner av
       <application>Evolution Data Server</application>.
     </para>
 -->
     <para>
       <option>--enable-plugins="collab openxml goffice grammar"</option>: Bygg
       noen eller alle programtilleggene. Openxml programtillegget aktiverer
-      <application>Abiword</application> til å åpne noen .docx filer.
+      <application>Abiword</application> til Ã¥ Ã¥pne noen .docx filer.
       Grammar programtillegget krever
       <ulink url="https://www.abisource.com/projects/link-grammar/">Link Grammar
       Parser</ulink>
@@ -272,8 +271,8 @@ make</userinput></screen>
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Velg riktig mal for ditt språk og lokalitet fra listen
-        produsert av følgende kommando:
+        Velg riktig mal for ditt sprÃ¥k og lokalitet fra listen
+        produsert av fÃ¸lgende kommando:
       </para>
 
 <screen><userinput>ls /usr/share/abiword-&AbiWord-minor-version;/templates</userinput></screen>
@@ -290,12 +289,12 @@ install -v -m640    /usr/share/abiword-&AbiWord-minor-version;/templates/normal.
 
       <para>
         Forandre <replaceable>&lt;lang&gt;</replaceable> i kommandoen ovenfor til
-        å passe til navnet på filen du ønsker.
+        Ã¥ passe til navnet pÃ¥ filen du Ã¸nsker.
       </para>
 
       <para>
-        Hvis du bruker flere språk, må du kanskje redigere malen
-        til å bruke en font med større dekning (f.eks. en
+        Hvis du bruker flere sprÃ¥k, mÃ¥ du kanskje redigere malen
+        til Ã¥ bruke en font med stÃ¸rre dekning (f.eks. en
         <xref linkend="dejavu-fonts"/>,
     <!--
         <ulink url="https://dejavu.sourceforge.net/">DejaVu fonts</ulink>), -->
@@ -305,14 +304,14 @@ install -v -m640    /usr/share/abiword-&AbiWord-minor-version;/templates/normal.
       </para>
 
       <para>
-        Hvis du har <xref linkend="desktop-file-utils"/> installert, bør du
-        kjøre <command>update-desktop-database</command> kommandoen for å oppdatere
+        Hvis du har <xref linkend="desktop-file-utils"/> installert, bÃ¸r du
+        kjÃ¸re <command>update-desktop-database</command> kommandoen for Ã¥ oppdatere
         mimeinfo hurtiglageret og la hjelpesystemet fungere.
       </para>
 
       <para>
-        Hvis du har <xref linkend="xdg-utils"/> installert, bør du
-        kjøre <command>xdg-icon-resource forceupdate --theme hicolor</command>
+        Hvis du har <xref linkend="xdg-utils"/> installert, bÃ¸r du
+        kjÃ¸re <command>xdg-icon-resource forceupdate --theme hicolor</command>
         kommando, for at det installerte ikonet skal vises i menyelementet.
       </para>
 
@@ -353,7 +352,7 @@ install -v -m640    /usr/share/abiword-&AbiWord-minor-version;/templates/normal.
         <listitem>
           <para>
             er tekstbehandleren, en innpakning for funksjonene i
-            libabiword-&AbiWord-minor-version; - den kan også brukes på
+            libabiword-&AbiWord-minor-version; - den kan ogsÃ¥ brukes pÃ¥
             kommandolinjen, se <command>man 1 abiword</command>
           </para>
           <indexterm zone="abiword abiword-prog">
@@ -366,7 +365,7 @@ install -v -m640    /usr/share/abiword-&AbiWord-minor-version;/templates/normal.
         <term><filename class="libraryfile">libabiword-&AbiWord-minor-version;.so</filename></term>
         <listitem>
           <para>
-            gir funksjoner for å få tilgang til MS Word dokumenter
+            gir funksjoner for Ã¥ fÃ¥ tilgang til MS Word dokumenter
           </para>
           <indexterm zone="abiword libabiword">
             <primary sortas="c-libabiword">libabiword-&AbiWord-minor-version;.so</primary>

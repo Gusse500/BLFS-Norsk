@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY gparted-download-http "&sourceforge-dl;/gparted/gparted-&gparted-version;.tar.gz">
   <!ENTITY gparted-download-ftp  " ">
-  <!ENTITY gparted-md5sum        "9adbd4b1cbcb7a7c76dcc0e9ffed9a7c">
+  <!ENTITY gparted-md5sum        "b2006a0a3f35853e7d7dc34c87db11f2">
   <!ENTITY gparted-size          "5.2 MB">
-  <!ENTITY gparted-buildsize     "75 MB (legg til 75 MB for tester)">
-  <!ENTITY gparted-time          "0.3 SBU (bruker parallellisme=4; legg til 0,2 SBU for tester)">
+  <!ENTITY gparted-buildsize     "72 MB (legg til 70 MB for tester)">
+  <!ENTITY gparted-time          "0.3 SBU (bruker parallellisme=4; legg til 0.3 SBU for tester)">
 ]>
 
 <sect1 id="gparted" xreflabel="Gparted-&gparted-version;">
@@ -27,10 +27,10 @@
 
     <para>
       Gparted er Gnome Partisjonsredigering, en Gtk 3 GUI for andre kommandolinje
-      verktøy som kan opprette, omorganisere eller slette diskpartisjoner.
+      verktÃ¸y som kan opprette, omorganisere eller slette diskpartisjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gparted-size;
+          NedlastingsstÃ¸rrelse: &gparted-size;
         </para>
       </listitem>
       <listitem>
@@ -68,7 +68,7 @@
 
     <bridgehead renderas="sect3">Gparted Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <!-- GTKMM2 is no longer used since 1.0.0, see #12110 -->
       <xref linkend="gtkmm3"/> og
@@ -88,7 +88,7 @@
     <title>Installasjon av Gparted</title>
 
     <para>
-      Installer <application>Gparted</application> ved å kjøre følgende
+      Installer <application>Gparted</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -98,11 +98,11 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -125,8 +125,8 @@ make</userinput></screen>
      wayland? -->
     <para>
       <option>--enable-xhost-root</option>: Denne bryteren gir en
-      midlertidig løsning for å la GParted kjøre under Wayland ved å bruke xhost
-      for å gi og tilbakekalle root tilgang til X11 skjermen.
+      midlertidig lÃ¸sning for Ã¥ la GParted kjÃ¸re under Wayland ved Ã¥ bruke xhost
+      for Ã¥ gi og tilbakekalle root tilgang til X11 skjermen.
     </para>
 
   </sect2>
@@ -135,45 +135,48 @@ make</userinput></screen>
     <title>Bruke Gparted</title>
 
     <para>
-      For å manipulere filsystemer har Gparted en kjøretidsavhengighet av forskjellige
-      filsystemverktøy (du trenger bare å installere verktøyene for filsystemer du
+      For Ã¥ manipulere filsystemer har Gparted en kjÃ¸retidsavhengighet av forskjellige
+      filsystemverktÃ¸y (du trenger bare Ã¥ installere verktÃ¸yene for filsystemer du
       faktisk bruker):
       <xref linkend="hdparm"/>
-      (nødvendig for valgfri visning av enhetsinformasjon om serienummer),
+      (nÃ¸dvendig for valgfri visning av enhetsinformasjon om serienummer),
       <xref linkend="btrfs-progs"/>,
       <xref role="runtime" linkend="dosfstools"/>,
       e2fsprogs (installert som del av LFS),
       <xref linkend="jfsutils"/>,
       <!--<xref linkend="ntfs-3g"/>,-->
-      <xref linkend="reiserfs"/>,
+      <!--<xref linkend="reiserfs"/>,-->
       <xref linkend="xfsprogs"/>,
-      <ulink url="https://ftp.gnu.org/pub/gnu/mtools/">mtools</ulink> (nødvendig
-      for å lese og skrive FAT16/32 volumetiketter og UUIDer),
+      <ulink url="https://ftp.gnu.org/pub/gnu/mtools/">mtools</ulink> (nÃ¸dvendig
+      for Ã¥ lese og skrive FAT16/32 volumetiketter og UUIDer),
       <ulink url="ftp://ftp.mars.org/pub/hfs/">hfsutils</ulink>,
       <ulink url="https://packages.debian.org/sid/hfsprogs">hfsprogs</ulink>,
-      <ulink url="https://nilfs.sourceforge.io/en/">nilfs-utils</ulink> og
+      <ulink url="https://nilfs.sourceforge.io/en/">nilfs-utils</ulink>,
       <ulink url="https://reiser4.wiki.kernel.org/index.php/Reiser4progs">
-      Reiser4progs</ulink>.
+      Reiser4progs</ulink> og
+      <ulink
+        url='https://mirrors.edge.kernel.org/pub/linux/kernel/people/jeffm/reiserfsprogs/'>
+        reiserfsprogs</ulink>.
     </para>
 
     <para>
-      Root privilegier kreves for å kjøre Gparted. Hvis du ønsker å kjøre
+      Root privilegier kreves for Ã¥ kjÃ¸re Gparted. Hvis du Ã¸nsker Ã¥ kjÃ¸re
       applikasjonen fra menyen, flere applikasjoner og konfigurasjoner er
-      nødvendig. Eksempler på applikasjoner som kan brukes:
+      nÃ¸dvendig. Eksempler pÃ¥ applikasjoner som kan brukes:
       <ulink url="https://people.debian.org/~kov/gksu/">gksu</ulink>,
       <ulink url="https://launchpad.net/kdesudo">kdesudo</ulink>, eller
       <ulink url="https://github.com/tarakbumba/xdg-su">xdg-su</ulink>.
       <!--Another solution is to use <application>pkexec</application>, from
       <xref linkend="polkit"/>, but some configuration is necessary.-->
-      En annen enkel løsning er <xref linkend="ssh-askpass"/>. <!--Below, we
+      En annen enkel lÃ¸sning er <xref linkend="ssh-askpass"/>. <!--Below, we
       describe these two alternatives: "ssh-askpass" and "pkexec".-->
     </para>
 
     <sect3 role="ssh-askpass">
       <title>ssh-askpass</title>
         <para>
-          Til valgfritt å bruke <xref linkend="ssh-askpass"/> hvis den er installert i
-          systemet ditt, kjør følgende kommandoer som
+          Til valgfritt Ã¥ bruke <xref linkend="ssh-askpass"/> hvis den er installert i
+          systemet ditt, kjÃ¸r fÃ¸lgende kommandoer som
           <systemitem class="username">root</systemitem> bruker:
         </para>
 
@@ -181,7 +184,7 @@ make</userinput></screen>
 sed -i 's/Exec=/Exec=sudo -A /'               /usr/share/applications/gparted.desktop</userinput></screen>
 
         <para>
-         Nå, ved å klikke på menyelementet for Gparted, vises en dialogboks på
+         NÃ¥, ved Ã¥ klikke pÃ¥ menyelementet for Gparted, vises en dialogboks pÃ¥
          skjermen, og ber om administratorpassordet.</para>
 
     </sect3>
@@ -277,7 +280,7 @@ chmod -v 0644 /usr/share/polkit-1/actions/org.gnome.gparted.policy</userinput></
         <term><command>gparted</command></term>
         <listitem>
           <para>
-            er et skallskript som setter opp miljøet før du det kaller
+            er et skallskript som setter opp miljÃ¸et fÃ¸r du det kaller
             <command>gpartedbin</command>
           </para>
           <indexterm zone="gparted gparted-prog">
@@ -291,7 +294,7 @@ chmod -v 0644 /usr/share/polkit-1/actions/org.gnome.gparted.policy</userinput></
         <term><command>gpartedbin</command></term>
         <listitem>
           <para>
-            er Gparted binær
+            er Gparted binÃ¦r
           </para>
           <indexterm zone="gparted gpartedbin">
             <primary sortas="b-gpartedbin">gpartedbin</primary>
@@ -304,7 +307,7 @@ chmod -v 0644 /usr/share/polkit-1/actions/org.gnome.gparted.policy</userinput></
         <term><command>gparted_polkit</command></term>
         <listitem>
           <para>
-            er et valgfritt skript som kan brukes til å kjøre gparted med polkit,
+            er et valgfritt skript som kan brukes til Ã¥ kjÃ¸re gparted med polkit,
             fra en meny
           </para>
           <indexterm zone="gparted gparted_polkit">

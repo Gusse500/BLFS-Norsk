@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY vlc-download-http "https://download.videolan.org/vlc/&vlc-version;/vlc-&vlc-version;.tar.xz">
   <!ENTITY vlc-download-ftp  " ">
-  <!ENTITY vlc-md5sum        "f3c031357c0eeffb41e928eca220a803">
-  <!ENTITY vlc-size          "25 MB">
-  <!ENTITY vlc-buildsize     "700 MB">
-  <!ENTITY vlc-time          "1.7 SBU (bruke parallellisme=4)">
+  <!ENTITY vlc-md5sum        "e8337fcd2df92f3901dad091fb85f545">
+  <!ENTITY vlc-size          "24 MB">
+  <!ENTITY vlc-buildsize     "726 MB">
+  <!ENTITY vlc-time          "1.9 SBU (bruke parallellisme=4; med tester)">
 ]>
 
 <sect1 id="vlc" xreflabel="VLC-&vlc-version;">
@@ -27,14 +27,14 @@
 
     <para>
       <application>VLC</application> er en mediespiller, streamer og enkoder.
-      Den kan spille fra mange innganger, for eksempel filer, nettverksstrømmer, fangst
+      Den kan spille fra mange innganger, for eksempel filer, nettverksstrÃ¸mmer, fangst
       enheter, skrivebord eller DVD, SVCD, VCD og lyd-CD. Den kan bruke det meste av lyd
       og videokodeker (MPEG 1/2/4, H264, VC-1, DivX, WMV, Vorbis, AC3, AAC,
-      etc.), og den kan også konvertere til forskjellige formater og/eller sende strømmer
+      etc.), og den kan ogsÃ¥ konvertere til forskjellige formater og/eller sende strÃ¸mmer
       gjennom nettverket.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &vlc-size;
+          NedlastingsstÃ¸rrelse: &vlc-size;
         </para>
       </listitem>
       <listitem>
@@ -70,6 +70,16 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
+    <itemizedlist spacing='compact'>
+      <listitem>
+        <para>
+          NÃ¸dvendig oppdatering:
+          <ulink url="&patch-root;/vlc-&vlc-version;-taglib-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">VLC Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -80,7 +90,7 @@
       <xref linkend="liba52"/>,
       <xref linkend="libgcrypt"/>
       <xref linkend="libmad"/>,
-      <xref linkend="lua52"/>, og
+      <xref linkend="lua"/>, og
       <xref linkend="x-window-system"/>
     </para>
 
@@ -133,7 +143,7 @@
       <xref linkend="libass"/>,
       <xref linkend="libmpeg2"/>,
       <xref linkend="libpng"/>,
-      <xref linkend="libtheora"/>,
+      <!--<xref linkend="libtheora"/>,-->
       <xref linkend="libva"/>,
       <xref linkend="libvorbis"/>,
       <xref linkend="opus"/>,
@@ -148,6 +158,7 @@
       <ulink url="https://sourceforge.net/projects/fluidsynth/">FluidSynth</ulink>,
       <ulink url="https://www.videolan.org/developers/libdca.html">libdca</ulink>,
       <ulink url="https://wiki.xiph.org/index.php/OggKate">libkate</ulink>,
+      <ulink url="https://www.theora.org">libthora</ulink>,
       <ulink url="https://www.khronos.org/openmax/">OpenMAX</ulink>,
       <ulink url="https://sourceforge.net/projects/schrodinger/">Schroedinger</ulink>,
       <ulink url="https://github.com/toots/shine">Shine</ulink>,
@@ -163,10 +174,16 @@
       <xref linkend="fontconfig"/>,
       <xref linkend="freetype2"/>,
       <xref linkend="fribidi"/>,
+      <!-- Using libplacebo is broken due to many API changes. The patch Arch
+      has for this only works on a version of libplacebo from July. VLC has
+      fixed this problem, but only for the upcoming VLC4.
+      https://code.videolan.org/videolan/vlc/-/merge_requests/2233#top -->
+      <xref linkend="libplacebo"/> (for Ã¸yeblikket Ã¸delagt),
       <xref linkend="librsvg"/>,
       <xref linkend="libvdpau"/>,
       <xref linkend="sdl"/>,
-      <ulink url="https://github.com/cacalabs/libcaca">libcaca</ulink>, og
+      <ulink url="https://github.com/cacalabs/libcaca">libcaca</ulink>,
+      <!--<ulink url="http://libplacebo.org/">libplacebo</ulink>, and-->
       <ulink url="https://github.com/Intel-Media-SDK/MediaSDK">libmfx</ulink>
     </para>
 
@@ -207,7 +224,7 @@
       <xref linkend="libnotify"/>,
       <xref linkend="libxml2"/>,
       <xref linkend="taglib"/>,
-      <xref role="runtime" linkend="xdg-utils"/> (kjøretid),
+      <xref role="runtime" linkend="xdg-utils"/> (kjÃ¸retid),
       <ulink url="https://www.team-mediaportal.com/extensions/mp2-plugins/atmolight">AtmoLight</ulink>,
       <ulink url="https://github.com/videolabs/libmicrodns">libmicrodns</ulink>,
       <ulink url="https://developers.google.com/protocol-buffers/">protobuf</ulink>, og
@@ -220,23 +237,24 @@
     <title>Installasjon av VLC</title>
 
     <para>
-      Installer <application>VLC</application> ved å kjøre følgende kommandoer:
+      FÃ¸rst legger du til en korreksjon for problemer med taglib-2.0 og senere:
     </para>
 
-<screen><userinput>export LUAC=/usr/bin/luac5.2                          &amp;&amp;
-export LUA_LIBS="$(pkg-config --libs lua52)"          &amp;&amp;
-export CPPFLAGS="$(pkg-config --cflags lua52)"        &amp;&amp;
+<screen><userinput>patch -Np1 -i ../vlc-&vlc-version;-taglib-1.patch</userinput></screen>
 
-BUILDCC=gcc ./configure --prefix=/usr --disable-libva &amp;&amp;
+    <para>
+      Installer <application>VLC</application> ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
+    </para>
 
+<screen><userinput>BUILDCC=gcc ./configure --prefix=/usr --disable-libplacebo &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make docdir=/usr/share/doc/vlc-&vlc-version; install</userinput></screen>
@@ -250,34 +268,13 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>export ...</command>: Disse kommandoene sikrer bygging med
-      <xref linkend="lua52"/>.  Oppstrøm støtter ikke lua 5.4 ennå.
-    </para>
-
-    <!--<para>
-      <command>sed ... modules/lua/...</command>: Denne kommandoen tillater
-      bygging med gjeldende versjon av <xref linkend="lua"/>.
-    </para>-->
-
-    <!--<para>
-      <command>sed ... a\#include &lt;QPainterPath&gt;/ ...</command>: Disse to
-      sed kommandoer fikser bygging med Qt-5.15.0.
-    </para>-->
-
-    <!--<para>
-      <parameter>- -disable-opencv</parameter>: Denne bryteren er nødvendig for å deaktivere
-      <application>opencv</application> som ikke er forenlig med denne
-      versjonen av <application>vlc</application>.
-    </para>-->
-
-    <para>
-      <parameter>--disable-libva</parameter>: Denne bryteren er nødvendig for å deaktivere
-      videoakselerasjon i VLC siden den er inkompatibel med ffmpeg-5, og
-      oppstrøm har ingen planer om å portere den på grunn av kompleksiteten.
+      <parameter>--disable-libplacebo</parameter>: Denne bryteren er nÃ¸dvendig for Ã¥
+      deaktive stÃ¸tte for bruk av libplacebo som en gjengivelsespipeline fordi VLC
+      er inkompatibel med den nyeste versjonen av libplacebo.
     </para>
 
     <para>
-      <option>--disable-vpx</option>: Bruk denne bryteren for å deaktivere
+      <option>--disable-vpx</option>: Bruk denne bryteren for Ã¥ deaktivere
       <application>libvpx</application>.
     </para>
 
@@ -317,15 +314,15 @@ make</userinput></screen>
     </para>
 
     <para>
-      <option>--disable-sftp</option>: Standard er å bygge sftp
+      <option>--disable-sftp</option>: Standard er Ã¥ bygge sftp
       modulen hvis <xref linkend="libssh2"/> er installert. Bruk denne bryteren
-      hvis du ikke ønsker å bygge denne modulen.
+      hvis du ikke Ã¸nsker Ã¥ bygge denne modulen.
     </para>
 
     <note>
       <para>
         Det er mange alternativer til <application>VLC</application> sin
-        <command>configure</command> kommando. Undersøk
+        <command>configure</command> kommando. UndersÃ¸k
         <command>configure --help</command> utdata for en fullstendig liste.
       </para>
     </note>
@@ -365,7 +362,7 @@ make</userinput></screen>
         <term><command>cvlc</command></term>
         <listitem>
           <para>
-            er et skript for å kjøre VLC med dummy grensesnittet
+            er et skript for Ã¥ kjÃ¸re VLC med dummy grensesnittet
           </para>
           <indexterm zone="vlc cvlc">
             <primary sortas="b-cvlc">cvlc</primary>
@@ -377,7 +374,7 @@ make</userinput></screen>
         <term><command>nvlc</command></term>
         <listitem>
           <para>
-            er et skript for å kjøre VLC med ncurses grensesnittet
+            er et skript for Ã¥ kjÃ¸re VLC med ncurses grensesnittet
           </para>
           <indexterm zone="vlc nvlc">
             <primary sortas="b-nvlc">nvlc</primary>
@@ -389,7 +386,7 @@ make</userinput></screen>
         <term><command>qvlc</command></term>
         <listitem>
           <para>
-            er et skript for å kjøre <application>VLC</application> med
+            er et skript for Ã¥ kjÃ¸re <application>VLC</application> med
             <application>Qt</application> grensesnittet
           </para>
           <indexterm zone="vlc qvlc">
@@ -402,7 +399,7 @@ make</userinput></screen>
         <term><command>rvlc</command></term>
         <listitem>
           <para>
-            er et skript for å kjøre <application>VLC</application> med en kommandolinje
+            er et skript for Ã¥ kjÃ¸re <application>VLC</application> med en kommandolinje
             grensesnitt
           </para>
           <indexterm zone="vlc rvlc">
@@ -415,7 +412,7 @@ make</userinput></screen>
         <term><command>svlc</command></term>
         <listitem>
           <para>
-            er et skript for å kjøre <application>VLC</application> med skinn
+            er et skript for Ã¥ kjÃ¸re <application>VLC</application> med skinn
             grensesnittet
           </para>
           <indexterm zone="vlc svlc">
@@ -440,7 +437,7 @@ make</userinput></screen>
         <term><command>vlc-wrapper</command></term>
         <listitem>
           <para>
-            er en innpakning for å gi slipp på privilegier med <application>VLC</application>
+            er en innpakning for Ã¥ gi slipp pÃ¥ privilegier med <application>VLC</application>
           </para>
           <indexterm zone="vlc vlc-wrapper">
             <primary sortas="b-vlc-wrapper">vlc-wrapper</primary>
