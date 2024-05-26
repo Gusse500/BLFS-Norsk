@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,12 +6,11 @@
 
   <!ENTITY libsoup3-download-http
            "&gnome-download-http;/libsoup/&libsoup3-minor;/libsoup-&libsoup3-version;.tar.xz">
-  <!ENTITY libsoup3-download-ftp
-           "&gnome-download-ftp;/libsoup/&libsoup3-minor;/libsoup-&libsoup3-version;.tar.xz">
-  <!ENTITY libsoup3-md5sum        "cd8b0fc5d53331b9c0b5b22aabac4294">
+  <!ENTITY libsoup3-download-ftp  " ">
+  <!ENTITY libsoup3-md5sum        "a63ea04a9686e9e4470b127ffe1eb96b">
   <!ENTITY libsoup3-size          "1.5 MB">
-  <!ENTITY libsoup3-buildsize     "28 MB (med tester)">
-  <!ENTITY libsoup3-time          "0.4 SBU (Bruker parallellisme=4; med tester)">
+  <!ENTITY libsoup3-buildsize     "38 MB (med tester)">
+  <!ENTITY libsoup3-time          "0.3 SBU (Bruker parallellisme=4; med tester)">
 ]>
 
 <sect1 id="libsoup3" xreflabel="libsoup-&libsoup3-version;">
@@ -29,12 +28,12 @@
 
     <para>
       <application>libsoup3</application> er et HTTP klient/server bibliotek for
-      <application>GNOME</application>. Den bruker GObject og GLib hovedsløyfen
-      for å integrere med <application>GNOME</application> applikasjoner og
-      den har også et asynkront API for bruk i trådede applikasjoner.
+      <application>GNOME</application>. Den bruker GObject og GLib hovedslÃ¸yfen
+      for Ã¥ integrere med <application>GNOME</application> applikasjoner og
+      den har ogsÃ¥ et asynkront API for bruk i trÃ¥dede applikasjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libsoup3-size;
+          NedlastingsstÃ¸rrelse: &libsoup3-size;
         </para>
       </listitem>
       <listitem>
@@ -72,7 +71,7 @@
 
     <bridgehead renderas="sect3">libsoup3 Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="glib-networking"/>,
       <xref linkend="libpsl"/>,
@@ -89,16 +88,17 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="apache"/> (kreves for å kjøre testpakken),
+      <xref linkend="apache"/> (kreves for Ã¥ kjÃ¸re testpakken),
       <xref linkend="brotli"/>,
-      <xref linkend="curl"/> (kreves for å kjøre testpakken),
+      <xref linkend="curl"/> (kreves for Ã¥ kjÃ¸re testpakken),
       <xref linkend="gi-docgen"/>,
-      <xref linkend="mitkrb"/> (kreves for å kjøre testpakken),
+      <xref linkend="mitkrb"/> (kreves for Ã¥ kjÃ¸re testpakken),
    <!-- It seems that XMLRPC is part of PHP 5.4.10 -->
       <xref linkend="php"/> kompilert med XMLRPC-EPI
-      støtte (bare brukt for XMLRPC regresjonstestene),
-      <xref linkend="samba"/> (ntlm_auth kreves for å kjøre testpakken),
-      <xref linkend="sysprof"/> (for profilering), og
+      stÃ¸tte (bare brukt for XMLRPC regresjonstestene),
+      <xref linkend="samba"/> (ntlm_auth kreves for Ã¥ kjÃ¸re testpakken),
+      <!--<xref linkend="sysprof"/> (for profiling),-->
+      <ulink url="&sysprof-url;">sysprof</ulink>, og
       <ulink url="https://github.com/posener/wstest">wstest</ulink>
     </para>
 
@@ -114,7 +114,7 @@
 <screen><userinput>sed 's/apiversion/soup_version/' -i docs/reference/meson.build</userinput></screen>
 
     <para>
-      Installer <application>libsoup3</application> ved å kjøre følgende
+      Installer <application>libsoup3</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -131,11 +131,11 @@ meson setup --prefix=/usr          \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -160,20 +160,21 @@ ninja</userinput></screen>
     <para>
       <option>-Ddocs=enabled</option>: Hvis <xref linkend='gi-docgen'/> er
       installert, API dokumentasjon vil bli bygget og installert uansett
-      om dette alternativet brukes eller ikke. Dette alternativet forårsaker at
+      om dette alternativet brukes eller ikke. Dette alternativet forÃ¥rsaker at
       <command>meson</command> kommandoen mislykkes hvis
       <xref linkend='gi-docgen'/> ikke er installert.
     </para>
 
     <para>
-      <parameter>-Dgssapi=disabled</parameter>: libsoup3 bygger som standard med GSSAPI støtte,
-      som krever Kerberos (det samme gjør testpakken).
+      <parameter>-Dgssapi=disabled</parameter>: libsoup3 bygger som standard med GSSAPI stÃ¸tte,
+      som krever Kerberos (det samme gjÃ¸r testpakken).
     </para>
 
     <para>
-      <parameter>-Dsysprof=disabled</parameter>: libsoup3 vil automatisk laste ned
-      en git versjon av <xref linkend="sysprof"/> hvis git er tilgjengelig eller å bruke den installerte
-      versjonen hvis tilgjengelig. Hvis du trenger profilering, fjern dette alternativet.
+      <parameter>-Dsysprof=disabled</parameter>: Libsoup3 vil automatisk
+      laste ned en git versjon av <ulink url="&sysprof-url;">sysprof</ulink> hvis
+      git er tilgjengelig eller bruk den installerte versjonen hvis den er til stede pÃ¥
+      systemet. Hvis du trenger profilering, fjern dette alternativet.
     </para>
 
   </sect2>
@@ -196,7 +197,7 @@ ninja</userinput></screen>
         <seg>
           /usr/include/libsoup-3.0,
           /usr/share/doc/libsoup-&libsoup3-version;
-          (bare installert hvis -Ddocs=enabled er gitt)
+          (Bare installert hvis Gi-docgen er tilgjengelig)
         </seg>
       </seglistitem>
     </segmentedlist>

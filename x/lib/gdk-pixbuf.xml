@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,8 +6,7 @@
 
   <!ENTITY gdk-pixbuf-download-http
            "&gnome-download-http;/gdk-pixbuf/2.42/gdk-pixbuf-&gdk-pixbuf-version;.tar.xz">
-  <!ENTITY gdk-pixbuf-download-ftp
-           "&gnome-download-ftp;/gdk-pixbuf/2.42/gdk-pixbuf-&gdk-pixbuf-version;.tar.xz">
+  <!ENTITY gdk-pixbuf-download-ftp  " ">
   <!ENTITY gdk-pixbuf-md5sum        "4a62f339cb1424693fba9bb7ffef8150">
   <!ENTITY gdk-pixbuf-size          "6.2 MB">
   <!ENTITY gdk-pixbuf-buildsize     "36 MB (med tester)">
@@ -28,15 +27,15 @@
     <title>Introduksjon til Gdk Pixbuf</title>
 
     <para>
-      <application>Gdk Pixbuf</application> pakken er et verktøysett for bildelasting
+      <application>Gdk Pixbuf</application> pakken er et verktÃ¸ysett for bildelasting
       og pikselbuffermanipulering. Den brukes av
       <application>GTK+ 2</application> og <application>GTK+ 3</application> til
-      å laste og manipulere bilder. Tidligere ble det distribuert som en del av
+      Ã¥ laste og manipulere bilder. Tidligere ble det distribuert som en del av
       <application>GTK+ 2</application> men den ble delt opp i en separat
       pakke som forberedelse til endringen til <application>GTK+ 3</application>.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -57,7 +56,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gdk-pixbuf-size;
+          NedlastingsstÃ¸rrelse: &gdk-pixbuf-size;
         </para>
       </listitem>
       <listitem>
@@ -74,7 +73,7 @@
 
     <bridgehead renderas="sect3">Gdk Pixbuf Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>,
       <xref linkend="libjpeg"/>,
@@ -85,26 +84,24 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="docutils"/>,
-      <xref role="runtime" linkend="librsvg"/> (kjøretidsavhengighet, nødvendig for
+      <xref role="runtime" linkend="librsvg"/> (kjÃ¸retidsavhengighet, nÃ¸dvendig for
          lasting av symbolske ikoner) og
       <xref linkend="libtiff"/>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri (påkrevd hvis du bygger GNOME)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (pÃ¥krevd hvis du bygger GNOME)</bridgehead>
     <para role="optional">
       <xref linkend="gobject-introspection"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref role="runtime" linkend="gdk-pixbuf-xlib"/>
-      (kjøretidsavhengighet, nødvendig for å laste XPM bilder),
       <xref linkend="gi-docgen"/>
-      (for å generere dokumentasjon),
+      (for Ã¥ generere dokumentasjon),
 	  <xref role="runtime" linkend="libavif"/>
-      (kjøretidsavhengighet, nødvendig for å laste AVIF bilder), and
+      (kjÃ¸retidsavhengighet, nÃ¸dvendig for Ã¥ laste AVIF bilder), and
       <xref role="runtime" linkend="webp-pixbuf-loader"/>
-      (kjøretidsavhengighet, nødvendig for å laste WebP bilder)
+      (kjÃ¸retidsavhengighet, nÃ¸dvendig for Ã¥ laste WebP bilder)
     </para>
 
   </sect2>
@@ -113,7 +110,7 @@
     <title>Installasjon av Gdk Pixbuf</title>
 
     <para>
-      Installer <application>Gdk Pixbuf</application> ved å kjøre følgende
+      Installer <application>Gdk Pixbuf</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -127,8 +124,8 @@ meson setup ..            \
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
-      API dokumentasjonen for denne pakken, kjør:
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
+      API dokumentasjonen for denne pakken, kjÃ¸r:
     </para>
 
 <screen role='nodump'><userinput>sed "/docs_dir =/s@\$@ / 'gdk-pixbuf-&gdk-pixbuf-version;'@" -i ../docs/meson.build &amp;&amp;
@@ -136,21 +133,21 @@ meson configure -Dgtk_doc=true                                         &amp;&amp
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>. Testene
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>. Testene
       bruker av disken(e) mye.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <note>
       <para>
-        Hvis du installerte pakken på systemet ditt ved hjelp av
+        Hvis du installerte pakken pÃ¥ systemet ditt ved hjelp av
         <quote>DESTDIR</quote> metoden, en viktig fil ble ikke installert og
-        bør kopieres og/eller genereres. Generer den ved å bruke følgende
+        bÃ¸r kopieres og/eller genereres. Generer den ved Ã¥ bruke fÃ¸lgende
         kommando som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -216,8 +213,8 @@ ninja</userinput></screen>
         <term><command>gdk-pixbuf-csource</command></term>
         <listitem>
           <para>
-            er et lite verktøy som genererer C kode som inneholder bilder, brukt
-            for å kompilere bilder direkte inn i programmer
+            er et lite verktÃ¸y som genererer C kode som inneholder bilder, brukt
+            for Ã¥ kompilere bilder direkte inn i programmer
           </para>
           <indexterm zone="gdk-pixbuf gdk-pixbuf-csource">
             <primary sortas="b-gdk-pixbuf-csource">gdk-pixbuf-csource</primary>
@@ -229,7 +226,7 @@ ninja</userinput></screen>
         <term><command>gdk-pixbuf-pixdata</command></term>
         <listitem>
           <para>
-            er et verktøy som brukes til å konvertere GdkPixbuf til GdkPixdata
+            er et verktÃ¸y som brukes til Ã¥ konvertere GdkPixbuf til GdkPixdata
           </para>
           <indexterm zone="gdk-pixbuf gdk-pixbuf-pixdata">
             <primary sortas="b-gdk-pixbuf-pixdata">gdk-pixbuf-pixdata</primary>
@@ -267,7 +264,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libgdk_pixbuf-2.0.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som brukes til å laste og gjengi bilder
+            inneholder funksjoner som brukes til Ã¥ laste og gjengi bilder
           </para>
           <indexterm zone="gdk-pixbuf libgdk_pixbuf-2">
             <primary sortas="c-libgdk_pixbuf-2">libgdk_pixbuf-2.0.so</primary>
@@ -280,7 +277,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libgdk_pixbuf_xlib-2.0.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som brukes til å manipulere bilder og grensesnitt med
+            inneholder funksjoner som brukes til Ã¥ manipulere bilder og grensesnitt med
             <application>Xlib</application>
           </para>
           <indexterm zone="gdk-pixbuf libgdk_pixbuf_xlib-2">
