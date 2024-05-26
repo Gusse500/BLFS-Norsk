@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,8 +6,8 @@
 
   <!ENTITY icewm-download-http "https://github.com/ice-wm/icewm/archive/&icewm-version;/icewm-&icewm-version;.tar.gz">
   <!ENTITY icewm-download-ftp  " ">
-  <!ENTITY icewm-md5sum        "d85cd83a01e5edf419d9bbed994e4eb6">
-  <!ENTITY icewm-size          "2.3 MB">
+  <!ENTITY icewm-md5sum        "09fd852e60087f22d9404c48ff1b3c81">
+  <!ENTITY icewm-size          "2.4 MB">
   <!ENTITY icewm-buildsize     "47 MB">
   <!ENTITY icewm-time          "0.4 SBU">
 ]>
@@ -26,11 +26,11 @@
     <title>Introduksjon til IceWM</title>
 
     <para>
-      <application>IceWM</application> er en vindusbehandler med mål om
-       hastighet, enkelhet og ikke å komme i brukeren&apos; sin vei.
+      <application>IceWM</application> er en vindusbehandler med mÃ¥l om
+       hastighet, enkelhet og ikke Ã¥ komme i brukeren&apos; sin vei.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &icewm-size;
+          NedlastingsstÃ¸rrelse: &icewm-size;
         </para>
       </listitem>
       <listitem>
@@ -68,22 +68,23 @@
 
     <bridgehead renderas="sect3">IceWM Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>,
-      <xref linkend="x-window-system"/>, og
-      <xref linkend="gdk-pixbuf-xlib"/>
+      <xref linkend="imlib2"/>, og
+      <xref linkend="x-window-system"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="asciidoc"/> (for å regenerere HTML dokumentasjonen),
-      <xref linkend="fribidi"/> (for språk skrevet fra høyre til venstre),
-      <xref linkend="imlib2"/>,
+      <xref linkend="asciidoc"/> (for Ã¥ regenerere HTML dokumentasjonen),
+      <xref linkend="fribidi"/> (for sprÃ¥k skrevet fra hÃ¸yre til venstre),
       <xref linkend="librsvg"/>,
       <xref linkend="libao"/>,
-      <xref linkend="libsndfile"/>, og
-      <xref linkend="alsa-lib"/> (for det eksperimentelle icesound programmet)
+      <xref linkend="libsndfile"/>,
+      <xref linkend="alsa-lib"/> (for det eksperimentelle icesound programmet),
+      og <ulink url='https://gitlab.gnome.org/Archive/gdk-pixbuf-xlib'>
+        gdk-pixbuf-xlib</ulink>
     </para>
 
    </sect2>
@@ -101,7 +102,7 @@
     </note>
 -->
     <para>
-      Installer <application>IceWM</application> ved å kjøre følgende
+      Installer <application>IceWM</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -112,8 +113,6 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_BUILD_TYPE=Release  \
       -DCFGDIR=/etc               \
       -DENABLE_LTO=ON             \
-      -DCONFIG_GDK_PIXBUF_XLIB=ON \
-      -DCONFIG_IMLIB2=OFF         \
       -DDOCDIR=/usr/share/doc/icewm-&icewm-version;  \
       .. &amp;&amp;
 make</userinput></screen>
@@ -123,7 +122,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 <!--
 <screen role="root"><userinput>cp ../lib/IceWM.jpg lib &amp;&amp;
@@ -135,7 +134,7 @@ rm /usr/share/xsessions/icewm.desktop</userinput></screen>
     <para>
       Denne pakken lager to <filename>.desktop</filename> filer i
       <filename class="directory">/usr/share/xsessions/</filename> mappen.
-      Begge er ikke nødvendig i et BLFS system, så unngå at de ekstra filene vises
+      Begge er ikke nÃ¸dvendig i et BLFS system, sÃ¥ unngÃ¥ at de ekstra filene vises
       som et alternativ i en skjermbehandler. Som &root; bruker:
     </para>
 
@@ -153,7 +152,7 @@ rm /usr/share/xsessions/icewm.desktop</userinput></screen>
 <!--
     <para>
       <command>rm /usr/share/xsessions/icewm.desktop</command>: Pakken
-      sendes med både icewm.desktop og icewm-xsession.desktop. Førstnevnte har
+      sendes med bÃ¥de icewm.desktop og icewm-xsession.desktop. FÃ¸rstnevnte har
       tilsynelatende blitt brukt tidligere, men den vil henge hvis den brukes med en moderne
       desktop-manager<phrase revision='sysv'> som
       <xref linkend="lightdm"/></phrase>.
@@ -211,9 +210,9 @@ rm /usr/share/xsessions/icewm.desktop</userinput></screen>
 
       <para>
         Hvis <application>IceWM</application> er den eneste Vindusbehandleren du
-        ønsker å bruke, kan du starte den med en <filename>.xinitrc</filename> fil
-        i hjemmemappen din. Sørg for å sikkerhetskopiere gjeldende
-        <filename>.xinitrc</filename> før du fortsetter.
+        Ã¸nsker Ã¥ bruke, kan du starte den med en <filename>.xinitrc</filename> fil
+        i hjemmemappen din. SÃ¸rg for Ã¥ sikkerhetskopiere gjeldende
+        <filename>.xinitrc</filename> fÃ¸r du fortsetter.
       </para>
 
       <indexterm zone="icewm icewm-config">
@@ -223,7 +222,7 @@ rm /usr/share/xsessions/icewm.desktop</userinput></screen>
 <screen><userinput>echo icewm-session &gt; ~/.xinitrc</userinput></screen>
 
       <para>
-        Nå oppretter du <application>IceWM</application> konfigurasjonsfiler:
+        NÃ¥ oppretter du <application>IceWM</application> konfigurasjonsfiler:
       </para>
 
 <screen><userinput>mkdir -pv ~/.icewm                                      &amp;&amp;
@@ -234,55 +233,55 @@ cp -v /usr/share/icewm/toolbar ~/.icewm/toolbar         &amp;&amp;
 cp -v /usr/share/icewm/winoptions ~/.icewm/winoptions</userinput></screen>
 
       <para>
-        Du kan nå redigere disse filene for å møte dine krav. Spesielt,
-        gjennomgå <filename>preferences</filename> filen. Du kan bruke
-        <command>Logout -> Restart-IceWM</command> på hovedmenyen for å laste
+        Du kan nÃ¥ redigere disse filene for Ã¥ mÃ¸te dine krav. Spesielt,
+        gjennomgÃ¥ <filename>preferences</filename> filen. Du kan bruke
+        <command>Logout -> Restart-IceWM</command> pÃ¥ hovedmenyen for Ã¥ laste
         dine endrede preferanser, men endringer i bakgrunnen tar bare
-        effekt når <application>IceWM</application> er startet.
+        effekt nÃ¥r <application>IceWM</application> er startet.
       </para>
 
       <para>
-        På dette tidspunktet kan du <emphasis>enten</emphasis> tilpasse
+        PÃ¥ dette tidspunktet kan du <emphasis>enten</emphasis> tilpasse
         tradisjonelle menyfiler som passer dine behov,
         <emphasis>eller</emphasis> bruke den nyere
         <command>icewm-menu-fdo</command> beskrevet senere.
       </para>
 
       <para>
-        Syntaksen til menyene er forklart i hjelpefilene, som du får
-        tilgang til ved å kjøre <command>help</command> fra menyen, men noen av
+        Syntaksen til menyene er forklart i hjelpefilene, som du fÃ¥r
+        tilgang til ved Ã¥ kjÃ¸re <command>help</command> fra menyen, men noen av
         detaljen er utdatert og standardvalgene i menyene (noen
-        få gamle applikasjoner på hovedmenyen, alt annet på
-        <command>Programs</command> menyen) vil ha nytte av å bli oppdatert til
-        å møte dine behov. Følgende eksempler er gitt for å oppmuntre deg
-        til å tenke på hvordan du ønsker å organisere menyene dine. Vær oppmerksom på
-        følgende:
+        fÃ¥ gamle applikasjoner pÃ¥ hovedmenyen, alt annet pÃ¥
+        <command>Programs</command> menyen) vil ha nytte av Ã¥ bli oppdatert til
+        Ã¥ mÃ¸te dine behov. FÃ¸lgende eksempler er gitt for Ã¥ oppmuntre deg
+        til Ã¥ tenke pÃ¥ hvordan du Ã¸nsker Ã¥ organisere menyene dine. VÃ¦r oppmerksom pÃ¥
+        fÃ¸lgende:
       </para>
 
       <itemizedlist>
         <listitem>
           <para>
-            Hvis et program som er oppført i menyen ikke er installert, vil det
-            ikke vises når menyen vises. Tilsvarende hvis programmet
-            eksisterer, men det angitte ikonet ikke gjør det, vil ingen ikon vises
+            Hvis et program som er oppfÃ¸rt i menyen ikke er installert, vil det
+            ikke vises nÃ¥r menyen vises. Tilsvarende hvis programmet
+            eksisterer, men det angitte ikonet ikke gjÃ¸r det, vil ingen ikon vises
             i menyen.
           </para>
         </listitem>
         <listitem>
           <para>
-            Ikonene kan være enten <filename>.xpm</filename> eller
-            <filename>.png</filename> filer, og det er ikke nødvendig å spesifisere
+            Ikonene kan vÃ¦re enten <filename>.xpm</filename> eller
+            <filename>.png</filename> filer, og det er ikke nÃ¸dvendig Ã¥ spesifisere
             utvidelsen. Hvis ikonet er plassert i &quot;library&quot;
             (<filename class="directory">/usr/share/icewm/icons</filename>)
-            er det ikke nødvendig å spesifisere banen.
+            er det ikke nÃ¸dvendig Ã¥ spesifisere banen.
           </para>
         </listitem>
         <listitem>
           <para>
             De fleste programmer er i undermenyer, og hovedmenyen vil alltid
-            legge til oppføringer for
+            legge til oppfÃ¸ringer for
             <literal>windows, help, settings, logout</literal>
-            på bunnen.
+            pÃ¥ bunnen.
           </para>
         </listitem>
         <listitem>
@@ -295,13 +294,13 @@ cp -v /usr/share/icewm/winoptions ~/.icewm/winoptions</userinput></screen>
         </listitem>
         <listitem>
           <para>
-            Standard verktøylinje er ikke endret.
+            Standard verktÃ¸ylinje er ikke endret.
           </para>
         </listitem>
       </itemizedlist>
 
       <para>
-        Hvis du ønsker å bruke denne tradisjonelle metoden, er det flere eksempler i
+        Hvis du Ã¸nsker Ã¥ bruke denne tradisjonelle metoden, er det flere eksempler i
         tidligere utgivelser av denne boken (f.eks. BLFS-7.8).
       </para>
 
@@ -310,20 +309,20 @@ cp -v /usr/share/icewm/winoptions ~/.icewm/winoptions</userinput></screen>
         samsvarer med FDO Desktop Menu Specifications, hvor programmer kan bli
         funnet fordi de har en .desktop fil i XDG_DATA_HOME eller
         XDG_DATA_DIR mappene. I motsetning til de fleste vindusbehandlere,
-        <application>icewm</application> søker ikke etter programmer når
-        menyen påkalles, så hvis du tar denne ruten må du kjøre
-        følgende kommando etter installasjon eller fjerning av programmer:
+        <application>icewm</application> sÃ¸ker ikke etter programmer nÃ¥r
+        menyen pÃ¥kalles, sÃ¥ hvis du tar denne ruten mÃ¥ du kjÃ¸re
+        fÃ¸lgende kommando etter installasjon eller fjerning av programmer:
       </para>
 
 <screen><userinput>icewm-menu-fdo >~/.icewm/menu</userinput></screen>
 
       <para>
-        Hvis du ønsker å putte ikoner på skrivebordet ditt, må du installere et
+        Hvis du Ã¸nsker Ã¥ putte ikoner pÃ¥ skrivebordet ditt, mÃ¥ du installere et
         program som f.eks <xref linkend="rox-filer"/> som gir en oppslagstavle.
-        Hvis du gjør det vil du ikke lenger få tilgang til menyen ved å
-        høyreklikke på skrivebordet, du må bruke
-        <application>IceWM</application> knappen. For å sikre at
-        <application>rox</application> oppslagstavlen kjører, følgende
+        Hvis du gjÃ¸r det vil du ikke lenger fÃ¥ tilgang til menyen ved Ã¥
+        hÃ¸yreklikke pÃ¥ skrivebordet, du mÃ¥ bruke
+        <application>IceWM</application> knappen. For Ã¥ sikre at
+        <application>rox</application> oppslagstavlen kjÃ¸rer, fÃ¸lgende
         kommandoer vil putte den i oppstartsfilen:
       </para>
 
@@ -340,20 +339,20 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
        <itemizedlist>
          <listitem>
            <para>
-             Ctrl + Alt + F<replaceable>N</replaceable> : går til
+             Ctrl + Alt + F<replaceable>N</replaceable> : gÃ¥r til
              <filename>tty<replaceable>N</replaceable></filename>.
            </para>
          </listitem>
          <listitem>
            <para>
-             Ctrl + Alt + <replaceable>N</replaceable> : går til skrivebord
+             Ctrl + Alt + <replaceable>N</replaceable> : gÃ¥r til skrivebord
              nummer <replaceable>N</replaceable>
            </para>
          </listitem>
          <listitem>
            <para>
-             Ctrl + Alt + Space : åpne en boks på oppgavelinjen der du kan
-             taste inn navnet på et program og kjøre det.
+             Ctrl + Alt + Space : Ã¥pne en boks pÃ¥ oppgavelinjen der du kan
+             taste inn navnet pÃ¥ et program og kjÃ¸re det.
            </para>
          </listitem>
        </itemizedlist>
@@ -389,7 +388,7 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
         <term><command>icehelp</command></term>
         <listitem>
           <para>
-            brukes til å vise html manualen
+            brukes til Ã¥ vise html manualen
           </para>
           <indexterm zone="icewm icehelp">
             <primary sortas="b-icehelp">icehelp</primary>
@@ -414,7 +413,7 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
         <term><command>icesound</command></term>
         <listitem>
           <para>
-            spiller av lydfiler på GUI hendelser reist av IceWM
+            spiller av lydfiler pÃ¥ GUI hendelser reist av IceWM
           </para>
           <indexterm zone="icewm icesound">
             <primary sortas="b-icesound">icesound</primary>
@@ -439,7 +438,7 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
         <listitem>
           <para>
             kan lage en fil i et format som passer for en IceWM menyen, som
-            viser de programmene som for øyeblikket er installert i et oppsett som samsvarer med
+            viser de programmene som for Ã¸yeblikket er installert i et oppsett som samsvarer med
             FDO Desktop Menu Specifications
           </para>
           <indexterm zone="icewm icewm-menu-fdo">
@@ -452,7 +451,7 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
         <term><command>icewm-menu-xrandr</command></term>
         <listitem>
           <para>
-            er et hjelpeprogram som brukes til å administrere flerskjermskonfigurasjoner
+            er et hjelpeprogram som brukes til Ã¥ administrere flerskjermskonfigurasjoner
           </para>
           <indexterm zone="icewm icewm-menu-xrandr">
             <primary sortas="b-icewm-menu-xrandr">icewm-menu-xrandr</primary>
@@ -464,8 +463,8 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
         <term><command>icewm-session</command></term>
         <listitem>
           <para>
-            kjører icewmbg, icewm, icewmtray, startup, shutdown (dvs. oppstart
-            og avslutning skript kjøres hvis de er installert)
+            kjÃ¸rer icewmbg, icewm, icewmtray, startup, shutdown (dvs. oppstart
+            og avslutning skript kjÃ¸res hvis de er installert)
           </para>
           <indexterm zone="icewm icewm-session">
             <primary sortas="b-icewm-session">icewm-session</primary>
@@ -477,7 +476,7 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
         <term><command>icewm-set-gnomewm</command></term>
         <listitem>
           <para>
-            er et skript for å angi <application>GNOME</application> vindusbehandler
+            er et skript for Ã¥ angi <application>GNOME</application> vindusbehandler
             til <application>icewm</application> ved bruk av
             <application>gconftool</application>
           </para>
@@ -491,7 +490,7 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
         <term><command>icewmbg</command></term>
         <listitem>
           <para>
-            brukes til å sette bakgrunnen, i henhold til de ulike
+            brukes til Ã¥ sette bakgrunnen, i henhold til de ulike
             <literal>DesktopBackground</literal> innstillinger i preferansene
           </para>
           <indexterm zone="icewm icewmbg">
@@ -504,7 +503,7 @@ chmod +x ~/.icewm/startup</literal></userinput></screen>
         <term><command>icewmhint</command></term>
         <listitem>
           <para>
-            brukes internt for å gi hint til brukeren
+            brukes internt for Ã¥ gi hint til brukeren
           </para>
           <indexterm zone="icewm icewmhint">
             <primary sortas="b-icewmhint">icewmhint</primary>

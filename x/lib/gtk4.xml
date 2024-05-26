@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY gtk4-download-http "&gnome-download-http;/gtk/&gtk4-minor;/gtk-&gtk4-version;.tar.xz">
-  <!ENTITY gtk4-download-ftp  "&gnome-download-ftp;/gtk/&gtk4-minor;/gtk-&gtk4-version;.tar.xz">
-  <!ENTITY gtk4-md5sum        "69372ddb998c125c3a04c44b8c68b339">
-  <!ENTITY gtk4-size          "16 MB">
-  <!ENTITY gtk4-buildsize     "562 MB (med dokumenter; legg til 29 MB for tester)">
-  <!ENTITY gtk4-time          "1.3 SBU (bruker parallellisme=4; med dokumenter; legg til 0.6 SBU for tester)">
+  <!ENTITY gtk4-download-ftp  " ">
+  <!ENTITY gtk4-md5sum        "45db1b94414e7a9f63bd32db9557edf0">
+  <!ENTITY gtk4-size          "17 MB">
+  <!ENTITY gtk4-buildsize     "502 MB (med dokumenter; legg til 23 MB for tester)">
+  <!ENTITY gtk4-time          "1.3 SBU (bruker parallellisme=4; med dokumenter; legg til 0.5 SBU for tester)">
 ]>
 
 <sect1 id="gtk4" xreflabel="GTK-&gtk4-version;">
@@ -26,10 +26,10 @@
 
     <para>
       <application>GTK 4</application> pakken inneholder biblioteker som brukes til
-      å lage grafiske brukergrensesnitt for applikasjoner.
+      Ã¥ lage grafiske brukergrensesnitt for applikasjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -50,7 +50,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gtk4-size;
+          NedlastingsstÃ¸rrelse: &gtk4-size;
         </para>
       </listitem>
       <listitem>
@@ -67,7 +67,7 @@
 
     <bridgehead renderas="sect3">GTK 4 Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="fribidi"/>,
       <xref linkend="gdk-pixbuf"/>,
@@ -82,15 +82,15 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="adwaita-icon-theme"/> (standard for enkelte gtk4 innstillingsnøkler),
+      <xref linkend="adwaita-icon-theme"/> (standard for enkelte gtk4 innstillingsnÃ¸kler),
       <xref linkend="gst10-plugins-bad"/>,
-      <xref role='runtime' linkend="gst10-plugins-good"/> (kjøretid,
+      <xref role='runtime' linkend="gst10-plugins-good"/> (kjÃ¸retid,
       bygget med <xref role='nodep' linkend='libvpx'/>),
-      <xref linkend="hicolor-icon-theme"/> (nødvendig for tester og for standarder), og
+      <xref linkend="hicolor-icon-theme"/> (nÃ¸dvendig for tester og for standarder), og
       <xref linkend="librsvg"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt (Påkrevd hvis GNOME bygges)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (PÃ¥krevd hvis GNOME bygges)</bridgehead>
     <para role="recommended">
       <xref linkend="gobject-introspection"/>
     </para>
@@ -104,13 +104,15 @@
       <xref role='nodep' linkend='libvpx'/>),
       <xref linkend="gi-docgen"/>,
       <xref role="runtime" linkend="highlight"/>
-        (kjøretid, bare brukt av <command>gtk4-demo</command> for syntaks
+        (kjÃ¸retid, bare brukt av <command>gtk4-demo</command> for syntaks
         utheving av demo kildekoden),
       <xref linkend="libcloudproviders"/>,
       <xref linkend="sassc"/>,
       <xref linkend="tracker3"/>,
+      <xref linkend="vulkan-loader"/>,
 	  <ulink url="https://github.com/OpenPrinting/cpdb-libs">cpdb</ulink>, og
-      <ulink url="https://vulkan.lunarg.com/sdk/home">vulkan</ulink>
+      <ulink url="&sysprof-url;">sysprof</ulink>
+      <!--<ulink url="https://vulkan.lunarg.com/sdk/home">vulkan</ulink>-->
     </para>
 
   </sect2>
@@ -119,16 +121,7 @@
     <title>Installasjon av GTK 4</title>
 
     <para>
-      Gjør først noen endringer fra oppstrøms:
-    </para>
-
-<screen><userinput>sed -e '/glib-object.h/a #include &lt;gdk/gdk.h&gt;'        \
-    -e '/ gtk_printer_option/i GDK_AVAILABLE_IN_ALL'  \
-    -e '/\*gtk_printer_option/i GDK_AVAILABLE_IN_ALL' \
-    -i.orig gtk/print/gtkprinteroptionprivate.h</userinput></screen>
-
-    <para>
-      Installer <application>GTK 4</application> ved å kjøre følgende
+      Installer <application>GTK 4</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -143,24 +136,24 @@ meson setup --prefix=/usr           \
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
-      API dokumentasjonen for denne pakken, kjør:
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
+      API dokumentasjonen for denne pakken, kjÃ¸r:
     </para>
 
 <screen remap='doc'><userinput>sed "s@'doc'@&amp; / 'gtk-&gtk4-version;'@" -i ../docs/reference/meson.build &amp;&amp;
-meson configure -Dgtk_doc=true                                   &amp;&amp;
+meson configure -Ddocumentation=true                             &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å kjøre testene, utsted: <command>dbus-run-session meson test --setup
-      x11</command>. Hvis du er i en Wayland økt, bytt ut x11 med wayland.
-      Ni tester er kjent for å mislykkes hvis
+      For Ã¥ kjÃ¸re testene, utsted: <command>dbus-run-session meson test --setup
+      x11</command>. Hvis du er i en Wayland Ã¸kt, bytt ut x11 med wayland.
+      Ni tester er kjent for Ã¥ mislykkes hvis
       <ulink url="https://gitlab.gnome.org/GNOME/cantarell-fonts">Cantrell fonts</ulink>
       ikke er installert. Mange tester vil mislykkes hvis
       <filename>~/.config/gtk-4.0/settings.ini</filename> eksisterer og gtk-modules
       linjen ikke er kommentert ut.
-      På systemer med NVIDIA grafikkort kan testene ta betydelig
-      lengre enn den annonserte testtiden.
+      PÃ¥ systemer med NVIDIA grafikkort kan testene ta betydelig
+      lengre enn testtiden ovenfor.
     </para>
 <!-- [pierre]: 4.6.0, wayland: 727 ok; 2 Expected Fail;  1 Fail; 1 Skipped
      [bdubbs]: 4.6.3, x11,     724 OK, 2 Expected Fail, 12 Fail. 1 Skipped
@@ -176,10 +169,14 @@ ninja</userinput></screen>
                above on native x11
      [bdubbs]: 4.12.0, x11,   1453 OK, 0 Expected Fail,  9 Fail. 5 Skipped, 0 Timeout
                above on native x11
+     [bdubbs]: 4.12.1, x11,   1455 OK, 0 Expected Fail,  7 Fail. 5 Skipped, 0 Timeout
+               above on native x11
+     [renodr]: 4.12.4, x11,   1535 OK, 0 Expected Fail,  8 Fail, 5 Skipped, 0 Timeout
+               above on native X11
 -->
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -198,38 +195,46 @@ ninja</userinput></screen>
 
     <para>
       <parameter>-Dintrospection=enabled</parameter>: Denne bryteren aktiverer
-      å bruke <xref linkend='gobject-introspection'/> til å generere GIR bindinger
+      Ã¥ bruke <xref linkend='gobject-introspection'/> til Ã¥ generere GIR bindinger
       av disse pakkene. Disse bindingene kreves av GNOME.
     </para>
 
     <para>
       <option>-Dcloudproviders=enabled</option>: Bruk denne bryteren hvis du har
-      <xref linkend="libcloudproviders" role="nodep"/> installert og ønsker å
-      aktivere støtte for skyleverandører i et filvelgervindu.
-    </para>
-
-    <para>
-      <option>-Dsysprof=enabled</option>: Bruk denne bryteren hvis du har
-      <xref linkend="sysprof"/> installert og ønsker å aktivere sporingsstøtte for
-      GTK4 baserte applikasjoner.
+      <xref linkend="libcloudproviders" role="nodep"/> installert og Ã¸nsker Ã¥
+      aktivere stÃ¸tte for skyleverandÃ¸rer i et filvelgervindu.
     </para>
 
     <para>
       <option>-Dtracker=enabled</option>: Bruk denne bryteren hvis du har
-      <xref linkend="tracker3"/> installert og ønsker å bruke søkefunksjonalitet
-      når du kjører en filvelger.
+      <xref linkend="tracker3"/> installert og Ã¸nsker Ã¥ bruke sÃ¸kefunksjonalitet
+      nÃ¥r du kjÃ¸rer en filvelger.
     </para>
 
     <para>
       <option>-Dcolord=enabled</option>: Bruk denne bryteren hvis du har
-      <xref linkend="colord"/> installert og ønsker å bruke colord med CUPS
+      <xref linkend="colord"/> installert og Ã¸nsker Ã¥ bruke colord med CUPS
       utskrifts bakstykket.
     </para>
 
     <para>
       <option>-Dman-pages=true</option>: Bruk denne bryteren hvis du har
-      <xref linkend='docutils'/> installert og ønsker å generere
+      <xref linkend='docutils'/> installert og Ã¸nsker Ã¥ generere
       manualsider.
+    </para>
+
+    <para>
+      <option>-Dsysprof=enabled</option>: Bruk denne bryteren hvis du har
+      <ulink url="&sysprof-url;">sysprof</ulink> installert og Ã¸nsker Ã¥ aktivere 
+      sporingsstÃ¸tte for GTK4 baserte applikasjoner.
+    </para>
+
+    <para>
+      <option>-Dvulkan=enabled</option>: Bruk denne bryteren hvis du har
+      <xref linkend="vulkan-loader"/> installert og Ã¸nsker Ã¥ bygge
+       det eksperimentelle Vulkan bakstykket. Merk at du mÃ¥ ha
+      <ulink url="https://github.com/google/shaderc/blob/main/downloads.md">glslc</ulink>
+      installert hvis du bestemmer deg for Ã¥ aktivere dette alternativet.
     </para>
 
   </sect2>
@@ -257,12 +262,12 @@ ninja</userinput></screen>
     <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        <application>GTK 4</application> temaer endrer måten en
+        <application>GTK 4</application> temaer endrer mÃ¥ten en
         <application>GTK 4</application> applikasjonen ser ut. Et ikontema kan
-        brukes til å endre ikonene som vises på programmets verktøylinje.
+        brukes til Ã¥ endre ikonene som vises pÃ¥ programmets verktÃ¸ylinje.
         Hvis du har installert et <application>GTK 4</application> tema (f.eks.
         Adwaita temaet bygd i <application>GTK 4</application>),
-        et ikontema (som f.eks <xref linkend="oxygen-icons5"/>) og/eller en font
+        et ikontema (som f.eks <xref linkend="oxygen-icons"/>) og/eller en font
         (<xref linkend="dejavu-fonts"/>), kan du angi dine preferanser i
         <filename>~/.config/gtk-4.0/settings.ini</filename>, eller standard
         systemomfattende konfigurasjonsfil (som
@@ -286,8 +291,8 @@ gtk-cursor-theme-name = <replaceable>Adwaita</replaceable></literal>
 EOF</userinput></screen>
 
        <para>
-         Det finnes mange innstillingsnøkler, noen med standardverdier. Du kan finne
-         dem på <ulink
+         Det finnes mange innstillingsnÃ¸kler, noen med standardverdier. Du kan finne
+         dem pÃ¥ <ulink
          url="https://developer.gnome.org/gtk4/stable/GtkSettings.html">Settings:
          GTK 4 Reference Manual</ulink>.
        </para>
@@ -338,7 +343,7 @@ EOF</userinput></screen>
         <term><command>gtk4-broadwayd</command></term>
         <listitem>
           <para>
-            gir støtte for visning av GTK 4 applikasjoner i en
+            gir stÃ¸tte for visning av GTK 4 applikasjoner i en
             nettleser som bruker HTML5 og web-sockets
           </para>
           <indexterm zone="gtk4 gtk4-broadwayd">
@@ -351,7 +356,7 @@ EOF</userinput></screen>
         <term><command>gtk4-builder-tool</command></term>
         <listitem>
           <para>
-            utfører ulike operasjoner på GtkBuilder .ui filer
+            utfÃ¸rer ulike operasjoner pÃ¥ GtkBuilder .ui filer
           </para>
           <indexterm zone="gtk4 gtk4-builder-tool">
             <primary sortas="b-gtk4-builder-tool">gtk4-builder-tool</primary>
@@ -364,7 +369,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er et enkelt program som viser noen av oppgavene som kan bli
-            utført med GTK 4
+            utfÃ¸rt med GTK 4
           </para>
           <indexterm zone="gtk4 gtk4-demo">
             <primary sortas="b-gtk4-demo">gtk4-demo</primary>
@@ -389,7 +394,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             konverterer symbolske SVG ikoner til spesielle PNG filer. GTK 4 kan laste
-            og farge disse PNGene på nytt, akkurat som originale SVGer, men laster dem
+            og farge disse PNGene pÃ¥ nytt, akkurat som originale SVGer, men laster dem
             mye raskere
           </para>
           <indexterm zone="gtk4 gtk4-encode-symbolic-svg">
@@ -402,8 +407,8 @@ EOF</userinput></screen>
         <term><command>gtk4-icon-browser</command></term>
         <listitem>
           <para>
-            er et verktøy for å utforske ikonene i det gjeldende ikontemaet. Den
-            viser ikoner i ulike størrelser, deres symbolske varianter når
+            er et verktÃ¸y for Ã¥ utforske ikonene i det gjeldende ikontemaet. Den
+            viser ikoner i ulike stÃ¸rrelser, deres symbolske varianter nÃ¥r
             tilgjengelig, samt en beskrivelse av ikonet og dets kontekst
           </para>
           <indexterm zone="gtk4 gtk4-icon-browser">
@@ -431,8 +436,8 @@ EOF</userinput></screen>
         <term><command>gtk4-node-editor</command></term>
         <listitem>
           <para>
-            er et verktøy for å vise og redigere gjengivelsesnodefiler. Slike
-            gjengivelsesnodefiler kan hentes f.eks. fra GTK inspektøren
+            er et verktÃ¸y for Ã¥ vise og redigere gjengivelsesnodefiler. Slike
+            gjengivelsesnodefiler kan hentes f.eks. fra GTK inspektÃ¸ren
           </para>
           <indexterm zone="gtk4 gtk4-node-editor">
             <primary sortas="b-gtk4-node-editor">gtk4-node-editor</primary>
@@ -444,7 +449,7 @@ EOF</userinput></screen>
         <term><command>gtk4-print-editor</command></term>
         <listitem>
           <para>
-            er et enkelt program for å demonstrere utskrift med GTK 4
+            er et enkelt program for Ã¥ demonstrere utskrift med GTK 4
             applikasjoner
           </para>
           <indexterm zone="gtk4 gtk4-print-editor">
@@ -469,7 +474,7 @@ EOF</userinput></screen>
         <term><command>gtk4-update-icon-cache</command></term>
         <listitem>
           <para>
-            er et hurtigbufferverktøy for ikontema som lager mmap()able
+            er et hurtigbufferverktÃ¸y for ikontema som lager mmap()able
             hurtigbufferfiler for ikontemaer
           </para>
           <indexterm zone="gtk4 gtk4-update-icon-cache">
@@ -482,7 +487,7 @@ EOF</userinput></screen>
         <term><command>gtk4-widget-factory</command></term>
         <listitem>
           <para>
-            er et program for å se GTK 4 temaer og skjermelementer
+            er et program for Ã¥ se GTK 4 temaer og skjermelementer
           </para>
           <indexterm zone="gtk4 gtk4-widget-factory">
             <primary sortas="b-gtk4-widget-factory">gtk4-widget-factory</primary>
@@ -494,7 +499,7 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">libgtk-4.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som gir en API for å implementere grafisk 
+            inneholder funksjoner som gir en API for Ã¥ implementere grafisk 
             brukergrensesnitt
           </para>
           <indexterm zone="gtk4 libgtk-4">

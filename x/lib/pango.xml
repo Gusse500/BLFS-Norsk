@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY pango-download-http "&gnome-download-http;/pango/&pango-minor;/pango-&pango-version;.tar.xz">
-  <!ENTITY pango-download-ftp  "&gnome-download-ftp;/pango/&pango-minor;/pango-&pango-version;.tar.xz">
-  <!ENTITY pango-md5sum        "baa2a0a67c71935165a205a76da25954">
-  <!ENTITY pango-size          "4.1 MB">
-  <!ENTITY pango-buildsize     "47 MB (med tester)">
+  <!ENTITY pango-download-ftp  " ">
+  <!ENTITY pango-md5sum        "dad79982a79badc27901d90400a32324">
+  <!ENTITY pango-size          "1.9 MB">
+  <!ENTITY pango-buildsize     "28 MB (med tester)">
   <!ENTITY pango-time          "0.1 SBU (Bruker parallellisme=4; med tester)">
 ]>
 
@@ -27,13 +27,13 @@
 
     <para>
       <application>Pango</application> er et bibliotek for utforming og gjengivelse
-      av tekst, med vekt på internasjonalisering. Den kan brukes hvor som helst
-      som tekstlayout er nødvendig, selv om det meste av arbeidet med
-      <application>Pango</application> så langt er gjort i forbindelse med
-      <application>GTK+</application> skjermelement verktøysett.
+      av tekst, med vekt pÃ¥ internasjonalisering. Den kan brukes hvor som helst
+      som tekstlayout er nÃ¸dvendig, selv om det meste av arbeidet med
+      <application>Pango</application> sÃ¥ langt er gjort i forbindelse med
+      <application>GTK+</application> skjermelement verktÃ¸ysett.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &pango-size;
+          NedlastingsstÃ¸rrelse: &pango-size;
         </para>
       </listitem>
       <listitem>
@@ -71,9 +71,9 @@
 
     <bridgehead renderas="sect3">Pango Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
-      <xref linkend="fontconfig"/> (må bygges med
+      <xref linkend="fontconfig"/> (mÃ¥ bygges med
        <xref linkend="freetype2"/> ved bruk av <xref linkend="harfbuzz"/>),
       <xref linkend="fribidi"/>, og
       <xref linkend="glib2"/>
@@ -83,7 +83,7 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="cairo"/>,
-      <xref linkend="gobject-introspection"/> (Nødvendig hvis det skal bygges GNOME), og
+      <xref linkend="gobject-introspection"/> (NÃ¸dvendig hvis det skal bygges GNOME), og
       <xref linkend="xorg7-lib"/>
     </para>
 
@@ -91,10 +91,11 @@
     <para role="optional">
       <xref linkend="cantarell-fonts"/> (for tester),
   <!--<xref linkend="gtk-doc"/>,-->
-      <xref linkend="sysprof"/>,
-      <xref linkend="gi-docgen"/> (for å generere dokumentasjon),
-      <ulink url="https://ftpmirror.gnu.org/gnu/help2man">help2man</ulink>, og
-      <ulink url="https://linux.thai.net/projects/libthai">libthai</ulink>
+      <!--<xref linkend="sysprof"/>,-->
+      <xref linkend="gi-docgen"/> (for Ã¥ generere dokumentasjon),
+      <ulink url="https://ftpmirror.gnu.org/gnu/help2man">help2man</ulink>,
+      <ulink url="https://linux.thai.net/projects/libthai">libthai</ulink>, og
+      <ulink url="&sysprof-url;">sysprof</ulink>
     </para>
 
   </sect2>
@@ -103,14 +104,7 @@
     <title>Installasjon av Pango</title>
 
     <para>
-      Først omgå en feil i gcc-13 som utløser en falsk advarsel
-      som bryter et release bygg:
-    </para>
-
-<screen><userinput>sed -i '/array-bounds/d' meson.build</userinput></screen>
-
-    <para>
-      Installer <application>Pango</application> ved å kjøre følgende
+      Installer <application>Pango</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -124,27 +118,27 @@ meson setup --prefix=/usr          \
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
       API dokumentasjonen for denne pakken, utsted:
     </para>
 
 <screen remap='doc'><userinput>sed "/docs_dir =/s@\$@ / 'pango-&pango-version;'@" -i ../docs/meson.build &amp;&amp;
-meson configure -Dgtk_doc=true                                    &amp;&amp;
+meson configure -Dgtk_doc=true                                   &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>. En test,
-      <filename>test-font</filename> er kjent for å mislykkes. Noen tester kan
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>. En test,
+      <filename>test-font</filename> er kjent for Ã¥ mislykkes. Noen tester kan
       mislykkes hvis ingen Opentype eller Truetype fonter er installert i
       <filename class='directory'>/usr/share/fonts</filename>.
       <!--<filename>test-itemize</filename>, are are known to fail. if
       <xref linkend="cantarell-fonts"/> ikke er installert.-->
-      <!-- de andre problematiske testene blir hoppet over nå -->
+      <!-- de andre problematiske testene blir hoppet over nÃ¥ -->
       <!-- Selv med cantarell-fonter, feiler pango-1.50.9 test-font igjen. -->
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -167,7 +161,7 @@ install -vm 644 ../utils/pango-view.1.in /usr/share/man/man1/pango-view.1</useri
 
     <para>
       <option>-Dintrospection=disabled</option>: Bruk denne bryteren hvis du ikke
-      ønsker å bruke <xref linkend="gobject-introspection"/>.
+      Ã¸nsker Ã¥ bruke <xref linkend="gobject-introspection"/>.
     </para>
 
     <!-- gi-docgen can get installed without this, if deps exist -->
@@ -184,7 +178,7 @@ install -vm 644 ../utils/pango-view.1.in /usr/share/man/man1/pango-view.1</useri
 
       <para>
         <filename>/etc/pango/pangorc</filename>, <filename>~/.pangorc</filename>
-        og filen spesifisert i miljøvariabelen
+        og filen spesifisert i miljÃ¸variabelen
         <envar>PANGO_RC_FILE</envar>
       </para>
 
@@ -201,10 +195,10 @@ install -vm 644 ../utils/pango-view.1.in /usr/share/man/man1/pango-view.1</useri
       <title>Configuration Information</title>
 
       <para>
-        <application>Pango</application> modulbanen er spesifisert av nøkkelen
+        <application>Pango</application> modulbanen er spesifisert av nÃ¸kkelen
         <userinput><parameter>Pango/ModulesPath</parameter></userinput> i
         <application>Pango</application> config-database, som leses fra
-        konfigurasjonsfiler oppført ovenfor.
+        konfigurasjonsfiler oppfÃ¸rt ovenfor.
       </para>
 
     </sect3>-->
@@ -244,7 +238,7 @@ install -vm 644 ../utils/pango-view.1.in /usr/share/man/man1/pango-view.1</useri
         <listitem>
           <para>
             viser en liste over fonter som <application>Pango</application>
-            kan bruke som for øyeblikket er installert på systemet
+            kan bruke som for Ã¸yeblikket er installert pÃ¥ systemet
           </para>
           <indexterm zone="pango pango-list">
             <primary sortas="b-pango-list">pango-list</primary>
@@ -269,7 +263,7 @@ install -vm 644 ../utils/pango-view.1.in /usr/share/man/man1/pango-view.1</useri
         <listitem>
           <para>
             render en gitt tekstfil gjennom <application>Pango</application>
-            for visningsformål
+            for visningsformÃ¥l
           </para>
           <indexterm zone="pango pango-view">
             <primary sortas="b-pango-view">pango-view</primary>
@@ -281,8 +275,8 @@ install -vm 644 ../utils/pango-view.1.in /usr/share/man/man1/pango-view.1</useri
         <term><filename class="libraryfile">libpango-1.0.so</filename></term>
         <listitem>
           <para>
-            inneholder lavt nivå layout rendering rutiner, en høy nivå driver for
-            å legge ut hele tekstblokker, og rutiner for å hjelpe til med å redigere
+            inneholder lavt nivÃ¥ layout rendering rutiner, en hÃ¸y nivÃ¥ driver for
+            Ã¥ legge ut hele tekstblokker, og rutiner for Ã¥ hjelpe til med Ã¥ redigere
             internasjonalisert tekst
           </para>
           <indexterm zone="pango libpango-1">
