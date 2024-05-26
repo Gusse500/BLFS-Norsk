@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY qemu-download-http "https://download.qemu.org/qemu-&qemu-version;.tar.xz">
   <!ENTITY qemu-download-ftp  " ">
-  <!ENTITY qemu-md5sum        "7dd9ff5a92cf81cfce6cda1f6e271f3a">
-  <!ENTITY qemu-size          "118 MB">
-  <!ENTITY qemu-buildsize     "2.1 GB (366 MB installert)">
-  <!ENTITY qemu-time          "1.2 SBU (legg til 0.8 SBU for tester, begge med parallellisme=4)">
+  <!ENTITY qemu-md5sum        "bda54248d773be2599df66f8995f10e1">
+  <!ENTITY qemu-size          "124 MB">
+  <!ENTITY qemu-buildsize     "2.2 GB (373 MB installert)">
+  <!ENTITY qemu-time          "1.3 SBU (legg til 0.8 SBU for tester, begge med parallellisme=4)">
 ]>
 
 <sect1 id="qemu" xreflabel="qemu-&qemu-version;">
@@ -26,12 +26,12 @@
     <title>Introduksjon til qemu</title>
 
     <para>
-      <application>qemu</application> er en full virtualiseringsløsning for
-      Linux på x86 maskinvare som inneholder virtualiseringsutvidelser (Intel VT eller
+      <application>qemu</application> er en full virtualiseringslÃ¸sning for
+      Linux pÃ¥ x86 maskinvare som inneholder virtualiseringsutvidelser (Intel VT eller
        AMD-V).
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &qemu-size;
+          NedlastingsstÃ¸rrelse: &qemu-size;
         </para>
       </listitem>
       <listitem>
@@ -69,9 +69,10 @@
 
     <bridgehead renderas="sect3">Qemu Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
-      <xref linkend="glib2"/>
+      <xref linkend="glib2"/> og
+      <xref linkend="pixman"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -83,44 +84,73 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      Avhengig av lydsystem, ulike pakker i <xref linkend="alsa"/>,
-      <xref linkend="python3"/>,
-      <xref linkend="pulseaudio"/>,
+      <xref linkend="pipewire"/> eller
+      <xref linkend="pulseaudio"/> (kan brukes i stedet for alsa-lib),
       <xref linkend="bluez"/>,
       <xref linkend="curl"/>,
       <xref linkend="cyrus-sasl"/>,
+      <xref linkend="fuse3"/>,
       <xref linkend="gnutls"/>,
-      <xref linkend="gtk2"/>,
       <xref linkend="gtk3"/>,
+      <xref linkend="keyutils"/>,
+      <xref linkend="libaio"/>,
       <xref linkend="libusb"/>,
       <xref linkend="libgcrypt"/>,
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libseccomp"/>,
       <xref linkend="libssh2"/>,
+      <xref linkend="libpng"/>,
+      <xref linkend="libtasn1"/>,
+      <xref linkend="linux-pam"/>,
       <xref linkend="lzo"/>,
       <xref linkend="nettle"/>,
       <xref linkend="mesa"/>,
-      <xref role="nodep" linkend="vte"/> eller <xref linkend="vte2"/>, og
+      <xref role="nodep" linkend="vte"/>,
 <!-- libcacard has been a standalone project since qemu-2.5.-->
-      <ulink url="https://gitlab.freedesktop.org/spice/libcacard">libcacard</ulink>
+      <ulink url="https://www.capstone-engine.org/">capstone</ulink>,
+      <ulink url="https://github.com/ceph/ceph/">ceph</ulink>,
+      <ulink url="https://pmem.io/daxctl/">daxctl</ulink>,
+      <ulink url="https://jackaudio.org/">JACK</ulink>,
+      <ulink url="https://github.com/gluster/glusterfs">glusterfs</ulink>,
+      <ulink url="https://github.com/libbpf/libbpf">libbpf</ulink>,
+      <ulink url="https://gitlab.freedesktop.org/spice/libcacard">libcacard</ulink>,
+      <ulink url="https://people.redhat.com/sgrubb/libcap-ng/">libcap-ng</ulink>,
+      <ulink url="https://sourceware.org/elfutils/">libdw</ulink>,
+      <ulink url="https://github.com/dgibson/dtc">libfdt</ulink>,
+      <ulink url="https://github.com/sahlberg/libiscsi">libiscsi</ulink>,
+      <ulink url="https://github.com/sahlberg/libnfs">libnfs</ulink>,
+      <ulink url="https://pmem.io/pmdk/libpmem/">libpmem</ulink>,
+      <ulink url="https://www.libssh.org/">libssh</ulink>,
+      <ulink url="https://github.com/Agnoctopus/libu2f-emu">libu2f-emu</ulink>,
+      <ulink url="https://github.com/lzfse/lzfse">lzfse</ulink>,
+      <ulink url="https://github.com/luigirizzo/netmap">netmap</ulink>,
+      <ulink url="https://github.com/numactl/numactl">numactl</ulink>,
+      <ulink url="https://github.com/linux-rdma/rdma-core">rdma-core</ulink>,
+      <ulink url="https://selinuxproject.org/">SELinux</ulink>,
+      <ulink url="https://google.github.io/snappy/">snappy</ulink>,
+      <ulink url="https://gitlab.freedesktop.org/spice/spice">spice</ulink>,
+      <ulink url="https://gitlab.freedesktop.org/spice/usbredir">usbredir</ulink>,
+      og <ulink url="https://github.com/virtualsquare/vde-2">VDE</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri (Kjøretid)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (KjÃ¸retid)</bridgehead>
     <para role="runtime">
       &logind;
     </para>
 
-    <bridgehead renderas="sect4">Valgfri (for å bygge dokumentasjonen)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (for Ã¥ bygge dokumentasjonen)</bridgehead>
     <para role="optional">
       <xref linkend="sphinx_rtd_theme"/>
     </para>
 
     <note>
       <para>
-        Denne valgfrie avhengighetslisten er ikke uttømmende. Se utdataen fra
+        Denne valgfrie avhengighetslisten er ikke uttÃ¸mmende. Se utdataen fra
         <command>./configure --help</command> for en mer komplett liste.
       </para>
     </note>
 
-    <para condition="html" role="usernotes">Redaktørens notater:
+    <para condition="html" role="usernotes">RedaktÃ¸rens notater:
     <ulink url="&blfs-wiki;/qemu"/></para>
 
   </sect2>
@@ -129,16 +159,16 @@
     <title>KVM Forutsetninger</title>
 
     <para>
-      Før byggingen av <application>qemu</application>, sjekk for å se om
-      prosessoren din støtter virtualiseringsteknologi (VT):
+      FÃ¸r byggingen av <application>qemu</application>, sjekk for Ã¥ se om
+      prosessoren din stÃ¸tter virtualiseringsteknologi (VT):
     </para>
 
     <screen><userinput>grep -E '^flags.*(vmx|svm)' /proc/cpuinfo</userinput></screen>
 
     <para>
-      Hvis du får noe utdata, har du VT teknologi (vmx for Intel
-      prosessorer og svm for AMD prosessorer). Du må da gå inn i din
-      system BIOS og sørge for at den er aktivert. Etter å ha aktivert den, start på nytt din
+      Hvis du fÃ¥r noe utdata, har du VT teknologi (vmx for Intel
+      prosessorer og svm for AMD prosessorer). Du mÃ¥ da gÃ¥ inn i din
+      system BIOS og sÃ¸rge for at den er aktivert. Etter Ã¥ ha aktivert den, start pÃ¥ nytt din
       LFS forekomst.
     </para>
 
@@ -148,8 +178,8 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen og
-      kompiler kjernen på nytt om nødvendig:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen og
+      kompiler kjernen pÃ¥ nytt om nÃ¸dvendig:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -160,14 +190,14 @@
     </indexterm>
 
     <para>
-      Begge Intel- eller AMD-innstillingene er ikke nødvendige, men den som samsvarer
-      din systemprosessor er nødvendig.
+      Begge Intel- eller AMD-innstillingene er ikke nÃ¸dvendige, men den som samsvarer
+      din systemprosessor er nÃ¸dvendig.
     </para>
 
     <para>
-      For å bruke <quote>bridge</quote> nettverksenhet, som forklart nedenfor,
+      For Ã¥ bruke <quote>bridge</quote> nettverksenhet, som forklart nedenfor,
       Sjekk at <xref linkend='bridgeutils'/> er installert
-      og følgende alternativer i kjernekonfigurasjonen er aktivert:
+      og fÃ¸lgende alternativer i kjernekonfigurasjonen er aktivert:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -180,8 +210,8 @@
 <!-- group kvm is created in lfs chapter 7 even for sysv
     <para revision="sysv">
       Du trenger en dedikert gruppe som vil inneholde brukere (annet enn root)
-      tillatelse til å få tilgang til KVM enheten. Opprett denne gruppen ved å kjøre
-      følgende kommando som
+      tillatelse til Ã¥ fÃ¥ tilgang til KVM enheten. Opprett denne gruppen ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -189,9 +219,9 @@
 -->
     <para>
       Udev regelen til LFS tillater bare &root; bruker, brukerne som eier
-      en lokal påloggingsøkt støttet av den valgfrie kjøretidsavhengigheten
+      en lokal pÃ¥loggingsÃ¸kt stÃ¸ttet av den valgfrie kjÃ¸retidsavhengigheten
       &logind;, eller brukerne i
-      <systemitem class="groupname">kvm</systemitem> gruppen å bruke KVM
+      <systemitem class="groupname">kvm</systemitem> gruppen Ã¥ bruke KVM
       enheten. Som &root; bruker, legg til eventuelle ikke-&root; brukere som kan bruke
       KVM enheten enten uten &logind; installert eller eksternt (via en
       SSH tilkobling) til
@@ -201,17 +231,17 @@
 <screen role="root"><userinput>usermod -a -G kvm <replaceable>&lt;username&gt;</replaceable></userinput></screen>
 
     <para>
-      Installer <application>qemu</application> ved å kjøre følgende
+      Installer <application>qemu</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
     <note>
       <para>
-        Qemu er i stand til å kjøre mange mål. Byggeprosessen
-        er også i stand til å bygge flere mål samtidig i en
-        kommadelt liste tilordnet <option>--target-list</option>. Kjør
-        <command>./configure --help</command> for å få en fullstendig liste over
-        tilgjengelige mål.
+        Qemu er i stand til Ã¥ kjÃ¸re mange mÃ¥l. Byggeprosessen
+        er ogsÃ¥ i stand til Ã¥ bygge flere mÃ¥l samtidig i en
+        kommadelt liste tilordnet <option>--target-list</option>. KjÃ¸r
+        <command>./configure --help</command> for Ã¥ fÃ¥ en fullstendig liste over
+        tilgjengelige mÃ¥l.
       </para>
     </note>
 
@@ -241,26 +271,26 @@ make</userinput></screen>
 
     <para>
       <application>qemu</application> bruker <command>ninja</command> som
-      en delprosess ved byggingen. For å kjøre testene, kjør:
-      <command>ninja test</command>. En test, bios-tables-test, er
-      kjent for å mislykkes.
+      en delprosess ved byggingen. For Ã¥ kjÃ¸re testene, kjÃ¸r:
+      <command>ninja test</command>. To tester, bios-tables-test og migration-test,
+      er kjent for Ã¥ mislykkes.
     </para>
 
     <para>
-      Nå, som &root; bruker:
+      NÃ¥, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      Endre tillatelsene og eierskapet til et hjelpeskript, som er nødvendig
-      når du bruker <quote>bridge</quote> nettverksenhet (se nedenfor). En gang til
-      som &root; bruker, kjør:
+      Endre tillatelsene og eierskapet til et hjelpeskript, som er nÃ¸dvendig
+      nÃ¥r du bruker <quote>bridge</quote> nettverksenhet (se nedenfor). En gang til
+      som &root; bruker, kjÃ¸r:
     </para>
 
     <note>
       <para>
-        Du må legge til brukere som kan bruke <quote>bridge</quote>
+        Du mÃ¥ legge til brukere som kan bruke <quote>bridge</quote>
         nettverksenhet i
         <systemitem class="groupname">kvm</systemitem> gruppen selv om
         &logind; er installert.
@@ -272,7 +302,7 @@ chmod 4750 /usr/libexec/qemu-bridge-helper</userinput></screen>
 
     <note>
       <para>
-        For enkelhets skyld kan det være lurt å lage en symbolsk lenke for å kjøre
+        For enkelhets skyld kan det vÃ¦re lurt Ã¥ lage en symbolsk lenke for Ã¥ kjÃ¸re
         det installerte programmet. For eksempel (som &root; bruker):
       </para>
 
@@ -285,14 +315,20 @@ chmod 4750 /usr/libexec/qemu-bridge-helper</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--audio-drv-list=alsa --disable-pa</parameter>: Denne bryteren
-      setter lyddriveren til ALSA. Se nedenfor for å aktivere andre lyddrivere.
+      <parameter>--audio-drv-list=alsa</parameter>: Denne bryteren
+      setter lyddriveren til ALSA. Se nedenfor for Ã¥ aktivere andre lyddrivere.
+    </para>
+
+    <para>
+      <parameter>--disable-pa</parameter>: selv om <emphasis>pa</emphasis> ikke
+      er i <parameter>--audio-drv-list</parameter> listen, pulseaudio
+      driveren blir bygget, med mindre den er deaktivert av denne parameteren.
     </para>
 
     <para>
       <parameter>--enable-slirp</parameter>: Denne bryteren tvinger byggesystemet
-      å se etter <xref linkend='libslirp'/>.  Fjern den hvis du
-      ikke trenger <option>-netdev user</option> støtte.
+      Ã¥ se etter <xref linkend='libslirp'/>.  Fjern den hvis du
+      ikke trenger <option>-netdev user</option> stÃ¸tte.
     </para>
 
     <para>
@@ -300,7 +336,7 @@ chmod 4750 /usr/libexec/qemu-bridge-helper</userinput></screen>
       lyddriveren til pulsaudio. For andre drivere se
       --audio-drv-list valg i utdaten fra
       <command>./configure --help</command>. Standard lyddriver er OSS.
-      For å aktivere støtte for både alsa og pulsaudio, bruk
+      For Ã¥ aktivere stÃ¸tte for bÃ¥de alsa og pulsaudio, bruk
       <option>--audio-drv-list=alsa,pa</option>.
     </para>
 
@@ -310,38 +346,38 @@ chmod 4750 /usr/libexec/qemu-bridge-helper</userinput></screen>
     <title>Bruke Qemu</title>
 
     <para>
-      Siden bruk av qemu betyr å bruke en virtuell datamaskin, trinnene for å sette opp
-      den virtuelle maskinen er i nær analogi med de for å sette opp en ekte
-      datamaskin. Du må bestemme deg for CPU, minne, disk, USB enheter,
-      nettverkskort(er), skjermstørrelse osv. Når <quote>maskinvaren</quote> er
-      bestemt, må du for eksempel velge hvordan du kobler til maskinenen
-      til internett og/eller for å installere et OS. I det følgende viser vi grunnleggende
-      måter å utføre disse trinnene på. Men qemu er mye mer enn dette, og det
-      anbefales på det sterkeste å lese qemu dokumentasjonen i
+      Siden bruk av qemu betyr Ã¥ bruke en virtuell datamaskin, trinnene for Ã¥ sette opp
+      den virtuelle maskinen er i nÃ¦r analogi med de for Ã¥ sette opp en ekte
+      datamaskin. Du mÃ¥ bestemme deg for CPU, minne, disk, USB enheter,
+      nettverkskort(er), skjermstÃ¸rrelse osv. NÃ¥r <quote>maskinvaren</quote> er
+      bestemt, mÃ¥ du for eksempel velge hvordan du kobler til maskinenen
+      til internett og/eller for Ã¥ installere et OS. I det fÃ¸lgende viser vi grunnleggende
+      mÃ¥ter Ã¥ utfÃ¸re disse trinnene pÃ¥. Men qemu er mye mer enn dette, og det
+      anbefales pÃ¥ det sterkeste Ã¥ lese qemu dokumentasjonen i
       <filename>/usr/share/doc/qemu-&qemu-version;/qemu-doc.html</filename>.
     </para>
 
     <note>
       <para>
-        Det er standard praksis å navngi datamaskinen som kjører qemu
-        <quote>host</quote> og den emulerte maskinen som kjører under qemu
+        Det er standard praksis Ã¥ navngi datamaskinen som kjÃ¸rer qemu
+        <quote>host</quote> og den emulerte maskinen som kjÃ¸rer under qemu
         <quote>guest</quote>. Vi bruker disse notasjonene nedenfor.
       </para>
     </note>
 
     <note>
       <para>
-        Følgende instruksjoner forutsetter at den valgfrie symbolske lenken,
+        FÃ¸lgende instruksjoner forutsetter at den valgfrie symbolske lenken,
         <filename>qemu</filename>, har blitt opprettet. I tillegg,
-        <command>qemu</command> skal kjøres i et grafisk miljø.
-        Men det er mulig å bruke qemu <quote>headless</quote> eller gjennom
+        <command>qemu</command> skal kjÃ¸res i et grafisk miljÃ¸.
+        Men det er mulig Ã¥ bruke qemu <quote>headless</quote> eller gjennom
         SSH. Se dokumentasjonen for de ulike mulighetene.
       </para>
     </note>
 
     <bridgehead renderas="sect3">Disk</bridgehead>
     <para>
-      En virtuell disk kan settes opp på følgende måte:
+      En virtuell disk kan settes opp pÃ¥ fÃ¸lgende mÃ¥te:
     </para>
 
 <screen><userinput>VDISK_SIZE=<replaceable>50G</replaceable>
@@ -349,17 +385,17 @@ VDISK_FILENAME=<replaceable>vdisk.img</replaceable>
 qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
 
     <para>
-      Den virtuelle diskstørrelsen og filnavnet bør justeres etter ønske. Den
-      faktiske størrelse på filen vil være mindre enn spesifisert, men vil utvides etter
-      behov, så det er trygt å sette en høy verdi.
+      Den virtuelle diskstÃ¸rrelsen og filnavnet bÃ¸r justeres etter Ã¸nske. Den
+      faktiske stÃ¸rrelse pÃ¥ filen vil vÃ¦re mindre enn spesifisert, men vil utvides etter
+      behov, sÃ¥ det er trygt Ã¥ sette en hÃ¸y verdi.
     </para>
 
     <bridgehead renderas="sect3">Operativsystem</bridgehead>
     <para>
-      For å installere et operativsystem, last ned et iso bilde fra din foretrukne
-      Linux distribusjon. For formålet med dette eksemplet vil vi bruke
+      For Ã¥ installere et operativsystem, last ned et iso bilde fra din foretrukne
+      Linux distribusjon. For formÃ¥let med dette eksemplet vil vi bruke
       <filename>Fedora-16-x86_64-Live-LXDE.iso</filename> i gjeldende
-      mappe. Kjør følgende:
+      mappe. KjÃ¸r fÃ¸lgende:
     </para>
 
 <screen><userinput>qemu -enable-kvm                           \
@@ -369,13 +405,13 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
      -m <replaceable>1G</replaceable></userinput></screen>
 
     <para>
-      Følg de vanlige installasjonsprosedyrene for den valgte distribusjonen.
-      <parameter>-boot</parameter> alternativet spesifiserer oppstartsrekkefølgen til
+      FÃ¸lg de vanlige installasjonsprosedyrene for den valgte distribusjonen.
+      <parameter>-boot</parameter> alternativet spesifiserer oppstartsrekkefÃ¸lgen til
       stasjoner som en streng med stasjonsbokstaver. Gyldige stasjonsbokstaver er: a, b
-      (diskett 1 og 2), c (første harddisk), d (første CD-ROM).
+      (diskett 1 og 2), c (fÃ¸rste harddisk), d (fÃ¸rste CD-ROM).
       <parameter>-m</parameter> alternativet er mengden minne som skal brukes til
       den virtuelle maskinen. Valget avhenger av belastningen til verten. Moderne
-      distribusjoner bør være komfortable med 1 GB.
+      distribusjoner bÃ¸r vÃ¦re komfortable med 1 GB.
       <parameter>-enable-kvm</parameter> alternativet tillater maskinvare
       akselerasjon. Uten denne bryteren er emuleringen mye tregere.
     </para>
@@ -403,35 +439,35 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
     <bridgehead renderas="sect3">Betydningen av kommandolinjealternativene</bridgehead>
     <para>
       <parameter>-enable-kvm</parameter>: aktiver full KVM virtualisering
-      støtte. På noen maskinvare kan det være nødvendig å legge til det udokumenterte
-      <option>-machine smm=off</option> alternativet for å aktivere KVM.
+      stÃ¸tte. PÃ¥ noen maskinvare kan det vÃ¦re nÃ¸dvendig Ã¥ legge til det udokumenterte
+      <option>-machine smm=off</option> alternativet for Ã¥ aktivere KVM.
     </para>
 
     <para>
-      <parameter>-smp &lt;N&gt;</parameter>: muliggjør symmetrisk multiprosessering
+      <parameter>-smp &lt;N&gt;</parameter>: muliggjÃ¸r symmetrisk multiprosessering
       med &lt;N&gt; CPUer.
     </para>
 
     <para>
       <parameter>-cpu &lt;model&gt;</parameter>: simulere CPU &lt;model&gt;.
-      Listen over støttede modeller kan fås med <option>-cpu
+      Listen over stÃ¸ttede modeller kan fÃ¥s med <option>-cpu
       help</option>.
     </para>
 
     <para>
       <parameter>-drive file=&lt;filename&gt;</parameter>: definerer en virtuell
-      disk hvis bildet er lagret på <filename>&lt;filename&gt;</filename>.
+      disk hvis bildet er lagret pÃ¥ <filename>&lt;filename&gt;</filename>.
     </para>
 
     <para>
       <parameter>-cdrom grub-img.iso</parameter>: definerer en iso formatert fil
-      for å bruke som en cdrom. Her bruker vi en grub redningsskive, som kan være nyttig
-      når noe går galt ved oppstart.
+      for Ã¥ bruke som en cdrom. Her bruker vi en grub redningsskive, som kan vÃ¦re nyttig
+      nÃ¥r noe gÃ¥r galt ved oppstart.
     </para>
 
     <para>
       <parameter>-boot order=c,once=d,menu=on</parameter>: definerer oppstarts
-      rekkefølgen for den virtuelle BIOS.
+      rekkefÃ¸lgen for den virtuelle BIOS.
     </para>
 
     <para>
@@ -443,57 +479,57 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
       <parameter>-netdev user,id=&lt;netid&gt;</parameter>: definerer
       nettverkets <quote>bruker</quote> enhet. Dette er et virtuelt lokalt nettverk
       med adresser 10.0.2.0/24, hvor verten har adressen 10.0.2.2 og
-      fungerer som en inngangsport til internett, og med en navneserver på adressen
-      10.0.2.3, og en smb server på adressen 10.0.2.4. En innebygd DHCP server
+      fungerer som en inngangsport til internett, og med en navneserver pÃ¥ adressen
+      10.0.2.3, og en smb server pÃ¥ adressen 10.0.2.4. En innebygd DHCP server
       kan tildele adresser mellom 10.0.2.15 og 10.0.2.31.
     </para>
 
     <para>
       <parameter>-soundhw &lt;model&gt;</parameter>: definerer lydkortets
-      modell. Listen kan fås med <option>-soundhw help</option>.
+      modell. Listen kan fÃ¥s med <option>-soundhw help</option>.
     </para>
 
     <para>
       <parameter>-vga &lt;type&gt;</parameter>: definerer typen VGA kort
-      å etterligne.  For <parameter>-vga std</parameter>, hvis du bygger
-      en Linuxkjerne som gjest, anbefales det å aktivere
+      Ã¥ etterligne.  For <parameter>-vga std</parameter>, hvis du bygger
+      en Linuxkjerne som gjest, anbefales det Ã¥ aktivere
       <option>CONFIG_DRM_BOCHS</option> (som en del av kjernen eller en kjerne
-      modul) for å drive alle funksjonene til det emulerte VGA kortet, og
-      <option>CONFIG_FB</option> for å vise Linux konsollen på den. Det
+      modul) for Ã¥ drive alle funksjonene til det emulerte VGA kortet, og
+      <option>CONFIG_FB</option> for Ã¥ vise Linux konsollen pÃ¥ den. Det
       andre <option>&lt;type&gt;</option> verdier er ikke testet av
-      redaktører og kan kreve ytterligere avhengigheter.
+      redaktÃ¸rer og kan kreve ytterligere avhengigheter.
     </para>
 
     <para>
       <parameter>-serial mon:stdio</parameter>: sender serieporten til
-      gjesten (<filename>/dev/ttyS0</filename> på linux gjester), multiplekset med
+      gjesten (<filename>/dev/ttyS0</filename> pÃ¥ linux gjester), multiplekset med
       qemu monitoren, til standardinngangen og -utgangen til qemu
       prosesser.
     </para>
 
     <para>
-      <parameter>-name &lt;name&gt;</parameter>: angir navnet på gjesten.
-      Dette navnet vises i gjestevinduets bildetekst. Det kan være nyttig
-      hvis du kjører flere gjester samtidig.
+      <parameter>-name &lt;name&gt;</parameter>: angir navnet pÃ¥ gjesten.
+      Dette navnet vises i gjestevinduets bildetekst. Det kan vÃ¦re nyttig
+      hvis du kjÃ¸rer flere gjester samtidig.
     </para>
 
     <para>
       <option>-drive if=pflash,format=raw,readonly=on,file=/usr/share/qemu/edk2-x86_64-code.fd</option>: Last en
-      forhåndsbygd EDK2 UEFI fastvare, i stedet for standard PC BIOS. Bruk
+      forhÃ¥ndsbygd EDK2 UEFI fastvare, i stedet for standard PC BIOS. Bruk
       dette alternativet hvis du vil starte gjesteOS med UEFI.
     </para>
 
     <para>
       <option>-drive file=&lt;filename&gt;,if=virtio</option>: Gir
       Virtio grensesnittet til gjestekjernen for tilgang til diskbildet,
-      i stedet for å simulere en ekte diskmaskinvare. Dette kan forbedre disk I/O
+      i stedet for Ã¥ simulere en ekte diskmaskinvare. Dette kan forbedre disk I/O
       ytelse, men det krever en Virtio driver i gjestekjernen. Bruk
       det i stedet for en vanlig <option>-drive</option> hvis gjestekjernen
-      støtter Virtio. For å bygge en Linuxkjerne med Virtio støtte for
+      stÃ¸tter Virtio. For Ã¥ bygge en Linuxkjerne med Virtio stÃ¸tte for
       gjest, bruk
       <command>make defconfig &amp;&amp; make kvm_guest.config</command> til
       opprette en innledende kjernekonfigurasjon med Virtio drivere aktivert,
-      deretter gjør din tilpasning. Og hvis gjestekjernen er Linux, vil
+      deretter gjÃ¸r din tilpasning. Og hvis gjestekjernen er Linux, vil
       virtuelle disker som bruker Virtio grensesnittet bli navngitt
       <filename>vdx</filename> i devtmpfs, i stedet for
       <filename>sdx</filename>.
@@ -502,38 +538,38 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
     <para>
       <option>-net nic,netdev=net0,model=virtio-net-pci</option>: Gir
       Virtio grensesnittet til gjestekjernen for tilgang til nettverkets
-      grensesnitt, i stedet for å simulere et ekte nettverkskort. Dette
+      grensesnitt, i stedet for Ã¥ simulere et ekte nettverkskort. Dette
       kan forbedre nettverkets I/O ytelse, men det krever en Virtio driver
       i gjestekjernen. Bruk den i stedet for den vanlige <option>-net</option> hvis
-      gjestekjernen støtter Virtio.
+      gjestekjernen stÃ¸tter Virtio.
     </para>
 
     <bridgehead renderas="sect3">Kontrollere den Emulerte Skjermen</bridgehead>
     <para>
-      For å angi oppløsningen til den emulerte skjermen for en Xorg server
-      som kjører i et gjeste Linux system, les <xref linkend='xdisplay'/>.
+      For Ã¥ angi opplÃ¸sningen til den emulerte skjermen for en Xorg server
+      som kjÃ¸rer i et gjeste Linux system, les <xref linkend='xdisplay'/>.
     </para>
 
     <bridgehead renderas="sect3">Nettverk</bridgehead>
     <para>
-      Ovennevnte løsning for nettverk lar gjesten få tilgang til det lokale
-      nettverket gjennom verten (og muligens for å få tilgang til internett via
+      Ovennevnte lÃ¸sning for nettverk lar gjesten fÃ¥ tilgang til det lokale
+      nettverket gjennom verten (og muligens for Ã¥ fÃ¥ tilgang til internett via
       lokale rutere), men det motsatte er ikke sant. Ikke engang verten kan
-      få tilgang til gjesten, med mindre portvideresending er aktivert. Og hvis
-      flere gjester kjører, kan de ikke kommunisere med hverandre.
-      Andre nettverksenheter kan brukes til dette formålet. For eksempel det
+      fÃ¥ tilgang til gjesten, med mindre portvideresending er aktivert. Og hvis
+      flere gjester kjÃ¸rer, kan de ikke kommunisere med hverandre.
+      Andre nettverksenheter kan brukes til dette formÃ¥let. For eksempel det
       er <quote>socket</quote> enheten, som lar flere gjester
-      dele et felles virtuelt nettverk. I det følgende beskriver vi i mer
+      dele et felles virtuelt nettverk. I det fÃ¸lgende beskriver vi i mer
       detaljer hvordan du setter opp <quote>bridge</quote> enheten, som tillater
-      gjestene til å se ut som om de er koblet til det lokale nettverket. Alle
-      kommandoene nedenfor skal kjøres som <systemitem
+      gjestene til Ã¥ se ut som om de er koblet til det lokale nettverket. Alle
+      kommandoene nedenfor skal kjÃ¸res som <systemitem
       class="username">root</systemitem> bruker.
     </para>
 
     <para revision="sysv">
       Sette opp brobygging med <xref linkend="bridgeutils"/>. Bare det fysiske
-      grensesnitt(er) bør settes opp ved oppstart. Det eller de virtuelle grensesnittene vil bli
-      lagt til etter behov når qemu startes.
+      grensesnitt(er) bÃ¸r settes opp ved oppstart. Det eller de virtuelle grensesnittene vil bli
+      lagt til etter behov nÃ¥r qemu startes.
     </para>
 
     <para revision="systemd">
@@ -545,7 +581,7 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
         revision="systemd"><userinput>sysctl -w net.ipv4.ip_forward=1</userinput></screen>
 
     <para revision="systemd">
-      For å gjøre dette permanent, legg til kommandoen til
+      For Ã¥ gjÃ¸re dette permanent, legg til kommandoen til
       <filename>/etc/sysctl.d/60-net-forward.conf:</filename>
     </para>
 
@@ -555,7 +591,7 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
 EOF</userinput></screen>
 
     <para>
-      Sett opp en nødvendig konfigurasjonsfil:
+      Sett opp en nÃ¸dvendig konfigurasjonsfil:
     </para>
 
 <!-- /etc/qemu has not been installed by "make install" since version 2.4 -->
@@ -621,7 +657,7 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
         <term><command>qemu-edid</command></term>
         <listitem>
           <para>
-            er et testverktøy for qemu EDID generatoren
+            er et testverktÃ¸y for qemu EDID generatoren
           </para>
           <indexterm zone="qemu qemu-edid">
             <primary sortas="b-qemu-edid">qemu-edid</primary>
@@ -633,8 +669,8 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
         <term><command>qemu-ga</command></term>
         <listitem>
           <para>
-            implementerer støtte for QMP (QEMU Monitor Protocol) kommandoer og
-            hendelser som avsluttes og oppstår henholdsvis hos gjesten
+            implementerer stÃ¸tte for QMP (QEMU Monitor Protocol) kommandoer og
+            hendelser som avsluttes og oppstÃ¥r henholdsvis hos gjesten
             bruker en agent bygget som en del av QEMU
           </para>
           <indexterm zone="qemu qemu-ga">
@@ -647,7 +683,7 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
         <term><command>qemu-img</command></term>
         <listitem>
           <para>
-            gir kommandoer for å administrere QEMU diskbilder
+            gir kommandoer for Ã¥ administrere QEMU diskbilder
           </para>
           <indexterm zone="qemu qemu-img">
             <primary sortas="b-qemu-img">qemu-img</primary>
@@ -660,7 +696,7 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
         <listitem>
           <para>
             er et diagnose- og manipuleringsprogram for (virtuelt) minne
-            media. Det er fortsatt på et tidlig stadium av utviklingen
+            media. Det er fortsatt pÃ¥ et tidlig stadium av utviklingen
           </para>
           <indexterm zone="qemu qemu-io">
             <primary sortas="b-qemu-io">qemu-io</primary>
@@ -712,7 +748,7 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
         <listitem>
           <para>
             lar deg endre diskbilder ved hjelp av QEMU Monitor Protocol (QMP)
-            uten å kjøre en VM
+            uten Ã¥ kjÃ¸re en VM
           </para>
           <indexterm zone="qemu qemu-storage-daemon">
             <primary sortas="b-qemu-storage-daemon">qemu-storage-daemon</primary>

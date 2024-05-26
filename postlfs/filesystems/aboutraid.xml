@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -14,10 +14,10 @@
   <para>
     Lagringsteknologien kjent som RAID (Redundant Array of
     Independent Disks) kombinerer flere fysiske disker til en logisk
-    enhet. Stasjonene kan vanligvis kombineres for å gi data
-    redundans eller for å utvide størrelsen på logiske enheter utover
+    enhet. Stasjonene kan vanligvis kombineres for Ã¥ gi data
+    redundans eller for Ã¥ utvide stÃ¸rrelsen pÃ¥ logiske enheter utover
     funksjonen til de fysiske diskene eller begge deler. Teknologien
-    gir også mulighet for vedlikehold av maskinvare uten å slå
+    gir ogsÃ¥ mulighet for vedlikehold av maskinvare uten Ã¥ slÃ¥
     av systemet.
   </para>
 
@@ -30,8 +30,8 @@
   <para>
     Merk at mens RAID gir beskyttelse mot diskfeil,
     er det ikke en erstatning for sikkerhetskopiering. En fil slettet
-    er fortsatt slettet på alle diskene i en RAID matrise. Moderne sikkerhetskopier
-    gjøres vanligvis via <xref linkend='rsync'/>.
+    er fortsatt slettet pÃ¥ alle diskene i en RAID matrise. Moderne sikkerhetskopier
+    gjÃ¸res vanligvis via <xref linkend='rsync'/>.
   </para>
 
   <para>
@@ -42,25 +42,25 @@
   <sect2 id="hwraid">
     <title>Maskinvare RAID</title>
     <para>
-      Maskinvarebasert RAID gir kapasitet gjennom proprietær
+      Maskinvarebasert RAID gir kapasitet gjennom proprietÃ¦r
       maskinvare og dataoppsett. Kontrollen og konfigurasjonen er generelt
-      gjort via fastvare i forbindelse med kjørbare programmer gjort
+      gjort via fastvare i forbindelse med kjÃ¸rbare programmer gjort
       tilgjengelig av enhetsprodusenten. Mulighetene
       leveres vanligvis via et PCI-kort, selv om det er noen
       forekomster av RAID komponenter integrert i hovedkortet.
-      Hardware RAID kan også være tilgjengelig i et frittstående kabinett.
+      Hardware RAID kan ogsÃ¥ vÃ¦re tilgjengelig i et frittstÃ¥ende kabinett.
     </para>
 
     <para>
       En fordel med maskinvarebasert RAID er at stasjonene
       tilbys til operativsystemet som en logisk stasjon og ingen
-      operativsystemavhengig konfigurasjon er nødvendig.
+      operativsystemavhengig konfigurasjon er nÃ¸dvendig.
     </para>
 
     <para>
-      Ulemper inkluderer vanskeligheter med å overføre stasjoner
+      Ulemper inkluderer vanskeligheter med Ã¥ overfÃ¸re stasjoner
       fra ett system til et annet, oppdatere fastvare eller erstatte
-      ødelagt RAID-maskinvare.
+      Ã¸delagt RAID-maskinvare.
     </para>
 
   </sect2>
@@ -83,7 +83,7 @@
 
     <para>
       I noen tilfeller er BIOS-basert RAID-fastvare aktivert som standard (f.eks.
-      noen DELL systemer). Hvis programvare RAID er ønsket, må dette alternativet være
+      noen DELL systemer). Hvis programvare RAID er Ã¸nsket, mÃ¥ dette alternativet vÃ¦re
       eksplisitt deaktivert i BIOS.
     </para>
 
@@ -93,29 +93,29 @@
   <title>Programvare RAID</title>
     <para>
       Programvarebasert RAID er den mest fleksible formen for RAID. Det er
-      enkelt å installere og oppdatere og gir full kapasitet på alle eller
+      enkelt Ã¥ installere og oppdatere og gir full kapasitet pÃ¥ alle eller
       del av alle stasjoner som er tilgjengelige for systemet. I BLFS, RAID-programvaren
       finnes i <xref linkend='mdadm'/>.
     </para>
 
     <para>
-      Det er enkelt å konfigurere en RAID enhet
+      Det er enkelt Ã¥ konfigurere en RAID enhet
       <application>mdadm</application>.  Vanligvis opprettes enheter i
       <filename class='directory'>/dev</filename> mappen som
       <filename>/dev/mdx</filename> hvor <emphasis>x</emphasis> er et heltall.
     </para>
 
     <para>
-      Det første trinnet i å lage en RAID matrise er å bruke partisjoneringsprogramvare
+      Det fÃ¸rste trinnet i Ã¥ lage en RAID matrise er Ã¥ bruke partisjoneringsprogramvare
       som for eksempel <userinput>fdisk</userinput> eller <xref linkend='parted'/> til
-      å definere partisjonene som trengs for matrisen. Vanligvis vil det være
-      en partisjon på hver stasjon som deltar i RAID matrisen, men det
-      er ikke strengt nødvendig. For dette eksemplet vil det være fire
+      Ã¥ definere partisjonene som trengs for matrisen. Vanligvis vil det vÃ¦re
+      en partisjon pÃ¥ hver stasjon som deltar i RAID matrisen, men det
+      er ikke strengt nÃ¸dvendig. For dette eksemplet vil det vÃ¦re fire
       harddisker:
       <filename>/dev/sda</filename>,
       <filename>/dev/sdb</filename>,
       <filename>/dev/sdc</filename>, og
-      <filename>/dev/sdd</filename>.  De vil bli delt opp som følger:
+      <filename>/dev/sdd</filename>.  De vil bli delt opp som fÃ¸lger:
     </para>
 
 <screen><literal>Partition Size     Type                Use
@@ -137,23 +137,23 @@ sdd2:     300 GB   fd Linux raid auto  /home    (RAID 5) /dev/md2 </literal></sc
 
     <para>
       I dette arrangementet opprettes en egen oppstartspartisjon som
-      første RAID matrise og et rootfilsystem som den andre RAID matrisen,
+      fÃ¸rste RAID matrise og et rootfilsystem som den andre RAID matrisen,
       begge speilet. Den tredje partisjonen er en stor (omtrent 1 TB) matrise for
       <filename class='directory'>/home</filename> mappen.  Dette gir
-      en evne til å stripe data på tvers av flere enheter, og forbedre hastigheten for
-      både lesing og skriving av store filer. Til slutt opprettes en fjerde matrise
-      som kobler sammen to partisjoner til en større enhet.
+      en evne til Ã¥ stripe data pÃ¥ tvers av flere enheter, og forbedre hastigheten for
+      bÃ¥de lesing og skriving av store filer. Til slutt opprettes en fjerde matrise
+      som kobler sammen to partisjoner til en stÃ¸rre enhet.
     </para>
 
     <note>
       <para>
-        Alle <application>mdadm</application> kommandoer må kjøres
+        Alle <application>mdadm</application> kommandoer mÃ¥ kjÃ¸res
         som <systemitem class="username">root</systemitem> bruker.
       </para>
     </note>
 
     <para>
-      For å opprette disse RAID matrisene er kommandoene:
+      For Ã¥ opprette disse RAID matrisene er kommandoene:
     </para>
 
 <screen><userinput>/sbin/mdadm -Cv /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
@@ -163,8 +163,8 @@ sdd2:     300 GB   fd Linux raid auto  /home    (RAID 5) /dev/md2 </literal></sc
         /dev/sda4 /dev/sdb4 /dev/sdc2 /dev/sdd2 </userinput></screen>
 
     <para>
-      Enhetene som er opprettet kan undersøkes enhet for enhet. For eksempel,
-      å se detaljene om <filename>/dev/md1</filename>, bruk
+      Enhetene som er opprettet kan undersÃ¸kes enhet for enhet. For eksempel,
+      Ã¥ se detaljene om <filename>/dev/md1</filename>, bruk
       <userinput>/sbin/mdadm --detail /dev/md1</userinput>:
     </para>
 
@@ -194,8 +194,8 @@ Working Devices : 2
 
     <para>
       Fra dette tidspunktet kan partisjonene formateres med filsystemet du
-      velger (f.eks. ext3, ext4, <xref linkend='xfsprogs'/>, <xref
-      linkend='reiserfs'/>, etc).  De formaterte partisjonene kan da bli
+      velger (f.eks. ext3, ext4, <xref linkend='xfsprogs'/>, etc).  De formaterte 
+      partisjonene kan da bli
       montert.  <filename>/etc/fstab</filename> filen kan bruke enhetene
       som er opprettet for montering ved oppstart og linux kommandolinjen i
       <filename>/boot/grub/grub.cfg</filename> kan spesifisere
@@ -204,9 +204,9 @@ Working Devices : 2
 
     <note>
       <para>
-        vekselminnet bør spesifiseres i
+        vekselminnet bÃ¸r spesifiseres i
         <filename>/etc/fstab</filename> filen som normalt. Kjernen striper normalt
-        vekselminnets data på tvers av flere vekselminnefiler og bør ikke lages
+        vekselminnets data pÃ¥ tvers av flere vekselminnefiler og bÃ¸r ikke lages
         som del av en RAID matrise.
       </para>
     </note>
@@ -217,8 +217,8 @@ Working Devices : 2
     </para>
 
     <para>
-      Ytterligere detaljer for å overvåke RAID matriser og håndtere
-      problemer finner du på <ulink
+      Ytterligere detaljer for Ã¥ overvÃ¥ke RAID matriser og hÃ¥ndtere
+      problemer finner du pÃ¥ <ulink
       url="https://raid.wiki.kernel.org/index.php/Linux_Raid">Linux RAID
       Wiki</ulink>.
     </para>
