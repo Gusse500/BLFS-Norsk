@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY valgrind-download-http "https://sourceware.org/pub/valgrind/valgrind-&valgrind-version;.tar.bz2">
-  <!ENTITY valgrind-download-ftp  "ftp://sourceware.org/pub/valgrind/valgrind-&valgrind-version;.tar.bz2">
-  <!ENTITY valgrind-md5sum        "b8b89b327732c12191306c3d31cfd4b1">
-  <!ENTITY valgrind-size          "17 MB">
-  <!ENTITY valgrind-buildsize     "388 MB (legg til 66 MB for tester)">
-  <!ENTITY valgrind-time          "0.5 SBU (Bruker parallellisme=4; legg til 8.4 SBU for tester)">
+  <!ENTITY valgrind-download-ftp  " ">
+  <!ENTITY valgrind-md5sum        "38ea14f567efa09687a822b33b4d9d60">
+  <!ENTITY valgrind-size          "16 MB">
+  <!ENTITY valgrind-buildsize     "390 MB (legg til 66 MB for tester)">
+  <!ENTITY valgrind-time          "0.5 SBU (legg til 6,8 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="valgrind" xreflabel="Valgrind-&valgrind-version;">
@@ -27,13 +27,13 @@
 
     <para>
       <application>Valgrind</application> er et instrumenteringsrammeverk for
-      å bygge dynamiske analyseverktøy. Det finnes Valgrind verktøy som automatisk kan
-      oppdage mange minnehåndterings- og trådfeil, og
-      profilprogrammer i detalj. Valgrind kan også brukes til å bygge nye
-      verktøy.
+      Ã¥ bygge dynamiske analyseverktÃ¸y. Det finnes Valgrind verktÃ¸y som automatisk kan
+      oppdage mange minnehÃ¥ndterings- og trÃ¥dfeil, og
+      profilprogrammer i detalj. Valgrind kan ogsÃ¥ brukes til Ã¥ bygge nye
+      verktÃ¸y.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &valgrind-size;
+          NedlastingsstÃ¸rrelse: &valgrind-size;
         </para>
       </listitem>
       <listitem>
@@ -68,17 +68,17 @@
         </para>
       </listitem>
     </itemizedlist>
-<!--
+
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/valgrind-&valgrind-version;-upstream_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
--->
+
     <bridgehead renderas="sect3">Valgrind Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -89,7 +89,7 @@
     </para>
 
 <!-- See "maintainer note", below
-    <bridgehead renderas="sect4">Valgfritt for å regenerere dokumentasjonen</bridgehead>
+    <bridgehead renderas="sect4">Valgfritt for Ã¥ regenerere dokumentasjonen</bridgehead>
     <para role="optional">
       <xref linkend="libxslt"/> og
       <xref linkend="texlive"/> (or <xref linkend="tl-installer"/>)
@@ -99,17 +99,16 @@
 
   <sect2 role="installation">
     <title>Installasjon av Valgrind</title>
-<!--
+
     <para>
-      Gjør først flere endringer som kreves for at Valgrind skal fungere på
-      systemer med glibc-2.35 installert:
+      GjÃ¸r fÃ¸rst flere endringer som kreves for at Valgrind skal fungere pÃ¥
+      systemer med glibc-2.39 og binutils-2.42 installert:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../valgrind-&valgrind-version;-upstream_fixes-1.patch</userinput></screen>
--->
 
     <para>
-      Installer <application>Valgrind</application> ved å kjøre følgende
+      Installer <application>Valgrind</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -120,11 +119,11 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make regtest</command>. Testene
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make regtest</command>. Testene
       kan henge for alltid hvis <xref linkend="gdb"/> ikke er installert. Noen tester
-      er kjent for å henge også, avhengig av versjonen av glibc. Noen få tester
+      er kjent for Ã¥ henge ogsÃ¥, avhengig av versjonen av glibc. Noen fÃ¥ tester
       kan mislykkes i ulike pakker. Problematiske
-      tester kan deaktiveres ved å endre <userinput>prereq:</userinput> linjen
+      tester kan deaktiveres ved Ã¥ endre <userinput>prereq:</userinput> linjen
       i den tilsvarende <filename>.vgtest</filename> filen til
       <userinput>prereq: false</userinput>. For eksempel:
     </para>
@@ -148,16 +147,22 @@ make</userinput></screen>
          0 stdoutB failures, 0 post failure -bdubbs May 2, 23
          valgrind-3.21.0
            memcheck/tests/overlap                   (stderr)
-           helgrind/tests/pth_mempcpy_false_races   (stderr) -->
+           helgrind/tests/pth_mempcpy_false_races   (stderr) 
+
+         792 tests, 1 stderr failure, 0 stdout failures, 0 stderrB failures, 
+         0 stdoutB failures, 0 post failures
+         valgrind-3.22.0
+           helgrind/tests/pth_mempcpy_false_races   (stderr)
+           -->
 
     <note>
       <para>
         <application>OpenMP</application> tester hoppes over hvis libgomp
         har blitt kompilert med <option>--enable-linux-futex</option> (standard).
-        Om nødvendig, bare kompiler libgomp biblioteket på nytt fra
+        Om nÃ¸dvendig, bare kompiler libgomp biblioteket pÃ¥ nytt fra
         gcc byggetreet, send <option>--disable-linux-futex</option>
         til configure, lagre biblioteket et sted og endre koblingen
-        fra <filename>/usr/lib/libgomp.so.1</filename> til å peke på det nye
+        fra <filename>/usr/lib/libgomp.so.1</filename> til Ã¥ peke pÃ¥ det nye
         bibliotek.
       </para>
     </note>
@@ -167,7 +172,7 @@ make</userinput></screen>
       (still broken with TeXLive 2016) -->
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -178,14 +183,14 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -i ... docs/Makefile.in </command>: Dette sed sørger for
+      <command>sed -i ... docs/Makefile.in </command>: Dette sed sÃ¸rger for
       installering av dokumentasjonen i en versjonert mappe.
     </para>
 
     <para>
       <option>--enable-lto=yes</option>: Dette alternativet lar deg bygge Valgrind
       med LTO (link time optimization). Dette gir en mindre/raskere
-      Valgrind (opptil 10%), men byggetiden øker til ca 5,5 SBU.
+      Valgrind (opptil 10%), men byggetiden Ã¸ker til ca 5,5 SBU.
     </para>
 
   </sect2>
@@ -232,7 +237,7 @@ make</userinput></screen>
         <term><command>valgrind</command></term>
         <listitem>
           <para>
-            er et program for feilsøking og profilering av Linux kjørbare filer
+            er et program for feilsÃ¸king og profilering av Linux kjÃ¸rbare filer
           </para>
           <indexterm zone="valgrind valgrind-prog">
             <primary sortas="b-valgrind">valgrind</primary>
@@ -245,7 +250,7 @@ make</userinput></screen>
         <listitem>
           <para>
             tar en utdatafil produsert av
-            <application>Valgrind</application> verktøyet Callgrind og skriver ut
+            <application>Valgrind</application> verktÃ¸yet Callgrind og skriver ut
             informasjon i en lettlest form
           </para>
           <indexterm zone="valgrind callgrind_annotate">
@@ -258,8 +263,8 @@ make</userinput></screen>
         <term><command>callgrind_control</command></term>
         <listitem>
           <para>
-            kontrollerer programmer som kjøres av <application>Valgrind</application>
-            verktøyet Callgrind
+            kontrollerer programmer som kjÃ¸res av <application>Valgrind</application>
+            verktÃ¸yet Callgrind
           </para>
           <indexterm zone="valgrind callgrind_control">
             <primary sortas="b-callgrind_control">callgrind_control</primary>
@@ -271,8 +276,8 @@ make</userinput></screen>
         <term><command>cg_annotate</command></term>
         <listitem>
           <para>
-            er et etterbehandlingsverktøy for <application>Valgrind</application>
-            verktøyet Cachegrind
+            er et etterbehandlingsverktÃ¸y for <application>Valgrind</application>
+            verktÃ¸yet Cachegrind
           </para>
           <indexterm zone="valgrind cg_annotate">
             <primary sortas="b-cg_annotate">cg_annotate</primary>
@@ -296,7 +301,7 @@ make</userinput></screen>
         <term><command>cg_merge</command></term>
         <listitem>
           <para>
-            slår sammen flere Cachegrind utdatafiler til en fil
+            slÃ¥r sammen flere Cachegrind utdatafiler til en fil
           </para>
           <indexterm zone="valgrind cg_merge">
             <primary sortas="b-cg_merge">cg_merge</primary>
@@ -309,7 +314,7 @@ make</userinput></screen>
         <listitem>
           <para>
             tar en utdatafil produsert av <application>Valgrind</application>
-            verktøyet Massif og skriver ut informasjonen i en lettlest form
+            verktÃ¸yet Massif og skriver ut informasjonen i en lettlest form
           </para>
           <indexterm zone="valgrind ms_print">
             <primary sortas="b-ms_print">ms_print</primary>
@@ -321,7 +326,7 @@ make</userinput></screen>
         <term><command>valgrind-di-server</command></term>
         <listitem>
           <para>
-            er en server som leser debuginfo fra objekter som er lagret på en
+            er en server som leser debuginfo fra objekter som er lagret pÃ¥ en
             annen maskin
           </para>
           <indexterm zone="valgrind valgrind-di-server">
@@ -334,7 +339,7 @@ make</userinput></screen>
         <term><command>valgrind-listener</command></term>
         <listitem>
           <para>
-            lytter på en socket for Valgrind kommentarer
+            lytter pÃ¥ en socket for Valgrind kommentarer
           </para>
           <indexterm zone="valgrind valgrind-listener">
             <primary sortas="b-valgrind-listener">valgrind-listener</primary>

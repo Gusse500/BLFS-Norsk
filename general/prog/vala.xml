@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY vala-download-http "&gnome-download-http;/vala/&vala-major-version;/vala-&vala-version;.tar.xz">
-  <!ENTITY vala-download-ftp  "&gnome-download-ftp;/vala/&vala-major-version;/vala-&vala-version;.tar.xz">
-  <!ENTITY vala-md5sum        "7b4481fb52bbf73fcfedacbdab616eeb">
+  <!ENTITY vala-download-ftp  " ">
+  <!ENTITY vala-md5sum        "30dea3532368e3357d642b64c8a1f473">
   <!ENTITY vala-size          "3.8 MB">
-  <!ENTITY vala-buildsize     "143 MB (legg til 19 MB for tester)">
-  <!ENTITY vala-time          "0.4 SBU (legg til 0,7 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY vala-buildsize     "160 MB (legg til 18 MB for tester)">
+  <!ENTITY vala-time          "0.5 SBU (legg til 1.0 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="vala" xreflabel="Vala-&vala-version;">
@@ -26,14 +26,14 @@
     <title>Introduksjon til Vala</title>
 
     <para>
-      <application>Vala</application> er et nytt programmeringsspråk som
-      har som mål å bringe moderne programmeringsspråkfunksjoner til
-      <application>GNOME</application> utviklere uten å pålegge noen
-      ekstra kjøretidskrav og uten å bruke en annen ABI
+      <application>Vala</application> er et nytt programmeringssprÃ¥k som
+      har som mÃ¥l Ã¥ bringe moderne programmeringssprÃ¥kfunksjoner til
+      <application>GNOME</application> utviklere uten Ã¥ pÃ¥legge noen
+      ekstra kjÃ¸retidskrav og uten Ã¥ bruke en annen ABI
       sammenlignet med applikasjoner og biblioteker skrevet i C.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &vala-size;
+          NedlastingsstÃ¸rrelse: &vala-size;
         </para>
       </listitem>
       <listitem>
@@ -71,20 +71,21 @@
 
     <bridgehead renderas="sect3">Vala Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="graphviz"/> (Påkrevd for valadoc)
+      <xref linkend="graphviz"/> (PÃ¥krevd for valadoc)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="dbus"/> (Nødvendig for tester),
-      <xref linkend="libxslt"/> (Nødvendig for å generere dokumentasjonen),
+      <xref linkend="dbus"/> (NÃ¸dvendig for tester),
+      <xref linkend="gobject-introspection"/> (NÃ¸dvendig for tester),
+      <xref linkend="libxslt"/> (NÃ¸dvendig for Ã¥ generere dokumentasjonen),
       <ulink url="https://ftpmirror.gnu.org/gnu/help2man/">help2man</ulink>,
       <ulink url="https://github.com/relaxng/jing-trang">jing</ulink>, og
       <ulink url="https://weasyprint.org/">weasyprint</ulink>
@@ -95,8 +96,31 @@
   <sect2 role="installation">
     <title>Installasjon av Vala</title>
 
+    <!-- https://gitlab.gnome.org/GNOME/vala/-/issues/1485 -->
+    <!-- Fixed in vala-0.56.14 
     <para>
-      Installer <application>Vala</application> ved å kjøre følgende
+      FÃ¸rst, fiks et problem som forÃ¥rsaker at <command>vapigen</command> Ã¥ krÃ¦sje
+      nÃ¥r noen pakker bygges (for eksempel NetworkManager):
+    </para>
+
+<screen><userinput>sed -e "/next_pos =/s/$/ \
+        char buf[16]; \
+        Memory.copy (buf, next_pos, \
+        (end - next_pos >= buf.length ? buf.length - 1 : end - next_pos));/" \
+    -e 's/(string) next_pos/(string) buf/' \
+    -i vala/valamarkupreader.vala</userinput></screen>
+    -->
+
+    <!-- See Ticket #19283 and
+    https://gitlab.gnome.org/GNOME/vala/-/issues/1524 -->
+    <para>
+      FÃ¸rst mÃ¥ du fikse en byggefeil som oppstÃ¥r med graphviz-10.x:
+    </para>
+
+<screen><userinput>sed -i '/gvc.h/a#define TRUE 1' libvaladoc/gvc-compat.c</userinput></screen>
+
+    <para>
+      Installer <application>Vala</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -104,11 +128,11 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -119,10 +143,21 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <option>--disable-valadoc</option>: Dette alternativet er
-      nødvendig hvis <xref linkend="graphviz"/> ikke er installert.
+      <option>bootstrap</option>: Dette <command>make</command>
+      mÃ¥let tvinger byggesystemet Ã¥ bygge pakken to ganger og bruke
+      <command>vala</command> kjÃ¸rbare produsert i det fÃ¸rste bygget
+      til Ã¥ regenerere <filename class="extension">.c</filename> filer
+      fra <filename class="extension">.vala</filename> filer om nÃ¸dvendig.
+      Hvis en <command>vala</command> kjÃ¸rbar fil ikke er installert ennÃ¥ og
+      du har endret noen <filename class="extension">.vala</filename> filer
+      i kildetreet, kjÃ¸r <command>make bootstrap</command> i stedet for
+      <command>make</command>.
     </para>
 
+    <para>
+      <option>--disable-valadoc</option>: Dette alternativet er
+      nÃ¸dvendig hvis <xref linkend="graphviz"/> ikke er installert.
+    </para>
   </sect2>
 
   <sect2 role="content">
@@ -186,8 +221,8 @@ make</userinput></screen>
         <term><command>valadoc</command></term>
         <listitem>
           <para>
-            er en dokumentasjonsgenerator for å generere API dokumentasjon
-            fra <application>Vala</application> kildekode basert på libvala
+            er en dokumentasjonsgenerator for Ã¥ generere API dokumentasjon
+            fra <application>Vala</application> kildekode basert pÃ¥ libvala
           </para>
           <indexterm zone="vala valadoc">
             <primary sortas="b-valadoc">valadoc</primary>
@@ -212,7 +247,7 @@ make</userinput></screen>
         <term><command>vapigen</command></term>
         <listitem>
           <para>
-            er et verktøy som genererer <application>Vala</application> API
+            er et verktÃ¸y som genererer <application>Vala</application> API
             (VAPI) filer fra GI filer
           </para>
           <indexterm zone="vala vapigen">
