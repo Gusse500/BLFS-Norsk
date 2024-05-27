@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 ]>
 
-<sect1 id="svnserver" xreflabel="Kjøre en Subversion Server">
+<sect1 id="svnserver" xreflabel="KjÃ¸re en Subversion Server">
   <?dbhtml filename="svnserver.html"?>
 
 
-  <title>Kjøre en Subversion Server</title>
+  <title>KjÃ¸re en Subversion Server</title>
 
   <sect2 role="package">
-    <title>Kjøre en Subversion Server</title>
+    <title>KjÃ¸re en Subversion Server</title>
 
     <para>
       Denne delen vil beskrive hvordan du setter opp, administrerer og sikrer
@@ -21,7 +21,7 @@
 
     <bridgehead renderas="sect3">Subversion Server Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="subversion"/> og
       <xref linkend="openssh"/>
@@ -33,26 +33,26 @@
     <title>Sette opp en Subversion Server.</title>
 
     <para>
-      Følgende instruksjoner vil installere en
+      FÃ¸lgende instruksjoner vil installere en
       <application>Subversion</application> server, som vil bli satt opp for
-      å bruke <application>OpenSSH</application> som en sikker fjerntilgangs
+      Ã¥ bruke <application>OpenSSH</application> som en sikker fjerntilgangs
       metode, med <command>svnserve</command> tilgjengelig for anonym
       adgang.
     </para>
 
     <para>
       Konfiguringen av <application>Subversion</application> server
-      består av følgende trinn:
+      bestÃ¥r av fÃ¸lgende trinn:
     </para>
 
     <sect3>
       <title>1. Sett opp brukere, grupper og tillatelser</title>
 
       <para>
-        Du må være bruker
-        <systemitem class='username'>root</systemitem> for den første delen
+        Du mÃ¥ vÃ¦re bruker
+        <systemitem class='username'>root</systemitem> for den fÃ¸rste delen
         av konfigurasjonen. Opprett <systemitem
-        class="username">svn</systemitem> bruker og gruppe med følgende
+        class="username">svn</systemitem> bruker og gruppe med fÃ¸lgende
         kommandoer:
       </para>
 
@@ -60,21 +60,21 @@
 useradd -c "SVN Owner" -d /home/svn -m -g svn -s /bin/false -u 56 svn</userinput></screen>
 
       <para>
-        Hvis du planlegger å ha flere depoter, bør du ha en
+        Hvis du planlegger Ã¥ ha flere depoter, bÃ¸r du ha en
         gruppe dedikert til hvert depot for enkel administrasjon. Opprett
         <systemitem class="groupname">svntest</systemitem> gruppe for
         testdepot og legg til <systemitem
         class="username">svn</systemitem> bruker til den gruppen med
-        følgende kommandoer:
+        fÃ¸lgende kommandoer:
       </para>
 
 <screen role="root"><userinput>groupadd -g 57 svntest &amp;&amp;
 usermod -G svntest -a svn</userinput></screen>
 
       <para>
-        I tillegg bør du sette <command>umask 002</command> samtidig som
-        arbeider med et depot slik at alle nye filer vil være skrivbare av
-        eier og gruppe. Dette gjøres obligatorisk ved å lage et innpakningsskript
+        I tillegg bÃ¸r du sette <command>umask 002</command> samtidig som
+        arbeider med et depot slik at alle nye filer vil vÃ¦re skrivbare av
+        eier og gruppe. Dette gjÃ¸res obligatorisk ved Ã¥ lage et innpakningsskript
         for <command>svn</command> og <command>svnserve</command>:
       </para>
 
@@ -94,8 +94,8 @@ chmod 0755 /usr/bin/svn{,serve}</userinput></screen>
 
       <note>
         <para>
-          Hvis du bruker <application>Apache</application> for å jobbe med
-           depotet over HTTP, selv for anonym tilgang, bør du pakke inn
+          Hvis du bruker <application>Apache</application> for Ã¥ jobbe med
+           depotet over HTTP, selv for anonym tilgang, bÃ¸r du pakke inn
           <command>/usr/sbin/httpd</command> i et lignende skript.
         </para>
       </note>
@@ -106,8 +106,8 @@ chmod 0755 /usr/bin/svn{,serve}</userinput></screen>
       <title>2. Opprett et Subversion depot.</title>
 
       <para>
-        Det er flere måter å sette opp et subversion depot. Det
-        anbefales å ta en titt på <ulink
+        Det er flere mÃ¥ter Ã¥ sette opp et subversion depot. Det
+        anbefales Ã¥ ta en titt pÃ¥ <ulink
         url="https://svnbook.red-bean.com/nightly/en/svn.reposadmin.html">SVN
         Book</ulink> tilsvarende kapittel. Et grunnleggende depot kan settes opp
         med instruksjonene nedenfor.
@@ -115,7 +115,7 @@ chmod 0755 /usr/bin/svn{,serve}</userinput></screen>
 
       <para>
         Opprett et nytt <application>Subversion</application> depot med
-        følgende kommandoer (som <systemitem class="username">root
+        fÃ¸lgende kommandoer (som <systemitem class="username">root
         </systemitem> bruker):
       </para>
 
@@ -124,12 +124,12 @@ install -v -m 0755 -o svn -g svn -d /srv/svn/repositories &amp;&amp;
 svnadmin create /srv/svn/repositories/svntest</userinput></screen>
 
       <para>
-        Nå som depotet er opprettet, skal det fylles ut med
-        noe nyttig. Du må ha en forhåndsdefinert mappe
+        NÃ¥ som depotet er opprettet, skal det fylles ut med
+        noe nyttig. Du mÃ¥ ha en forhÃ¥ndsdefinert mappe
         utforming satt opp akkurat slik du vil at depotet ditt skal se ut. For
-        eksempel, her er et eksempel på BLFS utformingsoppsett med en rot av
-        <filename>svntest/</filename>. Du må sette opp et mappetre
-        som ligner på følgende:
+        eksempel, her er et eksempel pÃ¥ BLFS utformingsoppsett med en rot av
+        <filename>svntest/</filename>. Du mÃ¥ sette opp et mappetre
+        som ligner pÃ¥ fÃ¸lgende:
       </para>
 
 <screen><literal>svntest/            # The name of the repository
@@ -143,8 +143,8 @@ svnadmin create /srv/svn/repositories/svntest</userinput></screen>
    tags/            # Needed for tagging release points</literal></screen>
 
       <para>
-        Når du har opprettet mappeoppsettet som vist ovenfor,
-        er du klar til å utføre den første importen:
+        NÃ¥r du har opprettet mappeoppsettet som vist ovenfor,
+        er du klar til Ã¥ utfÃ¸re den fÃ¸rste importen:
       </para>
 
 <screen role="root"><userinput>svn import -m "Initial import." \
@@ -152,7 +152,7 @@ svnadmin create /srv/svn/repositories/svntest</userinput></screen>
     file:///srv/svn/repositories/svntest</userinput></screen>
 
       <para>
-        Endre nå eier- og gruppeinformasjon for
+        Endre nÃ¥ eier- og gruppeinformasjon for
         depoet, og legg til en uprivilegert bruker for
         <systemitem class="groupname">svn</systemitem> og
         <systemitem class="groupname">svntest</systemitem> gruppene:
@@ -168,8 +168,8 @@ usermod -G svn,svntest -a <replaceable>&lt;username&gt;</replaceable></userinput
         tilordnet til svntest depotet. Som nevnt tidligere, letter dette
         administrasjon av flere depoter ved bruk av
         <application>OpenSSH</application> for autentisering. Fremover,
-        må du legge til den uprivilegerte brukeren din og eventuelle andre brukere
-        som du ønsker å ha skrivetilgang til depotet, til
+        mÃ¥ du legge til den uprivilegerte brukeren din og eventuelle andre brukere
+        som du Ã¸nsker Ã¥ ha skrivetilgang til depotet, til
         <systemitem class="groupname">svn</systemitem> og <systemitem
         class="groupname">svntest</systemitem> gruppene.
       </para>
@@ -177,28 +177,28 @@ usermod -G svn,svntest -a <replaceable>&lt;username&gt;</replaceable></userinput
       <para>
         I tillegg vil du legge merke til at i det nye depotet
         <filename>db</filename> mappen er set-groupID. Hvis begrunnelsen
-        ikke umiddelbart er åpenbart når du bruker en ekstern autentiseringsmetode
+        ikke umiddelbart er Ã¥penbart nÃ¥r du bruker en ekstern autentiseringsmetode
         (som for eksempel <command>ssh</command>), den klebrige biten er satt slik at alle
          nye filer vil eies av brukeren, med gruppen
         <systemitem class="groupname">svntest</systemitem>. Hvem som helst i
         <systemitem class="groupname">svntest</systemitem> gruppen kan opprette
         filer, men fortsatt gi hele gruppen skrivetilgang til disse
-        filene. Dette unngår å låse ut andre brukere fra depotet.
+        filene. Dette unngÃ¥r Ã¥ lÃ¥se ut andre brukere fra depotet.
       </para>
 
       <para>
-        Gå nå tilbake til en uprivilegert brukerkonto, og ta en
-        titt på det nye depotet med <command>svnlook</command>:
+        GÃ¥ nÃ¥ tilbake til en uprivilegert brukerkonto, og ta en
+        titt pÃ¥ det nye depotet med <command>svnlook</command>:
       </para>
 
 <screen><userinput>svnlook tree /srv/svn/repositories/svntest/</userinput></screen>
 
       <note>
         <para>
-          Du må kanskje logge ut og inn igjen for å oppdatere gruppemedlemskapet
+          Du mÃ¥ kanskje logge ut og inn igjen for Ã¥ oppdatere gruppemedlemskapet
           ditt. <command>su
           <replaceable>&lt;username&gt;</replaceable></command>
-          bør fungere også.
+          bÃ¸r fungere ogsÃ¥.
         </para>
       </note>
 
@@ -209,17 +209,17 @@ usermod -G svn,svntest -a <replaceable>&lt;username&gt;</replaceable></userinput
 
       <para>
         Som nevnt tidligere, vil disse instruksjonene konfigurere
-        serveren til å kun bruke <command>ssh</command> for skrivetilgang til
-        depoet og å gi anonym tilgang ved hjelp av
-        <command>svnserve</command>. Det er flere andre måter å tilby
+        serveren til Ã¥ kun bruke <command>ssh</command> for skrivetilgang til
+        depoet og Ã¥ gi anonym tilgang ved hjelp av
+        <command>svnserve</command>. Det er flere andre mÃ¥ter Ã¥ tilby
         tilgang til depotet. Disse tilleggskonfigurasjonene er best
-        forklart på <ulink url="https://svnbook.red-bean.com/"/>.
+        forklart pÃ¥ <ulink url="https://svnbook.red-bean.com/"/>.
       </para>
 
       <para>
-        Tilgangskonfigurasjon må gjøres for hvert depot.
+        Tilgangskonfigurasjon mÃ¥ gjÃ¸res for hvert depot.
         Opprett <filename>svnserve.conf</filename> filen for svntest
-        depoet ved hjelp av følgende kommandoer:
+        depoet ved hjelp av fÃ¸lgende kommandoer:
       </para>
 
 <screen role="root"><userinput>cp /srv/svn/repositories/svntest/conf/svnserve.conf \
@@ -233,7 +233,7 @@ EOF</userinput></screen>
 
       <para>
         Det er ikke mye i konfigurasjonsfilen i det hele tatt. Du vil merke
-        at kun den generelle delen kreves. Ta en titt på
+        at kun den generelle delen kreves. Ta en titt pÃ¥
         <filename>svnserve.conf.default</filename> filen for informasjon om
         bruk av <command>svnserve</command> sin innebygde autentiseringsmetode.
       </para>
@@ -244,12 +244,12 @@ EOF</userinput></screen>
       <title>4. Starte Serveren</title>
 
       <para revision="sysv">
-        For å starte serveren ved oppstart, installer svn
+        For Ã¥ starte serveren ved oppstart, installer svn
         oppstartskript inkludert i <xref linkend="bootscripts"/> pakken:
       </para>
 
       <para revision="systemd">
-        For å starte serveren ved oppstart, installer
+        For Ã¥ starte serveren ved oppstart, installer
         <filename>svnserve.service</filename> enheten fra
         <xref linkend="systemd-units"/> pakken:
       </para>
@@ -269,8 +269,8 @@ EOF</userinput></screen>
       <para revision="systemd">
         I tillegg krever instruksjonene ovenfor
         at svn serveren bruker <command>umask 002</command> slik at alle nye filer
-        vil kunne skrives av eier og gruppe. Dette kan oppnås ved å lage
-        en systemd enhetsoverstyringsfil ved å kjøre følgende kommando:
+        vil kunne skrives av eier og gruppe. Dette kan oppnÃ¥s ved Ã¥ lage
+        en systemd enhetsoverstyringsfil ved Ã¥ kjÃ¸re fÃ¸lgende kommando:
       </para>
 
 <screen role="root" revision="systemd"><userinput>mkdir -p /etc/systemd/system/svnserve.service.d
