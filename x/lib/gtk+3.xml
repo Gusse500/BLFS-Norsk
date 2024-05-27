@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY gtk3-download-http "&gnome-download-http;/gtk+/&gnome-minor-24;/gtk+-&gtk3-version;.tar.xz">
-  <!ENTITY gtk3-download-ftp  "&gnome-download-ftp;/gtk+/&gnome-minor-24;/gtk+-&gtk3-version;.tar.xz">
-  <!ENTITY gtk3-md5sum        "7ed2f5914683ebd515da22f5784389f4">
-  <!ENTITY gtk3-size          "12 MB">
-  <!ENTITY gtk3-buildsize     "233 MB (legg til 4 MB for tester)">
-  <!ENTITY gtk3-time          "0.2 SBU (bruk parallellisme=4, legg til 0,5 SBU for tester)">
+  <!ENTITY gtk3-download-ftp  " ">
+  <!ENTITY gtk3-md5sum        "2321e8158feac093b6ed82aac66dbbfd">
+  <!ENTITY gtk3-size          "13 MB">
+  <!ENTITY gtk3-buildsize     "238 MB (legg til 8 MB for tester)">
+  <!ENTITY gtk3-time          "0.8 SBU (bruk parallellisme=4, legg til 0,2 SBU for tester)">
 ]>
 
 <sect1 id="gtk3" xreflabel="GTK+-&gtk3-version;">
@@ -27,11 +27,11 @@
 
     <para>
       <application>GTK+ 3</application> pakken inneholder
-      biblioteker som brukes til å lage grafiske brukergrensesnitt for
+      biblioteker som brukes til Ã¥ lage grafiske brukergrensesnitt for
       applikasjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gtk3-size;
+          NedlastingsstÃ¸rrelse: &gtk3-size;
         </para>
       </listitem>
       <listitem>
@@ -69,7 +69,7 @@
 
     <bridgehead renderas="sect3">GTK+ 3 Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="at-spi2-core"/>,
       <xref linkend="gdk-pixbuf"/>,
@@ -79,19 +79,20 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="adwaita-icon-theme"/> (standard for noen gtk+3 innstillings
-      nøkler, også nødvendig for tester),
-      <xref linkend="docbook-xsl"/> (for å generere manualsider),
+      <xref role='runtime' linkend="adwaita-icon-theme"/>
+        (ved kjÃ¸retid; standard for noen gtk+3 innstillingstaster og
+        ogsÃ¥ nÃ¸dvendig for en test),
+      <xref linkend="docbook-xsl"/> (for Ã¥ generere manualsider),
       <xref linkend="hicolor-icon-theme"/> (needed for tests),
       <xref linkend="iso-codes"/>,
       <xref linkend="libxkbcommon"/>,
-      <xref linkend="libxslt"/> (for å generere manualsider),
+      <xref linkend="libxslt"/> (for Ã¥ generere manualsider),
       <xref linkend="sassc"/>,
       <xref linkend="wayland"/>, og
       <xref linkend="wayland-protocols"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt (Påkrevd hvis GNOME bygges)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (PÃ¥krevd hvis GNOME bygges)</bridgehead>
     <para role="recommended">
       <xref linkend="gobject-introspection"/>
     </para>
@@ -101,6 +102,7 @@
       <xref linkend="colord"/>,
       <xref linkend="cups"/>,
       <xref linkend="gtk-doc"/>,
+      <xref linkend="libcloudproviders"/>,
       <xref linkend="pyatspi2"/> (for tester),
       <xref linkend='tracker3'/>, og
       <ulink url="https://icl.utk.edu/papi/">PAPI</ulink>
@@ -112,7 +114,7 @@
     <title>Installasjon av GTK+ 3</title>
 
     <para>
-      Installer <application>GTK+ 3</application> ved å kjøre følgende
+      Installer <application>GTK+ 3</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -126,21 +128,26 @@ meson setup --prefix=/usr           \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene trenger du en grafisk økt, og utfør deretter
+      For Ã¥ teste resultatene trenger du en grafisk Ã¸kt, og utfÃ¸r deretter
       <command>dbus-run-session ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
+    <para>
+      En test navngitt <filename>check-cursor-names</filename> er kjent
+      for Ã¥ mislykkes hvis <xref linkend='adwaita-icon-theme'/> ikke er installert.
+    </para>
+
     <note>
       <para>
-        Hvis du installerte pakken på systemet ditt ved hjelp av en
+        Hvis du installerte pakken pÃ¥ systemet ditt ved hjelp av en
         <quote>DESTDIR</quote> metode, en viktig fil ble ikke installert og
-        må kopieres og/eller genereres. Generer den ved å bruke følgende
+        mÃ¥ kopieres og/eller genereres. Generer den ved Ã¥ bruke fÃ¸lgende
         kommando som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -170,9 +177,15 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <option>-Dtracker3=true</option>: Denne bryteren aktiverer søke
-      funksjonen basert på Tracker 3 i GTK+-3 filvelgerdialogen.
+      <option>-Dtracker3=true</option>: Denne bryteren aktiverer sÃ¸ke
+      funksjonen basert pÃ¥ Tracker 3 i GTK+-3 filvelgerdialogen.
       Det krever <xref linkend="tracker3"/>.
+    </para>
+
+    <para>
+      <option>-Dcloudproviders=true</option>: Bruk denne bryteren hvis du har
+      <xref linkend="libcloudproviders" role="nodep"/> installert og Ã¸nsker Ã¥
+      aktivere stÃ¸tte for skyleverandÃ¸rer i et filvelgervindu.
     </para>
 
   </sect2>
@@ -199,13 +212,13 @@ ninja</userinput></screen>
     <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        <application>GTK+ 3</application> temaer endrer måten en
+        <application>GTK+ 3</application> temaer endrer mÃ¥ten en
         <application>GTK+ 3</application> applikasjon ser ut. Et ikontema kan
-        brukes til å endre ikonene som vises på programmets verktøylinje.
+        brukes til Ã¥ endre ikonene som vises pÃ¥ programmets verktÃ¸ylinje.
         Hvis du har installert en <application>GTK+ 3</application> tema (f.eks.
         Adwaita temaet innebygd i <application>GTK+ 3</application>),
         et ikontema (som f.eks <xref
-        linkend="oxygen-icons5"/>) og/eller en font (<xref linkend="dejavu-fonts"/>),
+        linkend="oxygen-icons"/>) og/eller en font (<xref linkend="dejavu-fonts"/>),
         du kan angi dine preferanser i <filename>~/.config/gtk-3.0/settings.ini</filename>,
         eller standard systemomfattende konfigurasjonsfil (som <systemitem
         class="username">root</systemitem> bruker), i
@@ -229,18 +242,18 @@ gtk-cursor-theme-name = <replaceable>Adwaita</replaceable></literal>
 EOF</userinput></screen>
 
       <para>
-        Det finnes mange innstillingsnøkler, noen med standardverdier. Du kan finne
-        dem på <ulink
+        Det finnes mange innstillingsnÃ¸kler, noen med standardverdier. Du kan finne
+        dem pÃ¥ <ulink
         url="https://developer.gnome.org/gtk3/stable/GtkSettings.html">Settings:
-        GTK+ 3 Reference Manual</ulink>. Det er mange flere temaer tilgjengelig på
+        GTK+ 3 Reference Manual</ulink>. Det er mange flere temaer tilgjengelig pÃ¥
         <ulink url="https://www.gnome-look.org/browse/"/> og andre steder.
       </para>
 
       <para>
         Som en del av GTK+-3.0 sin redesign, er rullefeltknappene ikke lenger
-        synlig på rullefeltet i mange applikasjoner. Hvis denne funksjonaliteten
-        er ønsket, endre <filename>gtk.css</filename> filen og gjenopprett
-        dem ved å bruke følgende kommando:
+        synlig pÃ¥ rullefeltet i mange applikasjoner. Hvis denne funksjonaliteten
+        er Ã¸nsket, endre <filename>gtk.css</filename> filen og gjenopprett
+        dem ved Ã¥ bruke fÃ¸lgende kommando:
       </para>
 
 <screen><userinput>cat &gt; ~/.config/gtk-3.0/gtk.css &lt;&lt; "EOF"
@@ -299,7 +312,7 @@ EOF</userinput></screen>
         <term><command>broadwayd</command></term>
         <listitem>
           <para>
-            gir støtte for å vise
+            gir stÃ¸tte for Ã¥ vise
             <application>GTK+ 3</application> applikasjoner i en nettleser,
             ved hjelp av HTML5 og web-sockets
           </para>
@@ -338,8 +351,8 @@ EOF</userinput></screen>
         <term><command>gtk3-icon-browser</command></term>
         <listitem>
           <para>
-            er et verktøy for å utforske ikonene i det gjeldende ikontemaet. Den
-            viser ikoner i ulike størrelser, deres symbolske varianter hvor
+            er et verktÃ¸y for Ã¥ utforske ikonene i det gjeldende ikontemaet. Den
+            viser ikoner i ulike stÃ¸rrelser, deres symbolske varianter hvor
             tilgjengelig, samt en beskrivelse av ikonet og dets kontekst
           </para>
           <indexterm zone="gtk3 gtk3-icon-browser">
@@ -352,7 +365,7 @@ EOF</userinput></screen>
         <term><command>gtk3-widget-factory</command></term>
         <listitem>
           <para>
-            er et program å vise <application>GTK+ 3</application> temaer og skjermelementer
+            er et program Ã¥ vise <application>GTK+ 3</application> temaer og skjermelementer
           </para>
           <indexterm zone="gtk3 gtk3-widget-factory">
             <primary sortas="b-gtk3-widget-factory">gtk3-widget-factory</primary>
@@ -364,7 +377,7 @@ EOF</userinput></screen>
         <term><command>gtk-builder-tool</command></term>
         <listitem>
           <para>
-            utfører ulike operasjoner på GtkBuilder .ui filer
+            utfÃ¸rer ulike operasjoner pÃ¥ GtkBuilder .ui filer
           </para>
           <indexterm zone="gtk3 gtk-builder-tool">
             <primary sortas="b-gtk-builder-tool">gtk-builder-tool</primary>
@@ -432,7 +445,7 @@ EOF</userinput></screen>
         <term><command>gtk-update-icon-cache</command></term>
         <listitem>
           <para>
-            er et hurtigbufferverktøy for ikontema som lager mmap()able hurtigbufferfiler
+            er et hurtigbufferverktÃ¸y for ikontema som lager mmap()able hurtigbufferfiler
             for ikontemaer
           </para>
           <indexterm zone="gtk3 gtk-update-icon-cache3">
@@ -447,7 +460,7 @@ EOF</userinput></screen>
           <para>
             inneholder funksjoner som implementerer tilgjengelighetsgrensesnittene
             definert av <application>GNOME</application> Tilgjengelighets
-            Verktøysett
+            VerktÃ¸ysett
           </para>
           <indexterm zone="gtk3 libgailutil-3">
             <primary sortas="c-libgailutil-3">libgailutil-3.so</primary>
@@ -459,7 +472,7 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">libgdk-3.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som fungerer som en innpakning rundt lavt nivå
+            inneholder funksjoner som fungerer som en innpakning rundt lavt nivÃ¥
             tegne og vindus funksjoner levert av det underliggende 
             grafikksystemet
           </para>
@@ -473,7 +486,7 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">libgtk-3.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som gir en API for å implementere grafisk 
+            inneholder funksjoner som gir en API for Ã¥ implementere grafisk 
             brukergrensesnitt
           </para>
           <indexterm zone="gtk3 libgtk-3">
