@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
    <!ENTITY % general-entities SYSTEM "../../../general.ent">
   %general-entities;
 
   <!ENTITY pygobject3-download-http
-           "&gnome-download-http;/pygobject/&gnome-minor-44;/pygobject-&pygobject3-version;.tar.xz">
-  <!ENTITY pygobject3-download-ftp
-           "&gnome-download-ftp;/pygobject/&gnome-minor-44;/pygobject-&pygobject3-version;.tar.xz">
-  <!ENTITY pygobject3-md5sum        "def9418983594c6a3330717bb640ca4d">
-  <!ENTITY pygobject3-size          "548 KB">
-  <!ENTITY pygobject3-buildsize     "16 MB (legg til 2.5 MB for tester)">
-  <!ENTITY pygobject3-time          "0.1 SBU (med tester)">
+           "&gnome-download-http;/pygobject/&gnome-minor-46;/pygobject-&pygobject3-version;.tar.xz">
+  <!ENTITY pygobject3-download-ftp  " ">
+  <!ENTITY pygobject3-md5sum        "56c36bfe6f24fa28182a7adcd3815b2c">
+  <!ENTITY pygobject3-size          "552 KB">
+  <!ENTITY pygobject3-buildsize     "13 MB (legg til 2.5 MB for tester)">
+  <!ENTITY pygobject3-time          "0.3 SBU (med tester)">
 ]>
 
  <!-- Begin PyGObject3 -->
@@ -32,7 +31,7 @@
         klassen fra <application>GLib</application>.
       </para>
 
-      &lfs120_checked;
+      &lfs121_checked;
 
       <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -53,7 +52,7 @@
         </listitem>
         <listitem>
           <para>
-            Nedlastingsstørrelse: &pygobject3-size;
+            NedlastingsstÃ¸rrelse: &pygobject3-size;
           </para>
         </listitem>
         <listitem>
@@ -70,7 +69,7 @@
 
       <bridgehead renderas="sect4">PyGObject3 Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect5">Påkrevd</bridgehead>
+      <bridgehead renderas="sect5">PÃ¥krevd</bridgehead>
       <para role="required">
         <xref linkend="gobject-introspection"/> og
         <xref linkend="pycairo"/>
@@ -83,7 +82,6 @@
         <ulink url="https://pypi.python.org/pypi/pep8">pep8</ulink>,
         <ulink url="https://pypi.python.org/pypi/pyflakes">pyflakes</ulink>, og
         <xref linkend="pytest"/>
-        <!-- pytest brings in a lot of dependencies - upwards of 10 -->
       </para>
 
     </sect3>
@@ -92,13 +90,14 @@
       <title>Installasjon av PyGObject3</title>
 
     <para>
-      Fjern først en defekt test:
+      Fjern fÃ¸rst to defekte tester:
     </para>
 
-<screen><userinput remap="pre">mv -v tests/test_gdbus.py{,.nouse}</userinput></screen>
+<screen><userinput remap="pre">mv -v tests/test_gdbus.py{,.nouse} &amp;&amp;
+mv -v tests/test_overrides_gtk.py{,.nouse}</userinput></screen>
 
     <para>
-      Installer <application>pygobject3</application> ved å kjøre følgende
+      Installer <application>pygobject3</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -109,15 +108,15 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
-      En allerede aktiv grafisk sesjon med en bussadresse er nødvendig
-      for å kjøre testene. <!--One test, <filename>tests/test_gdbus.py</filename>,
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
+      En allerede aktiv grafisk sesjon med en bussadresse er nÃ¸dvendig
+      for Ã¥ kjÃ¸re testene. <!--One test, <filename>tests/test_gdbus.py</filename>,
       is known to fail.--> En annen runde med tester kan rapportere ERROR hvis
       <xref linkend="gtk4" role="nodep"/> ikke er installert.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
