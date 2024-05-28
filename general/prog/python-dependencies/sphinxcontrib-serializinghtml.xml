@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../../general.ent">
   %general-entities;
 
-  <!ENTITY sc-serializinghtml-download-http "https://files.pythonhosted.org/packages/source/s/sphinxcontrib-serializinghtml/sphinxcontrib-serializinghtml-&sc-serializinghtml-version;.tar.gz">
+  <!ENTITY sc-serializinghtml-download-http "https://files.pythonhosted.org/packages/source/s/sphinxcontrib_serializinghtml/sphinxcontrib_serializinghtml-&sc-serializinghtml-version;.tar.gz">
   <!ENTITY sc-serializinghtml-download-ftp  " ">
   <!ENTITY sc-serializinghtml-md5sum        "&sc-serializinghtml-md5sum;">
-  <!ENTITY sc-serializinghtml-size          "21 KB">
-  <!ENTITY sc-serializinghtml-buildsize     "3.0 MB (med tester)">
+  <!ENTITY sc-serializinghtml-size          "15 KB">
+  <!ENTITY sc-serializinghtml-buildsize     "2.0 MB (med tester)">
   <!ENTITY sc-serializinghtml-time          "mindre enn 0.1 SBU (med tester)">
 ]>
 
@@ -29,7 +29,7 @@
         <quote>serialiserte</quote> HTML filer (json og pickle).
       </para>
 
-      &lfs120_checked;
+      &lfs121_checked;
 
       <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -50,7 +50,7 @@
         </listitem>
         <listitem>
           <para>
-            Nedlastingsstørrelse: &sc-serializinghtml-size;
+            NedlastingsstÃ¸rrelse: &sc-serializinghtml-size;
           </para>
         </listitem>
         <listitem>
@@ -70,7 +70,7 @@
       <bridgehead renderas="sect5">Valgfri (for testing)</bridgehead>
       <para role="optional">
         <xref linkend="pytest"/> og
-        <xref linkend="sphinx"/> (sirkulær avhengighet)
+        <xref linkend="sphinx"/> (sirkulÃ¦r avhengighet)
       </para>
 
     </sect3>
@@ -78,18 +78,25 @@
     <sect3 role="installation">
       <title>Installasjon av Sphinxcontrib-serializinghtml</title>
 
-    <para> Bygg modulen: </para>
+      <para>
+        Fjern fÃ¸rst en falsk sirkulÃ¦r avhengighet:
+      </para>
 
-<screen><userinput>pip3 wheel -w dist --no-build-isolation --no-deps $PWD</userinput></screen>
+<screen><userinput>sed /^dependencies/,+2d -i pyproject.toml</userinput></screen>
 
-    <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
-    </para>
+      <para> Bygg modulen: </para>
 
-<screen role="root"><userinput>pip3 install --no-index --find-links dist --no-cache-dir --no-user sphinxcontrib-serializinghtml</userinput></screen>
+&build-wheel;
 
       <para>
-        For å teste installasjonen, kjør <command>pytest</command>.
+        NÃ¥, som  <systemitem class="username">root</systemitem> bruker:
+      </para>
+
+<screen role="root"><userinput>&install-wheel; sphinxcontrib-serializinghtml</userinput></screen>
+
+      <para>
+        For Ã¥ teste installasjonen, fÃ¸rst installer <xref linkend="sphinx"/>, deretter
+        kjÃ¸r <command>pytest</command>.
       </para>
 
     </sect3>
