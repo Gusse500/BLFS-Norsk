@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../../general.ent">
@@ -7,9 +7,9 @@
   <!ENTITY numpy-download-http "https://files.pythonhosted.org/packages/source/n/numpy/numpy-&numpy-version;.tar.gz">
   <!ENTITY numpy-download-ftp  " ">
   <!ENTITY numpy-md5sum        "&numpy-md5sum;">
-  <!ENTITY numpy-size          "10 MB">
-  <!ENTITY numpy-buildsize     "269 MB (legg til 146 MB for tester)">
-  <!ENTITY numpy-time          "1.6 SBU (3.1 SBU for tester)">
+  <!ENTITY numpy-size          "15 MB">
+  <!ENTITY numpy-buildsize     "91 MB (legg til 333 MB for tester)">
+  <!ENTITY numpy-time          "0,4 SBU (legg til 2,8 SBU for tester)">
 ]>
 
   <sect2 id="numpy" xreflabel="NumPy-&numpy-version;">
@@ -28,7 +28,7 @@
         vitenskapelig databehandling med Python.
       </para>
 
-      &lfs120_checked;
+      &lfs121_checked;
 
       <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -49,7 +49,7 @@
         </listitem>
         <listitem>
           <para>
-            Nedlastingsstørrelse: &numpy-size;
+            NedlastingsstÃ¸rrelse: &numpy-size;
           </para>
         </listitem>
         <listitem>
@@ -66,9 +66,11 @@
 
       <bridgehead renderas="sect4">NumPy Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect5">Påkrevd</bridgehead>
+      <bridgehead renderas="sect5">PÃ¥krevd</bridgehead>
       <para role="required">
-        <xref linkend="cython"/>
+        <xref linkend="cython"/>,
+        <xref linkend="meson_python"/>, og
+        <xref linkend="pyproject-metadata"/>
       </para>
 
 <!--  <bridgehead renderas="sect5">Anbefalt</bridgehead>
@@ -86,7 +88,8 @@
       <bridgehead renderas="sect5">Valgfri (for testing)</bridgehead>
       <para role="optional">
         <xref linkend="attrs"/>,
-        <xref linkend="pytest"/>, og
+        <xref linkend="pytest"/>,
+        <xref linkend="pytz"/>, og
         <ulink url="https://pypi.org/project/hypothesis/">hypothesis</ulink>
       </para>
 
@@ -97,16 +100,16 @@
 
       <para> Bygg modulen: </para>
 
-<screen><userinput>pip3 wheel -w dist --no-build-isolation --no-deps $PWD</userinput></screen>
+<screen><userinput>pip3 wheel -w dist --no-build-isolation --no-deps --no-cache-dir -Csetup-args=-Dallow-noblas=true $PWD</userinput></screen>
 
       <para>
-        Nå, som <systemitem class="username">root</systemitem> bruker:
+        NÃ¥, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
-<screen role="root"><userinput>pip3 install --no-index --find-links dist --no-cache-dir --no-user numpy</userinput></screen>
+<screen role="root"><userinput>&install-wheel; numpy</userinput></screen>
 
       <para>
-        Installasjonen kan testes med følgende kommandoer:
+        Installasjonen kan testes med fÃ¸lgende kommandoer:
       </para>
 
 <screen remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
@@ -114,6 +117,15 @@ source testenv/bin/activate                    &amp;&amp;
 pip3 install hypothesis                        &amp;&amp;
 python3 runtests.py<!-- no && because of a possible error -->
 deactivate</userinput></screen>
+
+      <para>
+        Tre tester, av over 35 000 tester, er kjent for Ã¥ mislykkes.
+        <!-- test_f2py2e.py::test_untitled_cli, 
+             test_f2py2e.py::test_no_py312_distutils_fcompiler
+             test_public_api.py::test_all_modules_are_expected
+             3 failed, 35182 passed, 1835 skipped, 1306 deselected, 
+                          32 xfailed, 2 xpassed -->
+      </para>
 
     </sect3>
 
@@ -151,7 +163,7 @@ deactivate</userinput></screen>
           <term><command>f2py</command></term>
           <listitem>
             <para>
-              er Fortran til Python grensesnittgeneratorverktøyet.
+              er Fortran til Python grensesnittgeneratorverktÃ¸yet.
             </para>
             <indexterm zone="numpy f2py">
               <primary sortas="b-f2py">f2py</primary>
