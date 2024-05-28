@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY autofs-download-http "&kernel-dl;/linux/daemons/autofs/v5/autofs-&autofs-version;.tar.xz">
   <!ENTITY autofs-download-ftp  " ">
-  <!ENTITY autofs-md5sum        "72d81645d39a857c3d16bd3a32e9cb44">
-  <!ENTITY autofs-size          "320 KB">
-  <!ENTITY autofs-buildsize     "6.5 MB">
-  <!ENTITY autofs-time          "0.1 SBU">
+  <!ENTITY autofs-md5sum        "06fb59a03c82364a0d788435b6853d70">
+  <!ENTITY autofs-size          "328 KB">
+  <!ENTITY autofs-buildsize     "5.7 MB">
+  <!ENTITY autofs-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="autofs" xreflabel="Autofs-&autofs-version;">
@@ -27,12 +27,12 @@
 
     <para>
       <application>Autofs</application> kontrollerer driften av automontering
-      nissen. Automount nissen monterer automatisk filsystemer når de
-      åpnes og demonterer dem etter en periode med inaktivitet. Dette blir gjort
-      basert på et sett med forhåndskonfigurerte kart.
+      nissen. Automount nissen monterer automatisk filsystemer nÃ¥r de
+      Ã¥pnes og demonterer dem etter en periode med inaktivitet. Dette blir gjort
+      basert pÃ¥ et sett med forhÃ¥ndskonfigurerte kart.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &autofs-size;
+          NedlastingsstÃ¸rrelse: &autofs-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
 
     <bridgehead renderas="sect3">Autofs Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libtirpc"/> og
       <xref linkend="rpcsvc-proto"/>
@@ -96,21 +96,21 @@
     </indexterm>
 
     <para>
-      Bekreft at automounter kjernestøtte er aktivert:
+      Bekreft at automounter kjernestÃ¸tte er aktivert:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="autofs-kernel.xml"/>
 
     <para>
-      Aktiver eventuelt følgende alternativer i kjernekonfigurasjonen:
+      Aktiver eventuelt fÃ¸lgende alternativer i kjernekonfigurasjonen:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="autofs-optional-kernel.xml"/>
 
     <para>
-      Rekompiler og installer den nye kjernen, om nødvendig.
+      Rekompiler og installer den nye kjernen, om nÃ¸dvendig.
     </para>
 
   </sect2>
@@ -118,15 +118,15 @@
   <sect2 role="installation">
 
     <title>Installasjon av Autofs</title>
-
+<!--
     <para>
-      Løs først et problem introdusert av glibc-2.36:
+      LÃ¸s fÃ¸rst et problem introdusert av glibc-2.36:
     </para>
 
     <screen><userinput>grep -rl linux/fs modules | xargs sed -i "/linux\/fs/d"</userinput></screen>
-
+-->
     <para>
-      Installer <application>Autofs</application> ved å kjøre følgende
+      Installer <application>Autofs</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -134,7 +134,7 @@
             --with-mapdir=/etc/autofs \
             --with-libtirpc           \
             --without-openldap        \
-            --mandir=/usr/share/man &amp;&amp;
+            --mandir=/usr/share/man   &amp;&amp;
 make</userinput></screen>
 
 <screen revision="systemd"><userinput>./configure --prefix=/usr             \
@@ -142,7 +142,7 @@ make</userinput></screen>
             --with-libtirpc           \
             --with-systemd            \
             --without-openldap        \
-            --mandir=/usr/share/man &amp;&amp;
+            --mandir=/usr/share/man   &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -150,7 +150,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -158,9 +158,9 @@ make</userinput></screen>
 <!-- As of version 5.1.5, the configuration files are not installed anymore -->
     <caution>
       <para>
-        Hvis <application>autofs</application> allerede er installert på ditt
-        system, sørg for å sikkerhetskopiere konfigurasjonsfilene dine. De blir
-        overskrevet av følgende kommando.
+        Hvis <application>autofs</application> allerede er installert pÃ¥ ditt
+        system, sÃ¸rg for Ã¥ sikkerhetskopiere konfigurasjonsfilene dine. De blir
+        overskrevet av fÃ¸lgende kommando.
       </para>
     </caution>
 
@@ -178,19 +178,19 @@ make</userinput></screen>
 
     <para>
       <parameter>--with-libtirpc</parameter>: Denne bryteren tvinger pakken til
-      å bruke libtirpc for RPC funksjonalitet i stedet for å stole på implementering
+      Ã¥ bruke libtirpc for RPC funksjonalitet i stedet for Ã¥ stole pÃ¥ implementering
       fra Glibc, som ble fjernet i LFS 8.1.
     </para>
 
     <para revision="systemd">
-      <parameter>--with-systemd</parameter>: Denne bryteren muliggjør installasjon
-      av de medfølgende systemd enhetene.
+      <parameter>--with-systemd</parameter>: Denne bryteren muliggjÃ¸r installasjon
+      av de medfÃ¸lgende systemd enhetene.
     </para>
 
     <para>
       <parameter>--without-openldap</parameter>: Denne bryteren deaktiverer openldap
-      hvis funnet. Hvis openldap er ønsket, utelat denne bryteren. Merk at openldap
-      støtte i autofs krever <xref linkend="mitkrb"/>.
+      hvis funnet. Hvis openldap er Ã¸nsket, utelat denne bryteren. Merk at openldap
+      stÃ¸tte i autofs krever <xref linkend="mitkrb"/>.
     </para>
 
   </sect2>
@@ -233,7 +233,7 @@ make</userinput></screen>
         Installasjonsprosessen oppretter <filename>auto.master</filename>,
         <filename>auto.misc</filename>,  <filename>auto.smb</filename>, og
         <filename>auto.net</filename>. Bytt ut
-        <filename>auto.master</filename> filen med følgende kommandoer
+        <filename>auto.master</filename> filen med fÃ¸lgende kommandoer
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -259,22 +259,22 @@ EOF</userinput></screen>
       <para>
         som vil montere en cdrom som <filename>/media/auto/cd</filename> hvis
         den mappen er lest. <option>--ghost</option> alternativet forteller
-        automounter å lage <quote>ghost</quote> versjoner (dvs. tomme
-        mapper) for alle monteringspunktene som er oppført i konfigurasjonsfilen
+        automounter Ã¥ lage <quote>ghost</quote> versjoner (dvs. tomme
+        mapper) for alle monteringspunktene som er oppfÃ¸rt i konfigurasjonsfilen
         uavhengig av om noen av filsystemene faktisk er montert eller ikke.
-        Dette er veldig praktisk og anbefales på det sterkeste, fordi det vil vise
+        Dette er veldig praktisk og anbefales pÃ¥ det sterkeste, fordi det vil vise
         de tilgjengelige automonterbare filsystemene som eksisterende mapper,
-        selv når filsystemene deres for øyeblikket ikke er montert. Uten
-        <option>--ghost</option> alternativet, må du huske navnene på
-        mappene. Så snart du prøver å få tilgang til en av dem, vil
-        mappen bli opprettet og filsystemet vil bli montert. Når
-        filsystemet demonteres igjen, vil mappen også bli ødelagt,
+        selv nÃ¥r filsystemene deres for Ã¸yeblikket ikke er montert. Uten
+        <option>--ghost</option> alternativet, mÃ¥ du huske navnene pÃ¥
+        mappene. SÃ¥ snart du prÃ¸ver Ã¥ fÃ¥ tilgang til en av dem, vil
+        mappen bli opprettet og filsystemet vil bli montert. NÃ¥r
+        filsystemet demonteres igjen, vil mappen ogsÃ¥ bli Ã¸delagt,
         med mindre <option>--ghost</option> alternativet ble gitt.
       </para>
 
       <note>
         <para>
-          En alternativ metode ville være å spesifisere en annen automontering
+          En alternativ metode ville vÃ¦re Ã¥ spesifisere en annen automontering
           plassering som f.eks <filename
           class='directory'>/var/lib/auto/cdrom</filename> og lage en
           symbolsk lenke fra <filename
@@ -283,18 +283,18 @@ EOF</userinput></screen>
       </note>
 
       <para>
-        <filename>auto.misc</filename> filen må konfigureres til din
+        <filename>auto.misc</filename> filen mÃ¥ konfigureres til din
         fungerende maskinvare. Den innlastede konfigurasjonsfilen skal laste inn cdrom
         hvis <filename>/dev/cdrom</filename> er aktiv eller den kan redigeres til
-        å samsvare med enhetsoppsettet ditt. Eksempler på disketter er tilgjengelige i
+        Ã¥ samsvare med enhetsoppsettet ditt. Eksempler pÃ¥ disketter er tilgjengelige i
         filen og enkelt aktivert. Dokumentasjon for denne filen er tilgjengelig
         ved bruk av <command>man 5 autofs</command> kommandoen.
       </para>
 
       <para>
-        På den andre linjen, hvis aktivert, vil en brukers hjemmemappe bli
+        PÃ¥ den andre linjen, hvis aktivert, vil en brukers hjemmemappe bli
         montert via NFS ved innlogging.  <filename>/etc/home.auto</filename>
-        må eksistere og ha en oppføring som ligner på:
+        mÃ¥ eksistere og ha en oppfÃ¸ring som ligner pÃ¥:
       </para>
 
 <screen>joe  example.org:/export/home/joe</screen>
@@ -302,14 +302,15 @@ EOF</userinput></screen>
       <para>
         hvor mappen <filename>/export/home/joe</filename> er
         eksportert via NFS fra systemets example.org. NFS deling
-        er dekket på neste side.
+        er dekket pÃ¥ neste side.
       </para>
 
       <para>
-        Denne pakken kan også brukes til å montere SMB delinger, men den
+        Denne pakken kan ogsÃ¥ brukes til Ã¥ montere SMB delinger, men den
         funksjonen er ikke konfigurert i disse instruksjonene. For ytterligere
-        konfigurasjonsinformasjon, se man sidene for auto.master(5). Det
-        er også nettressurser som dette <ulink
+        konfigurasjonsinformasjon, se man sidene for
+        <ulink role='man' url='&man;auto.master.5'>auto.master(5)</ulink>.
+        Det finnes ogsÃ¥ nettressurser som dette <ulink
         url='https://wiki.gentoo.org/wiki/AutoFS'>AUTOFS
         HOWTO</ulink> tilgjengelig.
       </para>
@@ -328,13 +329,13 @@ EOF</userinput></screen>
 
       <para revision="sysv">
         Installer <filename>/etc/init.d/autofs</filename>
-        monteringsskript som følger med <xref linkend="bootscripts"/>
+        monteringsskript som fÃ¸lger med <xref linkend="bootscripts"/>
         pakken.
       </para>
 
       <para revision="systemd">
-        For å starte <application>Autofs</application> ved oppstart, aktiver
-        den tidligere installerte systemd enhet ved å kjøre følgende kommando som
+        For Ã¥ starte <application>Autofs</application> ved oppstart, aktiver
+        den tidligere installerte systemd enhet ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -349,14 +350,14 @@ EOF</userinput></screen>
       <para revision="sysv">
         Time-out variabelen er satt i
         <filename>/etc/sysconfig/autofs.conf</filename>. De installerte filene setter
-        er standard på 60 sekunders inaktivitet før enheten demonteres. En
-        mye kortere tid kan være nødvendig for å beskytte bufferskriving til en diskett
-        hvis brukere har en tendens til å fjerne mediet før tidsavbruddsinnstillingen.
+        er standard pÃ¥ 60 sekunders inaktivitet fÃ¸r enheten demonteres. En
+        mye kortere tid kan vÃ¦re nÃ¸dvendig for Ã¥ beskytte bufferskriving til en diskett
+        hvis brukere har en tendens til Ã¥ fjerne mediet fÃ¸r tidsavbruddsinnstillingen.
       </para>
 
       <note revision="systemd">
         <para>
-          Du kan også spesifisere <envar>OPTIONS</envar> variabelen i
+          Du kan ogsÃ¥ spesifisere <envar>OPTIONS</envar> variabelen i
           <filename>/etc/sysconfig/autofs</filename> filen med eventuelle tilleggsparametere
           som du kanskje vil sende til automount nissen.
         </para>
@@ -377,14 +378,34 @@ EOF</userinput></screen>
       <seglistitem>
         <seg>automount</seg>
         <seg>
-          lookup_dir.so, lookup_file.so, lookup_files.so, lookup_hosts.so,
-          lookup_ldap.so (optional), lookup_multi.so, lookup_nis.so,
-          lookup_program.so, lookup_userhome.so, lookup_yp.so, mount_afs.so,
-          mount_autofs.so, mount_bind.so, mount_changer.so, mount_ext2.so,
-          mount_ext3.so, mount_ext4.so, mount_generic.so, mount_nfs.so,
-          mount_nfs4.so, parse_amd.so, og parse_sun.so
-           </seg>
-        <seg>/usr/lib/autofs og /etc/autofs</seg>
+          libautofs.so.
+          lookup_dir.so, 
+          lookup_file.so, 
+          lookup_files.so (symbolkobling til lookup_file.so), 
+          lookup_hosts.so,
+          lookup_ldap.so (valgfri), 
+          lookup_multi.so, 
+          lookup_nis.so (symbolkobling til lookup_yp.so),
+          lookup_program.so, 
+          lookup_userhome.so, 
+          lookup_yp.so, 
+          mount_afs.so,
+          mount_autofs.so, 
+          mount_bind.so, 
+          mount_changer.so, 
+          mount_ext2.so,
+          mount_ext3.so (symbolkobling til mount_ext2.so), 
+          mount_ext4.so (symbolkobling til mount_ext2.so), 
+          mount_generic.so, 
+          mount_nfs.so,
+          mount_nfs4.so (symbolkobling til mount_nfs.so), 
+          parse_amd.so, og 
+          parse_sun.so
+        </seg>
+        <seg>
+          /usr/lib/autofs og 
+          /etc/autofs
+        </seg>
       </seglistitem>
     </segmentedlist>
 
@@ -397,7 +418,7 @@ EOF</userinput></screen>
         <term><command>automount</command></term>
         <listitem>
           <para>
-            er nissen som utfører monteringen når en forespørsel blir
+            er nissen som utfÃ¸rer monteringen nÃ¥r en forespÃ¸rsel blir
             gjort for enheten
           </para>
           <indexterm zone="autofs automount">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -30,10 +30,10 @@
       <application>blocaled</application> er en implementering av
       <emphasis>org.freedesktop.locale1</emphasis> D-Bus protokollen,
       som vanligvis leveres med <application>systemd</application>.Den er
-      nødvendig for <application>GNOME</application> skrivebordet.
+      nÃ¸dvendig for <application>GNOME</application> skrivebordet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &blocaled-size;
+          NedlastingsstÃ¸rrelse: &blocaled-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +71,7 @@
 
     <bridgehead renderas="sect3">blocaled Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="polkit"/> og
       <xref linkend="libdaemon"/>
@@ -83,7 +83,7 @@
     <title>Installasjon av blocaled</title>
 
     <para>
-      Installer <application>blocaled</application> ved å kjøre følgende
+      Installer <application>blocaled</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -91,11 +91,11 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -121,16 +121,16 @@ make</userinput></screen>
       <para>
         <filename>/etc/blocaled.conf</filename> inneholder plasseringen av
         innstillingsfilene som brukes av <application>blocaled</application>. 
-        Standarder passer for BLFS. Informasjon om oppføringene er
+        Standarder passer for BLFS. Informasjon om oppfÃ¸ringene er
         tilgjengelig som kommentarer i filen.
       </para>
 
       <para>
         <emphasis>org.freedesktop.locale1</emphasis> protokoll
         kan ikke eksportere lokalitetsvariabler. Lokale innstillinger lagres
-        som standard i <filename>/etc/locale.conf</filename>. Vi må
+        som standard i <filename>/etc/locale.conf</filename>. Vi mÃ¥
         hente dem i bash profilen. Som <systemitem class="username">
-        root</systemitem> bruker, kjør:
+        root</systemitem> bruker, kjÃ¸r:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/profile.d/i18n.sh &lt;&lt; "EOF"
@@ -156,7 +156,7 @@ if [ -n "$LC_IDENTIFICATION" ]; then export LC_IDENTIFICATION; fi
 EOF</userinput></screen>
 
       <para>
-        Så blir <filename>/etc/locale</filename> filen generert,
+        SÃ¥ blir <filename>/etc/locale</filename> filen generert,
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -169,8 +169,8 @@ LANG=$LANG
 EOF</userinput></screen>
 
       <para>
-        Hvis du planlegger å kjøre et X (eller Wayland) Window system, kan det være lurt
-        å sette opp X tastaturet. Den beste måten å gjøre det på er å hente
+        Hvis du planlegger Ã¥ kjÃ¸re et X (eller Wayland) Window system, kan det vÃ¦re lurt
+        Ã¥ sette opp X tastaturet. Den beste mÃ¥ten Ã¥ gjÃ¸re det pÃ¥ er Ã¥ hente
         innstillinger fra <filename>/etc/sysconfig/console</filename>, og sende
         dem til <application>blocaled</application> nissen. Som
         <systemitem class="username">root</systemitem> bruker:
@@ -186,8 +186,8 @@ gdbus call --system                                             \
            "$KEYMAP" "$KEYMAP_CORRECTIONS" true true</userinput></screen>
 
       <para>
-        Dette bør opprette eller endre Xorg konfigurasjonsfilen (standard er
-        <filename>/etc/X11/xorg.conf.d/30-keyboard.conf</filename>) å samsvare
+        Dette bÃ¸r opprette eller endre Xorg konfigurasjonsfilen (standard er
+        <filename>/etc/X11/xorg.conf.d/30-keyboard.conf</filename>) Ã¥ samsvare
         med tastaturinnstillingene satt i <envar>KEYMAP</envar>.
       </para>
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,9 +6,9 @@
 
   <!ENTITY bluez-download-http "&kernel-dl;/linux/bluetooth/bluez-&bluez-version;.tar.xz">
   <!ENTITY bluez-download-ftp  " ">
-  <!ENTITY bluez-md5sum        "00a72fed12e706b2d8bb40786154d3aa">
-  <!ENTITY bluez-size          "2.2 MB">
-  <!ENTITY bluez-buildsize     "158 MB (med tester)">
+  <!ENTITY bluez-md5sum        "fcacd4d6d65f7da141977a2beb1ba78f">
+  <!ENTITY bluez-size          "2.3 MB">
+  <!ENTITY bluez-buildsize     "81 MB (legg til 84 MB for tester)">
   <!ENTITY bluez-time          "0.4 SBU (bruker parallellisme=4; med tester)">
 ]>
 
@@ -30,7 +30,7 @@
       Bluetooth protokollstabel for Linux.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &bluez-size;
+          NedlastingsstÃ¸rrelse: &bluez-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
     <itemizedlist spacing="compact" revision="sysv">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/bluez-&bluez-version;-obexd_without_systemd-1.patch"/>
         </para>
       </listitem>
@@ -78,7 +78,7 @@
 
     <bridgehead renderas="sect3">BlueZ Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="dbus"/>,
       <xref linkend="glib2"/>, og
@@ -87,7 +87,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="docutils"/> (for å generere man sider)
+      <xref linkend="docutils"/> (for Ã¥ generere man sider)
     </para>
 
   </sect2>
@@ -97,10 +97,10 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Hvis du bygger denne pakken for å bruke bluetooth enheter (i stedet for som en
-      byggeavhengighet), aktiverer følgende alternativer i kjernekonfigurasjonen,
-      også alternativene i <quote>Cryptographic API</quote> seksjonen hvis
-      du har tenkt å kjøre testene, og kompilere kjernen på nytt om nødvendig:
+      Hvis du bygger denne pakken for Ã¥ bruke bluetooth enheter (i stedet for som en
+      byggeavhengighet), aktiverer fÃ¸lgende alternativer i kjernekonfigurasjonen,
+      ogsÃ¥ alternativene i <quote>Cryptographic API</quote> seksjonen hvis
+      du har tenkt Ã¥ kjÃ¸re testene, og kompilere kjernen pÃ¥ nytt om nÃ¸dvendig:
     </para>
 
      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -116,18 +116,18 @@
 
 <!--
     <para>
-      Først, fiks et problem med å bygge pakken med Glibc-2.34 eller nyere:
+      FÃ¸rst, fiks et problem med Ã¥ bygge pakken med Glibc-2.34 eller nyere:
     </para>
 
 <screen><userinput>sed 's/pause(/bluez_&amp;/' -i profiles/audio/media.c</userinput></screen>
 -->
 
-    <para revision="sysv">Gjør nå noen endringer som trengs for SystemV systemer:</para>
+    <para revision="sysv">GjÃ¸r nÃ¥ noen endringer som trengs for SystemV systemer:</para>
 
 <screen revision="sysv"><userinput>patch -Np1 -i ../bluez-&bluez-version;-obexd_without_systemd-1.patch</userinput></screen>
 
     <para>
-      Installer <application>BlueZ</application> ved å kjøre følgende
+      Installer <application>BlueZ</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -147,11 +147,11 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <userinput>make check</userinput>.
+      For Ã¥ teste resultatene, kjÃ¸r: <userinput>make check</userinput>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -166,7 +166,7 @@ ln -svf ../libexec/bluetooth/bluetoothd /usr/sbin</userinput></screen>
 install -v -m644 src/main.conf /etc/bluetooth/main.conf</userinput></screen>
 
     <para>
-      Hvis ønskelig, installer API dokumentasjonen som
+      Hvis Ã¸nskelig, installer API dokumentasjonen som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -181,26 +181,26 @@ install -v -m644 doc/*.txt /usr/share/doc/bluez-&bluez-version;</userinput></scr
 
     <para>
       <parameter>--disable-manpages</parameter>: Denne bryteren deaktiverer generering
-      av manualsidene på grunn av avhengigheten av 'rst2man' i docutils. Fjern
+      av manualsidene pÃ¥ grunn av avhengigheten av 'rst2man' i docutils. Fjern
       denne bryteren hvis du har <xref role="nodep" linkend="docutils"/> installert
-      og ønsker å generere manualsidene.
+      og Ã¸nsker Ã¥ generere manualsidene.
     </para>
 
     <para>
-      <parameter>--enable-library</parameter>: Denne bryteren gjør det mulig å bygge
+      <parameter>--enable-library</parameter>: Denne bryteren gjÃ¸r det mulig Ã¥ bygge
       <application>BlueZ</application> 4 kompatibilitetsbibliotek som kreves av
       noen applikasjoner.
     </para>
 
     <para revision="sysv">
-      <parameter>--disable-systemd</parameter>: Denne bryteren er nødvendig pga at
+      <parameter>--disable-systemd</parameter>: Denne bryteren er nÃ¸dvendig pga at
       <application>systemd</application> ikke er en del av LFS/BLFS. Hvis du
       bruker systemd, fjern denne bryteren.
     </para>
 
     <para>
       <command>ln -svf ../libexec/bluetooth/bluetoothd /usr/sbin</command>:
-      Denne kommandoen gjør tilgangen til bluetooth nissen mer praktisk.
+      Denne kommandoen gjÃ¸r tilgangen til bluetooth nissen mer praktisk.
     </para>
 
   </sect2>
@@ -215,13 +215,13 @@ install -v -m644 doc/*.txt /usr/share/doc/bluez-&bluez-version;</userinput></scr
         under installasjonen. I tillegg er det tre tilleggs
         konfigurasjonsfiler.  /etc/sysconfig/bluetooth er installert som en del
         av oppstartsskriptet nedenfor. I tillegg kan du eventuelt installere
-        følgende, som <systemitem class="username">root</systemitem> bruker:
+        fÃ¸lgende, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <para revision="systemd">
         <filename>/etc/bluetooth/main.conf</filename> installeres automatisk
         under installasjonen. I tillegg er det to tilleggs
-        konfigurasjonsfiler. Du kan eventuelt installere følgende filer
+        konfigurasjonsfiler. Du kan eventuelt installere fÃ¸lgende filer
         som <systemitem class="username">root</systemitem> bruker:
      </para>
 
@@ -256,25 +256,25 @@ EOF</screen>
              <phrase revision="systemd">Systemd Bluez Tjenester</phrase></title>
 
       <para revision="sysv">
-        For å starte <command>bluetoothd</command> nissen automatisk når
-        systemet startes på nytt, installer
+        For Ã¥ starte <command>bluetoothd</command> nissen automatisk nÃ¥r
+        systemet startes pÃ¥ nytt, installer
         <filename>/etc/rc.d/init.d/bluetooth</filename> oppstartsskript fra
         <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        For å starte <command>bluetoothd</command> nissen ved oppstart,
-        aktiver den tidligere installerte systemd enheten ved å
-        kjøre følgende kommando som
+        For Ã¥ starte <command>bluetoothd</command> nissen ved oppstart,
+        aktiver den tidligere installerte systemd enheten ved Ã¥
+        kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable bluetooth</userinput></screen>
 
       <para revision="systemd">
-         For å starte <command>obexd</command> nissen for en brukerøkt (for å
-         støtte noen Bluetooth programmer som bruker det), aktiverer den tidligere
-         installerte systemd enheten for alle brukere ved å kjøre følgende kommando
+         For Ã¥ starte <command>obexd</command> nissen for en brukerÃ¸kt (for Ã¥
+         stÃ¸tte noen Bluetooth programmer som bruker det), aktiverer den tidligere
+         installerte systemd enheten for alle brukere ved Ã¥ kjÃ¸re fÃ¸lgende kommando
          som <systemitem class="username">root</systemitem> bruker:
        </para>
 
@@ -290,7 +290,7 @@ EOF</screen>
       <note revision="systemd">
         <para>
           <application>Systemd</application> vil starte Bluetooth nissen
-          bare når en bluetooth enhet oppdages på systemet.
+          bare nÃ¥r en bluetooth enhet oppdages pÃ¥ systemet.
         </para>
       </note>
 
@@ -341,7 +341,7 @@ EOF</screen>
         <term><command>bccmd</command></term>
         <listitem>
           <para>
-            brukes til å utstede BlueCore kommandoer til Cambridge Silicon
+            brukes til Ã¥ utstede BlueCore kommandoer til Cambridge Silicon
             Radioenheter
           </para>
           <indexterm zone="bluez bccmd">
@@ -355,7 +355,7 @@ EOF</screen>
         <term><command>bluemoon</command></term>
         <listitem>
           <para>
-            er et Bluemoon konfigurasjonsverktøy
+            er et Bluemoon konfigurasjonsverktÃ¸y
           </para>
           <indexterm zone="bluez bluemoon">
             <primary sortas="b-bluemoon">bluemoon</primary>
@@ -405,7 +405,7 @@ EOF</screen>
         <term><command>hex2hcd</command></term>
         <listitem>
           <para>
-            brukes til å konvertere en fil som trengs av Broadcom enheter
+            brukes til Ã¥ konvertere en fil som trengs av Broadcom enheter
             til hcd format (Broadcom bluetooth firmware).
           </para>
           <indexterm zone="bluez hex2hcd">
@@ -418,7 +418,7 @@ EOF</screen>
         <term><command>l2ping</command></term>
         <listitem>
           <para>
-            brukes til å sende en L2CAP ekkoforespørsel til Bluetooth MAC
+            brukes til Ã¥ sende en L2CAP ekkoforespÃ¸rsel til Bluetooth MAC
             adresse oppgitt i stiplet sekskantet notasjon
           </para>
           <indexterm zone="bluez l2ping">
@@ -443,7 +443,7 @@ EOF</screen>
         <term><command>rctest</command></term>
         <listitem>
           <para>
-            brukes til å teste RFCOMM kommunikasjon på
+            brukes til Ã¥ teste RFCOMM kommunikasjon pÃ¥
             Bluetooth stabelen
           </para>
           <indexterm zone="bluez rctest">

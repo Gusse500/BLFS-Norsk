@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -28,31 +28,33 @@
     <para>
       <application>acpid</application> Advanced Configuration and Power
       Interface event daemon) er en helt fleksibel, helt utvidbar
-      nisse for å levere ACPI hendelser. Den lytter på netlink grensesnitt og
-      når en hendelse inntreffer, kjører programmer for å håndtere hendelsen. Programmene
-      den kjører er konfigurert gjennom et sett med konfigurasjonsfiler, som kan
-      slippes på plass av pakker eller av brukeren.
+      nisse for Ã¥ levere ACPI hendelser. Den lytter pÃ¥ netlink grensesnitt og
+      nÃ¥r en hendelse inntreffer, kjÃ¸rer programmer for Ã¥ hÃ¥ndtere hendelsen. Programmene
+      den kjÃ¸rer er konfigurert gjennom et sett med konfigurasjonsfiler, som kan
+      slippes pÃ¥ plass av pakker eller av brukeren.
     </para>
 
     <note>
       <para>
-        Noen andre pakker kan også håndtere noen ACPI hendelser, og de
+        Noen andre pakker kan ogsÃ¥ hÃ¥ndtere noen ACPI hendelser, og de
         kan komme i konflikt med denne pakken. For eksempel, &logind;
         (les dokumentasjonen for <option>Handle*=</option> i
-        <filename>logind.conf(5)</filename> for detaljer) og
-        <xref linkend='upower'/> (brukes av mange skrivebordsmiljøer som f.eks
-        GNOME, KDE og XFCE for håndtering av ACPI hendelser). Hvis du har installert
+        <ulink role='man' url='&man;logind.conf.5'>logind.conf(5)</ulink>
+        for detaljer) og
+        <xref linkend='upower'/> (brukes av mange skrivebordsmiljÃ¸er som f.eks
+        GNOME, KDE og XFCE for hÃ¥ndtering av ACPI hendelser). Hvis du har installert
         en slik pakke og det er nok for din brukssituasjon, er denne pakken
-        sannsynligvis ikke nødvendig. Hvis du virkelig trenger denne pakken, må du være
-        nøye med å konfigurere den og de andre pakkene som håndterer ACPI hendelser
-        for å unngå konflikter. Spesielt &logind; håndterer noen ACPI hendelser
-        som standard, så håndteringen av disse hendelsene av &logind; bør være
-        deaktivert først hvis du håndterer disse hendelsene med acpid
-         (igjen, les <filename>logind.conf(5)</filename> for detaljer).
+        sannsynligvis ikke nÃ¸dvendig. Hvis du virkelig trenger denne pakken, mÃ¥ du vÃ¦re
+        nÃ¸ye med Ã¥ konfigurere den og de andre pakkene som hÃ¥ndterer ACPI hendelser
+        for Ã¥ unngÃ¥ konflikter. Spesielt &logind; hÃ¥ndterer noen ACPI hendelser
+        som standard, sÃ¥ hÃ¥ndteringen av disse hendelsene av &logind; bÃ¸r vÃ¦re
+        deaktivert fÃ¸rst hvis du hÃ¥ndterer disse hendelsene med acpid
+         (igjen, les <ulink role='man'
+        url='&man;logind.conf.5'>logind.conf(5)</ulink> for detaljer).
       </para>
     </note>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -73,7 +75,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &acpid-size;
+          NedlastingsstÃ¸rrelse: &acpid-size;
         </para>
       </listitem>
       <listitem>
@@ -94,8 +96,8 @@
     <title>Installasjon av acpid</title>
 
     <para>
-      Installer <application>acpid</application> ved å
-      kjøre følgende kommandoer:
+      Installer <application>acpid</application> ved Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr \
@@ -107,7 +109,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install                         &amp;&amp;
@@ -123,18 +125,18 @@ cp -r samples /usr/share/doc/acpid-&acpid-version;</userinput></screen>
       <application>acpid</application> er konfigurert av brukerdefinerte hendelser.
       Plasser hendelsesfiler under
       <filename class="directory">/etc/acpi/events</filename> mappen. Hvis en
-      hendelse inntreffer, <command>acpid</command> går igjen gjennom hendelsesfilene
-      for å se om regex definert etter "hendelse" stemmer overens. Hvis de gjør det,
-      blir handlingen utført.
+      hendelse inntreffer, <command>acpid</command> gÃ¥r igjen gjennom hendelsesfilene
+      for Ã¥ se om regex definert etter "hendelse" stemmer overens. Hvis de gjÃ¸r det,
+      blir handlingen utfÃ¸rt.
     </para>
 
     <para>
-      Følgende korte eksempel vil suspendere systemet når den bærbare datamaskin
+      FÃ¸lgende korte eksempel vil suspendere systemet nÃ¥r den bÃ¦rbare datamaskin
       lokket er lukket<phrase revision='sysv'> (det krever
-      <xref linkend="pm-utils"/>)</phrase>.  Eksemplet deaktiverer også
-      standardhåndteringen av lokkets hendelse av &logind; når
-      systemet er på batteri og ikke koblet til noen ekstern skjerm,
-      for å unngå konflikt:
+      <xref linkend="pm-utils"/>)</phrase>.  Eksemplet deaktiverer ogsÃ¥
+      standardhÃ¥ndteringen av lokkets hendelse av &logind; nÃ¥r
+      systemet er pÃ¥ batteri og ikke koblet til noen ekstern skjerm,
+      for Ã¥ unngÃ¥ konflikt:
     </para>
 
 <screen revision='sysv' role="nodump"><userinput>cat &gt; /etc/acpi/events/lid &lt;&lt; "EOF"
@@ -168,11 +170,11 @@ mkdir -pv /etc/systemd/logind.conf.d
 echo <literal>HandleLidSwitch=ignore</literal> &gt; /etc/systemd/logind.conf.d/acpi.conf</userinput></screen>
 
     <para>
-      Dessverre merker ikke alle datamaskiner ACPI hendelser på samme måte
+      Dessverre merker ikke alle datamaskiner ACPI hendelser pÃ¥ samme mÃ¥te
       (for eksempel kan lokket gjenkjennes som <filename>LID0</filename>
       i stedet for <filename>LID</filename>).
-      For å finne ut hvordan knappene dine gjenkjennes, bruk
-      <command>acpi_listen</command> verktøyet. Se også i <filename
+      For Ã¥ finne ut hvordan knappene dine gjenkjennes, bruk
+      <command>acpi_listen</command> verktÃ¸yet. Se ogsÃ¥ i <filename
       class="directory">samples</filename> mappen under <filename
       class="directory">/usr/share/doc/acpid-&acpid-version;</filename>
       for flere eksempler.
@@ -183,15 +185,15 @@ echo <literal>HandleLidSwitch=ignore</literal> &gt; /etc/systemd/logind.conf.d/a
              <phrase revision="systemd">Systemd Socket</phrase></title>
 
       <para revision="sysv">
-        For å starte <command>acpid</command> automatisk når systemet
-        startes på nytt, installer <filename>/etc/rc.d/init.d/acpid</filename>
+        For Ã¥ starte <command>acpid</command> automatisk nÃ¥r systemet
+        startes pÃ¥ nytt, installer <filename>/etc/rc.d/init.d/acpid</filename>
         oppstartsskript fra <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        For å starte <command>acpid</command> nissen ved systemstart,
+        For Ã¥ starte <command>acpid</command> nissen ved systemstart,
         installer systemd enheten fra <xref linkend="systemd-units"/>
-        pakken ved å kjøre følgende kommando som
+        pakken ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -203,8 +205,8 @@ echo <literal>HandleLidSwitch=ignore</literal> &gt; /etc/systemd/logind.conf.d/a
 
       <note revision="systemd">
         <para>
-          Denne pakken bruker socketbasert aktivering og vil bli startet når
-          noe trenger det. Ingen frittstående enhetsfil er gitt for denne
+          Denne pakken bruker socketbasert aktivering og vil bli startet nÃ¥r
+          noe trenger det. Ingen frittstÃ¥ende enhetsfil er gitt for denne
           pakken.
         </para>
       </note>
@@ -243,7 +245,7 @@ echo <literal>HandleLidSwitch=ignore</literal> &gt; /etc/systemd/logind.conf.d/a
         <term><command>acpid</command></term>
         <listitem>
           <para>
-            er et program som lytter etter ACPI hendelser og utfører reglene
+            er et program som lytter etter ACPI hendelser og utfÃ¸rer reglene
             som samsvarer med den mottatte hendelsen
           </para>
           <indexterm zone="acpid acpid-prog">
@@ -256,7 +258,7 @@ echo <literal>HandleLidSwitch=ignore</literal> &gt; /etc/systemd/logind.conf.d/a
         <term><command>acpi_listen</command></term>
         <listitem>
           <para>
-            er et enkelt verktøy som kobles til <command>acpid</command> og
+            er et enkelt verktÃ¸y som kobles til <command>acpid</command> og
             lytter etter hendelser
           </para>
           <indexterm zone="acpid acpi_listen">

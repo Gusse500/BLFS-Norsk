@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -28,13 +28,15 @@
 
     <para>
       <application>AccountsService</application> pakken gir et
-      sett med <application>D-Bus</application> grensesnitt for spørring
+      sett med <application>D-Bus</application> grensesnitt for spÃ¸rring
       og manipulering av brukerkontoinformasjon og en implementering
-      av disse grensesnittene basert på usermod(8), useradd(8) og
-      userdel(8) kommandoene.
+      av disse grensesnittene basert pÃ¥
+      <ulink role='man' url='&man;usermod.8'>usermod(8)</ulink>,
+      <ulink role='man' url='&man;useradd.8'>useradd(8)</ulink>, og
+      <ulink role='man' url='&man;userdel.8'>userdel(8)</ulink> kommandoene.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +57,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &accountsservice-size;
+          NedlastingsstÃ¸rrelse: &accountsservice-size;
         </para>
       </listitem>
       <listitem>
@@ -72,7 +74,7 @@
 
     <bridgehead renderas="sect3">AccountsService Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <!--<xref linkend="libgcrypt"/> and-->
       <xref linkend="polkit"/>
@@ -83,7 +85,7 @@
       <xref linkend="gobject-introspection"/>,
       <phrase revision="sysv"><xref linkend="elogind"/></phrase>
       <phrase revision="systemd"><xref role='runtime' linkend="systemd"/>
-        (kjøretid)</phrase>, og
+        (kjÃ¸retid)</phrase>, og
       <xref linkend="vala"/>
     </para>
 
@@ -106,17 +108,19 @@
     <title>Installasjon av AccountsService</title>
 
     <para>
-      Gi først nytt navn til en katalog hvis tilstedeværelse hindrer byggesystemet fra
-      å kjøre hvis <xref linkend="python-dbusmock"/> ikke er installert:
+      Gi fÃ¸rst nytt navn til en katalog hvis tilstedevÃ¦relse hindrer byggesystemet fra
+      Ã¥ kjÃ¸re hvis <xref linkend="python-dbusmock"/> ikke er installert:
     </para>
 
 <screen><userinput>mv tests/dbusmock{,-tests}</userinput></screen>
 
     <para>
-      Deretter fiks testene slik at den nye mappen blir funnet:
+      Deretter fiks testene slik at den nye mappen blir funnet, og tilpass
+      det for Python 3.12.0 eller nyere:
     </para>
 
 <screen><userinput>sed -e '/accounts_service\.py/s/dbusmock/dbusmock-tests/' \
+    -e 's/assertEquals/assertEqual/'                      \
     -i tests/test-libaccountsservice.py</userinput></screen>
 
    <para>
@@ -127,7 +131,7 @@
 <screen><userinput>sed -i '/^SIMULATED_SYSTEM_LOCALE/s/en_IE.UTF-8/en_HK.iso88591/' tests/test-daemon.py</userinput></screen>
 
     <para>
-      Installer <application>AccountsService</application> ved å kjøre følgende
+      Installer <application>AccountsService</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -152,11 +156,11 @@ meson setup ..            \
 ninja</userinput></screen>
 
     <para>
-      For å teste pakken, utsted <command>ninja test</command>.
+      For Ã¥ teste pakken, utsted <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -175,12 +179,12 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <option>-Ddocbook=true</option>: Denne bryteren gjør det mulig å bygge
+      <option>-Ddocbook=true</option>: Denne bryteren gjÃ¸r det mulig Ã¥ bygge
       dokumentasjonen for D-Bus grensesnitt API (trenger <xref linkend="xmlto"/>).
     </para>
 
     <para>
-      <option>-Dgtk_doc=true</option>: Denne bryteren gjør det mulig å bygge
+      <option>-Dgtk_doc=true</option>: Denne bryteren gjÃ¸r det mulig Ã¥ bygge
        libaccountsservice API dokumentasjonen (trenger
       <xref linkend="gtk-doc"/>).
     </para>
@@ -197,8 +201,8 @@ ninja</userinput></screen>
     <title>Konfigurere AccountsService</title>
 
     <para>
-      For å tillate at brukere i adm gruppen blir oppført som administratorer,
-      utfør følgende kommandoer som
+      For Ã¥ tillate at brukere i adm gruppen blir oppfÃ¸rt som administratorer,
+      utfÃ¸r fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -207,37 +211,6 @@ ninja</userinput></screen>
    return ["unix-group:adm"];
    });</literal>
 EOF</userinput></screen>
-
-    <sect3 id="accountsservice-init" revision="systemd">
-<!--      <title><phrase revision="sysv">Boot Script</phrase>
-             <phrase revision="systemd">Systemd Units</phrase></title> -->
-      <title>Systemd Unit</title>
-<!-- Automatically started by D-Bus when needed
-      <para revision="sysv">
-        For å starte <command>accounts-daemon</command> nissen ved oppstart,
-        installer
-        <filename>/etc/rc.d/init.d/accounts-daemon</filename> init skriptet fra
-        <xref linkend="bootscripts"/> pakken
-        ved å kjøre følgende kommando som
-        <systemitem class="username">root</systemitem> bruker:
-      </para>
-
-<screen role="root" revision="sysv"><userinput>make install-accounts-daemon</userinput></screen>
--->
-      <para>
-        For å starte <command>accounts-daemon</command> nissen ved oppstart,
-        aktiver den tidligere installerte systemd enheten
-        ved å kjøre følgende kommando som
-        <systemitem class="username">root</systemitem> bruker:
-      </para>
-
-      <indexterm zone="accountsservice accountsservice-init">
-        <primary sortas="f-accounts-daemon">accounts-daemon</primary>
-      </indexterm>
-
-<screen role="root"><userinput>systemctl enable accounts-daemon</userinput></screen>
-
-    </sect3>
 
   </sect2>
 
