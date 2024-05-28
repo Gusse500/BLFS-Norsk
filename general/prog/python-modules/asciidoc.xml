@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../../general.ent">
@@ -25,12 +25,12 @@
 
       <para>
         <application>Asciidoc</application> pakken er et tekstdokument
-        format for å skrive notater, dokumentasjon, artikler, bøker, e-bøker,
+        format for Ã¥ skrive notater, dokumentasjon, artikler, bÃ¸ker, e-bÃ¸ker,
         lysbildefremvisninger, nettsider, man-sider og blogger. AsciiDoc filer kan bli
         oversatt til mange formater, inkludert HTML, PDF, EPUB og man page.
       </para>
 
-      &lfs120_checked;
+      &lfs121_checked;
 
       <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
         </listitem>
         <listitem>
           <para>
-            Nedlastingsstørrelse: &asciidoc-size;
+            NedlastingsstÃ¸rrelse: &asciidoc-size;
           </para>
         </listitem>
         <listitem>
@@ -68,7 +68,7 @@
 
       <bridgehead renderas="sect4">Asciidoc Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect5">Valgfri (kjøretid)</bridgehead>
+      <bridgehead renderas="sect5">Valgfri (kjÃ¸retid)</bridgehead>
       <para role="optional">
         <xref linkend="docbook-xsl"/>,
         <xref linkend="fop"/>,
@@ -83,21 +83,31 @@
     <sect3 role="installation">
       <title>Installasjon av Asciidoc</title>
 
+      <!-- https://github.com/asciidoc-py/asciidoc-py/pull/267 -->
+      <para>
+        LÃ¸s et problem som forÃ¥rsaker tusenvis av linjer med
+        <quote><computeroutput>invalid escape sequence</computeroutput></quote>
+        advarsler som sendes ut nÃ¥r du genererer dokumentasjonen til noen
+        pakker med Asciidoc og Python 3.12 eller nyere:
+      </para>
+
+<screen><userinput>sed '/self.separator =/s/"/r"/' -i asciidoc/asciidoc.py</userinput></screen>
+
       <para>
         Bygg modulen:
       </para>
 
-<screen><userinput>pip3 wheel -w dist --no-build-isolation --no-deps $PWD</userinput></screen>
+&build-wheel;
 
       <para>
         Denne pakken kommer ikke med en testpakke.
       </para>
 
       <para>
-        Nå, som <systemitem class="username">root</systemitem> bruker:
+        NÃ¥, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
-<screen role="root"><userinput>pip3 install --no-index --find-links dist --no-cache-dir --no-user asciidoc</userinput></screen>
+<screen role="root"><userinput>&install-wheel; asciidoc</userinput></screen>
 
     </sect3>
 
@@ -134,7 +144,7 @@
           <term><command>a2x</command></term>
           <listitem>
             <para>
-              er verktøykjedea behandler for AsciiDoc
+              er verktÃ¸ykjedea behandler for AsciiDoc
               (konverterer Asciidoc tekstfiler til andre filformater)
             </para>
             <indexterm zone="asciidoc a2x">
