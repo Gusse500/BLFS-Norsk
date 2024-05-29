@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -30,7 +30,7 @@
       rotasjon, komprimering, fjerning og utsendelse av loggfiler.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &logrotate-size;
+          NedlastingsstÃ¸rrelse: &logrotate-size;
         </para>
       </listitem>
       <listitem>
@@ -68,19 +68,19 @@
 
     <bridgehead renderas="sect3">Logrotate Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="popt"/>
     </para>
 
     <bridgehead renderas="sect4" revision="sysv">Anbefalt</bridgehead>
     <para role="recommended" revision="sysv">
-      <xref role="runtime" linkend="fcron"/> (kjøretid)
+      <xref role="runtime" linkend="fcron"/> (kjÃ¸retid)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      En <xref role="runtime" linkend="server-mail"/> (kjøretid)
+      En <xref role="runtime" linkend="server-mail"/> (kjÃ¸retid)
     </para>
 
   </sect2>
@@ -89,7 +89,7 @@
     <title>Installasjon av Logrotate</title>
 
     <para>
-      Installer <application>logrotate</application> ved å kjøre følgende
+      Installer <application>logrotate</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -97,13 +97,13 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.  En test
-      mislykkes fordi den svært gamle <command>compress</command> ikke er
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make test</command>.  En test
+      mislykkes fordi den svÃ¦rt gamle <command>compress</command> ikke er
       tilstede og to tester mislykkes hvis en MTA ikke er installert.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -115,7 +115,7 @@ make</userinput></screen>
 
     <para>
       <application>Logrotate</application> trenger en konfigurasjonsfil,
-      som må sendes som et argument til kommandoen når den utføres. Opprett
+      som mÃ¥ sendes som et argument til kommandoen nÃ¥r den utfÃ¸res. Opprett
       filen som <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -165,14 +165,14 @@ EOF
 chmod -v 0644 /etc/logrotate.conf</userinput></screen>
 
     <para>
-      Nå opprett <filename class='directory'>/etc/logrotate.d</filename>
+      NÃ¥ opprett <filename class='directory'>/etc/logrotate.d</filename>
       mappen som  <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>mkdir -p /etc/logrotate.d</userinput></screen>
 
     <para>
-      På dette tidspunktet kan det vanligvis legges inn ekstra loggrotasjonskommandoer
+      PÃ¥ dette tidspunktet kan det vanligvis legges inn ekstra loggrotasjonskommandoer
       i <filename class='directory'>/etc/logrotate.d</filename> mappen.
       For eksempel:
     </para>
@@ -192,7 +192,7 @@ EOF
 chmod -v 0644 /etc/logrotate.d/sys.log</userinput></screen>
 
     <para>
-      Du kan angi flere filer i en oppføring:
+      Du kan angi flere filer i en oppfÃ¸ring:
     </para>
 
 <screen role="nodump"><userinput>cat &gt; /etc/logrotate.d/example.log &lt;&lt; EOF
@@ -209,7 +209,7 @@ EOF
 chmod -v 0644 /etc/logrotate.d/example.log</userinput></screen>
 
     <para>
-      Du kan bruke listen over filer på samme linje: fil1 fil2 fil3.
+      Du kan bruke listen over filer pÃ¥ samme linje: fil1 fil2 fil3.
       Se logrotate man siden eller <ulink
       url='https://www.techrepublic.com/article/manage-linux-log-files-with-logrotate/'/>
       for flere eksempler.
@@ -217,25 +217,25 @@ chmod -v 0644 /etc/logrotate.d/example.log</userinput></screen>
 
     <para>
       Kommandoen <command>logrotate /etc/logrotate.conf</command> kan bli
-      kjørt manuelt, men kommandoen bør kjøres daglig.
+      kjÃ¸rt manuelt, men kommandoen bÃ¸r kjÃ¸res daglig.
       Andre nyttige kommandoer er <command>logrotate -d
-      /etc/logrotate.conf</command> for feilsøkingsformål og
-      <command>logrotate -f /etc/logrotate.conf</command> for å tvinge
-      logrotate kommandoer som skal kjøres umiddelbart. Kombiner de tidligere alternativene
-      <option>-df</option>, du kan feilsøke effekten av tvangkommandoen.
-      Ved feilsøking simuleres kommandoene bare og kjøres faktisk ikke.
+      /etc/logrotate.conf</command> for feilsÃ¸kingsformÃ¥l og
+      <command>logrotate -f /etc/logrotate.conf</command> for Ã¥ tvinge
+      logrotate kommandoer som skal kjÃ¸res umiddelbart. Kombiner de tidligere alternativene
+      <option>-df</option>, du kan feilsÃ¸ke effekten av tvangkommandoen.
+      Ved feilsÃ¸king simuleres kommandoene bare og kjÃ¸res faktisk ikke.
       Som et resultat vil feil om filer som ikke eksisterer til slutt vises fordi
       filene faktisk ikke er opprettet.
     </para>
 
     <para>
-      For å kjøre <command>logrotate</command> kommandoen daglig,
+      For Ã¥ kjÃ¸re <command>logrotate</command> kommandoen daglig,
       <phrase revision="sysv">hvis du har installert
-      <xref linkend="fcron"/> og fullførte delen om periodiske jobber,
-      kjør</phrase><phrase revision="systemd">kjør</phrase> følgende
+      <xref linkend="fcron"/> og fullfÃ¸rte delen om periodiske jobber,
+      kjÃ¸r</phrase><phrase revision="systemd">kjÃ¸r</phrase> fÃ¸lgende
       kommandoer, som  <systemitem class="username">root</systemitem> bruker,
-      for å opprette en <phrase revision="sysv">daglig cron jobb:</phrase>
-      <phrase revision="systemd">systemd tidtaker som går daglig kl. 03.00.
+      for Ã¥ opprette en <phrase revision="sysv">daglig cron jobb:</phrase>
+      <phrase revision="systemd">systemd tidtaker som gÃ¥r daglig kl. 03.00.
      (lokal tid):</phrase>
     </para>
 
@@ -297,7 +297,7 @@ systemctl enable logrotate.timer</userinput></screen>
         <term><command>logrotate</command></term>
         <listitem>
           <para>
-            utfører loggvedlikeholdsfunksjonene definert i
+            utfÃ¸rer loggvedlikeholdsfunksjonene definert i
             konfigurasjonsfiler
           </para>
           <indexterm zone="logrotate logrotate-prog">

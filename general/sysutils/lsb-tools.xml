@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
 
   <!ENTITY lsb-tools-download-http "https://github.com/lfs-book/LSB-Tools/releases/download/v&lsb-tools-version;/LSB-Tools-&lsb-tools-version;.tar.gz">
   <!ENTITY lsb-tools-download-ftp  " ">
-  <!ENTITY lsb-tools-md5sum        "846c7ee94989c7d48d386c875dbd1d9f">
-  <!ENTITY lsb-tools-size          "19 KB">
-  <!ENTITY lsb-tools-buildsize     "428 KB">
+  <!ENTITY lsb-tools-md5sum        "1e6ef8cdfddb55035a6c36757e6313f9">
+  <!ENTITY lsb-tools-size          "20 KB">
+  <!ENTITY lsb-tools-buildsize     "412 KB">
   <!ENTITY lsb-tools-time          "mindre enn 0.1 SBU">
 
   %general-entities;
@@ -27,11 +27,11 @@
     <title>Introduksjon til LSB-Tools</title>
 
     <para>
-      <application>LSB-Tools</application> pakken inkluderer verktøy
+      <application>LSB-Tools</application> pakken inkluderer verktÃ¸y
       for overensstemmelse med Linux Standards Base (LSB).
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &lsb-tools-size;
+          NedlastingsstÃ¸rrelse: &lsb-tools-size;
         </para>
       </listitem>
       <listitem>
@@ -74,17 +74,30 @@
     <title>Installasjon av LSB-Tools</title>
 
     <para>
-      Installer <application>LSB-Tools</application> ved å kjøre følgende
+      Installer <application>LSB-Tools</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>python3 setup.py build</userinput></screen>
+<screen><userinput>make</userinput></screen>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>python3 setup.py install --optimize=1</userinput></screen>
+<screen role="root"><userinput>make install</userinput></screen>
+
+<!-- fixed upstream: should be ok for release 0.13+ -->
+    <para>
+      Fjern en fil som ikke skal installeres som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>rm /usr/sbin/lsbinstall</userinput></screen>
+
+    <para revision="systemd">
+      Fjern to skript som ikke tjener noen hensikt pÃ¥ et systemd system:
+    </para>
+
+<screen role="root" revision="systemd"><userinput>rm /usr/sbin/{install,remove}_initd</userinput></screen>
 
   </sect2>
 
@@ -92,14 +105,10 @@
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Konfigurasjonen for denne pakken ble gjort i <phrase revision="sysv">
-        <ulink url="&lfs-website;/lfs/view/stable/chapter11/theend.html">LFS</ulink>.</phrase>
-        <phrase revision="systemd">
-        <ulink url="&lfs-website;/lfs/view/systemd/chapter11/theend.html">LFS</ulink>
-        og
-        <ulink url="&lfs-website;/lfs/view/systemd/chapter08/systemd.html">Systemd</ulink>.</phrase>
+        Konfigurasjonen for denne pakken ble gjort i
+        <ulink url='&lfs-root;/chapter11/theend.html'>LFS</ulink>.
         Filen<filename>/etc/lsb-release</filename> burde allerede eksistere.
-        Pass på at DISTRIB_CODENAME oppføringen er riktig angitt.
+        Pass pÃ¥ at DISTRIB_CODENAME oppfÃ¸ringen er riktig angitt.
       </para>
 
   </sect2>
@@ -114,12 +123,12 @@
 
       <seglistitem>
         <seg>
-           lsb_release,
-           install_initd, og
-           remove_initd
+           lsb_release <phrase revision="sysv">,
+          install_initd, og
+          remove_initd</phrase>
         </seg>
         <seg>
-           Ingen
+          Ingen
         </seg>
         <seg>
           <phrase revision="systemd">/usr/lib/lsb og</phrase>
@@ -137,32 +146,34 @@
         <term><command>lsb_release</command></term>
         <listitem>
           <para>
-            er et skript for å gi LSB data
+            er et skript for Ã¥ gi LSB data
           </para>
           <indexterm zone="lsb-tools lsb_release">
-            <primary sortas="b-lsb-tools">lsb_release</primary>
+            <primary sortas="b-lsb_release">lsb_release</primary>
           </indexterm>
         </listitem>
       </varlistentry>
+
       <varlistentry id="install_initd">
         <term><command>install_initd</command></term>
         <listitem>
           <para>
-            er et skript for å aktivere SysV oppstartsskript
+            er et skript for Ã¥ aktivere SysV oppstartsskript
           </para>
           <indexterm zone="lsb-tools install_initd">
-            <primary sortas="b-lsb-tools">install_initd</primary>
+            <primary sortas="b-install_initd">install_initd</primary>
           </indexterm>
         </listitem>
       </varlistentry>
+
       <varlistentry id="remove_initd">
         <term><command>remove_initd</command></term>
         <listitem>
           <para>
-            er et skript for å deaktivere SysV oppstartsskript
+            er et skript for Ã¥ deaktivere SysV oppstartsskript
           </para>
           <indexterm zone="lsb-tools remove_initd">
-            <primary sortas="b-lsb-tools">remove_initd</primary>
+            <primary sortas="b-remove_initd">remove_initd</primary>
           </indexterm>
         </listitem>
       </varlistentry>

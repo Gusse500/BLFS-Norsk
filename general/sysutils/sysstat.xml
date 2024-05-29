@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY sysstat-download-http "http://sebastien.godard.pagesperso-orange.fr/sysstat-&sysstat-version;.tar.xz">
+  <!ENTITY sysstat-download-http "https://sysstat.github.io/sysstat-packages/sysstat-&sysstat-version;.tar.xz">
   <!ENTITY sysstat-download-ftp  " ">
-  <!ENTITY sysstat-md5sum        "cb625681a70b58e306d2564d4296a5ae">
-  <!ENTITY sysstat-size          "876 KB">
-  <!ENTITY sysstat-buildsize     "28 MB">
+  <!ENTITY sysstat-md5sum        "c5cac550f88327f0a93b12f6da93a0cb">
+  <!ENTITY sysstat-size          "896 KB">
+  <!ENTITY sysstat-buildsize     "29 MB">
   <!ENTITY sysstat-time          "0.1 SBU">
 ]>
 
@@ -26,14 +26,14 @@
     <title>Introduksjon til Sysstat</title>
 
     <para>
-      <application>Sysstat</application> pakken inneholder verktøy
-      for å overvåke systemytelse og bruksaktivitet.
+      <application>Sysstat</application> pakken inneholder verktÃ¸y
+      for Ã¥ overvÃ¥ke systemytelse og bruksaktivitet.
       <application>Sysstat</application> inneholder <command>sar</command>
-      verktøyet, vanlig for mange kommersielle Unixer, og verktøy du kan planlegge via
-      cron for å samle inn og lage historikk for ytelses- og aktivitetsdata.
+      verktÃ¸yet, vanlig for mange kommersielle Unixer, og verktÃ¸y du kan planlegge via
+      cron for Ã¥ samle inn og lage historikk for ytelses- og aktivitetsdata.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &sysstat-size;
+          NedlastingsstÃ¸rrelse: &sysstat-size;
         </para>
       </listitem>
       <listitem>
@@ -73,7 +73,7 @@
 
     <para role="recommended">
       Det er ingen byggetidskrav for denne pakken; derimot,
-      den er designet for å bli kontrollert av en cron nisse som f.eks
+      den er designet for Ã¥ bli kontrollert av en cron nisse som f.eks
       <xref linkend="fcron" role="runtime"/>.
     </para>
 
@@ -83,13 +83,13 @@
     <title>Installasjon av Sysstat</title>
 
     <para>
-      Installer <application>Sysstat</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>Sysstat</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>sa_lib_dir=/usr/lib/sa    \
 sa_dir=/var/log/sa        \
-conf_dir=/etc/sysconfig   \
+conf_dir=/etc/sysstat     \
 ./configure --prefix=/usr \
             --disable-file-attr &amp;&amp;
 make</userinput></screen>
@@ -99,24 +99,26 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para revision="systemd">
-      Installer systemd enheten ved å kjøre følgende kommandoer som
+      Installer systemd enheten ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root" revision="systemd"><userinput>install -v -m644 sysstat.service /usr/lib/systemd/system/sysstat.service &amp;&amp;
+<screen role="root" revision="systemd"><userinput>install -v -m644 sysstat.service /usr/lib/systemd/system/sysstat.service                      &amp;&amp;
 install -v -m644 cron/sysstat-collect.service /usr/lib/systemd/system/sysstat-collect.service &amp;&amp;
-install -v -m644 cron/sysstat-collect.timer /usr/lib/systemd/system/sysstat-collect.timer &amp;&amp;
+install -v -m644 cron/sysstat-collect.timer /usr/lib/systemd/system/sysstat-collect.timer     &amp;&amp;
+install -v -m644 cron/sysstat-rotate.service /usr/lib/systemd/system/sysstat-roate.service    &amp;&amp;
+install -v -m644 cron/sysstat-rotate.timer /usr/lib/systemd/system/sysstat-rotate.timer       &amp;&amp;
 install -v -m644 cron/sysstat-summary.service /usr/lib/systemd/system/sysstat-summary.service &amp;&amp;
 install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summary.timer</userinput></screen>
 
     <para revision="systemd">
-      Fiks systemd enheten ved å kjøre følgende kommando som
+      Fiks systemd enheten ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -128,23 +130,23 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
     <title>Parameterforklaringer</title>
 
     <para>
-      <envar>sa_lib_dir</envar>: Denne miljøvariabelen spesifiserer
+      <envar>sa_lib_dir</envar>: Denne miljÃ¸variabelen spesifiserer
       plassering av den pakkespesifikke bibliotekmappen.
     </para>
 
     <para>
-      <envar>sa_dir</envar>: Denne miljøvariabelen spesifiserer
+      <envar>sa_dir</envar>: Denne miljÃ¸variabelen spesifiserer
       plasseringen av mappen som inneholder datafilene.
     </para>
 
     <para>
-      <envar>conf_dir</envar>: Denne miljøvariabelen spesifiserer
+      <envar>conf_dir</envar>: Denne miljÃ¸variabelen spesifiserer
       plasseringen av systemkonfigurasjonsmappen.
     </para>
 
     <para>
       <parameter>--disable-file-attr</parameter>: Ikke sett attributter
-      på filer som installeres. Denne parameteren gjør at installasjonen ignorerer
+      pÃ¥ filer som installeres. Denne parameteren gjÃ¸r at installasjonen ignorerer
       man gruppevariabelen som resulterer i at man filene har
       <systemitem class="username">root</systemitem>:
       <systemitem class="groupname">root</systemitem> eierskap.
@@ -152,11 +154,11 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
 
     <note>
       <para>
-        Kjør <command>./configure --help</command> å se andre innflytelsesrike
-        miljøvariabler du kan overføre til <command>configure</command>.
+        KjÃ¸r <command>./configure --help</command> Ã¥ se andre innflytelsesrike
+        miljÃ¸variabler du kan overfÃ¸re til <command>configure</command>.
         Du vil kanskje bruke <envar>history</envar> og
-        <envar>compressafter</envar> variabler for å tilpasse mengden data
-        filer lagrer på systemet.
+        <envar>compressafter</envar> variabler for Ã¥ tilpasse mengden data
+        filer lagrer pÃ¥ systemet.
       </para>
     </note>
 
@@ -186,16 +188,16 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
      <title>Cron Informasjon</title>
 
       <para>
-        For å begynne å samle <application>Sysstat</application> historieinformasjon,
-        må du legge til eller opprette en privilegert brukers crontab.
+        For Ã¥ begynne Ã¥ samle <application>Sysstat</application> historieinformasjon,
+        mÃ¥ du legge til eller opprette en privilegert brukers crontab.
         Historiedataplasseringen er
-        <filename class="directory">/var/log/sa</filename>. Brukeren som kjører
-        <application>Sysstat</application> verktøy via cron må ha 
+        <filename class="directory">/var/log/sa</filename>. Brukeren som kjÃ¸rer
+        <application>Sysstat</application> verktÃ¸y via cron mÃ¥ ha 
         skrivetilgang til dette stedet.
       </para>
 
       <para>
-        Nedenfor er et eksempel på hva som skal installeres i crontab. Juster
+        Nedenfor er et eksempel pÃ¥ hva som skal installeres i crontab. Juster
         parametere som passer dine behov. Bruk <command>man sa1</command> og
         <command>man sa2</command> for informasjon om kommandoene.
       </para>
@@ -213,7 +215,7 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
 5 19 * * * /usr/lib/sa/sa2 -A &amp;</literal></screen>
 
       <para>
-        Sørg for at du sender inn den reviderte crontaben til cron nissen.
+        SÃ¸rg for at du sender inn den reviderte crontaben til cron nissen.
       </para>
 
     </sect3>
@@ -226,21 +228,21 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
       </indexterm>
 
       <para revision="sysv">
-        Ved systemoppstart må en LINUX RESTART melding bli
-        satt inn i den daglige datafilen for å reinitialisere kjernetellerne.
-        Dette kan automatiseres ved å installere
+        Ved systemoppstart mÃ¥ en LINUX RESTART melding bli
+        satt inn i den daglige datafilen for Ã¥ reinitialisere kjernetellerne.
+        Dette kan automatiseres ved Ã¥ installere
         <filename>/etc/rc.d/init.d/sysstat</filename> initskript inkludert i
-        <xref linkend="bootscripts"/> pakken ved å bruke følgende kommando
+        <xref linkend="bootscripts"/> pakken ved Ã¥ bruke fÃ¸lgende kommando
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root" revision="sysv"><userinput>make install-sysstat</userinput></screen>
 
       <para revision="systemd">
-        Ved systemoppstart, en LINUX RESTART melding må
-        bli satt inn i den daglige datafilen for å reinitialisere kjernetellerne.
-        Dette kan automatiseres ved å aktivere den tidligere installerte systemd enheten
-        ved å kjøre følgende kommando som
+        Ved systemoppstart, en LINUX RESTART melding mÃ¥
+        bli satt inn i den daglige datafilen for Ã¥ reinitialisere kjernetellerne.
+        Dette kan automatiseres ved Ã¥ aktivere den tidligere installerte systemd enheten
+        ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -277,7 +279,7 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
         <term><command>cifsiostat</command></term>
         <listitem>
           <para>
-            viser statistikk om lese- og skriveoperasjoner på CIFS
+            viser statistikk om lese- og skriveoperasjoner pÃ¥ CIFS
             filsystemer
           </para>
           <indexterm zone="sysstat cifsiostat">
@@ -315,7 +317,7 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
         <term><command>pidstat</command></term>
         <listitem>
           <para>
-            brukes til å overvåke individuelle oppgaver som for øyeblikket administreres
+            brukes til Ã¥ overvÃ¥ke individuelle oppgaver som for Ã¸yeblikket administreres
             av Linux kjernen
           </para>
           <indexterm zone="sysstat pidstat">
@@ -328,7 +330,7 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
         <term><command>sadf</command></term>
         <listitem>
           <para>
-            brukes til å vise innholdet i datafiler opprettet av
+            brukes til Ã¥ vise innholdet i datafiler opprettet av
             <command>sar</command> kommandoen. Men i motsetning til
             <command>sar</command>, <command>sadf</command> kan skrive dataene sine
             i mange forskjellige formater
@@ -343,7 +345,7 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
         <term><command>sar</command></term>
         <listitem>
           <para>
-            brukes til å vise innholdet i valgt kumulativ aktivitets
+            brukes til Ã¥ vise innholdet i valgt kumulativ aktivitets
             tellere i operativsystemet
           </para>
           <indexterm zone="sysstat sar">
@@ -356,7 +358,7 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
         <term><command>tapestat</command></term>
         <listitem>
           <para>
-            brukes til å overvåke aktiviteten til båndstasjoner koblet til
+            brukes til Ã¥ overvÃ¥ke aktiviteten til bÃ¥ndstasjoner koblet til
             et system
           </para>
           <indexterm zone="sysstat tapestat">
