@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -28,16 +28,16 @@
     <para>
       <application>elogind</application> er
       <application>systemd</application> prosjektets "logind", trukket ut til
-      være en frittstående nisse. Den integreres med <xref linkend="linux-pam"/>
-      å spore alle brukerne som er logget på et system, og om de
-      logges på grafisk, på konsollen eller eksternt.
-      <application>Elogind</application> avslører denne informasjonen via
+      vÃ¦re en frittstÃ¥ende nisse. Den integreres med <xref linkend="linux-pam"/>
+      Ã¥ spore alle brukerne som er logget pÃ¥ et system, og om de
+      logges pÃ¥ grafisk, pÃ¥ konsollen eller eksternt.
+      <application>Elogind</application> avslÃ¸rer denne informasjonen via
       standard org.freedesktop.login1 <application>D-Bus</application>
-      grensesnitt, og også gjennom filsystemet ved å bruke systemd sin standard
+      grensesnitt, og ogsÃ¥ gjennom filsystemet ved Ã¥ bruke systemd sin standard
       <filename class="directory">/run/systemd</filename> mal.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -58,7 +58,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &elogind-size;
+          NedlastingsstÃ¸rrelse: &elogind-size;
         </para>
       </listitem>
       <listitem>
@@ -77,19 +77,19 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref role="runtime" linkend="dbus"/> (kjøretid),
-      <xref linkend="linux-pam"/> (påkrevd for Xorg),
-      <xref role="runtime" linkend="polkit"/> (kjøretid),
+      <xref role="runtime" linkend="dbus"/> (kjÃ¸retid),
+      <xref linkend="linux-pam"/> (pÃ¥krevd for Xorg),
+      <xref role="runtime" linkend="polkit"/> (kjÃ¸retid),
       <xref linkend="DocBook"/>,
       <xref linkend="docbook-xsl"/>, og
-      <xref linkend="libxslt"/> (alle tre for å bygge manualsidene)
+      <xref linkend="libxslt"/> (alle tre for Ã¥ bygge manualsidene)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="lxml"/>,
       <xref linkend="zsh"/>,
-      <xref linkend="valgrind"/> (nødvendig for tester),
+      <xref linkend="valgrind"/> (nÃ¸dvendig for tester),
       <ulink url="https://github.com/linux-audit/audit-userspace">
       audit-userspace</ulink>,
       <ulink url="https://github.com/scop/bash-completion">
@@ -100,21 +100,25 @@
       SELinux</ulink>
     </para>
 
+    <para condition="html" role="usernotes">
+      RedaktÃ¸rens notater: <ulink url="&blfs-wiki;/Logind"/>
+    </para>
+
   </sect2>
 
   <sect2 role="kernel" id="elogind-kernel">
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen og kompiler
-      kjerne på nytt om nødvendig:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen og kompiler
+      kjerne pÃ¥ nytt om nÃ¸dvendig:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="elogind-kernel.xml"/>
 
     <para>
-      I tillegg trenger noen tester brukerområdets kryptografiske kjerne API, som
+      I tillegg trenger noen tester brukeromrÃ¥dets kryptografiske kjerne API, som
       er aktivert med:
     </para>
 
@@ -130,7 +134,7 @@
     <title>Installasjon av elogind</title>
 
     <para>
-      Installer <application>elogind</application> ved å kjøre følgende
+      Installer <application>elogind</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -151,21 +155,22 @@ meson setup ..                              \
       -Dman=auto                            \
       -Ddocdir=/usr/share/doc/elogind-&elogind-version; \
       -Dcgroup-controller=elogind           \
+      -Ddev-kvm-mode=0660                   \
       -Ddbuspolicydir=/etc/dbus-1/system.d &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>ninja test</command>. Noen få tester
-      blir hoppet over hvis ikke kjøres med <systemitem class="username">root</systemitem>
+      For Ã¥ teste resultatene, utsted: <command>ninja test</command>. Noen fÃ¥ tester
+      blir hoppet over hvis ikke kjÃ¸res med <systemitem class="username">root</systemitem>
       privilegier. To tester navngitt <filename>test-fs-util</filename> og
       <filename>test-id128</filename> krever
-      <filename>/etc/machine-id</filename> symbolkobling, så de vil mislykkes hvis
+      <filename>/etc/machine-id</filename> symbolkobling, sÃ¥ de vil mislykkes hvis
       denne symbolkoblingen ikke opprettes etter instruksjonen i
-      <xref linkend='dbus'/> ennå.
+      <xref linkend='dbus'/> ennÃ¥.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install                                           &amp;&amp;
@@ -192,16 +197,16 @@ ln -sfvn elogind /usr/include/systemd</userinput></screen>
     -->
     <para>
       <parameter>-Ddocdir=/usr/share/doc/elogind-&elogind-version;</parameter>:
-      Dette er nødvendig for å installere dokumentasjon i en versjonert mappe.
+      Dette er nÃ¸dvendig for Ã¥ installere dokumentasjon i en versjonert mappe.
     </para>
 
     <para>
       <parameter>-Dcgroup-controller=elogind</parameter>: Denne bryteren er
-      nødvendig for å bygge denne pakken når kjernen ikke er bygget med
+      nÃ¸dvendig for Ã¥ bygge denne pakken nÃ¥r kjernen ikke er bygget med
       <option>CONFIG_CGROUPS</option> aktivert. Noter at
       <application>elogind</application> strengt tatt trenger
-      en kjerne med <option>CONFIG_CGROUPS</option> aktivert under kjøring,
-      men denne bryteren vil tillate å bygge pakken først.
+      en kjerne med <option>CONFIG_CGROUPS</option> aktivert under kjÃ¸ring,
+      men denne bryteren vil tillate Ã¥ bygge pakken fÃ¸rst.
     </para>
 
     <para>
@@ -211,25 +216,32 @@ ln -sfvn elogind /usr/include/systemd</userinput></screen>
     </para>
 
     <para>
+      <parameter>-Ddev-kvm-mode=0660</parameter>: LFS udev-regelen setter
+      modus for <filename class='devicefile'>/dev/kvm</filename> til 0660.
+      Dette alternativet sikrer elogind udev reglene er i samsvar med LFS
+      konfigurasjonen.
+    </para>
+
+    <para>
       <parameter>-Dman=auto</parameter>: Standardverdien for denne bryteren er
       <emphasis>false</emphasis>. Sette den til <emphasis>auto</emphasis>
-      tillater å bygge og installere manualsidene hvis de anbefalte
+      tillater Ã¥ bygge og installere manualsidene hvis de anbefalte
       avhengigheter er installert.
     </para>
 
     <para>
       <option>-Dhtml=auto</option>: Standardverdien for denne bryteren er
       <emphasis>false</emphasis>. Sette den til <emphasis>auto</emphasis>
-      tillater å bygge og installere html dokumentasjonen hvis de anbefalte
+      tillater Ã¥ bygge og installere html dokumentasjonen hvis de anbefalte
       avhengigheter er installert.
     </para>
 
     <para>
-      <option>-Ddefault-kill-user-processes=false</option>: Avgjør om
-      prosessene til en bruker skal drepes når brukeren logger ut.
+      <option>-Ddefault-kill-user-processes=false</option>: AvgjÃ¸r om
+      prosessene til en bruker skal drepes nÃ¥r brukeren logger ut.
       Standard er <emphasis>true</emphasis>, men dette beseirer den tradisjonelle
       bruken av <command>screen</command> eller <command>tmux</command>. Dette kan
-      også endres i konfigurasjonsfilen (se nedenfor).
+      ogsÃ¥ endres i konfigurasjonsfilen (se nedenfor).
     </para>
 
     <para>
@@ -259,8 +271,8 @@ ln -sfvn elogind /usr/include/systemd</userinput></screen>
       <para>
         Den installerte filen <filename>/etc/elogind/logind.conf</filename>
         inneholder alle mulige alternativer med standardinnstillingene, kommentert
-        ut. Det kan være lurt å deaktivere automatisk drepende brukerprosesser når brukeren logger
-        ut, ved å kjøre, som <systemitem class="username">root</systemitem>
+        ut. Det kan vÃ¦re lurt Ã¥ deaktivere automatisk drepende brukerprosesser nÃ¥r brukeren logger
+        ut, ved Ã¥ kjÃ¸re, som <systemitem class="username">root</systemitem>
         bruker:
       </para>
 
@@ -268,11 +280,11 @@ ln -sfvn elogind /usr/include/systemd</userinput></screen>
     -i /etc/elogind/logind.conf</userinput></screen>
 
       <para>
-        Hver bruker må registrere en brukerøkt med
-        <application>Linux-PAM</application> ved pålogging.
-        <filename>/etc/pam.d/system-session</filename> filen må
-        endres og en ny fil må opprettes for
-        <command>elogind</command> å fungere riktig. Kjør følgende
+        Hver bruker mÃ¥ registrere en brukerÃ¸kt med
+        <application>Linux-PAM</application> ved pÃ¥logging.
+        <filename>/etc/pam.d/system-session</filename> filen mÃ¥
+        endres og en ny fil mÃ¥ opprettes for
+        <command>elogind</command> Ã¥ fungere riktig. KjÃ¸r fÃ¸lgende
         kommandoer som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -302,6 +314,15 @@ password required    pam_deny.so
 
 # End /etc/pam.d/elogind-user</literal>
 EOF</userinput></screen>
+
+    <note>
+      <para>Etter ferdigstillelse av <application>elogind</application>, 
+      du bÃ¸r sjekke at den fungerer som den skal. SÃ¸rg fÃ¸rst for at
+      <application>dbus</application> kjÃ¸rer. Det kan vÃ¦re lettest
+      Ã¥ gjÃ¸re dette ved Ã¥ starte systemet pÃ¥ nytt. Etter Ã¥ ha logget pÃ¥ igjen, kjÃ¸r
+      kommandoen <command>loginctl</command>.  Resultatet bÃ¸r indikere
+      at en Ã˜KT og et SETE har blitt opprettet.</para>
+    </note>
 
     </sect3>
   </sect2>
@@ -341,7 +362,7 @@ EOF</userinput></screen>
         <term><command>busctl</command></term>
         <listitem>
           <para>
-            brukes til å introspisere og overvåke D-Bus bussen
+            brukes til Ã¥ introspisere og overvÃ¥ke D-Bus bussen
           </para>
           <indexterm zone="elogind busctl">
             <primary sortas="b-busctl">busctl</primary>
@@ -353,7 +374,7 @@ EOF</userinput></screen>
         <term><command>elogind-inhibit</command></term>
         <listitem>
           <para>
-            brukes til å kjøre et program med avstenging, hvilemodus eller inaktiv
+            brukes til Ã¥ kjÃ¸re et program med avstenging, hvilemodus eller inaktiv
             inhibitor lock tatt
           </para>
           <indexterm zone="elogind elogind-inhibit">
@@ -366,8 +387,8 @@ EOF</userinput></screen>
         <term><command>loginctl</command></term>
         <listitem>
           <para>
-            brukes til å introspisere og kontrollere tilstanden til elogind
-            påloggingsbehandler
+            brukes til Ã¥ introspisere og kontrollere tilstanden til elogind
+            pÃ¥loggingsbehandler
           </para>
           <indexterm zone="elogind loginctl">
             <primary sortas="b-loginctl">loginctl</primary>
@@ -379,7 +400,7 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">libelogind.so</filename></term>
         <listitem>
           <para>
-            er det viktigste elogind verktøybiblioteket
+            er det viktigste elogind verktÃ¸ybiblioteket
           </para>
           <indexterm zone="elogind libelogind">
             <primary sortas="c-libelogind">libelogind.so</primary>

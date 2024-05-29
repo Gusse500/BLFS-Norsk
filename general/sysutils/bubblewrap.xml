@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -27,13 +27,13 @@
 
     <para>
       <application>Bubblewrap</application> er en setuid implementering av bruker
-      navneområder, eller sandboxing, som gir tilgang til et undersett av kjernefunksjoner
-      for brukernavn. Bubblewrap lar brukereide prosesser kjøre i
-      et isolert miljø med begrenset tilgang til det underliggende filsystemet.
+      navneomrÃ¥der, eller sandboxing, som gir tilgang til et undersett av kjernefunksjoner
+      for brukernavn. Bubblewrap lar brukereide prosesser kjÃ¸re i
+      et isolert miljÃ¸ med begrenset tilgang til det underliggende filsystemet.
       <!-- Thanks for the reword DJ -->
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &bubblewrap-size;
+          NedlastingsstÃ¸rrelse: &bubblewrap-size;
         </para>
       </listitem>
       <listitem>
@@ -73,17 +73,37 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="libxslt"/> (for å generere manualsider) og
+      <xref linkend="libxslt"/> (for Ã¥ generere manualsider) og
       <xref linkend="libseccomp"/> (bygget med python bindinger, for tester)
     </para>
 
+  </sect2>
+
+  <sect2 role="kernel" id="bubblewrap-kernel">
+    <title>Kjernekonfigurasjon</title>
+
+    <para>
+      Da denne pakken startet, forventet oppstrÃ¸ms at den kunne installeres med
+      suid-root. Det var lenge siden, suid-root anses generelt som
+      en dÃ¥rlig idÃ©. I tillegg til standard navneomrÃ¥der, krever denne pakken at
+      valgfritt brukernavneomrÃ¥de skal aktiveres. Hvis det ennÃ¥ ikke er aktivert,
+      velg fÃ¸lgende alternativ i kjernekonfigurasjonen og kompiler kjernen
+      pÃ¥ nytt:
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="bubblewrap-kernel.xml"/>
+
+    <indexterm zone="bubblewrap bubblewrap-kernel">
+      <primary sortas="d-bubblewrap">bubblewrap</primary>
+    </indexterm>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av Bubblewrap</title>
 
     <para>
-      Installer <application>Bubblewrap</application> ved å kjøre følgende
+      Installer <application>Bubblewrap</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -94,20 +114,20 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Deretter, hvis du ønsker å kjøre testpakken, fiks et problem forårsaket av
+      Deretter, hvis du Ã¸nsker Ã¥ kjÃ¸re testpakken, fiks et problem forÃ¥rsaket av
       merged-/usr konfigurasjon i LFS:
     </para>
 
 <screen remap="test"><userinput>sed 's@symlink usr/lib64@ro-bind-try /lib64@' -i ../tests/libtest.sh</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted (som en annen bruker enn
+      For Ã¥ teste resultatene, utsted (som en annen bruker enn
       <systemitem class="username">root</systemitem> bruker):
       <command>ninja test</command>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -118,26 +138,6 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-  </sect2>
-
-  <sect2 role="kernel" id="bubblewrap-kernel">
-    <title>Kjernekonfigurasjon</title>
-
-    <para>
-      Da denne pakken startet, forventet oppstrøms at den kunne installeres med
-      suid-root. Det var lenge siden, suid-root anses generelt som
-      en dårlig idé. I tillegg til standard navneområder, krever denne pakken
-      valgfritt brukernavneområde som skal aktiveres. Hvis det ennå ikke er aktivert,
-      velg følgende alternativ i kjernekonfigurasjonen og kompiler kjernen
-      på nytt:
-    </para>
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="bubblewrap-kernel.xml"/>
-
-    <indexterm zone="bubblewrap bubblewrap-kernel">
-      <primary sortas="d-bubblewrap">bubblewrap</primary>
-    </indexterm>
   </sect2>
 
   <sect2 role="content">
@@ -170,7 +170,7 @@ ninja</userinput></screen>
         <term><command>bwrap</command></term>
         <listitem>
           <para>
-            genererer en sandkasse for et program å kjøre i
+            genererer en sandkasse for et program Ã¥ kjÃ¸re i
           </para>
           <indexterm zone="bubblewrap bwrap">
             <primary sortas="b-bwrap">bwrap</primary>

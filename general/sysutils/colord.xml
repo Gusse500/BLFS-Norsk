@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY colord-download-http "https://www.freedesktop.org/software/colord/releases/colord-&colord-version;.tar.xz">
   <!ENTITY colord-download-ftp  " ">
-  <!ENTITY colord-md5sum        "7dbdc807495890c13e8242385f4c641f">
-  <!ENTITY colord-size          "1.8 MB">
-  <!ENTITY colord-buildsize     "32 MB (med tester)">
-  <!ENTITY colord-time          "0.3 SBU (med tester)">
+  <!ENTITY colord-md5sum        "94bd795efa1931a34990345e4ac439a8">
+  <!ENTITY colord-size          "1.7 MB">
+  <!ENTITY colord-buildsize     "18 MB (med tester)">
+  <!ENTITY colord-time          "0.4 SBU (med tester)">
 ]>
 
 <sect1 id="colord" xreflabel="colord-&colord-version;">
@@ -26,13 +26,13 @@
     <title>Introduksjon til Colord</title>
 
     <para>
-      <application>Colord</application> er en systemtjeneste som gjør det enkelt
-      å administrere, installere og generere fargeprofiler. Den brukes hovedsakelig av
+      <application>Colord</application> er en systemtjeneste som gjÃ¸r det enkelt
+      Ã¥ administrere, installere og generere fargeprofiler. Den brukes hovedsakelig av
       <application>GNOME Color Manager</application> for systemintegrasjon
-      og bruk når ingen brukere er pålogget.
+      og bruk nÃ¥r ingen brukere er pÃ¥logget.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &colord-size;
+          NedlastingsstÃ¸rrelse: &colord-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
 
     <bridgehead renderas="sect3">Colord Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="dbus"/>,
       <xref linkend="glib2"/>,
@@ -87,14 +87,14 @@
       <xref linkend="libgudev"/>,
       <xref linkend="libgusb"/>,
       <phrase revision="systemd" role="runtime"><xref linkend="systemd"/>
-      (kjøretid),</phrase>
+      (kjÃ¸retid),</phrase>
       og <xref linkend="vala"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gnome-desktop"/> og
-      <xref linkend="colord-gtk"/> (for å bygge eksempelverktøyene),
+      <xref linkend="colord-gtk"/> (for Ã¥ bygge eksempelverktÃ¸yene),
       <xref linkend="docbook-utils"/>,
       <xref linkend="gtk-doc"/>,
       <xref linkend="libxslt"/>,
@@ -109,8 +109,8 @@
     <title>Installasjon av Colord</title>
 
     <para>
-      Det bør være en dedikert bruker og gruppe for å ta kontroll over colord
-      nissen etter at den har startet. Utfør følgende kommandoer som
+      Det bÃ¸r vÃ¦re en dedikert bruker og gruppe for Ã¥ ta kontroll over colord
+      nissen etter at den har startet. UtfÃ¸r fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -118,16 +118,8 @@
 useradd -c "Color Daemon Owner" -d /var/lib/colord -u 71 \
         -g colord -s /bin/false colord</userinput></screen>
 
-    <!-- https://github.com/hughsie/colord/pull/146 -->
     <para>
-      Rett opp en dobbel frigjøring som forårsaker byggefeil på 32-bit x86 og kjøretids
-      krasjer med noen skjermer:
-    </para>
-
-<screen><userinput>sed '/cmsUnregisterPluginsTHR/d' -i lib/colord/cd-context-lcms.c</userinput></screen>
-
-    <para>
-      Installer <application>Colord</application> ved å kjøre følgende
+      Installer <application>Colord</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -164,16 +156,16 @@ meson setup ..                 \
 ninja</userinput></screen>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
       En test, <filename>colord-self-test-daemon</filename>, vil mislykkes hvis
-      pakken allerede er installert. Testpakken må kjøres med
-      systemomfattende D-Bus nissen kjørende.
+      pakken allerede er installert. Testpakken mÃ¥ kjÃ¸res med
+      systemomfattende D-Bus nissen kjÃ¸rende.
     </para>
 
   </sect2>
@@ -186,7 +178,7 @@ ninja</userinput></screen>
 
     <para>
       <parameter>-Ddaemon_user=colord</parameter>: Denne bryteren brukes
-       så colord nissen vil kjøre som en uprivilegert bruker i stedet for som
+       sÃ¥ colord nissen vil kjÃ¸re som en uprivilegert bruker i stedet for som
       <systemitem class="username">root</systemitem> bruker.
     </para>
 
@@ -198,7 +190,7 @@ ninja</userinput></screen>
 
     <para revision="sysv">
       <parameter>-Dsystemd=false</parameter>: Denne bryteren deaktiverer
-      støtte for <application>systemd</application> innlogging i Colord
+      stÃ¸tte for <application>systemd</application> innlogging i Colord
       applikasjoner.
     </para>
 
@@ -217,12 +209,12 @@ ninja</userinput></screen>
       <parameter>-Dargyllcms_sensor=false</parameter>: Denne bryteren
       deaktiverer tArgLLCMS sensordriver. Utelat hvis du har
       <ulink url="https://www.argyllcms.com/">ArgyllCMS</ulink> installert
-      og ønsker å bruke den.
+      og Ã¸nsker Ã¥ bruke den.
     </para>
 
     <para>
       <parameter>-Dbash_completion=false</parameter>: Denne bryteren
-      deaktiverer Bash Completion støtte for Colord applikasjoner.
+      deaktiverer Bash Completion stÃ¸tte for Colord applikasjoner.
     </para>
 
     <para>
@@ -234,7 +226,7 @@ ninja</userinput></screen>
       <parameter>-Dman=false</parameter>: Denne bryteren deaktiverer byggingen
       av man sider. Utelat hvis du har <xref linkend="docbook-utils"/>
       tilgjengelig. Namespaced versjoner av docbook-xsl stilarkene
-      kreves også.
+      kreves ogsÃ¥.
     </para>
 
   </sect2>
@@ -284,7 +276,7 @@ ninja</userinput></screen>
         <term><command>cd-create-profile</command></term>
         <listitem>
           <para>
-            er verktøyet for oppretting av profiler for Color Manager
+            er verktÃ¸yet for oppretting av profiler for Color Manager
           </para>
           <indexterm zone="colord cd-create-profile">
             <primary sortas="b-cd-create-profile">cd-create-profile</primary>
@@ -296,7 +288,7 @@ ninja</userinput></screen>
         <term><command>cd-fix-profile</command></term>
         <listitem>
           <para>
-            er et verktøy som brukes til å fikse metadata i ICC profiler
+            er et verktÃ¸y som brukes til Ã¥ fikse metadata i ICC profiler
           </para>
           <indexterm zone="colord cd-fix-profile">
             <primary sortas="b-cd-fix-profile">cd-fix-profile</primary>
@@ -320,7 +312,7 @@ ninja</userinput></screen>
         <term><command>cd-it8</command></term>
         <listitem>
           <para>
-            er testverktøyet for Color Manager
+            er testverktÃ¸yet for Color Manager
           </para>
           <indexterm zone="colord cd-it8">
             <primary sortas="b-cd-it8">cd-it8</primary>
@@ -332,7 +324,7 @@ ninja</userinput></screen>
         <term><command>colormgr</command></term>
         <listitem>
           <para>
-            er et tekstmodusprogram som lar deg samhandle med colord på
+            er et tekstmodusprogram som lar deg samhandle med colord pÃ¥
             kommandolinjen
           </para>
           <indexterm zone="colord colormgr">
@@ -370,7 +362,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libcolordprivate.so</filename></term>
         <listitem>
           <para>
-            inneholder interne API funksjoner for programmene som følger med
+            inneholder interne API funksjoner for programmene som fÃ¸lger med
             <application>Colord</application>
           </para>
           <indexterm zone="colord libcolordprivate.so">
@@ -383,7 +375,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libcolorhug.so</filename></term>
         <listitem>
           <para>
-            inneholder en enkel skjermmaskinvare fargemåler
+            inneholder en enkel skjermmaskinvare fargemÃ¥ler
           </para>
           <indexterm zone="colord libcolorhug.so">
             <primary sortas="c-libcolorhug.so">libcolorhug.so</primary>

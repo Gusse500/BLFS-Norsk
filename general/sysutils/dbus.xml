@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,17 +6,24 @@
 
   <!ENTITY dbus-download-http "https://dbus.freedesktop.org/releases/dbus/dbus-&dbus-version;.tar.xz">
   <!ENTITY dbus-download-ftp  " ">
-  <!ENTITY dbus-md5sum        "da42f55aeec51b355587bc3062fc2d41">
+  <!ENTITY dbus-md5sum        "46070a3487817ff690981f8cd2ba9376">
   <!ENTITY dbus-size          "1.3 MB">
-  <!ENTITY dbus-buildsize     "23 MB (legg til 20 MB for tester)">
-  <!ENTITY dbus-time          "0.2 SBU (legg til 1.6 SBU for tester)">
+  <!ENTITY dbus-buildsize     "23 MB (legg til 25 MB for tester)">
+  <!ENTITY dbus-time          "0.2 SBU (legg til 1.5 SBU for tester)">
   <!-- The former value was 0.8 SBU, which was far more sensible. -->
   <!-- I got 'real  0m14.355s' for make check at -j1; bdubbs dbus-1.14.2 -->
   <!-- Now 'real 2m51.642ss' for make check at -j1; bdubbs dbus-1.14.6
 # TOTAL: 217
 # PASS:  217
 
-Sane test resuults for 1.14.8.  -bdubbs
+Sane test results for 1.14.8.  -bdubbs
+
+For 1.14.10:
+# TOTAL: 219
+# PASS:  218
+# FAIL:  1
+
+not ok 2 test-autolaunch
   -->
 ]>
 
@@ -34,14 +41,14 @@ Sane test resuults for 1.14.8.  -bdubbs
     <title>Introduksjon til D-Bus</title>
 
     <para revision="sysv">
-      <application>D-Bus</application> er et meldingsbusssystem, en enkel måte
-      for applikasjoner å snakke med hverandre.
-      <application>D-Bus</application> leverer både en systemnisse (for
+      <application>D-Bus</application> er et meldingsbusssystem, en enkel mÃ¥te
+      for applikasjoner Ã¥ snakke med hverandre.
+      <application>D-Bus</application> leverer bÃ¥de en systemnisse (for
       hendelser som f.eks <quote>ny maskinvareenhet lagt til</quote> eller <quote>skriver
-      kø endret</quote>) og en per-bruker-pålogging-sesjon nisse (for generell
-      IPC-behov blant brukerapplikasjoner). Dessuten er meldingsbussen bygget på toppen
-      av et generelt rammeverk for en-til-en meldingsoverføring, som kan brukes av
-      to applikasjoner for å kommunisere direkte (uten å gå gjennom
+      kÃ¸ endret</quote>) og en per-bruker-pÃ¥logging-sesjon nisse (for generell
+      IPC-behov blant brukerapplikasjoner). Dessuten er meldingsbussen bygget pÃ¥ toppen
+      av et generelt rammeverk for en-til-en meldingsoverfÃ¸ring, som kan brukes av
+      to applikasjoner for Ã¥ kommunisere direkte (uten Ã¥ gÃ¥ gjennom
       meldingsbuss-demon).
     </para>
 
@@ -51,7 +58,7 @@ Sane test resuults for 1.14.8.  -bdubbs
       deres avhengigheter passet ikke inn i LFS.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -72,7 +79,7 @@ Sane test resuults for 1.14.8.  -bdubbs
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &dbus-size;
+          NedlastingsstÃ¸rrelse: &dbus-size;
         </para>
       </listitem>
       <listitem>
@@ -102,8 +109,8 @@ Sane test resuults for 1.14.8.  -bdubbs
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <phrase revision="systemd"><xref role="runtime" linkend="systemd"/>
-      (for registrering av tjenester lansert av D-Bus session nissen som systemd
-      brukertjenester);</phrase>
+      (kjÃ¸retid, for registrering av tjenester lansert av D-Bus Ã¸ktnissen som
+       systemd brukertjenester);</phrase>
       For testene:
       <xref linkend="dbus-python"/>,
       <xref linkend="pygobject3"/>,
@@ -116,11 +123,6 @@ Sane test resuults for 1.14.8.  -bdubbs
       og
       <ulink url="&gnome-download-http;/yelp-tools/">Yelp Tools</ulink>
     </para>
-
-    <para condition="html" role="usernotes">Redaktørens notater:
-      <ulink url="&blfs-wiki;/dbus"/>
-    </para>
-  </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av D-Bus</title>
@@ -137,9 +139,9 @@ useradd -c "D-Bus Message Daemon User" -d /var/run/dbus \
     -->
 
     <para>
-      Installer <application>D-Bus</application> ved å kjøre følgende
-      kommandoer (det kan være lurt å se gjennom utdataene fra <command>./configure
-      --help</command> først og legg til ønskede parametere til
+      Installer <application>D-Bus</application> ved Ã¥ kjÃ¸re fÃ¸lgende
+      kommandoer (det kan vÃ¦re lurt Ã¥ se gjennom utdataene fra <command>./configure
+      --help</command> fÃ¸rst og legg til Ã¸nskede parametere til
       <command>configure</command> kommandoen vist nedenfor):
     </para>
 
@@ -193,7 +195,7 @@ make</userinput></screen>
 -->
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -214,8 +216,8 @@ ln -sfv ../../lib/$(readlink /usr/lib/libdbus-1.so) /usr/lib/libdbus-1.so</useri
 
     <para>
       Hvis du bruker en DESTDIR installasjon,
-      <command>dbus-daemon-launch-helper</command> må fikses
-      etterpå. Utsted, som <systemitem class="username">root</systemitem>
+      <command>dbus-daemon-launch-helper</command> mÃ¥ fikses
+      etterpÃ¥. Utsted, som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
@@ -224,10 +226,10 @@ chmod -v      4750       /usr/libexec/dbus-daemon-launch-helper</userinput></scr
 
     <para revision="sysv">
       Hvis du fortsatt bygger systemet ditt i chroot eller du ikke har startet
-      nissen ennå, men du vil kompilere noen pakker som krever
+      nissen ennÃ¥, men du vil kompilere noen pakker som krever
       <application>D-Bus</application>, generer
-      <application>D-Bus</application> UUID for å unngå advarsler ved kompilering
-      av noen pakker med følgende kommando som
+      <application>D-Bus</application> UUID for Ã¥ unngÃ¥ advarsler ved kompilering
+      av noen pakker med fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -256,10 +258,10 @@ systemctl start multi-user.target</userinput></screen>
          installed, 238 tests are run and 37 out of 238 are skipped.  -->
 
     <para>
-      Mange tester er deaktivert med mindre både <xref linkend="dbus-python"/>
-      og <xref linkend="pygobject3"/> har blitt installert. Det må
-      kjøres som en uprivilegert bruker fra en lokal økt med bussadresse.
-      For å kjøre standard tester utsted <command>make check</command>.
+      Mange tester er deaktivert med mindre bÃ¥de <xref linkend="dbus-python"/>
+      og <xref linkend="pygobject3"/> har blitt installert. Det mÃ¥
+      kjÃ¸res som en uprivilegert bruker fra en lokal Ã¸kt med bussadresse.
+      For Ã¥ kjÃ¸re standard tester utsted <command>make check</command>.
     </para>
 
     <!-- With dbus-python and pygobject3 installed and these additional
@@ -267,11 +269,11 @@ systemctl start multi-user.target</userinput></screen>
          Additionally,  217 tests in the "name-test" directory are run
          and none is skipped.  -->
     <para>
-      Hvis du vil kjøre enhetsregresjonstestene, krever konfigureringen
+      Hvis du vil kjÃ¸re enhetsregresjonstestene, krever konfigureringen
       tilleggsparametere som viser tilleggsfunksjonalitet i
-      binærfiler som ikke er ment å brukes i en produksjonsbygning av
-      <application>D-Bus</application>.  Hvis du ønsker å kjøre testene,
-      utsted følgende kommandoer (for testene trenger du ikke å bygge
+      binÃ¦rfiler som ikke er ment Ã¥ brukes i en produksjonsbygning av
+      <application>D-Bus</application>.  Hvis du Ã¸nsker Ã¥ kjÃ¸re testene,
+      utsted fÃ¸lgende kommandoer (for testene trenger du ikke Ã¥ bygge
       dokumenter):
     </para>
 
@@ -284,9 +286,10 @@ make                                              &amp;&amp;
 make check</userinput></screen>
 
     <para>
-      Det har vært rapporter om at testene kan mislykkes hvis de kjøres i et
-      Midnight Commander skall. Du kan få feilmeldinger om at minnet er tomt når
-      kjører testene. Disse er normale og kan trygt ignoreres.
+      En test, test-autolaunch, er kjent for Ã¥ mislykkes.
+      Det har vÃ¦rt rapporter om at testene kan mislykkes hvis de kjÃ¸res i et
+      Midnight Commander skall. Du kan fÃ¥ feilmeldinger om at minnet er tomt nÃ¥r
+      kjÃ¸rer testene. Disse er normale og kan trygt ignoreres.
     </para>
 
   </sect2>
@@ -298,7 +301,7 @@ make check</userinput></screen>
       <parameter>--disable-doxygen-docs</parameter>: Denne bryteren deaktiverer at
       doxygen dokumentasjon bygges og installeres, hvis du har
       <application>doxygen</application> installert. Hvis
-      <application>doxygen</application> er installert, og du ønsker å bygge
+      <application>doxygen</application> er installert, og du Ã¸nsker Ã¥ bygge
       dem, fjern denne parameteren.
     </para>
 
@@ -306,7 +309,7 @@ make check</userinput></screen>
       <parameter>--disable-xml-docs</parameter>: Denne bryteren deaktiverer at html
       dokumentasjon bygges og installeres, hvis du har
       <application>xmlto</application> installert. Hvis
-      <application>xmlto</application> er installert, og du ønsker å bygge
+      <application>xmlto</application> er installert, og du Ã¸nsker Ã¥ bygge
       dem, fjern denne parameteren.
     </para>
 
@@ -315,39 +318,39 @@ make check</userinput></screen>
 
     <para revision="systemd">
       <parameter>--enable-user-session</parameter>: Denne parameteren aktiverer
-      per bruker DBus-økter med
+      per bruker DBus-Ã¸kter med
       <application>systemd</application>.
     </para>
 
     <para revision="sysv">
       <parameter>--with-systemd{user,system}unitdir=no</parameter>: Disse
-      brytere deaktiverer installasjon av systemenheter på elogind baserte systemer.
+      brytere deaktiverer installasjon av systemenheter pÃ¥ elogind baserte systemer.
     </para>
-
+<!-- not in instructions anymore
     <para>
-      <parameter>--with-system-pid-file=/run/dbus/pid</parameter>: Dette
+      <parameter>- -with-system-pid-file=/run/dbus/pid</parameter>: Dette
       parameter angir plasseringen av PID filen.
     </para>
-
+-->
     <para>
       <parameter>--with-system-socket=/run/dbus/system_bus_socket</parameter>:
       Denne parameteren spesifiserer plasseringen av systembuss socket.
     </para>
 
     <para>
-      <parameter>--enable-tests</parameter>: Bygger ekstra deler av koden for å
-      støtte alle tester. Ikke bruk på en produksjonsbygning.
+      <parameter>--enable-tests</parameter>: Bygger ekstra deler av koden for Ã¥
+      stÃ¸tte alle tester. Ikke bruk pÃ¥ en produksjonsbygning.
     </para>
 
     <para>
       <option>--enable-embedded-tests</option>: Bygger ekstra deler av
-      koden for kun å støtte enhetstester. Ikke bruk på en produksjonsbygning.
+      koden for kun Ã¥ stÃ¸tte enhetstester. Ikke bruk pÃ¥ en produksjonsbygning.
     </para>
 
     <para>
-      <parameter>--enable-asserts</parameter>: Gjør det mulig å kjøre feilsøkingskode
-      påstander for utsagn som normalt antas å være sanne. Dette forhindrer
-      advarsel om det '<parameter>--enable-tests</parameter>' på egen hånd er bare
+      <parameter>--enable-asserts</parameter>: GjÃ¸r det mulig Ã¥ kjÃ¸re feilsÃ¸kingskode
+      pÃ¥stander for utsagn som normalt antas Ã¥ vÃ¦re sanne. Dette forhindrer
+      advarsel om det '<parameter>--enable-tests</parameter>' pÃ¥ egen hÃ¥nd er bare
       nyttig for profilering og gir kanskje ikke sanne resultater for alle tester, men
       legger til sin egen MERK at dette ikke skal brukes i et produksjonsbygg.
     </para>
@@ -384,11 +387,11 @@ make check</userinput></screen>
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Konfigurasjonsfilene oppført ovenfor bør sannsynligvis ikke bli
-        modifisert. Hvis det kreves endringer, bør du opprette
+        Konfigurasjonsfilene oppfÃ¸rt ovenfor bÃ¸r sannsynligvis ikke bli
+        modifisert. Hvis det kreves endringer, bÃ¸r du opprette
         <filename>/etc/dbus-1/session-local.conf</filename> og/eller
         <filename>/etc/dbus-1/system-local.conf</filename> og lage eventuelle
-        ønskede endringer i disse filene.
+        Ã¸nskede endringer i disse filene.
      </para>
 
       <para>
@@ -399,7 +402,7 @@ make check</userinput></screen>
         den mappen skal legges til den lokale sesjonskonfigurasjonen.
         For eksempel, <filename
         class="directory">/usr/local/share/dbus-1/services</filename> kan
-        legges til ved å utføre følgende kommandoer som
+        legges til ved Ã¥ utfÃ¸re fÃ¸lgende kommandoer som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -418,11 +421,11 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3  id="dbus-session">
-      <title>D-Bus Øktnisse</title>
+      <title>D-Bus Ã˜ktnisse</title>
 
       <para revision="sysv">
-        For å starte <command>dbus-daemon</command> automatisk når
-        systemet startes på nytt, installer
+        For Ã¥ starte <command>dbus-daemon</command> automatisk nÃ¥r
+        systemet startes pÃ¥ nytt, installer
         <filename>/etc/rc.d/init.d/dbus</filename> oppstartsskript fra
         <xref linkend="bootscripts"/> pakken.
       </para>
@@ -434,10 +437,10 @@ EOF</userinput></screen>
 <screen role="root" revision="sysv"><userinput>make install-dbus</userinput></screen>
 
       <para revision="sysv">
-        Hvis dette er første gang
-        <application>D-Bus</application> installeres på systemet, og du ikke
-        opererer i et chroot miljø, kan du starte umiddelbart
-        <command>dbus-daemon</command> uten å starte systemet på nytt:
+        Hvis dette er fÃ¸rste gang
+        <application>D-Bus</application> installeres pÃ¥ systemet, og du ikke
+        opererer i et chroot miljÃ¸, kan du starte umiddelbart
+        <command>dbus-daemon</command> uten Ã¥ starte systemet pÃ¥ nytt:
       </para>
 
       <!-- nodump because maybe the user is building in chroot -->
@@ -446,17 +449,17 @@ EOF</userinput></screen>
       <para revision="sysv">
         Merk at dette oppstartsskriptet bare starter system-brede
         <application>D-Bus</application> nissen. Hver bruker som krever tilgang til
-        <application>D-Bus</application> tjenester må også kjøre en
-        sesjonsnisse også. Det er mange metoder du kan bruke for å starte en
-        sesjonsnisse ved hjelp av <command>dbus-launch</command> kommandoen. Gjennomgå
+        <application>D-Bus</application> tjenester mÃ¥ ogsÃ¥ kjÃ¸re en
+        sesjonsnisse ogsÃ¥. Det er mange metoder du kan bruke for Ã¥ starte en
+        sesjonsnisse ved hjelp av <command>dbus-launch</command> kommandoen. GjennomgÃ¥
         <command>dbus-launch</command> manualsiden for detaljer om
         tilgjengelige parametere og alternativer. Her er noen forslag og
         eksempler:
       </para>
 
       <para revision="systemd">
-        Det er mange metoder du kan bruke for å starte en sesjonsnisse
-        ved å bruke <command>dbus-launch</command> kommandoen. Gjennomgå
+        Det er mange metoder du kan bruke for Ã¥ starte en sesjonsnisse
+        ved Ã¥ bruke <command>dbus-launch</command> kommandoen. GjennomgÃ¥
         <command>dbus-launch</command> manualsiden for detaljer om
         tilgjengelige parametere og alternativer. Her er noen forslag og
         eksempler:
@@ -468,7 +471,7 @@ EOF</userinput></screen>
           <para>
             Legg til <command>dbus-launch</command> til linjen i
             <filename>~/.xinitrc</filename> filen som starter det grafiske
-            skrivebordsmiljøet.
+            skrivebordsmiljÃ¸et.
           </para>
         </listitem>
         <listitem>
@@ -477,19 +480,19 @@ EOF</userinput></screen>
             som kaller <filename>~/.xsession</filename> filen, kan du legge til
             <command>dbus-launch</command> til linjen i din
             <filename>~/.xsession</filename> fil som starter det grafiske
-            skrivebordsmiljøet. Syntaksen vil være lik eksemplet i
+            skrivebordsmiljÃ¸et. Syntaksen vil vÃ¦re lik eksemplet i
             <filename>~/.xinitrc</filename> filen.
           </para>
         </listitem>
         <listitem>
           <para>
             Eksemplene vist tidligere bruker
-            <command>dbus-launch</command> for å spesifisere et program som skal kjøres. Dette
-            har fordelen (når du også bruker
-            <parameter>--exit-with-x11</parameter> parameteren) å stoppe
-            sesjonsnissen når det angitte programmet stoppes. Du kan også
+            <command>dbus-launch</command> for Ã¥ spesifisere et program som skal kjÃ¸res. Dette
+            har fordelen (nÃ¥r du ogsÃ¥ bruker
+            <parameter>--exit-with-x11</parameter> parameteren) Ã¥ stoppe
+            sesjonsnissen nÃ¥r det angitte programmet stoppes. Du kan ogsÃ¥
             starte sesjonsnissen i systemet ditt eller personlige oppstartsskript
-            ved å legge til følgende linjer:
+            ved Ã¥ legge til fÃ¸lgende linjer:
           </para>
 
 <screen role="nodump"><userinput><literal># Start the D-Bus session daemon
@@ -562,7 +565,7 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <term><command>dbus-cleanup-sockets</command></term>
         <listitem>
           <para>
-            brukes til å rydde opp etterlatte sockets i en mappe
+            brukes til Ã¥ rydde opp etterlatte sockets i en mappe
           </para>
           <indexterm zone="dbus dbus-cleanup-sockets">
             <primary sortas="b-dbus-cleanup-sockets">dbus-cleanup-sockets</primary>
@@ -586,9 +589,9 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <term><command>dbus-launch</command></term>
         <listitem>
           <para>
-            brukes til å starte <command>dbus-daemon</command> fra et
+            brukes til Ã¥ starte <command>dbus-daemon</command> fra et
             skallskript. Det vil normalt bli kalt opp fra en brukers
-            påloggingsskript
+            pÃ¥loggingsskript
           </para>
           <indexterm zone="dbus dbus-launch">
             <primary sortas="b-dbus-launch">dbus-launch</primary>
@@ -600,7 +603,7 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <term><command>dbus-monitor</command></term>
         <listitem>
           <para>
-            brukes til å overvåke meldinger som går gjennom en
+            brukes til Ã¥ overvÃ¥ke meldinger som gÃ¥r gjennom en
             <application>D-Bus</application> meldingsbuss
           </para>
           <indexterm zone="dbus dbus-monitor">
@@ -613,7 +616,7 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <term><command>dbus-run-session</command></term>
         <listitem>
           <para>
-            starter en prosess som en ny <application>D-Bus</application> økt
+            starter en prosess som en ny <application>D-Bus</application> Ã¸kt
           </para>
           <indexterm zone="dbus dbus-run-session">
             <primary sortas="b-dbus-run-session">dbus-run-session</primary>
@@ -625,7 +628,7 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <term><command>dbus-send</command></term>
         <listitem>
           <para>
-            brukes til å sende en melding til en <application>D-Bus</application>
+            brukes til Ã¥ sende en melding til en <application>D-Bus</application>
             meldingsbuss
           </para>
           <indexterm zone="dbus dbus-send">
@@ -639,7 +642,7 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <listitem>
           <para>
             er en <application>D-Bus</application> trafikkgenerator og
-            testverktøy; det er et flerbruksverktøy for feilsøking og profilering
+            testverktÃ¸y; det er et flerbruksverktÃ¸y for feilsÃ¸king og profilering
             <application>D-Bus</application>
           </para>
           <indexterm zone="dbus dbus-test-tool">
@@ -652,11 +655,11 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <term><command>dbus-update-activation-environment</command></term>
         <listitem>
           <para>
-            brukes til å oppdatere miljøet som brukes til
+            brukes til Ã¥ oppdatere miljÃ¸et som brukes til
             <application>D-Bus</application> sesjonstjenester;
-            den oppdaterer listen over miljøvariabler som brukes av
-            <command>dbus-daemon --session</command> når den aktiverer
-            økttjenester uten å bruke systemd
+            den oppdaterer listen over miljÃ¸variabler som brukes av
+            <command>dbus-daemon --session</command> nÃ¥r den aktiverer
+            Ã¸kttjenester uten Ã¥ bruke systemd
           </para>
           <indexterm zone="dbus dbus-update-activation-environment">
             <primary sortas="b-dbus-update-activation-environment">
@@ -669,7 +672,7 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <term><command>dbus-uuidgen</command></term>
         <listitem>
           <para>
-            brukes til å generere en universell unik ID
+            brukes til Ã¥ generere en universell unik ID
           </para>
           <indexterm zone="dbus dbus-uuidgen">
             <primary sortas="b-dbus-uuidgen">dbus-uuidgen</primary>
@@ -683,10 +686,10 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
           <para>
             inneholder API funksjonene som brukes av
             <application>D-Bus</application> meldingsnisse.
-            <application>D-Bus</application> er først et bibliotek som gir
+            <application>D-Bus</application> er fÃ¸rst et bibliotek som gir
             en-til-en kommunikasjon mellom to applikasjoner;
             <command>dbus-daemon</command> er en applikasjon som bruker dette
-            biblioteket for å implementere en meldingsbuss nisse
+            biblioteket for Ã¥ implementere en meldingsbuss nisse
           </para>
           <indexterm zone="dbus libdbus-1">
             <primary sortas="c-libdbus-1">libdbus-1.so</primary>
@@ -703,7 +706,7 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
 
       <para>
         En liste over installerte filer, sammen med deres korte
-        beskrivelser finner du på
+        beskrivelser finner du pÃ¥
         <ulink url="&lfs-root;/chapter08/dbus.html#contents-dbus"/>.
       </para>
 
