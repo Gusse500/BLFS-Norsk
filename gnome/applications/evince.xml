@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY evince-download-http
-     "&gnome-download-http;/evince/&gnome-44;/evince-&evince-version;.tar.xz">
-  <!ENTITY evince-download-ftp
-     "&gnome-download-ftp;/evince/&gnome-44;/evince-&evince-version;.tar.xz">
-  <!ENTITY evince-md5sum        "a5ea6d19f083f41086ee363caefaa14f">
+     "&gnome-download-http;/evince/&gnome-45;/evince-&evince-version;.tar.xz">
+  <!ENTITY evince-download-ftp  " ">
+  <!ENTITY evince-md5sum        "494cdeef8898a2479aa86f8def7a63bc">
   <!ENTITY evince-size          "2.8 MB">
-  <!ENTITY evince-buildsize     "59 MB">
-  <!ENTITY evince-time          "0.4 SBU (Bruke parallellisme=4)">
+  <!ENTITY evince-buildsize     "45 MB">
+  <!ENTITY evince-time          "0.2 SBU (Bruke parallellisme=4)">
 ]>
 
 <sect1 id="evince" xreflabel="Evince-&evince-version;">
@@ -29,13 +28,13 @@
 
     <para>
       <application>Evince</application> er en dokumentviser for flere
-      dokumentformater. Den støtter PDF, Postscript, DjVu, TIFF og DVI.
-      Det er nyttig for å vise dokumenter av ulike typer ved hjelp av en enkel
+      dokumentformater. Den stÃ¸tter PDF, Postscript, DjVu, TIFF og DVI.
+      Det er nyttig for Ã¥ vise dokumenter av ulike typer ved hjelp av en enkel
       applikasjon i stedet for flere dokumentvisningsprogrammer som en gang eksisterte
-      på <application>GNOME</application> Skrivebordet.
+      pÃ¥ <application>GNOME</application> Skrivebordet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &evince-size;
+          NedlastingsstÃ¸rrelse: &evince-size;
         </para>
       </listitem>
       <listitem>
@@ -73,7 +72,7 @@
 
     <bridgehead renderas="sect3">Evince Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="adwaita-icon-theme"/>,
       <xref linkend="gsettings-desktop-schemas"/>,
@@ -95,7 +94,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="cups"/> (for å aktivere utskrift hvis støtte er bygd inn i
+      <xref linkend="cups"/> (for Ã¥ aktivere utskrift hvis stÃ¸tte er bygd inn i
       <application>GTK+ 3</application>),
       <xref linkend="gnome-desktop"/>,
       <xref linkend="gspell"/>,
@@ -115,7 +114,7 @@
     <title>Installasjon av Evince</title>
 
     <para>
-      Installer <application>Evince</application> ved å kjøre følgende
+      Installer <application>Evince</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -142,12 +141,11 @@ meson setup --prefix=/usr          \
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
-      API dokumentasjonen for denne pakken, kjør:
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
+      API dokumentasjonen for denne pakken, kjÃ¸r:
     </para>
 
 <screen role='nodump'><userinput>sed "/docs_dir/s@\$@ / 'evince-&evince-version;'@" -i ../help/meson.build &amp;&amp;
-sed '/fatal-warnings/d' -i ../help/reference/*/meson.build    &amp;&amp;
 meson configure -Dgtk_doc=true                                &amp;&amp;
 ninja</userinput></screen>
 
@@ -156,7 +154,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -173,14 +171,14 @@ ninja</userinput></screen>
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>CPPFLAGS+=" -I/opt/texlive/..."</parameter>:
-      Sørg for at meson kan finne libkpathsea deklarasjoner fra TeXLive hvis det
-      er installert. Dette har ingen effekt på systemer uten TeXLive installert.
+      <parameter>CPPFLAGS+=" -I/opt/texlive/&texlive-year;/include"</parameter>:
+      SÃ¸rg for at meson kan finne libkpathsea deklarasjoner fra TeXLive hvis det
+      er installert. Dette har ingen effekt pÃ¥ systemer uten TeXLive installert.
     </para>
 
     <para>
       <parameter>--wrap-mode=nodownload</parameter>: Denne bryteren deaktiverer
-      nedlasting av enhver avhengighet: byggesystemet prøver å hente gi-docgen
+      nedlasting av enhver avhengighet: byggesystemet prÃ¸ver Ã¥ hente gi-docgen
       selv om <parameter>-Dgtk_doc=false</parameter> er gitt.
     </para>
 
@@ -189,14 +187,14 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <option>-Dgspell=false</option>: Denne bryteren slår av støtten
+      <option>-Dgspell=false</option>: Denne bryteren slÃ¥r av stÃ¸tten
       for stavekontroll programtillegget.
     </para>
 
     <para>
       <option>-Dintrospection=false</option>: Bruk dette alternativet hvis du
       ikke har <xref role="nodep" linkend="gobject-introspection"/>
-      installert og ikke ønsker å ha introspection støtte innebygd i Evince.
+      installert og ikke Ã¸nsker Ã¥ ha introspection stÃ¸tte innebygd i Evince.
     </para>
 
     <para>
@@ -265,7 +263,7 @@ ninja</userinput></screen>
         <term><command>evince-previewer</command></term>
         <listitem>
           <para>
-            er et program som implementerer forhåndsvisningen for utskrift
+            er et program som implementerer forhÃ¥ndsvisningen for utskrift
           </para>
           <indexterm zone="evince evince-previewer">
             <primary sortas="b-evince-previewer">evince-previewer</primary>
@@ -277,8 +275,8 @@ ninja</userinput></screen>
         <term><command>evince-thumbnailer</command></term>
         <listitem>
           <para>
-            er et enkelt program som brukes til å lage miniatyrbilder av
-            støttede dokumenter
+            er et enkelt program som brukes til Ã¥ lage miniatyrbilder av
+            stÃ¸ttede dokumenter
           </para>
           <indexterm zone="evince evince-thumbnailer">
             <primary sortas="b-evince-thumbnailer">evince-thumbnailer</primary>
