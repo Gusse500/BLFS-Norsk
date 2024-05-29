@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -8,10 +8,10 @@
            "https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/&gnome-terminal-version;/gnome-terminal-&gnome-terminal-version;.tar.gz">
   <!ENTITY gnome-terminal-download-ftp
            " ">
-  <!ENTITY gnome-terminal-md5sum        "d7b0b8bdce595bb0eb83ef99b43e8869">
+  <!ENTITY gnome-terminal-md5sum        "627c0381b3620f7f92662dbc0a9c4099">
   <!ENTITY gnome-terminal-size          "2.8 MB">
-  <!ENTITY gnome-terminal-buildsize     "32 MB">
-  <!ENTITY gnome-terminal-time          "0.4 SBU">
+  <!ENTITY gnome-terminal-buildsize     "31 MB">
+  <!ENTITY gnome-terminal-time          "0.3 SBU">
 ]>
 
 <sect1 id="gnome-terminal" xreflabel="gnome-terminal-&gnome-terminal-version;">
@@ -32,7 +32,7 @@
       terminalemulator for <application>GNOME</application> Skrivebordet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gnome-terminal-size;
+          NedlastingsstÃ¸rrelse: &gnome-terminal-size;
         </para>
       </listitem>
       <listitem>
@@ -70,12 +70,13 @@
 
     <bridgehead renderas="sect3">GNOME Terminal Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="dconf"/>,
       <phrase revision="systemd"><xref linkend="gnome-shell"/>,</phrase>
       <xref linkend="gsettings-desktop-schemas"/>,
       <xref linkend="itstool"/>,
+      <xref linkend="libhandy1"/>,
       <xref linkend="pcre2"/>, og
       <xref linkend="vte"/>
     </para>
@@ -99,14 +100,14 @@
     <title>Installasjon av GNOME Terminal</title>
 
     <para>
-      Først må du fikse noen utdaterte skjemaoppføringer:
+      FÃ¸rst mÃ¥ du fikse noen utdaterte skjemaoppfÃ¸ringer:
     </para>
 
 <screen><userinput remap="pre">sed -i -r 's:"(/system):"/org/gnome\1:g' src/external.gschema.xml</userinput></screen>
 
     <para>
-      Installer <application>GNOME Terminal</application> ved å
-      kjøre følgende kommandoer:
+      Installer <application>GNOME Terminal</application> ved Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -116,11 +117,11 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="systemd"><userinput>ninja install</userinput></screen>
@@ -130,9 +131,9 @@ rm -v /usr/lib/systemd/user/gnome-terminal-server.service</userinput></screen>
 
     <note>
       <para>
-        For å kjøre <application>GNOME Terminal</application>, miljøvariabelen
-        <envar>LANG</envar> må settes til en UTF-8 lokalitet
-        <emphasis>før</emphasis> det grafiske miljøet startes.
+        For Ã¥ kjÃ¸re <application>GNOME Terminal</application>, miljÃ¸variabelen
+        <envar>LANG</envar> mÃ¥ settes til en UTF-8 lokalitet
+        <emphasis>fÃ¸r</emphasis> det grafiske miljÃ¸et startes.
       </para>
     </note>
 
@@ -147,7 +148,7 @@ rm -v /usr/lib/systemd/user/gnome-terminal-server.service</userinput></screen>
     <para>
       <option>-Dsearch_provider=false</option>: Denne bryteren deaktiverer
       <quote>search <application>gnome-shell</application></quote>
-      leverandøren. Bruk dette alternativet hvis du ikke har gnome-shell installert.
+      leverandÃ¸ren. Bruk dette alternativet hvis du ikke har gnome-shell installert.
     </para>
 
     <para>
