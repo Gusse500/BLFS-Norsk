@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY usbutils-download-http "https://github.com/gregkh/usbutils/archive/v&usbutils-version;/usbutils-&usbutils-version;.tar.gz">
+  <!ENTITY usbutils-download-http "https://kernel.org/pub/linux/utils/usb/usbutils/usbutils-&usbutils-version;.tar.xz">
   <!ENTITY usbutils-download-ftp  " ">
-  <!ENTITY usbutils-md5sum        "112eafa991e55229b9f48b90c290a0e2">
-  <!ENTITY usbutils-size          "120 KB">
-  <!ENTITY usbutils-buildsize     "4.3 MB">
+  <!ENTITY usbutils-md5sum        "8ff21441faf2e8128e4810b3d6e49059">
+  <!ENTITY usbutils-size          "168 KB">
+  <!ENTITY usbutils-buildsize     "4.4 MB">
   <!ENTITY usbutils-time          "0.1 SBU">
 ]>
 
@@ -26,12 +26,12 @@
     <title>Introduksjon til USB Utils</title>
 
     <para>
-      <application>USB Utils</application> pakken inneholder verktøy
-      som brukes til å vise informasjon om USB busser i systemet og
+      <application>USB Utils</application> pakken inneholder verktÃ¸y
+      som brukes til Ã¥ vise informasjon om USB busser i systemet og
       enheter koblet til dem.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &usbutils-size;
+          NedlastingsstÃ¸rrelse: &usbutils-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +71,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/usbutils-&usbutils-version;-lsusb_bugfixes-1.patch"/>
         </para>
       </listitem>
@@ -79,7 +79,7 @@
 -->
     <bridgehead renderas="sect3">USB Utils Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libusb"/>
     </para>
@@ -89,8 +89,8 @@
 <!-- git is required by autogen.sh. If using the tarball on kernel.org,
      autogen.sh does not need to be run. If using the github source,
      autogen.sh needs to be run, and git is used to pull the usbhid-dump
-     submodule. -->
-      <xref linkend="git"/> og
+     submodule.
+      <xref linkend="git"/> og -->
       <xref linkend="wget"/>
 <!-- In the systemd book, a unit/timer is installed to update the
      usb.ids file automatically. wget is used in the instructions below. -->
@@ -102,28 +102,26 @@
     <title>Installasjon av USB Utils</title>
 
     <para>
-      Installer <application>USB Utils</application> ved å
-      kjøre følgende kommandoer:
+      Installer <application>USB Utils</application> ved Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
-<screen><userinput>autoreconf -fiv &amp;&amp;
-
-./configure --prefix=/usr --datadir=/usr/share/hwdata &amp;&amp;
-make</userinput></screen>
+<screen><userinput>./configure --prefix=/usr --datadir=/usr/share/hwdata &amp;&amp;
+ make</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      For å installere <filename>usb.ids</filename> datafilen, ved hjelp av
-      <xref linkend="wget"/>, kjør, som
+      For Ã¥ installere <filename>usb.ids</filename> datafilen, ved hjelp av
+      <xref linkend="wget"/>, kjÃ¸r, som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -132,7 +130,7 @@ wget http://www.linux-usb.org/usb.ids -O /usr/share/hwdata/usb.ids</userinput></
 
     <para>
       Skriptet <command>lsusb.py</command> viser informasjon i en mer
-      lettlest form enn <command>lsusb</command>. For å finne alternativene,
+      lettlest form enn <command>lsusb</command>. For Ã¥ finne alternativene,
       bruk <command>lsusb.py -h</command>. En bruksform anbefalt av
       utviklere er <command>lsusb.py -ciu</command>.
     </para>
@@ -143,7 +141,7 @@ wget http://www.linux-usb.org/usb.ids -O /usr/share/hwdata/usb.ids</userinput></
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed ... lsusb.py</command>: Instruerer lsusb.py hvor den skal søke
+      <command>sed ... lsusb.py</command>: Instruerer lsusb.py hvor den skal sÃ¸ke
       <filename>usb.ids</filename>.
     </para>
 
@@ -154,20 +152,20 @@ wget http://www.linux-usb.org/usb.ids -O /usr/share/hwdata/usb.ids</userinput></
 
     <para revision="sysv">
       <filename>usb.ids</filename> datafilen oppdateres kontinuerlig.
-      For å få en gjeldende versjon av denne filen ved å bruke <xref linkend="wget"/>,
-      kjør jevnlig, som
+      For Ã¥ fÃ¥ en gjeldende versjon av denne filen ved Ã¥ bruke <xref linkend="wget"/>,
+      kjÃ¸r jevnlig, som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="sysv"><userinput>wget http://www.linux-usb.org/usb.ids -O /usr/share/hwdata/usb.ids</userinput></screen>
 
     <para>
-      Du bør oppdatere <filename>/usr/share/hwdata/usb.ids</filename> filen
+      Du bÃ¸r oppdatere <filename>/usr/share/hwdata/usb.ids</filename> filen
       jevnlig. <phrase revision="sysv">Hvis du har installert
-      <xref linkend="fcron"/> og fullførte delen om periodiske jobber,
-      kjør</phrase><phrase revision="systemd">Kjør</phrase> følgende       kommandoer, som  <systemitem class="username">root</systemitem> bruker,
-      for å opprette en <phrase revision="sysv">ukentlig cron jobb:</phrase>
-      <phrase revision="systemd">systemd timer for å oppdatere det ukentlig på søndager
+      <xref linkend="fcron"/> og fullfÃ¸rte delen om periodiske jobber,
+      kjÃ¸r</phrase><phrase revision="systemd">KjÃ¸r</phrase> fÃ¸lgende       kommandoer, som  <systemitem class="username">root</systemitem> bruker,
+      for Ã¥ opprette en <phrase revision="sysv">ukentlig cron jobb:</phrase>
+      <phrase revision="systemd">systemd timer for Ã¥ oppdatere det ukentlig pÃ¥ sÃ¸ndager
       klokken 02.30 (lokal tid):</phrase>
     </para>
 
@@ -235,7 +233,7 @@ systemctl enable update-usbids.timer</userinput></screen>
         <term><command>lsusb</command></term>
         <listitem>
           <para>
-            er et verktøy for å vise informasjon om alle USB busser
+            er et verktÃ¸y for Ã¥ vise informasjon om alle USB busser
             i systemet og alle enheter koblet til dem, men ikke i lesbar
             vennlig form
           </para>
@@ -263,8 +261,8 @@ systemctl enable update-usbids.timer</userinput></screen>
         <listitem>
           <para>
             er et skallskript som viser detaljer om USB busser og enheter
-            koblet til dem. Den er designet for å brukes hvis /proc/bus/usb/devices
-            ikke er tilgjengelig på systemet ditt
+            koblet til dem. Den er designet for Ã¥ brukes hvis /proc/bus/usb/devices
+            ikke er tilgjengelig pÃ¥ systemet ditt
           </para>
           <indexterm zone="usbutils usb-devices">
             <primary sortas="b-usb-devices">usb-devices</primary>
@@ -276,7 +274,7 @@ systemctl enable update-usbids.timer</userinput></screen>
         <term><command>usbhid-dump</command></term>
         <listitem>
           <para>
-            brukes til å dumpe rapportbeskrivelser og strømmer fra HID
+            brukes til Ã¥ dumpe rapportbeskrivelser og strÃ¸mmer fra HID
             (human interface device) grensesnitt for USB enheter
           </para>
           <indexterm zone="usbutils usbhid-dump">

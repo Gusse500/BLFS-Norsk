@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -9,7 +9,7 @@
   <!ENTITY upower-md5sum        "bfd6e3275e61d7e097b53eb2b216fffa">
   <!ENTITY upower-size          "136 KB">
   <!ENTITY upower-buildsize     "6.5 MB (legg til 1.1 MB for tester)">
-  <!ENTITY upower-time          "mindre enn 0.1 SBU (ved å bruke parallellisme=4, legg til 0,6 SBU for tester)">
+  <!ENTITY upower-time          "mindre enn 0.1 SBU (ved Ã¥ bruke parallellisme=4, legg til 0,6 SBU for tester)">
 ]>
 
 <sect1 id="upower" xreflabel="UPower-&upower-version;">
@@ -26,13 +26,13 @@
     <title>Introduksjon til UPower</title>
 
     <para>
-      <application>UPower</application> pakken gir et grensesnitt for å
-      telle strømenheter, lytte til enhetshendelser og spørrehistorikk
-      og statistikk. Enhver applikasjon eller tjeneste på systemet kan få tilgang til
+      <application>UPower</application> pakken gir et grensesnitt for Ã¥
+      telle strÃ¸menheter, lytte til enhetshendelser og spÃ¸rrehistorikk
+      og statistikk. Enhver applikasjon eller tjeneste pÃ¥ systemet kan fÃ¥ tilgang til
       org.freedesktop.UPower tjenesten via systemmeldingsbussen.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &upower-size;
+          NedlastingsstÃ¸rrelse: &upower-size;
         </para>
       </listitem>
       <listitem>
@@ -70,13 +70,13 @@
 
     <bridgehead renderas="sect3">UPower Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libgudev"/> og
       <xref linkend="libusb"/>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri (Påkrevd hvis du bygger GNOME)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (PÃ¥krevd hvis du bygger GNOME)</bridgehead>
     <para role="optional">
       <xref linkend="gobject-introspection"/>
     </para>
@@ -101,8 +101,8 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen og kompiler kjernen på nytt
-      om nødvendig:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen og kompiler kjernen pÃ¥ nytt
+      om nÃ¸dvendig:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -117,13 +117,13 @@
     <title>Installasjon av UPower</title>
 
     <para>
-      Fjern først en unødvendig avhengighet fra en test:
+      Fjern fÃ¸rst en unÃ¸dvendig avhengighet fra en test:
     </para>
 
 <screen><userinput>sed '/parse_version/d' -i src/linux/integration-test.py</userinput></screen>
 
     <para>
-      Installer <application>UPower</application> ved å kjøre følgende
+      Installer <application>UPower</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -154,16 +154,34 @@ ninja</userinput></screen>
     <!-- Headphone hotplug (bluetooth and AUX) was tested and seems to work
          okay even with the test faliures. Maybe it's wants headphones plugged
          in during the test? Regardless, it can be safely ignored. -->
+    <!-- On a 32-bit machine, the following test failure can be observed:
+         ======================================================================
+         FAIL: test_battery_energy_charge_mixed (__main__.Tests.test_battery_energy_charge_mixed)
+         battery which reports both current charge and energy
+
+         self.assertEqual(self.get_dbus_dev_property(bat0_up, 'Percentage'), 40.0)
+         AssertionError: 40.00000000000001 != 40.0
+
+         This is known upstream as https://gitlab.freedesktop.org/upower/upower/-/issues/251
+         Not sure if this is an actual problem, but it seems to start and work
+         properly -renodr
+
+         test_bluetooth_le_device: upstream MR !207  -xry111 -->
+
     <para>
-      For å teste resultatene, utsted: <command>LC_ALL=C ninja test</command>. Noen
-      sjekker kan kanskje ikke bestå på grunn av manglende filer. Testpakken skal kjøres fra
-      en lokal GUI økt startet med dbus-launch. 2 tester knyttet til
-      hodetelefon hotplug funksjonen er kjent for å mislykkes, disse kan trygt ignoreres
-      siden hodetelefonfunksjonaliteten fortsatt fungerer.
+      For Ã¥ teste resultatene, utsted: <command>LC_ALL=C ninja test</command>. Noen
+      sjekker kan hende ikke bestÃ¥r pÃ¥ grunn av manglende filer. Testpakken skal kjÃ¸res
+      fra en lokal GUI Ã¸kt startet med dbus-launch. PÃ¥ 32-bits maskiner,
+      en test vil mislykkes pÃ¥ grunn av avrundingsfeil:
+      <filename>Tests.test_battery_energy_charge_mixed</filename>. PÃ¥ noen
+      systemer, to tester knyttet til hodetelefon hotplug funksjonen er kjent for
+      Ã¥ mislykkes. Disse kan trygt ignoreres siden funksjonaliteten fortsatt fungerer.
+      Testen heter <filename>Tests.test_bluetooth_le_device</filename>
+      er kjent for Ã¥ mislykkes med dbusmock-0.30.1 eller nyere.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -176,19 +194,19 @@ ninja</userinput></screen>
     <para>
       <parameter>-Dgtk-doc=false</parameter>: Hindrer byggingen av
       dokumentasjonen. Fjern denne hvis du har <application>GTK-Doc</application>
-      installert og ønsker å bygge dokumentasjonen.
+      installert og Ã¸nsker Ã¥ bygge dokumentasjonen.
     </para>
 
     <para>
       <parameter>-Dman=false</parameter>: Hindrer byggingen av
       manualsider. Fjern denne hvis du har <xref linkend='libxslt'/> og
-      <xref linkend='docbook-xsl'/> installert og ønsker å bygge
+      <xref linkend='docbook-xsl'/> installert og Ã¸nsker Ã¥ bygge
       manualsider.
     </para>
 
     <para revision="sysv">
       <parameter>-Dsystemdsystemunitdir=no</parameter>: Fjerner
-      avhengigheten på <application>systemd</application>.
+      avhengigheten pÃ¥ <application>systemd</application>.
     </para>
 
     <para revision="sysv">
@@ -197,43 +215,6 @@ ninja</userinput></screen>
       regler fordi informasjonen mangler i
       <filename>/usr/lib/pkgconfig/libudev.pc</filename>
     </para>
-
-  </sect2>
-
-  <sect2 role="configuration" revision="systemd">
-
-    <title>Konfigurere UPower</title>
-<!-- timer statistics have been removed from kernel (since 4.11)
-     I do not know if there is a replacement. See
-     https://patchwork.kernel.org/patch/9561519
-     and https://bugs.freedesktop.org/show_bug.cgi?id=100626
-
-    <para>
-      For å bruke kommandoen <command>upower -w</command> for informasjon om
-      prosessorvekker (denne kommandoen brukes av <phrase revision="sysv">
-      <ulink url="&gnome-download-http;/gnome-power-manager/">gnome-power-manager</ulink></phrase><phrase revision="systemd"><xref linkend="gnome-power-manager"/></phrase>)
-      du må aktivere CONFIG_TIMER_STATS. Dette oppnås i
-      <command>make menuconfig</command> ved å gå til &apos;kernel-hacking&apos;
-      menyen og velge &apos;Collect kernel timers statistics&apos;.
-    </para>
--->
-    <sect3  id="upower-init">
-      <title>Systemd Enhet</title>
-
-      <para>
-        For å starte <command>UPower</command> servicen ved oppstart,
-        aktiver den tidligere installerte systemd enheten ved å
-        kjøre følgende kommando som
-        <systemitem class="username">root</systemitem> bruker:
-      </para>
-
-      <indexterm zone="upower upower-init">
-        <primary sortas="f-upower">upower</primary>
-      </indexterm>
-
-<screen role="root"><userinput>systemctl enable upower</userinput></screen>
-
-    </sect3>
 
   </sect2>
 
@@ -274,7 +255,7 @@ reason so single out systemd here. -->
         <term><command>upower</command></term>
         <listitem>
           <para>
-            er <application>UPower</application> kommandolinjeverktøy
+            er <application>UPower</application> kommandolinjeverktÃ¸y
           </para>
           <indexterm zone="upower upower-prog">
             <primary sortas="b-upower">upower</primary>
@@ -287,7 +268,7 @@ reason so single out systemd here. -->
         <listitem>
           <para>
             er <application>UPower</application> Nissen. Det gir
-            org.freedesktop.UPower tjenesten på systemmeldingsbussen.
+            org.freedesktop.UPower tjenesten pÃ¥ systemmeldingsbussen.
           </para>
           <indexterm zone="upower upowerd">
             <primary sortas="b-upowerd">upowerd</primary>

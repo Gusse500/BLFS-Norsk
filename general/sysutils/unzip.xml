@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -27,21 +27,21 @@
 
     <para>
       <application>UnZip</application> pakken inneholder
-      <filename>ZIP</filename> utpakningsverktøy. Disse er nyttige for
-      å pakke ut filer fra <filename>ZIP</filename> arkiver.
+      <filename>ZIP</filename> utpakningsverktÃ¸y. Disse er nyttige for
+      Ã¥ pakke ut filer fra <filename>ZIP</filename> arkiver.
       <filename>ZIP</filename> arkiver opprettes med
       <application>PKZIP</application> eller <application>Info-ZIP</application>
-      verktøy, primært i et DOS miljø.
+      verktÃ¸y, primÃ¦rt i et DOS miljÃ¸.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <caution>
       <para>
         Den forrige versjonen av <application>UnZip</application>
-        pakken hadde noen lokalitetsproblemene. For øyeblikket er det ingen BLFS
-        redaktører som er i stand til å teste disse lokalitetsproblemene. derfor
-        lokalitetsrelatert informasjon er igjen på denne siden, men har ikke vært blitt
+        pakken hadde noen lokalitetsproblemene. For Ã¸yeblikket er det ingen BLFS
+        redaktÃ¸rer som er i stand til Ã¥ teste disse lokalitetsproblemene. derfor
+        lokalitetsrelatert informasjon er igjen pÃ¥ denne siden, men har ikke vÃ¦rt blitt
         testet. En mer generell diskusjon om disse problemene finnes i
         <xref linkend="locale-assumed-encoding"/> delen av <xref
         linkend="locale-issues"/> siden.
@@ -67,7 +67,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &unzip-size;
+          NedlastingsstÃ¸rrelse: &unzip-size;
         </para>
       </listitem>
       <listitem>
@@ -86,7 +86,7 @@
     <itemizedlist spacing='compact'>
       <listitem>
         <para>
-          Nødvendig oppdatering: <ulink
+          NÃ¸dvendig oppdatering: <ulink
           url="&patch-root;/unzip-&unzip-version;-consolidated_fixes-1.patch"/>
         </para>
       </listitem>
@@ -103,56 +103,56 @@
         <application>JDK</application>, <application>Mozilla</application>,
         <application>DocBook</application> eller en hvilken som helst annen BLFS
         pakkeinstallasjon er ikke et problem, siden BLFS instruksjoner aldri bruker
-        <application>UnZip</application> for å pakke ut en fil med ikke-ASCII
+        <application>UnZip</application> for Ã¥ pakke ut en fil med ikke-ASCII
         tegn i filnavnet.
       </para>
     </note>
 
     <para>
-      Disse problemene antas å være løst i oppdateringen. Men siden ingen
-      av redaktørene har data for å teste dette, er følgende løsninger
-      beholdt i tilfelle de fortsatt kan være nødvendige.
+      Disse problemene antas Ã¥ vÃ¦re lÃ¸st i oppdateringen. Men siden ingen
+      av redaktÃ¸rene har data for Ã¥ teste dette, er fÃ¸lgende lÃ¸sninger
+      beholdt i tilfelle de fortsatt kan vÃ¦re nÃ¸dvendige.
     </para>
 
     <para>
       <application>UnZip</application> pakken antar at filnavn
-      lagret i ZIP arkivene som er opprettet på ikke-Unix-systemer, er kodet i
+      lagret i ZIP arkivene som er opprettet pÃ¥ ikke-Unix-systemer, er kodet i
       CP850, og at de skal konverteres til ISO-8859-1 ved skriving av filer
       til filsystemet. Slike forutsetninger er ikke alltid gyldige. Faktisk,
       inne i ZIP arkivet er filnavn kodet i DOS kodesiden som er
-      i bruk i det aktuelle landet, og filnavnene på disken skal være i
+      i bruk i det aktuelle landet, og filnavnene pÃ¥ disken skal vÃ¦re i
       lokalitetskodingen. I MS Windows, OemToChar() C-funksjonen (fra
-      <filename>User32.DLL</filename>) gjør den riktige konverteringen (som er
+      <filename>User32.DLL</filename>) gjÃ¸r den riktige konverteringen (som er
       faktisk konverteringen fra CP850 til et supersett av ISO-8859-1 hvis MS
-      Windows er satt opp til å bruke amerikansk engelsk språk), men det er ingen
+      Windows er satt opp til Ã¥ bruke amerikansk engelsk sprÃ¥k), men det er ingen
       tilsvarende i Linux.
     </para>
 
     <para>
-      Når det brukes <command>unzip</command> for å pakke ut et ZIP arkiv
+      NÃ¥r det brukes <command>unzip</command> for Ã¥ pakke ut et ZIP arkiv
       som inneholder ikke-ASCII filnavn, er filnavnene skadet fordi
-      <command>unzip</command> bruker feil konvertering når noen av disse
+      <command>unzip</command> bruker feil konvertering nÃ¥r noen av disse
       kodingsforutsetninger er feil. For eksempel i ru_RU.KOI8-R
       locale, kreves konvertering av filnavn fra CP866 til KOI8-R, men
-      konvertering fra CP850 til ISO-8859-1 er utført, noe som produserer filnavn
-      som består av utydelige tegn i stedet for ord (den nærmeste
-      tilsvarende forståelig eksempel for brukere som bare bruker engelsk er rot13). Det
-      er flere måter rundt denne begrensningen:
+      konvertering fra CP850 til ISO-8859-1 er utfÃ¸rt, noe som produserer filnavn
+      som bestÃ¥r av utydelige tegn i stedet for ord (den nÃ¦rmeste
+      tilsvarende forstÃ¥elig eksempel for brukere som bare bruker engelsk er rot13). Det
+      er flere mÃ¥ter rundt denne begrensningen:
     </para>
 
     <para>
       1) For utpakking av ZIP arkiver med filnavn som inneholder ikke-ASCII
       tegn, bruk <ulink url="https://www.winzip.com/">WinZip</ulink> mens
-      det kjøres <ulink url="https://www.winehq.com/">Wine</ulink> Windows
+      det kjÃ¸res <ulink url="https://www.winehq.org/">Wine</ulink> Windows
       emulator.
     </para>
 
     <para>
       2) Bruk <command>bsdtar -xf</command> fra
       <xref role="nodep" linkend="libarchive"/> to unpack the ZIP archive.
-      Deretter fiks skaden på
-      filnavnene ved hjelp av <command>convmv</command> verktøyet
-      (<ulink url="https://j3e.de/linux/convmv/"/>). Følgende er et eksempel
+      Deretter fiks skaden pÃ¥
+      filnavnene ved hjelp av <command>convmv</command> verktÃ¸yet
+      (<ulink url="https://j3e.de/linux/convmv/"/>). FÃ¸lgende er et eksempel
       for lokaliteten zh_CN.UTF-8:
     </para>
 
@@ -168,16 +168,16 @@
     <para>
       Den lar deg spesifisere antatt filnavnkoding i ZIP
       arkiv ved hjelp av <option>-O charset_name</option> alternativet og
-      på disk filnavnkoding ved hjelp av <option>-I charset_name</option>
-      alternativ. Standarder: filnavnkodingen på disken er lokalkodingen,
+      pÃ¥ disk filnavnkoding ved hjelp av <option>-I charset_name</option>
+      alternativ. Standarder: filnavnkodingen pÃ¥ disken er lokalkodingen,
       kodingen inne i ZIP-arkivet er gjettet i henhold til den innebygde
-      tabell basert på lokalkodingen. For brukere av amerikansk engelsk, dette fortsatt
+      tabell basert pÃ¥ lokalkodingen. For brukere av amerikansk engelsk, dette fortsatt
       betyr at unzip konverterer fra CP850 til ISO-8859-1 som standard.
     </para>
 
     <para>
       Caveat: denne metoden fungerer bare med 8-biters lokalkoding, ikke
-      med UTF-8. Forsøker å bruke en oppdatering <command>unzip</command> i UTF-8
+      med UTF-8. ForsÃ¸ker Ã¥ bruke en oppdatering <command>unzip</command> i UTF-8
       lokaliteter kan resultere i en segmenteringsfeil og er sannsynligvis en
       sikkerhetsrisiko.
     </para>
@@ -188,23 +188,23 @@
     <title>Installasjon av UnZip</title>
 
     <para>
-      Først anvend oppdateringen:
+      FÃ¸rst anvend oppdateringen:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../unzip-&unzip-version;-consolidated_fixes-1.patch</userinput></screen>
 
     <para>
-      Nå kompiler pakken:
+      NÃ¥ kompiler pakken:
     </para>
 
 <screen><userinput>make -f unix/Makefile generic</userinput></screen>
 
     <para>
-      Testpakken fungerer ikke for målet <quote>generic</quote>.
+      Testpakken fungerer ikke for mÃ¥let <quote>generic</quote>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make prefix=/usr MANDIR=/usr/share/man/man1 \
@@ -217,11 +217,11 @@
 
     <para>
       <command>make -f unix/Makefile generic</command>:
-      Dette målet begynner med å kjøre et konfigureringsskript (i motsetning til eldre
-      mål som linux og linux_noasm) som lager en flaggfil som
+      Dette mÃ¥let begynner med Ã¥ kjÃ¸re et konfigureringsskript (i motsetning til eldre
+      mÃ¥l som linux og linux_noasm) som lager en flaggfil som
       deretter brukes i bygget. Dette sikrer at 32-bit x86 bygget
-      mottar de riktige flaggene for å pakke ut filer som er større enn 2 GB
-      når den pakkes ut.
+      mottar de riktige flaggene for Ã¥ pakke ut filer som er stÃ¸rre enn 2 GB
+      nÃ¥r den pakkes ut.
     </para>
 
   </sect2>
@@ -250,7 +250,7 @@
         <term><command>funzip</command></term>
         <listitem>
           <para>
-            tillater utdata fra <command>unzip</command> kommandoer å bli
+            tillater utdata fra <command>unzip</command> kommandoer Ã¥ bli
             omdirigert
           </para>
           <indexterm zone="unzip funzip">
@@ -278,7 +278,7 @@
           <para>
             er en selvutpakkende stub som kan settes foran et
             <filename>ZIP</filename> arkiv.  Filer i dette formatet tillater
-            mottakeren for å pakke ut arkivet uten å installere
+            mottakeren for Ã¥ pakke ut arkivet uten Ã¥ installere
             <application>UnZip</application>
           </para>
           <indexterm zone="unzip unzipfsx">
@@ -291,8 +291,8 @@
         <term><command>zipgrep</command></term>
         <listitem>
           <para>
-            søker etter filer i et <filename>ZIP</filename> arkiv for
-            linjer som samsvarer med et mønster
+            sÃ¸ker etter filer i et <filename>ZIP</filename> arkiv for
+            linjer som samsvarer med et mÃ¸nster
           </para>
           <indexterm zone="unzip zipgrep">
             <primary sortas="b-zipgrep">zipgrep</primary>
