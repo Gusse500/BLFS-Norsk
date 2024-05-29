@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY gnome-control-center-download-http
-           "&gnome-download-http;/gnome-control-center/&gnome-44;/gnome-control-center-&gnome-control-center-version;.tar.xz">
-  <!ENTITY gnome-control-center-download-ftp
-           "&gnome-download-ftp;/gnome-control-center/&gnome-44;/gnome-control-center-&gnome-control-center-version;.tar.xz">
-  <!ENTITY gnome-control-center-md5sum        "a31987664414838a40b45ac485ee0375">
-  <!ENTITY gnome-control-center-size          "7.3 MB">
-  <!ENTITY gnome-control-center-buildsize     "123 MB (med tester)">
-  <!ENTITY gnome-control-center-time          "0.5 SBU (Bruke parallellisme=4; med tester)">
+           "&gnome-download-http;/gnome-control-center/&gnome-45;/gnome-control-center-&gnome-control-center-version;.tar.xz">
+  <!ENTITY gnome-control-center-download-ftp  " ">
+  <!ENTITY gnome-control-center-md5sum        "b8b5bc5f66d48d0ef231fc85c79abfdd">
+  <!ENTITY gnome-control-center-size          "7.4 MB">
+  <!ENTITY gnome-control-center-buildsize     "117 MB (med tester)">
+  <!ENTITY gnome-control-center-time          "0.6 SBU (Bruke parallellisme=4; med tester)">
 ]>
 
 <sect1 id="gnome-control-center" xreflabel="gnome-control-center-&gnome-control-center-version;">
@@ -32,7 +31,7 @@
       <application>GNOME</application> innstillingsbehandling.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gnome-control-center-size;
+          NedlastingsstÃ¸rrelse: &gnome-control-center-size;
         </para>
       </listitem>
       <listitem>
@@ -70,17 +69,19 @@
 
     <bridgehead renderas="sect3">GNOME Kontrollsenter Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="accountsservice"/>,
       <xref linkend="colord-gtk"/>,
       <xref linkend="gnome-online-accounts"/>,
       <xref linkend="gnome-settings-daemon"/>,
       <xref linkend="gsound"/>,
+      <xref linkend="libadwaita1"/>,
       <xref linkend="libgtop"/>,
       <xref linkend="libpwquality"/>,
       <xref linkend="mitkrb"/>,
-      <xref linkend="shared-mime-info"/>, og
+      <xref linkend="shared-mime-info"/>,
+      <xref linkend="tecla"/>, og
       <xref linkend="udisks2"/>
     </para>
 
@@ -90,7 +91,6 @@
       <xref linkend="samba"/> (for Skriverpanel),
       <xref linkend="gnome-bluetooth"/>,
       <xref linkend="ibus"/>,
-      <xref linkend="libadwaita1"/>, og
       <xref linkend="ModemManager"/> og
       <xref linkend="libnma"/> (for Nettverkspanel)
       <!-- gnome-remote-desktop can be used in the Sharing panel. -->
@@ -105,12 +105,12 @@
     </para>
 
     <bridgehead renderas="sect4"
-                revision="sysv">Anbefalt (Kjøretid)</bridgehead>
+                revision="sysv">Anbefalt (KjÃ¸retid)</bridgehead>
     <para role="recommended" revision="sysv">
       <xref linkend="blocaled" role="runtime"/>
     </para>
 
-    <bridgehead renderas="sect4">Valgfrie Kjøretids Avhengigheter</bridgehead>
+    <bridgehead renderas="sect4">Valgfrie KjÃ¸retids Avhengigheter</bridgehead>
     <para role="optional">
       <xref role="runtime" linkend="cups-pk-helper"/> (Skriverpanel),
       <xref role="runtime" linkend="gnome-color-manager"/> (Fargepanel),
@@ -120,9 +120,9 @@
 
     <note>
       <para>
-        Anbefalte avhengigheter er ikke strengt nødvendig for
-        at denne pakken skal bygge og fungere, men du får kanskje ikke
-        forventede resultater ved kjøring hvis du ikke installerer dem.
+        Anbefalte avhengigheter er ikke strengt nÃ¸dvendig for
+        at denne pakken skal bygge og fungere, men du fÃ¥r kanskje ikke
+        forventede resultater ved kjÃ¸ring hvis du ikke installerer dem.
       </para>
     </note>
 
@@ -131,20 +131,22 @@
   <sect2 role="installation">
     <title>Installasjon av GNOME Kontrollsenter</title>
 
+<!--
     <note>
       <para>
         Hvis du oppgraderer fra gnome-control-center-41 eller tidligere, fjern en
-        skrivebordsfil som vil resultere i dupliserte menyoppføringer. Som
+        skrivebordsfil som vil resultere i dupliserte menyoppfÃ¸ringer. Som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>rm -f /usr/share/applications/gnome-control-center.desktop</userinput></screen>
 
     </note>
+-->
 
     <para>
-      Installer <application>GNOME Kontrollsenter</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>GNOME Kontrollsenter</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -156,14 +158,14 @@ ninja</userinput></screen>
     <!-- for GTK_A11Y=none see upstream issue #2300.  The test still fails
          w/o it in 43.4.1. -->
     <para>
-      For å teste resultatene, utsted:
+      For Ã¥ teste resultatene, utsted:
       <command>GTK_A11Y=none ninja test</command>. Merk at
-      du må ha <application>python-dbusmock</application> modulen
-      installert for at testene skal fullføres på en vellykket måte.
+      du mÃ¥ ha <application>python-dbusmock</application> modulen
+      installert for at testene skal fullfÃ¸res pÃ¥ en vellykket mÃ¥te.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -215,7 +217,7 @@ ninja</userinput></screen>
         <term><command>gnome-control-center</command></term>
         <listitem>
           <para>
-            er et grafisk brukergrensesnitt som brukes til å konfigurere ulike
+            er et grafisk brukergrensesnitt som brukes til Ã¥ konfigurere ulike
             aspekter ved <application>GNOME</application>
           </para>
           <indexterm zone="gnome-control-center gnome-control-center-prog">

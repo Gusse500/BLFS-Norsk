@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY gcr4-download-http "&gnome-download-http;/gcr/&gcr4-minor;/gcr-&gcr4-version;.tar.xz">
-  <!ENTITY gcr4-download-ftp  "&gnome-download-ftp;/gcr/&gcr4-minor;/gcr-&gcr4-version;.tar.xz">
-  <!ENTITY gcr4-md5sum        "bb2e957f0ce11a8c527d1d5079ba485f">
-  <!ENTITY gcr4-size          "708 KB">
-  <!ENTITY gcr4-buildsize     "22 MB (med tester)">
+  <!ENTITY gcr4-download-ftp  " ">
+  <!ENTITY gcr4-md5sum        "59259f5cb4e5a799c20db2dcf3d60a8e">
+  <!ENTITY gcr4-size          "704 KB">
+  <!ENTITY gcr4-buildsize     "29 MB (med tester)">
   <!ENTITY gcr4-time          "0.1 SBU (med tester; begge bruker parallellisme=4)">
 ]>
 
@@ -27,12 +27,12 @@
 
     <para>
       <application>Gcr</application> pakken inneholder biblioteker som brukes
-      for visning av sertifikater og tilgang til nøkkellagre. Det gir også
-      viseren for kryptofiler på
+      for visning av sertifikater og tilgang til nÃ¸kkellagre. Det gir ogsÃ¥
+      viseren for kryptofiler pÃ¥
       <application>GNOME</application> Skrivebordet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gcr4-size;
+          NedlastingsstÃ¸rrelse: &gcr4-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
 
     <bridgehead renderas="sect3">Gcr Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>,
       <xref linkend="libgcrypt"/>, og
@@ -83,7 +83,8 @@
       <xref linkend="gobject-introspection"/>,
       <xref linkend="gtk4"/>,
       <xref linkend="libsecret"/>,
-      <xref linkend="libxslt"/>, og
+      <xref linkend="libxslt"/>,
+      <xref linkend="openssh"/>, og
       <xref linkend="vala"/>
     </para>
 
@@ -99,14 +100,14 @@
     <title>Installasjon av Gcr</title>
 
     <note>
-      <para>Både gcr-3 og gcr-4 kan installeres samtidig. Denne versjonen av pakken
-      brukes til å støtte GTK-4 applikasjoner, som f.eks
+      <para>BÃ¥de gcr-3 og gcr-4 kan installeres samtidig. Denne versjonen av pakken
+      brukes til Ã¥ stÃ¸tte GTK-4 applikasjoner, som f.eks
       <xref linkend="gnome-shell" role="nodep"/> og
       <xref linkend="epiphany" role="nodep"/>.</para>
     </note>
 
     <para>
-      Installer <application>Gcr</application> ved å kjøre følgende
+      Installer <application>Gcr</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -120,23 +121,23 @@ meson setup --prefix=/usr       \
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
-      API dokumentasjonen for denne pakken, kjør:
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
+      API dokumentasjonen for denne pakken, kjÃ¸r:
     </para>
 
-<screen role='nodump'><userinput>sed -e "/install_dir/s@,\$@ / 'gcr-&gcr4-version;'&amp;@" \
+<screen remap='doc'><userinput>sed -e "/install_dir/s@,\$@ / 'gcr-&gcr4-version;'&amp;@" \
     -e "/fatal-warnings/d"                   \
     -i ../docs/*/meson.build                 &amp;&amp;
 meson configure -Dgtk_doc=true               &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
-      Testene skal kjøres fra en X Terminal eller lignende.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
+      Testene skal kjÃ¸res fra en X Terminal eller lignende.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -156,9 +157,14 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <option>-Dgtk_doc=true</option>: &gi-doc-disable;
+      <option>-Dssh_agent=false</option>: Bruk denne bryteren hvis du
+      ikke har installert <xref linkend="openssh"/>, og Ã¸nsker Ã¥ deaktivere
+      ssh kompatibilitet.
     </para>
 
+    <para>
+      <option>-Dgtk_doc=true</option>: &gi-doc-disable;
+    </para>
     <!--<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
     href="../../xincludes/gtk-doc-rebuild.xml"/>-->
 
@@ -196,7 +202,7 @@ ninja</userinput></screen>
         <term><command>gcr-viewer-gtk4</command></term>
         <listitem>
           <para>
-            brukes til å vise sertifikater og nøkkelfiler
+            brukes til Ã¥ vise sertifikater og nÃ¸kkelfiler
           </para>
           <indexterm zone="gcr4 gcr-viewer-gtk4">
             <primary sortas="b-gcr-viewer-gtk4">gcr-viewer-gtk4</primary>
@@ -220,7 +226,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libgcr-4.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner for tilgang til nøkkellagre og visning av
+            inneholder funksjoner for tilgang til nÃ¸kkellagre og visning av
             sertifikater
           </para>
           <indexterm zone="gcr4 libgcr-4">

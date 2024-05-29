@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,12 +6,11 @@
 
   <!ENTITY gnome-bluetooth-download-http
            "&gnome-download-http;/gnome-bluetooth/&gnome-42;/gnome-bluetooth-&gnome-bluetooth-version;.tar.xz">
-  <!ENTITY gnome-bluetooth-download-ftp
-           "&gnome-download-ftp;/gnome-bluetooth/&gnome-42;/gnome-bluetooth-&gnome-bluetooth-version;.tar.xz">
-  <!ENTITY gnome-bluetooth-md5sum        "46494f676eb14c436525e5a5671eae37">
+  <!ENTITY gnome-bluetooth-download-ftp  " ">
+  <!ENTITY gnome-bluetooth-md5sum        "a4b2b8f1321bcc33a868894fae364554">
   <!ENTITY gnome-bluetooth-size          "300 KB">
-  <!ENTITY gnome-bluetooth-buildsize     "14 MB (med tester)">
-  <!ENTITY gnome-bluetooth-time          "0.1 SBU (Bruke parallellisme=4, med tester)">
+  <!ENTITY gnome-bluetooth-buildsize     "12 MB (med tester)">
+  <!ENTITY gnome-bluetooth-time          "0.2 SBU (Bruke parallellisme=4, med tester)">
 ]>
 
 <sect1 id="gnome-bluetooth" xreflabel="gnome-bluetooth-&gnome-bluetooth-version;">
@@ -28,12 +27,12 @@
     <title>Introduksjon til GNOME Bluetooth</title>
 
     <para>
-      <application>GNOME Bluetooth</application> pakken inneholder verktøy
-      for å administrere og manipulere Bluetooth enheter ved bruk av
+      <application>GNOME Bluetooth</application> pakken inneholder verktÃ¸y
+      for Ã¥ administrere og manipulere Bluetooth enheter ved bruk av
       <application>GNOME</application> Skrivebordet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gnome-bluetooth-size;
+          NedlastingsstÃ¸rrelse: &gnome-bluetooth-size;
         </para>
       </listitem>
       <listitem>
@@ -69,9 +68,21 @@
       </listitem>
     </itemizedlist>
 
+<!--
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Valgfri oppdatering (pÃ¥krevd for Ã¥ kjÃ¸re testpakken):
+          <ulink url="&patch-root;/gnome-bluetooth-&gnome-bluetooth-version;-testsuite_fix-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
+
     <bridgehead renderas="sect3">GNOME Bluetooth Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="gtk4"/>,
       <xref linkend="gsound"/>,
@@ -91,7 +102,7 @@
       <xref linkend="python-dbusmock"/>
     </para>
 
-    <bridgehead renderas="sect4">Kjøretids Avhengigheter</bridgehead>
+    <bridgehead renderas="sect4">KjÃ¸retids Avhengigheter</bridgehead>
     <para role="optional">
       <xref role="runtime" linkend="bluez"/>
     </para>
@@ -101,9 +112,18 @@
   <sect2 role="installation">
     <title>Installasjon av GNOME Bluetooth</title>
 
+<!--
     <para>
-      Installer <application>GNOME Bluetooth</application> ved å kjøre
-      følgende kommandoer:
+      Hvis du kjÃ¸rer testpakken, bruk en oppdatering for Ã¥ fikse testtidsavbrudd
+      med python-dbusmock 0.30.0 eller nyere:
+    </para>
+
+    <screen><userinput>patch -Np1 -i ../gnome-bluetooth-&gnome-bluetooth-version;-testsuite_fix-1.patch</userinput></screen>
+-->
+
+    <para>
+      Installer <application>GNOME Bluetooth</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -113,11 +133,11 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -165,7 +185,7 @@ ninja</userinput></screen>
         <term><command>bluetooth-sendto</command></term>
         <listitem>
           <para>
-            er en <application>GTK+</application> applikasjon for å overføre
+            er en <application>GTK+</application> applikasjon for Ã¥ overfÃ¸re
             filer over Bluetooth
           </para>
           <indexterm zone="gnome-bluetooth bluetooth-sendto">
