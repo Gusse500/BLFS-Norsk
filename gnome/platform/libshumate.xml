@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libshumate-download-http "&gnome-download-http;/libshumate/1.0/libshumate-&libshumate-version;.tar.xz">
-  <!ENTITY libshumate-download-ftp  "&gnome-download-ftp;/libshumate/1.0/libshumate-&libshumate-version;.tar.xz">
-  <!ENTITY libshumate-md5sum        "2e30b5dae91ee473d47a3a0be54d4fd9">
-  <!ENTITY libshumate-size          "112 KB">
-  <!ENTITY libshumate-buildsize     "4.1 MB">
-  <!ENTITY libshumate-time          "0.1 SBU">
+  <!ENTITY libshumate-download-http "&gnome-download-http;/libshumate/1.1/libshumate-&libshumate-version;.tar.xz">
+  <!ENTITY libshumate-download-ftp  " ">
+  <!ENTITY libshumate-md5sum        "64c9ec76c3b1b073aa4130c081eabbba">
+  <!ENTITY libshumate-size          "296 KB">
+  <!ENTITY libshumate-buildsize     "5.4 MB">
+  <!ENTITY libshumate-time          "0.2 SBU">
 ]>
 
 <sect1 id="libshumate" xreflabel="libshumate-&libshumate-version;">
@@ -26,10 +26,10 @@
 
     <para>
       <application>libshumate</application> pakken inneholder et GTK-4 skjermelement
-      for å vise kart.
+      for Ã¥ vise kart.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -50,7 +50,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libshumate-size;
+          NedlastingsstÃ¸rrelse: &libshumate-size;
         </para>
       </listitem>
       <listitem>
@@ -67,7 +67,7 @@
 
     <bridgehead renderas="sect3">libshumate Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="gtk4"/> og
       <xref linkend="libsoup3"/>
@@ -75,13 +75,13 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend='gobject-introspection'/> (påkrevd for gnome-maps)
+      <xref linkend='gobject-introspection'/> (pÃ¥krevd for gnome-maps)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gi-docgen"/>
-      <!-- and <xref linkend="gtk-doc"/> check but never used -->
+      <xref linkend="gi-docgen"/> og
+      <ulink url="&sysprof-url;">sysprof</ulink>
     </para>
 
   </sect2>
@@ -90,34 +90,37 @@
     <title>Installasjon av libshumate</title>
 
     <para>
-      Installer <application>libshumate</application> ved å kjøre følgende
+      Installer <application>libshumate</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr       \
-            --buildtype=release \
-            -Dgtk_doc=false     \
+meson setup --prefix=/usr          \
+            --buildtype=release    \
+            --wrap-mode=nodownload \
+            -Dgtk_doc=false        \
             ..                  &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
       API dokumentasjonen for denne pakken, utsted:
     </para>
 
-<screen remap='doc'><userinput>sed 's/lib_version/version/' -i ../docs/meson.build &amp;&amp;
-meson configure -Dgtk_doc=true                      &amp;&amp;
+<screen remap='doc'><userinput>sed -e 's/lib_version/version/' \
+    -e '/fatal-warnings/d'      \
+    -i ../docs/meson.build      &amp;&amp;
+meson configure -Dgtk_doc=true  &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -128,6 +131,9 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-wrap-nodownload.xml"/>
   </sect2>
 
   <sect2 role="content">
@@ -161,7 +167,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libshumate-1.0.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som gir et GTK-4 skjermelement for å vise kart
+            inneholder funksjoner som gir et GTK-4 skjermelement for Ã¥ vise kart
           </para>
           <indexterm zone="libshumate libshumate-1.0">
             <primary sortas="c-libshumate-1.0">libshumate-1.0.so</primary>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,12 +6,11 @@
 
   <!ENTITY libgweather-download-http
            "&gnome-download-http;/libgweather/&libgweather-minor;/libgweather-&libgweather-version;.tar.xz">
-  <!ENTITY libgweather-download-ftp
-           "&gnome-download-ftp;/libgweather/&libgweather-minor;/libgweather-&libgweather-version;.tar.xz">
-  <!ENTITY libgweather-md5sum        "4c0c46102dcb5e813ff698e5f713e4bb">
-  <!ENTITY libgweather-size          "2.6 MB">
-  <!ENTITY libgweather-buildsize     "95 MB (med tester)">
-  <!ENTITY libgweather-time          "0.2 SBU (med tester)">
+  <!ENTITY libgweather-download-ftp  " ">
+  <!ENTITY libgweather-md5sum        "bba9065a75a7482be21d0427a12233c0">
+  <!ENTITY libgweather-size          "2.7 MB">
+  <!ENTITY libgweather-buildsize     "96 MB (med tester)">
+  <!ENTITY libgweather-time          "0.3 SBU (med tester)">
 ]>
 
 <sect1 id="libgweather" xreflabel="libgweather-&libgweather-version;">
@@ -29,11 +28,11 @@
 
     <para>
       <application>libgweather</application> pakken er et bibliotek som brukes
-      for å få tilgang til værinformasjon fra netttjenester for mange
+      for Ã¥ fÃ¥ tilgang til vÃ¦rinformasjon fra netttjenester for mange
       steder.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libgweather-size;
+          NedlastingsstÃ¸rrelse: &libgweather-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +70,7 @@
 
     <bridgehead renderas="sect3">libgweather Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="geocode-glib"/>,
       <xref linkend="gtk3"/>,
@@ -88,12 +87,14 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gi-docgen"/> (gi-docgen leveres også som meson
+      <xref linkend="gi-docgen"/> (gi-docgen leveres ogsÃ¥ som meson
       delprosjekt, som vil bli brukt hvis <option>-Dgtk_doc=false</option>
-      ikke er overført til <command>meson</command>),
+      ikke er overfÃ¸rt til <command>meson</command>),
       <xref linkend="llvm"/> (for clang-format), og
       <ulink url="https://pypi.org/project/pylint/">pylint</ulink>
     </para>
+
+    &test-use-internet;
 
   </sect2>
 
@@ -101,7 +102,7 @@
     <title>Installasjon av libgweather</title>
 
     <para>
-      Installer <application>libgweather</application> ved å kjøre følgende
+      Installer <application>libgweather</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -115,8 +116,8 @@ meson setup --prefix=/usr       \
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
-      API dokumentasjonen for denne pakken, kjør:
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
+      API dokumentasjonen for denne pakken, kjÃ¸r:
     </para>
 
 <screen role='nodump'><userinput>sed "s/libgweather_full_version/'libgweather-&libgweather-version;'/" \
@@ -125,19 +126,28 @@ meson configure -Dgtk_doc=true                        &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      En test trenger at lokalitetsfilene er installert på systemet, så
-      det er bedre å kjøre testene etter at du har installert pakken.
+      En test trenger at lokalitetsfilene er installert pÃ¥ systemet, sÃ¥
+      det er bedre Ã¥ kjÃ¸re testene etter at du har installert pakken.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>LC_ALL=C ninja test</command>. En
-      test, metar, er kjent for å mislykkes.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>LC_ALL=C ninja test</command>. En
+      test, <filename>style / style-format</filename>, er kjent for Ã¥ mislykkes pga
+      forskjeller mellom LLVM-16 og LLVM-17s versjonen av clang-format.
+      <!--
+        https://gitlab.gnome.org/GNOME/libgweather/-/commit/3c60094ffdc5
+        It's not a simple URL change, so just document it instead of
+	patching the test suite...
+      -->
+      En test navngitt <filename>libgweather / metar</filename> er kjent for
+      mislykkes fordi det krever noen nettressurser som har blitt flyttet
+      borte.
     </para>
 
   </sect2>
@@ -187,7 +197,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libgweather-4.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som gjør det mulig å hente ut vær
+            inneholder funksjoner som gjÃ¸r det mulig Ã¥ hente ut vÃ¦r
             informasjon
           </para>
           <indexterm zone="libgweather libgweather-4">
