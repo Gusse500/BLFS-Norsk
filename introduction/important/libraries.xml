@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -21,16 +21,16 @@
 
     <para>
       De originale bibliotekene var rett og slett et arkiv av rutiner som
-      de nødvendige rutinene ble trukket ut fra og koblet inn i det kjørbare
-      programmet. Disse beskrives som statiske biblioteker, med navn på formen
-      <filename>libfoo.a</filename> på UNIX lignende operativsystemer.
-      På noen gamle operativsystemer er de den eneste tilgjengelige typen.
+      de nÃ¸dvendige rutinene ble trukket ut fra og koblet inn i det kjÃ¸rbare
+      programmet. Disse beskrives som statiske biblioteker, med navn pÃ¥ formen
+      <filename>libfoo.a</filename> pÃ¥ UNIX lignende operativsystemer.
+      PÃ¥ noen gamle operativsystemer er de den eneste tilgjengelige typen.
     </para>
 
     <para>
-      På nesten alle Linux plattformer er det også <quote>delte</quote>
+      PÃ¥ nesten alle Linux plattformer er det ogsÃ¥ <quote>delte</quote>
       (eller tilsvarende <quote>dynamiske</quote>)
-      biblioteker (med navn på formen <filename>libfoo.so</filename>) &ndash;
+      biblioteker (med navn pÃ¥ formen <filename>libfoo.so</filename>) &ndash;
       en kopi av biblioteket lastes inn i det virtuelle minnet, og deles av
       alle programmene som kaller noen av funksjonene. Dette er plass
       effektiv.
@@ -41,42 +41,42 @@
       statisk slik at en form for minimalt gjenopprettingssystem til og med ville eksistere
       hvis delte biblioteker, som f.eks <filename>libc.so</filename>, ble
       skadet (f.eks. flyttet til <filename class="directory">lost+found</filename>
-      av <command>fsck</command> etter en uren nedstengning). Nå for tiden,
+      av <command>fsck</command> etter en uren nedstengning). NÃ¥ for tiden,
       de fleste bruker en alternativ systeminstallasjon eller en USB pinne hvis de
-      må gjenopprette. Journalføring av filsystemer reduserer også sannsynligheten for
+      mÃ¥ gjenopprette. JournalfÃ¸ring av filsystemer reduserer ogsÃ¥ sannsynligheten for
       denne typen problem.
     </para>
 
 <!-- really?
     <para>
-      Utviklere, i det minste mens de utvikler, foretrekker ofte å bruke
+      Utviklere, i det minste mens de utvikler, foretrekker ofte Ã¥ bruke
       statiske versjoner av bibliotekene som koden deres lenker til.
     </para>
 -->
     <para>
       Inne i boken er det forskjellige steder hvor konfigureringsbrytere
       som for eksempel <parameter>--disable-static</parameter> er brukt, og
-      andre steder hvor muligheten for å bruke systemversjoner av
+      andre steder hvor muligheten for Ã¥ bruke systemversjoner av
       biblioteker i stedet for versjonene som er inkludert i en annen pakke
-      er diskutert. Hovedgrunnen til dette er å forenkle oppdateringer av biblioteker.
+      er diskutert. Hovedgrunnen til dette er Ã¥ forenkle oppdateringer av biblioteker.
     </para>
 
     <para>
       Hvis en pakke er koblet til et dynamisk bibliotek, oppdatering til et nyere
-      bibliotekversjon er automatisk når det nyere biblioteket er installert og
-      programmet (på nytt) startes (forutsatt at bibliotekets hovedversjon er uendret,
-      f.eks. går fra <filename>libfoo.so.2.0</filename> til
-      <filename>libfoo.so.2.1</filename>. Gå til
+      bibliotekversjon er automatisk nÃ¥r det nyere biblioteket er installert og
+      programmet (pÃ¥ nytt) startes (forutsatt at bibliotekets hovedversjon er uendret,
+      f.eks. gÃ¥r fra <filename>libfoo.so.2.0</filename> til
+      <filename>libfoo.so.2.1</filename>. GÃ¥ til
       <filename>libfoo.so.3</filename> vil kreve rekompilering &ndash;
-      <command>ldd</command> kan brukes til å finne hvilke programmer som bruker den gamle
+      <command>ldd</command> kan brukes til Ã¥ finne hvilke programmer som bruker den gamle
       versjonen). Hvis et program er knyttet til et statisk
-      biblioteket, må programmet alltid kompileres på nytt. Hvis du vet hvilke
+      biblioteket, mÃ¥ programmet alltid kompileres pÃ¥ nytt. Hvis du vet hvilke
       programmer som er knyttet til et bestemt statisk bibliotek, er dette bare en
       irritasjon. Men vanligvis vil du <emphasis>ikke</emphasis> vite hvilke
-      programmer å rekompilere.
+      programmer Ã¥ rekompilere.
     </para>
 <!-- obsolete with /usr merge
-    <para>De fleste biblioteker er felles, men hvis du gjør noe uvanlig, som f.eks
+    <para>De fleste biblioteker er felles, men hvis du gjÃ¸r noe uvanlig, som f.eks
     flytte et delt bibliotek til <filename class="directory">/lib</filename>
     ved et uhell bryter <literal>.so</literal> symbollinken i
     <filename class="directory">/usr/lib</filename> mens du beholder det statiske
@@ -84,57 +84,57 @@
     vil stille kobles inn i programmene som trenger det.</para>
 -->
     <para>
-      En måte å identifisere når et statisk bibliotek brukes, er å håndtere
-      det på slutten av installasjonen av hver pakke. Skriv et skript
-      for å finne alle de statiske bibliotekene i <filename
+      En mÃ¥te Ã¥ identifisere nÃ¥r et statisk bibliotek brukes, er Ã¥ hÃ¥ndtere
+      det pÃ¥ slutten av installasjonen av hver pakke. Skriv et skript
+      for Ã¥ finne alle de statiske bibliotekene i <filename
         class="directory">/usr/lib</filename> eller hvor enn du installerer
       til, og enten flytte dem til en annen mappe slik at de er ikke
       lenger blir funnet av linkeren, eller gi dem nytt navn slik at
       <filename>libfoo.a</filename> blir
       f.eks. <filename>libfoo.a.hidden</filename>. Det statiske biblioteket kan da
-      midlertidig gjenopprettes hvis det noen gang er nødvendig, og pakken som trenger
-      det kan identifiseres. Dette bør ikke gjøres blindt siden mange
+      midlertidig gjenopprettes hvis det noen gang er nÃ¸dvendig, og pakken som trenger
+      det kan identifiseres. Dette bÃ¸r ikke gjÃ¸res blindt siden mange
       biblioteker eksisterer bare i en statisk versjon. For eksempel noen biblioteker
       fra <application>glibc</application> og
-      <application>gcc</application> pakkene skal alltid være
-      presentert på systemet som (<filename>libc_nonshared.a, libg.a,
+      <application>gcc</application> pakkene skal alltid vÃ¦re
+      presentert pÃ¥ systemet som (<filename>libc_nonshared.a, libg.a,
         libpthread_nonshared.a, libssp_nonshared.a, libsupc++.a</filename>
       fra glibc-2.36 og gcc-12.2).
     </para>
 
 <!-- versions hardcoded in this para, it's a comment on those versions  -->
-    <para>Hvis du bruker denne tilnærmingen, kan du oppdage at flere pakker enn
+    <para>Hvis du bruker denne tilnÃ¦rmingen, kan du oppdage at flere pakker enn
     du ventet bruker et statisk bibliotek. Det var tilfellet med
     <application>nettle-2.4</application> i standard kun statisk
-    konfigurasjon: Det ble påkrevd av <application>GnuTLS-3.0.19</application>,
-    men også koblet til pakke(r) som bruker
+    konfigurasjon: Det ble pÃ¥krevd av <application>GnuTLS-3.0.19</application>,
+    men ogsÃ¥ koblet til pakke(r) som bruker
     <application>GnuTLS</application>, som for eksempel
     <application>glib-networking-2.32.3</application>.</para>
 
     <para>Mange pakker legger noen av sine vanlige funksjoner inn i et statisk
     bibliotek som bare brukes av programmene i pakken og,
-    avgjørende, biblioteket er <emphasis>ikke</emphasis> installert som en
-    frittstående bibliotek. Disse interne bibliotekene er ikke et problem &ndash; hvis
-    pakken må bygges om for å fikse en feil eller sårbarhet, ingenting annet
+    avgjÃ¸rende, biblioteket er <emphasis>ikke</emphasis> installert som en
+    frittstÃ¥ende bibliotek. Disse interne bibliotekene er ikke et problem &ndash; hvis
+    pakken mÃ¥ bygges om for Ã¥ fikse en feil eller sÃ¥rbarhet, ingenting annet
     er knyttet til dem.</para>
 
-    <para>Når BLFS nevner systembiblioteker, betyr det delte versjoner av
+    <para>NÃ¥r BLFS nevner systembiblioteker, betyr det delte versjoner av
     biblioteker. Noen pakker som f.eks <xref linkend="firefox"/> og
     <xref linkend="gs"/> samler mange andre biblioteker i byggetreet deres.
     Versjonen de sender er ofte eldre enn versjonen som brukes i systemet,
-    så det kan inneholde feil &ndash; noen ganger tar utviklere bryet med
-    å fikse feil i de inkluderte bibliotekene, andre ganger gjør de det ikke.</para>
+    sÃ¥ det kan inneholde feil &ndash; noen ganger tar utviklere bryet med
+    Ã¥ fikse feil i de inkluderte bibliotekene, andre ganger gjÃ¸r de det ikke.</para>
 
-    <para>Noen ganger er det en enkel avgjørelse å bestemme seg for å bruke systembiblioteker.
+    <para>Noen ganger er det en enkel avgjÃ¸relse Ã¥ bestemme seg for Ã¥ bruke systembiblioteker.
     Andre ganger kan det kreve at du endrer systemversjonen (f.eks
     <xref linkend="libpng"/> hvis det brukes til <xref linkend="firefox"/>).
     Noen ganger sender en pakke et gammelt bibliotek og kan ikke lenger koble til
     gjeldende versjon, men kan lenke til en eldre versjon. I dette tilfellet, BLFS
     vil vanligvis bare bruke den leverte versjonen. Noen ganger det er det inkluderte
-    biblioteket ikke lenger utviklet separat, eller oppstrøms er nå det samme som
-    pakkens oppstrøms og du har ingen andre pakker som vil bruke den.
-    I slike tilfeller vil du bli ledet til å bruke det inkluderte biblioteket selv om
-    du vanligvis foretrekker å bruke systembiblioteker.</para>
+    biblioteket ikke lenger utviklet separat, eller oppstrÃ¸ms er nÃ¥ det samme som
+    pakkens oppstrÃ¸ms og du har ingen andre pakker som vil bruke den.
+    I slike tilfeller vil du bli ledet til Ã¥ bruke det inkluderte biblioteket selv om
+    du vanligvis foretrekker Ã¥ bruke systembiblioteker.</para>
 
   </sect2>
 

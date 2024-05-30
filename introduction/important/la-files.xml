@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -21,31 +21,31 @@
 
     <para>
 
-      I LFS og BLFS bruker mange pakker en internt sendt kopi av libtool for å
-      bygge på en rekke Unix plattformer. Dette inkluderer plattformer som f.eks
+      I LFS og BLFS bruker mange pakker en internt sendt kopi av libtool for Ã¥
+      bygge pÃ¥ en rekke Unix plattformer. Dette inkluderer plattformer som f.eks
       AIX, Solaris, IRIX, HP-UX og Cygwin samt Linux. Opprinnelsen til
-      dette verktøyet er ganske utdatert. Det var ment å administrere biblioteker på
+      dette verktÃ¸yet er ganske utdatert. Det var ment Ã¥ administrere biblioteker pÃ¥
       systemer med mindre avanserte funksjoner enn et moderne Linux system.
 
     </para>
 
     <para>
 
-      På et Linux system er libtool spesifikke filer generelt unødvendige.
+      PÃ¥ et Linux system er libtool spesifikke filer generelt unÃ¸dvendige.
       Normalt spesifiseres biblioteker i byggeprosessen under koblingsfasen.
       Siden et linux basert system bruker <ulink
       url="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format">
-      Executable and Linkable Format (ELF)</ulink> for kjørbare filer og
-      dynamiske biblioteker, er informasjon som trengs for å fullføre oppgaven innebygd
-      i filene. Både linkeren og programlasteren kan spørre om
-      passende filer og koble eller kjøre programmet på riktig måte.
+      Executable and Linkable Format (ELF)</ulink> for kjÃ¸rbare filer og
+      dynamiske biblioteker, er informasjon som trengs for Ã¥ fullfÃ¸re oppgaven innebygd
+      i filene. BÃ¥de linkeren og programlasteren kan spÃ¸rre om
+      passende filer og koble eller kjÃ¸re programmet pÃ¥ riktig mÃ¥te.
 
     </para>
 
     <para>
       Statiske biblioteker brukes sjelden i LFS og BLFS. Og i dag lagrer de fleste
-      pakker informasjonen som trengs for å koble til et statisk
-      biblioteket til en .pc fil, i stedet for å stole på libtool.
+      pakker informasjonen som trengs for Ã¥ koble til et statisk
+      biblioteket til en .pc fil, i stedet for Ã¥ stole pÃ¥ libtool.
       <command>pkg-config --static --libs</command> kommandoen sender ut
       de tilstrekkelige flaggene til at linkeren kan kobles mot et statisk bibliotek
       uten libtool-magi.
@@ -53,35 +53,35 @@
 
     <para>
       Problemet er at libtool vanligvis lager en eller flere tekstfiler for
-      pakkebiblioteker kalt libtool arkiver. Disse små filene har en
-      ".la" filtype og inneholder informasjon som ligner på den innebygde
-      i bibliotekene eller pkg-config-filene. Når du bygger en pakke som
+      pakkebiblioteker kalt libtool arkiver. Disse smÃ¥ filene har en
+      ".la" filtype og inneholder informasjon som ligner pÃ¥ den innebygde
+      i bibliotekene eller pkg-config-filene. NÃ¥r du bygger en pakke som
       bruker libtool, ser prosessen automatisk etter disse filene.
       Noen ganger kan en .la fil inneholde navnet eller banen til et statisk bibliotek
       som brukes under bygging, men ikke er installert, da vil byggeprosessen bryte
-      fordi .la filen refererer til noe som ikke eksisterer på systemet.
-      På samme måte, hvis en pakke er oppdatert og ikke lenger bruker .la-filen,
+      fordi .la filen refererer til noe som ikke eksisterer pÃ¥ systemet.
+      PÃ¥ samme mÃ¥te, hvis en pakke er oppdatert og ikke lenger bruker .la-filen,
       da kan byggeprosessen bryte med de gamle .la-filene.
     </para>
 
     <para>
 
-       Løsningen er å fjerne .la filene. Men det er en hake.
+       LÃ¸sningen er Ã¥ fjerne .la filene. Men det er en hake.
        Noen pakker, som f.eks <xref linkend='imagemagick'/>, bruk en libtool
-       funksjon, lt_dlopen, for å laste biblioteker etter behov under kjøring og
-       løse deres avhengigheter under kjøring. I dette tilfellet bør .la filene
-       bli værende.
+       funksjon, lt_dlopen, for Ã¥ laste biblioteker etter behov under kjÃ¸ring og
+       lÃ¸se deres avhengigheter under kjÃ¸ring. I dette tilfellet bÃ¸r .la filene
+       bli vÃ¦rende.
 
     </para>
 
     <para>
 
-        Skriptet nedenfor fjerner alle unødvendige .la filer og lagrer dem i en
+        Skriptet nedenfor fjerner alle unÃ¸dvendige .la filer og lagrer dem i en
         katalog, /var/local/la-files som standard, ikke i den vanlige bibliotek
-        stien. Den søker også i alle pkg-config filer (.pc) etter innebygde
-        referanser til .la filer og fikser dem til å være konvensjonelle bibliotek
-        referanser som trengs når en applikasjon eller et bibliotek bygges. Den
-        kan kjøres etter behov for å rydde opp i katalogene som kan være årsaken
+        stien. Den sÃ¸ker ogsÃ¥ i alle pkg-config filer (.pc) etter innebygde
+        referanser til .la filer og fikser dem til Ã¥ vÃ¦re konvensjonelle bibliotek
+        referanser som trengs nÃ¥r en applikasjon eller et bibliotek bygges. Den
+        kan kjÃ¸res etter behov for Ã¥ rydde opp i katalogene som kan vÃ¦re Ã¥rsaken
         til problemer.
 
     </para>
