@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY nautilus-download-http
-           "&gnome-download-http;/nautilus/&gnome-44;/nautilus-&nautilus-version;.tar.xz">
-  <!ENTITY nautilus-download-ftp
-           "&gnome-download-ftp;/nautilus/&gnome-44;/nautilus-&nautilus-version;.tar.xz">
-  <!ENTITY nautilus-md5sum        "aa72cb40ee0ac4555b9e8babf74ced57">
+           "&gnome-download-http;/nautilus/&gnome-45;/nautilus-&nautilus-version;.tar.xz">
+  <!ENTITY nautilus-download-ftp  " ">
+  <!ENTITY nautilus-md5sum        "88aadc5165a20442e63afc97348f5586">
   <!ENTITY nautilus-size          "3.1 MB">
-  <!ENTITY nautilus-buildsize     "110 MB (med tester)">
-  <!ENTITY nautilus-time          "0.7 SBU (med tester, begge ved bruk av parallellitet=4)">
+  <!ENTITY nautilus-buildsize     "80 MB (med tester)">
+  <!ENTITY nautilus-time          "1.0 SBU (med tester, begge ved bruk av parallellitet=4)">
 ]>
 
 <sect1 id="nautilus" xreflabel="Nautilus-&nautilus-version;">
@@ -32,7 +31,7 @@
       <application>GNOME</application> filbehandler.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &nautilus-size;
+          NedlastingsstÃ¸rrelse: &nautilus-size;
         </para>
       </listitem>
       <listitem>
@@ -70,14 +69,13 @@
 
     <bridgehead renderas="sect3">Nautilus Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="bubblewrap"/>,
       <xref linkend="gexiv2"/>,
       <xref linkend="gnome-autoar"/>,
       <xref linkend="gnome-desktop"/>,
       <xref linkend="libadwaita1"/>,
-      <xref linkend="libcloudproviders"/>,
       <xref linkend="libnotify"/>,
       <xref linkend="libportal"/>,
       <xref linkend="libseccomp"/>, og
@@ -89,7 +87,8 @@
       <xref linkend="desktop-file-utils"/>,
       <xref linkend="exempi"/>,
       <xref linkend="gobject-introspection"/>,
-      <xref linkend="gst10-plugins-base"/>, og
+      <xref linkend="gst10-plugins-base"/>,
+      <xref linkend="libcloudproviders"/>, og
       <xref linkend="libexif"/>
     </para>
 
@@ -98,7 +97,7 @@
       <xref linkend="gi-docgen"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt (Kjøretid)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (KjÃ¸retid)</bridgehead>
     <para role="recommended">
       <xref role="runtime" linkend="adwaita-icon-theme"/> og
       <xref role="runtime" linkend="gvfs"/> (For hotplugging og enhets
@@ -111,7 +110,7 @@
     <title>Installasjon av Nautilus</title>
 
     <para>
-      Fiks plasseringen for å installere API dokumentasjonen:
+      Fiks plasseringen for Ã¥ installere API dokumentasjonen:
     </para>
 
 <screen><userinput>sed "/docdir =/s@\$@ / 'nautilus-&nautilus-version;'@" -i meson.build</userinput></screen>
@@ -126,7 +125,7 @@
 -->
 
     <para>
-      Installer <application>Nautilus</application> ved å kjøre følgende
+      Installer <application>Nautilus</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -142,14 +141,14 @@ meson setup --prefix=/usr       \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>. Testene
-      må kjøres i et grafisk miljø. En test er kjent for å mislykkes
-      hvis <xref linkend='tracker3-miners'/> ikke er installert. En test er også
-      kjent for tidsavbrudd hvis brukeren som kjører testene har en stor hjemmemappe.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>. Testene
+      mÃ¥ kjÃ¸res i et grafisk miljÃ¸. En test er kjent for Ã¥ mislykkes
+      hvis <xref linkend='tracker3-miners'/> ikke er installert. En test er ogsÃ¥
+      kjent for tidsavbrudd hvis brukeren som kjÃ¸rer testene har en stor hjemmemappe.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -167,7 +166,7 @@ ninja</userinput></screen>
 
     <para>
       <parameter>-Dselinux=false</parameter>: Denne bryteren deaktiverer bruken
-      av selinux som ikke støttes av BLFS.
+      av selinux som ikke stÃ¸ttes av BLFS.
     </para>
 
     <para>
@@ -175,12 +174,10 @@ ninja</userinput></screen>
       av PackageKit som ikke er egnet for BLFS.
     </para>
 
-<!-- Now explicitly required in 43.1
     <para>
-      <option>-Dlibportal=false</option>: Bruk denne bryteren hvis du ikke
-      har <xref linkend="libportal"/> installert.
+      <option>-Dcloudproviders=false</option>: Bruk denne bryteren hvis du ikke
+      har <xref linkend="libcloudproviders"/> installert.
     </para>
--->
 
   </sect2>
 

@@ -1,17 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-<!--  <!ENTITY vte-download-http "&gnome-download-http;/vte/&vte-minor;/vte-&vte-version;.tar.xz">-->
-<!--  <!ENTITY vte-download-ftp "&gnome-download-ftp;/vte/&vte-minor;/vte-&vte-version;.tar.xz">-->
   <!ENTITY vte-download-http "https://gitlab.gnome.org/GNOME/vte/-/archive/&vte-version;/vte-&vte-version;.tar.gz">
   <!ENTITY vte-download-ftp  " ">
-  <!ENTITY vte-md5sum        "1954cae9b70ce35bdf1f383b4ddc7d32">
+  <!ENTITY vte-md5sum        "a89aabe85ebb62331098d669c0e3d469">
   <!ENTITY vte-size          "620 KB">
-  <!ENTITY vte-buildsize     "16 MB (med tester)">
-  <!ENTITY vte-time          "0.3 SBU (bruke parallellisme=4; med tester)">
+  <!ENTITY vte-buildsize     "15 MB (med tester)">
+  <!ENTITY vte-time          "0.5 SBU (bruke parallellisme=4; med tester)">
 
   <!-- For "Contents" and "Short Descriptions" sections -->
   <!ENTITY vte-nano          "91">
@@ -35,7 +33,7 @@
       filimplementering for terminalemulatorer.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &vte-size;
+          NedlastingsstÃ¸rrelse: &vte-size;
         </para>
       </listitem>
       <listitem>
@@ -73,7 +71,7 @@
 
     <bridgehead renderas="sect3">VTE Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="gtk3"/>,
       <xref linkend="libxml2"/>, og
@@ -84,15 +82,14 @@
     <para role="recommended">
       <xref linkend="icu"/>,
       <xref linkend="gnutls"/>,
-      <xref linkend="gobject-introspection"/>, og
+      <xref linkend="gobject-introspection"/>,
+      <xref linkend="gtk4"/>, og
       <xref linkend="vala"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="fribidi"/>,
-      <xref linkend="gi-docgen"/>, og
-      <xref linkend="gtk4"/>
+      <xref linkend="gi-docgen"/>
     </para>
 
   </sect2>
@@ -101,14 +98,14 @@
     <title>Installasjon av VTE</title>
 
     <para>
-      Installer <application>VTE</application> ved å kjøre følgende
+      Installer <application>VTE</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr --buildtype=release -Dfribidi=false .. &amp;&amp;
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
@@ -116,31 +113,26 @@ cd    build &amp;&amp;
 
 meson setup --prefix=/usr       \
             --buildtype=release \
-            -Dfribidi=false     \
             -D_systemd=false    &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
-      API dokumentasjonen for denne pakken, kjør:
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
+      API dokumentasjonen for denne pakken, kjÃ¸r:
     </para>
 
-    <!-- To editors: you may wonder why this change makes a
-         /usr/share/doc/vte-&vte-version; with only one subdirectory
-         "vte-2.91" inside.  The reason is when -Dgtk4 is enabled,
-         another directory "vte-2.91-gtk4" will also be there.  -->
 <screen role='nodump'><userinput>sed -e "/docdir =/s@\$@/ 'vte-&vte-version;'@" \
-    -e "/fatal-warnings/d"              \
+    -e "/--fatal-warnings/d"            \
     -i ../doc/reference/meson.build     &amp;&amp;
 meson configure -Ddocs=true             &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør <command>ninja test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install &amp;&amp;
@@ -156,27 +148,24 @@ rm -v /etc/profile.d/vte.*</userinput></screen>
 
     <para>
       <command>rm -v /etc/profile.d/vte.*</command>: Denne kommandoen fjerner to
-      filer installert i /etc/profile.d som ikke har noen bruk på et LFS system.
-    </para>
-
-    <para>
-      <parameter>-Dfribidi=false</parameter>: Utelat denne bryteren hvis du vil
-      aktivere toveisfunksjoner.
+      filer installert i /etc/profile.d som ikke har noen bruk pÃ¥ et LFS system.
     </para>
 
     <para>
       <option>-Dgnutls=false</option>: Legg til denne bryteren hvis du ikke
-      ønsker å aktivere GnuTLS støtte.
+      Ã¸nsker Ã¥ aktivere GnuTLS stÃ¸tte.
     </para>
 
     <para>
       <option>-Dvapi=false</option>: Legg til denne bryteren hvis du ikke
-      ønsker å aktivere vala bindinger.
+      Ã¸nsker Ã¥ aktivere vala bindinger.
     </para>
 
     <para>
-      <option>-Dgtk4=true</option>: Legg til denne bryteren for å bygge GTK4 skjermelementet.
+      <option>-Dgtk4=false</option>: Legg til denne bryteren hvis du ikke vil
+      bygge GTK-4 versjonen av VTE.
     </para>
+
   </sect2>
 
   <sect2 role="content">
@@ -196,13 +185,16 @@ rm -v /etc/profile.d/vte.*</userinput></screen>
 -->
       <seglistitem>
         <seg>
-          vte-2.&vte-nano;
+          vte-2.&vte-nano; og
+          vte-2.&vte-nano;-gtk4
         </seg>
         <seg>
-          libvte-2.&vte-nano;.so
+          libvte-2.&vte-nano;.so og
+          libvte-2.&vte-nano;-gtk4.so
         </seg>
         <seg>
-          /usr/include/vte-2.&vte-nano; og
+         /usr/include/vte-2.&vte-nano;,
+          /usr/include/vte-2.&vte-nano;-gtk4, og
           (optional) /usr/share/doc/vte-&vte-version;
         </seg>
       </seglistitem>
@@ -226,6 +218,19 @@ rm -v /etc/profile.d/vte.*</userinput></screen>
         </listitem>
       </varlistentry>
 
+      <varlistentry id="vte291-gtk4">
+        <term><command>vte-2.&vte-nano;-gtk4</command></term>
+        <listitem>
+          <para>
+            er en testapplikasjon for GTK-4 versjonen av
+            <application>VTE</application> bibliotekene
+          </para>
+          <indexterm zone="vte vte291-gtk4">
+            <primary sortas="b-vte2-&vte-nano;-gtk4">vte-2.&vte-nano;-gtk4</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
       <varlistentry id="libvte291">
         <term><filename class="libraryfile">libvte-2.&vte-nano;.so</filename></term>
         <listitem>
@@ -235,6 +240,19 @@ rm -v /etc/profile.d/vte.*</userinput></screen>
           </para>
           <indexterm zone="vte libvte291">
             <primary sortas="c-libvte2-&vte-nano;">libvte-2.&vte-nano;.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libvte291-gtk4">
+        <term><filename class="libraryfile">libvte-2.&vte-nano;-gtk4.so</filename></term>
+        <listitem>
+          <para>
+            er et bibliotek som implementerer en terminalemulator
+            skjermelement for <application>GTK-4</application>
+          </para>
+          <indexterm zone="vte libvte291-gtk4">
+            <primary sortas="c-libvte2-&vte-nano;-gtk4">libvte-2.&vte-nano;-gtk4.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>

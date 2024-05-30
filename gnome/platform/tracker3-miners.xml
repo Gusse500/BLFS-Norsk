@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY tracker3-miners-download-http "&gnome-download-http;/tracker-miners/3.5/tracker-miners-&tracker3-miners-version;.tar.xz">
-  <!ENTITY tracker3-miners-download-ftp  "&gnome-download-ftp;/tracker-miners/3.5/tracker-miners-&tracker3-miners-version;.tar.xz">
-  <!ENTITY tracker3-miners-md5sum        "307705e0ebb45c733f42489230ab14f2">
+  <!ENTITY tracker3-miners-download-http "&gnome-download-http;/tracker-miners/3.6/tracker-miners-&tracker3-miners-version;.tar.xz">
+  <!ENTITY tracker3-miners-download-ftp  " ">
+  <!ENTITY tracker3-miners-md5sum        "36b1149a9b10ee3db3e3aa6d8a95c5dc">
   <!ENTITY tracker3-miners-size          "7.2 MB">
-  <!ENTITY tracker3-miners-buildsize     "38 MB (med tester)">
-  <!ENTITY tracker3-miners-time          "0.5 SBU (med parallellitet=4; legg til 1.0 SBU for tester, avhengig av diskhastighet)">
+  <!ENTITY tracker3-miners-buildsize     "85 MB (med tester)">
+  <!ENTITY tracker3-miners-time          "0.3 SBU (med parallellitet=4; legg til sÃ¥ mye som 1.0 SBU for tester, avhengig av diskhastighet)">
 ]>
 
 <sect1 id="tracker3-miners" xreflabel="tracker-miners-&tracker3-miners-version;">
@@ -30,7 +30,7 @@
       datauttrekkere for Tracker.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &tracker3-miners-size;
+          NedlastingsstÃ¸rrelse: &tracker3-miners-size;
         </para>
       </listitem>
       <listitem>
@@ -66,9 +66,21 @@
       </listitem>
     </itemizedlist>
 
+<!--
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          NÃ¸dvendig oppdatering:
+          <ulink url="&patch-root;/tracker-miners-&tracker3-miners-version;-upstream_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
+
     <bridgehead renderas="sect3">Tracker-miners Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="gst10-plugins-base"/>,
       <xref linkend="tracker3"/>,
@@ -79,15 +91,15 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="giflib"/>,
-      <xref linkend="gst10-plugins-base"/>,
-      <xref role='runtime' linkend="gst10-plugins-good"/> (kjøretid),
-      <xref role='runtime' linkend="gst10-libav"/> (kjøretid),
+      <xref role='runtime' linkend="gst10-plugins-good"/> (kjÃ¸retid),
+      <xref role='runtime' linkend="gst10-libav"/> (kjÃ¸retid),
       <xref linkend="icu"/>,
       <xref linkend="libexif"/>,
       <xref linkend="libgrss"/>,
       <xref linkend="libgxps"/>,
-      <xref linkend="libseccomp"/>, og
-      <xref linkend="poppler"/>
+      <xref linkend="libseccomp"/>,
+      <xref linkend="poppler"/>, og
+      <xref linkend="upower"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -100,13 +112,10 @@
 	  <xref linkend="NetworkManager"/>,
       <xref linkend="taglib"/>,
       <xref linkend="totem-pl-parser"/>,
-      <xref linkend="upower"/>,
       <ulink url="https://github.com/lipnitsk/libcue">libcue</ulink>,
       <ulink url="https://libiptcdata.sourceforge.net/">libitpcdata</ulink>,
       <ulink url="https://libosinfo.org">libosinfo</ulink>, og
       <ulink url="https://gitlab.gnome.org/GNOME/gupnp">gupnp</ulink>
-      <!--<ulink url="https://pypi.python.org/pypi/tap.py/">tap.py</ulink>
-      (for tests)-->
     </para>
 
   </sect2>
@@ -114,36 +123,43 @@
   <sect2 role="installation">
     <title>Installasjon av Tracker-miners</title>
 
-<!--
-    <para>
-      Først, som <systemitem class="username">root</systemitem> bruker,
-      fjern noen filer fra tracker-2 som vil komme i konflikt med
-      tracker-miners-3:
-    </para>
-
-<screen role="root"><userinput remap="pre">rm -fv /etc/xdg/autostart/tracker-miner-*</userinput></screen>
--->
-
     <note>
       <para>
-        Hvis du planlegger å kjøre testene, er noen tidsavbrudd for korte ved
+        Hvis du planlegger Ã¥ kjÃ¸re testene, er noen tidsavbrudd for korte ved
         bruk av spinnende disker. Det er to steder hvor tidsavbrudd er
-        brukt: for det første har individuelle tester i en gruppe tester en
-        standard tidsavbrudd på 10s. Dette kan endres ved å stille inn miljøvariabelen
-        <envar>TRACKER_TESTS_AWAIT_TIMEOUT</envar> til ønsket
-        verdi når du kjører testene (se nedenfor). For det andre, en global tidsavbrudd
-        for en gruppe tester er fast på konfigurasjonstidspunktet. Standardverdien
+        brukt: for det fÃ¸rste har individuelle tester i en gruppe tester en
+        standard tidsavbrudd pÃ¥ 10s. Dette kan endres ved Ã¥ stille inn miljÃ¸variabelen
+        <envar>TRACKER_TESTS_AWAIT_TIMEOUT</envar> til Ã¸nsket
+        verdi nÃ¥r du kjÃ¸rer testene (se nedenfor). For det andre, en global tidsavbrudd
+        for en gruppe tester er fast pÃ¥ konfigurasjonstidspunktet. Standardverdien
         i <filename class="directory">functional-tests</filename>
         mappen (andre mapper har bare kortvarige tester) kan bli
-        økt med følgende kommando (erstatt 200 med en verdi
+        Ã¸kt med fÃ¸lgende kommando (erstatt 200 med en verdi
         egnet for din maskin):
       </para>
 
 <screen remap="test"><userinput>sed -i s/120/<replaceable>200</replaceable>/ tests/functional-tests/meson.build</userinput></screen>
     </note>
 
+<!-- Applied in 3.6.2
     <para>
-      Installer <application>Tracker-miners</application> ved å kjøre følgende
+      FÃ¸rst mÃ¥ du fikse noen problemer med den nylige tilstrammingen av seccomp
+      sandkassen:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../tracker-miners-&tracker3-miners-version;-upstream_fixes-1.patch</userinput></screen>
+-->
+
+    <para>
+      FÃ¸rst, fiks noen krasjer introdusert av gstreamer-1.22.9:
+      <!-- https://gitlab.gnome.org/GNOME/tracker-miners/-/issues/252 and
+      https://gitlab.gnome.org/GNOME/tracker-miners/-/issues/299 -->
+    </para>
+
+<screen><userinput remap="pre">sed -i '/ALLOW_RULE (shutdown);/a ALLOW_RULE (getsockopt);' src/libtracker-miners-common/tracker-seccomp.c</userinput></screen>
+
+    <para>
+      Installer <application>Tracker-miners</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -167,8 +183,10 @@ meson setup --prefix=/usr                 \
             ..                            &amp;&amp;
 ninja</userinput></screen>
 
+      <!-- Some tests fail in 3.6.1 due to seccomp sandbox changes.
+      See https://github.blog/2023-10-09-coordinated-disclosure-1-click-rce-on-gnome-cve-2023-43641/ -->
     <para>
-      For å teste resultatene, kjør (justere den individuelle testtidsavbruddet til en
+      For Ã¥ teste resultatene, kjÃ¸r (justere den individuelle testtidsavbruddet til en
       verdi som passer for din maskin, se merknaden ovenfor):
     </para>
 
@@ -177,13 +195,13 @@ rm -rf ~/tracker-tests</userinput></screen>
 
     <note>
       <para>
-        Testene lager filer i brukermappen (opptil 24 MB), så
-        de må fjernes etterpå.
+        Testene lager filer i brukermappen (opptil 24 MB), sÃ¥
+        de mÃ¥ fjernes etterpÃ¥.
       </para>
     </note>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -197,20 +215,20 @@ rm -rf ~/tracker-tests</userinput></screen>
 
     <para>
       <parameter>-Dman=false</parameter>: Denne bryteren forhindrer byggeprosessen
-      fra å generere mansider. Utelat denne bryteren hvis du har
-      <xref linkend="asciidoc" role="nodep"/> installert og ønsker å generere og
+      fra Ã¥ generere mansider. Utelat denne bryteren hvis du har
+      <xref linkend="asciidoc" role="nodep"/> installert og Ã¸nsker Ã¥ generere og
       installere mansidene.
     </para>
 
     <para revision="sysv">
       <parameter>-Dsystemd_user_services=false</parameter>: Denne bryteren forhindrer
-      byggeprosessen fra å installere systemd enheter siden de er ubrukelige
-      på SysV systemer.
+      byggeprosessen fra Ã¥ installere systemd enheter siden de er ubrukelige
+      pÃ¥ SysV systemer.
     </para>
 
     <para>
       <option>-Dseccomp=false</option>: Dette alternativet deaktiverer seccomp system
-      anropsfilter. På noen arkitekturer, som i686 og ARM, fungerer funksjonene
+      anropsfilter. PÃ¥ noen arkitekturer, som i686 og ARM, fungerer funksjonene
       som tracker-miners bruker er ikke bevoktet ordentlig, og tracker-miners
       vil bli drept med en SIGSYS som resultat.
     </para>
@@ -218,6 +236,14 @@ rm -rf ~/tracker-tests</userinput></screen>
     <para>
       <option>-Dminer_rss=false</option>: Bruk dette alternativet hvis du ikke har
       installert den anbefalte avhengigheten libgrss.
+    </para>
+
+    <para>
+      <option>-Dbattery_detection=none</option>: Bruk dette alternativet hvis du ikke har
+      installert den anbefalte avhengigheten upower. Ikke bruk dette
+      alternativet hvis systemet ditt har et batteri (bÃ¦rbar batteri eller UPS), eller
+      tracker miners kan kaste bort batteristrÃ¸m og levetid nÃ¥r 
+      A/C strÃ¸mmen er utilgjengelig.
     </para>
 
   </sect2>
