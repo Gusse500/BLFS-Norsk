@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,7 +6,7 @@
 
   <!ENTITY kidletime-download-http "&kf5-download-http;/kidletime-&kf5-version;.tar.xz">
   <!ENTITY kidletime-download-ftp  " ">
-  <!ENTITY kidletime-md5sum        "d8f87c99c0b798f04ac328d7050d2d97">
+  <!ENTITY kidletime-md5sum        "1bf59dbd22248f150f3b9c977af8b51f">
   <!ENTITY kidletime-size          "32 KB">
   <!ENTITY kidletime-buildsize     "3.7 MB">
   <!ENTITY kidletime-time          "0.2 SBU">
@@ -26,20 +26,20 @@
     <title>Introduksjon til kidletime</title>
 
     <para>
-      KIdleTime brukes til å rapportere inaktiv tid for brukere og systemet. Det er
-      nyttig ikke bare for å bestemme gjeldende hviletid for PC-en,
-      men også for å bli varslet om uvirksomme hendelser, for eksempel tilpasset
+      KIdleTime brukes til Ã¥ rapportere inaktiv tid for brukere og systemet. Det er
+      nyttig ikke bare for Ã¥ bestemme gjeldende hviletid for PC-en,
+      men ogsÃ¥ for Ã¥ bli varslet om uvirksomme hendelser, for eksempel tilpasset
       tidsavbrudd eller brukeraktivitet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <important>
       <para>
         Denne pakken er hentet fra KF5 settet med pakker.
         Hvis <xref linkend="kf5-frameworks"/> er bygget, <emphasis
         role="bold">IKKE</emphasis> bygge denne pakken som presentert
-        her også.
+        her ogsÃ¥.
       </para>
     </important>
 
@@ -62,7 +62,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &kidletime-size;
+          NedlastingsstÃ¸rrelse: &kidletime-size;
         </para>
       </listitem>
       <listitem>
@@ -79,7 +79,7 @@
 
     <bridgehead renderas="sect3">kidletime Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="extra-cmake-modules"/>,
       <xref linkend="plasma-wayland-protocols"/>, og
@@ -92,17 +92,19 @@
     <title>Installasjon av kidletime</title>
 
     <para>
-      Installer <application>kidletime</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>kidletime</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir -v build &amp;&amp;
 cd       build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr \
-      -DCMAKE_BUILD_TYPE=Release  \
-      -DBUILD_TESTING=OFF         \
-      -Wno-dev ..                 &amp;&amp;
+cmake -DCMAKE_INSTALL_PREFIX=/usr        \
+      -DCMAKE_INSTALL_LIBEXECDIR=libexec \
+      -DKDE_INSTALL_USE_QT_SYS_PATHS=ON  \
+      -DCMAKE_BUILD_TYPE=Release         \
+      -DBUILD_TESTING=OFF                \
+      -Wno-dev ..                        &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -110,16 +112,28 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som &root; bruker:
+      NÃ¥, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
     <para>
-      Til slutt, fjern noen unødvendige filer som &root; bruker:
+      <parameter>-DCMAKE_INSTALL_LIBEXECDIR=libexec</parameter>: Dette overstyrer
+      standarden i extra-cmake-moduler, som er <filename
+      class="directory">/usr/lib/libexec</filename> og ikke er FHS kompatibel.
     </para>
 
-<screen role="root"><userinput>rm -rf /usr/mkspecs</userinput></screen>
+    <para>
+      <parameter>-DKDE_INSTALL_USE_QT_SYS_PATHS=ON</parameter>: Dette tvinger
+      installasjon av Qt progrmatilegg i samme mappe som <xref linkend="qt5"/>
+      i seg selv. Ellers blir de installert i <filename
+      class="directory">/usr/mkspecs</filename>, som ikke er FHS kompatibel.
+    </para>
 
   </sect2>
 

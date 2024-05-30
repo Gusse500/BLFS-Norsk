@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,7 +6,7 @@
 
   <!ENTITY libkscreen-download-http "http://download.kde.org/stable/plasma/&plasma5-version;/libkscreen-&plasma5-version;.tar.xz">
   <!ENTITY libkscreen-download-ftp  " ">
-  <!ENTITY libkscreen-md5sum        "0f40e7e4ef0675cf06afc828c6056821">
+  <!ENTITY libkscreen-md5sum        "1f491e823bc83df650d04d5d9948da45">
   <!ENTITY libkscreen-size          "116 KB">
   <!ENTITY libkscreen-buildsize     "16 MB">
   <!ENTITY libkscreen-time          "0.2 SBU (bruke parallellisme=4)">
@@ -30,14 +30,14 @@
       KDE Skjermbehandlingsbiblioteket.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <important>
       <para>
         Denne pakken er trukket ut fra plasma settet med pakker.
         Hvis <xref linkend="plasma5-build"/> er bygget, <emphasis
         role="bold">IKKE</emphasis> bygg denne pakken som presentert
-        her også.
+        her ogsÃ¥.
       </para>
     </important>
 
@@ -60,7 +60,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libkscreen-size;
+          NedlastingsstÃ¸rrelse: &libkscreen-size;
         </para>
       </listitem>
       <listitem>
@@ -77,7 +77,7 @@
 
     <bridgehead renderas="sect3">libkscreen Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkred</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥kred</bridgehead>
     <para role="required">
       <xref linkend="lxqt-kconfig"/> og
       <xref linkend="lxqt-kwayland"/>
@@ -89,18 +89,19 @@
     <title>Installasjon av libkscreen</title>
 
     <para>
-      Installer <application>libkscreen</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>libkscreen</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir -v build &amp;&amp;
 cd       build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr \
-      -DCMAKE_BUILD_TYPE=Release  \
-      -DCMAKE_INSTALL_LIBDIR=lib  \
-      -DBUILD_TESTING=OFF         \
-      -Wno-dev ..                 &amp;&amp;
+cmake -DCMAKE_INSTALL_PREFIX=/usr        \
+      -DCMAKE_BUILD_TYPE=Release         \
+      -DCMAKE_INSTALL_LIBEXECDIR=libexec \
+      -DKDE_INSTALL_USE_QT_SYS_PATHS=ON  \
+      -DBUILD_TESTING=OFF                \
+      -Wno-dev ..                        &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -108,17 +109,35 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som &root; bruker:
+      NÃ¥, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
-    <para>
-      Til slutt, fjern noen unødvendige filer som &root; bruker:
+    <para revision="sysv">
+      Deretter fjerner du en systemd enhet som ikke tjener noen hensikt pÃ¥ et SysV system, som
+       &root; bruker:
     </para>
 
-<screen role="root"><userinput>rm -rf /usr/mkspecs &amp;&amp;
-rm -rf /usr/lib/libexec</userinput></screen>
+<screen role="root" revision="sysv"><userinput>rm -v /usr/lib/systemd/user/plasma-kscreen.service</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-DCMAKE_INSTALL_LIBEXECDIR=libexec</parameter>: Dette overstyrer
+      standarden i extra-cmake-moduler, som er <filename
+      class="directory">/usr/lib/libexec</filename> og ikke er FHS kompatibel.
+    </para>
+
+    <para>
+      <parameter>-DKDE_INSTALL_USE_QT_SYS_PATHS=ON</parameter>: Dette tvinger
+      installasjon av Qt progrmatilegg i samme mappe som <xref linkend="qt5"/>
+      i seg selv. Ellers blir de installert i <filename
+      class="directory">/usr/mkspecs</filename>, som ikke er FHS kompatibel.
+    </para>
 
   </sect2>
 
@@ -179,7 +198,7 @@ rm -rf /usr/lib/libexec</userinput></screen>
         <term><filename class="libraryfile">libKF5ScreenDpms.so</filename></term>
         <listitem>
           <para>
-            inneholder API funksjoner for håndtering av DPMS
+            inneholder API funksjoner for hÃ¥ndtering av DPMS
           </para>
           <indexterm zone="lxqt-libkscreen-dpms-lib">
             <primary sortas="c-libKF5ScreenDpms">libKF5ScreenDpms.so</primary>
