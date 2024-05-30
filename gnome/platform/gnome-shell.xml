@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY gnome-shell-download-http
-           "&gnome-download-http;/gnome-shell/&gnome-44;/gnome-shell-&gnome-shell-version;.tar.xz">
-  <!ENTITY gnome-shell-download-ftp
-           "&gnome-download-ftp;/gnome-shell/&gnome-44;/gnome-shell-&gnome-shell-version;.tar.xz">
-  <!ENTITY gnome-shell-md5sum        "a73a7ba82782ad46378127a9a3acdec8">
+           "&gnome-download-http;/gnome-shell/&gnome-45;/gnome-shell-&gnome-shell-version;.tar.xz">
+  <!ENTITY gnome-shell-download-ftp  " ">
+  <!ENTITY gnome-shell-md5sum        "4b3f4593b986af9799e8a62f87d723ae">
   <!ENTITY gnome-shell-size          "1.9 MB">
-  <!ENTITY gnome-shell-buildsize     "61 MB">
-  <!ENTITY gnome-shell-time          "0.2 SBU (Bruke parallellisme=4; med tester)">
+  <!ENTITY gnome-shell-buildsize     "60 MB">
+  <!ENTITY gnome-shell-time          "0.4 SBU (Bruke parallellisme=4; med tester)">
 ]>
 
 <sect1 id="gnome-shell" xreflabel="gnome-shell-&gnome-shell-version;">
@@ -29,10 +28,10 @@
 
     <para>
       <application>GNOME Skallet</application> er kjernebrukergrensesnittet for
-      <application>GNOME</application> Skrivebordsmiljøet.
+      <application>GNOME</application> SkrivebordsmiljÃ¸et.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gnome-shell-size;
+          NedlastingsstÃ¸rrelse: &gnome-shell-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +69,7 @@
 
     <bridgehead renderas="sect3">GNOME Skallet Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="evolution-data-server"/>,
       <xref linkend="gcr4"/>,
@@ -88,8 +87,9 @@
       <xref linkend="desktop-file-utils"/>,
       <xref linkend="gnome-autoar"/>,
       <xref linkend="gnome-bluetooth"/>,
-      <xref linkend="gst10-plugins-base"/>, og
-      <xref linkend="NetworkManager"/>
+      <xref linkend="gst10-plugins-base"/>,
+      <xref linkend="NetworkManager"/>, og
+      <xref linkend="power-profiles-daemon"/> (for bÃ¦rbare datamaskiner)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -98,7 +98,7 @@
       <ulink url="https://github.com/scop/bash-completion">bash-completion</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Nødvendige Kjøretids Avhengigheter</bridgehead>
+    <bridgehead renderas="sect4">NÃ¸dvendige KjÃ¸retids Avhengigheter</bridgehead>
     <para role="required">
       <xref role="runtime" linkend="adwaita-icon-theme"/>,
       <xref role="runtime" linkend="dconf"/>,
@@ -108,6 +108,7 @@
       <xref role="runtime" linkend="gdm"/>,
       <xref role="runtime" linkend="gnome-backgrounds"/>,
       <xref role="runtime" linkend="gnome-control-center"/>,
+      <xref role="runtime" linkend="gnome-menus"/>,
       <xref role="runtime" linkend="libgweather"/>,
       <phrase revision="sysv">og</phrase>
       <phrase revision="systemd">
@@ -117,7 +118,7 @@
     </para>
 
     <bridgehead renderas="sect4"
-                revision="sysv">Anbefalte Kjøretids Avhengigheter</bridgehead>
+                revision="sysv">Anbefalte KjÃ¸retids Avhengigheter</bridgehead>
     <para role="recommended" revision="sysv">
       <xref linkend="blocaled" role="runtime"/>
     </para>
@@ -128,8 +129,8 @@
     <title>Installasjon av GNOME Skallet</title>
 
     <para>
-      Installer <application>GNOME Skallet</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>GNOME Skallet</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
@@ -152,14 +153,14 @@ meson setup --prefix=/usr       \
 ninja</userinput></screen>
 
     <para revision='systemd'>
-      For å teste resultatene må du fjerne
-      <parameter>-Dtests=false</parameter> bryteren, og å ha <xref
-      linkend="mutter"/> kompilert og installert med tester også.
+      For Ã¥ teste resultatene mÃ¥ du fjerne
+      <parameter>-Dtests=false</parameter> bryteren, og Ã¥ ha <xref
+      linkend="mutter"/> kompilert og installert med tester ogsÃ¥.
 
-      For å kjøre testene, utsted: <command>ninja test</command>. Du må
-      kjører en X økt for å kjøre testene. Noen vil mislykkes hvis <xref
+      For Ã¥ kjÃ¸re testene, utsted: <command>ninja test</command>. Du mÃ¥
+      kjÃ¸rer en X Ã¸kt for Ã¥ kjÃ¸re testene. Noen vil mislykkes hvis <xref
       linkend="gdm"/> ikke er installert. <phrase revision="sysv">Flere
-      tester kan mislykkes i Sysv-miljøet.</phrase>
+      tester kan mislykkes i Sysv-miljÃ¸et.</phrase>
       <!-- "Failed to read monitors config file
            '/home/xry111/.config/monitors.xml': Logical monitors not
            adjacent"
@@ -177,7 +178,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -190,14 +191,16 @@ ninja</userinput></screen>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
+<!--
     <para revision="sysv">
-      <command>patch ...</command>: Denne oppdateringen fikser en feil når du prøver
-      å starte en xwayland applikasjon på ikke-systemd.
+      <command>patch ...</command>: Denne oppdateringen fikser en feil nÃ¥r du prÃ¸ver
+      Ã¥ starte en xwayland applikasjon pÃ¥ ikke-systemd.
     </para>
+-->
 
     <para revision="sysv">
       <parameter>-Dsystemd=false</parameter>: Hindrer installasjon av systemd
-      filer, som ikke er nødvendig i denne versjonen av BLFS.
+      filer, som ikke er nÃ¸dvendig i denne versjonen av BLFS.
     </para>
 
     <para>
@@ -249,7 +252,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
             gir kjernefunksjonene for brukergrensesnittet for
-            <application>GNOME</application> 3 Skrivebordet
+            <application>GNOME</application> Skrivebordet
           </para>
           <indexterm zone="gnome-shell gnome-shell-prog">
             <primary sortas="b-gnome-shell">gnome-shell</primary>
