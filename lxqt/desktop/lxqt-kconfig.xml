@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,13 +6,13 @@
 
   <!ENTITY kconfig-download-http "&kf5-download-http;/kconfig-&kf5-version;.tar.xz">
   <!ENTITY kconfig-download-ftp  " ">
-  <!ENTITY kconfig-md5sum        "fe2b1c516c2f9caadd6c8e3bf35ffd96">
+  <!ENTITY kconfig-md5sum        "fcb77cb2d9349b33e9e085ca4d2ebe7f">
   <!ENTITY kconfig-size          "288 KB">
   <!ENTITY kconfig-buildsize     "20 MB">
   <!ENTITY kconfig-time          "0.1 SBU (Bruke parallellisme=4)">
 ]>
 
-<sect1 id="lxqt-kconfig" xreflabel="kconfig-&plasma5-version; for lxqt">
+<sect1 id="lxqt-kconfig" xreflabel="kconfig-&kf5-version; for lxqt">
   <?dbhtml filename="lxqt-kconfig.html"?>
 
 
@@ -30,14 +30,14 @@
       konfigurasjonsfiler.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <important>
       <para>
         Denne pakken er hentet fra KF5 settet med pakker.
         Hvis <xref linkend="kf5-frameworks"/> er bygget, <emphasis
         role="bold">IKKE</emphasis> bygg denne pakken som er presentert
-        her også.
+        her ogsÃ¥.
       </para>
     </important>
 
@@ -60,7 +60,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &kconfig-size;
+          NedlastingsstÃ¸rrelse: &kconfig-size;
         </para>
       </listitem>
       <listitem>
@@ -77,7 +77,7 @@
 
     <bridgehead renderas="sect3">kconfig Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="extra-cmake-modules"/> og
       &qt5-deps;
@@ -89,18 +89,19 @@
     <title>Installasjon av kconfig</title>
 
     <para>
-      Installer <application>kconfig</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>kconfig</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir -v build &amp;&amp;
 cd       build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr \
-      -DCMAKE_BUILD_TYPE=Release  \
-      -DCMAKE_INSTALL_LIBDIR=lib  \
-      -DBUILD_TESTING=OFF         \
-      -Wno-dev ..                 &amp;&amp;
+cmake -DCMAKE_INSTALL_PREFIX=/usr        \
+      -DCMAKE_BUILD_TYPE=Release         \
+      -DCMAKE_INSTALL_LIBEXECDIR=libexec \
+      -DKDE_INSTALL_USE_QT_SYS_PATHS=ON  \
+      -DBUILD_TESTING=OFF                \
+      -Wno-dev ..                        &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -108,17 +109,28 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som &root; bruker:
+      NÃ¥, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
     <para>
-      Til slutt, fjern noen unødvendige filer som &root; bruker:
+      <parameter>-DCMAKE_INSTALL_LIBEXECDIR=libexec</parameter>: Dette overstyrer
+      standarden i extra-cmake-moduler, som er <filename
+      class="directory">/usr/lib/libexec</filename> og ikke er FHS kompatibel.
     </para>
 
-<screen role="root"><userinput>rm -rf /usr/mkspecs &amp;&amp;
-rm -rf /usr/lib/libexec</userinput></screen>
+    <para>
+      <parameter>-DKDE_INSTALL_USE_QT_SYS_PATHS=ON</parameter>: Dette tvinger
+      installasjon av Qt programtillegg i samme mappe som <xref linkend="qt5"/>
+      i seg selv. Ellers blir de installert i <filename
+      class="directory">/usr/mkspecs</filename>, som ikke er FHS kompatibel.
+    </para>
 
   </sect2>
 
@@ -156,7 +168,7 @@ rm -rf /usr/lib/libexec</userinput></screen>
         <term><command>kreadconfig5</command></term>
         <listitem>
           <para>
-            leser en konfigurasjonsfil ved å bruke KConfig grensesnittet
+            leser en konfigurasjonsfil ved Ã¥ bruke KConfig grensesnittet
           </para>
           <indexterm zone="lxqt-kconfig kreadconfig5">
             <primary sortas="b-kreadconfig5">kreadconfig5</primary>
@@ -168,7 +180,7 @@ rm -rf /usr/lib/libexec</userinput></screen>
         <term><command>kwriteconfig5</command></term>
         <listitem>
           <para>
-            skriver til en konfigurasjonsfil ved å bruke KConfig grensesnittet
+            skriver til en konfigurasjonsfil ved Ã¥ bruke KConfig grensesnittet
           </para>
           <indexterm zone="lxqt-kconfig kwriteconfig5">
             <primary sortas="b-kwriteconfig5">kwriteconfig5</primary>
