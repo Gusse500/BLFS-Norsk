@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -8,10 +8,10 @@
 
   <!ENTITY intel-media-download-http "https://github.com/intel/media-driver/archive/refs/tags/intel-media-&intel-media-version;.tar.gz">
   <!ENTITY intel-media-download-ftp  " ">
-  <!ENTITY intel-media-md5sum        "a6f48933bcb3d55dea8ec2e66c4f99e1">
-  <!ENTITY intel-media-size          "27 MB">
-  <!ENTITY intel-media-buildsize     "2.5 GB (359 MB installert)">
-  <!ENTITY intel-media-time          "5.9 SBU (med parallellitet=4)">
+  <!ENTITY intel-media-md5sum        "5e2fffaf1c1972b8791c3cfd59cd6a9e">
+  <!ENTITY intel-media-size          "25 MB">
+  <!ENTITY intel-media-buildsize     "2.1 GB (359 MB installert)">
+  <!ENTITY intel-media-time          "6.3 SBU (med parallellitet=4)">
 
 ]>
 
@@ -34,10 +34,10 @@
       <para>
         <application>intel-media</application> pakken gir en
         VA API driver for Intel GPUer som er utstyrt med Broadwell CPUer og
-        høyere. Dette inkluderer støtte for en rekke kodeker.
+        hÃ¸yere. Dette inkluderer stÃ¸tte for en rekke kodeker.
       </para>
 
-      &lfs120_checked;
+      &lfs121_checked;
 
       <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -58,7 +58,7 @@
         </listitem>
         <listitem>
           <para>
-            Nedlastingsstørrelse: &intel-media-size;
+            NedlastingsstÃ¸rrelse: &intel-media-size;
           </para>
         </listitem>
         <listitem>
@@ -78,7 +78,7 @@
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            Nødvendig oppdatering:
+            NÃ¸dvendig oppdatering:
             <ulink url="&patch-root;/intel-media-&intel-media-version;-upstream_fixes-1.patch"/>
           </para>
         </listitem>
@@ -95,7 +95,7 @@
 
       <bridgehead renderas="sect3">intel-media Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect4">Påkrevd</bridgehead>
+      <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
       <para role="required">
         <xref linkend="cmake"/>,
         <xref linkend="intel-gmmlib"/>,
@@ -109,8 +109,8 @@
       <title>Kjernekonfigurasjon</title>
 
       <para>
-        Aktiver følgende alternativer i kjernekonfigurasjonen.
-        Om nødvendig kompiler kjernen på nytt:
+        Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen.
+        Om nÃ¸dvendig kompiler kjernen pÃ¥ nytt:
       </para>
 
       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -128,37 +128,58 @@
 
       <note>
         <para>
-          Denne pakken tar lang tid å bygge fordi den kompilerer kode
+          Denne pakken tar lang tid Ã¥ bygge fordi den kompilerer kode
           spesifikk for hver enkelt generasjon av Intel GPUer og for en
           rekke mediekodeker.
         </para>
 
         <!-- This reduce the size of iHD_drv_video.so from 319M to 157M
              for me.  -->
+        <!-- It seems ARL depends on MTL.  We need to review once an Arrow
+             Lake CPU is launched.  -->
+        <!-- Support for ARL is completely broken, needs to be turned off to 
+             complete the build -->
         <para>
           Hvis du kjenner modellen til din Intel GPU, kan du sende
-          <option>-D{GEN{8,9,10,11,12},MTL}=OFF</option> alternativet til
+          <option>-D{GEN{8,9,11,12},MTL,ARL}=OFF</option> alternativet til
           <command>cmake</command> kommandoen, men utelat alternativet for din
           GPU. Merk at <quote>GEN</quote> nummeret her er
           generasjonen for GPU, ikke CPU. For eksempel med en Intel
           Core i7-1065G7 CPU som leverer en 11. generasjons Intel GPU,
-          <option>-D{GEN{8,9,10,12},MTL}=OFF</option> alternativet kan brukes
-          så koden som er spesifikk for de andre generasjonene av Intel GPUer ikke vil
+          <option>-D{GEN{8,9,12},MTL,ARL}=OFF</option> alternativet kan brukes
+          sÃ¥ koden som er spesifikk for de andre generasjonene av Intel GPUer ikke vil
           bygges.
         </para>
+
+        <para>
+          For Ã¥ finne modellen til Intel GPU, installer
+          <xref linkend='pciutils'/> og kjÃ¸r
+          <command>lspci -nn | grep -Ei 'VGA|DISPLAY'</command> fÃ¸rst.
+          Den vil gi ut litt informasjon om GPUen. Hvis utdataen
+          inneholder <literal>Meteor Lake</literal>, GPU modellen er
+          <literal>MTL</literal>.  Ellers, fÃ¸lg
+          <ulink url='https://dgpu-docs.intel.com/devices/hardware-table.html'/>
+          for Ã¥ finne oppfÃ¸ringen for din GPU og modellen til GPUen, som skal
+          vÃ¦re i <quote>Architecture</quote> kolonnen. Xe og XeHPG
+          arkitekturer dekkes av <literal>GEN12</literal> modellen.
+        </para>
+        <!-- TODO: The info about MTL is my best guess, the referred Intel
+        page does not contain Meteor Lake GPU PCI devicd ID as at Feb 2024.
+        XeHPC is not enabled by default but they are some data center GPUs.
+        Not sure if anyone will run LFS in a data center. -->
       </note>
 
 <!--
       <para>
-        Først må du fikse noen byggefeil med GCC-13:
+        FÃ¸rst mÃ¥ du fikse noen byggefeil med GCC-13:
       </para>
 
  <screen><userinput remap="pre">patch -Np1 -i ../intel-media-&intel-media-version;-upstream_fixes-1.patch</userinput></screen>
 -->
 
       <para>
-        Installer <application>intel-media</application> ved å kjøre
-        følgende kommandoer:
+        Installer <application>intel-media</application> ved Ã¥ kjÃ¸re
+        fÃ¸lgende kommandoer:
       </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -167,20 +188,41 @@ cd    build &amp;&amp;
 cmake -DCMAKE_INSTALL_PREFIX=$XORG_PREFIX \
       -DINSTALL_DRIVER_SYSCONF=OFF        \
       -DBUILD_TYPE=Release                \
+      -G Ninja                            \
       -Wno-dev ..                   &amp;&amp;
-make</userinput></screen>
+ninja</userinput></screen>
+
 
       <para>
         Denne pakken kommer ikke med en testpakke.
       </para>
 
       <para>
-        Nå, som <systemitem class="username">root</systemitem> bruker:
+        NÃ¥, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     </sect2>
+
+    <!-- As of Oct 1 2023, the build is broken if MTL and ARL are turned on
+         hopefully this is fixed by the time they launch, in which 
+         case we can remove the option and this section [rahul] -->
+    <!-- As of October 31st, 2023, the build seems to be functional again! This
+         is with version 23.4.0. [renodr]
+    <sect2 role="commands">
+      <title>Parameterforklaringer</title>
+       
+      <para>
+        <parameter>-D{MTL,ARL}=OFF</parameter>: Fra oktober 2023,
+        Meteor Lake og Arrow Lake iGPU-stÃ¸tte er Ã¸delagt, men likevel
+        i intel-media. Byggingen mislykkes hvis stÃ¸tte for en av iGPUene
+        er slÃ¥tt pÃ¥. Siden begge disse ikke har vÃ¦rt offisielt
+        utgitt ennÃ¥, er det trygt Ã¥ slÃ¥ av stÃ¸tten for dem.
+      </para>
+
+     </sect2> 
+    -->
 
     <sect2 role="content">
       <title>Innhold</title>
@@ -216,7 +258,7 @@ make</userinput></screen>
           <term><filename class="libraryfile">libigfxcmrt.so</filename></term>
           <listitem>
             <para>
-              gir API funksjoner som tillater å kjøre GPU kjerner på
+              gir API funksjoner som tillater Ã¥ kjÃ¸re GPU kjerner pÃ¥
               gjengivelse motoren
             </para>
             <indexterm zone="intel-media libigfxcmrt">
