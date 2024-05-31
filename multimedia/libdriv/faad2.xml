@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,9 +6,9 @@
 
   <!ENTITY faad2-download-http "https://github.com/knik0/faad2/archive/&faad2-version;/faad2-&faad2-version;.tar.gz">
   <!ENTITY faad2-download-ftp  " ">
-  <!ENTITY faad2-md5sum        "62a0427c6ff3a273aa720e27da166758">
-  <!ENTITY faad2-size          "788 KB">
-  <!ENTITY faad2-buildsize     "14 MB">
+  <!ENTITY faad2-md5sum        "f85b2514c4fb2f87d22a3bc879d83277">
+  <!ENTITY faad2-size          "642 KB">
+  <!ENTITY faad2-buildsize     "9.0 MB">
   <!ENTITY faad2-time          "0.1 SBU">
 ]>
 
@@ -31,7 +31,7 @@
       standarder og kjent som Advanced Audio Coding (AAC).
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &faad2-size;
+          NedlastingsstÃ¸rrelse: &faad2-size;
         </para>
       </listitem>
       <listitem>
@@ -76,29 +76,41 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">FAAD2 Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
+    <para role="required">
+      <xref linkend="cmake"/>
+    </para>
+
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av FAAD2</title>
 
     <para>
-      Installer <application>FAAD2</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>FAAD2</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
-<screen><userinput>./bootstrap                                &amp;&amp;
-./configure --prefix=/usr --disable-static &amp;&amp;
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release  \
+      -DBUILD_SHARED_LIBS=ON      \
+      .. &amp;&amp;
 make</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke. Imidlertid grunnleggende
-      funksjonalitet kan testes ved å dekode AAC eksempelfilen:
+      funksjonalitet kan testes ved Ã¥ dekode AAC eksempelfilen:
     </para>
 
-<screen remap="test"><userinput>./frontend/faad -o sample.wav ../sample.aac</userinput></screen>
+<screen remap="test"><userinput>./faad -o sample.wav ../../sample.aac</userinput></screen>
 
     <para>
-      Dette skal vise en opphavsrettsmelding og følgende
+      Dette skal vise en opphavsrettsmelding og fÃ¸lgende
       informasjon om eksempelfilen:
     </para>
 
@@ -115,7 +127,7 @@ ADTS, 4.608 sec, 13 kbps, 16000 Hz
   ---------------------</computeroutput></literallayout>
 
     <para>
-      Spill nå resultatet (krever <command>aplay</command> programmet
+      Spill nÃ¥ resultatet (krever <command>aplay</command> programmet
       fra <xref linkend="alsa-utils"/> pakken):
     </para>
 
@@ -124,17 +136,18 @@ ADTS, 4.608 sec, 13 kbps, 16000 Hz
     <para>
       <command>aplay</command> skal identifisere filen som
       <quote>Signed 16 bit Little Endian, Rate 16000 Hz, Stereo</quote>, og
-      du bør høre noen pianotoner.
+      du bÃ¸r hÃ¸re noen pianotoner.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
   </sect2>
 
+<!--
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
@@ -142,6 +155,7 @@ ADTS, 4.608 sec, 13 kbps, 16000 Hz
       href="../../xincludes/static-libraries.xml"/>
 
   </sect2>
+-->
 
   <sect2 role="content">
     <title>Innhold</title>
@@ -167,7 +181,7 @@ ADTS, 4.608 sec, 13 kbps, 16000 Hz
         <term><command>faad</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy for dekoding av AAC og MP4 filer
+            er et kommandolinjeverktÃ¸y for dekoding av AAC og MP4 filer
           </para>
           <indexterm zone="faad2 faad-prog">
             <primary sortas="b-faad">faad</primary>
@@ -179,7 +193,7 @@ ADTS, 4.608 sec, 13 kbps, 16000 Hz
         <term><filename class="libraryfile">libfaad.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner for dekoding av AAC strømmer
+            inneholder funksjoner for dekoding av AAC strÃ¸mmer
           </para>
           <indexterm zone="faad2 libfaad">
             <primary sortas="c-libfaad">libfaad.so</primary>
