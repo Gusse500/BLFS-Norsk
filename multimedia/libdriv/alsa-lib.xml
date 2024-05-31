@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY alsa-lib-download-http "&alsa-download-http;/lib/alsa-lib-&alsa-lib-version;.tar.bz2">
-  <!ENTITY alsa-lib-download-ftp  "&alsa-download-ftp;/lib/alsa-lib-&alsa-lib-version;.tar.bz2">
-  <!ENTITY alsa-lib-md5sum        "d29f5ebe9a4ff1be70508ecbf6655318">
+  <!ENTITY alsa-lib-download-ftp  " ">
+  <!ENTITY alsa-lib-md5sum        "1c5870770047b6a520d18a43f49e42ea">
   <!ENTITY alsa-lib-size          "1.1 MB">
-  <!ENTITY alsa-lib-buildsize     "45 MB (med tester og dokumenter)">
+  <!ENTITY alsa-lib-buildsize     "46 MB (med tester og dokumenter)">
   <!ENTITY alsa-lib-time          "0.3 SBU (med tester og dokumenter)">
 ]>
 
@@ -28,11 +28,11 @@
     <para>
       <application>ALSA Bibliotek</application> pakken inneholder
       ALSA biblioteket som brukes av programmer (inkludert <application>ALSA
-      Verktøy</application>) som krever tilgang til ALSA lyden sitt
+      VerktÃ¸y</application>) som krever tilgang til ALSA lyden sitt
       grensesnitt.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &alsa-lib-size;
+          NedlastingsstÃ¸rrelse: &alsa-lib-size;
         </para>
       </listitem>
       <listitem>
@@ -67,10 +67,20 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          NÃ¸dvendig oppdatering:
+          <ulink url="&patch-root;/alsa-lib-&alsa-lib-version;-upstream_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
     <bridgehead renderas="sect3">ALSA Bibliotekets Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Anbefalt (Kjøretid)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (KjÃ¸retid)</bridgehead>
     <para role="runtime">
       <phrase revision='sysv'><xref linkend='elogind'/></phrase>
       <phrase revision='systemd'><xref linkend='systemd'/></phrase>
@@ -78,8 +88,8 @@
 
     <note>
       <para>
-        Hvis den anbefalte kjøretidsavhengigheten ikke er installert, kan du
-        trenge å kjøre et hvilket som helst program som krever ALSA bibliotek som &root;
+        Hvis den anbefalte kjÃ¸retidsavhengigheten ikke er installert, kan du
+        trenge Ã¥ kjÃ¸re et hvilket som helst program som krever ALSA bibliotek som &root;
         bruker eller en bruker i
         <systemitem class='groupname'>audio</systemitem> gruppen.
       </para>
@@ -89,7 +99,7 @@
     <para role="optional">
       <xref linkend="doxygen"/>,
       <xref linkend="python2"/>, og
-      <ulink url="https://www.alsa-project.org/files/pub/lib/">alsa-ucm-conf</ulink>
+      <ulink url="https://www.alsa-project.org/files/pub/lib/alsa-ucm-conf-&alsa-lib-version;.tar.bz2">alsa-ucm-conf</ulink>
     </para>
 
   </sect2>
@@ -98,7 +108,7 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-       Aktiver om nødvendig følgende alternativer i kjerne
+       Aktiver om nÃ¸dvendig fÃ¸lgende alternativer i kjerne
        konfigureringen og rekompilere kjernen:
     </para>
 
@@ -108,8 +118,8 @@
     <para>
       I Device Drivers &rArr; Sound card support &rArr; Advanced Linux
       Sound Architecture delen av kjernekonfigurasjonen, velg
-      innstillinger og drivere som passer for maskinvaren din. Hvis nødvendig,
-      kompiler på nytt og installer den nye kjernen.
+      innstillinger og drivere som passer for maskinvaren din. Hvis nÃ¸dvendig,
+      kompiler pÃ¥ nytt og installer den nye kjernen.
     </para>
 
     <indexterm zone="alsa-lib alsa-lib-kernel">
@@ -120,35 +130,44 @@
 
   <sect2 role="installation">
     <title>Installasjon av ALSA Library</title>
-
+<!--
     <para>
-      Installer <application>ALSA Library</application> ved å
-      kjøre følgende kommandoer:
+      FÃ¸rst, hvis du bygger pÃ¥ et 32-bitssystem, fiks en regresjon som
+      forÃ¥rsaker en segmenteringsfeil ved avspilling av lyd:
+    </para>
+ 
+<screen><userinput>case $(uname -m) in
+   i?86) patch -Np1 -i ../alsa-lib-&alsa-lib-version;-upstream_fixes-1.patch ;;
+esac</userinput></screen>
+-->
+    <para>
+      Installer <application>ALSA Library</application> ved Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>./configure &amp;&amp;
 make</userinput></screen>
 
    <para>
-     Hvis du har <application>Doxygen</application> installert og du ønsker å
-     bygge bibliotekets API dokumentasjon, kjør følgende
-     kommandoer fra toppnivåmappen i kildetreet:
+     Hvis du har <application>Doxygen</application> installert og du Ã¸nsker Ã¥
+     bygge bibliotekets API dokumentasjon, kjÃ¸r fÃ¸lgende
+     kommandoer fra toppnivÃ¥mappen i kildetreet:
    </para>
 
 <screen remap="doc"><userinput>make doc</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      For å installere API dokumentasjonen, kjør følgende kommando som
+      For Ã¥ installere API dokumentasjonen, kjÃ¸r fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -188,8 +207,8 @@ install -v -m644 doc/doxygen/html/search/* \
       <para>
         Standard <filename>alsa.conf</filename> er tilstrekkelig for de fleste
         installasjoner. For ekstra funksjonalitet og/eller avansert kontroll av din
-        lydenhet, må du kanskje opprette flere konfigurasjonsfiler.
-        For informasjon om tilgjengelige konfigurasjonsparametere, besøk
+        lydenhet, mÃ¥ du kanskje opprette flere konfigurasjonsfiler.
+        For informasjon om tilgjengelige konfigurasjonsparametere, besÃ¸k
         <ulink url="https://www.alsa-project.org/main/index.php/Asoundrc"/>.
       </para>
 
