@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY v4l-download-http "https://www.linuxtv.org/downloads/v4l-utils/v4l-utils-&v4l-utils-version;.tar.bz2">
+  <!ENTITY v4l-download-http "https://www.linuxtv.org/downloads/v4l-utils/v4l-utils-&v4l-utils-version;.tar.xz">
   <!ENTITY v4l-download-ftp  " ">
-  <!ENTITY v4l-md5sum        "8ba9c73c4319b6afab5fa4358edc43de">
-  <!ENTITY v4l-size          "2.2 MB">
-  <!ENTITY v4l-buildsize     "126 MB">
+  <!ENTITY v4l-md5sum        "a3565a8ccc427dcce52845c2b8880c28">
+  <!ENTITY v4l-size          "1.2 MB">
+  <!ENTITY v4l-buildsize     "32 MB">
   <!ENTITY v4l-time          "1.1 SBU (bruke parallellisme=4)">
 ]>
 
@@ -26,12 +26,12 @@
     <title>Introduksjon til v4l-utils</title>
 
     <para>
-      <application>v4l-utils</application> gir en rekke verktøy for
-      medieenheter, som gjør det mulig å håndtere de proprietære formatene som er tilgjengelige på
-      de fleste webkameraer (libv4l), og gir verktøy for å teste V4L enheter.
+      <application>v4l-utils</application> gir en rekke verktÃ¸y for
+      medieenheter, som tillater muligheten til Ã¥ hÃ¥ndtere proprietÃ¦re formater
+      tilgjengelig fra de fleste webkameraer (libv4l), og gir verktÃ¸y for Ã¥ teste V4L enheter.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &v4l-size;
+          NedlastingsstÃ¸rrelse: &v4l-size;
         </para>
       </listitem>
       <listitem>
@@ -71,18 +71,13 @@
     <itemizedlist>
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/v4l-utils-&v4l-utils-version;-upstream_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
 -->
     <bridgehead renderas="sect3">v4l-utils Avhengigheter</bridgehead>
-
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
-    <para role="required">
-      <xref linkend="llvm"/> (med mål BPF)
-    </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
@@ -94,8 +89,12 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="doxygen"/> og
-      <xref linkend="sdl2"/>
+      <xref linkend="doxygen"/>,
+      <xref linkend="sdl2"/>,
+      bÃ¥de <xref linkend="llvm"/> (med Clang og target BPF)
+      og <ulink url='https://github.com/libbpf/libbpf'>libbpf</ulink>
+      (for infrarÃ¸de fjernkontrolldekodere basert pÃ¥ BPF), og
+      <ulink url="https://github.com/libsdl-org/SDL_image">SDL_image</ulink>
     </para>
 
   </sect2>
@@ -103,27 +102,66 @@
   <sect2 role="installation">
     <title>Installasjon av v4l-utils</title>
 
+    <note>
+      <para>
+        Hvis du har installert bÃ¥de LLVM og libbpf (ikke i BLFS), enten
+        aktiver BPF mÃ¥let (via
+        <option>-DLLVM_TARGETS_TO_BUILD=</option>) bygge LLVM, eller deaktiver
+        de infrarÃ¸de fjernkontrolldekoderne basert pÃ¥ BPF:
+      </para>
+
+      <!-- not "nodump" because it's harmless for BLFS anyway -->
+      <screen><userinput>sed '/^ir_bpf_enabled/s/=.*/= false/' \
+    -i utils/keytable/meson.build</userinput></screen>
+    </note>
+
     <para>
-      Installer <application>v4l-utils</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>v4l-utils</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr     \
-            --sysconfdir=/etc \
-            --disable-static  &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr          \
+            -Ddoxygen-doc=disabled \
+            -Dgconv=disabled       \
++           --buildtype=release    .. &amp;&amp;
+ninja</userinput></screen>
+
 
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make -j1 install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para>
+      Hvis du ogsÃ¥ Ã¸nsker Ã¥ installere bidragsprogrammene, legg til:
+    </para>
+
+<screen role="root"><userinput>for prog in v4l2gl v4l2grab
+do
+   cp -v contrib/test/$prog /usr/bin
+done</userinput></screen>
+
 
   </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-Dgconv=disabled</parameter>: Denne bryteren deaktiverer
+      den feilaktige installasjonen av gconv moduler som ville bryte glibc.
+    </para>
+
+  </sect2>
+
 
   <sect2 role="content">
     <title>Innhold</title>
@@ -154,7 +192,9 @@ make</userinput></screen>
           rds-ctl,
           v4l2-compliance,
           v4l2-ctl,
-          v4l2-dbg, og
+           v4l2-dbg,
+          v4l2gl,
+          v4l2grab, og
           v4l2-sysfs-path
         </seg>
         <seg>
@@ -184,7 +224,7 @@ make</userinput></screen>
         <term><command>cx18-ctl</command></term>
         <listitem>
           <para>
-            er et verktøy for å håndtere cx18 baserte enheter
+            er et verktÃ¸y for Ã¥ hÃ¥ndtere cx18 baserte enheter
           </para>
           <indexterm zone="v4l-utils cx18-ctl">
             <primary sortas="b-cx18-ctl">cx18-ctl</primary>
@@ -208,7 +248,7 @@ make</userinput></screen>
         <term><command>dvb-fe-tool</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy for digitale TV-tjenester
+            er et kommandolinjeverktÃ¸y for digitale TV-tjenester
           </para>
           <indexterm zone="v4l-utils dvb-fe-tool">
             <primary sortas="b-dvb-fe-tool">dvb-fe-tool</primary>
@@ -220,7 +260,7 @@ make</userinput></screen>
         <term><command>dvb-format-convert</command></term>
         <listitem>
           <para>
-            er et verktøy ment å konvertere mellom forskjellige filformater. Det er
+            er et verktÃ¸y ment Ã¥ konvertere mellom forskjellige filformater. Det er
             i samsvar med versjon 5 av DVB API
           </para>
           <indexterm zone="v4l-utils dvb-format-convert">
@@ -233,7 +273,7 @@ make</userinput></screen>
         <term><command>dvbv5-scan</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy for frekvensskanning for digitale
+            er et kommandolinjeverktÃ¸y for frekvensskanning for digitale
             TV-tjenester som er kompatible med versjon 5 av DVB API
           </para>
           <indexterm zone="v4l-utils dvbv5-scan">
@@ -246,7 +286,7 @@ make</userinput></screen>
         <term><command>dvbv5-zap</command></term>
         <listitem>
           <para>
-            er et kommandolinjeinnstillingsverktøy for digitale TV-tjenester
+            er et kommandolinjeinnstillingsverktÃ¸y for digitale TV-tjenester
             som er i samsvar med versjon 5 av DVB API
           </para>
           <indexterm zone="v4l-utils dvbv5-zap">
@@ -259,9 +299,9 @@ make</userinput></screen>
         <term><command>ir-keytable</command></term>
         <listitem>
           <para>
-            er et verktøy som viser fjernkontrollenhetene, tillater en
-            å få/sette IR-nøkkelkode/skannekodetabeller, testhendelser generert av
-            IR, og for å justere andre fjernkontrollalternativer
+            er et verktÃ¸y som viser fjernkontrollenhetene, tillater en
+            Ã¥ fÃ¥/sette IR-nÃ¸kkelkode/skannekodetabeller, testhendelser generert av
+            IR, og for Ã¥ justere andre fjernkontrollalternativer
           </para>
           <indexterm zone="v4l-utils ir-keytable">
             <primary sortas="b-ir-keytable">ir-keytable</primary>
@@ -273,9 +313,9 @@ make</userinput></screen>
         <term><command>ivtv-ctl</command></term>
         <listitem>
           <para>
-            er et verktøy som kan kontrollere mange kortinnstillinger, som å endre
+            er et verktÃ¸y som kan kontrollere mange kortinnstillinger, som Ã¥ endre
             inngangene fra tuner til svideo eller kompositt, innstillingsvideo
-            oppløsning eller endring av videomodus (PAL, SECAM, NTSC)
+            opplÃ¸sning eller endring av videomodus (PAL, SECAM, NTSC)
           </para>
           <indexterm zone="v4l-utils ivtv-ctl">
             <primary sortas="b-ivtv-ctl">ivtv-ctl</primary>
@@ -287,7 +327,7 @@ make</userinput></screen>
         <term><command>media-ctl</command></term>
         <listitem>
           <para>
-            er et verktøy som brukes til å konfigurere V4L2 enheter
+            er et verktÃ¸y som brukes til Ã¥ konfigurere V4L2 enheter
           </para>
           <indexterm zone="v4l-utils media-ctl">
             <primary sortas="b-media-ctl">media-ctl</primary>
@@ -299,7 +339,7 @@ make</userinput></screen>
         <term><command>qv4l2</command></term>
         <listitem>
           <para>
-            brukes til å teste video4linux opptaksenheter
+            brukes til Ã¥ teste video4linux opptaksenheter
           </para>
           <indexterm zone="v4l-utils qv4l2">
             <primary sortas="b-qv4l2">qv4l2</primary>
@@ -311,7 +351,7 @@ make</userinput></screen>
         <term><command>qvidcap</command></term>
         <listitem>
           <para>
-            brukes til å ta opp video fra en V4L2 enhet
+            brukes til Ã¥ ta opp video fra en V4L2 enhet
           </para>
           <indexterm zone="v4l-utils qvidcap">
             <primary sortas="b-qvidcap">qvidcap</primary>
@@ -323,8 +363,8 @@ make</userinput></screen>
         <term><command>rds-ctl</command></term>
         <listitem>
           <para>
-            er et verktøy for å dekode rå RDS data fra V4L2 radioenheter
-            og tilbyr enkle måter å få tilgang til den mottatte RDS informasjonen på
+            er et verktÃ¸y for Ã¥ dekode rÃ¥ RDS data fra V4L2 radioenheter
+            og tilbyr enkle mÃ¥ter Ã¥ fÃ¥ tilgang til den mottatte RDS informasjonen pÃ¥
           </para>
           <indexterm zone="v4l-utils rds-ctl">
             <primary sortas="b-rds-ctl">rds-ctl</primary>
@@ -336,7 +376,7 @@ make</userinput></screen>
         <term><command>v4l2-compliance</command></term>
         <listitem>
           <para>
-            er et samsvarstestverktøy
+            er et samsvarstestverktÃ¸y
           </para>
           <indexterm zone="v4l-utils v4l2-compliance">
             <primary sortas="b-v4l2-compliance">v4l2-compliance</primary>
@@ -348,7 +388,7 @@ make</userinput></screen>
         <term><command>v4l2-ctl</command></term>
         <listitem>
           <para>
-            er et verktøy for å kontrollere v4l2 kontroller fra kommandolinjen
+            er et verktÃ¸y for Ã¥ kontrollere v4l2 kontroller fra kommandolinjen
           </para>
           <indexterm zone="v4l-utils v4l2-ctl">
             <primary sortas="b-v4l2-ctl">v4l2-ctl</primary>
@@ -360,10 +400,36 @@ make</userinput></screen>
         <term><command>v4l2-dbg</command></term>
         <listitem>
           <para>
-            er et verktøy for å direkte hente og sette registre for v4l2 enheter
+            er et verktÃ¸y for Ã¥ direkte hente og sette registre for v4l2 enheter
           </para>
           <indexterm zone="v4l-utils v4l2-dbg">
             <primary sortas="b-v4l2-dbg">v4l2-dbg</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="v4l2gl">
+        <term><command>v4l2gl</command></term>
+        <listitem>
+          <para>
+            tar bilder ved hjelp av libv4l og lagrer dem som PPM filer
+          </para>
+          <indexterm zone="v4l-utils v4l2gl">
+            <primary sortas="b-v4l2gl">v4l2gl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="v4l2grab">
+        <term><command>v4l2grab</command></term>
+        <listitem>
+          <para>
+            tar bilder ved hjelp av libv4l og lagrer dem som PPM filer, men
+            gir ogsÃ¥ mulighet for flere alternativer som Ã¥ angi mengden av
+            rammer tatt opp og lagrer filen som en RAW fil
+          </para>
+          <indexterm zone="v4l-utils v4l2grab">
+            <primary sortas="b-v4l2grab">v4l2grab</primary>
           </indexterm>
         </listitem>
       </varlistentry>
@@ -372,7 +438,7 @@ make</userinput></screen>
         <term><command>v4l2-sysfs-path</command></term>
         <listitem>
           <para>
-            sjekker medieenhetene som er installert på en maskin og
+            sjekker medieenhetene som er installert pÃ¥ en maskin og
             tilsvarende enhetsnoder
           </para>
           <indexterm zone="v4l-utils v4l2-sysfs-path">
