@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -7,9 +7,9 @@
   <!ENTITY dhcpcd-download-http "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v&dhcpcd-version;/dhcpcd-&dhcpcd-version;.tar.xz">
 <!--  <!ENTITY dhcpcd-download-ftp  "ftp://roy.marples.name/pub/dhcpcd/dhcpcd-&dhcpcd-version;.tar.xz">-->
   <!ENTITY dhcpcd-download-ftp  " ">
-  <!ENTITY dhcpcd-md5sum        "1f266e2c32567bc778ea22c599fb06d9">
-  <!ENTITY dhcpcd-size          "260 KB">
-  <!ENTITY dhcpcd-buildsize     "3.1 MB (med tester)">
+  <!ENTITY dhcpcd-md5sum        "ef8356d711b17701928ead7206d15234">
+  <!ENTITY dhcpcd-size          "264 KB">
+  <!ENTITY dhcpcd-buildsize     "3.0 MB (med tester)">
   <!ENTITY dhcpcd-time          "mindre enn 0.1 SBU (med tester)">
 ]>
 
@@ -28,13 +28,13 @@
 
     <para>
       <application>dhcpcd</application> er en implementering av en
-      DHCP klient spesifisert i RFC2131. En DHCP klient er nyttig for å tilkoble
-      datamaskinen til et nettverk som bruker DHCP for å tilordne 
-      nettverksadresser. dhcpcd streber etter å være en fullt utstyrt, men likevel veldig lett
+      DHCP klient spesifisert i RFC2131. En DHCP klient er nyttig for Ã¥ tilkoble
+      datamaskinen til et nettverk som bruker DHCP for Ã¥ tilordne 
+      nettverksadresser. dhcpcd streber etter Ã¥ vÃ¦re en fullt utstyrt, men likevel veldig lett
       DHCP klient.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &dhcpcd-size;
+          NedlastingsstÃ¸rrelse: &dhcpcd-size;
         </para>
       </listitem>
       <listitem>
@@ -70,6 +70,19 @@
       </listitem>
     </itemizedlist>
 
+<!--
+
+
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          NÃ¸dvendig oppdatering:
+          <ulink url="&patch-root;/dhcpcd-&dhcpcd-version;-upstream_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+-->
     <bridgehead renderas="sect3">dhcpcd Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -86,15 +99,15 @@
     <title>Privilegeseparasjon</title>
 
     <para>
-      Nylige utgivelser av <application>dhcpcd</application> støtter valgfritt
+      Nylige utgivelser av <application>dhcpcd</application> stÃ¸tter valgfritt
       rettighetsseparasjon. Siden de praktiske sikkerhetsfordelene ved dette er
       uklart for et program som <application>dhcpcd</application> og
-      oppsettet er mer komplisert, deaktiverer boken det for øyeblikket som standard.
+      oppsettet er mer komplisert, deaktiverer boken det for Ã¸yeblikket som standard.
     </para>
     <para>
-      Hvis du imidlertid ønsker å bruke rettighetsseparasjon, tilleggs
-       installasjonstrinn er nødvendig for å sette opp det riktige miljøet. Kjør
-       følgende kommandoer som
+      Hvis du imidlertid Ã¸nsker Ã¥ bruke rettighetsseparasjon, tilleggs
+       installasjonstrinn er nÃ¸dvendig for Ã¥ sette opp det riktige miljÃ¸et. KjÃ¸r
+       fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -112,15 +125,10 @@ chown    -v dhcpcd:dhcpcd /var/lib/dhcpcd </userinput></screen>
 
   <sect2 role="installation">
     <title>Installasjon av dhcpcd</title>
-<!--  Now in the code
-    <para>Rett opp en kjøretidsfeil forårsaket av en endring i glibc-2.36:</para>
 
-<screen><userinput>sed '/Deny everything else/i SECCOMP_ALLOW(__NR_getrandom),' \
-    -i src/privsep-linux.c</userinput></screen>
--->
     <para>
       Alternativt, bygg <application>dhcpcd</application> med privilegium
-      separasjon ved å kjøre følgende kommandoer:
+      separasjon ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen role="nodump"><userinput>./configure --prefix=/usr                \
@@ -133,7 +141,7 @@ make</userinput></screen>
 
     <para>
       Bygg <application>dhcpcd</application> med rettighetsseparasjon
-      ved å kjøre følgende kommandoer:
+      ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr                \
@@ -145,11 +153,11 @@ make</userinput></screen>
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role='root'><userinput>make install</userinput></screen>
@@ -158,7 +166,7 @@ make</userinput></screen>
     <para>
       Som standard opprettes ikke en leie infofil med ren tekst, men
       <application>dhcpcd</application> gir en krok som kan brukes til
-      å opprette en slik fil. Installer kroken ved å kjøre følgende kommandoer
+      Ã¥ opprette en slik fil. Installer kroken ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer
       som <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -183,7 +191,7 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
     </para>
 
     <para>
-      <parameter>--runstatedir=/run</parameter>: Denne bryteren stiller inn kjøretidens
+      <parameter>--runstatedir=/run</parameter>: Denne bryteren stiller inn kjÃ¸retidens
       tilstands mappe fordi standard
       <filename class="directory">/var/run</filename> er en symbolsk
       lenke til <filename class="directory">/run</filename>, og bruke
@@ -204,7 +212,7 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
 
     <para>
       <option>--with-hook=...</option>: Du kan eventuelt installere flere kroker,
-      for eksempel å installere noen konfigurasjonsfiler som f.eks
+      for eksempel Ã¥ installere noen konfigurasjonsfiler som f.eks
       <filename>ntp.conf</filename>. Et sett med kroker finner du i
       <filename class="directory">dhcpcd-hooks</filename> mappen i
       byggetreet.
@@ -231,7 +239,7 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
       <title>Generell Konfigurasjonsinformasjon</title>
 
       <para>
-        For å konfigurere <command>dhcpcd</command>, må du først installere
+        For Ã¥ konfigurere <command>dhcpcd</command>, mÃ¥ du fÃ¸rst installere
         nettverkstjenesteskriptet,
         <filename>/usr/lib/services/dhcpcd</filename>
         inkludert i <xref linkend="bootscripts"/> pakken
@@ -246,13 +254,13 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
 
       <note>
         <para id="dhcpcd-config3">
-          Standard for <command>dhcpcd</command> er å angi vertsnavnet
-          og mtu. Den overskriver også <filename>/etc/resolv.conf </filename>
+          Standard for <command>dhcpcd</command> er Ã¥ angi vertsnavnet
+          og mtu. Den overskriver ogsÃ¥ <filename>/etc/resolv.conf </filename>
           og <filename>/etc/ntp.conf</filename>. Disse
-          modifikasjonene av systemfiler gjøres av kroker som er lagret i
+          modifikasjonene av systemfiler gjÃ¸res av kroker som er lagret i
           <filename class="directory">/usr/lib/dhcpcd/dhcpcd-hooks</filename>.
-          Du kan endre denne virkemåten ved å fjerne eller legge til kroker fra/til
-          den mappen. Utførelsen av kroker kan deaktiveres ved å bruke
+          Du kan endre denne virkemÃ¥ten ved Ã¥ fjerne eller legge til kroker fra/til
+          den mappen. UtfÃ¸relsen av kroker kan deaktiveres ved Ã¥ bruke
           <option>--nohook</option> (<option>-C</option>) kommandolinjealternativ
           eller av <option>nohook</option> alternativet i
           <filename>/etc/dhcpcd.conf</filename> filen.
@@ -262,7 +270,7 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
       <para id="dhcpcd-config2">
         Til slutt, som <systemitem class="username">root</systemitem> bruker
         opprett <filename>/etc/sysconfig/ifconfig.eth0</filename>
-        konfigurasjonsfil ved hjelp av følgende kommandoer. Juster riktig
+        konfigurasjonsfil ved hjelp av fÃ¸lgende kommandoer. Juster riktig
         for ekstra grensesnitt:
       </para>
 
@@ -274,13 +282,13 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
 <literal>ONBOOT="yes"
 IFACE="eth0"
 SERVICE="dhcpcd"
-DHCP_START="-b -q -h ''<replaceable>&lt;insert appropriate start options here&gt;</replaceable>"
+DHCP_START="-b -q -h $HOSTNAME <replaceable>&lt;insert appropriate start options here&gt;</replaceable>"
 DHCP_STOP="-k <replaceable>&lt;insert additional stop options here&gt;</replaceable>"</literal>
 EOF</userinput></screen>
 
       <para>
         For mer informasjon om passende <envar>DHCP_START</envar> og
-        <envar>DHCP_STOP</envar> verdier, undersøk man siden for
+        <envar>DHCP_STOP</envar> verdier, undersÃ¸k man siden for
         <command>dhcpcd</command>.
       </para>
 
@@ -294,11 +302,11 @@ EOF</userinput></screen>
 
       <para id="dhcpcd-config4">
         Selv om det ikke er vanlig, er det mulig at du trenger
-        å konfigurere <application>dhcpcd</application> til å bruke en fast ip. Her,
+        Ã¥ konfigurere <application>dhcpcd</application> til Ã¥ bruke en fast ip. Her,
         gir vi et eksempel. Som
         <systemitem class="username">root</systemitem> bruker opprett
         <filename>/etc/sysconfig/ifconfig.eth0</filename> konfigurasjonsfilen
-        ved å bruke følgende kommandoer. Juster passende for ytterligere
+        ved Ã¥ bruke fÃ¸lgende kommandoer. Juster passende for ytterligere
         grensesnitt og for den faktiske ip og ruteren du trenger:
       </para>
 
@@ -334,9 +342,9 @@ EOF</userinput></screen>
 
       <para>
         Hvis du vil konfigurere nettverksgrensesnitt ved oppstart ved hjelp av
-        <command>dhcpcd</command>, må du installere
+        <command>dhcpcd</command>, mÃ¥ du installere
         systemd enheten inkludert i <xref linkend="systemd-units"/>
-        pakken ved å kjøre følgende kommando som
+        pakken ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -348,14 +356,14 @@ EOF</userinput></screen>
 
       <note>
         <para id="dhcpcd-config5">
-          Standardoppførselen til <command>dhcpcd</command> er å stille inn
-          vertsnavn og mtu. Den overskriver også <filename>/etc/resolv.conf
+          StandardoppfÃ¸rselen til <command>dhcpcd</command> er Ã¥ stille inn
+          vertsnavn og mtu. Den overskriver ogsÃ¥ <filename>/etc/resolv.conf
           </filename> og <filename>/etc/ntp.conf</filename>. Disse
-          endringer i systemkonfigurasjonsfiler gjøres av kroker som
+          endringer i systemkonfigurasjonsfiler gjÃ¸res av kroker som
           er lagret i <filename class="directory">
-          /usr/lib/dhcpcd/dhcpcd-hooks</filename>. Du kan endre denne oppførselen
-          ved å fjerne eller legge til kroker fra/til den mappen. Utførelsen
-          av kroker kan deaktiveres ved å bruke <option>--nohook</option>
+          /usr/lib/dhcpcd/dhcpcd-hooks</filename>. Du kan endre denne oppfÃ¸rselen
+          ved Ã¥ fjerne eller legge til kroker fra/til den mappen. UtfÃ¸relsen
+          av kroker kan deaktiveres ved Ã¥ bruke <option>--nohook</option>
           (<option>-C</option>) kommandolinjealternativet eller ved hjelp av
           <option>nohook</option> alternativet i <filename>/etc/dhcpcd.conf
           </filename> filen.
@@ -368,24 +376,24 @@ EOF</userinput></screen>
 
       <note>
         <para>
-          Pass på at du deaktiverer <command>systemd-networkd</command>
-          tjenesten eller konfigurer den til ikke å administrere grensesnittene du ønsker
-          å administrere med <application>dhcpcd</application>.
+          Pass pÃ¥ at du deaktiverer <command>systemd-networkd</command>
+          tjenesten eller konfigurer den til ikke Ã¥ administrere grensesnittene du Ã¸nsker
+          Ã¥ administrere med <application>dhcpcd</application>.
         </para>
       </note>
 
       <para>
-        På dette tidspunktet kan du teste om <command>dhcpcd</command> 
-        oppfører seg som forventet ved å kjøre følgende kommando som
+        PÃ¥ dette tidspunktet kan du teste om <command>dhcpcd</command> 
+        oppfÃ¸rer seg som forventet ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>systemctl start dhcpcd@<replaceable>eth0</replaceable></userinput></screen>
 
       <para>
-        For å starte <command>dhcpcd</command> på et spesifikt grensesnitt
-        ved oppstart, aktiver den tidligere installerte systemd enheten ved å
-        kjøre følgende kommando som
+        For Ã¥ starte <command>dhcpcd</command> pÃ¥ et spesifikt grensesnitt
+        ved oppstart, aktiver den tidligere installerte systemd enheten ved Ã¥
+        kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -435,9 +443,9 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">udev.so</filename></term>
         <listitem>
           <para>
-            legger til udev støtte for grensesnitt ankomst og avgang; dette er
-            fordi udev liker å gi nytt navn til grensesnittet, noe det ikke kan gjøre hvis
-            dhcpcd tar det først
+            legger til udev stÃ¸tte for grensesnitt ankomst og avgang; dette er
+            fordi udev liker Ã¥ gi nytt navn til grensesnittet, noe det ikke kan gjÃ¸re hvis
+            dhcpcd tar det fÃ¸rst
           </para>
           <indexterm zone="dhcpcd dhcpcd-udev">
             <primary sortas="c-dhcpcd-udev">udev.so</primary>
