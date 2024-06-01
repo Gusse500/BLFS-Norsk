@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY opus-download-http
-           "&mozilla-http;/opus/opus-&opus-version;.tar.gz">
+  <!ENTITY opus-download-http "https://downloads.xiph.org/releases/opus/opus-&opus-version;.tar.gz">
   <!ENTITY opus-download-ftp  " ">
-  <!ENTITY opus-md5sum        "d7c07db796d21c9cf1861e0c2b0c0617">
+  <!ENTITY opus-md5sum        "0d89c15268c5c5984f583d7997d2a148">
   <!ENTITY opus-size          "1.0 MB">
-  <!ENTITY opus-buildsize     "26 MB (med tester)">
-  <!ENTITY opus-time          "0.8 SBU  (med tester)">
+  <!ENTITY opus-buildsize     "15 MB (med tester)">
+  <!ENTITY opus-time          "0.5 SBU  (med tester)">
 ]>
 
 <sect1 id="opus" xreflabel="Opus-&opus-version;">
@@ -29,12 +28,12 @@
     <para>
       <application>Opus</application> er et lydkomprimeringsformat med tap
       utviklet av Internet Engineering Task Force (IETF), dvs
-      spesielt egnet for interaktiv tale og lydoverføring over
+      spesielt egnet for interaktiv tale og lydoverfÃ¸ring over
       internettet. Denne pakken gir Opus utviklingsbibliotek og
       deklarasjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &opus-size;
+          NedlastingsstÃ¸rrelse: &opus-size;
         </para>
       </listitem>
       <listitem>
@@ -83,24 +82,27 @@
     <title>Installasjon av Opus</title>
 
     <para>
-      Installer <application>Opus</application> ved å kjøre følgende
+      Installer <application>Opus</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr    \
-            --disable-static \
-            --docdir=/usr/share/doc/opus-&opus-version; &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr        \
+            --buildtype=release  \
+            -Ddocdir=/usr/share/doc/opus-&opus-version; &amp;&amp;
+ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
@@ -108,7 +110,7 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/static-libraries.xml"/>
+      href="../../xincludes/meson-buildtype-release.xml"/>
 
   </sect2>
 
@@ -142,7 +144,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libopus.so</filename></term>
         <listitem>
           <para>
-            gir funksjonene som brukes til å lese og skrive Opus formatet
+            gir funksjonene som brukes til Ã¥ lese og skrive Opus formatet
           </para>
           <indexterm zone="opus libopus">
             <primary sortas="c-libopus">libopus.so</primary>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -7,7 +7,7 @@
   <!ENTITY pulseaudio-download-http
            "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-&pulseaudio-version;.tar.xz">
   <!ENTITY pulseaudio-download-ftp  " ">
-  <!ENTITY pulseaudio-md5sum        "2c7b8ceb5d7337565c7314b4d6087ca8">
+  <!ENTITY pulseaudio-md5sum        "c4a3596a26ff4b9dcd0c394dd1d4f8ee">
   <!ENTITY pulseaudio-size          "1.5 MB">
   <!ENTITY pulseaudio-buildsize     "42 MB (med tester)">
   <!ENTITY pulseaudio-time          "0.2 SBU (Bruker parallellisme=4; legg til 0,2 SBU for tester)">
@@ -28,14 +28,14 @@
 
     <para>
       <application>PulseAudio</application> er et lydsystem for POSIX OS,
-      som betyr at det er en mellomtjener for lydapplikasjoner. Det lar deg gjøre
-      avanserte operasjoner på lyddataene dine når de går mellom dine
-      applikasjonen og maskinvaren din. Ting som å overføre lyden til en
-      annen maskin, endre prøveformatet eller kanaltellingen og mikse
-      flere lyder til en oppnås enkelt ved hjelp av en lydserver.
+      som betyr at det er en mellomtjener for lydapplikasjoner. Det lar deg gjÃ¸re
+      avanserte operasjoner pÃ¥ lyddataene dine nÃ¥r de gÃ¥r mellom dine
+      applikasjonen og maskinvaren din. Ting som Ã¥ overfÃ¸re lyden til en
+      annen maskin, endre prÃ¸veformatet eller kanaltellingen og mikse
+      flere lyder til en oppnÃ¥s enkelt ved hjelp av en lydserver.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +56,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &pulseaudio-size;
+          NedlastingsstÃ¸rrelse: &pulseaudio-size;
         </para>
       </listitem>
       <listitem>
@@ -73,7 +73,7 @@
 
     <bridgehead renderas="sect3">PulseAudio Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libsndfile"/>
     </para>
@@ -96,9 +96,9 @@
       <xref linkend="fftw"/>,
       <xref linkend="gtk3"/>,
       <xref linkend="libsamplerate"/>,
-      <xref linkend="sbc"/> (Bluetooth støtte),
+      <xref linkend="sbc"/> (Bluetooth stÃ¸tte),
       <xref linkend="valgrind"/>,
-      <ulink url="https://www.jackaudio.org/">JACK</ulink>,
+      <ulink url="https://jackaudio.org/">JACK</ulink>,
       <ulink url="https://0pointer.de/lennart/projects/libasyncns/">libasyncns</ulink>,
       <ulink url="https://www.lirc.org/">LIRC</ulink>,
       <ulink url="https://gstreamer.freedesktop.org/src/orc/">ORC</ulink>,
@@ -115,14 +115,14 @@
     <title>Installasjon av PulseAudio</title>
 <!--
     <para>
-      Hvis <xref linkend="doxygen"/> ikke er installert, omgå et bygge
-      problem på grunn av endringene i meson-0.57.2:
+      Hvis <xref linkend="doxygen"/> ikke er installert, omgÃ¥ et bygge
+      problem pÃ¥ grunn av endringene i meson-0.57.2:
     </para>
 
 <screen><userinput>sed '/doxygen/d' -i meson.build</userinput></screen>
 -->
     <para>
-      Installer <application>PulseAudio</application> ved å kjøre følgende
+      Installer <application>PulseAudio</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -138,28 +138,28 @@ meson setup --prefix=/usr       \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>. En test
-      mislykkes hvis testene ikke kjøres som root bruker, men dette kan ignoreres.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>. En test
+      mislykkes hvis testene ikke kjÃ¸res som root bruker, men dette kan ignoreres.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <!-- http://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/SystemWide/ -->
-    <para>Å kjøre PulseAudio som en systemomfattende nisse er mulig, men ikke
+    <para>Ã… kjÃ¸re PulseAudio som en systemomfattende nisse er mulig, men ikke
       anbefalt. Se <ulink
       url="https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/SystemWide/"/>
       for mer informasjon.
        Mens fortsatt som <systemitem class="username">root</systemitem>
       bruker, fjern <application>D-Bus</application> konfigurasjonsfil
-      for systemomfattende nisse for å unngå å lage unødvendige system
+      for systemomfattende nisse for Ã¥ unngÃ¥ Ã¥ lage unÃ¸dvendige system
       brukere og grupper:
     </para>
 
-<screen role="root"><userinput>rm -fv /etc/dbus-1/system.d/pulseaudio-system.conf</userinput></screen>
+<screen role="root"><userinput>rm /usr/share/dbus-1/system.d/pulseaudio-system.conf</userinput></screen>
 
   </sect2>
   <sect2 role="commands">
@@ -170,20 +170,20 @@ ninja</userinput></screen>
 
     <para>
       <parameter>-Dbluez5=disabled</parameter>: Denne bryteren forhindrer
-      en kjøretidsfeil hvis <xref linkend="dbus"/> og <xref linkend="sbc"/>
+      en kjÃ¸retidsfeil hvis <xref linkend="dbus"/> og <xref linkend="sbc"/>
       er begge installert men <xref linkend="bluez"/> ikke er installert.
       Fjern dette hvis du har installert alle tre pakkene.
     </para>
 
     <para>
-      <parameter>-Ddoxygen=false</parameter>: Dette gjør at pakken kan
+      <parameter>-Ddoxygen=false</parameter>: Dette gjÃ¸r at pakken kan
       kompilere hvis <xref linkend="doxygen"/> ikke er installert. Fjern dette
-      hvis du har installert dette og ønsker å bygge dokumentasjonen.
+      hvis du har installert dette og Ã¸nsker Ã¥ bygge dokumentasjonen.
     </para>
 <!--
     <para>
       <parameter>- -disable-rpath</parameter>: Denne bryteren forhindrer
-      linker fra å legge til en hardkodet kjøretidsbane til de installerte
+      linker fra Ã¥ legge til en hardkodet kjÃ¸retidsbane til de installerte
       programmer og biblioteker.
     </para>-->
 
@@ -226,9 +226,9 @@ ninja</userinput></screen>
     <sect3><title>Konfigurasjonsinformasjon</title>
 <!--
       <para>
-        Standard konfigurasjonsfilene tillater å sette opp en fungerende installasjon.
-        En referanse til Console-Kit må imidlertid fjernes.
-        Utfør følgende kommando som
+        Standard konfigurasjonsfilene tillater Ã¥ sette opp en fungerende installasjon.
+        En referanse til Console-Kit mÃ¥ imidlertid fjernes.
+        UtfÃ¸r fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -237,7 +237,7 @@ ninja</userinput></screen>
        In 13.0 this is protected via .ifexists module-console-kit.so
 -->
       <para>
-        Du må kanskje konfigurere lydsystemet. Du kan starte
+        Du mÃ¥ kanskje konfigurere lydsystemet. Du kan starte
         <application>pulseaudio</application> i kommandolinjemodus ved hjelp av
         <command>pulseaudio -C</command> og deretter liste ulik
         informasjon og endre innstillinger. Se
@@ -246,27 +246,27 @@ ninja</userinput></screen>
 
       <para>
         Hvis <application>pulseaudio</application> fungerte, men du ikke lenger
-        har lyd etter å ha sjekket for maskinvareproblemer (høyttalere eller hodetelefoner
-        ikke tilkoblet, ekstern forsterker ikke tilkoblet) kan det hende du må fikse det.
+        har lyd etter Ã¥ ha sjekket for maskinvareproblemer (hÃ¸yttalere eller hodetelefoner
+        ikke tilkoblet, ekstern forsterker ikke tilkoblet) kan det hende du mÃ¥ fikse det.
       </para>
 
       <para>
-        Et forslag er å stenge applikasjoner, som f.eks
-        <application>firefox</application> hvor lyden har sluttet å virke, da
-        kjør: <command>pactl list short sinks</command> fulgt av:
-        <command>pacmd set-default-sink &lt;sink #&gt;</command> og så
-        start applikasjonen på nytt.
+        Et forslag er Ã¥ stenge applikasjoner, som f.eks
+        <application>firefox</application> hvor lyden har sluttet Ã¥ virke, da
+        kjÃ¸r: <command>pactl list short sinks</command> fulgt av:
+        <command>pacmd set-default-sink &lt;sink #&gt;</command> og sÃ¥
+        start applikasjonen pÃ¥ nytt.
       </para>
 
       <para>
-        Hvis det ikke fungerer, fungerer ofte en mer drastisk tilnærming. Etter stenging
+        Hvis det ikke fungerer, fungerer ofte en mer drastisk tilnÃ¦rming. Etter stenging
         av applikasjonenen, lukk pulsaudio, enten ved hjelp av <command>pulseaudio
         --kill</command> eller, hvis det mislykkes, <command>killall -KILL
         pulseaudio</command> og deretter <command>rm -rf
-        ~/.config/pulse/*</command> (og kanskje også
+        ~/.config/pulse/*</command> (og kanskje ogsÃ¥
         <command>rm -rf ~/.pulse/*</command> hvis du har brukt en veldig gammel versjon
-        av pulseaudio på denne maskinen), og kjør deretter <command>pulseaudio
-        --verbose</command> for å starte den på nytt. Hvis nissen starter, start på nytt
+        av pulseaudio pÃ¥ denne maskinen), og kjÃ¸r deretter <command>pulseaudio
+        --verbose</command> for Ã¥ starte den pÃ¥ nytt. Hvis nissen starter, start pÃ¥ nytt
         applikasjonen. Se <command>man pulseaudio</command> for flere alternativer.
       </para>
 
@@ -332,7 +332,7 @@ ninja</userinput></screen>
         <term><command>pacat</command></term>
         <listitem>
           <para>
-            spiller av eller tar opp rå eller kodede lydstrømmer på en
+            spiller av eller tar opp rÃ¥ eller kodede lydstrÃ¸mmer pÃ¥ en
             <application>PulseAudio</application> lydserver
           </para>
           <indexterm zone="pulseaudio pacat">
@@ -345,8 +345,8 @@ ninja</userinput></screen>
         <term><command>pacmd</command></term>
         <listitem>
           <para>
-            er et verktøy som brukes til å rekonfigurere en <application>PulseAudio</application>
-            lydserver under kjøring
+            er et verktÃ¸y som brukes til Ã¥ rekonfigurere en <application>PulseAudio</application>
+            lydserver under kjÃ¸ring
           </para>
           <indexterm zone="pulseaudio pacmd">
             <primary sortas="b-pacmd">pacmd</primary>
@@ -358,7 +358,7 @@ ninja</userinput></screen>
         <term><command>pactl</command></term>
         <listitem>
           <para>
-            brukes til å kontrollere en kjørende <application>PulseAudio</application>
+            brukes til Ã¥ kontrollere en kjÃ¸rende <application>PulseAudio</application>
             lydserver
           </para>
           <indexterm zone="pulseaudio pactl">
@@ -395,7 +395,7 @@ ninja</userinput></screen>
         <term><command>paplay</command></term>
         <listitem>
           <para>
-            brukes til å spille av lydfiler på en
+            brukes til Ã¥ spille av lydfiler pÃ¥ en
             <application>PulseAudio</application> lydserver
           </para>
           <indexterm zone="pulseaudio paplay">
@@ -432,10 +432,10 @@ ninja</userinput></screen>
         <term><command>pasuspender</command></term>
         <listitem>
           <para>
-            er et verktøy som kan brukes til å fortelle en lokal
-            <application>PulseAudio</application> lydserver til å midlertidig
-            suspendere tilgangen til lydenhetene for å tillate andre applikasjoner
-            å få direkte tilgang til dem
+            er et verktÃ¸y som kan brukes til Ã¥ fortelle en lokal
+            <application>PulseAudio</application> lydserver til Ã¥ midlertidig
+            suspendere tilgangen til lydenhetene for Ã¥ tillate andre applikasjoner
+            Ã¥ fÃ¥ direkte tilgang til dem
           </para>
           <indexterm zone="pulseaudio pasuspender">
             <primary sortas="b-pasuspender">pasuspender</primary>
@@ -502,7 +502,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
             Starter <application>PulseAudio</application> og laster
-            module-device-manager for å bruke KDE rutingspolicyer.
+            module-device-manager for Ã¥ bruke KDE rutingspolicyer.
           </para>
           <indexterm zone="pulseaudio start-pulseaudio-kde">
             <primary sortas="b-start-pulseaudio-kde">start-pulseaudio-kde</primary>
@@ -515,7 +515,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
             starter <application>PulseAudio</application> og registrerer det til
-            X11 øktbehandler
+            X11 Ã¸ktbehandler
           </para>
           <indexterm zone="pulseaudio start-pulseaudio-x11">
             <primary sortas="b-start-pulseaudio-x11">start-pulseaudio-x11</primary>
