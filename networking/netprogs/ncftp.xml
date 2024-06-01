@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY ncftp-download-http " ">
-  <!ENTITY ncftp-download-ftp  "ftp://ftp.ncftp.com/ncftp/ncftp-&ncftp-version;-src.tar.xz">
-  <!ENTITY ncftp-md5sum        "42d0f896d69a4d603ec097546444245f">
-  <!ENTITY ncftp-size          "412 KB">
-  <!ENTITY ncftp-buildsize     "6.6 MB">
+  <!ENTITY ncftp-download-http "https://www.ncftp.com/downloads/ncftp/ncftp-&ncftp-version;-src.tar.xz">
+  <!ENTITY ncftp-download-ftp  " ">
+  <!ENTITY ncftp-md5sum        "bbcb048d2412f4d62bc798818e703680">
+  <!ENTITY ncftp-size          "416 KB">
+  <!ENTITY ncftp-buildsize     "6.9 MB">
   <!ENTITY ncftp-time          "0.2 SBU">
 ]>
 
@@ -27,12 +27,12 @@
 
     <para>
       <application>NcFTP</application> pakken inneholder
-      et kraftig og fleksibelt grensesnitt til Internett standard Filoverførings
-      Protokoll. Den er ment å erstatte eller supplere
+      et kraftig og fleksibelt grensesnitt til Internett standard FiloverfÃ¸rings
+      Protokoll. Den er ment Ã¥ erstatte eller supplere
       <command>ftp</command> programmet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &ncftp-size;
+          NedlastingsstÃ¸rrelse: &ncftp-size;
         </para>
       </listitem>
       <listitem>
@@ -67,17 +67,17 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/ncftp-&ncftp-version;-configure_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <bridgehead renderas="sect3">NcFTP Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -91,40 +91,41 @@
     <title>Installation of NcFTP</title>
 
     <para>
-      Det er to måter å bygge <application>NcFTP</application> på.  Den første
-      (og optimal) måten bygger mesteparten av funksjonaliteten som et delt bibliotek
+      Det er to mÃ¥ter Ã¥ bygge <application>NcFTP</application> pÃ¥.  Den fÃ¸rste
+      (og optimal) mÃ¥ten bygger mesteparten av funksjonaliteten som et delt bibliotek
       og deretter bygger og installerer programmet koblet mot dette biblioteket.
-      Den andre metoden kobler ganske enkelt all funksjonalitet til binæren
-      statisk. Dette gjør ikke det dynamiske biblioteket tilgjengelig for kobling
-      av andre applikasjoner. Du må velge hvilken metode som passer deg best.
+      Den andre metoden kobler ganske enkelt all funksjonalitet til binÃ¦ren
+      statisk. Dette gjÃ¸r ikke det dynamiske biblioteket tilgjengelig for kobling
+      av andre applikasjoner. Du mÃ¥ velge hvilken metode som passer deg best.
       Merk at den andre metoden <emphasis>ikke</emphasis> oppretter en
-      helt statisk koblet binær; bare <filename
+      helt statisk koblet binÃ¦r; bare <filename
       class="libraryfile">libncftp</filename> deler er statisk koblet,
-      i dette tilfellet. Vær oppmerksom på at det å bygge og bruke det delte biblioteket er
-      dekket av Clarified Artistic License; imidlertid å utvikle
+      i dette tilfellet. VÃ¦r oppmerksom pÃ¥ at det Ã¥ bygge og bruke det delte biblioteket er
+      dekket av Clarified Artistic License; imidlertid Ã¥ utvikle
       applikasjoner som bruker det delte biblioteket er underlagt en annen
       tillatelse.
     </para>
-
+<!--
     <para>
-      Først, fiks et problem forårsaket av en endring i atferd i GCC-10:
+      FÃ¸rst, fiks et problem forÃ¥rsaket av en endring i atferd i GCC-10:
     </para>
 
 <screen><userinput remap="pre">sed -i 's/^Bookmark/extern Bookmark/' sh_util/gpshare.c</userinput></screen>
-
+-->
     <para>
-      Deretter oppdaterer du konfigureringsskriptet til å bruke moderne C standarder:
+      Deretter oppdaterer du konfigureringsskriptet til Ã¥ bruke moderne C standarder:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../ncftp-&ncftp-version;-configure_fixes-1.patch &amp;&amp;
 autoreconf -fiv -I autoconf_local</userinput></screen>
 
     <para>
-      For å installere <application>NcFTP</application> ved å bruke
-      den første (og optimale) metoden, kjør følgende kommandoer:
+      For Ã¥ installere <application>NcFTP</application> ved Ã¥ bruke
+      den fÃ¸rste (og optimale) metoden, kjÃ¸r fÃ¸lgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
+<screen><userinput>CC=/usr/bin/gcc \
+./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
 make -C libncftp shared &amp;&amp;
 make</userinput></screen>
 
@@ -133,16 +134,16 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role='root'><userinput>make -C libncftp soinstall &amp;&amp;
 make install</userinput></screen>
 
     <para>
-      For å installere <application>NcFTP</application> ved å bruke
+      For Ã¥ installere <application>NcFTP</application> ved Ã¥ bruke
       den andre metoden (med <filename class="libraryfile">libncftp</filename>
-      funksjonalitet koblet inn statisk) kjør følgende kommandoer:
+      funksjonalitet koblet inn statisk) kjÃ¸r fÃ¸lgende kommandoer:
     </para>
 
 <screen role="nodump"><userinput>./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
@@ -153,7 +154,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="nodump"><userinput>make install</userinput></screen>
@@ -164,9 +165,16 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
+      <envar>CC=/usr/bin/gcc</envar>. Denne miljÃ¸variabelen sikrer
+      at <command>gcc</command> blir brukt hvis <xref linkend="llvm"/> er
+      installert.  Byggeprosedyren er brutt hvis <command>gcc</command>
+      ikke blir brukt.
+    </para>
+
+    <para>
       <command>make -C ... &amp;&amp; make -C ...</command>:
       Disse kommandoene lager og installerer det dynamiske biblioteket <filename
-      class="libraryfile">libncftp</filename> som deretter brukes til å linke
+      class="libraryfile">libncftp</filename> som deretter brukes til Ã¥ linke
       mot ved kompilering av hovedprogrammet.
     </para>
 
@@ -199,10 +207,10 @@ make</userinput></screen>
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        De fleste <application>NcFTP</application> konfigurasjonene gjøres mens du er i
+        De fleste <application>NcFTP</application> konfigurasjonene gjÃ¸res mens du er i
         programmet, og konfigurasjonsfilene behandles automatisk.
         Et unntak fra dette er <filename>~/.ncftp/prefs_v3</filename>. Det
-        er forskjellige alternativer å endre der, inkludert:
+        er forskjellige alternativer Ã¥ endre der, inkludert:
       </para>
 
 <screen><literal>yes-i-know-about-NcFTPd=yes</literal></screen>
@@ -284,8 +292,8 @@ make</userinput></screen>
         <term><command>ncftpget</command></term>
         <listitem>
           <para>
-            er et internett filoverføringsprogram for skript som brukes til
-            å hente filer
+            er et internett filoverfÃ¸ringsprogram for skript som brukes til
+            Ã¥ hente filer
           </para>
           <indexterm zone="ncftp ncftpget">
             <primary sortas="b-ncftpget">ncftpget</primary>
@@ -297,8 +305,8 @@ make</userinput></screen>
         <term><command>ncftpls</command></term>
         <listitem>
           <para>
-            er et internett filoverføringsprogram for skript som brukes til
-            å liste filer
+            er et internett filoverfÃ¸ringsprogram for skript som brukes til
+            Ã¥ liste filer
           </para>
           <indexterm zone="ncftp ncftpls">
             <primary sortas="b-ncftpls">ncftpls</primary>
@@ -310,8 +318,8 @@ make</userinput></screen>
         <term><command>ncftpput</command></term>
         <listitem>
           <para>
-            er et internett filoverføringsprogram for skript som brukes til
-            å overføre filer
+            er et internett filoverfÃ¸ringsprogram for skript som brukes til
+            Ã¥ overfÃ¸re filer
           </para>
           <indexterm zone="ncftp ncftpput">
             <primary sortas="b-ncftpput">ncftpput</primary>
