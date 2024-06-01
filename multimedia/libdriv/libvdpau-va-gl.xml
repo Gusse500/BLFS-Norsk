@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libvdpau-va-gl-version       "0.4.0">
+  <!ENTITY libvdpau-va-gl-version       "0.4.2">
 
   <!ENTITY libvdpau-va-gl-download-http "https://github.com/i-rinat/libvdpau-va-gl/archive/v&libvdpau-va-gl-version;/libvdpau-va-gl-&libvdpau-va-gl-version;.tar.gz">
   <!ENTITY libvdpau-va-gl-download-ftp  " ">
-  <!ENTITY libvdpau-va-gl-md5sum        "638244652a702d0262039890904f37ce">
+  <!ENTITY libvdpau-va-gl-md5sum        "8db21dcfd5cd14c6ec51b992e20369dc">
   <!ENTITY libvdpau-va-gl-size          "120 KB">
-  <!ENTITY libvdpau-va-gl-buildsize     "3.4 MB">
-  <!ENTITY libvdpau-va-gl-time          "mindre enn 0.1 SBU">
+  <!ENTITY libvdpau-va-gl-buildsize     "4.9 MB">
+  <!ENTITY libvdpau-va-gl-time          "mindre enn 0.1 SBU (legg til 1.1 SBU for tester)">
 ]>
 
   <sect1 id="libvdpau-va-gl" xreflabel="libvdpau-va-gl-&libvdpau-va-gl-version;">
@@ -33,13 +33,13 @@
       <para>
         <application>libvdpau-va-gl</application> pakken inneholder et bibliotek
         som implementerer VDPAU biblioteket. Libvdpau_va_gl bruker OpenGL under
-        panseret for å akselerere tegning og skalering og VA-API (hvis tilgjengelig) til
-        å akselerere videodekoding. Foreløpig er VA-API tilgjengelig på enkelte Intel
-        brikker, og på noen AMD skjermkort ved hjelp av libvdpau
+        panseret for Ã¥ akselerere tegning og skalering og VA-API (hvis tilgjengelig) til
+        Ã¥ akselerere videodekoding. ForelÃ¸pig er VA-API tilgjengelig pÃ¥ enkelte Intel
+        brikker, og pÃ¥ noen AMD skjermkort ved hjelp av libvdpau
         driver.
       </para>
 
-      &lfs120_checked;
+      &lfs121_checked;
 
       <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -60,7 +60,7 @@
         </listitem>
         <listitem>
           <para>
-            Libvdpau-va-gl Driver Nedlastingsstørrelse: &libvdpau-va-gl-size;
+            Libvdpau-va-gl Driver NedlastingsstÃ¸rrelse: &libvdpau-va-gl-size;
           </para>
         </listitem>
         <listitem>
@@ -77,11 +77,12 @@
 
       <bridgehead renderas="sect3">libvdpau-va-gl Avhengigheter</bridgehead>
 
-      <bridgehead renderas="sect4">Påkrevd</bridgehead>
+      <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
       <para role="required">
         <xref linkend="cmake"/>,
-        <xref linkend="libvdpau"/>, og
-        <xref linkend="libva"/>
+        <xref linkend="libvdpau"/>,
+        <xref linkend="libva"/>, og
+        <xref linkend="mesa"/>
       </para>
 
       <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -91,42 +92,36 @@
         <xref linkend="texlive"/> eller <xref linkend="tl-installer"/>
       </para>
 
-      <bridgehead renderas="sect4">Kjøretid Avhengighet</bridgehead>
-      <para role="optional">
-        <xref role="runtime" linkend="mesa"/>
-      </para>
-
     </sect2>
 
     <sect2 role="installation">
       <title>Installasjon av libvdpau-va-gl</title>
 
       <para>
-        Installer <application>libvdpau-va-gl</application> ved å kjøre følgende
+        Installer <application>libvdpau-va-gl</application> ved Ã¥ kjÃ¸re fÃ¸lgende
         kommandoer:
       </para>
 
-<screen><userinput>sed -e '/#include &lt;stdlib.h&gt;/a #include &lt;string&gt;' -i src/api-device.cc &amp;&amp;
-
-mkdir build &amp;&amp;
+<screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$XORG_PREFIX .. &amp;&amp;
 make</userinput></screen>
 
       <para>
-        For å teste resultatene, utsted: <command>make check</command>.  Testene må
-        kjøres fra et Xorg miljø.
+        For Ã¥ teste resultatene, utsted: <command>make check</command>.  Testene mÃ¥
+        kjÃ¸res fra et Xorg miljÃ¸.
       </para>
 
       <para>
-        Nå, som <systemitem class="username">root</systemitem> bruker:
+        NÃ¥, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     </sect2>
 
+<!--
     <sect2 role="commands">
       <title>Parameterforklaringer</title>
 
@@ -136,13 +131,13 @@ make</userinput></screen>
       </para>
 
     </sect2>
-
+-->
 
     <sect2 role="configuration">
       <title>Konfigurasjon</title>
 
       <para>
-        For å la libvdpau finne libvdpau-va-gl, sett en miljøvariabel.
+        For Ã¥ la libvdpau finne libvdpau-va-gl, sett en miljÃ¸variabel.
         Som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -180,7 +175,7 @@ make</userinput></screen>
           <term><filename class="libraryfile">libvdpau_va_gl.so</filename></term>
           <listitem>
             <para>
-              inneholder funksjoner for å implementere OpenGL bakstykket til
+              inneholder funksjoner for Ã¥ implementere OpenGL bakstykket til
               VDPAU (Video Decode and Presentation API for Unix) API
             </para>
             <indexterm zone="libvdpau-va-gl libvdpau-va-gl-lib">
