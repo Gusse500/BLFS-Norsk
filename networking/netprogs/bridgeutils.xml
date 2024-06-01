@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -26,12 +26,12 @@
     <title>Introduksjon bridge-utils</title>
 
     <para>
-      <application>bridge-utils</application> pakken inneholder et verktøy
-      nødvendig for å opprette og administrere broenheter. Dette er nyttig ved oppsett
+      <application>bridge-utils</application> pakken inneholder et verktÃ¸y
+      nÃ¸dvendig for Ã¥ opprette og administrere broenheter. Dette er nyttig ved oppsett
       av nettverk for en vertsbasert virtuell maskin (VM).
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &bridge-size;
+          NedlastingsstÃ¸rrelse: &bridge-size;
         </para>
       </listitem>
       <listitem>
@@ -69,7 +69,7 @@
 
     <bridgehead renderas="sect3">bridge-utils Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Valgfri (for å kjøre testene)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (for Ã¥ kjÃ¸re testene)</bridgehead>
     <para role="optional">
       <xref linkend="net-tools"/>
     </para>
@@ -81,15 +81,15 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen
-      og kompiler kjernen på nytt om nødvendig:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen
+      og kompiler kjernen pÃ¥ nytt om nÃ¸dvendig:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="bridgeutils-kernel.xml"/>
 
     <indexterm zone="bridgeutils bridgeutils-kernel">
-      <primary sortas="d-bridgeutils">Bridge Verktøy</primary>
+      <primary sortas="d-bridgeutils">Bridge VerktÃ¸y</primary>
     </indexterm>
 
   </sect2>
@@ -98,7 +98,7 @@
     <title>Installasjon av bridge-utils</title>
 
     <para>
-      Installer <application>bridge-utils</application> ved å kjøre følgende
+      Installer <application>bridge-utils</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -107,7 +107,7 @@
 make</userinput></screen>
 
     <para>
-      Testing av resultatene krever å kjøre de seks skallskriptene i
+      Testing av resultatene krever Ã¥ kjÃ¸re de seks skallskriptene i
       <filename class='directory'>tools/</filename> mappen.
       To av testene krever to Ethernet porter. Noen tester
       vil ikke bevare den gjeldende nettverkskonfigurasjonen. Se
@@ -115,7 +115,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -129,7 +129,7 @@ make</userinput></screen>
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        For å automatisere brooppretting og konfigurasjon,
+        For Ã¥ automatisere brooppretting og konfigurasjon,
         installer <filename>/usr/lib/services/bridge</filename>
         tjenesteskript inkludert i <xref linkend="bootscripts"/>
         pakken.
@@ -152,28 +152,28 @@ make</userinput></screen>
       </note>
 
       <para>
-        Følgende konfigurasjonsfil vil opprette en broenhet ved
+        FÃ¸lgende konfigurasjonsfil vil opprette en broenhet ved
         oppstart og feste eth0 enheten til den. Hvis mer enn en enhet er
-        ønsket, bruk en mellomromseparert liste over INTERFACE_COMPONENTS. Denne
-        konfigurasjon er nyttig når du planlegger å kjøre en virtuell maskin som f.eks
+        Ã¸nsket, bruk en mellomromseparert liste over INTERFACE_COMPONENTS. Denne
+        konfigurasjon er nyttig nÃ¥r du planlegger Ã¥ kjÃ¸re en virtuell maskin som f.eks
         kvm/qemu.
       </para>
 
       <para>
         Andre <envar>SERVICE</envar> kombinasjoner er mulig, for eksempel,
-        <code>SERVICE="bridge dhcp"</code>.  I så fall adresseparametere
-        er ikke nødvendig, men forstyrrer ikke hvis de er tilstede.
-        Brotjenesten kan også brukes alene, men vil kreve
-        ytterligere etterfølgende konfigurasjon.
+        <code>SERVICE="bridge dhcp"</code>.  I sÃ¥ fall adresseparametere
+        er ikke nÃ¸dvendig, men forstyrrer ikke hvis de er tilstede.
+        Brotjenesten kan ogsÃ¥ brukes alene, men vil kreve
+        ytterligere etterfÃ¸lgende konfigurasjon.
       </para>
 
       <caution>
         <para>
-          Ikke kjør en parallell konfigurasjon for en enhet i
+          Ikke kjÃ¸r en parallell konfigurasjon for en enhet i
           INTERFACE_COMPONENTS listen. For eksempel, i eksemplet nedenfor, ikke
-          konfigurer <filename>/etc/sysconfig/ifconfig.eth0</filename> til å kjøre ved
+          konfigurer <filename>/etc/sysconfig/ifconfig.eth0</filename> til Ã¥ kjÃ¸re ved
           oppstart. Kommandoen <command>ifdown br0</command> etterfulgt av
-          kommandoen <command>ifup eth0</command> vil fungere, men ikke prøv å ha
+          kommandoen <command>ifup eth0</command> vil fungere, men ikke prÃ¸v Ã¥ ha
           begge oppe samtidig.
         </para>
       </caution>
@@ -194,7 +194,7 @@ IP_FORWARD=true</literal>
 EOF</userinput></screen>
 
       <para>
-        Alle adresser bør endres for å møte dine omstendigheter.
+        Alle adresser bÃ¸r endres for Ã¥ mÃ¸te dine omstendigheter.
       </para>
 
     </sect3>
@@ -238,7 +238,7 @@ EOF</userinput></screen>
         <term><command>brctl</command></term>
         <listitem>
           <para>
-            er et program som brukes til å sette opp, vedlikeholde og inspisere
+            er et program som brukes til Ã¥ sette opp, vedlikeholde og inspisere
             ethernet brokonfigurasjonen i linuxkjernen
           </para>
           <indexterm zone="bridgeutils brctl">
