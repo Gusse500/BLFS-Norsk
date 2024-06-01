@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,16 +6,16 @@
 
   <!ENTITY libnl-download-http "https://github.com/thom311/libnl/releases/download/libnl&libnl-dl-version;/libnl-&libnl-version;.tar.gz">
   <!ENTITY libnl-download-ftp  " ">
-  <!ENTITY libnl-md5sum        "b381405afd14e466e35d29a112480333">
-  <!ENTITY libnl-size          "980 KB">
-  <!ENTITY libnl-buildsize     "31 MB (med API dokumentsjon)">
-  <!ENTITY libnl-time          "0.4 SBU (med API dokumentsjon)">
+  <!ENTITY libnl-md5sum        "27bffaccbb22ab9d8cff377b320f6014">
+  <!ENTITY libnl-size          "1.1 MB">
+  <!ENTITY libnl-buildsize     "74 MB (med API dokumentsjon)">
+  <!ENTITY libnl-time          "0.6 SBU (med API dokumentsjon)">
 
 
   <!ENTITY libnl-doc-download-http "https://github.com/thom311/libnl/releases/download/libnl&libnl-dl-version;/libnl-doc-&libnl-version;.tar.gz">
   <!ENTITY libnl-doc-download-ftp  " ">
-  <!ENTITY libnl-doc-md5sum        "15f55a421a16ff4084c4a1af085c19b8">
-  <!ENTITY libnl-doc-size          "13 MB">
+  <!ENTITY libnl-doc-md5sum        "3259c70458712f34a40b8345f405f5ac">
+  <!ENTITY libnl-doc-size          "3.8 MB">
 ]>
 
 <sect1 id="libnl" xreflabel="libnl-&libnl-version;">
@@ -35,7 +35,7 @@
       som gir APIer til netlink protokollbaserte Linux kjernegrensesnitt.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +56,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libnl-size;
+          NedlastingsstÃ¸rrelse: &libnl-size;
         </para>
       </listitem>
       <listitem>
@@ -90,7 +90,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libnl-doc-size;
+          NedlastingsstÃ¸rrelse: &libnl-doc-size;
         </para>
       </listitem>
     </itemizedlist>
@@ -111,14 +111,14 @@
     <title>Installasjon av libnl</title>
 <!--
     <para>
-      Hvis du skal kjøre pakketestene, bruk denne oppdateringen:
+      Hvis du skal kjÃ¸re pakketestene, bruk denne oppdateringen:
     </para>
 
 <screen><userinput>patch -Np1 -i ../libnl-&libnl-version;-upstream_test_fix-1.patch
 autoreconf -fi</userinput></screen>
 -->
     <para>
-      Installer <application>libnl</application> ved å kjøre følgende
+      Installer <application>libnl</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -127,23 +127,44 @@ autoreconf -fi</userinput></screen>
             --disable-static  &amp;&amp;
 make</userinput></screen>
 
+    <!-- "keyboard inputs not displayed at all" highly reproducible in
+         a QEMU VM with -j8 under Linux console.  In xterm I've seen "all
+         texts blinking".  I'd considered this caused by my CFLAGS, but
+         this time I've not deviated from the book at all.  -->
+    <note>
+      <para>
+        Hvis <command>make</command> kommandoen ble utfÃ¸rt med
+        flere parallelle jobber aktivert, kan det forstyrre terminalmodusen
+        og forÃ¥rsake noen <quote>morsomme</quote> visuelle effekter. I
+        I verste fall kan dette problemet fÃ¸re til at tastaturindataer ikke
+        vises pÃ¥ skjermen i det hele tatt (men du kan fortsatt kjÃ¸re en hvilken som helst kommando
+        hvis du kan skrive det riktig). KjÃ¸r <command>reset</command>
+        Ã¥ fikse et slikt problem.
+      </para>
+    </note>
+
     <para>
-      Denne pakken kommer ikke med en fungerende testpakke.
-      <!--For å teste resultatene, kjør: <command>make check</command>.
-      En deltest er kjent for å mislykkes.-->
-      <!-- Hvis kjernen ikke har CONFIG_IPC_NS=y, én deltest tests/check-all
-      mislykkes.  Hvis den har det, mislykkes undertesten fortsatt på et annet sted
-      av ukjente årsaker. Version 3.6.0. -->
+      Hvis du Ã¸nsker Ã¥ kjÃ¸re testene, sjekk at fÃ¸lgende alternativer
+      er aktivert i kjernekonfigurasjonen og kompilerer kjernen pÃ¥ nytt
+      hvis nÃ¸dvendig. Noen av dem er kanskje ikke strengt nÃ¸dvendig, men de
+      skal stÃ¸tte en fullstendig testdekning.
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="libnl-test-kernel.xml"/>
+
+    <para>
+      For Ã¥ teste resultatene, utsted: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      Hvis du ønsker å installere API dokumentasjonen, som
+      Hvis du Ã¸nsker Ã¥ installere API dokumentasjonen, som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -161,7 +182,7 @@ tar -xf ../libnl-doc-&libnl-version;.tar.gz --strip-components=1 --no-same-owner
 
     <para>
       <option>--disable-cli</option>: Bruk denne parameteren hvis du
-      ikke ønsker å installere cli verktøy levert av pakken.
+      ikke Ã¸nsker Ã¥ installere cli verktÃ¸y levert av pakken.
     </para>
 
   </sect2>
@@ -219,7 +240,7 @@ tar -xf ../libnl-doc-&libnl-version;.tar.gz --strip-components=1 --no-same-owner
         <term><command>genl-ctrl-list</command></term>
         <listitem>
           <para>
-            spør den generiske Netlink kontrolleren i kjernen og skriver ut
+            spÃ¸r den generiske Netlink kontrolleren i kjernen og skriver ut
             en liste over alle registrerte generiske Netlink familier inkludert
             versjonen av grensesnittet som er registrert
           </para>
@@ -257,7 +278,7 @@ tar -xf ../libnl-doc-&libnl-version;.tar.gz --strip-components=1 --no-same-owner
         <term><command>nl-classid-lookup</command></term>
         <listitem>
           <para>
-            brukes til å løse qdisc/class navn til classid verdier og vice
+            brukes til Ã¥ lÃ¸se qdisc/class navn til classid verdier og vice
             versa
           </para>
           <indexterm zone="libnl nl-classid-lookup">
@@ -342,7 +363,7 @@ tar -xf ../libnl-doc-&libnl-version;.tar.gz --strip-components=1 --no-same-owner
         <term><command>nl-qdisc-add</command></term>
         <listitem>
           <para>
-            legger til kødisipliner (qdiscs) i kjernen
+            legger til kÃ¸disipliner (qdiscs) i kjernen
           </para>
           <indexterm zone="libnl nl-qdisc-add">
             <primary sortas="b-nl-qdisc-add">nl-qdisc-add</primary>
@@ -354,7 +375,7 @@ tar -xf ../libnl-doc-&libnl-version;.tar.gz --strip-components=1 --no-same-owner
         <term><command>nl-qdisc-delete</command></term>
         <listitem>
           <para>
-             fjerner kødisipliner (qdiscs) i kjernen
+             fjerner kÃ¸disipliner (qdiscs) i kjernen
           </para>
           <indexterm zone="libnl nl-qdisc-delete">
             <primary sortas="b-nl-qdisc-delete">nl-qdisc-delete</primary>
@@ -366,7 +387,7 @@ tar -xf ../libnl-doc-&libnl-version;.tar.gz --strip-components=1 --no-same-owner
         <term><command>nl-qdisc-list</command></term>
         <listitem>
           <para>
-            lister kødisipliner (qdiscs) i kjernen
+            lister kÃ¸disipliner (qdiscs) i kjernen
           </para>
           <indexterm zone="libnl nl-qdisc-list">
             <primary sortas="b-nl-qdisc-list">nl-qdisc-list</primary>
@@ -378,7 +399,7 @@ tar -xf ../libnl-doc-&libnl-version;.tar.gz --strip-components=1 --no-same-owner
         <term><filename class="libraryfile">libnl*-3.so</filename></term>
         <listitem>
           <para>
-            Disse bibliotekene inneholder API funksjoner som brukes for å få tilgang til Netlink
+            Disse bibliotekene inneholder API funksjoner som brukes for Ã¥ fÃ¥ tilgang til Netlink
             grensesnitt i Linux kjernen
           </para>
           <indexterm zone="libnl libnl-lib">
