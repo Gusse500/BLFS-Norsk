@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY curl-download-http "https://curl.se/download/curl-&curl-version;.tar.xz">
   <!ENTITY curl-download-ftp  " ">
-  <!ENTITY curl-md5sum        "556576a795bdd2c7d10de6886480065f">
+  <!ENTITY curl-md5sum        "8f28f7e08c91cc679a45fccf66184fbc">
   <!ENTITY curl-size          "2.5 MB">
-  <!ENTITY curl-buildsize     "42 MB (legg til 23 MB for tester)">
-  <!ENTITY curl-time          "0.1 SBU (med parallellitet=4; legg til 15 SBU for tester (uten valgrind, legg til 36 SBU med valgrind)">
+  <!ENTITY curl-buildsize     "42 MB (legg til 18 MB for tester)">
+  <!ENTITY curl-time          "0.2 SBU (med parallellitet=4; legg til 4.1 SBU for tester (uten valgrind, legg til 36 SBU med valgrind)">
 ]>
 
 <sect1 id="curl" xreflabel="cURL-&curl-version;">
@@ -26,16 +26,16 @@
     <title>Introduksjon til cURL</title>
 
     <para>
-      <application>cURL</application> pakken inneholder et verktøy
-      og et bibliotek som brukes til å overføre filer med URL syntaks til hvilken som helst av
-      følgende protokoller: DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP,
+      <application>cURL</application> pakken inneholder et verktÃ¸y
+      og et bibliotek som brukes til Ã¥ overfÃ¸re filer med URL syntaks til hvilken som helst av
+      fÃ¸lgende protokoller: DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP,
       HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTSP, SMB, SMBS,
-      SMTP, SMPTS, TELNET og TFTP. Dens evne til både å laste ned
-      og laste opp filer kan integreres i andre programmer for å støtte
-      funsksjoner som å strømme media.
+      SMTP, SMPTS, TELNET og TFTP. Dens evne til bÃ¥de Ã¥ laste ned
+      og laste opp filer kan integreres i andre programmer for Ã¥ stÃ¸tte
+      funsksjoner som Ã¥ strÃ¸mme media.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +56,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &curl-size;
+          NedlastingsstÃ¸rrelse: &curl-size;
         </para>
       </listitem>
       <listitem>
@@ -75,7 +75,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/curl-&curl-version;-function_naming-1.patch"/>
         </para>
       </listitem>
@@ -86,7 +86,20 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref role="runtime" linkend="make-ca"/> (kjøretid)
+      <xref linkend="libpsl"/>
+    </para>
+
+    <note>
+      <para>
+        Mens det er et alternativ for Ã¥ bygge pakken uten libpsl, begge deler
+        bÃ¥de oppstrÃ¸msutviklerne og BLFS redaktÃ¸rene anbefaler pÃ¥ det sterkeste
+        ikke deaktivere stÃ¸tte for libpsl pÃ¥ grunn av alvorlige sikkerhetsimplikasjoner.
+      </para>
+    </note>
+
+    <bridgehead renderas="sect4">Anbefalt ved kjÃ¸retid</bridgehead>
+    <para role="recommended">
+      <xref role="runtime" linkend="make-ca"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -95,7 +108,6 @@
       <xref linkend="c-ares"/>,
       <xref linkend="gnutls"/>,
       <xref linkend="libidn2"/>,
-      <xref linkend="libpsl"/>,
       <xref linkend="libssh2"/>,
       <xref linkend="mitkrb"/>,
       <xref linkend="nghttp2"/>,
@@ -104,7 +116,7 @@
            used for /usr/bin/ntlm_auth helper.  The path is correctly
            guessed even if Samba is not installed, so "runtime".  -->
       <xref role='runtime' linkend="samba"/>
-      (kjøretid, for NTLM autentisering),
+      (kjÃ¸retid, for NTLM autentisering),
       <ulink url="https://www.gnu.org/software/gsasl/">gsasl</ulink>,
       <ulink url="https://www.secureauth.com/labs/open-source-tools/impacket/">impacket</ulink>,
       <ulink url="https://launchpad.net/libmetalink/">libmetalink</ulink>,
@@ -117,14 +129,15 @@
       <ulink url="https://spnego.sourceforge.net/">SPNEGO</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Valgfritt hvis du kjører testpakken</bridgehead>
+    <bridgehead renderas="sect4">Valgfritt hvis du kjÃ¸rer testpakken</bridgehead>
     <para role="optional">
       <!-- stunnel is still listed in the docs as required, but 7.58.0
        tests completed happily without it, although the test for unit1323
        reported that the tool set in the test case does not exist - ken -->
       <xref linkend="apache"/> og
-      <xref linkend="stunnel"/> (for HTTPS og FTPS tester), og
-      <xref linkend="valgrind"/> (dette vil gjøre at testene kjører saktere og kan forårsake feil.)
+      <xref linkend="stunnel"/> (for HTTPS og FTPS tester),
+      <xref linkend="openssh"/>, og
+      <xref linkend="valgrind"/> (dette vil gjÃ¸re at testene kjÃ¸rer saktere og kan forÃ¥rsake feil.)
     </para>
 
   </sect2>
@@ -133,7 +146,7 @@
     <title>Installasjon av cURL</title>
 
     <para>
-      Installer <application>cURL</application> ved å kjøre følgende
+      Installer <application>cURL</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -150,9 +163,9 @@ make</userinput></screen>
    TESTDONE: 1092 tests were considered during 1080 seconds
 
     <para>
-      Det er valgfritt å kjøre testpakken. Omtrent 2 % av testene mislykkes. Økning
-      i testtid ved hver ikke bestått test er omtrent 10 %. Test SBU ovenfor var
-      oppnådd ved deaktivering av feilede tester, med:
+      Det er valgfritt Ã¥ kjÃ¸re testpakken. Omtrent 2 % av testene mislykkes. Ã˜kning
+      i testtid ved hver ikke bestÃ¥tt test er omtrent 10 %. Test SBU ovenfor var
+      oppnÃ¥dd ved deaktivering av feilede tester, med:
     </para>
 
     2017-10-29 - bdubbs
@@ -173,14 +186,17 @@ make</userinput></screen>
 -->
 
     <para>
-       For å teste resultatene, kjør: <command>make test</command>.
-       <!--Fire tester, 1139, 1140, 1173 og 1177, er kjent for å mislykkes pga.
-       manglende kjørbare filer fra de valgfrie avhengighetene.-->
-       Testene relatert til SMB protokollen vil sende ut en melding
-       duplisert mange ganger og klage over Python modulen impacket (ikke en
-       del av BLFS) mangler og vil bli hoppet over.<!-- Hvis libssh2 er installert
-       og den valgfrie <option>- -enable-ssh2</option> brukes, test 1459
-       vil mislykkes.-->
+       For Ã¥ teste resultatene, kjÃ¸r: <command>make test</command>.
+       <!--One test, <filename>1477</filename>, er kjent for Ã¥ mislykkes pga
+       en manglende fil i curl tarballen.--> Noen tester er ustabile,
+       sÃ¥ hvis noen tester har mislyktes er det mulig Ã¥
+       kjÃ¸re en test igjen med: <command>(cd tests; ./runtests.pl
+       <replaceable>&lt;test ID&gt;</replaceable>)</command> (ID for
+       mislykkede tester vises i <quote><computeroutput>These test cases
+       failed:</computeroutput></quote> beskjeden). Hvis du kjÃ¸rer testene etter at
+       pakken er installert, kan noen tester mislykkes fordi manualsidene
+       ble slettet med 'find' kommandoen i installasjonsinstruksjonene
+       under.
     </para>
 <!-- Two (of 857) tests
 fail for unknown reasons, and all tests fail is valgrind is installed. Moving
@@ -374,10 +390,34 @@ It appears that every test is now run under valgrind.
 TESTDONE: 1611 tests were considered during 2129 seconds.
 TESTDONE: 1369 tests out of 1369 reported OK: 100%
 All BLFS dependencies installed, and run under valgrind.
+
+[renodr] - Test results for 8.3.0 (2023-09-14)
+TESTDONE: 1635 tests were considered during 4068 seconds.
+TESTDONE: 1386 tests out of 1387 reported OK: 99%
+TESTFAIL: These test cases failed: 1474
+All BLFS dependencies installed, and run under valgrind. Test 1474 is flaky.
+
+[renodr] - Test results for 8.4.0 (2023-10-11)
+TESTDONE: 1646 tests were considered during 2290 seconds.
+TESTDONE: 1449 tests out of 1452 reported OK: 99%
+TESTFAIL: These test cases failed: 1474 3021 3022
+All BLFS dependencies are installed, and the tests were run with Valgrind
+installed as well. Test 3021 and 3022 fails due to incompatibilities with
+our version of SSH. See https://github.com/curl/curl/issues/12096
+Test 1474 is still flaky.
+
+[bdubbs] - Test results for 8.6.0 (2024-02-01)
+TESTDONE: 1673 tests were considered during 395 seconds.
+TESTDONE: 1355 tests out of 1360 reported OK: 99%
+TESTFAIL: These test cases failed: 1139 1140 1173 1177 1477
+Run without valgrind.
+Tests seem to looking for man pages that are missing.
+- renodr: this is because tests were run after the man pages were deleted by
+  the find command after 'make install'
 -->
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem>
+      NÃ¥, som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
@@ -393,8 +433,8 @@ find docs \( -name Makefile\* -o  \
 cp -v -R docs -T /usr/share/doc/curl-&curl-version;</userinput></screen>
 
     <para>
-      For å kjøre noen enkle verifiseringstester på den nylig installerte
-      <command>curl</command>, utsted følgende kommandoer:
+      For Ã¥ kjÃ¸re noen enkle verifiseringstester pÃ¥ den nylig installerte
+      <command>curl</command>, utsted fÃ¸lgende kommandoer:
       <command>curl --trace-ascii debugdump.txt https://www.example.com/</command>
       og
       <command>curl --trace-ascii d.txt --trace-time https://example.com/</command>.
@@ -412,7 +452,7 @@ cp -v -R docs -T /usr/share/doc/curl-&curl-version;</userinput></screen>
 
     <para>
       <parameter>--enable-threaded-resolver</parameter>: Denne bryteren aktiverer
-      <application>cURL</application> sin innebygde trådet DNS løser.
+      <application>cURL</application> sin innebygde trÃ¥det DNS lÃ¸ser.
     </para>
 
     <para>
@@ -423,37 +463,37 @@ cp -v -R docs -T /usr/share/doc/curl-&curl-version;</userinput></screen>
     <para>
       <parameter>--with-openssl</parameter>: Denne parameteren velger
       <application>OpenSSL</application> som SSL/TLS implementering.
-      Dette virker obligatorisk nå.
+      Dette virker obligatorisk nÃ¥.
     </para>
 
     <para>
       <option>--with-gssapi</option>: Denne parameteren legger til
-      <application>Kerberos 5</application> støtte til
+      <application>Kerberos 5</application> stÃ¸tte til
       <filename class="libraryfile">libcurl</filename>.
     </para>
 
     <para>
-      <option>--without-ssl --with-gnutls</option>: Brukt for å
-      bygge med <application>GnuTLS</application> støtte
+      <option>--without-ssl --with-gnutls</option>: Brukt denne bryteren for Ã¥
+      bygge med <application>GnuTLS</application> stÃ¸tte
       i stedet for <application>OpenSSL</application> for SSL/TLS.
     </para>
 
     <para>
       <option>--with-ca-bundle=/etc/pki/tls/certs/ca-bundle.crt</option>: Bruk
-      denne bryteren i stedet for <parameter>--with-ca-path</parameter> for å
-      bygge med <application>GnuTLS</application> støtte
+      denne bryteren i stedet for <parameter>--with-ca-path</parameter> for Ã¥
+      bygge med <application>GnuTLS</application> stÃ¸tte
       i stedet for <application>OpenSSL</application> for SSL/TLS.
     </para>
 
     <para>
       <option>--with-libssh2</option>: Denne parameteren legger til
-      <application>SSH</application> støtte til cURL. Dette er deaktivert
+      <application>SSH</application> stÃ¸tte til cURL. Dette er deaktivert
       som standard.
     </para>
 
     <para>
       <option>--enable-ares</option>: Denne parameteren legger til
-      støtte for DNS oppløsning gjennom c-ares biblioteket. Den overstyrer
+      stÃ¸tte for DNS opplÃ¸sning gjennom c-ares biblioteket. Den overstyrer
       <parameter>--enable-threaded-resolver</parameter> og er ikke utbredt
       testet av redaksjonen.
     </para>
@@ -461,7 +501,7 @@ cp -v -R docs -T /usr/share/doc/curl-&curl-version;</userinput></screen>
     <para>
       <command>find docs ... -exec rm {} \;</command>: Denne kommandoen fjerner
       <filename>Makefiles</filename> og man filer fra dokumentasjonensmappen
-      som ellers ville blitt installert av kommandoene som følger.
+      som ellers ville blitt installert av kommandoene som fÃ¸lger.
     </para>
 
   </sect2>
@@ -497,7 +537,7 @@ cp -v -R docs -T /usr/share/doc/curl-&curl-version;</userinput></screen>
         <term><command>curl</command></term>
         <listitem>
          <para>
-           er et kommandolinjeverktøy for å overføre filer med URL syntaks
+           er et kommandolinjeverktÃ¸y for Ã¥ overfÃ¸re filer med URL syntaks
          </para>
           <indexterm zone="curl curl-prog">
             <primary sortas="b-curl">curl</primary>
