@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,9 +6,9 @@
 
   <!ENTITY fuse3-download-http "https://github.com/libfuse/libfuse/releases/download/fuse-&fuse3-version;/fuse-&fuse3-version;.tar.gz">
   <!ENTITY fuse3-download-ftp  " ">
-  <!ENTITY fuse3-md5sum        "578498e1035e1039525430c0694f60b7">
+  <!ENTITY fuse3-md5sum        "b00bf08b27ead4a9411578777e94a1cc">
   <!ENTITY fuse3-size          "14 MB">
-  <!ENTITY fuse3-buildsize     "230 MB (med tester og dokumentasjon)">
+  <!ENTITY fuse3-buildsize     "222 MB (med tester og dokumentasjon)">
   <!ENTITY fuse3-time          "0.2 SBU (legg til 0.3 SBU for tester)">
 ]>
 
@@ -27,13 +27,13 @@
 
     <para>
       <application>FUSE</application> (Filesystem in Userspace) er en enkel
-      grensesnitt for brukerromsprogrammer for å eksportere et virtuelt filsystem til
-      Linux kjernen. <application>Fuse</application> har også som mål å gi en
-      sikker metode for ikke-privilegerte brukere å lage og montere sine egne
+      grensesnitt for brukerromsprogrammer for Ã¥ eksportere et virtuelt filsystem til
+      Linux kjernen. <application>Fuse</application> har ogsÃ¥ som mÃ¥l Ã¥ gi en
+      sikker metode for ikke-privilegerte brukere Ã¥ lage og montere sine egne
       filsystemimplementeringer.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &fuse3-size;
+          NedlastingsstÃ¸rrelse: &fuse3-size;
         </para>
       </listitem>
       <listitem>
@@ -72,8 +72,8 @@
     <bridgehead renderas="sect3">Fuse Avhengigheter</bridgehead>
     <bridgehead renderas="sect4">Optional</bridgehead>
     <para role="optional">
-      <xref linkend="doxygen"/> (for å gjenoppbygge API dokumentasjonen)
-      <xref linkend="pytest"/> (nødvendig for tester) og
+      <xref linkend="doxygen"/> (for Ã¥ gjenoppbygge API dokumentasjonen)
+      <xref linkend="pytest"/> (nÃ¸dvendig for tester) og
 	  <ulink url="https://pypi.org/project/looseversion/">looseversion</ulink>
     </para>
 
@@ -83,15 +83,15 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen og kompiler kjernen på nytt
-      om nødvendig:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen og kompiler kjernen pÃ¥ nytt
+      om nÃ¸dvendig:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="fuse-kernel.xml"/>
 
     <para>
-      Tegnenheter i brukerområdet bør også være aktivert for å kjøre
+      Tegnenheter i brukeromrÃ¥det bÃ¸r ogsÃ¥ vÃ¦re aktivert for Ã¥ kjÃ¸re
       tester:
     </para>
 
@@ -107,7 +107,7 @@
     <title>Installasjon av Fuse</title>
 
     <para>
-      Installer <application>Fuse</application> ved å kjøre følgende
+      Installer <application>Fuse</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -121,8 +121,8 @@ ninja</userinput></screen>
 
     <para>
       API dokumentasjonen er inkludert i pakken, men
-      hvis du har <xref linkend="doxygen"/> installert og ønsker å bygge det det
-      om, kjør:
+      hvis du har <xref linkend="doxygen"/> installert og Ã¸nsker Ã¥ bygge det det
+      om, kjÃ¸r:
     </para>
 
 <screen remap="doc"><userinput>pushd .. &amp;&amp;
@@ -130,7 +130,7 @@ ninja</userinput></screen>
 popd</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted følgende kommandoer (som <systemitem
+      For Ã¥ teste resultatene, utsted fÃ¸lgende kommandoer (som <systemitem
       role="username">root</systemitem> bruker):
     </para>
 
@@ -148,16 +148,16 @@ popd</userinput></screen>
 <screen role="root" remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
 source testenv/bin/activate                    &amp;&amp;
 pip3 install looseversion                      &amp;&amp;
-python3 -m pytest                              &amp;&amp;
+python3 -m pytest
 deactivate</userinput></screen>
 
     <para>
       <xref linkend="pytest"/> Python
-      modulen er nødvendig for testene. En test navngitt
+      modulen er nÃ¸dvendig for testene. En test navngitt
       <filename>test_cuse</filename> vil mislykkes hvis
       <parameter>CONFIG_CUSE</parameter> konfigurasjonselementet ikke ble aktivert
-      når kjernen ble bygget. En test,
-      <filename>test/util.py</filename>, vil gi en advarsel på grunn av bruken
+      nÃ¥r kjernen ble bygget. En test,
+      <filename>test/util.py</filename>, vil gi en advarsel pÃ¥ grunn av bruken
       av en ukjent mark i pytest.
       <!-- I really don't know why.  But it always happen for me, maybe
            kernel configuration issue... -->
@@ -167,7 +167,7 @@ deactivate</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install                  &amp;&amp;
@@ -185,7 +185,7 @@ install -v -m644   doc/{README.NFS,kernel.txt} \
 
     <para>
       <command>sed ... util/meson.build</command>: Denne kommandoen deaktiverer
-      installasjonen av et oppstartsskript og en udev regel som ikke er nødvendig.
+      installasjonen av et oppstartsskript og en udev regel som ikke er nÃ¸dvendig.
     </para>
 
 <!--
@@ -207,9 +207,9 @@ install -v -m644   doc/{README.NFS,kernel.txt} \
       <title>Konfigurasjonsfiler</title>
 
       <para>
-        Noen alternativer angående monteringsregler kan angis i filen
-        <filename>/etc/fuse.conf</filename>. For å installere filen, kjør
-        følgende kommando som <systemitem class="username">root</systemitem>
+        Noen alternativer angÃ¥ende monteringsregler kan angis i filen
+        <filename>/etc/fuse.conf</filename>. For Ã¥ installere filen, kjÃ¸r
+        fÃ¸lgende kommando som <systemitem class="username">root</systemitem>
         bruker:
       </para>
 
@@ -227,7 +227,7 @@ EOF</userinput></screen>
 
       <para>
         Ytterligere informasjon om betydningen av konfigurasjonalternativene
-        finnes på man siden.
+        finnes pÃ¥ man siden.
       </para>
 
     </sect3>
@@ -264,7 +264,7 @@ EOF</userinput></screen>
         <term><command>fusermount3</command></term>
         <listitem>
           <para>
-            er et suid root program for å montere og avmontere Fuse filsystemer
+            er et suid root program for Ã¥ montere og avmontere Fuse filsystemer
           </para>
           <indexterm zone="fuse3 fusermount3">
             <primary sortas="b-fusermount3">fusermount3</primary>
@@ -276,7 +276,7 @@ EOF</userinput></screen>
         <term><command>mount.fuse3</command></term>
         <listitem>
           <para>
-            er kommandoen <command>mount</command> kaller å montere et Fuse
+            er kommandoen <command>mount</command> kaller Ã¥ montere et Fuse
             filsystem
           </para>
           <indexterm zone="fuse3 mount.fuse3">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,9 +6,9 @@
 
   <!ENTITY gptfdisk-download-http "&sourceforge-dl;/gptfdisk/gptfdisk-&gptfdisk-version;.tar.gz">
   <!ENTITY gptfdisk-download-ftp  " ">
-  <!ENTITY gptfdisk-md5sum        "01c11ecfa454096543562e3068530e01">
-  <!ENTITY gptfdisk-size          "212 KB">
-  <!ENTITY gptfdisk-buildsize     "2.3 MB">
+  <!ENTITY gptfdisk-md5sum        "1970269eb7a97560e238611524b7797a">
+  <!ENTITY gptfdisk-size          "216 KB">
+  <!ENTITY gptfdisk-buildsize     "2.4 MB">
   <!ENTITY gptfdisk-time          "mindre enn 0.1 SBU (legg til 0.2 SBU for tester)">
 ]>
 
@@ -28,13 +28,13 @@
     <para>
       <application>gptfdisk</application> pakken er et sett med programmer for
       opprettelse og vedlikehold av GUID Partition Table (GPT) diskstasjoner. En
-      GPT partisjonert disk kreves for stasjoner større enn 2 TB og er en
+      GPT partisjonert disk kreves for stasjoner stÃ¸rre enn 2 TB og er en
       moderne erstatning for eldre PC-BIOS partisjonerte diskstasjoner som bruker en
       Master Boot Record (MBR). Hovedprogrammet, <command>gdisk</command>,
       har et grensesnitt som ligner det klassiske <command>fdisk</command> programmet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &gptfdisk-size;
+          NedlastingsstÃ¸rrelse: &gptfdisk-size;
         </para>
       </listitem>
       <listitem>
@@ -82,7 +82,7 @@
 
     <bridgehead renderas="sect3">gptfdisk Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="popt"/>
     </para>
@@ -99,28 +99,25 @@
 
     <para>
       <application>gptfdisk</application> pakken kommer med en
-      grunnleggende <filename>Makefile</filename>.  Først oppdaterer vi den
-      for å gi et enkelt bygge- og installeringsgrensesnitt og fikse
-      plassering av en deklarasjonsfil samt fikse et problem som ble introdusert
-      av en nylig versjon av <application>popt</application>.
-      Installer <application>gptfdisk</application> ved å kjøre følgende
+      grunnleggende <filename>Makefile</filename>.  FÃ¸rst oppdaterer vi den
+      for Ã¥ gi et enkelt bygge- og installeringsgrensesnitt og fikse
+      plassering av en deklarasjonsfil og fikse noen mindre plasseringsproblemer.
+      Installer <application>gptfdisk</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
 <screen><userinput>patch -Np1 -i ../gptfdisk-&gptfdisk-version;-convenience-1.patch &amp;&amp;
 sed -i 's|ncursesw/||' gptcurses.cc &amp;&amp;
-sed -i 's|sbin|usr/sbin|' Makefile &amp;&amp;
-sed -i '/UUID_H/s/^.*$/#if defined (_UUID_UUID_H) || defined (_UL_LIBUUID_UUID_H)/' guid.cc &amp;&amp;
-sed -i "/device =/s/= \(.*\);/= strdup(\1);/" gptcl.cc &amp;&amp;
+sed -i 's|sbin|usr/sbin|' Makefile  &amp;&amp;
 
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -132,7 +129,7 @@ make</userinput></screen>
     <para>
       <command>patch -Np1 ...</command>: Denne oppdateringen endrer
       <filename>Makefile</filename> filen slik at den gir et
-      <quote>install</quote> mål.
+      <quote>install</quote> mÃ¥l.
     </para>
 
   </sect2>
@@ -159,7 +156,7 @@ make</userinput></screen>
         <term><command>cgdisk</command></term>
         <listitem>
           <para>
-            er et ncurses basert verktøy for å manipulere GPT partisjoner
+            er et ncurses basert verktÃ¸y for Ã¥ manipulere GPT partisjoner
           </para>
           <indexterm zone="gptfdisk cgdisk">
             <primary sortas="b-cgdisk">cgdisk</primary>
@@ -171,7 +168,7 @@ make</userinput></screen>
         <term><command>gdisk</command></term>
         <listitem>
           <para>
-            er et interaktivt tekstmodusverktøy for å manipulere GPT partisjoner
+            er et interaktivt tekstmodusverktÃ¸y for Ã¥ manipulere GPT partisjoner
           </para>
           <indexterm zone="gptfdisk gdisk">
             <primary sortas="b-gdisk">gdisk</primary>
@@ -196,7 +193,7 @@ make</userinput></screen>
         <listitem>
           <para>
             er et partisjonsmanipuleringsprogram for
-            GPT partisjoner som ligner på <command>sfdisk</command>
+            GPT partisjoner som ligner pÃ¥ <command>sfdisk</command>
           </para>
           <indexterm zone="gptfdisk sgdisk">
             <primary sortas="b-sgdisk">sgdisk</primary>
