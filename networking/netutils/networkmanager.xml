@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,12 +6,11 @@
 
   <!ENTITY NetworkManager-download-http
 "&gnome-download-http;/NetworkManager/&NetworkManager-minor;/NetworkManager-&NetworkManager-version;.tar.xz">
-  <!ENTITY NetworkManager-download-ftp
-"&gnome-download-ftp;/NetworkManager/&NetworkManager-minor;/NetworkManager-&NetworkManager-version;.tar.xz">
-  <!ENTITY NetworkManager-md5sum        "2a39852cda0f04bd72c9782839b1dc7d">
+  <!ENTITY NetworkManager-download-ftp  " ">
+  <!ENTITY NetworkManager-md5sum        "bd6c9cb0ecd0fb7f516cde7bf4dee3fb">
   <!ENTITY NetworkManager-size          "6.6 MB">
-  <!ENTITY NetworkManager-buildsize     "917 MB (med tester og dokumentasjon)">
-  <!ENTITY NetworkManager-time          "1.3  SBU (med tester, bruker parallellisme=4)">
+  <!ENTITY NetworkManager-buildsize     "904 MB (med tester og dokumentasjon)">
+  <!ENTITY NetworkManager-time          "1.2 SBU (med tester, bruker parallellisme=4)">
 ]>
 
 <sect1 id="NetworkManager" xreflabel="NetworkManager-&NetworkManager-version;">
@@ -29,19 +28,19 @@
 
     <para>
       <application>NetworkManager</application> er et sett med samhandlende
-      verktøy som gjør nettverksbygging enkelt og greit. Enten du bruker WiFi,
+      verktÃ¸y som gjÃ¸r nettverksbygging enkelt og greit. Enten du bruker WiFi,
       kablet, 3G eller Bluetooth lar NetworkManager deg raskt flytte fra
-      ett nettverk til et annet: Når et nettverk er konfigurert og koblet til
-      en gang kan den oppdages og slås på igjen automatisk neste gang den er
+      ett nettverk til et annet: NÃ¥r et nettverk er konfigurert og koblet til
+      en gang kan den oppdages og slÃ¥s pÃ¥ igjen automatisk neste gang den er
       tilgjengelig.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <note revision="systemd">
       <para>
-        Pass på at du deaktiverer <command>systemd-networkd</command>
-        tjenesten eller konfigurer den til ikke å administrere grensesnittene du vil administrere
+        Pass pÃ¥ at du deaktiverer <command>systemd-networkd</command>
+        tjenesten eller konfigurer den til ikke Ã¥ administrere grensesnittene du vil administrere
         med <application>NetworkManager</application>.
       </para>
     </note>
@@ -65,7 +64,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &NetworkManager-size;
+          NedlastingsstÃ¸rrelse: &NetworkManager-size;
         </para>
       </listitem>
       <listitem>
@@ -82,9 +81,8 @@
 
     <bridgehead renderas="sect3">NetworkManager Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
-      <xref linkend="jansson"/> og
       <xref linkend="libndp"/>
     </para>
 
@@ -94,14 +92,15 @@
       <xref linkend="dhcpcd"/>,
       <xref linkend="gobject-introspection"/>,
       <xref linkend="iptables"/>,
+      <xref linkend="libpsl"/>,
       <xref linkend="newt"/> (for <command>nmtui</command>),
       <xref linkend="nss"/>,
-      <xref role='runtime' linkend="polkit"/> (kjøretid),
+      <xref role='runtime' linkend="polkit"/> (kjÃ¸retid),
       <xref linkend="pygobject3"/>,
       <phrase revision="sysv"><xref linkend="elogind"/>,</phrase>
       <phrase revision="systemd"><xref linkend="systemd"/>,</phrase>
       <xref linkend="vala"/>, og
-      <xref linkend="wpa_supplicant"/> (kjøretid, bygd med D-Bus støtte)
+      <xref linkend="wpa_supplicant"/> (kjÃ¸retid, bygd med D-Bus stÃ¸tte)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -111,7 +110,8 @@
       <!-- <xref linkend="firewalld"/> (For whenever firewalld is reintroduced) -->
       <xref linkend="gnutls"/> (kan brukes i stedet for <xref linkend="nss"/>),
       <xref linkend="gtk-doc"/>,
-      <xref linkend="libpsl"/>,
+      <xref linkend="jansson"/>,
+      <xref linkend="ModemManager"/>,
       (<xref linkend="qt5"/> eller
        <xref role="node" linkend="qt5-components"/> med qtdoc) (for eksempler),
       <xref linkend="ModemManager"/>,
@@ -132,10 +132,10 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Hvis du ønsker å kjøre testene, kontroller at minst følgende alternativer
-      er aktivert i kjernekonfigurasjonen. De alternativene har vært
-      fastslått å være nødvendig, men kanskje ikke tilstrekkelig. Kompiler på nytt
-      kjernen om nødvendig:
+      Hvis du Ã¸nsker Ã¥ kjÃ¸re testene, kontroller at minst fÃ¸lgende alternativer
+      er aktivert i kjernekonfigurasjonen. De alternativene har vÃ¦rt
+      fastslÃ¥tt Ã¥ vÃ¦re nÃ¸dvendig, men kanskje ikke tilstrekkelig. Kompiler pÃ¥ nytt
+      kjernen om nÃ¸dvendig:
     </para>
 
     <!-- Ethernet Teaming support is potentially optional, but I didn't
@@ -164,7 +164,7 @@
 
     <para>
       Hvis <xref linkend="qt5"/> er installert og Qt basert
-      eksempler ønskes, fiks to meson.build filer:
+      eksempler Ã¸nskes, fiks to meson.build filer:
     </para>
 
 <screen><userinput>sed -e 's/-qt4/-qt5/'              \
@@ -190,8 +190,8 @@ sed -e 's/Qt/&amp;5/'                  \
 <screen><userinput>grep -rl '^#!.*python$' | xargs sed -i '1s/python/&amp;3/'</userinput></screen>
 
     <para>
-      Installer <application>NetworkManager</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>NetworkManager</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
@@ -202,7 +202,6 @@ meson setup ..                   \
       --prefix=/usr              \
       --buildtype=release        \
       -Dlibaudit=no              \
-      -Dlibpsl=false             \
       -Dnmtui=true               \
       -Dovs=false                \
       -Dppp=false                \
@@ -222,7 +221,6 @@ meson setup ..                   \
       --prefix=/usr              \
       --buildtype=release        \
       -Dlibaudit=no              \
-      -Dlibpsl=false             \
       -Dnmtui=true               \
       -Dovs=false                \
       -Dppp=false                \
@@ -233,17 +231,17 @@ meson setup ..                   \
 ninja</userinput></screen>
 
     <para>
-      En allerede aktiv grafisk øky med en bussadresse er nødvendig
-      for å kjøre testene. For å teste resultatene, utsted
+      En allerede aktiv grafisk Ã¸ky med en bussadresse er nÃ¸dvendig
+      for Ã¥ kjÃ¸re testene. For Ã¥ teste resultatene, utsted
       <command>ninja test</command>.
     </para>
 
     <para>
-      Noen få tester kan mislykkes, avhengig av aktiverte kjernealternativer.
+      Noen fÃ¥ tester kan mislykkes, avhengig av aktiverte kjernealternativer.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install &amp;&amp;
@@ -251,7 +249,7 @@ mv -v /usr/share/doc/NetworkManager{,-&NetworkManager-version;}</userinput></scr
 
     <para>
       Hvis du ikke har sendt <option>-Ddocs=true</option> alternativ til
-      <command>meson</command>, du kan installere de forhåndsgenererte manualsidene
+      <command>meson</command>, du kan installere de forhÃ¥ndsgenererte manualsidene
       med (som &root; bruker):
     </para>
 
@@ -263,7 +261,7 @@ done</userinput></screen>
 
     <para>
       Hvis du ikke har brukt <option>-Ddocs=true</option>,
-      forhåndsgenerert HTML dokumentasjon kan også installeres med (som
+      forhÃ¥ndsgenerert HTML dokumentasjon kan ogsÃ¥ installeres med (som
       &root; bruker):
     </para>
 
@@ -277,38 +275,38 @@ done</userinput></screen>
 
     <para>
       <envar>CXXFLAGS="-O2 -fPIC"</envar>: Disse kompilatoralternativene er
-      nødvendig for å bygge de Qt5 baserte eksemplene.
+      nÃ¸dvendig for Ã¥ bygge de Qt5 baserte eksemplene.
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <option>-Ddocs=true</option>: Bruk denne bryteren for å aktivere bygging
+      <option>-Ddocs=true</option>: Bruk denne bryteren for Ã¥ aktivere bygging
       av mansider og dokumentasjon hvis <xref linkend="gtk-doc"/> er installert.
     </para>
 
     <para>
-      <parameter>-Dnmtui=true</parameter>: Denne bryteren gjør det mulig å bygge
+      <parameter>-Dnmtui=true</parameter>: Denne bryteren gjÃ¸r det mulig Ã¥ bygge
       <command>nmtui</command>.
     </para>
 
     <para revision="sysv">
       <parameter>-Dsystemdsystemunitdir=no</parameter> og
       <parameter>-Dsystemd_journal=false</parameter>: systemd er ikke
-      brukt til sysv init systemer, så unngå å installere enheter og bruke
+      brukt til sysv init systemer, sÃ¥ unngÃ¥ Ã¥ installere enheter og bruke
       systemd journal.
     </para>
 
     <para>
-      <parameter>-Dlibpsl=false</parameter> og
-      <parameter>-Dovs=false</parameter>: Disse bryterne deaktiverer bygging med
-      respektive biblioteker. Fjern disse hvis du har de nødvendige bibliotekene
-      installert på systemet ditt.
+      <parameter>-Dovs=false</parameter>: Denne bryteren deaktiverer Open
+      vSwitch integrasjon fordi den trenger <xref linkend='jansson'/>.
+      Fjern den hvis du har <xref linkend='jansson'/> installert pÃ¥ systemet
+      ditt.
     </para>
 
     <para>
-      <parameter>-Dmodem_manager=false</parameter>: Denne bryteren er nødvendig hvis
+      <parameter>-Dmodem_manager=false</parameter>: Denne bryteren er nÃ¸dvendig hvis
       <application>ModemManager</application> ikke er installert. Utelat denne bryteren
       hvis du har bygget <application>ModemManager</application> og
       <application>mobile-broadband-provider-info</application>.
@@ -316,33 +314,33 @@ done</userinput></screen>
 
     <para revision="sysv">
       <parameter>-Dsession_tracking=elogind</parameter>: Denne bryteren
-      brukes til å sette <command>elogind</command> som
-      standardprogram for øktsporing.
+      brukes til Ã¥ sette <command>elogind</command> som
+      standardprogram for Ã¸ktsporing.
     </para>
 
     <para revision="systemd">
       <parameter>-Dsession_tracking=systemd</parameter>: Denne bryteren
-      brukes til å sette <command>systemd-logind</command> som
-      standardprogram for øktsporing.
+      brukes til Ã¥ sette <command>systemd-logind</command> som
+      standardprogram for Ã¸ktsporing.
     </para>
-
+<!-- not in instrucitons anymore
     <para revision="systemd">
       <parameter>-Dsystemdsystemunitdir=/lib/systemd/system</parameter>:
-      Denne bryteren brukes til å angi riktig installasjonsmappe for
+      Denne bryteren brukes til Ã¥ angi riktig installasjonsmappe for
       systemd enheter.
     </para>
-
+-->
     <para>
       <parameter>-Dppp=false</parameter>: Denne bryteren deaktiverer
-      <application>PPP</application> støtte i
-      <application>NetworkManager</application> siden programmene er nødvendige
-      for det ikke er installert. Fjern denne bryteren hvis du trenger PPP støtte og
+      <application>PPP</application> stÃ¸tte i
+      <application>NetworkManager</application> siden programmene er nÃ¸dvendige
+      for det ikke er installert. Fjern denne bryteren hvis du trenger PPP stÃ¸tte og
       har <application>PPP</application> installert.
     </para>
 
     <para>
       <parameter>-Dlibaudit=no</parameter> og
-      <parameter>-Dselinux=false</parameter>: Denne bryteren deaktiverer støtte for
+      <parameter>-Dselinux=false</parameter>: Denne bryteren deaktiverer stÃ¸tte for
       libaudit og SELinux siden de ikke brukes i BLFS.
     </para>
 
@@ -350,26 +348,26 @@ done</userinput></screen>
       <parameter>-Dqt=false</parameter>: deaktiverer
       <parameter>-Dqt=false</parameter>: Denne bryteren deaktiverer
       <application>Qt</application> eksempler. Utelat hvis du har
-      <application>Qt</application> tilgjengelig og ønsker å installere eksemplene.
+      <application>Qt</application> tilgjengelig og Ã¸nsker Ã¥ installere eksemplene.
     </para>
 
     <para>
       <option>-Dcrypto=gnutls</option>: Bruk denne bryteren hvis du har GnuTLS
-      installert og ønsker å bruke den til sertifikat og nøkkel operasjoner i
-      NetworkManager, i stedet for å bruke NSS (standard).
+      installert og Ã¸nsker Ã¥ bruke den til sertifikat og nÃ¸kkel operasjoner i
+      NetworkManager, i stedet for Ã¥ bruke NSS (standard).
     </para>
 
     <para>
       <option>-Dcrypto=null</option>: Bruk denne bryteren hvis verken NSS eller
       GnuTLS er installert, men du vil uansett bygge NetworkManager. Denne
-      bryteren vil få NetworkManager til å mangle noen funksjoner (for eksempel
+      bryteren vil fÃ¥ NetworkManager til Ã¥ mangle noen funksjoner (for eksempel
       802.1X).
     </para>
 
     <para>
       <option>-Dsuspend_resume=upower</option>: Bruk denne bryteren hvis
-      du har <xref linkend='upower'/> installert og ønsker å bruke den
-      (i stedet for &logind;) for å suspendere og gjenoppta støtte.
+      du har <xref linkend='upower'/> installert og Ã¸nsker Ã¥ bruke den
+      (i stedet for &logind;) for Ã¥ suspendere og gjenoppta stÃ¸tte.
     </para>
   </sect2>
 
@@ -393,10 +391,10 @@ done</userinput></screen>
     <sect3><title>Konfigurasjonsinformasjon</title>
 
       <para>
-        For at <application>NetworkManager</application> skal virke, må det i det minste
-        være til stede en minimal konfigurasjonsfil. En slik fil er ikke
-        installert med <command>make install</command>. Utsted følgende
-        kommando som <systemitem class="username">root</systemitem> bruker for å
+        For at <application>NetworkManager</application> skal virke, mÃ¥ det i det minste
+        vÃ¦re til stede en minimal konfigurasjonsfil. En slik fil er ikke
+        installert med <command>make install</command>. Utsted fÃ¸lgende
+        kommando som <systemitem class="username">root</systemitem> bruker for Ã¥
         lage en minimal <filename>NetworkManager.conf</filename> fil:
       </para>
 
@@ -407,14 +405,14 @@ EOF</userinput></screen>
 
       <para>
         Denne filen skal ikke endres direkte av brukere av systemet.
-        I stedet bør systemspesifikke endringer gjøres ved hjelp av
+        I stedet bÃ¸r systemspesifikke endringer gjÃ¸res ved hjelp av
         konfigurasjonsfiler i
         <filename class="directory">/etc/NetworkManager/conf.d</filename>
         mappen.
       </para>
 
       <para>
-        For å tillate polkit å administrere autorisasjoner, legg til følgende
+        For Ã¥ tillate polkit Ã¥ administrere autorisasjoner, legg til fÃ¸lgende
         konfigurasjonsfil:
       </para>
 
@@ -424,8 +422,8 @@ auth-polkit=true</literal>
 EOF</userinput></screen>
 
       <para>
-        For å bruke noe annet enn den innebygde dhcp klienten (anbefalt hvis
-        du kun bruker <command>nmcli</command>), bruk følgende konfigurasjon
+        For Ã¥ bruke noe annet enn den innebygde dhcp klienten (anbefalt hvis
+        du kun bruker <command>nmcli</command>), bruk fÃ¸lgende konfigurasjon
          (gyldige verdier inkluderer enten dhcpcd eller internal):
       </para>
 
@@ -435,8 +433,8 @@ dhcp=</literal><replaceable>dhcpcd</replaceable>
 EOF</userinput></screen>
 
       <para>
-        For å forhindre <application>NetworkManager</application> fra å oppdatere
-        <filename>/etc/resolv.conf</filename> filen, legg til følgende
+        For Ã¥ forhindre <application>NetworkManager</application> fra Ã¥ oppdatere
+        <filename>/etc/resolv.conf</filename> filen, legg til fÃ¸lgende
         konfigurasjonsfil:
       </para>
 
@@ -451,11 +449,11 @@ EOF</userinput></screen>
       </para>
 
       <para>
-        For å la vanlige brukere konfigurere nettverkstilkoblinger,
-        bør du legge dem til
+        For Ã¥ la vanlige brukere konfigurere nettverkstilkoblinger,
+        bÃ¸r du legge dem til
         <systemitem class="groupname">netdev</systemitem>
         gruppen, og lag en <application>polkit</application> regel som gir
-        adgang. Kjør følgende kommandoer som
+        adgang. KjÃ¸r fÃ¸lgende kommandoer som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -477,23 +475,23 @@ EOF</userinput></screen>
              <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        For å starte <command>NetworkManager</command> nissen automatisk
-        når systemet startes på nytt, installer
+        For Ã¥ starte <command>NetworkManager</command> nissen automatisk
+        nÃ¥r systemet startes pÃ¥ nytt, installer
         <filename>/etc/rc.d/init.d/networkmanager</filename>bootscript fra
         <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        For å starte <command>NetworkManager</command> nissen ved oppstart, aktiver
-        den tidligere installerte systemd enheten ved å kjøre følgende kommando
+        For Ã¥ starte <command>NetworkManager</command> nissen ved oppstart, aktiver
+        den tidligere installerte systemd enheten ved Ã¥ kjÃ¸re fÃ¸lgende kommando
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
       <note>
         <para>
-          Hvis du bruker <application>Network Manager</application> til å administrere
-          et grensesnitt, bør enhver tidligere konfigurasjon for det grensesnittet være
-          fjernet, og grensesnittet tatt ned før
+          Hvis du bruker <application>Network Manager</application> til Ã¥ administrere
+          et grensesnitt, bÃ¸r enhver tidligere konfigurasjon for det grensesnittet vÃ¦re
+          fjernet, og grensesnittet tatt ned fÃ¸r
           <application>Network Manager</application> startes.
         </para>
       </note>
@@ -509,11 +507,11 @@ EOF</userinput></screen>
      enabled by default when enabling NetworkManager. -->
 <!--
       <para revision="systemd">
-        <application>NetworkManager</application> sender også en systemd enhet
+        <application>NetworkManager</application> sender ogsÃ¥ en systemd enhet
         kalt <filename>NetworkManager-wait-online.service</filename> som
-        kan brukes til å forhindre tjenester som krever nettverkstilkobling
-        fra å starte til <application>NetworkManager</application> har
-        opprettet forbindelsen. For å aktivere det, kjør følgende kommando
+        kan brukes til Ã¥ forhindre tjenester som krever nettverkstilkobling
+        fra Ã¥ starte til <application>NetworkManager</application> har
+        opprettet forbindelsen. For Ã¥ aktivere det, kjÃ¸r fÃ¸lgende kommando
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -524,9 +522,9 @@ EOF</userinput></screen>
       <para revision="systemd">
         Fra og med versjon 1.11.2 av <application>NetworkManager</application>,
         en systemd enhet kalt <filename>NetworkManager-wait-online.service</filename>
-        er aktivert, som brukes til å forhindre tjenester som krever nettverkstilkobling
-        fra å starte inntil <application>NetworkManager</application>
-        oppretter en forbindelse. For å deaktivere denne virkemåten, kjør følgende
+        er aktivert, som brukes til Ã¥ forhindre tjenester som krever nettverkstilkobling
+        fra Ã¥ starte inntil <application>NetworkManager</application>
+        oppretter en forbindelse. For Ã¥ deaktivere denne virkemÃ¥ten, kjÃ¸r fÃ¸lgende
         kommando som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -575,9 +573,9 @@ EOF</userinput></screen>
         <term><command>nmcli</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy for å kontrollere
+            er et kommandolinjeverktÃ¸y for Ã¥ kontrollere
             <application>NetworkManager</application>
-            og få dens status
+            og fÃ¥ dens status
           </para>
           <indexterm zone="NetworkManager nmcli">
             <primary sortas="b-nmcli">nmcli</primary>
@@ -589,7 +587,7 @@ EOF</userinput></screen>
         <term><command>nm-online</command></term>
         <listitem>
           <para>
-            er et verktøy for å avgjøre om du er på nett
+            er et verktÃ¸y for Ã¥ avgjÃ¸re om du er pÃ¥ nett
           </para>
           <indexterm zone="NetworkManager nm-online">
             <primary sortas="b-nm-online">nm-online</primary>
@@ -615,7 +613,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er et interaktivt ncurses-basert brukergrensesnitt til
-            å aktivere/deaktivere tilkoblinger
+            Ã¥ aktivere/deaktivere tilkoblinger
           </para>
           <indexterm zone="NetworkManager nmtui-connect">
             <primary sortas="b-nmtui-connect">nmtui-connect</primary>
@@ -627,7 +625,7 @@ EOF</userinput></screen>
         <term><command>nmtui-edit</command></term>
         <listitem>
           <para>
-            er et interaktivt ncurses-basert brukergrensesnitt for å redigere tilkoblinger
+            er et interaktivt ncurses-basert brukergrensesnitt for Ã¥ redigere tilkoblinger
           </para>
           <indexterm zone="NetworkManager nmtui-edit">
             <primary sortas="b-nmtui-edit">nmtui-edit</primary>
@@ -639,7 +637,7 @@ EOF</userinput></screen>
         <term><command>nmtui-hostname</command></term>
         <listitem>
           <para>
-            er et interaktivt ncurses-basert brukergrensesnitt for å redigere vertsnavnet
+            er et interaktivt ncurses-basert brukergrensesnitt for Ã¥ redigere vertsnavnet
           </para>
           <indexterm zone="NetworkManager nmtui-hostname">
             <primary sortas="b-nmtui-hostname">nmtui-hostname</primary>

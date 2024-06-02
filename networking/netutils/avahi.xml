@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -27,10 +27,10 @@
 
     <para>
       <application>Avahi</application> pakken er et system som
-      forenkler tjenesteoppdagelse på et lokalt nettverk.
+      forenkler tjenesteoppdagelse pÃ¥ et lokalt nettverk.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &avahi-size;
+          NedlastingsstÃ¸rrelse: &avahi-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/avahi-&avahi-version;-ipv6_race_condition_fix-1.patch"/>
         </para>
       </listitem>
@@ -78,7 +78,7 @@
 
     <bridgehead renderas="sect3">Avahi Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/>
     </para>
@@ -86,21 +86,19 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="gobject-introspection"/>,
-      <xref linkend="gtk2"/>,
       <xref linkend="gtk3"/>,
-      <xref linkend="libdaemon"/>,
-      <xref linkend="libglade"/>, og
+      <xref linkend="libdaemon"/>, og
       &qt5-deps;
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="dbus-python"/>,
+      <xref linkend="gtk2"/> (avviklet),
       <xref linkend="libevent"/>,
-      <xref linkend="pygtk"/>,
       <xref linkend="doxygen"/> og
       <ulink url="https://sourceforge.net/projects/xmltoman/">xmltoman</ulink>
-      (for å generere dokumentasjon)
+      (for Ã¥ generere dokumentasjon)
     </para>
 
   </sect2>
@@ -109,9 +107,9 @@
     <title>Installasjon av Avahi</title>
 
     <para>
-      Det bør være en dedikert bruker og gruppe til å ta kontroll
-      på <command>avahi-daemon</command> nissen etter at det er
-      startet. Utfør følgende kommandoer som
+      Det bÃ¸r vÃ¦re en dedikert bruker og gruppe til Ã¥ ta kontroll
+      pÃ¥ <command>avahi-daemon</command> nissen etter at det er
+      startet. UtfÃ¸r fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -120,22 +118,22 @@ useradd -c "Avahi Daemon Owner" -d /run/avahi-daemon -u 84 \
         -g avahi -s /bin/false avahi</userinput></screen>
 
     <para>
-      Det bør også være en dedikert privilegert tilgangsgruppe for
-      <application>Avahi</application> klienter. Utfør følgende kommando som
+      Det bÃ¸r ogsÃ¥ vÃ¦re en dedikert privilegert tilgangsgruppe for
+      <application>Avahi</application> klienter. UtfÃ¸r fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>groupadd -fg 86 netdev</userinput></screen>
 
     <para>
-      Fiks en regresjon som resulterer i en konkurranse tilstand når IPv6 er i bruk
-      og flere nettverkskort er tilstede på systemet:
+      Fiks en regresjon som resulterer i en konkurranse tilstand nÃ¥r IPv6 er i bruk
+      og flere nettverkskort er tilstede pÃ¥ systemet:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../avahi-&avahi-version;-ipv6_race_condition_fix-1.patch</userinput></screen>
 
     <para>
-      Rett opp en sikkerhetssårbarhet i <command>avahi-daemon</command>:
+      Rett opp en sikkerhetssÃ¥rbarhet i <command>avahi-daemon</command>:
     </para>
 
 <screen><userinput remap="pre">sed -i '426a if (events &amp; AVAHI_WATCH_HUP) { \
@@ -144,7 +142,7 @@ return; \
 }' avahi-daemon/simple-protocol.c</userinput></screen>
 
     <para>
-      Installer <application>Avahi</application> ved å kjøre følgende
+      Installer <application>Avahi</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -186,7 +184,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -216,19 +214,19 @@ make</userinput></screen>
 
     <para>
       <parameter>--disable-python</parameter>: Denne parameteren deaktiverer
-      skript som er avhengig av <application>Python</application>. Det lar også
-      en vanlig installasjon fullføre.
+      skript som er avhengig av <application>Python</application>. Det lar ogsÃ¥
+      en vanlig installasjon fullfÃ¸re.
     </para>
 
     <para>
       <parameter>--disable-qt3</parameter>: Denne parameteren deaktiverer
-      forsøk på å bygge de foreldede <application>Qt3</application>
+      forsÃ¸k pÃ¥ Ã¥ bygge de foreldede <application>Qt3</application>
       deler av pakken.
     </para>
 
     <para>
       <parameter>--disable-qt4</parameter>: Denne parameteren deaktiverer
-      forsøk på å bygge de foreldede <application>Qt4Core</application>
+      forsÃ¸k pÃ¥ Ã¥ bygge de foreldede <application>Qt4Core</application>
       deler av pakken.
     </para>
 
@@ -244,12 +242,12 @@ make</userinput></screen>
 
     <para revision="sysv">
       <parameter>--with-systemdsystemunitdir=no</parameter>: Uten den
-      nissen klarer ikke å starte i BLFS, som ikke støtter
+      nissen klarer ikke Ã¥ starte i BLFS, som ikke stÃ¸tter
       <application>systemd</application>.
     </para>
 
     <para>
-      <parameter>--with-dbus-system-address=...</parameter>: Dette alternativet
+      <parameter>--with-dbus-system-address=</parameter>: Dette alternativet
        forhindrer at pakken refererer til den utdaterte
       <filename class='directory'>/var/run</filename> mappen.
     </para>
@@ -281,7 +279,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      <option>--enable-tests</option>: Dette alternativet gjør det mulig å bygge
+      <option>--enable-tests</option>: Dette alternativet gjÃ¸r det mulig Ã¥ bygge
       tester og eksempler.
     </para>
 
@@ -304,15 +302,15 @@ make</userinput></screen>
       <title>Oppstartsskript</title>
 
       <para revision="sysv">
-        For å starte <command>avahi-daemon</command> automatisk
-        når systemet startes på nytt, installer
+        For Ã¥ starte <command>avahi-daemon</command> automatisk
+        nÃ¥r systemet startes pÃ¥ nytt, installer
         <filename>/etc/rc.d/init.d/avahi</filename> oppstartsskriptet fra
         <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        For å starte <command>avahi-daemon</command> nissen ved oppstart, aktiver
-        den tidligere installerte systemd enheten ved å kjøre følgende kommando
+        For Ã¥ starte <command>avahi-daemon</command> nissen ved oppstart, aktiver
+        den tidligere installerte systemd enheten ved Ã¥ kjÃ¸re fÃ¸lgende kommando
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -325,8 +323,8 @@ make</userinput></screen>
 <screen role="root" revision="systemd"><userinput>systemctl enable avahi-daemon</userinput></screen>
 
       <para revision="systemd">
-        For å starte <command>avahi-dnsconfd</command> nissen ved oppstart, aktiver
-        den tidligere installerte systemd enheten ved å kjøre følgende kommando
+        For Ã¥ starte <command>avahi-dnsconfd</command> nissen ved oppstart, aktiver
+        den tidligere installerte systemd enheten ved Ã¥ kjÃ¸re fÃ¸lgende kommando
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -395,7 +393,7 @@ make</userinput></screen>
         <term><command>avahi-browse</command></term>
         <listitem>
           <para>
-            søker etter mDNS/DNS-SD tjenester ved hjelp av
+            sÃ¸ker etter mDNS/DNS-SD tjenester ved hjelp av
             <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-browse">
@@ -408,7 +406,7 @@ make</userinput></screen>
         <term><command>avahi-browse-domains</command></term>
         <listitem>
           <para>
-            søker etter mDNS/DNS-SD tjenester ved hjelp av
+            sÃ¸ker etter mDNS/DNS-SD tjenester ved hjelp av
             <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-browse-domains">
@@ -433,7 +431,7 @@ make</userinput></screen>
         <term><command>avahi-discover</command></term>
         <listitem>
           <para>
-            søker etter mDNS/DNS-SD tjenester ved hjelp av
+            sÃ¸ker etter mDNS/DNS-SD tjenester ved hjelp av
             <application>Avahi</application> nissen.
           </para>
           <indexterm zone="avahi avahi-discover">
@@ -446,7 +444,7 @@ make</userinput></screen>
         <term><command>avahi-discover-standalone</command></term>
         <listitem>
           <para>
-            søker etter mDNS/DNS-SD tjenester ved hjelp av
+            sÃ¸ker etter mDNS/DNS-SD tjenester ved hjelp av
             <application>Avahi</application> nissen
           </para>
           <indexterm zone="avahi avahi-discover-standalone">
@@ -510,8 +508,8 @@ make</userinput></screen>
         <term><command>avahi-resolve</command></term>
         <listitem>
           <para>
-            løser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
-            (og omvendt) ved å bruke <application>Avahi</application>
+            lÃ¸ser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
+            (og omvendt) ved Ã¥ bruke <application>Avahi</application>
             nissen
           </para>
           <indexterm zone="avahi avahi-resolve">
@@ -524,8 +522,8 @@ make</userinput></screen>
         <term><command>avahi-resolve-address</command></term>
         <listitem>
           <para>
-            løser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
-            (og omvendt) ved å bruke <application>Avahi</application>
+            lÃ¸ser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
+            (og omvendt) ved Ã¥ bruke <application>Avahi</application>
             nissen
           </para>
           <indexterm zone="avahi avahi-resolve-address">
@@ -538,8 +536,8 @@ make</userinput></screen>
         <term><command>avahi-resolve-host-name</command></term>
         <listitem>
           <para>
-            løser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
-            (og omvendt) ved å bruke <application>Avahi</application>
+            lÃ¸ser ett eller flere mDNS/DNS vertsnavn til IP adresse(r)
+            (og omvendt) ved Ã¥ bruke <application>Avahi</application>
             nissen
           </para>
           <indexterm zone="avahi avahi-resolve-host-name">
@@ -564,7 +562,7 @@ make</userinput></screen>
         <term><command>bshell</command></term>
         <listitem>
           <para>
-            gjør dette .....
+            gjÃ¸r dette .....
           </para>
           <indexterm zone="avahi bshell">
             <primary sortas="b-bshell">bshell</primary>
@@ -576,7 +574,7 @@ make</userinput></screen>
         <term><command>bssh</command></term>
         <listitem>
           <para>
-            søker etter SSH servere på det lokale nettverket
+            sÃ¸ker etter SSH servere pÃ¥ det lokale nettverket
           </para>
           <indexterm zone="avahi bssh">
             <primary sortas="b-bssh">bssh</primary>
@@ -588,7 +586,7 @@ make</userinput></screen>
         <term><command>bvnc</command></term>
         <listitem>
           <para>
-            søker etter VNC servere på det lokale nettverket
+            sÃ¸ker etter VNC servere pÃ¥ det lokale nettverket
           </para>
           <indexterm zone="avahi bvnc">
             <primary sortas="b-bvnc">bvnc</primary>
