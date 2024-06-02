@@ -1,86 +1,86 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 ]>
 
-<sect1 id="postlfs-config-logon" xreflabel="Tilpasse Påloggingen med /etc/issue">
+<sect1 id="postlfs-config-logon" xreflabel="Tilpasse PÃ¥loggingen med /etc/issue">
   <?dbhtml filename="logon.html"?>
 
 
-  <title>Tilpasse Påloggingen med /etc/issue</title>
+  <title>Tilpasse PÃ¥loggingen med /etc/issue</title>
 
   <indexterm zone="postlfs-config-logon">
     <primary sortas="e-etc-issue">/etc/issue</primary>
   </indexterm>
 
   <para>
-    Første gang du starter opp ditt nye LFS system, vil påloggingsskjermen vises
-    fin og vanlig (som det skal være i et basis system). Mange folk
-    vil imidlertid at systemet deres skal vise noe informasjon i påloggings
-    beskjeden. Dette kan gjøres ved å bruke
+    FÃ¸rste gang du starter opp ditt nye LFS system, vil pÃ¥loggingsskjermen vises
+    fin og vanlig (som det skal vÃ¦re i et basis system). Mange folk
+    vil imidlertid at systemet deres skal vise noe informasjon i pÃ¥loggings
+    beskjeden. Dette kan gjÃ¸res ved Ã¥ bruke
     filen <filename>/etc/issue</filename>.
   </para>
 
   <para>
     <filename>/etc/issue</filename> filen er en ren tekstfil
-    som også vil akseptere visse skiftesekvenser (se nedenfor) for å
-    legge inn informasjon om systemet. Det er også filen
-    <filename>issue.net</filename> som kan brukes ved ekstern pålogging.
+    som ogsÃ¥ vil akseptere visse skiftesekvenser (se nedenfor) for Ã¥
+    legge inn informasjon om systemet. Det er ogsÃ¥ filen
+    <filename>issue.net</filename> som kan brukes ved ekstern pÃ¥logging.
     <command>ssh</command> vil imidlertid bare bruke det hvis du angir alternativet i
     konfigurasjonsfilen og vil <emphasis>ikke</emphasis> tolke
     skiftesekvensene vist nedenfor.
   </para>
 
   <para>
-    En av de vanligste tingene som folk ønsker å gjøre er å rydde
-    skjermen ved hver pålogging. Den enkleste måten å gjøre det på er å sette en "clear"
-    skiftesekvens inn i <filename>/etc/issue</filename>.  En enkel måte å
-    å gjøre dette er å gi kommandoen <command>clear &gt;
+    En av de vanligste tingene som folk Ã¸nsker Ã¥ gjÃ¸re er Ã¥ rydde
+    skjermen ved hver pÃ¥logging. Den enkleste mÃ¥ten Ã¥ gjÃ¸re det pÃ¥ er Ã¥ sette en "clear"
+    skiftesekvens inn i <filename>/etc/issue</filename>.  En enkel mÃ¥te Ã¥
+    Ã¥ gjÃ¸re dette er Ã¥ gi kommandoen <command>clear &gt;
     /etc/issue</command>.  Dette vil sette inn den relevante skiftesekvensen i
-    starten på <filename>/etc/issue</filename> filen.  Merk at hvis
-    du gjør dette, når du redigerer filen, bør du la tegnene på første linje
-    (normalt '^[[H^[[2J') stå alene.
+    starten pÃ¥ <filename>/etc/issue</filename> filen.  Merk at hvis
+    du gjÃ¸r dette, nÃ¥r du redigerer filen, bÃ¸r du la tegnene pÃ¥ fÃ¸rste linje
+    (normalt '^[[H^[[2J') stÃ¥ alene.
   </para>
 
   <note>
     <para>
       Terminal skiftesekvenser er spesielle koder som gjenkjennes av terminalen.
       ^[ representerer et ASCII ESC tegn. Sekvensen ESC [ H
-      plasserer markøren i øvre venstre hjørne av skjermen og ESC 2 J
+      plasserer markÃ¸ren i Ã¸vre venstre hjÃ¸rne av skjermen og ESC 2 J
       sletter skjermen. For mer informasjon om terminal skiftesekvenser, se
       <ulink url='http://rtfm.etla.org/xterm/ctlseq.html'/>
     </para>
   </note>
 
   <para>
-    Følgende sekvenser gjenkjennes av <command>agetty</command>
+    FÃ¸lgende sekvenser gjenkjennes av <command>agetty</command>
     (programmet som vanligvis analyserer <filename>/etc/issue</filename>).  Denne
     informasjon er fra <command>man agetty</command> hvor du kan finne
-    ekstra informasjon om påloggingsprosessen.
+    ekstra informasjon om pÃ¥loggingsprosessen.
   </para>
 
   <para>
     <filename>issue</filename> filen kan inneholde visse tegn
-    sekvenser for å vise forskjellig informasjon. Alle <filename>issue</filename>
-    sekvenser består av en omvendt skråstrek (\) umiddelbart etterfulgt av en av
-    bokstavene forklart nedenfor (så <option>\d</option> i
+    sekvenser for Ã¥ vise forskjellig informasjon. Alle <filename>issue</filename>
+    sekvenser bestÃ¥r av en omvendt skrÃ¥strek (\) umiddelbart etterfulgt av en av
+    bokstavene forklart nedenfor (sÃ¥ <option>\d</option> i
     <filename>/etc/issue</filename> vil sette inn gjeldende dato).
   </para>
 
 <screen><literal>b   Setter inn baudraten til gjeldende linje.
 d   Setter inn gjeldende dato.
-s   Setter inn systemnavnet, navnet på operativsystemet.
-l   Setter inn navnet på gjeldende tty linje.
+s   Setter inn systemnavnet, navnet pÃ¥ operativsystemet.
+l   Setter inn navnet pÃ¥ gjeldende tty linje.
 m   Setter inn arkitekturidentifikatoren for maskinen, f.eks., i686.
-n   Setter inn nodenavn på maskinen, også kjent som vertsnavnet.
+n   Setter inn nodenavn pÃ¥ maskinen, ogsÃ¥ kjent som vertsnavnet.
 o   Setter inn domenenavnet til maskinen.
 r   Setter inn utgivelsesnummer for kjernen, f.eks., 2.6.11.12.
-t   Setter inn nåværende tid.
-u   Setter inn antall nåværende brukere pålogget.
+t   Setter inn nÃ¥vÃ¦rende tid.
+u   Setter inn antall nÃ¥vÃ¦rende brukere pÃ¥logget.
 U   Setter inn streng "1 bruker" eller "&lt;n&gt; brukere" hvor &lt;n&gt; er
-     antall nåværende brukere pålogget.
+     antall nÃ¥vÃ¦rende brukere pÃ¥logget.
 v   Setter inn versjonen av OS, f.eks., byggedato osv.</literal></screen>
 
 </sect1>

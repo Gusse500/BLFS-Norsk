@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -17,10 +17,10 @@
 
   <para>
     Selv om de fleste enheter som trengs av pakker i BLFS og utover er satt opp
-    skikkelig av <application>udev</application> ved å bruke standardreglene
+    skikkelig av <application>udev</application> ved Ã¥ bruke standardreglene
     installert av LFS i <filename
     class="directory">/etc/udev/rules.d</filename>, det er tilfeller der
-    reglene må endres eller utvides.
+    reglene mÃ¥ endres eller utvides.
   </para>
 
   <sect2>
@@ -28,18 +28,18 @@
 
     <para>
       Hvis det er flere lydkort i et system, vil "standard"
-      lydkortet blir tilfeldig. Metoden for å etablere lydkortrekkefølge
+      lydkortet blir tilfeldig. Metoden for Ã¥ etablere lydkortrekkefÃ¸lge
       avhenger av om driverne er moduler eller ikke. Hvis lydkortets
       drivere er kompilert inn i kjernen, kontroll er via kjernekommandolinjens
       parametere i <filename>/boot/grub/grub.cfg</filename>.  For eksempel,
-      hvis et system har både et FM801-kort og et SoundBlaster PCI-kort,
-      følgende kan legges til kommandolinjen:
+      hvis et system har bÃ¥de et FM801-kort og et SoundBlaster PCI-kort,
+      fÃ¸lgende kan legges til kommandolinjen:
     </para>
 
 <screen><literal>snd-fm801.index=0 snd-ens1371.index=1</literal></screen>
 
     <para>
-      Hvis lydkortdriverne er bygget som moduler, kan rekkefølgen bli
+      Hvis lydkortdriverne er bygget som moduler, kan rekkefÃ¸lgen bli
       etablert i <filename>/etc/modprobe.conf</filename> filen med:
     </para>
 
@@ -56,43 +56,43 @@ options snd-ens1371 index=1</literal></screen>
     </para>
 
     <para>
-      Den første typen er laget av enhetsspesifikke drivere (f.eks.
+      Den fÃ¸rste typen er laget av enhetsspesifikke drivere (f.eks.
       usb_storage/sd_mod eller usblp) i kjernen. For eksempel en USB
-      masselagringsenhet ville være /dev/sdb, og en USB skriver ville være
-      /dev/usb/lp0. Disse enhetsnodene eksisterer bare når den enhetensspesifikke
+      masselagringsenhet ville vÃ¦re /dev/sdb, og en USB skriver ville vÃ¦re
+      /dev/usb/lp0. Disse enhetsnodene eksisterer bare nÃ¥r den enhetensspesifikke
       driveren er lastet inn.
     </para>
 
     <para>
       Den andre typen enhetsnoder (/dev/bus/usb/BBB/DDD, der BBB er
       bussnummeret og DDD er enhetsnummeret) opprettes selv om
-      enheten ikke har en kjernedriver. Ved å bruke disse "rå" USB enhetenes
-      noder, kan en applikasjon utveksle vilkårlige USB pakker med
-      enheten, dvs. omgå den muligens eksisterende kjernedriveren.
+      enheten ikke har en kjernedriver. Ved Ã¥ bruke disse "rÃ¥" USB enhetenes
+      noder, kan en applikasjon utveksle vilkÃ¥rlige USB pakker med
+      enheten, dvs. omgÃ¥ den muligens eksisterende kjernedriveren.
     </para>
 
     <para>
-      Tilgang til rå USB enhetsnoder er nødvendig når et brukerromsprogram
-      fungerer som enhetsdriver. Men for at programmet skal lykkes med å åpne enheten,
-      må tillatelsene settes riktig. Som standard, pga
-      av sikkerhetshensyn eies alle rå USB enheter av bruker root og
-      gruppe root, og har 0664-tillatelser (lesetilgangen er nødvendig, f.eks.
-      for at lsusb skal fungere og for at programmer skal få tilgang til USB huber). Pakker (f.eks
-      som SANE og libgphoto2) som også inneholder USB enhetsdrivere for brukerområdet
-      send udev-regler som endrer tillatelsene til den kontrollerte rå USB
+      Tilgang til rÃ¥ USB enhetsnoder er nÃ¸dvendig nÃ¥r et brukerromsprogram
+      fungerer som enhetsdriver. Men for at programmet skal lykkes med Ã¥ Ã¥pne enheten,
+      mÃ¥ tillatelsene settes riktig. Som standard, pga
+      av sikkerhetshensyn eies alle rÃ¥ USB enheter av bruker root og
+      gruppe root, og har 0664-tillatelser (lesetilgangen er nÃ¸dvendig, f.eks.
+      for at lsusb skal fungere og for at programmer skal fÃ¥ tilgang til USB huber). Pakker (f.eks
+      som SANE og libgphoto2) som ogsÃ¥ inneholder USB enhetsdrivere for brukeromrÃ¥det
+      send udev-regler som endrer tillatelsene til den kontrollerte rÃ¥ USB
       enheten. Det vil si at regler installert av SANE endrer tillatelser for kjente
-      skannere, men ikke skrivere. Hvis en pakkevedlikeholder glemte å skrive
-      en regel for enheten din, rapporter en feil til både BLFS (hvis pakken er
-      der) og oppstrøms, og du må skrive din egen regel.
+      skannere, men ikke skrivere. Hvis en pakkevedlikeholder glemte Ã¥ skrive
+      en regel for enheten din, rapporter en feil til bÃ¥de BLFS (hvis pakken er
+      der) og oppstrÃ¸ms, og du mÃ¥ skrive din egen regel.
     </para>
 
     <para>
-      Før Linux-2.6.15 ble tilgang til rå USB enheter ikke utført med
+      FÃ¸r Linux-2.6.15 ble tilgang til rÃ¥ USB enheter ikke utfÃ¸rt med
       /dev/bus/usb/BBB/DDD enhetsnoder, men med /proc/bus/usb/BBB/DDD
       pseudofiles. Noen applikasjoner bruker fortsatt bare
       denne foreldede teknikken og kan ikke bruke de nye enhetsnodene. De
-      kan ikke fungere med Linux kjerne versjon 3.5 eller nyere. Hvis du trenger å
-      kjøre en slik applikasjon, kontakt utvikleren av den for en løsning.
+      kan ikke fungere med Linux kjerne versjon 3.5 eller nyere. Hvis du trenger Ã¥
+      kjÃ¸re en slik applikasjon, kontakt utvikleren av den for en lÃ¸sning.
     </para>
 
   </sect2>
@@ -102,10 +102,10 @@ options snd-ens1371 index=1</literal></screen>
 
     <para>
       Finjustering av enhetsattributter som gruppenavn og tillatelser
-      er mulig ved å lage ekstra <application>udev</application> regler,
-      samsvarende på noe slikt. Leverandøren og produktet kan finnes med å
-      søke på <filename class='directory'>/sys/devices</filename>
-      mappegoppføringer eller bruk <command>udevadm info</command> etter at
+      er mulig ved Ã¥ lage ekstra <application>udev</application> regler,
+      samsvarende pÃ¥ noe slikt. LeverandÃ¸ren og produktet kan finnes med Ã¥
+      sÃ¸ke pÃ¥ <filename class='directory'>/sys/devices</filename>
+      mappegoppfÃ¸ringer eller bruk <command>udevadm info</command> etter at
       enheten er koblet til. Se dokumentasjonen i gjeldende
       <application>udev</application> mappen til <filename
       class='directory'>/usr/share/doc</filename> for detaljer.
@@ -116,8 +116,8 @@ options snd-ens1371 index=1</literal></screen>
 
     <note>
       <para>
-        Linjen ovenfor brukes kun for beskrivende formål.
-        <application>udev</application> skanner regler settes på plass når
+        Linjen ovenfor brukes kun for beskrivende formÃ¥l.
+        <application>udev</application> skanner regler settes pÃ¥ plass nÃ¥r
         <xref linkend='sane'/> installeres.
       </para>
     </note>
@@ -139,25 +139,25 @@ options snd-ens1371 index=1</literal></screen>
     <title>Enheter for Servere</title>
 
     <para>
-      I noen tilfeller er det fornuftig å deaktivere
+      I noen tilfeller er det fornuftig Ã¥ deaktivere
       <application>udev</application> fullstendig og lage statiske enheter.
       Servere er ett eksempel om denne situasjonen. Trenger en server
-      evne til å håndtere dynamiske enheter? Bare systemadministratoren
-      kan svare på det spørsmålet, men i mange tilfeller vil svaret være nei.
+      evne til Ã¥ hÃ¥ndtere dynamiske enheter? Bare systemadministratoren
+      kan svare pÃ¥ det spÃ¸rsmÃ¥let, men i mange tilfeller vil svaret vÃ¦re nei.
     </para>
 
     <para>
-      Hvis dynamiske enheter ikke er ønsket, må statiske enheter være
-      opprettet på systemet. I standardkonfigurasjonen
+      Hvis dynamiske enheter ikke er Ã¸nsket, mÃ¥ statiske enheter vÃ¦re
+      opprettet pÃ¥ systemet. I standardkonfigurasjonen
       <filename>/etc/rc.d/rcS.d/S10udev</filename> oppstartsskript monterer en
       <systemitem class="filesystem">tmpfs</systemitem> partisjon over
       <filename class="directory">/dev</filename> mappen. Dette problemet kan
-      overvinnes ved å montere root partisjonen midlertidig:
+      overvinnes ved Ã¥ montere root partisjonen midlertidig:
     </para>
 
     <warning>
       <para>
-        Hvis instruksjonene nedenfor ikke følges nøye, kan
+        Hvis instruksjonene nedenfor ikke fÃ¸lges nÃ¸ye, kan
         systemet ditt bli uoppstartbart.
       </para>
     </warning>
@@ -169,7 +169,7 @@ rm /etc/rc.d/rcS.d/{S10udev,S50udev_retry}
 umount /mnt</userinput></screen>
 
     <para>
-      På dette tidspunktet vil systemet bruke statiske enheter på neste
+      PÃ¥ dette tidspunktet vil systemet bruke statiske enheter pÃ¥ neste
       omstart. Lag eventuelle ekstra enheter ved hjelp av
       <command>mknod</command>.
     </para>
@@ -177,10 +177,10 @@ umount /mnt</userinput></screen>
     <para>
       Hvis du vil gjenopprette de dynamiske enhetene, gjenskaper du
       <filename>/etc/rc.d/rcS.d/{S10udev,S50udev_retry}</filename> symbolske
-      koblinger og starter på nytt. Statiske enheter trenger ikke å fjernes
-      (konsoll og null er alltid nødvendig) fordi de er dekket av
+      koblinger og starter pÃ¥ nytt. Statiske enheter trenger ikke Ã¥ fjernes
+      (konsoll og null er alltid nÃ¸dvendig) fordi de er dekket av
       <systemitem class="filesystem">tmpfs</systemitem> partisjonen. Disk
-      bruk for enheter er ubetydelig (ca 20&ndash;30 byte per oppføring.)
+      bruk for enheter er ubetydelig (ca 20&ndash;30 byte per oppfÃ¸ring.)
     </para>
 
   </sect2>
@@ -189,10 +189,10 @@ umount /mnt</userinput></screen>
     <title>Devices for DVD Drives</title>
 
     <para>
-      Hvis den første oppstartsprosessen ikke konfigurerer
+      Hvis den fÃ¸rste oppstartsprosessen ikke konfigurerer
       <systemitem>/dev/dvd</systemitem> enheten riktig, kan den
-      installeres ved å bruke følgende modifikasjon av standard udev regler.
-      Som <systemitem class="username">root</systemitem> bruker, kjør:
+      installeres ved Ã¥ bruke fÃ¸lgende modifikasjon av standard udev regler.
+      Som <systemitem class="username">root</systemitem> bruker, kjÃ¸r:
     </para>
 
 <screen><userinput>sed '1d;/SYMLINK.*cdrom/ a\
