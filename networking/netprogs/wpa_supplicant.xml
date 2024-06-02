@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -28,15 +28,15 @@
 
     <para>
       <application>WPA Supplicant</application> er en Wi-Fi beskyttet tilgang
-      (WPA) klient og IEEE 802.1X leverandør. Den implementerer WPA nøkkelforhandling
+      (WPA) klient og IEEE 802.1X leverandÃ¸r. Den implementerer WPA nÃ¸kkelforhandling
       med en WPA Authenticator og Extensible Authentication Protocol (EAP)
       autentisering med en autentiseringsserver. I tillegg kontrollerer den
-      roaming og IEEE 802.11 autentisering/tilknytning av det trådløse LAN
-      driveren. Dette er nyttig for å koble til et passordbeskyttet trådløst nettverk
+      roaming og IEEE 802.11 autentisering/tilknytning av det trÃ¥dlÃ¸se LAN
+      driveren. Dette er nyttig for Ã¥ koble til et passordbeskyttet trÃ¥dlÃ¸st nettverk
       tilgangspunkt.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -57,7 +57,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &wpa_supplicant-size;
+          NedlastingsstÃ¸rrelse: &wpa_supplicant-size;
         </para>
       </listitem>
       <listitem>
@@ -72,16 +72,26 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          NÃ¸dvendig oppdatering:
+          <ulink url="&patch-root;/wpa_supplicant-&wpa_supplicant-version;-security_fix-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">WPA Supplicant Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd (Kjøretid)</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd (KjÃ¸retid)</bridgehead>
     <para role="nodump">
       <xref linkend="wireless-kernel"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="desktop-file-utils"/> (for kjøring av
+      <xref linkend="desktop-file-utils"/> (for kjÃ¸ring av
         <command>update-desktop-database</command>) og
       <xref linkend="libnl"/>
     </para>
@@ -100,14 +110,14 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen i tillegg
-      spesifikke enhetsdrivere for maskinvaren din og kompiler kjernen på nytt hvis
-      nødvendig:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen i tillegg
+      spesifikke enhetsdrivere for maskinvaren din og kompiler kjernen pÃ¥ nytt hvis
+      nÃ¸dvendig:
     </para>
 
     <para>
-      For å bruke <application>wpa_supplicant</application>, kjernen må ha
-      passende drivere og annen støtte tilgjengelig. Les
+      For Ã¥ bruke <application>wpa_supplicant</application>, kjernen mÃ¥ ha
+      passende drivere og annen stÃ¸tte tilgjengelig. Les
       <xref linkend='wireless-kernel'/> for detaljer.
     </para>
 
@@ -120,12 +130,12 @@
     <title>Installasjon av WPA Supplicant</title>
 
     <para>
-      Først må du opprette en innledende konfigurasjonsfil for
+      FÃ¸rst mÃ¥ du opprette en innledende konfigurasjonsfil for
       byggeprosessen. Du kan lese <filename>wpa_supplicant/README</filename>
       og <filename>wpa_supplicant/defconfig</filename> for forklaringen
-      av følgende alternativer samt andre alternativer som kan brukes.
+      av fÃ¸lgende alternativer samt andre alternativer som kan brukes.
       Lag en konfigurasjonsfil som skal fungere for standard WiFi
-      oppsett ved å kjøre følgende kommando:
+      oppsett ved Ã¥ kjÃ¸re fÃ¸lgende kommando:
     </para>
 
 <screen><userinput>cat &gt; wpa_supplicant/.config &lt;&lt; "EOF"
@@ -157,11 +167,11 @@ CFLAGS += -I/usr/include/libnl3</literal>
 EOF</userinput></screen>
 
     <para>
-      Hvis du ønsker å bruke <application>WPA Supplicant</application> med
-      <xref linkend="NetworkManager"/>, sørg for at du har installert
+      Hvis du Ã¸nsker Ã¥ bruke <application>WPA Supplicant</application> med
+      <xref linkend="NetworkManager"/>, sÃ¸rg for at du har installert
       <xref linkend="dbus"/> og <xref linkend="libxml2"/>, legg deretter til
-      følgende alternativer til <application>WPA Supplicant</application>
-      byggekonfigurasjonsfilen ved å kjøre følgende kommando:
+      fÃ¸lgende alternativer til <application>WPA Supplicant</application>
+      byggekonfigurasjonsfilen ved Ã¥ kjÃ¸re fÃ¸lgende kommando:
     </para>
 
 <screen><userinput>cat &gt;&gt; wpa_supplicant/.config &lt;&lt; "EOF"
@@ -171,22 +181,30 @@ CONFIG_CTRL_IFACE_DBUS_INTRO=y</literal>
 EOF</userinput></screen>
 
     <para>
-      Installer <application>WPA Supplicant</application> ved å kjøre
-      følgende kommandoer:
+      Deretter ordne et sikkerhetsproblem som oppstÃ¥r nÃ¥r du kobler til noen
+      nettverk:
+      <!-- CVE-2023-52160, see Ticket #19304. -->
+    </para>
+
+<screen><userinput>patch -Np1 -i ../wpa_supplicant-&wpa_supplicant-version;-security_fix-1.patch</userinput></screen>
+
+    <para>
+      Installer <application>WPA Supplicant</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>cd wpa_supplicant &amp;&amp;
 make BINDIR=/usr/sbin LIBDIR=/usr/lib</userinput></screen>
 
     <para>
-      Hvis du har installert &qt5-deps; og ønsker å bygge
-      <application>WPA Supplicant</application> GUI programmet, kjør
-      følgende kommandoer:
+      Hvis du har installert &qt5-deps; og Ã¸nsker Ã¥ bygge
+      <application>WPA Supplicant</application> GUI programmet, kjÃ¸r
+      fÃ¸lgende kommandoer:
     </para>
 
     <note>
       <para>
-        Følgende mappenavn er merket qt4, men
+        FÃ¸lgende mappenavn er merket qt4, men
          er kompatibel med &qt5-deps;.
       </para>
     </note>
@@ -201,7 +219,7 @@ popd</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>install -v -m755 wpa_{cli,passphrase,supplicant} /usr/sbin/ &amp;&amp;
@@ -209,8 +227,8 @@ install -v -m644 doc/docbook/wpa_supplicant.conf.5 /usr/share/man/man5/ &amp;&am
 install -v -m644 doc/docbook/wpa_{cli,passphrase,supplicant}.8 /usr/share/man/man8/</userinput></screen>
 
     <para revision="systemd">
-      Installer <application>systemd</application> støttefiler ved å
-      kjøre følgende kommando som <systemitem
+      Installer <application>systemd</application> stÃ¸ttefiler ved Ã¥
+      kjÃ¸re fÃ¸lgende kommando som <systemitem
       class="username">root</systemitem> bruker:
     </para>
 
@@ -218,9 +236,9 @@ install -v -m644 doc/docbook/wpa_{cli,passphrase,supplicant}.8 /usr/share/man/ma
 
     <para>
       Hvis du har bygget <application>WPA Supplicant</application> med
-      <application>D-Bus</application> støtte, må du installere
+      <application>D-Bus</application> stÃ¸tte, mÃ¥ du installere
       <application>D-Bus</application> konfigurasjonsfiler. Installer dem
-      ved å kjøre følgende kommandoer som
+      ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -230,20 +248,9 @@ install -v -d -m755 /etc/dbus-1/system.d &amp;&amp;
 install -v -m644 dbus/dbus-wpa_supplicant.conf \
                  /etc/dbus-1/system.d/wpa_supplicant.conf</userinput></screen>
 
-    <para revision="systemd">
-      Aktiver i tillegg <filename>wpa_supplicant.service</filename>
-      så <application>systemd</application> kan riktig aktivere
-      <application>D-Bus</application> service. Merk at
-      per tilkoblingstjeneste og D-Bus tjenesten kan ikke aktiveres
-      samtidig. Kjør følgende kommando som
-      <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root" revision="systemd"><userinput>systemctl enable wpa_supplicant</userinput></screen>
-
     <para>
       Hvis du har bygget <application>WPA Supplicant</application> GUI
-      programmet, installer den ved å kjøre følgende kommandoer som
+      programmet, installer den ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -254,8 +261,8 @@ install -v -m644 wpa_gui-qt4/icons/wpa_gui.svg /usr/share/pixmaps/</userinput></
 
     <note>
       <para>
-        Du må starte på nytt systemets <application>D-Bus</application> nisse
-        før du kan bruke <application>WPA Supplicant</application>
+        Du mÃ¥ starte pÃ¥ nytt systemets <application>D-Bus</application> nisse
+        fÃ¸r du kan bruke <application>WPA Supplicant</application>
         <application>D-Bus</application> grensesnittet.
       </para>
     </note>
@@ -267,6 +274,17 @@ install -v -m644 wpa_gui-qt4/icons/wpa_gui.svg /usr/share/pixmaps/</userinput></
 
   <sect2 role="configuration">
     <title>Konfigurere wpa_supplicant</title>
+
+    <important>
+      <para>
+        Hvis du bruker WPA Supplicant med
+        <xref linkend='NetworkManager'/> (eller noe som kommuniserer med
+        WPA Supplicant via D-Bus), bÃ¸r denne delen hoppes over. Ã… kjÃ¸re
+        en D-Bus tilkoblet WPA Supplicant Ã¸kt og en annen WPA Supplicant
+        forekomst konfigurert etter denne delen samtidig kan forÃ¥rsake
+        subtile problemer.
+      </para>
+    </important>
 
     <sect3 id="wpa_supplicant-config">
       <title>Konfigurasjonsfil</title>
@@ -295,8 +313,8 @@ install -v -m644 wpa_gui-qt4/icons/wpa_gui.svg /usr/share/pixmaps/</userinput></
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        For å koble til et tilgangspunkt som bruker et passord, må du putte
-        den forhåndsdelte nøkkelen inn i
+        For Ã¥ koble til et tilgangspunkt som bruker et passord, mÃ¥ du putte
+        den forhÃ¥ndsdelte nÃ¸kkelen inn i
         <phrase revision="sysv">
           <filename>
  /etc/sysconfig/wpa_supplicant-<replaceable>wifi0</replaceable>.conf</filename>.
@@ -305,8 +323,8 @@ install -v -m644 wpa_gui-qt4/icons/wpa_gui.svg /usr/share/pixmaps/</userinput></
           <filename>
  /etc/wpa_supplicant/wpa_supplicant-<replaceable>wifi0</replaceable>.conf</filename>.
         </phrase>
-        SSID er strengen som tilgangspunktet/ruteren sender for å
-        identifisere seg. Kjør følgende kommando som
+        SSID er strengen som tilgangspunktet/ruteren sender for Ã¥
+        identifisere seg. KjÃ¸r fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -326,14 +344,14 @@ wpa_passphrase <replaceable>SSID</replaceable> <replaceable>SECRET_PASSWORD</rep
             /etc/wpa_supplicant/wpa_supplicant-<replaceable>wifi0</replaceable>.conf
           </filename>
         </phrase>
-        kan inneholde detaljene til flere tilgangspunkter. Når
+        kan inneholde detaljene til flere tilgangspunkter. NÃ¥r
         <command>wpa_supplicant</command> er startet, vil den skanne etter
-        SSID-er den kan se og velge riktig passord for å koble til.
+        SSID-er den kan se og velge riktig passord for Ã¥ koble til.
       </para>
 
       <para>
         Hvis du vil koble til et tilgangspunkt som ikke er 
-        passordbeskyttet, legg inn en oppføring som dette
+        passordbeskyttet, legg inn en oppfÃ¸ring som dette
         <phrase revision="sysv">
           <filename>
 /etc/sysconfig/wpa_supplicant-<replaceable>wifi0</replaceable>.conf</filename>.
@@ -351,9 +369,9 @@ wpa_passphrase <replaceable>SSID</replaceable> <replaceable>SECRET_PASSWORD</rep
 }</screen>
 
       <para>
-        Å koble til et nytt tilgangspunkt som ikke er i konfigurasjonsfilen
-        kan utføres manuelt via kommandolinjen eller GUI, men det
-        må gjøres via en privilegert bruker. For å gjøre det, legg til følgende
+        Ã… koble til et nytt tilgangspunkt som ikke er i konfigurasjonsfilen
+        kan utfÃ¸res manuelt via kommandolinjen eller GUI, men det
+        mÃ¥ gjÃ¸res via en privilegert bruker. For Ã¥ gjÃ¸re det, legg til fÃ¸lgende
         i konfigurasjonsfilen:
       </para>
 
@@ -362,11 +380,11 @@ update_config=1</screen>
 
       <para>
         Bytt ut &lt;privileged group&gt; ovenfor med en systemgruppe hvor
-        medlemmer har muligheten til å koble til et trådløst tilgangspunkt.
+        medlemmer har muligheten til Ã¥ koble til et trÃ¥dlÃ¸st tilgangspunkt.
       </para>
 
       <para>
-        Det er mange alternativer du kan bruke for å justere hvordan du kobler til
+        Det er mange alternativer du kan bruke for Ã¥ justere hvordan du kobler til
         til hvert tilgangspunkt. De er beskrevet i noen detalj i
         <filename>wpa_supplicant/wpa_supplicant.conf</filename> filen i
         kildetreet.
@@ -379,7 +397,7 @@ update_config=1</screen>
 
       <para id="wpa-service" revision="sysv">
         Hvis du vil konfigurere nettverksgrensesnitt ved oppstart ved hjelp av
-        <command>wpa_supplicant</command>, må du installere
+        <command>wpa_supplicant</command>, mÃ¥ du installere
         <filename>/lib/services/wpa</filename> skriptet
         inkludert i <xref linkend="bootscripts"/> pakken:
       </para>
@@ -391,11 +409,11 @@ update_config=1</screen>
       </indexterm>
 
       <para revision="sysv">
-        Hvis ruteren/tilgangspunktet bruker DHCP til å tildele IP adresser, kan du
+        Hvis ruteren/tilgangspunktet bruker DHCP til Ã¥ tildele IP adresser, kan du
         installere <xref linkend="dhcpcd" role="nodep"/> og bruke den til
-        å automatisk hente nettverksadresser. Opprett
+        Ã¥ automatisk hente nettverksadresser. Opprett
         <filename>/etc/sysconfig/ifconfig-<replaceable>wifi0</replaceable>
-        </filename> ved å kjøre følgende kommando som
+        </filename> ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -413,10 +431,10 @@ DHCP_STOP="-k <replaceable>&lt;insert additional stop options here&gt;</replacea
 EOF</userinput></screen>
 
       <para revision="sysv">
-        Alternativt, hvis du bruker statiske adresser på ditt lokale nettverk,
+        Alternativt, hvis du bruker statiske adresser pÃ¥ ditt lokale nettverk,
         opprette da
         <filename>/etc/sysconfig/ifconfig-<replaceable>wifi0</replaceable>
-        </filename> ved å kjøre følgende kommando som
+        </filename> ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -460,14 +478,14 @@ EOF</userinput></screen>
 
       <para revision="systemd">
         Den eneste forskjellen mellom 3 av dem er hvilken driver
-        som brukes for tilkobling (-D-alternativ). Den første bruker
+        som brukes for tilkobling (-D-alternativ). Den fÃ¸rste bruker
         standarddriveren, den andre bruker nl80211
         driver og den tredje bruker den kablede driveren.
       </para>
 
       <para>
-        Du kan koble til det trådløse tilgangspunktet ved å
-        kjøre følgende kommando som
+        Du kan koble til det trÃ¥dlÃ¸se tilgangspunktet ved Ã¥
+        kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -475,21 +493,21 @@ EOF</userinput></screen>
 
       <para revision="sysv">
         Erstatt <replaceable>wlan0</replaceable> med riktig
-        trådløst grensesnitt og <replaceable>wifi0</replaceable>
-        med ønsket navn for konfigurasjonsfilen. Vær oppmerksom på
+        trÃ¥dlÃ¸st grensesnitt og <replaceable>wifi0</replaceable>
+        med Ã¸nsket navn for konfigurasjonsfilen. VÃ¦r oppmerksom pÃ¥
         at <filename>wpa_supplicant-*.conf</filename> og
         <filename>ifconfig.*</filename> konfigurasjonsfiler trenger
-        å ha identiske navn, dvs. begge inneholder
+        Ã¥ ha identiske navn, dvs. begge inneholder
         <replaceable>wifi0</replaceable> i deres navn.
       </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl start wpa_supplicant@<replaceable>wlan0</replaceable></userinput></screen>
 
       <para revision="systemd">
-        For å koble til det trådløse tilgangspunktet ved
+        For Ã¥ koble til det trÃ¥dlÃ¸se tilgangspunktet ved
         oppstart, aktiver den aktuelle
         <command>wpa_supplicant</command> service
-        ved å kjøre følgende kommando som
+        ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -498,11 +516,11 @@ EOF</userinput></screen>
       <para revision="systemd">
         Avhengig av oppsettet ditt, kan du erstatte
         <filename>wpa_supplicant@.service</filename>
-        med en hvilken som helst annen oppført ovenfor.
+        med en hvilken som helst annen oppfÃ¸rt ovenfor.
       </para>
 
       <para revision="systemd">
-        For å tilordne en nettverksadresse til det trådløse grensesnittet, se
+        For Ã¥ tilordne en nettverksadresse til det trÃ¥dlÃ¸se grensesnittet, se
         <ulink url="&lfs-root;/chapter09/network.html">Generell nettverkskonfigurasjon</ulink>
         siden i LFS.
       </para>
@@ -554,7 +572,7 @@ EOF</userinput></screen>
         <term><command>wpa_supplicant</command></term>
         <listitem>
           <para>
-            er en nisse som kan koble til et passordbeskyttet trådløst nettverk
+            er en nisse som kan koble til et passordbeskyttet trÃ¥dlÃ¸st nettverk
              tilgangspunkt
           </para>
           <indexterm zone="wpa_supplicant wpa_supplicant-prog">
@@ -569,7 +587,7 @@ EOF</userinput></screen>
           <para>
             tar en SSID og et passord og genererer en enkel
             konfigurasjon som <command>wpa_supplicant</command> kan
-            forstå
+            forstÃ¥
           </para>
           <indexterm zone="wpa_supplicant wpa_passphrase">
             <primary sortas="b-wpa_passphrase">wpa_passphrase</primary>
@@ -581,7 +599,7 @@ EOF</userinput></screen>
         <term><command>wpa_cli</command></term>
         <listitem>
           <para>
-            er et kommandolinjegrensesnitt som brukes til å kontrollere en kjørende
+            er et kommandolinjegrensesnitt som brukes til Ã¥ kontrollere en kjÃ¸rende
             <command>wpa_supplicant</command> nisse
           </para>
           <indexterm zone="wpa_supplicant wpa_cli">
