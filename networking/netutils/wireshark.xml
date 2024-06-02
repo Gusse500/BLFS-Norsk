@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,13 +6,13 @@
 
   <!ENTITY wireshark-download-http "https://www.wireshark.org/download/src/all-versions/wireshark-&wireshark-version;.tar.xz">
   <!ENTITY wireshark-download-ftp  " ">
-  <!ENTITY wireshark-md5sum        "8c23f20130bb1a346ca3da1ff43a16b4">
-  <!ENTITY wireshark-size          "41 MB">
-  <!ENTITY wireshark-buildsize     "692 MB (med alle valgfrie avhengigheter tilgjengelig i BLFS boken)">
-  <!ENTITY wireshark-time          "2.1 SBU (med parallellisme=4 og alle valgfrie avhengigheter tilgjengelig i BLFS boken)">
+  <!ENTITY wireshark-md5sum        "6c773f66b127ea1928d43b96d0e28098">
+  <!ENTITY wireshark-size          "43 MB">
+  <!ENTITY wireshark-buildsize     "915 MB (med alle valgfrie avhengigheter tilgjengelig i BLFS boken; 170 MB installert)">
+  <!ENTITY wireshark-time          "2.9 SBU (med parallellisme=4 og alle valgfrie avhengigheter tilgjengelig i BLFS boken)">
 ]>
 
-<!-- Gentler reminder: many Wireshark releases contain vulnerability fixes,
+<!-- Gentle reminder: many Wireshark releases contain vulnerability fixes,
  we have not always been aware of these. At https://www.wireshark.org/security/
  there is a list of advisories and the version in which they were fixed.
 
@@ -36,19 +36,19 @@
 
     <para>
       <application>Wireshark</application> pakken inneholder en nettverks
-      protokollanalysator, også kjent som en <quote>sniffer</quote>. Dette er nyttig
-      for å analysere registrerte data <quote>off the wire</quote> fra en levende
+      protokollanalysator, ogsÃ¥ kjent som en <quote>sniffer</quote>. Dette er nyttig
+      for Ã¥ analysere registrerte data <quote>off the wire</quote> fra en levende
       nettverkstilkobling, eller data lest fra en registreringsfil.
     </para>
 
     <para>
-      <application>Wireshark</application> gir både en grafisk og en
-      TTY modus grenseflate for å undersøke fangede nettverkspakker fra over 500
-      protokoller, samt muligheten til å lese en fangstfil fra mange
-      andre populære nettverksanalysatorer.
+      <application>Wireshark</application> gir bÃ¥de en grafisk og en
+      TTY modus grenseflate for Ã¥ undersÃ¸ke fangede nettverkspakker fra over 500
+      protokoller, samt muligheten til Ã¥ lese en fangstfil fra mange
+      andre populÃ¦re nettverksanalysatorer.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -69,7 +69,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &wireshark-size;
+          NedlastingsstÃ¸rrelse: &wireshark-size;
         </para>
       </listitem>
       <listitem>
@@ -86,6 +86,14 @@
 
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
+    <!--
+      <listitem>
+        <para>
+          NÃ¸dvendig oppdatering for Ã¥ bygge med Python-3.12:
+          <ulink url="&patch-root;/wireshark-&wireshark-version;-py_3.12_fix-1.patch"/>
+        </para>
+      </listitem>
+    -->
       <listitem>
         <para>
           Ytterligere dokumentasjon:
@@ -97,18 +105,26 @@
 
     <bridgehead renderas="sect3">Wireshark Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>,
+      <xref linkend="c-ares"/>,
       <xref linkend="glib2"/>,
       <xref linkend="libgcrypt"/>, og
-      (<xref linkend="qt5"/> eller
-       <xref role="nodep" linkend="qt5-components"/> med qtmultimedia)
+      <xref linkend="qt6"/>
     </para>
+
+    <note>
+      <para>
+        <xref linkend="qt6"/> er strengt tatt ikke nÃ¸dvendig, siden den kan bli
+        erstattet med <application>Qt5</application>. Se <quote>Parameterforklaringer
+        </quote> under.
+      </para>
+    </note>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="libpcap"/> (nødvendig for å fange data)
+      <xref linkend="libpcap"/> (nÃ¸dvendig for Ã¥ fange data)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -125,9 +141,11 @@
       <xref linkend="lua52"/>,
       <xref linkend="mitkrb"/>,
       <xref linkend="nghttp2"/>,
+      (<xref linkend="qt5"/> eller
+      <xref role="nodep" linkend="qt5-components"/> med qtmultimedia)
+      (pÃ¥krevd hvis <xref role="nodep" linkend="qt6"/> ikke er installert),
       <xref linkend="sbc"/>,
       <xref linkend="speex"/>,
-      <!--<ulink url="https://asciidoctor.org/">Asciidoctor</ulink>,-->
       <ulink url="https://www.linphone.org/technical-corner/bcg729">BCG729</ulink>,
       <ulink url="https://github.com/TimothyGu/libilbc">libilbc</ulink>,
       <ulink url="https://www.ibr.cs.tu-bs.de/projects/libsmi/">libsmi</ulink>,
@@ -146,7 +164,7 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Kjernen må ha pakkeprotokollen aktivert for at <application>
+      Kjernen mÃ¥ ha pakkeprotokollen aktivert for at <application>
       Wireshark</application> skal fange opp levende pakker fra nettverket:
     </para>
 
@@ -171,7 +189,7 @@
     <para>
       <application>Wireshark</application> er en veldig stor og kompleks
       applikasjon. Disse instruksjonene gir ytterligere sikkerhetstiltak for
-      å sikre at bare pålitelige brukere har lov til å se nettverkstrafikk. Først,
+      Ã¥ sikre at bare pÃ¥litelige brukere har lov til Ã¥ se nettverkstrafikk. FÃ¸rst,
       sett opp en systemgruppe for wireshark. Som <systemitem
       class="username">root</systemitem> bruker:
     </para>
@@ -179,8 +197,8 @@
 <screen role="root"><userinput>groupadd -g 62 wireshark</userinput></screen>
 
     <para>
-      Fortsett å installere <application>Wireshark</application> ved å kjøre
-      følgende kommandoer:
+      Fortsett Ã¥ installere <application>Wireshark</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -198,7 +216,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install &amp;&amp;
@@ -216,8 +234,8 @@ unset FILENAME</userinput></screen>
 
     <para>
       Hvis du lastet ned noen av dokumentasjonsfilene fra siden
-      oppført i 'Ytterligere nedlastinger', installer dem ved å utstede
-      følgende kommandoer som <systemitem class="username">root</systemitem>
+      oppfÃ¸rt i 'Ytterligere nedlastinger', installer dem ved Ã¥ utstede
+      fÃ¸lgende kommandoer som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
@@ -226,8 +244,8 @@ unset FILENAME</userinput></screen>
                  /usr/share/doc/wireshark-&wireshark-version;</userinput></screen>
 
     <para>
-      Sett nå eierskap og tillatelser for sensitive applikasjoner til bare
-      å tillate autoriserte brukere. Som <systemitem class="username">root
+      Sett nÃ¥ eierskap og tillatelser for sensitive applikasjoner til bare
+      Ã¥ tillate autoriserte brukere. Som <systemitem class="username">root
       </systemitem> bruker:
     </para>
 
@@ -242,23 +260,30 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
     <screen role="root"><userinput>usermod -a -G wireshark <replaceable>&lt;brukernavn&gt;</replaceable></userinput></screen>
 
     <para>
-      Hvis du installerer wireshark for første gang, vil det være nødvendig
-      å logge ut av økten og logge på igjen. Dette vil sette wireshark i din
+      Hvis du installerer wireshark for fÃ¸rste gang, vil det vÃ¦re nÃ¸dvendig
+      Ã¥ logge ut av Ã¸kten og logge pÃ¥ igjen. Dette vil sette wireshark i din
       gruppe, fordi ellers vil ikke Wireshark fungere skikkelig.
     </para>
 
   </sect2>
-<!--
+
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
+      <para>
+        <option>-DUSE_qt6=OFF</option>: Bruk denne bryteren hvis
+        <xref linkend="qt6"/> ikke er tilgjengelig. Du vil trenge
+        <xref linkend="qt5"/> i det minste <xref linkend="qt5-components"/>
+        med qtmultimedia i dette tilfellet.
+      </para>
+<!--
     <para>
       <option>- -disable-wireshark</option>: Bruk denne bryteren hvis du
-      har <application>Qt</application> installert, men ønsker ikke å bygge
+      har <application>Qt</application> installert, men Ã¸nsker ikke Ã¥ bygge
       noen av GUIene.
     </para>
-  </sect2>
 -->
+  </sect2>
 
   <sect2 role="configuration">
     <title>Konfigurere Wireshark</title>
@@ -290,16 +315,16 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
         konfigurasjonsdelen av <ulink url=
         "https://www.wireshark.org/docs/wsug_html/">Wireshark User's Guide
         </ulink> for konfigurasjonsinformasjon. Meste av <application>Wireshark
-        </application> sin konfigurasjon kan utføres
-        ved å bruke menyalternativene til <command>wireshark</command> grafiske
+        </application> sin konfigurasjon kan utfÃ¸res
+        ved Ã¥ bruke menyalternativene til <command>wireshark</command> grafiske
         grensesnitt.
       </para>
 
       <note>
         <para>
-          Hvis du vil se på pakker, sørg for at du ikke filtrerer dem
+          Hvis du vil se pÃ¥ pakker, sÃ¸rg for at du ikke filtrerer dem
           ut med <xref linkend="iptables"/>. Hvis du vil utelukke visse
-          klasser av pakker, er det mer effektivt å gjøre det med
+          klasser av pakker, er det mer effektivt Ã¥ gjÃ¸re det med
           <application>iptables</application> enn det er med
           <application>Wireshark</application>.
         </para>
@@ -328,7 +353,7 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
           libwsutil.so, og mange moduler under /usr/lib/wireshark/plugins
         </seg>
         <seg>
-          /usr/{include,lib,share}/wireshark og
+          /usr/{lib,share}/wireshark og
           /usr/share/doc/wireshark-&wireshark-version;
          </seg>
       </seglistitem>
@@ -344,8 +369,8 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
         <listitem>
           <para>
             leser en lagret fangstfil og returnerer noen eller alle av flere
-            statistikker om den filen. Den er i stand til å oppdage og lese all
-            fangst støttet av <application>Wireshark</application>
+            statistikker om den filen. Den er i stand til Ã¥ oppdage og lese all
+            fangst stÃ¸ttet av <application>Wireshark</application>
             pakken
           </para>
           <indexterm zone="wireshark capinfos">
@@ -370,7 +395,7 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
         <term><command>dumpcap</command></term>
         <listitem>
           <para>
-            er et nettverkstrafikkdumpverktøy. Den lar deg fange opp pakkedata
+            er et nettverkstrafikkdumpverktÃ¸y. Den lar deg fange opp pakkedata
             fra et levende nettverk og skriv pakkene til en fil
           </para>
           <indexterm zone="wireshark dumpcap">
@@ -384,9 +409,9 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
         <listitem>
           <para>
             redigerer og/eller oversetter formatet til fangstfiler. Det vet
-            hvordan å lese <application>libpcap</application> fangstfiler,
+            hvordan Ã¥ lese <application>libpcap</application> fangstfiler,
             inkludert <command>tcpdump</command>,
-            <application>Wireshark</application> og andre verktøy som skriver
+            <application>Wireshark</application> og andre verktÃ¸y som skriver
             fangster i det formatet
           </para>
           <indexterm zone="wireshark editcap">
@@ -404,7 +429,7 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
             <application>Wireshark</application> <quote>programtillegg</quote>. Den
             er avhengig av to Python programmer <command>wireshark_be.py</command>
             og <command>wireshark_gen.py</command>, som ikke er installert
-            som standard. De må kopieres manuelt fra
+            som standard. De mÃ¥ kopieres manuelt fra
             <filename class="directory">tools</filename> mappen til
             <filename class="directory">$PYTHONPATH/site-packages/</filename>
             mappen
@@ -443,7 +468,7 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
         <term><command>rawshark</command></term>
         <listitem>
           <para>
-            dumper og analyserer rå libpcap data
+            dumper og analyserer rÃ¥ libpcap data
           </para>
           <indexterm zone="wireshark rawshark">
             <primary sortas="b-rawshark">rawshark</primary>
@@ -467,7 +492,7 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
         <term><command>sharkd</command></term>
         <listitem>
           <para>
-            er en nisse som lytter på UNIX sockets
+            er en nisse som lytter pÃ¥ UNIX sockets
           </para>
           <indexterm zone="wireshark sharkd">
             <primary sortas="b-sharkd">sharkd</primary>
@@ -535,7 +560,7 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
         <listitem>
           <para>
             inneholder funksjoner som brukes av <application>Wireshark</application>
-            programmer for å utføre filtrering og pakkefangst
+            programmer for Ã¥ utfÃ¸re filtrering og pakkefangst
           </para>
           <indexterm zone="wireshark libwireshark">
             <primary sortas="c-libwireshark">libwireshark.so</primary>
@@ -548,7 +573,7 @@ chmod -v 6550 /usr/bin/{tshark,dumpcap}</userinput></screen>
         <listitem>
           <para>
             er et bibliotek som utvikles som en fremtidig erstatning for
-            <filename class="libraryfile">libpcap</filename>, den nåværende
+            <filename class="libraryfile">libpcap</filename>, den nÃ¥vÃ¦rende
             standard Unix bibliotek for pakkefangst. For mer informasjon,
             se <filename>README</filename> filen i kilde
             <filename class="directory">wiretap</filename> mappen
