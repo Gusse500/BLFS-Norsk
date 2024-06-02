@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,12 +6,12 @@
 
   <!-- only for initial releases of a new version
   <!ENTITY vim-download-http "http://ftp.vim.org/vim/unix/vim-&vim-version;.tar.bz2">-->
-  <!ENTITY vim-download-http "&sources-anduin-http;/vim/vim-&vim-version;.tar.gz">
+  <!ENTITY vim-download-http "https://github.com/vim/vim/archive/v&vim-version;/vim-&vim-version;.tar.gz">
   <!ENTITY vim-download-ftp  " ">
-  <!ENTITY vim-md5sum        "65e6b09ef0628a2d8eba79f1d1d5a564">
-  <!ENTITY vim-size          "16 MB">
-  <!ENTITY vim-buildsize     "127 MB (add 67 MB for tests)">
-  <!ENTITY vim-time          "0.5 SBU (med parallellitet=4; legg til 3.0 SBU for tester)">
+  <!ENTITY vim-md5sum        "79dfe62be5d347b1325cbd5ce2a1f9b3">
+  <!ENTITY vim-size          "17 MB">
+  <!ENTITY vim-buildsize     "125 MB (add 67 MB for tests)">
+  <!ENTITY vim-time          "0.3 SBU (med parallellitet=4; legg til 3.0 SBU for tester)">
 ]>
 
 <sect1 id="vim" xreflabel="Vim-&vim-version;">
@@ -36,22 +36,22 @@
 
     <para>
       Standard LFS instruksjoner installerer <application>vim</application>
-      som en del av basissystemet. Hvis du foretrekker å linke
+      som en del av basissystemet. Hvis du foretrekker Ã¥ linke
       <application>vim</application> imot <application>X</application>,
-      du bør kompilere <application>vim</application> på nytt for å aktivere GUI modus.
+      du bÃ¸r kompilere <application>vim</application> pÃ¥ nytt for Ã¥ aktivere GUI modus.
       Det er ikke behov for spesielle instruksjoner siden
-      <application>X</application> støtte oppdages automatisk.
+      <application>X</application> stÃ¸tte oppdages automatisk.
     </para>
 
     <note>
       <para>
-        Versjonen av vim endres daglig. For å få den siste
-        versjonen, gå til <ulink url="https://github.com/vim/vim/releases">
+        Versjonen av vim endres daglig. For Ã¥ fÃ¥ den siste
+        versjonen, gÃ¥ til <ulink url="https://github.com/vim/vim/releases">
         https://github.com/vim/vim/releases</ulink>.
       </para>
     </note>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -72,7 +72,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &vim-size;
+          NedlastingsstÃ¸rrelse: &vim-size;
         </para>
       </listitem>
       <listitem>
@@ -99,10 +99,8 @@
     <para role="optional">
       <xref linkend="gpm"/>,
       <xref linkend="lua"/>,
-<!-- can use python3: don't advertise python2
-      <xref linkend="python2"/>,
--->   <xref linkend="rsync"/>, og
-      <xref linkend="ruby"/>
+      <xref linkend="ruby"/>, og
+      <xref linkend="rsync"/>
     </para>
 
   </sect2>
@@ -112,32 +110,32 @@
 
     <note>
       <para>
-        Hvis du rekompilerer <application>Vim</application> for å linke mot
+        Hvis du rekompilerer <application>Vim</application> for Ã¥ linke mot
         <application>X</application> og dine <application>X</application>
-        biblioteker ikke er på root partisjonen, vil du ikke lenger ha en
-        tekstredigerer for bruk i nødstilfeller. Du kan velge å installere en ekstra
+        biblioteker ikke er pÃ¥ root partisjonen, vil du ikke lenger ha en
+        tekstredigerer for bruk i nÃ¸dstilfeller. Du kan velge Ã¥ installere en ekstra
         tekstredigerer, ikke lenke <application>Vim</application> mot
         <application>X</application>, eller flytt den gjeldende <command>vim</command>
-        kjørbare til <filename class="directory">/bin</filename> mappen
+        kjÃ¸rbare til <filename class="directory">/bin</filename> mappen
         under et annet navn som f.eks <filename>vi</filename>.
       </para>
     </note>
 <!--
     <para>
-      Først, hvis du bygger Lua tolken for VIM, må du tilpasse den til en
+      FÃ¸rst, hvis du bygger Lua tolken for VIM, mÃ¥ du tilpasse den til en
       API-endring i lua-5.4.0:
     </para>
 
 <screen><userinput remap="pre">sed -i '461 s/static int/int/' src/if_lua.c</userinput></screen>
 -->
     <para>
-      Installer <application>Vim</application> ved å kjøre følgende
+      Installer <application>Vim</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
     <note>
       <para>
-        Hvis du har tenkt å kjøre testene og ikke har installert Xorg i /usr,
+        Hvis du har tenkt Ã¥ kjÃ¸re testene og ikke har installert Xorg i /usr,
         legg til LDFLAGS='-L$XORG_PREFIX/lib' til konfigureringslinjen nedenfor.
       </para>
     </note>
@@ -154,43 +152,49 @@ make</userinput></screen>
     <note>
       <para>
         Hvis den globale konfigurasjonsfilen <filename>/etc/vimrc</filename>
-        refererer til <envar>VIMRUNTIME</envar> miljøvariabel, noen
-        tester kan klage på at de ikke kan finne tilsvarende
-        mappe og vente på brukerinndata. Hvis dette er tilfelle, bør denne filen
-        lagres og fjernes før testene kjøres.
+        refererer til <envar>VIMRUNTIME</envar> miljÃ¸variabel, noen
+        tester kan klage pÃ¥ at de ikke kan finne tilsvarende
+        mappe og vente pÃ¥ brukerinndata. Hvis dette er tilfelle, bÃ¸r denne filen
+        lagres og fjernes fÃ¸r testene kjÃ¸res. Eller hvis
+        <xref linkend='bubblewrap'/> er installert, er det ogsÃ¥ mulig Ã¥
+         lage et lett containermiljÃ¸ der denne filen er skjult
+        og kjÃ¸r testene i beholderen.
       </para>
     </note>
 
     <para>
-      For å teste resultatene, kjør: <command>make -j1 test</command>.
-      Selv om en av testene ikke klarer å produsere filen
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make -j1 test</command>, eller
+      <command>bwrap --dev-bind / / --dev-bind /dev/null /etc/vimrc make -j1
+      test</command> hvis du kjÃ¸rer testene med <xref linkend='bubblewrap'/>
+      og <filename>/etc/vimrc</filename> skjult.
+      Selv om en av testene ikke klarer Ã¥ produsere filen
       <filename>test.out</filename> i <filename
       class="directory">src/testdir</filename>, de resterende testene vil
-      fortsatt bli utført. Hvis alt går bra, vil loggen rapportere
+      fortsatt bli utfÃ¸rt. Hvis alt gÃ¥r bra, vil loggen rapportere
       <literal>ALL DONE</literal>. Noen tester merket som
       <quote>flaky</quote> kan av og til mislykkes og kan ignoreres.
-      Testene er kjent for å mislykkes hvis utdata blir omdirigert til en fil,
-      og også hvis de kjøres i en 'screen' økt.
+      Testene er kjent for Ã¥ mislykkes hvis utdata blir omdirigert til en fil,
+      og ogsÃ¥ hvis de kjÃ¸res i en 'screen' Ã¸kt.
     </para>
 
     <note>
       <para>
-        Noen fargetester forventer å bli utført under
+        Noen fargetester forventer Ã¥ bli utfÃ¸rt under
         <command>xterm</command> terminalemulator.
       </para>
     </note>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
       Som standard er Vims dokumentasjon installert i <filename
-      class="directory">/usr/share/vim</filename>. Følgende symbolkobling tillater
-      dokumentasjonen å bli nådd via <filename
-      class="directory">/usr/share/doc/vim-&vim-version;</filename>, som gjør at det
+      class="directory">/usr/share/vim</filename>. FÃ¸lgende symbolkobling tillater
+      dokumentasjonen Ã¥ bli nÃ¥dd via <filename
+      class="directory">/usr/share/doc/vim-&vim-version;</filename>, som gjÃ¸r at det
       samsvarer med plasseringen av dokumentasjonen for andre pakker:
     </para>
 
@@ -200,20 +204,23 @@ make</userinput></screen>
 <screen role="root"><userinput>ln -snfv ../vim/vim&vim-majmin;/doc /usr/share/doc/vim-&vim-version;</userinput></screen>
 
     <para>
-      Hvis du ønsker å oppdatere kjøretidsfilene, utsted
-      følgende kommando (krever <xref linkend="rsync"/>):
+      <emphasis role='bold'>Hvis</emphasis> du Ã¸nsker Ã¥ oppdatere kjÃ¸retidsfiler,
+      utfÃ¸r fÃ¸lgende kommando (krever <xref linkend="rsync"/>)
+      for Ã¥ laste den ned:
     </para>
 
-<screen><userinput>rsync -avzcP --exclude="/dos/" --exclude="/spell/" \
+<screen role='nodump'><userinput>rsync -avzcP --exclude="/dos/" --exclude="/spell/" \
     ftp.nluug.nl::Vim/runtime/ ./runtime/</userinput></screen>
 
     <para>
-      For å installere kjøretidsfilene og gjenskape
+      Og installer deretter de oppdaterte kjÃ¸retidsfilene og regener
       <filename>tags</filename> filene, som
-      <systemitem class="username">root</systemitem> bruker kjør:
+      <systemitem class="username">root</systemitem> bruker kjÃ¸r:
     </para>
 
-<screen role="root"><userinput>make -C src installruntime &amp;&amp;
+    <!-- already executed by "make install" if not updating the runtime
+         files -->
+<screen role="nodump"><userinput>make -C src installruntime &amp;&amp;
 vim -c ":helptags /usr/share/doc/vim-&vim-version;" -c ":q"</userinput></screen>
 
   </sect2>
@@ -224,11 +231,11 @@ vim -c ":helptags /usr/share/doc/vim-&vim-version;" -c ":q"</userinput></screen>
     <para>
       <parameter>--with-features=huge</parameter>: Denne bryteren aktiverer alle
       tilleggsfunksjonene som er tilgjengelige i <application>Vim</application>,
-      inkludert støtte for multibyte tegn.
+      inkludert stÃ¸tte for multibyte tegn.
     </para>
 
     <para>
-      <parameter>--with-tlib=ncursesw</parameter>: Denne bryteren tvinger Vim til å
+      <parameter>--with-tlib=ncursesw</parameter>: Denne bryteren tvinger Vim til Ã¥
       lenke mot <filename class="libraryfile">libncursesw</filename>
       biblioteket.
     </para>
@@ -241,7 +248,7 @@ vim -c ":helptags /usr/share/doc/vim-&vim-version;" -c ":q"</userinput></screen>
     </para>
 
     <para>
-      <option>--without-x</option>: Hvis du foretrekker å ikke linke
+      <option>--without-x</option>: Hvis du foretrekker Ã¥ ikke linke
       <application>Vim</application> mot <application>X</application>, bruk
       denne bryteren.
     </para>
@@ -254,12 +261,12 @@ vim -c ":helptags /usr/share/doc/vim-&vim-version;" -c ":q"</userinput></screen>
       <option>--enable-rubyinterp</option>:
       Disse alternativene inkluderer Lua-, Perl-, Python3-, Tcl- eller Ruby-tolkene
       som tillater bruk av annen applikasjonskode i <application>vim</application>
-      skript. Alle <option>--enable-...</option> alternativene kan godta
-      <option>=dynamic</option> å dynamisk laste tolken etter
-      behov. Dette kreves for <application>Python 3</application> for å
+      skript. Alle <option>--enable-*</option> alternativene kan godta
+      <option>=dynamic</option> Ã¥ dynamisk laste tolken etter
+      behov. Dette kreves for <application>Python 3</application> for Ã¥
       forhindre segmenteringsfeil. Til <application>tcl</application>,
-      er det nødvendig å angi navnet på <command>tclsh</command>
-      kjørbare, siden <command>configure</command> bare søker versjonerte
+      er det nÃ¸dvendig Ã¥ angi navnet pÃ¥ <command>tclsh</command>
+      kjÃ¸rbare, siden <command>configure</command> bare sÃ¸ker versjonerte
       navn med gamle versjoner.
     </para>
 
@@ -290,7 +297,7 @@ vim -c ":helptags /usr/share/doc/vim-&vim-version;" -c ":q"</userinput></screen>
       <title>Skrivebordsfil</title>
 
       <para>
-        Hvis ønskelig, opprett en menyoppføring for grafisk vim,
+        Hvis Ã¸nskelig, opprett en menyoppfÃ¸ring for grafisk vim,
         <filename>gvim.desktop</filename>, som <systemitem
         class="username">root</systemitem> bruker
       </para>
@@ -317,23 +324,23 @@ EOF</userinput></screen>
 
       <para>
         <application>Vim</application> har en integrert stavekontroll
-        som du kan aktivere ved å utstede følgende i et vim vindu:
+        som du kan aktivere ved Ã¥ utstede fÃ¸lgende i et vim vindu:
       </para>
 
 <screen><literal>:setlocal spell spelllang=ru</literal></screen>
 
       <para>
         Denne innstillingen vil aktivere stavekontroll for russisk
-        språk for gjeldende økt.
+        sprÃ¥k for gjeldende Ã¸kt.
       </para>
 
       <para>
-        Som standard, <application>Vim</application> installerer kun språkfiler
-        for det engelske språket. Hvis en språkfil ikke er tilgjengelig for
-        et språk vil <application>Vim</application> kalle
+        Som standard, <application>Vim</application> installerer kun sprÃ¥kfiler
+        for det engelske sprÃ¥ket. Hvis en sprÃ¥kfil ikke er tilgjengelig for
+        et sprÃ¥k vil <application>Vim</application> kalle
         <filename>$VIMRUNTIME/plugin/spellfile.vim</filename> programtillegget og vil
-        prøve å få tak i *.spl og eventuelt *.sug fra vim ftp serveren,
-        ved å bruke <filename>$VIMRUNTIME/plugin/netrwPlugin.vim</filename>
+        prÃ¸ve Ã¥ fÃ¥ tak i *.spl og eventuelt *.sug fra vim ftp serveren,
+        ved Ã¥ bruke <filename>$VIMRUNTIME/plugin/netrwPlugin.vim</filename>
         programtillegget.
       </para>
 
@@ -348,8 +355,8 @@ EOF</userinput></screen>
       </para>
 
       <para>
-        For å finne ut hva som er nytt i <application>Vim-&vim-version;</application>
-        kjør følgende kommando:
+        For Ã¥ finne ut hva som er nytt i <application>Vim-&vim-version;</application>
+        kjÃ¸r fÃ¸lgende kommando:
       </para>
 
 <screen><literal>:help version-&vim-version;</literal></screen>
@@ -408,7 +415,7 @@ EOF</userinput></screen>
         <term><command>gvim</command></term>
         <listitem>
           <para>
-            er redigeringsprogrammet som kjører under <application>X</application>
+            er redigeringsprogrammet som kjÃ¸rer under <application>X</application>
             og inkluderer en GUI
           </para>
           <indexterm zone="vim gvim">
@@ -434,7 +441,7 @@ EOF</userinput></screen>
         <term><command>gvimtutor</command></term>
         <listitem>
           <para>
-            lærer de grunnleggende tastene og kommandoene til
+            lÃ¦rer de grunnleggende tastene og kommandoene til
             <command>gvim</command>
           </para>
           <indexterm zone="vim gvimtutor">

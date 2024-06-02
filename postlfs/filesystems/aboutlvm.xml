@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -13,9 +13,9 @@
 
   <para>
     LVM administrerer diskstasjoner. Den tillater at flere stasjoner og partisjoner
-    blir kombinert til større <emphasis>volumgrupper</emphasis>, bistår i å
-    lage sikkerhetskopier gjennom et <emphasis>øyeblikksbilde</emphasis>, og gir rom for
-    dynamisk volumendring. Det kan også gi speiling tilsvarende
+    blir kombinert til stÃ¸rre <emphasis>volumgrupper</emphasis>, bistÃ¥r i Ã¥
+    lage sikkerhetskopier gjennom et <emphasis>Ã¸yeblikksbilde</emphasis>, og gir rom for
+    dynamisk volumendring. Det kan ogsÃ¥ gi speiling tilsvarende
     et RAID 1 matrise.
   </para>
 
@@ -25,13 +25,13 @@
   </para>
 
   <para>
-    For å kjøre noen av kommandoene som presenteres her, må <xref linkend='lvm2'/>
-    pakken installeres. Alle kommandoer må kjøres som <systemitem
+    For Ã¥ kjÃ¸re noen av kommandoene som presenteres her, mÃ¥ <xref linkend='lvm2'/>
+    pakken installeres. Alle kommandoer mÃ¥ kjÃ¸res som <systemitem
     class="username">root</systemitem> bruker.
   </para>
 
   <para>
-    Administrering av disker med lvm utføres ved å bruke følgende konsepter:
+    Administrering av disker med lvm utfÃ¸res ved Ã¥ bruke fÃ¸lgende konsepter:
   </para>
 
   <variablelist>
@@ -51,7 +51,7 @@
         <para>
           Disse er navngitte grupper av fysiske volumer som
           kan manipuleres av administratoren. Antall fysiske
-          volumer som utgjør en volumgruppe er vilkårlige. Fysiske volumer
+          volumer som utgjÃ¸r en volumgruppe er vilkÃ¥rlige. Fysiske volumer
           kan dynamisk legges til eller fjernes fra en volumgruppe.
         </para>
       </listitem>
@@ -72,10 +72,10 @@
   </variablelist>
 
   <para>
-    For å gi et konkret eksempel, anta at du har to 2 TB disker. Også
+    For Ã¥ gi et konkret eksempel, anta at du har to 2 TB disker. OgsÃ¥
     anta at det kreves veldig mye plass for en veldig stor
-    database, montert på <filename class='directory'>/srv/mysql</filename>.
-    Slik vil det første settet med partisjoner se ut:
+    database, montert pÃ¥ <filename class='directory'>/srv/mysql</filename>.
+    Slik vil det fÃ¸rste settet med partisjoner se ut:
   </para>
 
   <screen><literal>Partition  Use    Size      Partition Type
@@ -87,7 +87,7 @@
 /dev/sdb2  LVM    remainder 8e (LVM)</literal></screen>
 
   <para>
-    Initialiser først de fysiske volumene:
+    Initialiser fÃ¸rst de fysiske volumene:
   </para>
 
   <screen><userinput>pvcreate /dev/sda4 /dev/sdb2</userinput></screen>
@@ -95,8 +95,8 @@
   <note>
     <para>
       En full disk kan brukes som en del av et fysisk volum, men
-      pass på at <command>pvcreate</command> kommando vil ødelegge all
-      partisjonsinformasjon på den disken.
+      pass pÃ¥ at <command>pvcreate</command> kommando vil Ã¸delegge all
+      partisjonsinformasjon pÃ¥ den disken.
     </para>
   </note>
 
@@ -107,10 +107,10 @@
   <screen><userinput>vgcreate lfs-lvm /dev/sda4  /dev/sdb2</userinput></screen>
 
   <para>
-    Statusen til volumgruppen kan kontrolleres ved å kjøre kommandoen
-    <command>vgscan</command>. Lag nå de logiske volumene. Siden det
-    er ca 3900 GB tilgjengelig, la ca 900 GB være ledig for utvidelse. Merk
-    at det logiske volumet som heter <emphasis>mysql</emphasis> er større enn
+    Statusen til volumgruppen kan kontrolleres ved Ã¥ kjÃ¸re kommandoen
+    <command>vgscan</command>. Lag nÃ¥ de logiske volumene. Siden det
+    er ca 3900 GB tilgjengelig, la ca 900 GB vÃ¦re ledig for utvidelse. Merk
+    at det logiske volumet som heter <emphasis>mysql</emphasis> er stÃ¸rre enn
     hvilken som helst fysisk disk.
   </para>
 
@@ -120,7 +120,7 @@ lvcreate --name home  --size  500G lfs-lvm</userinput></screen>
   <para>
     Til slutt kan de logiske volumene formateres og monteres. I dette
     eksempel filsystemet jfs (<xref linkend='jfsutils'/>) brukes for
-    demonstrasjonsformål.
+    demonstrasjonsformÃ¥l.
   </para>
 
   <screen><userinput>mkfs -t ext4 /dev/lfs-lvm/home
@@ -130,24 +130,24 @@ mkdir -p /srv/mysql
 mount /dev/lfs-lvm/mysql /srv/mysql</userinput></screen>
 
   <para>
-    Det kan være nødvendig å aktivere de logiske volumene, for at de skal
+    Det kan vÃ¦re nÃ¸dvendig Ã¥ aktivere de logiske volumene, for at de skal
     vises i <filename class="directory">/dev</filename>. De kan alle
-    aktiveres samtidig ved å kjøre, som
+    aktiveres samtidig ved Ã¥ kjÃ¸re, som
     <systemitem class="username">root</systemitem> bruker:
   </para>
 
 <screen role="root"><userinput>vgchange -a y</userinput></screen>
 
   <para revision="sysv">
-    LFS oppstartsskriptene gjør disse logiske volumene tilgjengelige for
+    LFS oppstartsskriptene gjÃ¸r disse logiske volumene tilgjengelige for
     systemet i <command>udev</command> skriptet automatisk. Rediger
-    <filename>/etc/fstab</filename> filen etter behov for å montere dem
+    <filename>/etc/fstab</filename> filen etter behov for Ã¥ montere dem
     automatisk.
   </para>
 
   <para>
-    Et LVM logisk volum kan være vert for et rootfilsystem, men krever bruk
-    av initramfs (opprinnelig RAM filsystem). Initramfs foreslått i
+    Et LVM logisk volum kan vÃ¦re vert for et rootfilsystem, men krever bruk
+    av initramfs (opprinnelig RAM filsystem). Initramfs foreslÃ¥tt i
     <xref linkend="initramfs"/> lar lvm volumet sende inn
     <parameter>root=</parameter> bryteren til kjernekommandolinjen.
   </para>
@@ -155,10 +155,11 @@ mount /dev/lfs-lvm/mysql /srv/mysql</userinput></screen>
   <para revision="systemd">
     Hvis du ikke bruker initramfs, er det en rasetilstand i <application>
     systemd</application> som forhindrer montering av logiske volumer gjennom
-    <filename>/etc/fstab</filename>. Du må opprette en <quote>mount</quote>
-    enhet (se systemd.mount(5)) som i følgende eksempel, som monterer
-    <filename class="directory">/home</filename> mappen automatisk
-    ved oppstart:
+    <filename>/etc/fstab</filename>. Du mÃ¥ opprette en <quote>mount</quote>
+    enhet (se <ulink role='man'
+    url='&man;systemd.mount.5'>systemd.mount(5)</ulink>) som i det fÃ¸lgende
+    eksempel, som monterer <filename class="directory">/home</filename>
+    mappen automatisk ved oppstart:
   </para>
 
 <screen role="root" revision="systemd"><userinput>cat &gt; /etc/systemd/system/home.mount &lt;&lt; EOF
@@ -177,13 +178,13 @@ EOF</userinput></screen>
 
   <note revision="systemd">
     <para>
-    Navnet på enheten må være navnet på monteringspunktet med
+    Navnet pÃ¥ enheten mÃ¥ vÃ¦re navnet pÃ¥ monteringspunktet med
      `/'-tegnet erstattet av `-', og utelate den innledende.
     </para>
   </note>
 
   <para revision="systemd">
-    Deretter må enheten aktiveres med:
+    Deretter mÃ¥ enheten aktiveres med:
   </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable home.mount</userinput></screen>
@@ -194,7 +195,7 @@ EOF</userinput></screen>
     lvm mansidene. En god dybde
     <ulink url="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/logical_volume_manager_administration/index">
     veiledning</ulink> er tilgjengelig fra RedHat<superscript>&reg;</superscript>,
-    selv om det noen ganger refererer til proprietære verktøy.
+    selv om det noen ganger refererer til proprietÃ¦re verktÃ¸y.
   </para>
 
 </sect1>
