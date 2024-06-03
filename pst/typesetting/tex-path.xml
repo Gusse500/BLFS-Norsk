@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -12,28 +12,28 @@
   <title>Innstilling av PATH for TeX Live</title>
 
   <para>
-    Før du begynner å bygge TeX Live, sett opp PATH slik
-    at systemet kan finne filene på riktig måte. Hvis du setter opp påloggingsskriptet
+    FÃ¸r du begynner Ã¥ bygge TeX Live, sett opp PATH slik
+    at systemet kan finne filene pÃ¥ riktig mÃ¥te. Hvis du setter opp pÃ¥loggingsskriptet
     som anbefalt i <xref linkend='postlfs-config-profile'/>, oppdater
-    de nødvendige banene ved å lage
+    de nÃ¸dvendige banene ved Ã¥ lage
     <filename>texlive.sh</filename> skriptet. Programmene er alltid
-    installert i et &lt;ARCH&gt;-linux undermappe og på 32-bit x86 er dette
+    installert i et &lt;ARCH&gt;-linux undermappe og pÃ¥ 32-bit x86 er dette
     alltid i386-linux. For x86_64 og i?86 kan vi generere dette som $TEXARCH:
   </para>
 
   <note>
     <para>
-      Hvis du oppgraderer fra et tidligere års versjon, bør du manuelt
-      redigere <filename>texlive.sh</filename> for å sikre at versjonen for
-      året du ønsker å bruke er den eneste TeX tilstede (noen trenger
-      å holde flere år tilgjengelig for å sikre at det ikke er noen regresjoner i
+      Hvis du oppgraderer fra et tidligere Ã¥rs versjon, bÃ¸r du manuelt
+      redigere <filename>texlive.sh</filename> for Ã¥ sikre at versjonen for
+      Ã¥ret du Ã¸nsker Ã¥ bruke er den eneste TeX tilstede (noen trenger
+      Ã¥ holde flere Ã¥r tilgjengelig for Ã¥ sikre at det ikke er noen regresjoner i
       dokumentene deres).
     </para>
   </note>
 
 <!-- EOF should NOT be in double quotes, we want it to evaluate $TEXARCH -->
 <!-- this is also in texlive.xml -->
-   <para>Lag nå texlive.sh skriptet som &root; bruker:</para>
+   <para>Lag nÃ¥ texlive.sh skriptet som &root; bruker:</para>
 
 <screen role="root"><userinput>TEXARCH=$(uname -m | sed -e 's/i.86/i386/' -e 's/$/-linux/')
 
@@ -46,6 +46,9 @@ pathappend \$TEXLIVE_PREFIX/texmf-dist/doc/man  MANPATH
 pathappend \$TEXLIVE_PREFIX/texmf-dist/doc/info INFOPATH
 pathappend \$TEXLIVE_PREFIX/bin/$TEXARCH
 
+TEXMFCNF=\$TEXLIVE_PREFIX/texmf-dist/web2c
+export TEXMFCNF
+
 # End texlive setup</literal>
 EOF
 
@@ -54,44 +57,30 @@ unset TEXARCH</userinput></screen>
   <note>
     <para>
       Standard MANPATH og INFOPATH banen er spesifisert ovenfor vil
-      sørge for at de er inkludert. Hvis de allerede er satt i oppstartsskript
+      sÃ¸rge for at de er inkludert. Hvis de allerede er satt i oppstartsskript
       prosedyren, vil pathappend funksjonen sikre at duplikater er
-      fjernet, så å inkludere dem her vil ikke skade.
+      fjernet, sÃ¥ Ã¥ inkludere dem her vil ikke skade.
     </para>
   </note>
 
   <note>
     <para>
-      Omvendt skråstrek før dollartegn i skriptet ovenfor er for
-      å lette en kopiering/lim inn operasjon. Omvendt skråstrek bør ikke
+      Omvendt skrÃ¥strek fÃ¸r dollartegn i skriptet ovenfor er for
+      Ã¥ lette en kopiering/lim inn operasjon. Omvendt skrÃ¥strek bÃ¸r ikke
       vises i selve skriptet.
     </para>
   </note>
 
   <para>
-    De nye banene kan aktiveres umiddelbart ved å kjøre:
+    De nye banene kan aktiveres umiddelbart ved Ã¥ kjÃ¸re:
   </para>
 
 <screen><userinput>source /etc/profile</userinput></screen>
 
   <para>
-    De delte bibliotekene vil bli installert i en texlive mappe.
-    Som <systemitem class="username">root</systemitem> bruker, legg den til
-    din <filename>/etc/ld.so.conf</filename>:
-  </para>
-
-<screen role="root"><userinput>cat &gt;&gt; /etc/ld.so.conf &lt;&lt; EOF
-<literal># Begin texlive addition
-
-$TEXLIVE_PREFIX/lib
-
-# End texlive addition</literal>
-EOF</userinput></screen>
-
-  <para>
-    Du bør nå fortsette enten til <xref linkend="tl-installer"/> for
-    en binær installasjon av texlive, eller til <xref linkend="texlive"/> for å begynne
-    å installere fra kilden.
+    Du bÃ¸r nÃ¥ fortsette enten til <xref linkend="tl-installer"/> for
+    en binÃ¦r installasjon av texlive, eller til <xref linkend="texlive"/> for Ã¥ begynne
+    Ã¥ installere fra kilden.
   </para>
 
 </sect1>
