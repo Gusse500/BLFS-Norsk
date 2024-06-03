@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../../general.ent">
@@ -12,23 +12,23 @@
   <title>Using GRUB to Set Up the Boot Process with UEFI</title>
 
   <sect2>
-    <title>Slå Av Sikker Oppstart</title>
+    <title>SlÃ¥ Av Sikker Oppstart</title>
 
     <para>
-      BLFS har ikke de nødvendige pakkene for å støtte Sikker Oppstart. Til
-      å sette opp oppstartsprosessen med GRUB og UEFI i BLFS, Sikker
-      Oppstart må slås av fra konfigurasjonsgrensesnittet til
+      BLFS har ikke de nÃ¸dvendige pakkene for Ã¥ stÃ¸tte Sikker Oppstart. Til
+      Ã¥ sette opp oppstartsprosessen med GRUB og UEFI i BLFS, Sikker
+      Oppstart mÃ¥ slÃ¥s av fra konfigurasjonsgrensesnittet til
       fastvaren. Les dokumentasjonen fra produsenten av dtt
-      system for å finne ut hvordan.
+      system for Ã¥ finne ut hvordan.
     </para>
   </sect2>
 
   <sect2 role="kernel" id="uefi-kernel">
-    <title>Kjernekonfigurasjon for UEFI støtte</title>
+    <title>Kjernekonfigurasjon for UEFI stÃ¸tte</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen og kompiler kjernen på nytt
-      om nødvendig:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen og kompiler kjernen pÃ¥ nytt
+      om nÃ¸dvendig:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -42,9 +42,9 @@
         <listitem>
           <para>Hvis det ikke er aktivert,
           <parameter>CONFIG_EFI_PARTITION</parameter> vil bli aktivert
-          automatisk. Men når den er aktivert, må du stille inn
-          <parameter>CONFIG_EFI_PARTITION</parameter> til å aktiveres
-          også.</para>
+          automatisk. Men nÃ¥r den er aktivert, mÃ¥ du stille inn
+          <parameter>CONFIG_EFI_PARTITION</parameter> til Ã¥ aktiveres
+          ogsÃ¥.</para>
         </listitem>
       </varlistentry>
 
@@ -58,8 +58,8 @@
           <parameter>CONFIG_FRAMEBUFFER_CONSOLE</parameter></term>
         <listitem>
           <para>Kombinasjonen av disse alternativene gir Linux konsollen
-          støtte på toppen av UEFI rammebufferen. For å tillate kjernen
-          å skrive ut feilsøkingsmeldinger på et tidlig oppstartsstadium, bør de ikke bli
+          stÃ¸tte pÃ¥ toppen av UEFI rammebufferen. For Ã¥ tillate kjernen
+          Ã¥ skrive ut feilsÃ¸kingsmeldinger pÃ¥ et tidlig oppstartsstadium, bÃ¸r de ikke bli
           bygget som kjernemoduler med mindre en initramfs skal brukes.</para>
         </listitem>
       </varlistentry>
@@ -72,25 +72,25 @@
   </sect2>
 
   <sect2>
-    <title>Opprett en Nødoppstartsdiskett</title>
+    <title>Opprett en NÃ¸doppstartsdiskett</title>
 
     <para>
-      Sørg for at en nødoppstartsdiskett er klar til å <quote>redde</quote>
-      systemet i tilfelle systemet blir uoppstartbart. Å lage en
-      nødoppstartsdisk med GRUB for et EFI basert system, finn en ekstra
+      SÃ¸rg for at en nÃ¸doppstartsdiskett er klar til Ã¥ <quote>redde</quote>
+      systemet i tilfelle systemet blir uoppstartbart. Ã… lage en
+      nÃ¸doppstartsdisk med GRUB for et EFI basert system, finn en ekstra
       USB flashstasjon og opprett et
-      <systemitem class="filesystem">vfat</systemitem> filsystemet på den.
-      Installer <xref linkend="dosfstools"/> først,
+      <systemitem class="filesystem">vfat</systemitem> filsystemet pÃ¥ den.
+      Installer <xref linkend="dosfstools"/> fÃ¸rst,
       som <systemitem class="username">root</systemitem> bruker:
     </para>
 
     <warning>
       <para>
-        Følgende kommando vil slette alle mapper og filer på
-        partisjonen. Sørg for at USB flashstasjonen ikke inneholder data som
+        FÃ¸lgende kommando vil slette alle mapper og filer pÃ¥
+        partisjonen. SÃ¸rg for at USB flashstasjonen ikke inneholder data som
         du trenger, og endre <userinput>sdx1</userinput> til
-        enhetsnoden som tilsvarer den første partisjonen til USB flashstasjonen.
-        Vær forsiktig så du ikke overskriver harddisken med en skrivefeil!
+        enhetsnoden som tilsvarer den fÃ¸rste partisjonen til USB flashstasjonen.
+        VÃ¦r forsiktig sÃ¥ du ikke overskriver harddisken med en skrivefeil!
       </para>
     </warning>
 
@@ -98,8 +98,8 @@
 
     <para>
       Fortsatt som <systemitem class="username">root</systemitem> bruker, bruk
-      <command>fdisk</command> verktøyet for å sette den første partisjonen
-      av USB flashstasjonen til å være en <quote>EFI system</quote> partisjon
+      <command>fdisk</command> verktÃ¸yet for Ã¥ sette den fÃ¸rste partisjonen
+      av USB flashstasjonen til Ã¥ vÃ¦re en <quote>EFI system</quote> partisjon
       (endre <userinput>sdx</userinput> til enhetsnoden tilsvarende
       til USB flashstasjonen):
     </para>
@@ -122,7 +122,7 @@ Syncing disks.</literal></screen>
 
     <para>
       Fortsatt som <systemitem class="username">root</systemitem> bruker,
-      opprette et monteringspunkt for EFI partisjonen på USB flashstasjonen
+      opprette et monteringspunkt for EFI partisjonen pÃ¥ USB flashstasjonen
       og monter den:
     </para>
 
@@ -130,7 +130,7 @@ Syncing disks.</literal></screen>
       /mnt/rescue</userinput></screen>
 
     <para>
-      Installer GRUB for EFI på partisjonen:
+      Installer GRUB for EFI pÃ¥ partisjonen:
     </para>
 
 <screen role="nodump"><userinput>grub-install --target=x86_64-efi --removable \
@@ -143,11 +143,11 @@ Syncing disks.</literal></screen>
 <screen role="nodump"><userinput>umount /mnt/rescue</userinput></screen>
 
     <para>
-      Nå kan USB flashstasjonen brukes som en nødoppstartsdisk på hvilken som helst x86-64
-      UEFI plattform. Det vil starte opp systemet og vise GRUB skallet. Så kan
-      du skrive kommandoer for å starte operativsystemet fra harddisken.
-      For å lære hvordan du velger oppstartsenhet, les bruksanvisningen til ditt
-      hovedkort eller bærbar PC.
+      NÃ¥ kan USB flashstasjonen brukes som en nÃ¸doppstartsdisk pÃ¥ hvilken som helst x86-64
+      UEFI plattform. Det vil starte opp systemet og vise GRUB skallet. SÃ¥ kan
+      du skrive kommandoer for Ã¥ starte operativsystemet fra harddisken.
+      For Ã¥ lÃ¦re hvordan du velger oppstartsenhet, les bruksanvisningen til ditt
+      hovedkort eller bÃ¦rbar PC.
     </para>
 
   </sect2>
@@ -156,42 +156,42 @@ Syncing disks.</literal></screen>
     <title>Finn eller Opprett EFI Systempartisjonen</title>
 
     <para>
-      På EFI baserte systemer er oppstartslastere installert i en spesiell FAT32
+      PÃ¥ EFI baserte systemer er oppstartslastere installert i en spesiell FAT32
       partisjon kalt <emphasis>EFI System Partition</emphasis> (ESP).
-      Hvis systemet ditt støtter EFI, og en nyere versjon av en Linux
-      distribusjon eller Windows er forhåndsinstallert, er det sannsynlig at ESP
+      Hvis systemet ditt stÃ¸tter EFI, og en nyere versjon av en Linux
+      distribusjon eller Windows er forhÃ¥ndsinstallert, er det sannsynlig at ESP
       allerede er opprettet. Som
       <systemitem class="username">root</systemitem> bruker, list opp alle
-      partisjoner på harddisken (erstatt <userinput>sda</userinput>
+      partisjoner pÃ¥ harddisken (erstatt <userinput>sda</userinput>
       med enheten som tilsvarer den aktuelle harddisken):
     </para>
 
     <screen role="nodump"><userinput>fdisk -l /dev/sda</userinput></screen>
 
     <para>
-      The <quote>Type</quote> kolonnen i ESP skal være
+      The <quote>Type</quote> kolonnen i ESP skal vÃ¦re
       <literal>EFI System</literal>.
     </para>
 
     <para>
-      Hvis systemet eller harddisken er ny, eller det er den første
-      installasjon av et UEFI oppstartet OS på systemet, kan det hende at ESP ikke eksisterer.
-      Installer i så fall <xref linkend='dosfstools'/> først. Deretter oppretter du
+      Hvis systemet eller harddisken er ny, eller det er den fÃ¸rste
+      installasjon av et UEFI oppstartet OS pÃ¥ systemet, kan det hende at ESP ikke eksisterer.
+      Installer i sÃ¥ fall <xref linkend='dosfstools'/> fÃ¸rst. Deretter oppretter du
       en ny partisjon, lag et
-      <systemitem class="filesystem">vfat</systemitem> filsystem på den,
+      <systemitem class="filesystem">vfat</systemitem> filsystem pÃ¥ den,
       og sett partisjonstypen til <quote>EFI system</quote>.  Se
-      instruksjoner for nødoppstartsenheten ovenfor som referanse.
+      instruksjoner for nÃ¸doppstartsenheten ovenfor som referanse.
     </para>
 
     <warning>
       <para>
-        Noen (gamle) UEFI implementeringer kan kreve at ESP er den første
-        partisjon på disken.
+        Noen (gamle) UEFI implementeringer kan kreve at ESP er den fÃ¸rste
+        partisjon pÃ¥ disken.
       </para>
     </warning>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker,
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker,
       lag monteringspunktet for ESP, og monter det (erstatt
       <userinput>sda1</userinput> med enhetsnoden som tilsvarer
       ESP):
@@ -202,7 +202,7 @@ Syncing disks.</literal></screen>
 
     <para>
       Hvis du vil montere ESP automatisk under systemoppstart,
-      som &root; bruker, legg til en oppføring for ESP i
+      som &root; bruker, legg til en oppfÃ¸ring for ESP i
       <filename>/etc/fstab</filename>:
     </para>
 
@@ -216,66 +216,66 @@ Syncing disks.</literal></screen>
     <title>Minimal Oppstartskonfigurasjon med GRUB og EFI</title>
 
     <para>
-      På UEFI baserte systemer fungerer GRUB ved å installere en EFI applikasjon
-      (en spesiell type kjørbar) inn i ESP. EFI fastvaren vil
-      søke oppstartslastere i EFI applikasjoner fra registrerte oppstartsoppføringer
+      PÃ¥ UEFI baserte systemer fungerer GRUB ved Ã¥ installere en EFI applikasjon
+      (en spesiell type kjÃ¸rbar) inn i ESP. EFI fastvaren vil
+      sÃ¸ke oppstartslastere i EFI applikasjoner fra registrerte oppstartsoppfÃ¸ringer
       i EFI variabler, og i tillegg en hardkodet bane
       <filename>EFI/BOOT/BOOTX64.EFI</filename>.  Vanligvis en oppstartslaster
       som skal installeres i en tilpasset bane, og banen skal registreres
-      i EFI variablene. Bruken av den hardkodede banen bør
-      unngås hvis mulig. Men i noen tilfeller må vi bruke
+      i EFI variablene. Bruken av den hardkodede banen bÃ¸r
+      unngÃ¥s hvis mulig. Men i noen tilfeller mÃ¥ vi bruke
       den hardkodede banen:
     </para>
 
     <itemizedlist>
       <listitem>
         <para>
-          Systemet er ikke oppstartet med EFI ennå, noe som gjør EFI variabler
+          Systemet er ikke oppstartet med EFI ennÃ¥, noe som gjÃ¸r EFI variabler
           utilgjengelig.
         </para>
       </listitem>
       <listitem>
         <para>
-          EFI fastvaren er 64-bit, men LFS-systemet er 32-bit, noe som gjør
-          EFI variabler utilgjengelige fordi kjernen ikke kan påkalle EFI
-          kjøretidstjenester med en annen virtuell adresselengde.
+          EFI fastvaren er 64-bit, men LFS-systemet er 32-bit, noe som gjÃ¸r
+          EFI variabler utilgjengelige fordi kjernen ikke kan pÃ¥kalle EFI
+          kjÃ¸retidstjenester med en annen virtuell adresselengde.
         </para>
       </listitem>
       <listitem>
         <para>
-          LFS er bygget for en Live USB, så vi kan ikke stole på EFI variabler,
-          som er lagret i NVRAM eller EEPROM på den lokale maskinen.
+          LFS er bygget for en Live USB, sÃ¥ vi kan ikke stole pÃ¥ EFI variabler,
+          som er lagret i NVRAM eller EEPROM pÃ¥ den lokale maskinen.
         </para>
       </listitem>
       <listitem>
         <para>
           Du er ikke i stand til eller vil ikke installere
-          <application>efibootmgr</application> for å manipulere
-          oppstartsoppføringer i EFI variabler.
+          <application>efibootmgr</application> for Ã¥ manipulere
+          oppstartsoppfÃ¸ringer i EFI variabler.
         </para>
       </listitem>
     </itemizedlist>
 
     <para>
-      I disse tilfellene, følg disse instruksjonene for å installere GRUB EFI
+      I disse tilfellene, fÃ¸lg disse instruksjonene for Ã¥ installere GRUB EFI
       applikasjonen inn i den hardkodede banen og lag en minimal
-      oppstartskonfigurasjon. Ellers er det bedre å gå videre og sette opp
+      oppstartskonfigurasjon. Ellers er det bedre Ã¥ gÃ¥ videre og sette opp
       oppstartskonfigurasjon normalt.
     </para>
 
     <para>
-      For å installere GRUB med EFI applikasjonen i den hardkodede
-      banen <filename>EFI/BOOT/BOOTX64.EFI</filename>, sørg først for at
+      For Ã¥ installere GRUB med EFI applikasjonen i den hardkodede
+      banen <filename>EFI/BOOT/BOOTX64.EFI</filename>, sÃ¸rg fÃ¸rst for at
       oppstartspartisjonen er montert som <filename class="directory">/boot</filename>
       og ESP er montert som
       <filename class="directory">/boot/efi</filename>.  Deretter, som &root;
-      bruker, kjør kommandoen:
+      bruker, kjÃ¸r kommandoen:
     </para>
 
     <note>
       <para>
         Denne kommandoen vil overskrive
-        <filename>/boot/efi/EFI/BOOT/BOOTX64.EFI</filename>.  Det kan ødelegge en
+        <filename>/boot/efi/EFI/BOOT/BOOTX64.EFI</filename>.  Det kan Ã¸delegge en
         oppstartslaster allerede installert der. Sikkerhetskopier den hvis du ikke er sikker.
       </para>
     </note>
@@ -284,7 +284,7 @@ Syncing disks.</literal></screen>
 
     <para>
       Denne kommandoen vil installere GRUB EFI applikasjonen i den hardkodede banen
-      <filename>/boot/efi/EFI/BOOT/BOOTX64.EFI</filename>, så EFI
+      <filename>/boot/efi/EFI/BOOT/BOOTX64.EFI</filename>, sÃ¥ EFI
       fastvaren kan finne og laste den. De resterende GRUB filene er installert
       i <filename class="directory">/boot/grub</filename> mappen og
       vil bli lastet av <filename>BOOTX64.EFI</filename> under systemoppstart.
@@ -294,16 +294,16 @@ Syncing disks.</literal></screen>
       <para>
         EFI fastvaren foretrekker vanligvis EFI applikasjonene med en bane
         lagret i EFI variabler til EFI
-        applikasjon på den hardkodede banen. Så du må kanskje påkalle
-        oppstartsmeny eller fastvareinnstillingsgrensesnitt for å velge
+        applikasjon pÃ¥ den hardkodede banen. SÃ¥ du mÃ¥ kanskje pÃ¥kalle
+        oppstartsmeny eller fastvareinnstillingsgrensesnitt for Ã¥ velge
         den nyinstallert GRUB manuelt ved neste oppstart. Les manualen til
-        hovedkortet eller den bærbare datamaskinen for å lære hvordan.
+        hovedkortet eller den bÃ¦rbare datamaskinen for Ã¥ lÃ¦re hvordan.
       </para>
     </note>
 
     <para>
       Hvis du har fulgt instruksjonene i denne delen og satt opp en minimal
-      oppstartskonfigurasjon, hopp nå videre til
+      oppstartskonfigurasjon, hopp nÃ¥ videre til
       <quote>Opprette GRUB Konfigurasjonsfilen</quote>.
     </para>
   </sect2>
@@ -312,7 +312,7 @@ Syncing disks.</literal></screen>
     <title>Monter EFI Variabelt Filsystem</title>
 
     <para>
-      Installasjonen av GRUB på en UEFI plattform krever at et EFI variabelt
+      Installasjonen av GRUB pÃ¥ en UEFI plattform krever at et EFI variabelt
       filsystem, <systemitem class="filesystem">efivarfs</systemitem>, er
       montert. Som <systemitem class="username">root</systemitem> bruker,
       monter det hvis det ikke allerede er montert:
@@ -324,15 +324,15 @@ Syncing disks.</literal></screen>
       <para>
         Hvis systemet startes opp med UEFI og systemd,
         <systemitem class="filesystem">efivarfs</systemitem> vil bli montert
-        automatisk. Men i LFS chrootmiljøet trenger det fortsatt
-        å monteres manuelt.
+        automatisk. Men i LFS chrootmiljÃ¸et trenger det fortsatt
+        Ã¥ monteres manuelt.
       </para>
     </note>
 
     <para revision="sysv">
-      Legg nå til en oppføring for
+      Legg nÃ¥ til en oppfÃ¸ring for
       <systemitem class="filesystem">efivarfs</systemitem> i
-      <filename>/etc/fstab</filename> så den monteres automatisk
+      <filename>/etc/fstab</filename> sÃ¥ den monteres automatisk
       under systemoppstart:
     </para>
 
@@ -344,8 +344,8 @@ Syncing disks.</literal></screen>
       <para>
         Hvis systemet ikke er startet opp med UEFI, vil mappen
         <filename class="directory">/sys/firmware/efi</filename> 
-        mangle. I dette tilfellet bør du starte systemet i UEFI modus med
-        nødoppstartsdisken eller ved å bruke en minimal oppstartskonfigurasjon opprettet som
+        mangle. I dette tilfellet bÃ¸r du starte systemet i UEFI modus med
+        nÃ¸doppstartsdisken eller ved Ã¥ bruke en minimal oppstartskonfigurasjon opprettet som
         over, og monter deretter
         <systemitem class="filesystem">efivarfs</systemitem> og fortsett.
       </para>
@@ -356,21 +356,21 @@ Syncing disks.</literal></screen>
     <title>Sette Opp Konfigurasjonen</title>
 
     <para>
-      På UEFI baserte systemer fungerer GRUB ved å installere en EFI applikasjon
-      (en spesiell type kjørbar) i
+      PÃ¥ UEFI baserte systemer fungerer GRUB ved Ã¥ installere en EFI applikasjon
+      (en spesiell type kjÃ¸rbar) i
       <filename class="directory">/boot/efi/EFI/[id]/grubx64.efi</filename>,
       hvor <filename class="directory">/boot/efi</filename> er monteringspunktet
       til ESP, og <literal>[id]</literal> erstattes med en
       identifikator spesifisert i <command>grub-install</command> kommandolinjen.
-      GRUB vil opprette en oppføring i EFI variablene som inneholder
-      banen <literal>EFI/[id]/grubx64.efi</literal> så EFI fastvaren
+      GRUB vil opprette en oppfÃ¸ring i EFI variablene som inneholder
+      banen <literal>EFI/[id]/grubx64.efi</literal> sÃ¥ EFI fastvaren
       kan finne <filename>grubx64.efi</filename> og laste den.
     </para>
 
     <para>
       <filename>grubx64.efi</filename> er veldig lite (136 KB med
-      GRUB-2.06), så den vil ikke bruke mye plass i ESP. En typisk ESP
-      størrelse er 100 MB (for Windows oppstartsbehandler, som bruker omtrent 50 MB i
+      GRUB-2.06), sÃ¥ den vil ikke bruke mye plass i ESP. En typisk ESP
+      stÃ¸rrelse er 100 MB (for Windows oppstartsbehandler, som bruker omtrent 50 MB i
       ESP). Med en gang <filename>grubx64.efi</filename> har blitt lastet av
       fastvare, vil den laste GRUB moduler fra oppstartspartisjonen.
       Standardplasseringen er
@@ -381,21 +381,21 @@ Syncing disks.</literal></screen>
       Som <systemitem class="username">root</systemitem> bruker, installer
       GRUB filer i <filename>/boot/efi/EFI/LFS/grubx64.efi</filename>
       og <filename class="directory">/boot/grub</filename>. Sett deretter opp
-      oppstartsoppføringer i EFI variablene:
+      oppstartsoppfÃ¸ringer i EFI variablene:
     </para>
 
 <screen role="nodump"><userinput>grub-install --bootloader-id=LFS --recheck</userinput></screen>
 
     <para>
-      Hvis installasjonen er vellykket, bør utdataen være:
+      Hvis installasjonen er vellykket, bÃ¸r utdataen vÃ¦re:
     </para>
 
 <screen role="nodump"><literal>Installing for x86_64-efi platform.
 Installation finished. No error reported.</literal></screen>
 
     <para>
-      Kjør <command>efibootmgr | cut -f 1</command> kommandoen for å kontrollere EFI oppstarskonfigurasjonen på nytt.
-      Et eksempel på utdataen er:
+      KjÃ¸r <command>efibootmgr | cut -f 1</command> kommandoen for Ã¥ kontrollere EFI oppstarskonfigurasjonen pÃ¥ nytt.
+      Et eksempel pÃ¥ utdataen er:
     </para>
 
 <screen role="nodump"><literal>BootCurrent: 0000
@@ -409,10 +409,10 @@ Boot0004* UEFI:Network Device
 Boot0005* LFS</literal></screen>
 
     <para>
-      Merk at <literal>0005</literal> er den første i
+      Merk at <literal>0005</literal> er den fÃ¸rste i
       <literal>BootOrder</literal>, og <literal>Boot0005</literal>
-      er <literal>LFS</literal>. Dette betyr at på neste oppstart, vil
-      versjonen av GRUB installert av LFS bli brukt til å starte opp systemet.
+      er <literal>LFS</literal>. Dette betyr at pÃ¥ neste oppstart, vil
+      versjonen av GRUB installert av LFS bli brukt til Ã¥ starte opp systemet.
     </para>
 
   </sect2>
@@ -425,7 +425,7 @@ Boot0005* LFS</literal></screen>
     </indexterm>
 
     <para>
-      Generer <filename>/boot/grub/grub.cfg</filename> for å konfigurere
+      Generer <filename>/boot/grub/grub.cfg</filename> for Ã¥ konfigurere
       oppstartsmenyen for GRUB:
     </para>
 
@@ -443,8 +443,8 @@ if loadfont /boot/grub/fonts/unicode.pf2; then
   terminal_output gfxterm
 fi
 
-menuentry "GNU/Linux, Linux 6.4.10-lfs-12.0"  {
-  linux   /boot/vmlinuz-6.4.10-lfs-12.0 root=/dev/sda2 ro
+menuentry "GNU/Linux, Linux 6.7.4-lfs-12.1"  {
+  linux   /boot/vmlinuz-6.7.4-lfs-12.1 root=/dev/sda2 ro
 }
 
 menuentry "Firmware Setup" {
@@ -457,22 +457,22 @@ menuentry "Firmware Setup" {
       boken</ulink> for grunnleggende kunnskap om
       <filename>grub.cfg</filename> filen.
       <literal>(hd0,2)</literal>, <literal>sda2</literal>, og
-      <literal>6.4.10-lfs-12.0</literal> må stemme overens med din
+      <literal>6.4.10-lfs-12.0</literal> mÃ¥ stemme overens med din
       konfigurasjon.
     </para>
 
     <para>
        <command>insmod all_video</command> direktivet laster ulike
-      moduler for videostøtte. Det er nødvendig for å initialisere EFI
-      framebuffer for at kjernen skal skrive ut meldinger riktig før
+      moduler for videostÃ¸tte. Det er nÃ¸dvendig for Ã¥ initialisere EFI
+      framebuffer for at kjernen skal skrive ut meldinger riktig fÃ¸r
       initialisering av kjerne GPU driver.
     </para>
 
     <para>
       <command>terminal_output gfxterm</command> direktivet endrer
-      skjermoppløsningen til GRUB menyen for å matche skjermenheten din.
+      skjermopplÃ¸sningen til GRUB menyen for Ã¥ matche skjermenheten din.
       Det vil bryte gjengivelsen hvis <filename>unicode.pf2</filename>
-      fontdatafilen ikke er lastet inn, så den er beskyttet av et
+      fontdatafilen ikke er lastet inn, sÃ¥ den er beskyttet av et
       <command>if</command> direktiv.
     </para>
 
@@ -480,14 +480,14 @@ menuentry "Firmware Setup" {
       <para>
         Fra GRUB sitt perspektiv er filene i forhold til partisjonene
         brukt. Hvis du brukte en separat /bootpartisjon, fjern /boot fra
-        overstående stier (til kjernen og til <filename>unicode.pf2</filename>). Du
-        må også endre "set root" linjen for å peke til
+        overstÃ¥ende stier (til kjernen og til <filename>unicode.pf2</filename>). Du
+        mÃ¥ ogsÃ¥ endre "set root" linjen for Ã¥ peke til
         oppstartspartisjonen.
       </para>
     </note>
 
     <para>
-      The <literal>Firmware Setup</literal> oppføringen kan brukes til å angi
+      The <literal>Firmware Setup</literal> oppfÃ¸ringen kan brukes til Ã¥ angi
       konfigurasjonsgrensesnitt levert av fastvaren (noen ganger kalt
       <quote>BIOS configuration</quote>).
     </para>
@@ -497,7 +497,7 @@ menuentry "Firmware Setup" {
     <title>Oppstart sammen med Windows</title>
 
     <para>
-      Legg til en menyoppføring for Windows i <filename>grub.cfg</filename>:
+      Legg til en menyoppfÃ¸ring for Windows i <filename>grub.cfg</filename>:
     </para>
 
 <screen role="nodump"><userinput>cat &gt;&gt; /boot/grub/grub.cfg &lt;&lt; EOF</userinput>
@@ -512,12 +512,12 @@ menuentry "Windows 11" {
 <userinput>EOF</userinput></screen>
 
     <para>
-      <literal>(hd0,1)</literal> bør erstattes med det GRUB
+      <literal>(hd0,1)</literal> bÃ¸r erstattes med det GRUB
       utpekte navnet for ESP.  <literal>chainloader</literal>
-      direktivet kan brukes til å fortelle GRUB om å kjøre en annen EFI kjørbar,
-      i dette tilfellet Windows Boot Manager. Du kan bruke mer brukbare verktøy
-      i EFI kjørbart format (for eksempel et EFI skall) inn i ESP og
-      lage GRUB oppføringer for dem også.
+      direktivet kan brukes til Ã¥ fortelle GRUB om Ã¥ kjÃ¸re en annen EFI kjÃ¸rbar,
+      i dette tilfellet Windows Boot Manager. Du kan bruke mer brukbare verktÃ¸y
+      i EFI kjÃ¸rbart format (for eksempel et EFI skall) inn i ESP og
+      lage GRUB oppfÃ¸ringer for dem ogsÃ¥.
     </para>
 
   </sect2>

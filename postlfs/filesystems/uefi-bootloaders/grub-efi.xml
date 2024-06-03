@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../../general.ent">
@@ -6,14 +6,14 @@
 
   <!ENTITY grub-efi-download-http "https://ftp.gnu.org/gnu/grub/grub-&grub-version;.tar.xz">
   <!ENTITY grub-efi-download-ftp  " ">
-  <!ENTITY grub-efi-md5sum        "cf0fd928b1e5479c8108ee52cb114363">
-  <!ENTITY grub-efi-size          "6.3 MB">
+  <!ENTITY grub-efi-md5sum        "60c564b1bdc39d8e43b3aab4bc0fb140">
+  <!ENTITY grub-efi-size          "6.4 MB">
   <!ENTITY grub-efi-buildsize     "183 MB">
-  <!ENTITY grub-efi-time          "0.4 SBU (på 64-bits LFS, ved å bruke parallellisme=4)">
+  <!ENTITY grub-efi-time          "0.4 SBU (pÃ¥ 64-bits LFS, ved Ã¥ bruke parallellisme=4)">
 
   <!ENTITY unifont-download-http  "https://unifoundry.com/pub/unifont/unifont-&unifont-version;/font-builds/unifont-&unifont-version;.pcf.gz">
-  <!ENTITY unifont-md5sum         "94ff8cb4d5674cd2f38b00cede5e06d5">
-  <!ENTITY unifont-size           "1.4 MB">
+  <!ENTITY unifont-md5sum         "72f95e7ecb47a4c7ed610babe6959ead">
+  <!ENTITY unifont-size           "1.3 MB">
 ]>
 
 <sect1 id="grub-efi" xreflabel="GRUB-&grub-version; for EFI">
@@ -31,11 +31,11 @@
 
     <para>
       <application>GRUB</application> pakken gir GRand Unified
-      Bootloader. På denne siden vil den bygges med UEFI støtte, som
+      Bootloader. PÃ¥ denne siden vil den bygges med UEFI stÃ¸tte, som
       ikke er aktivert for GRUB innebygd i LFS.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +56,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &grub-efi-size;
+          NedlastingsstÃ¸rrelse: &grub-efi-size;
         </para>
       </listitem>
       <listitem>
@@ -72,18 +72,18 @@
     </itemizedlist>
 
     <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
-
+<!--
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/grub-&grub-version;-upstream_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <itemizedlist spacing="compact">
-      <title>Unicode skriftdata som brukes til å vise GRUB menyen</title>
+      <title>Unicode skriftdata som brukes til Ã¥ vise GRUB menyen</title>
       <listitem>
         <para>
           Nedlasting (HTTP): <ulink url="&unifont-download-http;"/>
@@ -96,13 +96,13 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &unifont-size;
+          NedlastingsstÃ¸rrelse: &unifont-size;
         </para>
       </listitem>
     </itemizedlist>
 
     <itemizedlist spacing="compact">
-      <title>GCC (bare nødvendig hvis du bygger på 32-bits LFS)</title>
+      <title>GCC (bare nÃ¸dvendig hvis du bygger pÃ¥ 32-bits LFS)</title>
       <listitem>
         <para>
           Referer til <xref linkend='gcc'/> siden for nedlastingsinformasjon.
@@ -114,7 +114,7 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref role="runtime" linkend="efibootmgr"/> (kjøretid) og
+      <xref role="runtime" linkend="efibootmgr"/> (kjÃ¸retid) og
       <xref linkend="freetype2"/>
     </para>
 
@@ -130,7 +130,7 @@
     <title>Installasjon av GRUB</title>
 
     <para>
-      Installer først skriftdata som
+      Installer fÃ¸rst skriftdata som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -138,26 +138,23 @@
 gunzip -c ../unifont-&unifont-version;.pcf.gz > /usr/share/fonts/unifont/unifont.pcf</userinput></screen>
 
     <warning>
-      <para>Fjern eventuelle miljøvariabler som kan påvirke byggingen:</para>
+      <para>Fjern eventuelle miljÃ¸variabler som kan pÃ¥virke byggingen:</para>
 
       <screen><userinput>unset {C,CPP,CXX,LD}FLAGS</userinput></screen>
 
-      <para>Ikke prøv å <quote>tilpasse</quote> denne pakken med tilpassete
-      kompilasjonsflagg: denne pakken er en oppstartslaster, med lav nivå
-      operasjoner i kildekoden som sannsynligvis vil bli ødelagt av
+      <para>Ikke prÃ¸v Ã¥ <quote>tilpasse</quote> denne pakken med tilpassete
+      kompilasjonsflagg: denne pakken er en oppstartslaster, med lav nivÃ¥
+      operasjoner i kildekoden som sannsynligvis vil bli Ã¸delagt av
       aggressive optimaliseringer.</para>
     </warning>
 
     <para>
-      Løs et problem som forårsaker at <command>grub-install</command> feiler når
-      <filename class='directory'>/boot</filename> partisjonen (eller root
-      partisjonen <filename class='directory'>/boot</filename> ikke er en
-      separat partisjon) er opprettet av e2fsprogs-1.47.0 eller senere:
+      Legg til en fil som mangler fra utgivelsens tarball:
     </para>
 
-<screen><userinput>patch -Np1 -i ../grub-&grub-version;-upstream_fixes-1.patch</userinput></screen>
+<screen><userinput>echo <literal>depends bli part_gpt</literal> > grub-core/extra_deps.lst</userinput></screen>
 
-    <para>Hvis du kjører en 32-bits LFS, klargjør en 64-bits kompilator:</para>
+    <para>Hvis du kjÃ¸rer en 32-bits LFS, klargjÃ¸r en 64-bits kompilator:</para>
 
 <!-- 'literal' is used deliberately to show this is only for 32-bit LFS -->
 <screen><userinput>case $(uname -m) in i?86 )
@@ -176,7 +173,7 @@ gunzip -c ../unifont-&unifont-version;.pcf.gz > /usr/share/fonts/unifont/unifont
 esac</userinput></screen>
 
     <para>
-      Bygg <application>GRUB</application> med følgende kommandoer:
+      Bygg <application>GRUB</application> med fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr        \
@@ -194,7 +191,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -206,38 +203,38 @@ mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions</userin
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--enable-grub-mkfont</parameter>: Bygg verktøyet som heter
-      <command>grub-mkfont</command> for å generere fontfilen for oppstartslasteren
+      <parameter>--enable-grub-mkfont</parameter>: Bygg verktÃ¸yet som heter
+      <command>grub-mkfont</command> for Ã¥ generere fontfilen for oppstartslasteren
       fra fontdataene vi har installert.
     </para>
 
     <warning>
       <para>Hvis den anbefalte avhengigheten <xref linkend="freetype2"/> ikke er
-      installert, er det mulig å utelate dette alternativet og bygge GRUB. Derimot,
+      installert, er det mulig Ã¥ utelate dette alternativet og bygge GRUB. Derimot,
       hvis <command>grub-mkfont</command> ikke er bygget, eller unicode fontdataen
-      ikke er tilgjengelig på det tidspunktet GRUB bygges, vil GRUB ikke installere
+      ikke er tilgjengelig pÃ¥ det tidspunktet GRUB bygges, vil GRUB ikke installere
       hvilken som helst font for oppstartslasteren. GRUB oppstartsmenyen vil vises
-      ved hjelp av en grov skrift eller i et mindre område på skjermen.</para>
+      ved hjelp av en grov skrift eller i et mindre omrÃ¥de pÃ¥ skjermen.</para>
     </warning>
 
     <para>
-      <parameter>--with-platform=efi</parameter>: Sikrer å bygge GRUB med
+      <parameter>--with-platform=efi</parameter>: Sikrer Ã¥ bygge GRUB med
       EFI aktivert.
     </para>
 
     <para>
       <parameter>--target=x86_64</parameter>: Sikrer at GRUB bygges for
-      x86_64 selv om du bygger på et 32-bits LFS system. De fleste EFI fastvare
-      på x86_64 støtter ikke 32-biters oppstartslastere.
+      x86_64 selv om du bygger pÃ¥ et 32-bits LFS system. De fleste EFI fastvare
+      pÃ¥ x86_64 stÃ¸tter ikke 32-biters oppstartslastere.
     </para>
 
     <para>
-      <option>--target=i386</option>: Noen få 32-bits x86 plattformer har EFI
-      støtte. Og noen x86_64 plattformer har en 32-biters EFI implementering,
+      <option>--target=i386</option>: Noen fÃ¥ 32-bits x86 plattformer har EFI
+      stÃ¸tte. Og noen x86_64 plattformer har en 32-biters EFI implementering,
       men de er veldig gamle og sjeldne. Bruk dette i stedet for
       <parameter>--target=x86_64</parameter> hvis du er
-      <emphasis role='bold'>helt sikker</emphasis> på at LFS kjører
-      på et slikt system.
+      <emphasis role='bold'>helt sikker</emphasis> pÃ¥ at LFS kjÃ¸rer
+      pÃ¥ et slikt system.
     </para>
 
   </sect2>
@@ -246,7 +243,7 @@ mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions</userin
     <title>Konfigurere GRUB</title>
 
     <para>
-      Å bruke GRUB for å gjøre LFS systemet oppstartbart på UEFI plattformen vil bli
+      Ã… bruke GRUB for Ã¥ gjÃ¸re LFS systemet oppstartbart pÃ¥ UEFI plattformen vil bli
       diskutert i <xref linkend="grub-setup"/>.
     </para>
   </sect2>
