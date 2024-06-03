@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY epdfview-download-http "&sources-anduin-http;/epdfview/epdfview-&epdfview-version;.tar.bz2">
+  <!ENTITY epdfview-download-http "&sources-anduin-http;/epdfview-gtk3/epdfview-&epdfview-version;.tar.xz">
   <!ENTITY epdfview-download-ftp  " ">
-  <!ENTITY epdfview-md5sum        "e50285b01612169b2594fea375f53ae4">
-  <!ENTITY epdfview-size          "456 KB">
-  <!ENTITY epdfview-buildsize     "6 MB">
-  <!ENTITY epdfview-time          "mindre enn 0.1 SBU">
+  <!ENTITY epdfview-md5sum        "d222a3dc26c2faf6f862018bb478fb36">
+  <!ENTITY epdfview-size          "184 KB">
+  <!ENTITY epdfview-buildsize     "3.5 MB">
+  <!ENTITY epdfview-time          "mindre enn 0.1 SBU (bruker parallellisme=4)">
 ]>
 
 <sect1 id="epdfview" xreflabel="epdfview-&epdfview-version;">
@@ -23,17 +23,19 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduksjon til ePDFView</title>
+    <title>Introduksjon til ePDFView-gtk3</title>
 
     <para>
-      <application>ePDFView</application> er en gratis frittstående lettvekts PDF
-      dokumentviser som bruker<application>Poppler</application> og
-      <application>GTK+</application> biblioteker. Det er en god erstatning for
+      <application>ePDFView-gtk3</application> er en forgrening av det gamle
+      <application>ePDFView</application> programmet. Selv om github depotet
+      <ulink url="https://github.com/Flow-It/epdfview_old.git"/>  navngir den som
+      'old', er det gtk3 forgreningen. Det er en lettvekts erstatning for
       <application>Evince</application> siden den ikke er avhengig av
-      <application>GNOME</application> biblioteker.
+      <application>GNOME</application> biblioteker og er mer kapabel enn
+      <application>MuPDF</application>.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +56,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &epdfview-size;
+          NedlastingsstÃ¸rrelse: &epdfview-size;
         </para>
       </listitem>
       <listitem>
@@ -69,92 +71,103 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing='compact'>
-      <listitem>
-        <para>
-          Nødvendig oppdatering: <ulink url=
-          "&patch-root;/epdfview-&epdfview-version;-fixes-2.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
-
     <bridgehead renderas="sect3">ePDFView Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
-      <xref linkend="gtk2"/> og
+      <xref linkend="gtk3"/> og
       <xref linkend="poppler"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt (hovedsakelig for
-    skrivebordsmiljøer)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="Recommended">
-      <xref linkend="desktop-file-utils"/> og
-      <xref linkend="hicolor-icon-theme"/>
+      <xref linkend="cups"/> (for Ã¥ fÃ¥ tilgang til utskriftskÃ¸er),
+      <xref linkend="desktop-file-utils"/>, og
+      <xref linkend="hicolor-icon-theme"/> (begge for ikonene denne installerer)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="cups"/>
+      Hjemmesiden til prosjektets depot nevner at det er valgfrie
+      avhengigheter, som aktiveres av brytere. Disse er for Ã¥ bygge
+      dokumentasjon og kjÃ¸ring av testpakken,
+      <xref linkend="doxygen"/> og
+      <ulink url='https://freedesktop.org/wiki/Software/cppunit/'>Cppunit</ulink>.
+      Merk at <application>doxygen</application> installerer bare en skjelettside
+      om seg selv, som ikke inneholder pakkedokumentasjon, og testkoden
+      kompilerer ikke med nyere versjoner av C++.
     </para>
-
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av ePDFView</title>
+    <title>Installasjon av ePDFView-gtk3</title>
 
     <para>
-      Installer <application>ePDFView</application> ved å kjøre følgende
+      Installer <application>ePDFView-gtk3</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>patch -Np1 -i ../epdfview-&epdfview-version;-fixes-2.patch &amp;&amp;
-./configure --prefix=/usr &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr          \
+            --buildtype=release    \
+            -Denable-printing=true \
+            ..                     &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
-    <para>
-      For brukere av skrivebordsmiljø er ytterligere (valgfri) instruksjoner nødvendig for riktig visning av <filename>epdfview.desktop</filename> i menyen. Som <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>for size in 24 32 48; do
-  ln -svf ../../../../epdfview/pixmaps/icon_epdfview-$size.png \
-          /usr/share/icons/hicolor/${size}x${size}/apps
-done &amp;&amp;
-unset size &amp;&amp;
-
-update-desktop-database &amp;&amp;
-gtk-update-icon-cache -t -f --include-image-data /usr/share/icons/hicolor</userinput></screen>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/update-icons-and-desktop.xml"/>
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-<!-- keep this in case the patch breaks builds without cups
     <para>
-      <command>sed -i 's#/gmacros##' src/gtk/StockIcons.h</command>: Denne sed
-      fikser kompilering med <application>glib-2.32</application> eller større.
-    </para> -->
-
-    <para>
-      <command>patch -Np1 -i ../epdfview-&epdfview-version;-fixes-2.patch</command>
-      Oppdateringen gjør fire ting: fikser kompilering med
-      <application>glib-2.32</application> eller nyere, korrigerer rødt som vises som
-      blå med nyere versjoner av <application>poppler</application>, muliggjør
-      applikasjonen for å kompilere når <xref linkend="cups"/> er installert,
-      og fikser visningen av innebygde png bilder.
+      <command>-Denable-printing=true</command>: bygger koden for Ã¥ koble til
+      <application>cups</application> utskriftskÃ¸(er). Utelat dette hvis du ikke har
+      installert <application>cups</application>.
     </para>
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Configuring ePDFView-gtk3</title>
+
+      <para>
+        ePDFView-gtk3 har flere hurtigtaster for valgfrie funksjoner. Flesteparten
+        av dem er 'av' som standard, inkludert verktÃ¸ylinjen, og hvis den har vÃ¦rt
+        lukket med menyen deaktivert, kan programmet starte med alle alternativer
+        ikke synlig fÃ¸r de relevante funksjonstastene er trykket.
+        <itemizedlist>
+          <listitem>
+            <para>[F6] - veksle mellom verktÃ¸ylinjen</para>
+          </listitem>
+          <listitem>
+            <para>[F7] - veksle mellom menyen</para>
+          </listitem>
+          <listitem>
+            <para>[F8] - veksle mellom omvendt-farger</para>
+          </listitem>
+          <listitem>
+            <para>[F9] - veksle mellom vis-indeks</para>
+          </listitem>
+          <listitem>
+            <para>[F11] - veksle mellom fullskjerm</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+
   </sect2>
 
   <sect2 role="content">
@@ -181,7 +194,7 @@ gtk-update-icon-cache -t -f --include-image-data /usr/share/icons/hicolor</useri
         <term><command>epdfview</command></term>
         <listitem>
           <para>
-            er et <application>Gtk+-2</application> program for å se PDF
+            er et <application>Gtk+-3</application> program for Ã¥ se PDF
             dokumenter
           </para>
           <indexterm zone="epdfview epdfview-prog">
