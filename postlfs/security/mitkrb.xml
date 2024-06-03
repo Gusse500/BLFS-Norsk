@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -29,12 +29,12 @@
       <application>MIT Kerberos V5</application> er en gratis implementering
       av Kerberos 5. Kerberos er en nettverksautentiseringsprotokoll. Den
       sentraliserer autentiseringsdatabasen og bruker kerberized
-      applikasjoner som fungerer med servere eller tjenester som støtter Kerberos
-      tillater enkeltpålogginger og kryptert kommunikasjon over intern
+      applikasjoner som fungerer med servere eller tjenester som stÃ¸tter Kerberos
+      tillater enkeltpÃ¥logginger og kryptert kommunikasjon over intern
       nettverk eller Internett.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &mitkrb-size;
+          NedlastingsstÃ¸rrelse: &mitkrb-size;
         </para>
       </listitem>
       <listitem>
@@ -74,7 +74,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
            <ulink url="&patch-root;/mitkrb-&mitkrb-version;-openssl3_fixes-1.patch"/>
         </para>
       </listitem>
@@ -85,7 +85,7 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="bind-utils"/>,
-      <xref linkend="gnupg2"/> (for å autentisere pakken),
+      <xref linkend="gnupg2"/> (for Ã¥ autentisere pakken),
       <xref linkend="keyutils"/>,
       <xref linkend="openldap"/>,<!-- Seems so that mit has its own
       implementation of rpc now.
@@ -101,8 +101,8 @@
 
     <note>
       <para>
-        En slags tidssynkroniseringsfunksjon på systemet ditt (som
-        <xref linkend="ntp"/>) er nødvendig siden Kerberos ikke vil autentisere
+        En slags tidssynkroniseringsfunksjon pÃ¥ systemet ditt (som
+        <xref linkend="ntp"/>) er nÃ¸dvendig siden Kerberos ikke vil autentisere
         hvis det er en tidsforskjell mellom en kerberisert klient og
         KDC serveren.
       </para>
@@ -114,14 +114,14 @@
     <title>Installasjon av MIT Kerberos V5</title>
 <!--
     <para>
-      Deretter løser du flere problemer identifisert av OpenSSL-3:
+      Deretter lÃ¸ser du flere problemer identifisert av OpenSSL-3:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../mitkrb-&mitkrb-version;-openssl3_fixes-1.patch</userinput></screen>
 -->
     <para>
-      Bygg <application>MIT Kerberos V5</application> ved å kjøre
-      følgende kommandoer:
+      Bygg <application>MIT Kerberos V5</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>cd src &amp;&amp;
@@ -142,16 +142,16 @@ sed -i -e '/eq 0/{N;s/12 //}'    plugins/kdb/db2/libdb2/test/run.test &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste bygget, utsted <command>make -j1 -k check</command>.
-      <!-- Du trenger i det minste <xref link end="tcl"/>, som brukes til å drive
-      testpakken. Dessuten, <xref link end="dejagnu"/> må være tilgjengelig for
-      noen av testene som skal kjøres. Hvis du har en tidligere versjon av MIT Kerberos V5
+      For Ã¥ teste bygget, utsted <command>make -j1 -k check</command>.
+      <!-- Du trenger i det minste <xref link end="tcl"/>, som brukes til Ã¥ drive
+      testpakken. Dessuten, <xref link end="dejagnu"/> mÃ¥ vÃ¦re tilgjengelig for
+      noen av testene som skal kjÃ¸res. Hvis du har en tidligere versjon av MIT Kerberos V5
       installert, kan det hende at testpakken plukker opp det installerte
-      versjoner av bibliotekene, i stedet for de nybygde. I så fall er det det
-      bedre å kjøre testene etter installasjonen. -->Noen tester kan mislykkes med
+      versjoner av bibliotekene, i stedet for de nybygde. I sÃ¥ fall er det det
+      bedre Ã¥ kjÃ¸re testene etter installasjonen. -->Noen tester kan mislykkes med
       den nyeste versjonen av dejagnu og glibc. Noen tester kan henge for en
       lang tid og mislykkes hvis systemet ikke er koblet til et nettverk.
-      En test, <filename>t_kadm5srv</filename>, er kjent for å mislykkes.
+      En test, <filename>t_kadm5srv</filename>, er kjent for Ã¥ mislykkes.
       <!-- Note: on my laptop -j8 fails but -j1 passes
       For version 1.21, -j1 no longer needs to be specified and the
       time for the tests was reduced considerably.  -bdubbs
@@ -161,11 +161,23 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
 cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
+
+    <!-- libsoup3 FTBFS with these flags if -Dgssapi=enabled (not used by
+         the book) -->
+    <para>
+      Fortsatt som &root; bruker, fjern linkerflagginnstillingen RPATH fra
+      <command>krb5-config</command> skriptet. Disse flaggene er unÃ¸dvendige for
+      en installasjon i standardprefikset
+      (<filename class='directory'>/usr</filename>) og de kan forÃ¥rsake at noen
+      pakker ikke klarer Ã¥ bygge:
+    </para>
+
+    <screen role='root'><userinput>sed '/PROG_RPATH_FLAGS/d' -i /usr/bin/krb5-config</userinput></screen>
 
   </sect2>
 
@@ -174,31 +186,31 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
 
     <para>
       <command>sed</command> kommandoene fjerner en
-      test som er kjent for å mislykkes.
+      test som er kjent for Ã¥ mislykkes.
     </para>
 
     <para>
       <parameter>--localstatedir=/var/lib</parameter>: Dette alternativet
-      brukes slik at Kerberos variablens kjøretidsdata er plassert i
+      brukes slik at Kerberos variablens kjÃ¸retidsdata er plassert i
       <filename class="directory">/var/lib</filename> i stedet for
       <filename class="directory">/usr/var</filename>.
     </para>
 
     <para>
       <parameter>--runstatedir=/run</parameter>: Dette alternativet brukes slik at
-      informasjonen om Kerberos kjøretidstilstand er plassert i
+      informasjonen om Kerberos kjÃ¸retidstilstand er plassert i
       <filename class="directory">/run</filename> istedenfor det foreldede
       <filename class="directory">/var/run</filename>.
     </para>
 
     <para>
-      <parameter>--with-system-et</parameter>: Denne bryteren gjør at bygget
-      bruker de systeminstallerte versjonene av feiltabell støtte
+      <parameter>--with-system-et</parameter>: Denne bryteren gjÃ¸r at bygget
+      bruker de systeminstallerte versjonene av feiltabell stÃ¸tte
       programvaren.
     </para>
 
     <para>
-      <parameter>--with-system-ss</parameter>: Denne bryteren gjør at bygget
+      <parameter>--with-system-ss</parameter>: Denne bryteren gjÃ¸r at bygget
       bruker de systeminstallerte versjonene av undersystemets kommandolinje
       grensesnitt programvaren.
     </para>
@@ -206,14 +218,14 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
     <para>
       <parameter>--with-system-verto=no</parameter>: Denne bryteren fikser en feil i
       pakken: den gjenkjenner ikke sitt eget tidligere installerte verto bibliotek.
-      Dette er ikke et problem, hvis du installerer samme versjon på nytt,
+      Dette er ikke et problem, hvis du installerer samme versjon pÃ¥ nytt,
       men hvis du oppdaterer, brukes det gamle biblioteket som systemets bibliotek,
-      i stedet for å installere den nye versjonen.
+      i stedet for Ã¥ installere den nye versjonen.
     </para>
 
     <para>
       <parameter>--enable-dns-for-realm</parameter>: Denne bryteren tillater
-      realms som skal løses ved hjelp av DNS serveren.
+      realms som skal lÃ¸ses ved hjelp av DNS serveren.
     </para>
 
     <para>
@@ -252,9 +264,9 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
 
         <tip>
           <para>
-            Du bør vurdere å installere en slags passordkontroll
+            Du bÃ¸r vurdere Ã¥ installere en slags passordkontroll
             ordbok slik at du kan konfigurere installasjonen til kun
-            å godta sterke passord. En passende ordbok å bruke vises i
+            Ã¥ godta sterke passord. En passende ordbok Ã¥ bruke vises i
             <xref linkend="cracklib"/> bruksanvisning. Merk at kun en
             fil kan brukes, men du kan sette sammen mange filer til en.
             Konfigurasjonsfilen vist nedenfor forutsetter at du har installert en
@@ -263,8 +275,8 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
         </tip>
 
         <para>
-          Opprett Kerberos konfigurasjonsfilen med følgende
-          kommandoer kjørt som <systemitem class="username">root</systemitem>
+          Opprett Kerberos konfigurasjonsfilen med fÃ¸lgende
+          kommandoer kjÃ¸rt som <systemitem class="username">root</systemitem>
           bruker:
         </para>
 
@@ -294,22 +306,22 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
 EOF</userinput></screen>
 
         <para>
-          Du må erstatte domenet ditt og det riktige vertsnavnet
+          Du mÃ¥ erstatte domenet ditt og det riktige vertsnavnet
           for forekomster av <replaceable>&lt;belgarath&gt;</replaceable> og
           <replaceable>&lt;example.org&gt;</replaceable> navn.
         </para>
 
         <para>
-          <option>default_realm</option> skal være navnet på ditt
-          domene endret til ALL STORE BOKSTAVER. Dette er ikke nødvendig, men både
+          <option>default_realm</option> skal vÃ¦re navnet pÃ¥ ditt
+          domene endret til ALL STORE BOKSTAVER. Dette er ikke nÃ¸dvendig, men bÃ¥de
           <application>Heimdal</application> og MIT anbefaler det.
         </para>
 
         <para>
           <option>encrypt = true</option> gir kryptering av all trafikk
-          mellom kerberiserte klienter og servere. Det er ikke nødvendig og kan
-          bli utelatt. Hvis du lar det være av, kan du kryptere all trafikk fra
-          klienten til serveren ved hjelp av en bryter på klientprogrammet
+          mellom kerberiserte klienter og servere. Det er ikke nÃ¸dvendig og kan
+          bli utelatt. Hvis du lar det vÃ¦re av, kan du kryptere all trafikk fra
+          klienten til serveren ved hjelp av en bryter pÃ¥ klientprogrammet
           i stedet.
         </para>
 
@@ -329,8 +341,8 @@ EOF</userinput></screen>
 <screen role="root"><userinput>kdb5_util create -r <replaceable>&lt;EXAMPLE.ORG&gt;</replaceable> -s</userinput></screen>
 
         <para>
-          Nå bør du fylle databasen med fullmakt
-          (brukere). For nå er det bare å bruke ditt vanlige påloggingsnavn eller
+          NÃ¥ bÃ¸r du fylle databasen med fullmakt
+          (brukere). For nÃ¥ er det bare Ã¥ bruke ditt vanlige pÃ¥loggingsnavn eller
           <systemitem class="username">root</systemitem>.
         </para>
 
@@ -339,14 +351,14 @@ EOF</userinput></screen>
 <prompt>kadmin.local:</prompt> addprinc -policy dict-only <replaceable>&lt;loginname&gt;</replaceable></userinput></screen>
 
         <para>
-          KDC serveren og enhver maskin som kjører kerberisert
-          servernisser må ha en vertsnøkkel installert:
+          KDC serveren og enhver maskin som kjÃ¸rer kerberisert
+          servernisser mÃ¥ ha en vertsnÃ¸kkel installert:
         </para>
 
 <screen role="root"><userinput><prompt>kadmin.local:</prompt> addprinc -randkey host/<replaceable>&lt;belgarath.example.org&gt;</replaceable></userinput></screen>
 
         <para>
-          Etter å ha valgt standardinnstillingene når du blir bedt om det, må du
+          Etter Ã¥ ha valgt standardinnstillingene nÃ¥r du blir bedt om det, mÃ¥ du
           eksporter dataene til en keytab fil:
         </para>
 
@@ -357,40 +369,40 @@ EOF</userinput></screen>
           <filename class="directory">/etc</filename> navngitt
           <filename>krb5.keytab</filename> (Kerberos 5). Denne filen skal
           ha 600 (<systemitem class="username">root</systemitem> rw bare)
-          tillatelser. Å holde keytab filene fra offentlig tilgang er avgjørende
+          tillatelser. Ã… holde keytab filene fra offentlig tilgang er avgjÃ¸rende
           for den generelle sikkerheten til Kerberos installasjonen.
         </para>
 
         <para>
-          Gå ut av <command>kadmin</command> programmet (bruk
+          GÃ¥ ut av <command>kadmin</command> programmet (bruk
           <command>quit</command> eller <command>exit</command>) og returner
-          tilbake til skall ledeteksten. Start KDC nissen manuelt, bare for å
+          tilbake til skall ledeteksten. Start KDC nissen manuelt, bare for Ã¥
           teste installasjonen:
         </para>
 
 <screen role="root"><userinput>/usr/sbin/krb5kdc</userinput></screen>
 
         <para>
-          Forsøk å få en billett med følgende kommando:
+          ForsÃ¸k Ã¥ fÃ¥ en billett med fÃ¸lgende kommando:
         </para>
 
 <screen><userinput>kinit <replaceable>&lt;loginname&gt;</replaceable></userinput></screen>
 
         <para>
           Du vil bli bedt om passordet du opprettet. Etter at du
-          har fått billetten din, kan du liste den med følgende kommando:
+          har fÃ¥tt billetten din, kan du liste den med fÃ¸lgende kommando:
         </para>
 
 <screen><userinput>klist</userinput></screen>
 
         <para>
-          Informasjon om billetten skal vises på
+          Informasjon om billetten skal vises pÃ¥
           skjermen.
         </para>
 
         <para>
-          For å teste funksjonaliteten til keytab filen, kjør
-          følgende kommando som
+          For Ã¥ teste funksjonaliteten til keytab filen, kjÃ¸r
+          fÃ¸lgende kommando som
           <systemitem class="username">root</systemitem> bruker:
         </para>
 
@@ -399,8 +411,8 @@ EOF</userinput></screen>
 <prompt>ktutil:</prompt> l</userinput></screen>
 
         <para>
-          Dette bør dumpe en liste over vertens fullmakt, sammen med
-          krypteringsmetodene som brukes for å få tilgang til fullmakter.
+          Dette bÃ¸r dumpe en liste over vertens fullmakt, sammen med
+          krypteringsmetodene som brukes for Ã¥ fÃ¥ tilgang til fullmakter.
         </para>
 
         <para>
@@ -410,8 +422,8 @@ EOF</userinput></screen>
 <screen role="root"><userinput>touch /var/lib/krb5kdc/kadm5.acl</userinput></screen>
 
         <para>
-          På dette tidspunktet, hvis alt har vært vellykket så langt, kan du
-          føle deg ganske trygg på installasjon og konfigurasjon av
+          PÃ¥ dette tidspunktet, hvis alt har vÃ¦rt vellykket sÃ¥ langt, kan du
+          fÃ¸le deg ganske trygg pÃ¥ installasjon og konfigurasjon av
           pakken.
         </para>
 
@@ -424,7 +436,7 @@ EOF</userinput></screen>
           For ytterligere informasjon se <ulink
           url="https://web.mit.edu/kerberos/www/krb5-&mitkrb-major-version;/#documentation">
           dokumentasjon for krb5-&mitkrb-version;</ulink> hvor ovennevnte
-          instruksjoner er basert på.
+          instruksjoner er basert pÃ¥.
         </para>
 
       </sect4>
@@ -439,13 +451,13 @@ EOF</userinput></screen>
         Hvis du vil starte <application>Kerberos</application> tjenester
         ved oppstart, installer <filename>/etc/rc.d/init.d/krb5</filename> init
         skriptet inkludert i <xref linkend="bootscripts"/> pakke ved hjelp av
-        følgende kommando:
+        fÃ¸lgende kommando:
       </para>
 
       <para revision="systemd">
         Hvis du vil starte <application>Kerberos</application> tjenester
         ved oppstart, installer <filename>krb5.service</filename> enhet inkludert i
-        <xref linkend="systemd-units"/> pakke ved å bruke følgende kommando:
+        <xref linkend="systemd-units"/> pakke ved Ã¥ bruke fÃ¸lgende kommando:
       </para>
 
       <indexterm zone="mitkrb mitkrb-init">
@@ -524,7 +536,7 @@ EOF</userinput></screen>
         <term><command>k5srvutil</command></term>
         <listitem>
           <para>
-            er et vertsnøkkeltabellmanipulasjonsverktøy
+            er et vertsnÃ¸kkeltabellmanipulasjonsverktÃ¸y
           </para>
           <indexterm zone="mitkrb k5srvutil">
             <primary sortas="b-k5srvutil">k5srvutil</primary>
@@ -536,7 +548,7 @@ EOF</userinput></screen>
         <term><command>kadmin</command></term>
         <listitem>
           <para>
-            er et verktøy som brukes til å gjøre endringer
+            er et verktÃ¸y som brukes til Ã¥ gjÃ¸re endringer
             til Kerberos databasen
           </para>
           <indexterm zone="mitkrb kadmin">
@@ -549,9 +561,9 @@ EOF</userinput></screen>
         <term><command>kadmin.local</command></term>
         <listitem>
           <para>
-            er et verktøy som ligner på <command>kadmin</command>, men hvis
+            er et verktÃ¸y som ligner pÃ¥ <command>kadmin</command>, men hvis
             databasen er db2, den lokale klienten <command>kadmin.local</command>,
-            er ment å kjøre direkte på master KDC uten Kerberos
+            er ment Ã¥ kjÃ¸re direkte pÃ¥ master KDC uten Kerberos
             autentisering
           </para>
           <indexterm zone="mitkrb kadmin.local">
@@ -590,7 +602,7 @@ EOF</userinput></screen>
         <term><command>kdb5_util</command></term>
         <listitem>
           <para>
-            er KDC databaseverktøyet
+            er KDC databaseverktÃ¸yet
           </para>
           <indexterm zone="mitkrb kdb5_util">
             <primary sortas="b-kdb5_util">kdb5_util</primary>
@@ -614,9 +626,9 @@ EOF</userinput></screen>
         <term><command>kinit</command></term>
         <listitem>
           <para>
-            brukes til å autentisere til Kerberos serveren som en
+            brukes til Ã¥ autentisere til Kerberos serveren som en
             fullmakt og anskaffe en billettbevilgningsbillett som senere kan
-            brukes til å skaffe billetter til andre tjenester
+            brukes til Ã¥ skaffe billetter til andre tjenester
           </para>
           <indexterm zone="mitkrb kinit">
             <primary sortas="b-kinit">kinit</primary>
@@ -641,7 +653,7 @@ EOF</userinput></screen>
         <term><command>kpasswd</command></term>
         <listitem>
           <para>
-            er et program for å endre Kerberos 5 passord
+            er et program for Ã¥ endre Kerberos 5 passord
           </para>
           <indexterm zone="mitkrb kpasswd">
             <primary sortas="b-kpasswd">kpasswd</primary>
@@ -654,7 +666,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             tar en hoveddatabase i et spesifisert format og
-            konverterer den til en strøm av databaseposter
+            konverterer den til en strÃ¸m av databaseposter
           </para>
           <indexterm zone="mitkrb kprop">
             <primary sortas="b-kprop">kprop</primary>
@@ -717,7 +729,7 @@ EOF</userinput></screen>
         <term><command>krb5-send-pr</command></term>
         <listitem>
           <para>
-            sender en problemrapport (PR) til en sentral støtteside
+            sender en problemrapport (PR) til en sentral stÃ¸tteside
           </para>
           <indexterm zone="mitkrb krb5-send-pr">
             <primary sortas="b-krb-send-pr">krb5-send-pr</primary>
@@ -733,7 +745,7 @@ EOF</userinput></screen>
             Krever en riktig konfigurert
             <filename>/etc/shells</filename> og
             <filename>~/.k5login</filename> som inneholder fullmakt
-            autorisert til å bli superbrukere
+            autorisert til Ã¥ bli superbrukere
           </para>
           <indexterm zone="mitkrb ksu">
             <primary sortas="b-ksu">ksu</primary>
@@ -745,8 +757,8 @@ EOF</userinput></screen>
         <term><command>kswitch</command></term>
         <listitem>
           <para>
-            gjør den spesifiserte legitimasjonsbufferen til
-            primær buffer for samlingen, hvis en buffer
+            gjÃ¸r den spesifiserte legitimasjonsbufferen til
+            primÃ¦r buffer for samlingen, hvis en buffer
             samling er tilgjengelig
           </para>
           <indexterm zone="mitkrb kswitch">
@@ -759,7 +771,7 @@ EOF</userinput></screen>
         <term><command>ktutil</command></term>
         <listitem>
           <para>
-            er et program for å administrere Kerberos keytabs
+            er et program for Ã¥ administrere Kerberos keytabs
           </para>
           <indexterm zone="mitkrb ktutil">
             <primary sortas="b-ktutil">ktutil</primary>
@@ -771,7 +783,7 @@ EOF</userinput></screen>
         <term><command>kvno</command></term>
         <listitem>
           <para>
-            skriver ut nøkkelversjonsnummer for Kerberos fullmakter
+            skriver ut nÃ¸kkelversjonsnummer for Kerberos fullmakter
           </para>
           <indexterm zone="mitkrb kvno">
             <primary sortas="b-kvno">kvno</primary>
@@ -783,8 +795,8 @@ EOF</userinput></screen>
         <term><command>sclient</command></term>
         <listitem>
           <para>
-            brukes til å kontakte en eksempelserver og autentisere til den
-            ved å bruke Kerberos 5 billetter, og vis deretter serverens
+            brukes til Ã¥ kontakte en eksempelserver og autentisere til den
+            ved Ã¥ bruke Kerberos 5 billetter, og vis deretter serverens
             respons
           </para>
           <indexterm zone="mitkrb sclient">
@@ -823,7 +835,7 @@ EOF</userinput></screen>
         <term><command>sserver</command></term>
         <listitem>
           <para>
-            er eksempelet på Kerberos 5 serveren
+            er eksempelet pÃ¥ Kerberos 5 serveren
           </para>
           <indexterm zone="mitkrb sserver">
             <primary sortas="b-sserver">sserver</primary>
@@ -862,10 +874,10 @@ EOF</userinput></screen>
           <para>
             inneholder Generisk sikkerhetstjenesteapplikasjonsprogrammering
             Grensesnitt (GSSAPI) funksjoner som gir sikkerhetstjenester
-            til kallere på en generisk måte, støttes med en rekke
+            til kallere pÃ¥ en generisk mÃ¥te, stÃ¸ttes med en rekke
             underliggende mekanismer og teknologier og dermed tillate
-            kildenivå portabilitet av applikasjoner til forskjellige
-            miljøer
+            kildenivÃ¥ portabilitet av applikasjoner til forskjellige
+            miljÃ¸er
           </para>
           <indexterm zone="mitkrb libgssapi_krb5">
             <primary sortas="c-libgssapi_krb5">libgssapi_krb5.so</primary>
@@ -916,7 +928,7 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">libkrad.so</filename></term>
         <listitem>
           <para>
-            inneholder det interne støttebiblioteket for RADIUS funksjonalitet
+            inneholder det interne stÃ¸ttebiblioteket for RADIUS funksjonalitet
           </para>
           <indexterm zone="mitkrb libkrad">
             <primary sortas="c-libkrad">libkrad.so</primary>
@@ -928,7 +940,7 @@ EOF</userinput></screen>
         <term><filename class="libraryfile">libkrb5.so</filename></term>
         <listitem>
           <para>
-            er et allsidig formåls <application>Kerberos 5</application> bibliotek
+            er et allsidig formÃ¥ls <application>Kerberos 5</application> bibliotek
           </para>
           <indexterm zone="mitkrb libkrb5">
             <primary sortas="c-libkrb5">libkrb5.so</primary>

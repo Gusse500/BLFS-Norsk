@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,14 +6,12 @@
 
   <!ENTITY openssh-download-http
            "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-&openssh-version;.tar.gz">
-  <!ENTITY openssh-download-ftp
-           " "> <!-- at the moment, unable to connect via ftp: ken
-           "ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-&openssh-version;.tar.gz"> -->
+  <!ENTITY openssh-download-ftp  " ">
   <!ENTITY openssh-md5sum        "&openssh-md5sum;">
-  <!ENTITY openssh-size          "1.7 MB">
+  <!ENTITY openssh-size          "1.8 MB">
   <!ENTITY openssh-buildsize     "45 MB (legg til 22 MB for tester)">
   <!ENTITY openssh-time          "0.2 SBU (Bruker parallellisme=4;
-                                  å kjøre testene tar omtrent 20 minutter,
+                                  Ã¥ kjÃ¸re testene tar omtrent 20 minutter,
                                   uavhengig av prosessorhastighet)">
 ]>
 
@@ -35,13 +33,13 @@
     <para>
       <application>OpenSSH</application> pakken inneholder
       <command>ssh</command> klienter og <command>sshd</command> nissen.
-      Dette er nyttig for kryptering av autentisering og påfølgende trafikk over
+      Dette er nyttig for kryptering av autentisering og pÃ¥fÃ¸lgende trafikk over
       et nettverk. <command>ssh</command> og <command>scp</command> kommandoene
       er sikre implementeringer av <command>telnet</command> og
       <command>rcp</command> henholdsvis.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -62,7 +60,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &openssh-size;
+          NedlastingsstÃ¸rrelse: &openssh-size;
         </para>
       </listitem>
       <listitem>
@@ -81,7 +79,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/openssh-&openssh-version;-glibc_2.31_fix-1.patch"/>
         </para>
       </listitem>
@@ -92,7 +90,8 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gdb"/> (for tester),
-      <xref linkend="linux-pam"/>,
+      <xref linkend="linux-pam"/> (PAM konfigurasjonsfiler fra
+      <xref linkend="shadow"/> brukes til Ã¥ lage openssh sine),
       <xref linkend="xorg7-app"/> (eller
       <xref linkend='xorg-env' role='nodep'/>, se Parameterforklaringer),
       <xref linkend="mitkrb"/>,
@@ -103,27 +102,24 @@
       <ulink url="http://www.citi.umich.edu/projects/smartcard/sectok.html">libsectok</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri kjøretid (brukes kun for å samle entropi)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri kjÃ¸retid (brukes kun for Ã¥ samle entropi)</bridgehead>
     <para role="optional">
       <!--<xref role="runtime" linkend="openjdk"/>, Not seen in 8.8p1 -->
       <xref role="runtime" linkend="net-tools"/>, og
       <xref role="runtime" linkend="sysstat"/>
     </para>
 
-    <para condition="html" role="usernotes">
-        Redaktørens notater: <ulink url="&blfs-wiki;/OpenSSH"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av OpenSSH</title>
 
     <para>
-      <application>OpenSSH</application> kjører som to prosesser ved tilkobling
-      til andre datamaskiner. Den første prosessen er en privilegert prosess og kontroller
+      <application>OpenSSH</application> kjÃ¸rer som to prosesser ved tilkobling
+      til andre datamaskiner. Den fÃ¸rste prosessen er en privilegert prosess og kontroller
       utstedelse av privilegier etter behov. Den andre prosessen kommuniserer
-      med nettverket. Ytterligere installasjonstrinn er nødvendig for å sette opp
-      det riktige miljøet, som utføres ved å kjøre følgende
+      med nettverket. Ytterligere installasjonstrinn er nÃ¸dvendig for Ã¥ sette opp
+      det riktige miljÃ¸et, som utfÃ¸res ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer som <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -137,7 +133,7 @@ useradd  -c 'sshd PrivSep' \
          -u 50 sshd</userinput></screen>
 <!--
     <para>
-      Bruk en oppdatering for å tillate OpenSSH å bygge og fungere med
+      Bruk en oppdatering for Ã¥ tillate OpenSSH Ã¥ bygge og fungere med
       <application>Glibc-2.31</application> og senere:
     </para>
 
@@ -146,14 +142,14 @@ useradd  -c 'sshd PrivSep' \
 
 <!-- Applied in 8.5p1
     <para>
-      Først, tilpass <application>ssh-copy-id</application> til endringer
+      FÃ¸rst, tilpass <application>ssh-copy-id</application> til endringer
       i bash-5.1:
     </para>
 
 <screen><userinput remap="pre">sed -e '/INSTALLKEYS_SH/s/)//' -e '260a\  )' -i contrib/ssh-copy-id</userinput></screen>
 
     <para>
-      Deretter løser du et problem på andre plattformer enn x86_64:
+      Deretter lÃ¸ser du et problem pÃ¥ andre plattformer enn x86_64:
     </para>
     <screen><userinput remap="pre">if [ "$(uname -m)" != "x86_64" ]; then
     l1="#ifdef __NR_pselect6_time64"
@@ -164,7 +160,7 @@ useradd  -c 'sshd PrivSep' \
 fi</userinput></screen>
 -->
     <para>
-      Installer <application>OpenSSH</application> ved å kjøre følgende
+      Installer <application>OpenSSH</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -179,22 +175,22 @@ fi</userinput></screen>
 make</userinput></screen>
 <!--  I got all tests passed without this with 9.3p1, June 12, 2023.
     <para>
-      Testpakken krever en installert kopi av <command>scp</command> for å
-      fullføre multipleksing testene. For å kjøre testpakken, kopier først
+      Testpakken krever en installert kopi av <command>scp</command> for Ã¥
+      fullfÃ¸re multipleksing testene. For Ã¥ kjÃ¸re testpakken, kopier fÃ¸rst
       <command>scp</command> programmet til
-      <filename class="directory">/usr/bin</filename>, sørge for at du
-      sikkerhetskopiere alle eksisterende kopier først.
+      <filename class="directory">/usr/bin</filename>, sÃ¸rge for at du
+      sikkerhetskopiere alle eksisterende kopier fÃ¸rst.
     </para>-->
 <!--  I got all tests passed without this with 9.0p1.  Apr 13, 2022.
     <para>
-      Hvis du ønsker å kjøre testene, fjern en testpakke som ikke er gyldig på
+      Hvis du Ã¸nsker Ã¥ kjÃ¸re testene, fjern en testpakke som ikke er gyldig pÃ¥
       Linux baserte plattformer:
     </para>
 
 <screen><userinput>sed -i 's/conch-ciphers//' regress/Makefile</userinput></screen>
 -->
     <para>
-      For å teste resultatene, kjør: <command>make -j1 tests</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make -j1 tests</command>.
       <!--One test, <filename>key options</filename>, fails when run in chroot.-->
     </para>
 
@@ -206,7 +202,7 @@ make</userinput></screen>
  ignored and the end says 'all tests passed' even when not root
 
     <para>
-      For å kjøre testpakken, utfør følgende kommandoer:
+      For Ã¥ kjÃ¸re testpakken, utfÃ¸r fÃ¸lgende kommandoer:
     </para>
 
 <screen role="root"><userinput>make tests 2&gt;&amp;1 | tee check.log
@@ -217,7 +213,7 @@ grep FATAL check.log</userinput></screen>
       installasjon, som <systemitem class="username">root</systemitem> bruker:
     </para>-->
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -239,13 +235,6 @@ install -v -m644    INSTALL LICENCE OVERVIEW README* \
       <filename class="directory">/usr/etc</filename>.
     </para>
 
-    <!--
-    <para>
-      <parameter>-\-with-md5-passwords</parameter>: Dette muliggjør bruk av MD5
-      passord.
-    </para>
-    -->
-
     <para>
       <parameter>--with-default-path=/usr/bin</parameter> og
       <parameter>--with-superuser-path=/usr/sbin:/usr/bin</parameter>:
@@ -255,27 +244,37 @@ install -v -m644    INSTALL LICENCE OVERVIEW README* \
 
     <para>
       <parameter>--with-pid-dir=/run</parameter>: Dette forhindrer
-      <application>OpenSSH</application> fra å referere til utdaterte
+      <application>OpenSSH</application> fra Ã¥ referere til utdaterte
       <filename class="directory">/var/run</filename>.
     </para>
 
+<!--
+    <para>
+      <parameter>- -without-zlib-version-check</parameter>: Dette forhindrer
+      <application>OpenSSH</application> fra Ã¥ sjekke versjonen av
+      systemets <application>Zlib</application>.  Vi mÃ¥ bruke dette
+      bryteren eller versjonskontrollen vil feilaktig rapportere det siste
+      <application>Zlib</application> 1.13 <quote>for gammel</quote> og
+      avvise det.
+    </para>
+-->
     <para>
       <option>--with-pam</option>: Denne parameteren aktiverer
-      <application>Linux-PAM</application> støtte i bygget.
+      <application>Linux-PAM</application> stÃ¸tte i bygget.
     </para>
 
     <para>
       <option>--with-xauth=$XORG_PREFIX/bin/xauth</option>: Angi standard
-      plassering for <command>xauth</command> binære for X autentisering.
-      Miljøvariabelen <envar>XORG_PREFIX</envar> bør settes
-      ved å følge <xref linkend='xorg-env'/>. Denne kan også styres fra
-      <filename>sshd_config</filename> med nøkkelordet XAuthLocation. Du kan
+      plassering for <command>xauth</command> binÃ¦re for X autentisering.
+      MiljÃ¸variabelen <envar>XORG_PREFIX</envar> bÃ¸r settes
+      ved Ã¥ fÃ¸lge <xref linkend='xorg-env'/>. Denne kan ogsÃ¥ styres fra
+      <filename>sshd_config</filename> med nÃ¸kkelordet XAuthLocation. Du kan
       se bort fra denne bryteren hvis <application>Xorg</application> allerede er installert.
     </para>
 
     <para>
-      <option>--with-kerberos5=/usr</option>: Dette alternativet brukes til å
-      inkludere Kerberos 5 støtte i bygget.
+      <option>--with-kerberos5=/usr</option>: Dette alternativet brukes til Ã¥
+      inkludere Kerberos 5 stÃ¸tte i bygget.
     </para>
 
     <para>
@@ -310,14 +309,14 @@ install -v -m644    INSTALL LICENCE OVERVIEW README* \
       </indexterm>
 
       <para>
-        Det er ingen nødvendige endringer i noen av disse filene. Derimot,
-        du ønsker kanskje å se
+        Det er ingen nÃ¸dvendige endringer i noen av disse filene. Derimot,
+        du Ã¸nsker kanskje Ã¥ se
         <filename class='directory'>/etc/ssh/</filename> filer og lag eventuelle
         endringer som passer for sikkerheten til systemet ditt. En anbefalt
         endring er at du deaktiverer
         <systemitem class='username'>root</systemitem> innlogging via
-        <command>ssh</command>. Utfør følgende kommando som
-        <systemitem class='username'>root</systemitem> bruker for å deaktivere
+        <command>ssh</command>. UtfÃ¸r fÃ¸lgende kommando som
+        <systemitem class='username'>root</systemitem> bruker for Ã¥ deaktivere
         <systemitem class='username'>root</systemitem> innlogging via
         <command>ssh</command>:
       </para>
@@ -325,22 +324,22 @@ install -v -m644    INSTALL LICENCE OVERVIEW README* \
 <screen role="root"><userinput>echo "PermitRootLogin no" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
 
       <para>
-        Hvis du vil kunne logge inn uten å skrive inn passordet ditt, først
+        Hvis du vil kunne logge inn uten Ã¥ skrive inn passordet ditt, fÃ¸rst
         opprett ~/.ssh/id_rsa og ~/.ssh/id_rsa.pub med
         <command>ssh-keygen</command> og kopier deretter ~/.ssh/id_rsa.pub til
-        ~/.ssh/authorized_keys på den eksterne datamaskinen du vil logge på.
-        Du må endre REMOTE_USERNAME og REMOTE_HOSTNAME for brukernavnet og vertsnavnet til den eksterne
-        datamaskin, og du må også skrive inn passordet for kommandoen ssh-copy-id
-        for å lykkes:
+        ~/.ssh/authorized_keys pÃ¥ den eksterne datamaskinen du vil logge pÃ¥.
+        Du mÃ¥ endre REMOTE_USERNAME og REMOTE_HOSTNAME for brukernavnet og vertsnavnet til den eksterne
+        datamaskin, og du mÃ¥ ogsÃ¥ skrive inn passordet for kommandoen ssh-copy-id
+        for Ã¥ lykkes:
       </para>
 
-<screen><userinput>ssh-keygen &amp;&amp;
-ssh-copy-id -i ~/.ssh/id_rsa.pub <replaceable>REMOTE_USERNAME</replaceable>@<replaceable>REMOTE_HOSTNAME</replaceable></userinput></screen>
+<screen role='nodump'><userinput>ssh-keygen &amp;&amp;
+ssh-copy-id -i ~/.ssh/id_ed25519.pub <replaceable>REMOTE_USERNAME</replaceable>@<replaceable>REMOTE_HOSTNAME</replaceable></userinput></screen>
 
       <para>
-        Når du først har fått passordløse pålogginger til å fungere, er det faktisk sikrere
-        enn å logge på med et passord (da den private nøkkelen er mye lengre enn
-        de flestes passord). Hvis du vil deaktivere passordpålogginger,
+        NÃ¥r du fÃ¸rst har fÃ¥tt passordlÃ¸se pÃ¥logginger til Ã¥ fungere, er det faktisk sikrere
+        enn Ã¥ logge pÃ¥ med et passord (da den private nÃ¸kkelen er mye lengre enn
+        de flestes passord). Hvis du vil deaktivere passordpÃ¥logginger,
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -349,12 +348,12 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub <replaceable>REMOTE_USERNAME</replaceable>@<rep
 echo "KbdInteractiveAuthentication no" >> /etc/ssh/sshd_config</userinput></screen>
 
       <para>
-        Hvis du har lagt til <application>Linux-PAM</application> støtte og du ønsker at
-        ssh bruker den, må du legge til en konfigurasjonsfil for
-        <application>sshd</application> og muliggjør bruk av
-        <application>LinuxPAM</application>. Merk at ssh bare bruker PAM for å sjekke
-        passord, hvis du har deaktivert passordpålogging er ikke behov for disse kommandoene.
-        Hvis du vil bruke PAM, utfør følgende kommandoer som
+        Hvis du har lagt til <application>Linux-PAM</application> stÃ¸tte og du Ã¸nsker at
+        ssh bruker den, mÃ¥ du legge til en konfigurasjonsfil for
+        <application>sshd</application> og muliggjÃ¸r bruk av
+        <application>LinuxPAM</application>. Merk at ssh bare bruker PAM for Ã¥ sjekke
+        passord, hvis du har deaktivert passordpÃ¥logging er ikke behov for disse kommandoene.
+        Hvis du vil bruke PAM, utfÃ¸r fÃ¸lgende kommandoer som
         <systemitem class='username'>root</systemitem> bruker:
       </para>
 
@@ -374,13 +373,13 @@ echo "UsePAM yes" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
              <phrase revision="systemd">Systemd Enhet</phrase></title>
 
       <para revision="sysv">
-        For å starte SSH serveren ved systemoppstart, installer
+        For Ã¥ starte SSH serveren ved systemoppstart, installer
         <filename>/etc/rc.d/init.d/sshd</filename> init skriptet inkludert
         i <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        For å starte SSH serveren ved systemoppstart, installer
+        For Ã¥ starte SSH serveren ved systemoppstart, installer
         <filename>sshd.service</filename> enheten inkludert i
         <xref linkend="systemd-units"/> pakken.
       </para>
@@ -476,7 +475,7 @@ echo "UsePAM yes" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
         <term><command>sshd</command></term>
         <listitem>
           <para>
-            er en nisse som lytter etter <command>ssh</command> påloggingsforespørsler
+            er en nisse som lytter etter <command>ssh</command> pÃ¥loggingsforespÃ¸rsler
           </para>
           <indexterm zone="openssh sshd">
             <primary sortas="b-sshd">sshd</primary>
@@ -488,7 +487,7 @@ echo "UsePAM yes" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
         <term><command>ssh-add</command></term>
         <listitem>
           <para>
-            er et verktøy som legger til nøkler til <command>ssh-agent</command>
+            er et verktÃ¸y som legger til nÃ¸kler til <command>ssh-agent</command>
           </para>
           <indexterm zone="openssh ssh-add">
             <primary sortas="b-ssh-add">ssh-add</primary>
@@ -500,7 +499,7 @@ echo "UsePAM yes" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
         <term><command>ssh-agent</command></term>
         <listitem>
           <para>
-            er en autentiseringsagent som kan lagre private nøkler
+            er en autentiseringsagent som kan lagre private nÃ¸kler
           </para>
           <indexterm zone="openssh ssh-agent">
             <primary sortas="b-ssh-agent">ssh-agent</primary>
@@ -512,7 +511,7 @@ echo "UsePAM yes" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
         <term><command>ssh-copy-id</command></term>
         <listitem>
           <para>
-            er et skript som muliggjør pålogging på eksterne maskiner ved hjelp av lokale nøkler
+            er et skript som muliggjÃ¸r pÃ¥logging pÃ¥ eksterne maskiner ved hjelp av lokale nÃ¸kler
           </para>
           <indexterm zone="openssh ssh-copy-id">
             <primary sortas="b-ssh-copy-id">ssh-copy-id</primary>
@@ -524,7 +523,7 @@ echo "UsePAM yes" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
         <term><command>ssh-keygen</command></term>
         <listitem>
           <para>
-            er et nøkkelgenereringsverktøy
+            er et nÃ¸kkelgenereringsverktÃ¸y
           </para>
           <indexterm zone="openssh ssh-keygen">
             <primary sortas="b-ssh-keygen">ssh-keygen</primary>
@@ -536,7 +535,7 @@ echo "UsePAM yes" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
         <term><command>ssh-keyscan</command></term>
         <listitem>
           <para>
-            er et verktøy for å samle offentlige vertsnøkler fra en rekke verter
+            er et verktÃ¸y for Ã¥ samle offentlige vertsnÃ¸kler fra en rekke verter
           </para>
           <indexterm zone="openssh ssh-keyscan">
             <primary sortas="b-ssh-keyscan">ssh-keyscan</primary>

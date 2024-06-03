@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY p11-kit-download-http "https://github.com/p11-glue/p11-kit/releases/download/&p11-kit-version;/p11-kit-&p11-kit-version;.tar.xz">
   <!ENTITY p11-kit-download-ftp  " ">
-  <!ENTITY p11-kit-md5sum        "9fcb1ec80b5d083dd9b34122fa7c3c23">
-  <!ENTITY p11-kit-size          "940 KB">
-  <!ENTITY p11-kit-buildsize     "90 MB (med tester)">
-  <!ENTITY p11-kit-time          "0.6 SBU (med tester)">
+  <!ENTITY p11-kit-md5sum        "2610cef2951d83d7037577eaae1acb54">
+  <!ENTITY p11-kit-size          "972 KB">
+  <!ENTITY p11-kit-buildsize     "95 MB (med tester)">
+  <!ENTITY p11-kit-time          "0.8 SBU (med tester)">
 ]>
 
 <sect1 id="p11-kit" xreflabel="p11-kit-&p11-kit-version;">
@@ -26,11 +26,11 @@
     <title>Introduksjon til p11-kit</title>
 
     <para>
-      <application>p11-kit</application> pakken gir en måte å laste og
+      <application>p11-kit</application> pakken gir en mÃ¥te Ã¥ laste og
       telle opp PKCS #11 (en Cryptographic Token Interface Standard) moduler.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &p11-kit-size;
+          NedlastingsstÃ¸rrelse: &p11-kit-size;
         </para>
       </listitem>
       <listitem>
@@ -75,7 +75,7 @@
       <xref linkend="libtasn1"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt (kjøretid)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (kjÃ¸retid)</bridgehead>
     <para role="recommended">
       <xref role="runtime" linkend="make-ca"/>
     </para>
@@ -84,7 +84,7 @@
     <para role="optional">
       <xref linkend="gtk-doc"/>,
       <xref linkend="libxslt"/>, og
-      <xref role="runtime" linkend="nss"/> (kjøretid)
+      <xref role="runtime" linkend="nss"/> (kjÃ¸retid)
     </para>
 
   </sect2>
@@ -93,20 +93,22 @@
     <title>Installasjon av p11-kit</title>
 
     <!-- https://github.com/p11-glue/p11-kit/pull/535
-         The issue causes test failures in glib-networking and libsoup -->
+         The issue causes test failures in glib-networking and libsoup 
+         Fixed in version 0.25.1
+
     <para>
-      Løs et problem som gjør at enkelte PKCS 11 moduler ikke kan lastes:
+      LÃ¸s et problem som gjÃ¸r at enkelte PKCS 11 moduler ikke kan lastes:
     </para>
 
 <screen><userinput>sed 's/if (gi/&amp; \&amp;\&amp; gi != C_GetInterface/' \
-    -i p11-kit/modules.c</userinput></screen>
-
+    -i p11-kit/modules.c</userinput></screen>-->
 
     <para>
-      Klargjør den distribusjonsspesifikke ankerkroken:
+      KlargjÃ¸r den distribusjonsspesifikke ankerkroken:
     </para>
 
 <screen><userinput>sed '20,$ d' -i trust/trust-extract-compat &amp;&amp;
+
 cat &gt;&gt; trust/trust-extract-compat &lt;&lt; "EOF"
 <literal># Copy existing anchor modifications to /etc/ssl/local
 /usr/libexec/make-ca/copy-trust-modifications
@@ -116,7 +118,7 @@ cat &gt;&gt; trust/trust-extract-compat &lt;&lt; "EOF"
 EOF</userinput></screen>
 
     <para>
-      Installer <application>p11-kit</application> ved å kjøre følgende
+      Installer <application>p11-kit</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -130,11 +132,11 @@ meson setup ..            \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>LC_ALL=C ninja test</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install &amp;&amp;
@@ -162,8 +164,8 @@ ln -sfv /usr/libexec/p11-kit/trust-extract-compat \
 
     <para>
       <option>-Dgtk_doc=true</option>: Bruk denne bryteren hvis du har installert
-      <xref linkend="gtk-doc"/> og <xref linkend="libxslt"/> og ønsker å
-      bygge dokumentasjonen på nytt og generere manualsider.
+      <xref linkend="gtk-doc"/> og <xref linkend="libxslt"/> og Ã¸nsker Ã¥
+      bygge dokumentasjonen pÃ¥ nytt og generere manualsider.
     </para>
 
   </sect2>
@@ -174,12 +176,12 @@ ln -sfv /usr/libexec/p11-kit/trust-extract-compat \
     <para>
       <application>p11-kit</application> tillitsmodul
       (<filename>/usr/lib/pkcs11/p11-kit-trust.so</filename>) kan brukes som en
-      drop-in erstatning for <filename>/usr/lib/libnssckbi.so</filename> til å
-      gjøre system CA-ene på en transparent måte tilgjengelig for
+      drop-in erstatning for <filename>/usr/lib/libnssckbi.so</filename> til Ã¥
+      gjÃ¸re system CA-ene pÃ¥ en transparent mÃ¥te tilgjengelig for
       <application>NSS</application> bevisste applikasjoner, snarere enn den statiske
       listen levert av <filename>/usr/lib/libnssckbi.so</filename>. Som
-      <systemitem class="username">root</systemitem> bruker, kjør
-      følgende kommandoer:
+      <systemitem class="username">root</systemitem> bruker, kjÃ¸r
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen role="root"><userinput>ln -sfv ./pkcs11/p11-kit-trust.so /usr/lib/libnssckbi.so</userinput></screen>
@@ -221,8 +223,8 @@ ln -sfv /usr/libexec/p11-kit/trust-extract-compat \
         <term><command>p11-kit</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy som kan brukes til å utføre operasjoner
-            på PKCS#11 moduler konfigurert på systemet
+            er et kommandolinjeverktÃ¸y som kan brukes til Ã¥ utfÃ¸re operasjoner
+            pÃ¥ PKCS#11 moduler konfigurert pÃ¥ systemet
           </para>
           <indexterm zone="p11-kit p11-kit-prog">
             <primary sortas="b-p11-kit">p11-kit</primary>
@@ -234,7 +236,7 @@ ln -sfv /usr/libexec/p11-kit/trust-extract-compat \
         <term><command>trust</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy for å undersøke og endre den delte trust
+            er et kommandolinjeverktÃ¸y for Ã¥ undersÃ¸ke og endre den delte trust
             policy store
           </para>
           <indexterm zone="p11-kit trust">
@@ -247,11 +249,11 @@ ln -sfv /usr/libexec/p11-kit/trust-extract-compat \
         <term><command>update-ca-certificates</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy for både å trekke ut lokale sertifikater fra en
+            er et kommandolinjeverktÃ¸y for bÃ¥de Ã¥ trekke ut lokale sertifikater fra en
             oppdatert ankerlager, og regenerer alle ankere og sertifikater
-            lagret på systemet. Dette gjøres ubetinget på BLFS ved hjelp av
+            lagret pÃ¥ systemet. Dette gjÃ¸res ubetinget pÃ¥ BLFS ved hjelp av
             <parameter>--force</parameter> og <parameter>--get</parameter>
-            flagg til <command>make-ca</command> og bør sannsynligvis ikke brukes
+            flagg til <command>make-ca</command> og bÃ¸r sannsynligvis ikke brukes
             for automatiserte oppdateringer
           </para>
           <indexterm zone="p11-kit update-ca-certificates">
@@ -264,8 +266,8 @@ ln -sfv /usr/libexec/p11-kit/trust-extract-compat \
         <term><filename class="libraryfile">libp11-kit.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som brukes til å koordinere initialisering og
-            sluttføring av enhver PKCS#11 modul
+            inneholder funksjoner som brukes til Ã¥ koordinere initialisering og
+            sluttfÃ¸ring av enhver PKCS#11 modul
           </para>
           <indexterm zone="p11-kit libp11-kit">
             <primary sortas="c-libp11-kit">libp11-kit.so</primary>

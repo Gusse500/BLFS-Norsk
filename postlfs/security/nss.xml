@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -13,10 +13,10 @@
 <!-- no micro versions -->
   <!ENTITY nss-download-http "https://&nss-url;/NSS_&nss-dir;_RTM/src/nss-&nss-version;.tar.gz">
   <!ENTITY nss-download-ftp  " ">
-  <!ENTITY nss-md5sum        "589167c3be81d09b9e332ff17d46ebca">
-  <!ENTITY nss-size          "69 MB">
-  <!ENTITY nss-buildsize     "299 MB (legg til 261 MB for tester)">
-  <!ENTITY nss-time          "1.2 SBU (med parallellisme = 4, legg til 15 SBU for tester på AMD ryzens eller minst 30 SBU på Intel-maskiner)">
+  <!ENTITY nss-md5sum        "4502fcae1b32da310fffdfb3c67f6985">
+  <!ENTITY nss-size          "73 MB">
+  <!ENTITY nss-buildsize     "312 MB (legg til 268 MB for tester)">
+  <!ENTITY nss-time          "0.9 SBU (med parallellisme = 4, legg til 16 SBU for tester pÃ¥ AMD ryzens eller minst 30 SBU pÃ¥ Intel-maskiner)">
   <!-- On my system, I got 64.2 SBU, but Bruce gets 18 SBU. -renodr -->
   <!-- On my system, I got 63 SBU, but Xi gets ~18 SBU. -pierre (for 3.78) -->
   <!-- On my 3400G for 3.79 I got 16 SBU -ken -->
@@ -28,13 +28,52 @@
    i7-4790 35 SBU with 6.0.12, no failures
    Bruce's 3900X 19.3 SBU, his i7-12700K about 30 SBU, 12 failures
 
-   3.90:
-     Passed:             68593
+   3.93:
+     Passed:             69982
      Failed:             0
      Failed with core:   0
      ASan failures:      0
      Unknown status:     2
      TinderboxPrint:Unknown: 2
+   <!-- Test Results 3.95: (Intel i9-10900k) I got close to 70 SBU [rahul] 
+
+     Passed:             69982
+     Failed:             0
+     Failed with core:   0
+     ASan failures:      0
+     Unknown status:     2
+     TinderboxPrint:Unknown: 2
+   -->
+
+   <!--  Test Results 3.96: (AMD Ryzen 9 3900X) about 14 SBU [bdubbs]
+     Passed:             70289
+     Failed:             0
+     Failed with core:   0
+     ASan failures:      0
+     Unknown status:     2
+     TinderboxPrint:Unknown: 2
+
+
+   -->
+   <!-- Test Results 3.97: (AMD Ryzen 7 1700) about 16 SBU [rahul]
+     Passed:             69809
+     Failed:             0
+     Failed with core:   0
+     ASan failures:      0
+     Unknown status:     2
+     TinderboxPrint:Unknown: 2
+     -->
+
+   <!-- Test results 3.98: (Intel Xeon E5-1650v3) 25 SBU [renodr]
+     Tests summary:
+     Passed:             69919
+     Failed:             0
+     Failed with core:   0
+     ASan failures:      0
+     Unknown status:     2
+     TinderboxPrint:Unknown: 2
+   -->
+
    -->
 ]>
 
@@ -53,15 +92,15 @@
 
     <para>
       Nettverkssikkerhetstjenester (<application>NSS</application>) pakken er
-      et sett med biblioteker designet for å støtte utvikling på tvers av plattformer med
+      et sett med biblioteker designet for Ã¥ stÃ¸tte utvikling pÃ¥ tvers av plattformer med
       sikkerhetsaktiverte klient- og serverapplikasjoner. Applikasjoner bygget med
-      NSS kan støtte SSL v2 og v3, TLS, PKCS #5, PKCS #7, PKCS #11, PKCS #12,
+      NSS kan stÃ¸tte SSL v2 og v3, TLS, PKCS #5, PKCS #7, PKCS #11, PKCS #12,
       S/MIME, X.509 v3 sertifikater og andre sikkerhetsstandarder. Dette er
       nyttig for implementering av SSL og S/MIME eller andre Internett
       sikkerhetsstandarder inn i en applikasjon.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -82,7 +121,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &nss-size;
+          NedlastingsstÃ¸rrelse: &nss-size;
         </para>
       </listitem>
       <listitem>
@@ -101,14 +140,14 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/nss-&nss-version;-standalone-1.patch"/>
         </para>
       </listitem>
 <!--
       <listitem>
         <para>
-          Nødvendig oppdatering for prosessorer som mangler <quote>adx</quote>
+          NÃ¸dvendig oppdatering for prosessorer som mangler <quote>adx</quote>
           Instruksjonssett:
           <ulink url="&patch-root;/nss-&nss-version;-illegal_instruction-1.patch"/>
         </para>
@@ -118,7 +157,7 @@
 
     <bridgehead renderas="sect3">NSS Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="nspr"/>
     </para>
@@ -126,11 +165,11 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="sqlite"/> og
-      <xref role="runtime" linkend="p11-kit"/> (kjøretid)
+      <xref role="runtime" linkend="p11-kit"/> (kjÃ¸retid)
     </para>
 
     <para condition="html" role="usernotes">
-      Redaktørens notater: <ulink url="&blfs-wiki;/nss"/>
+      RedaktÃ¸rens notater: <ulink url="&blfs-wiki;/nss"/>
     </para>
   </sect2>
 
@@ -141,11 +180,11 @@
     <note>
       <para>
         Noen gamle generasjoner prosessorer mangler en assembler instruksjon som
-        genereres ubetinget av NSS-3.90. Det fører til en
-        "ulovlig instruksjon" feil når du kjører firefox. Tilgjengeligheten
+        genereres ubetinget av NSS-3.90. Det fÃ¸rer til en
+        "ulovlig instruksjon" feil nÃ¥r du kjÃ¸rer firefox. Tilgjengeligheten
         av denne instruksen er hevdet av <quote>adx</quote> flag
         i <filename>/proc/cpuinfo</filename>. Hvis dette flagget ikke er satt,
-        bruk følgende oppdatering:
+        bruk fÃ¸lgende oppdatering:
       </para>
     </note>
 
@@ -154,7 +193,7 @@ patch -Np1 -i ../nss-&nss-version;-illegal_instruction-1.patch</userinput></scre
 
 -->
     <para>
-      Installer <application>NSS</application> ved å kjøre følgende kommandoer:
+      Installer <application>NSS</application> ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>patch -Np1 -i ../nss-&nss-version;-standalone-1.patch &amp;&amp;
@@ -171,7 +210,7 @@ make BUILD_OPT=1                  \
 
     <para>
       <!-- the unittest files get compiled automatically since nss-3.31.0 -->
-      For å kjøre testene, kjør følgende kommandoer<!--(1 test is known to fail)-->:
+      For Ã¥ kjÃ¸re testene, kjÃ¸r fÃ¸lgende kommandoer<!--(1 test is known to fail)-->:
     </para>
 
 <screen remap="test"><userinput>cd tests &amp;&amp;
@@ -183,46 +222,55 @@ cd ../</userinput></screen>
       <itemizedlist spacing="compact">
       <listitem>
         <para>
-           HOST=localhost og DOMSUF=localdomain er påkrevd.
+           HOST=localhost og DOMSUF=localdomain er pÃ¥krevd.
            Uten disse variablene kreves er en FQDN
-           spesifisert og denne generiske måten bør fungere for
+           spesifisert og denne generiske mÃ¥ten bÃ¸r fungere for
            alle, gitt <systemitem>localhost.localdomain</systemitem>
-           er definert i <filename>/etc/hosts</filename>, slik det er gjort i
-           <ulink url="&lfs-root;/chapter09/network.html#ch-config-hosts">
-           LFS boken</ulink>.
+           er definert
+           <phrase revision='sysv'>
+             i <filename>/etc/hosts</filename>, som gjort i
+             <ulink url="&lfs-root;/chapter09/network.html#ch-config-hosts">
+               LFS boken</ulink>.
+           </phrase>
+           <phrase revision='systemd'>
+             ved <systemitem class='library'>myhostname</systemitem>
+             Name Service Switch modulen, som spesifisert i
+             <ulink url="&lfs-root;/chapter08/glibc.html#conf-glibc">
+               LFS boken</ulink>.
+           </phrase>
         </para>
       </listitem>
       <listitem>
         <para>
-           Testene tar lang tid å kjøre. Om ønskelig er det
-           informasjon i all.sh skriptet om kjøring av delsett av
+           Testene tar lang tid Ã¥ kjÃ¸re. Om Ã¸nskelig er det
+           informasjon i all.sh skriptet om kjÃ¸ring av delsett av
            total testpakke.
         </para>
       </listitem>
       <listitem>
         <para>
-           Når du avbryter testene, testpakken
-           klarer ikke å avslutte testservere som kjøres. Dette fører til en
-           uendelig løkke i testene der testpakken prøver å drepe en server
+           NÃ¥r du avbryter testene, testpakken
+           klarer ikke Ã¥ avslutte testservere som kjÃ¸res. Dette fÃ¸rer til en
+           uendelig lÃ¸kke i testene der testpakken prÃ¸ver Ã¥ drepe en server
            som ikke eksisterer lenger fordi den bruker feil PID.
         </para>
       </listitem>
       <listitem>
         <para>
-           Testresultater (i HTML-format!) finner du på
+           Testresultater (i HTML-format!) finner du pÃ¥
            ../../test_results/security/localhost.1/results.html
         </para>
       </listitem>
       <listitem>
         <para>
-           Noen få tester kan mislykkes på noen Intel maskiner av ukjente årsaker.
+           Noen fÃ¥ tester kan mislykkes pÃ¥ noen Intel maskiner av ukjente Ã¥rsaker.
         </para>
       </listitem>
       </itemizedlist>
      </note>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>cd ../dist                                                          &amp;&amp;
@@ -244,8 +292,8 @@ install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</userinput></sc
 
     <para>
       <parameter>BUILD_OPT=1</parameter>: Dette alternativet sendes til
-      <command>make</command> slik at byggingen utføres uten feilsøkingssymboler
-      innebygd i binærfiler og standard kompilatoroptimaliseringer er
+      <command>make</command> slik at byggingen utfÃ¸res uten feilsÃ¸kingssymboler
+      innebygd i binÃ¦rfiler og standard kompilatoroptimaliseringer er
       brukt.
     </para>
 
@@ -256,7 +304,7 @@ install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</userinput></sc
 
     <para>
       <parameter>USE_SYSTEM_ZLIB=1</parameter>: Dette alternativet sendes til
-      <command>make</command> for å sikre at
+      <command>make</command> for Ã¥ sikre at
       <filename class="libraryfile">libssl3.so</filename> biblioteket er knyttet til
       systemets installerte <application>zlib</application> i stedet for
       versjon i pakken.
@@ -264,31 +312,31 @@ install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</userinput></sc
 
     <para>
       <parameter>ZLIB_LIBS=-lz</parameter>: Dette alternativet gir
-      linkerflagg som trengs for å koble til systemets <application>zlib</application>.
+      linkerflagg som trengs for Ã¥ koble til systemets <application>zlib</application>.
     </para>
 
     <para>
       <command>$([ $(uname -m) = x86_64 ] &amp;&amp; echo USE_64=1)</command>:
-      <parameter>USE_64=1</parameter> alternativet er <emphasis>påkrevd på
-      x86_64</emphasis>, ellers vil <command>make</command> prøve (og mislykkes)
-      å lage 32-bits objekter. [ $(uname -m) = x86_64 ] testen sikrer at det
-      ikke har noe effekt på et 32-bitssystem.
+      <parameter>USE_64=1</parameter> alternativet er <emphasis>pÃ¥krevd pÃ¥
+      x86_64</emphasis>, ellers vil <command>make</command> prÃ¸ve (og mislykkes)
+      Ã¥ lage 32-bits objekter. [ $(uname -m) = x86_64 ] testen sikrer at det
+      ikke har noe effekt pÃ¥ et 32-bitssystem.
     </para>
 
     <para>
       <command>([ -f /usr/include/sqlite3.h ] &amp;&amp; echo
       NSS_USE_SYSTEM_SQLITE=1)</command>: Dette tester om
-      <application>sqlite</application> er installert og i så fall
+      <application>sqlite</application> er installert og i sÃ¥ fall
       <command>echo</command>er det valget NSS_USE_SYSTEM_SQLITE=1 til
-      <command>make</command> sånn at
+      <command>make</command> sÃ¥nn at
       <filename class="libraryfile">libsoftokn3.so</filename> vil lenke mot
       systemversjonen av sqlite.
     </para>
 
     <para>
-      <option>NSS_DISABLE_GTESTS=1</option>: Hvis du ikke trenger å kjøre
+      <option>NSS_DISABLE_GTESTS=1</option>: Hvis du ikke trenger Ã¥ kjÃ¸re
       NSS testpakken, legg til dette alternativet til <command>make</command> kommandoen,
-      for å forhindre kompilering av tester og spare litt byggetid.
+      for Ã¥ forhindre kompilering av tester og spare litt byggetid.
     </para>
 
   </sect2>
@@ -300,11 +348,11 @@ install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</userinput></sc
       Hvis <xref linkend="p11-kit"/> er installert,
       <application>p11-kit</application> tillitsmodul
       (<filename>/usr/lib/pkcs11/p11-kit-trust.so</filename>) kan brukes som en
-      erstatning for <filename>/usr/lib/libnssckbi.so</filename> for å
-      gjøre systems CA tilgjengelig på en transparent måte for
+      erstatning for <filename>/usr/lib/libnssckbi.so</filename> for Ã¥
+      gjÃ¸re systems CA tilgjengelig pÃ¥ en transparent mÃ¥te for
       <application>NSS</application> bevisste applikasjoner, snarere enn de statiske
-      listene levert av <filename>/usr/lib/libnssckbi.so</filename>. Somm
-      <systemitem class="username">root</systemitem> bruker, utføre følgende
+      bibliotekene levert av <filename>/usr/lib/libnssckbi.so</filename>. Somm
+      <systemitem class="username">root</systemitem> bruker, utfÃ¸re fÃ¸lgende
       kommando:
     </para>
 
@@ -313,9 +361,9 @@ install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</userinput></sc
     <para>
       I tillegg for avhengige applikasjoner som ikke bruker den interne
       databasen (<filename>/usr/lib/libnssckbi.so</filename>),
-      <filename>/usr/sbin/make-ca</filename> skriptet inkludert på
+      <filename>/usr/sbin/make-ca</filename> skriptet inkludert pÃ¥
       <xref linkend="make-ca"/> siden kan generere en systemomfattende NSS DB med
-      <parameter>-n</parameter> bryteren, eller ved å endre
+      <parameter>-n</parameter> bryteren, eller ved Ã¥ endre
       <filename>/etc/make-ca/make-ca.conf</filename> filen.
     </para>
 
@@ -356,11 +404,11 @@ install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</userinput></sc
         <listitem>
           <para>
             er Mozilla Certificate Database Tool. Det er et kommandolinje
-            verktøy som kan opprette og endre Netscape Communicator
-            cert8.db og key3.db databasefiler. Den kan også liste, generere,
+            verktÃ¸y som kan opprette og endre Netscape Communicator
+            cert8.db og key3.db databasefiler. Den kan ogsÃ¥ liste, generere,
             endre eller slette sertifikater i cert8.db-filen og opprette
-            eller endre passordet, generer nye offentlige og private nøkkelpar,
-            vise innholdet i nøkkeldatabasen, eller slette nøkkelpar innenfor
+            eller endre passordet, generer nye offentlige og private nÃ¸kkelpar,
+            vise innholdet i nÃ¸kkeldatabasen, eller slette nÃ¸kkelpar innenfor
             filen key3.db
           </para>
           <indexterm zone="nss certutil">
@@ -373,7 +421,7 @@ install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</userinput></sc
         <term><command>nss-config</command></term>
         <listitem>
           <para>
-            brukes til å bestemme NSS bibliotekinnstillingene for de installerte NSS
+            brukes til Ã¥ bestemme NSS bibliotekinnstillingene for de installerte NSS
             bibliotekene
           </para>
           <indexterm zone="nss nss-config">
@@ -386,8 +434,8 @@ install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</userinput></sc
         <term><command>pk12util</command></term>
         <listitem>
           <para>
-            er et verktøy for å importere sertifikater og nøkler fra pkcs #12 filer
-            inn i NSS eller eksportere dem. Den kan også liste sertifikater og nøkler
+            er et verktÃ¸y for Ã¥ importere sertifikater og nÃ¸kler fra pkcs #12 filer
+            inn i NSS eller eksportere dem. Den kan ogsÃ¥ liste sertifikater og nÃ¸kler
             i slike filer
           </para>
           <indexterm zone="nss pk12util">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,12 +6,12 @@
 
   <!ENTITY certhost              "https://hg.mozilla.org/">
   <!ENTITY certpath              "/lib/ckfw/builtins/certdata.txt">
-  <!ENTITY make-ca-buildsize     "6.9 MB (med alle kjøretidsdeps)">
-  <!ENTITY make-ca-time          "0.1 SBU (med alle kjøretidsdeps)">
+  <!ENTITY make-ca-buildsize     "6.9 MB (med alle kjÃ¸retidsdeps)">
+  <!ENTITY make-ca-time          "0.1 SBU (med alle kjÃ¸retidsdeps)">
 
   <!ENTITY make-ca-download      "https://github.com/lfs-book/make-ca/releases/download/v&make-ca-version;/make-ca-&make-ca-version;.tar.xz">
-  <!ENTITY make-ca-size          "36 KB">
-  <!ENTITY make-ca-md5sum        "67e0b911e73a859fc326171c5153d455">
+  <!ENTITY make-ca-size          "32 KB">
+  <!ENTITY make-ca-md5sum        "04bd86fe2eb299788439c3466782ce45">
 ]>
 
 <sect1 id="make-ca" xreflabel="make-ca-&make-ca-version;">
@@ -27,28 +27,28 @@
     <title>Introduksjon til make-ca</title>
 
     <para>
-      Offentlig nøkkelinfrastruktur (PKI) er en metode for å validere ektheten
-      av en ellers ukjent enhet på tvers av uklarerte nettverk. PKI fungerer med å
-      etablere en tillitskjede, i stedet for å stole på hver enkelt vert
-      eller enhet eksplisitt. For å få et sertifikat presentert av en fjern
-      enhet som skal stoles på, må sertifikatet presentere en komplett kjede av
+      Offentlig nÃ¸kkelinfrastruktur (PKI) er en metode for Ã¥ validere ektheten
+      av en ellers ukjent enhet pÃ¥ tvers av uklarerte nettverk. PKI fungerer med Ã¥
+      etablere en tillitskjede, i stedet for Ã¥ stole pÃ¥ hver enkelt vert
+      eller enhet eksplisitt. For Ã¥ fÃ¥ et sertifikat presentert av en fjern
+      enhet som skal stoles pÃ¥, mÃ¥ sertifikatet presentere en komplett kjede av
       sertifikater som kan valideres ved hjelp av rotsertifikatet til en
       Sertifiseringsinstans (CA) som er klarert av den lokale maskinen.
     </para>
 
     <para>
-      Å etablere tillit med en CA innebærer å validere ting som selskap
+      Ã… etablere tillit med en CA innebÃ¦rer Ã¥ validere ting som selskap
       adresse, eierskap, kontaktinformasjon osv., og sikre at CA
-      har fulgt beste praksis, som å gjennomgå periodiske sikkerhetsrevisjoner
+      har fulgt beste praksis, som Ã¥ gjennomgÃ¥ periodiske sikkerhetsrevisjoner
       av uavhengige etterforskere og opprettholde en alltid tilgjengelig
       sertifikatopphevelsesliste. Dette er godt utenfor omfanget av BLFS (som
       det er for de fleste Linux distribusjoner). Sertifikatlageret som oppgis her
-      er hentet fra Mozilla Foundation, som har etablert svært strenge
+      er hentet fra Mozilla Foundation, som har etablert svÃ¦rt strenge
       retningslinjer for inkludering beskrevet <ulink
-        url="https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/">her</ulink>.
+        url="https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/policy/">her</ulink>.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -59,7 +59,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &make-ca-size;
+          NedlastingsstÃ¸rrelse: &make-ca-size;
         </para>
       </listitem>
       <listitem>
@@ -79,22 +79,34 @@
       </listitem>
     </itemizedlist>
 
+    <note>
+      <para>
+        Denne pakken sender et CA sertifikat for Ã¥ validere identiteten til
+        <ulink url='&certhost;'/>.  Hvis tillitskjeden til denne nettsiden
+        har blitt endret etter utgivelsen av make-ca-&make-ca-version;,
+        det kan mislykkes Ã¥ fÃ¥ revisjonen av <filename>certdata.txt</filename>
+        fra serveren. Bruk en oppdatert make-ca utgivelse pÃ¥
+        <ulink url='https://github.com/lfs-book/make-ca/releases'>the
+        release page</ulink> hvis dette problemet oppstÃ¥r.
+      </para>
+    </note>
+
     <bridgehead renderas="sect3">make-ca Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <!-- Attention: no role="runtime" here because jhalfs don't assume
 +           runtime dependencies are needed to run commands.  -->
-      <xref linkend="p11-kit"/> (kjøretid, bygget etter
-      <xref role="nodep" linkend="libtasn1"/>, kreves i de følgende
-      instruksjoner for å generere sertifikatlagre fra tillitsankere, og
-      hver gang <command>make-ca</command> kjøres)
+      <xref linkend="p11-kit"/> (kjÃ¸retid, bygget etter
+      <xref role="nodep" linkend="libtasn1"/>, kreves i de fÃ¸lgende
+      instruksjoner for Ã¥ generere sertifikatlagre fra tillitsankere, og
+      hver gang <command>make-ca</command> kjÃ¸res)
     </para>
     <!-- /usr/bin/trust is needed to extract the certs to /etc/ssl/certs -->
 
-   <bridgehead renderas="sect4">Valgfri (kjøretid)</bridgehead>
+   <bridgehead renderas="sect4">Valgfri (kjÃ¸retid)</bridgehead>
     <para role="optional">
-      <xref role="runtime" linkend="nss"/> (å generere en delt NSSDB)
+      <xref role="runtime" linkend="nss"/> (Ã¥ generere en delt NSSDB)
     </para>
 
   </sect2>
@@ -108,18 +120,18 @@
       til bruk som tillitsankere for <xref linkend="p11-kit"/> tillitsmodulen.
       I tillegg vil den generere systemsertifikatlagre som brukes av BLFS
       applikasjoner (hvis de anbefalte og valgfrie applikasjonene finnes
-      på systemet). Eventuelle lokale sertifikater lagret i
-      <filename>/etc/ssl/local</filename> vil bli importert til både
+      pÃ¥ systemet). Eventuelle lokale sertifikater lagret i
+      <filename>/etc/ssl/local</filename> vil bli importert til bÃ¥de
       tillitsankere og de genererte sertifikatlagrene (overstyrer Mozillas
       tillit). I tillegg vil eventuelle modifiserte tillitsverdier bli kopiert fra
-      tillitsankere til <filename>/etc/ssl/local</filename> før evt
-      oppdateringer, som bevarer tilpassede tillitsverdier som er forskjellige fra Mozilla når
-      det brukes <command>trust</command> verktøy fra
-      <application>p11-kit</application> for å operere på tillitslageret.
+      tillitsankere til <filename>/etc/ssl/local</filename> fÃ¸r evt
+      oppdateringer, som bevarer tilpassede tillitsverdier som er forskjellige fra Mozilla nÃ¥r
+      det brukes <command>trust</command> verktÃ¸y fra
+      <application>p11-kit</application> for Ã¥ operere pÃ¥ tillitslageret.
     </para>
 
     <para>
-      For å installere de forskjellige sertifikatlagrene, installer først
+      For Ã¥ installere de forskjellige sertifikatlagrene, installer fÃ¸rst
       <application>make-ca</application> skriptet til riktig plassering.
       Som <systemitem class="username">root</systemitem> bruker:
     </para>
@@ -129,33 +141,33 @@ install -vdm755 /etc/ssl/local</userinput></screen>
 
    <note>
      <para>
-       Teknisk sett er denne pakken allerede installert på dette tidspunktet.
+       Teknisk sett er denne pakken allerede installert pÃ¥ dette tidspunktet.
        Men de fleste pakker som lister <application>make-ca</application> som
        en avhengighet krever faktisk at systemsertifikatlageret er satt opp
-       av denne pakken, i stedet for å kreve <command>make-ca</command>
-       programmet i seg selv. Så instruksjonene for å bruke
-       <command>make-ca</command> for å sette opp systemsertifikatlageret
-       er inkludert i denne delen. Du bør sørge for at nødvendige
-       kjøretidsavhengighet for <application>make-ca</application> er
-       tilfredstilt nå, og fortsett å følge instruksjonene.
+       av denne pakken, heller enn <command>make-ca</command>
+       programmet i seg selv. SÃ¥ instruksjonene for Ã¥ bruke
+       <command>make-ca</command> for Ã¥ sette opp systemsertifikatlageret
+       er inkludert i denne delen. Du bÃ¸r sÃ¸rge for at nÃ¸dvendige
+       kjÃ¸retidsavhengighet for <application>make-ca</application> er
+       tilfredstilt nÃ¥, og fortsett Ã¥ fÃ¸lge instruksjonene.
      </para>
    </note>
 
    <para>
      Som <systemitem class="username">root</systemitem> bruker,
      last ned sertifikatkilden og
-     klargjør for systembruk med følgende kommando:
+     klargjÃ¸r for systembruk med fÃ¸lgende kommando:
    </para>
 
     <note>
       <para>
-        Hvis du kjører skriptet en gang til med samme versjon av
-        <filename>certdata.txt</filename>, for eksempel for å oppdatere
-        lagre når <application>make-ca</application> er oppgradert, eller for å
-        legge til flere lagre etter hvert som den nødvendige programvaren er installert,
+        Hvis du kjÃ¸rer skriptet en gang til med samme versjon av
+        <filename>certdata.txt</filename>, for eksempel for Ã¥ oppdatere
+        lagre nÃ¥r <application>make-ca</application> er oppgradert, eller for Ã¥
+        legge til flere lagre etter hvert som den nÃ¸dvendige programvaren er installert,
         erstatt <parameter>-g</parameter> bryteren med
         <parameter>-r</parameter> bryter i kommandolinjen. Hvis innpakning,
-        kjør <command>make-ca --help</command> for å se alle tilgjengelige kommandoers
+        kjÃ¸r <command>make-ca --help</command> for Ã¥ se alle tilgjengelige kommandoers
         linjealternativer.
       </para>
     </note>
@@ -163,15 +175,15 @@ install -vdm755 /etc/ssl/local</userinput></screen>
 <screen role="root"><userinput>/usr/sbin/make-ca -g</userinput></screen>
 
     <para>
-      Du bør periodisk oppdatere lagrene med kommandoen ovenfor,
+      Du bÃ¸r periodisk oppdatere lagrene med kommandoen ovenfor,
       enten manuelt eller via en <phrase revision="sysv">cron job.</phrase>
       <phrase revision="systemd">systemd timer. En timer er installert i
       <filename>/usr/lib/systemd/system/update-pki.timer</filename> det, hvis
       aktivert, vil se etter oppdateringer ukentlig.</phrase><phrase
       revision="sysv">Hvis du har installert <xref linkend="fcron"/> og
-      fullført avsnittet om periodiske jobber, kjør</phrase> <phrase
-      revision="systemd">Kjør</phrase> følgende kommandoer, som
-      <systemitem class="username">root</systemitem> bruker, for å <phrase
+      fullfÃ¸rt avsnittet om periodiske jobber, kjÃ¸r</phrase> <phrase
+      revision="systemd">KjÃ¸r</phrase> fÃ¸lgende kommandoer, som
+      <systemitem class="username">root</systemitem> bruker, for Ã¥ <phrase
       revision="sysv">opprette en ukentlig cron jobb:</phrase><phrase
       revision="systemd">aktiver systemd timer:</phrase>
     </para>
@@ -190,15 +202,15 @@ chmod 754 /etc/cron.weekly/update-pki.sh</userinput></screen>
     <title>Konfigurere make-ca</title>
 
     <para>
-      For de fleste brukere er ingen ekstra konfigurasjon nødvendig, men
+      For de fleste brukere er ingen ekstra konfigurasjon nÃ¸dvendig, men
       standard <filename>certdata.txt</filename> filen levert av make-ca
-      er hentet fra mozilla-release grenen, og er modifisert for å gi en
-      Mercurial revisjon. Dette vil være riktig versjon for de fleste systemer.
+      er hentet fra mozilla-release grenen, og er modifisert for Ã¥ gi en
+      Mercurial revisjon. Dette vil vÃ¦re riktig versjon for de fleste systemer.
       Det er flere andre varianter av filen tilgjengelig for bruk som kan
       foretrekkes av en eller annen grunn, inkludert filene som leveres med
       Mozilla produkter i denne boken. RedHat og OpenSUSE, for eksempel, bruker
-      versjonen inkludert i <xref linkend="nss"/>. Ytterligere oppstrømsnedlastinger
-      er tilgjengelig på lenkene som er inkludert i
+      versjonen inkludert i <xref linkend="nss"/>. Ytterligere oppstrÃ¸msnedlastinger
+      er tilgjengelig pÃ¥ lenkene som er inkludert i
       <filename>/etc/make-ca/make-ca.conf.dist</filename>. Bare kopier
       filen til
       <filename>/etc/make-ca.conf</filename> og rediger etter behov.
@@ -220,15 +232,15 @@ chmod 754 /etc/cron.weekly/update-pki.sh</userinput></screen>
       tillitsargumentene er utelatt, er sertifikatet verken klarert, eller
       avvist for den rollen. Klienter som bruker
       <application>OpenSSL</application> eller <application>NSS</application>
-      som støter på dette sertifikatet vil gi en advarsel til brukeren.
+      som stÃ¸ter pÃ¥ dette sertifikatet vil gi en advarsel til brukeren.
       Klienter som bruker
       <application>GnuTLS</application> uten
-      <application>p11-kit</application> støtte er ikke klar over klarerte
-      sertifikater. For å inkludere denne CA i
+      <application>p11-kit</application> stÃ¸tte er ikke klar over klarerte
+      sertifikater. For Ã¥ inkludere denne CA i
       <filename>ca-bundle.crt</filename>,
       <filename>email-ca-bundle.crt</filename>, eller
       <filename>objsign-ca-bundle.crt</filename> filer
-      (<application>GnuTLS</application> gamle pakker), den må ha
+      (<application>GnuTLS</application> gamle pakker), den mÃ¥ ha
       passende tillitsargumenter.
     </para>
 
@@ -236,23 +248,23 @@ chmod 754 /etc/cron.weekly/update-pki.sh</userinput></screen>
 
     <para>
       <filename class="directory">/etc/ssl/local</filename> mappen
-      er tilgjengelig for å legge til flere CA sertifikater til systemtillitslageret.
-      Denne katalogen brukes også til å lagre sertifikater som ble lagt til eller
-      endret i systemtillitslageret av <xref linkend="p11-kit"/> sånn at
-      tillitsverdier opprettholdes på tvers av oppgraderinger. Filer i denne mappen må
-      være i <application>OpenSSL</application> klarert sertifikatformat.
-      Sertifikater importert ved hjelp av <command>trust</command> verktøyet fra
+      er tilgjengelig for Ã¥ legge til flere CA sertifikater til systemtillitslageret.
+      Denne katalogen brukes ogsÃ¥ til Ã¥ lagre sertifikater som ble lagt til eller
+      endret i systemtillitslageret av <xref linkend="p11-kit"/> sÃ¥nn at
+      tillitsverdier opprettholdes pÃ¥ tvers av oppgraderinger. Filer i denne mappen mÃ¥
+      vÃ¦re i <application>OpenSSL</application> klarert sertifikatformat.
+      Sertifikater importert ved hjelp av <command>trust</command> verktÃ¸yet fra
       <xref linkend="p11-kit"/> vil bruke x509 Extended Key Usage verdiene
-      for å tildele standard tillitsverdier for systemankrene.
+      for Ã¥ tildele standard tillitsverdier for systemankrene.
     </para>
 
-    <para>Hvis du trenger å overstyre tillitsverdier, eller på annen måte trenger å opprette
+    <para>Hvis du trenger Ã¥ overstyre tillitsverdier, eller pÃ¥ annen mÃ¥te trenger Ã¥ opprette
       et <application>OpenSSL</application> klarert sertifikat manuelt
-      fra en vanlig PEM kodet fil, må du legge til tillitsargumenter til
+      fra en vanlig PEM kodet fil, mÃ¥ du legge til tillitsargumenter til
       <command>openssl</command> kommandoen, og opprette et nytt sertifikat.
-      For eksempel ved å bruke <ulink url="http://www.cacert.org/">CAcert</ulink>
-      roots, hvis du vil stole på begge for alle tre rollene, følgende
-      kommandoer vil opprette passende OpenSSL klarerte sertifikater (kjør som
+      For eksempel ved Ã¥ bruke <ulink url="http://www.cacert.org/">CAcert</ulink>
+      roots, hvis du vil stole pÃ¥ begge for alle tre rollene, fÃ¸lgende
+      kommandoer vil opprette passende OpenSSL klarerte sertifikater (kjÃ¸r som
       <systemitem class="username">root</systemitem> etter at <xref
       linkend="wget"/> er installert):
     </para>
@@ -270,13 +282,13 @@ openssl x509 -in class3.crt -text -fingerprint -setalias "CAcert Class 3 root" \
     <bridgehead renderas="sect3">Overstyrer Mozilla Tillit</bridgehead>
 
     <para>
-      Noen ganger kan det være tilfeller der du ikke er enig med
+      Noen ganger kan det vÃ¦re tilfeller der du ikke er enig med
       Mozillas inkludering av en bestemt sertifiseringsinstans. Hvis du vil
       overstyre standardtilliten til en bestemt CA, lag ganske enkelt en kopi av
       det eksisterende sertifikatet i <filename
       class="directory">/etc/ssl/local</filename> med ulik tillitsargumenter.
-      For eksempel, hvis du ønsker å mistro
-       "Makebelieve_CA_Root" filen, kjør følgende kommandoer:
+      For eksempel, hvis du Ã¸nsker Ã¥ mistro
+       "Makebelieve_CA_Root" filen, kjÃ¸r fÃ¸lgende kommandoer:
     </para>
 
 <screen role="nodump"><userinput>openssl x509 -in /etc/ssl/certs/Makebelieve_CA_Root.pem \
@@ -295,32 +307,32 @@ openssl x509 -in class3.crt -text -fingerprint -setalias "CAcert Class 3 root" \
     <title>Bruke make-ca med Python3</title>
 
     <para>
-      Når <application>Python3</application> ble installert i LFS inkluderte det
+      NÃ¥r <application>Python3</application> ble installert i LFS inkluderte det
       <application>pip3</application> modulen med forhandlersertifikater
-      fra <application>Certifi</application> modulen. Det var nødvendig,
-      men det betyr at når som helst <command>pip3</command> brukes kan den referere
-      til disse sertifikatene, først og fremst når du oppretter et virtuelt miljø eller når
-      installere en modul med alle dens wheel avhengigheter på en gang.
+      fra <application>Certifi</application> modulen. Det var nÃ¸dvendig,
+      men det betyr at nÃ¥r som helst <command>pip3</command> brukes kan den referere
+      til disse sertifikatene, fÃ¸rst og fremst nÃ¥r du oppretter et virtuelt miljÃ¸ eller nÃ¥r
+      installere en modul med alle dens wheel avhengigheter pÃ¥ en gang.
     </para>
 
     <para>
-      Det anses generelt at systemadministratoren bør være
-      ansvarlig for hvilke sertifikater som er tilgjengelige. Nå som <xref
+      Det anses generelt at systemadministratoren bÃ¸r vÃ¦re
+      ansvarlig for hvilke sertifikater som er tilgjengelige. NÃ¥ som <xref
       linkend="make-ca"/> og <xref linkend="p11-kit"/> har blitt installert og
-      <application>make-ca</application> er konfigurert, er det mulig å
-      få <command>pip3</command> til å bruke systemsertifikatene.
+      <application>make-ca</application> er konfigurert, er det mulig Ã¥
+      fÃ¥ <command>pip3</command> til Ã¥ bruke systemsertifikatene.
     </para>
 
     <para>
-      Sertifikatene som er installert i LFS er et øyeblikksbilde fra når en
+      Sertifikatene som er installert i LFS er et Ã¸yeblikksbilde fra nÃ¥r en
       trukket inn versjon av <application>Certifi</application> ble laget. Hvis
-      du regelmessig oppdaterer systemsertifikatene, vil leverandørversjonen
+      du regelmessig oppdaterer systemsertifikatene, vil leverandÃ¸rversjonen
       bli utdatert.
     </para>
 
     <para>
-      For å bruke systemsertifikatene i <application>Python3</application> bør
-      du sette <envar>_PIP_STANDALONE_CERT</envar> til å peke på dem, f.eks
+      For Ã¥ bruke systemsertifikatene i <application>Python3</application> bÃ¸r
+      du sette <envar>_PIP_STANDALONE_CERT</envar> til Ã¥ peke pÃ¥ dem, f.eks
       for <application>bash</application> skallet:
     </para>
 
@@ -328,18 +340,18 @@ openssl x509 -in class3.crt -text -fingerprint -setalias "CAcert Class 3 root" \
 
     <warning>
       <para>
-        Hvis du har laget virtuelle miljøer, for eksempel når du tester moduler,
+        Hvis du har laget virtuelle miljÃ¸er, for eksempel nÃ¥r du tester moduler,
         og de inkluderer <application>Requests</application> og
         <application>Certifi</application> moduler i <filename
-        class="directory">~/.local/lib/python3.11/</filename> så vil de lokale
+        class="directory">~/.local/lib/python3.11/</filename> sÃ¥ vil de lokale
         modulene bli brukt i stedet for systemsertifikatene med mindre du
         fjerner de lokale modulene.
       </para>
     </warning>
 
     <para>
-      For å bruke systemsertifikatene i <application>Python3</application> med
-      BLFS profilene legg til følgende variabel til systemet eller personlig
+      For Ã¥ bruke systemsertifikatene i <application>Python3</application> med
+      BLFS profilene legg til fÃ¸lgende variabel til systemet eller personlig
       profil:
     </para>
 
@@ -378,7 +390,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er et skallskript som tilpasser en gjeldende versjon av
-            <filename>certdata.txt</filename>, og gjør den klar til bruk
+            <filename>certdata.txt</filename>, og gjÃ¸r den klar til bruk
             som systemtillitslageret
           </para>
           <indexterm zone="make-ca make-ca">
