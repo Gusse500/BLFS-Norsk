@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY sudo-download-http "https://www.sudo.ws/dist/sudo-&sudo-version;.tar.gz">
-  <!ENTITY sudo-download-ftp  "ftp://ftp.sudo.ws/pub/sudo/sudo-&sudo-version;.tar.gz">
-  <!ENTITY sudo-md5sum        "4cc21cf7c9a89290b230954aed0d1e11">
-  <!ENTITY sudo-size          "5.0 MB">
-  <!ENTITY sudo-buildsize     "51 MB (legg til 17 MB for tester)">
+  <!ENTITY sudo-download-ftp  " ">
+  <!ENTITY sudo-md5sum        "4166279cb188ecb6641c7a2ba5f68270">
+  <!ENTITY sudo-size          "5.1 MB">
+  <!ENTITY sudo-buildsize     "53 MB (legg til 18 MB for tester)">
   <!ENTITY sudo-time          "0.2 SBU (med parallellitet=4; legg til 0,1 SBU for tester)">
 ]>
 
@@ -27,13 +27,13 @@
 
     <para>
       <application>Sudo</application> pakken tillater en systemadministrator
-      å gi visse brukere (eller grupper av brukere) muligheten til å kjøre
+      Ã¥ gi visse brukere (eller grupper av brukere) muligheten til Ã¥ kjÃ¸re
       noen (eller alle) kommandoer som
       <systemitem class="username">root</systemitem> eller en annen bruker mens
       kommandoer og argumenter logges.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &sudo-size;
+          NedlastingsstÃ¸rrelse: &sudo-size;
         </para>
       </listitem>
       <listitem>
@@ -79,45 +79,45 @@
       <xref linkend="server-mail"/> (som gir en
       <command>sendmail</command> kommando),
       <ulink url="https://www.openafs.org/">AFS</ulink>,
+<!--  It seems dead for decades, nowhere to download source code
       <ulink url="https://www.fwtk.org/">FWTK</ulink>, og
-      <ulink url="&sourceforge-dl;/opie/">Opie</ulink>
+-->
+      <ulink url="https://github.com/linux-audit/audit-userspace">libaudit</ulink>,
+      <ulink url="&sourceforge-dl;/opie/">Opie</ulink>, og
+      <ulink url="https://sssd.io/">Sssd</ulink>
     </para>
 
-    <para condition="html" role="usernotes">Redaktørens notater:
-      <ulink url="&blfs-wiki;/sudo"/>
-    </para>
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av Sudo</title>
 
     <para>
-      Installer <application>Sudo</application> ved å kjøre følgende kommandoer:
+      Installer <application>Sudo</application> ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr              \
             --libexecdir=/usr/lib      \
             --with-secure-path         \
-            --with-all-insults         \
             --with-env-editor          \
             --docdir=/usr/share/doc/sudo-&sudo-version; \
             --with-passprompt="[sudo] password for %p: " &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>env LC_ALL=C make check 2&gt;&amp;1
-      | tee make-check.log</command>. Sjekk resultatene med <command>grep
-      failed make-check.log</command>.
+      For Ã¥ teste resultatene, utsted:
+      <!-- line breaks in command tags confuse jhalfs -->
+      <command>env LC_ALL=C make check |&amp; tee make-check.log</command>.
+      Sjekk resultatene med <command>grep failed make-check.log</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <!-- for a DESTDIR install as normal user, use
     "make install INSTALL_OWNER= DESTDIR=<destdir>"-->
-<screen role="root"><userinput>make install &amp;&amp;
-ln -sfv libsudo_util.so.0.0.0 /usr/lib/sudo/libsudo_util.so.0</userinput></screen>
+<screen role="root"><userinput>make install</userinput></screen>
 
   </sect2>
 
@@ -126,8 +126,8 @@ ln -sfv libsudo_util.so.0.0.0 /usr/lib/sudo/libsudo_util.so.0</userinput></scree
 
     <para>
      <parameter>--libexecdir=/usr/lib</parameter>: Denne bryteren kontrollerer hvor
-     private programmer er installert. Alt i den mappen er et bibliotek, så
-     de hører under <filename class="directory">/usr/lib</filename> i stedet for
+     private programmer er installert. Alt i den mappen er et bibliotek, sÃ¥
+     de hÃ¸rer under <filename class="directory">/usr/lib</filename> i stedet for
      <filename class="directory">/usr/libexec</filename>.
     </para>
 
@@ -135,47 +135,47 @@ ln -sfv libsudo_util.so.0.0.0 /usr/lib/sudo/libsudo_util.so.0</userinput></scree
       <parameter>--with-secure-path</parameter>: Denne bryteren legger transparent til
       <filename class="directory">/sbin</filename> og <filename
       class="directory">/usr/sbin</filename> mappene til
-      <envar>PATH</envar> miljøvariabelen.
+      <envar>PATH</envar> miljÃ¸variabelen.
     </para>
 
     <para>
-      <parameter>--with-all-insults</parameter>: Denne bryteren inkluderer alle
-      <application>sudo</application> insult sett.
+      <parameter>--with-env-editor</parameter>: Denne bryteren muliggjÃ¸r bruk av
+      miljÃ¸variabel EDITOR for <command>visudo</command>.
     </para>
 
     <para>
-      <parameter>--with-env-editor</parameter>: Denne bryteren muliggjør bruk av
-      miljøvariabel EDITOR for <command>visudo</command>.
+      <parameter>--with-passprompt</parameter>: Denne bryteren angir passordforespÃ¸rselen.
+      <parameter>%p</parameter> utvides til navnet pÃ¥ brukeren hvis passord blir bedt om.
     </para>
 
     <para>
-      <parameter>--with-passprompt</parameter>: Denne bryteren angir passordforespørselen.
-      <parameter>%p</parameter> utvides til navnet på brukeren hvis passord blir bedt om.
+      <option>--without-pam</option>: Denne bryteren unngÃ¥r bygging av
+      <application>Linux-PAM</application> stÃ¸tte nÃ¥r
+      <application>Linux-PAM</application> er installert pÃ¥ systemet.
     </para>
 
     <para>
-      <option>--without-pam</option>: Denne bryteren unngår bygging av
-      <application>Linux-PAM</application> støtte når
-      <application>Linux-PAM</application> er installert på systemet.
+      <option>--with-all-insults</option>: Denne bryteren inkluderer alle
+      sudo insult sett. Insults skrives ut hvis brukeren skriver en dÃ¥rlig
+      passord, og hvis aktivert i <filename>/etc/sudoers</filename>. Bruk
+      <option>--with-insults</option> for Ã¥ ha dem aktivert som standard.
+      Ulike sett med insults kan velges med noen andre brytere.
     </para>
-<!-- See the developer note above before the configure command
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/static-libraries.xml"/>-->
 
     <note>
       <para>
         Det er mange alternativer til <application>sudo</application> sin
-        <command>configure</command> kommandoen. Undersøk
+        <command>configure</command> kommandoen. UndersÃ¸k
         <command>configure --help</command> utdata for en fullstendig liste.
       </para>
     </note>
-
+    <!-- Seems to be fixed
     <para>
       <command>ln -sfv libsudo_util...</command>: Jobber rundt en feil i
       installasjonsprosessen, som kobler til den tidligere installerte
       versjonen (hvis det er en) i stedet for den nye.
     </para>
-
+-->
   </sect2>
 
   <sect2 role="configuration">
@@ -198,18 +198,18 @@ ln -sfv libsudo_util.so.0.0.0 /usr/lib/sudo/libsudo_util.so.0</userinput></scree
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        <filename>sudoers</filename> fil kan være ganske komplisert. Den
-        er sammensatt av to typer oppføringer: aliaser (i utgangspunktet variabler) og
-        brukerspesifikasjoner (som spesifiserer hvem som kan kjøre hva). Installasjonen
+        <filename>sudoers</filename> fil kan vÃ¦re ganske komplisert. Den
+        er sammensatt av to typer oppfÃ¸ringer: aliaser (i utgangspunktet variabler) og
+        brukerspesifikasjoner (som spesifiserer hvem som kan kjÃ¸re hva). Installasjonen
         installerer en standardkonfigurasjon som ikke har noen rettigheter installert for
         noen bruker.
       </para>
 
       <para>
-        Et par vanlige konfigurasjonsendringer er å angi banen for
-        superbruker og for å tillate medlemmer av wheel gruppen å utføre alle
-        kommandoer etter å ha oppgitt sin egen legitimasjon. Bruk følgende
-        kommandoer for å lage <filename>/etc/sudoers.d/00-sudo</filename>
+        Et par vanlige konfigurasjonsendringer er Ã¥ angi banen for
+        superbruker og for Ã¥ tillate medlemmer av wheel gruppen Ã¥ utfÃ¸re alle
+        kommandoer etter Ã¥ ha oppgitt sin egen legitimasjon. Bruk fÃ¸lgende
+        kommandoer for Ã¥ lage <filename>/etc/sudoers.d/00-sudo</filename>
         konfigurasjonsfilen som
         <systemitem class="username">root</systemitem> bruker:
       </para>
@@ -221,18 +221,18 @@ EOF</userinput></screen>
 
       <note>
         <para>
-          I svært enkle installasjoner hvor det kun er en bruker,
-          kan det være lettere å bare redigere <filename>/etc/sudoers</filename>
-          filen direkte. I så fall <varname>secure_path</varname>
-          oppføring er kanskje ikke nødvendig og bruke <command>sudo -E ...</command> kan
-          importer den ikke-privilegerte brukerens fullstendige miljø inn i
-          privilegert økt.
+          I svÃ¦rt enkle installasjoner hvor det kun er en bruker,
+          kan det vÃ¦re lettere Ã¥ bare redigere <filename>/etc/sudoers</filename>
+          filen direkte. I sÃ¥ fall <varname>secure_path</varname>
+          oppfÃ¸ring er kanskje ikke nÃ¸dvendig og bruke <command>sudo -E ...</command> kan
+          importer den ikke-privilegerte brukerens fullstendige miljÃ¸ inn i
+          privilegert Ã¸kt.
         </para>
 
         <para>
           Filene i <filename class="directory">/etc/sudoers.d</filename>
-          mappen analyseres i sortert leksikalsk rekkefølge. Vær forsiktig med at oppføringer
-          i en tillagt fil ikke overskriv tidligere oppføringer.
+          mappen analyseres i sortert leksikalsk rekkefÃ¸lge. VÃ¦r forsiktig med at oppfÃ¸ringer
+          i en tillagt fil ikke overskriv tidligere oppfÃ¸ringer.
         </para>
       </note>
 
@@ -242,20 +242,20 @@ EOF</userinput></screen>
 
       <note>
         <para>
-          <application>Sudo</application> utviklere anbefaler på det sterkeste
-          å bruke <command>visudo</command> programmet for å redigere
+          <application>Sudo</application> utviklere anbefaler pÃ¥ det sterkeste
+          Ã¥ bruke <command>visudo</command> programmet for Ã¥ redigere
           <filename>sudoers</filename> filen. Dette vil gi grunnleggende tilregnelighetssjekk
-          som syntaksanalyse og filtillatelse for å unngå noen
-          mulige feil som kan føre til en sårbar konfigurasjon.
+          som syntaksanalyse og filtillatelse for Ã¥ unngÃ¥ noen
+          mulige feil som kan fÃ¸re til en sÃ¥rbar konfigurasjon.
         </para>
       </note>
 
       <para>
-        Hvis <application>PAM</application> er installert på systemet,
+        Hvis <application>PAM</application> er installert pÃ¥ systemet,
         <application>Sudo</application> er bygget med
-        <application>PAM</application> støtte. Kjør i så fall
-        følgende kommando som <systemitem class="username">root</systemitem>
-        bruker for å opprette <application>PAM</application> konfigurasjonsfil:
+        <application>PAM</application> stÃ¸tte. KjÃ¸r i sÃ¥ fall
+        fÃ¸lgende kommando som <systemitem class="username">root</systemitem>
+        bruker for Ã¥ opprette <application>PAM</application> konfigurasjonsfil:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/pam.d/sudo &lt;&lt; "EOF"
@@ -299,8 +299,8 @@ chmod 644 /etc/pam.d/sudo</userinput></screen>
           shared objects in /usr/lib/sudo look more like modules than
           libraries. Leaving them now, and updating the list, but I think
           they should not be listed. -->
-          audit_json.so, group_file.so, libsudo_util.so, sample_approval.so,
-          sudoers.so, sudo_noexec.so, og system_group.so
+          audit_json.so, group_file.so, libsudo_util.so,
+          sudoers.so, sudo_intercept.so, sudo_noexec.so, og system_group.so
         </seg>
         <seg>
           /etc/sudoers.d,
@@ -332,7 +332,7 @@ chmod 644 /etc/pam.d/sudo</userinput></screen>
         <term><command>sudo</command></term>
         <listitem>
           <para>
-            utfører en kommando som en annen bruker som tillatt av
+            utfÃ¸rer en kommando som en annen bruker som tillatt av
             <filename>/etc/sudoers</filename> konfigurasjonsfil
           </para>
           <indexterm zone="sudo sudo">
@@ -369,8 +369,8 @@ chmod 644 /etc/pam.d/sudo</userinput></screen>
         <term><command>sudoedit</command></term>
         <listitem>
           <para>
-            er en symbolkobling til <command>sudo</command> som innebærer
-            <option>-e</option> alternativet for å påkalle et skriveprogram som en annen bruker
+            er en symbolkobling til <command>sudo</command> som innebÃ¦rer
+            <option>-e</option> alternativet for Ã¥ pÃ¥kalle et skriveprogram som en annen bruker
           </para>
           <indexterm zone="sudo sudoedit">
             <primary sortas="b-sudoedit">sudoedit</primary>
@@ -382,7 +382,7 @@ chmod 644 /etc/pam.d/sudo</userinput></screen>
         <term><command>sudoreplay</command></term>
         <listitem>
           <para>
-            brukes til å spille av eller vise utdataens
+            brukes til Ã¥ spille av eller vise utdataens
             logger opprettet av <command>sudo</command>
           </para>
           <indexterm zone="sudo sudoreplay">

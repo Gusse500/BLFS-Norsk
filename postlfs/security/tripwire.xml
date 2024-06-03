@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -27,10 +27,10 @@
 
     <para>
       <application>Tripwire</application> pakken inneholder programmer som
-      brukes til å verifisere integriteten til filene på et gitt system.
+      brukes til Ã¥ verifisere integriteten til filene pÃ¥ et gitt system.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &tripwire-size;
+          NedlastingsstÃ¸rrelse: &tripwire-size;
         </para>
       </listitem>
       <listitem>
@@ -85,7 +85,7 @@
     <title>Installasjon av</title>
 
     <para>
-      Kompilere <application>Tripwire</application> ved å kjøre følgende
+      Kompilere <application>Tripwire</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -106,9 +106,9 @@ make CPPFLAGS=-std=c++11</userinput></screen>
 
     <note>
       <para>
-        Standardkonfigurasjonen er å bruke en lokal MTA. Hvis
-        du ikke har en MTA installert og ikke ønsker å installere
-        en, endre <filename>install/install.cfg</filename> å bruke en SMTP
+        Standardkonfigurasjonen er Ã¥ bruke en lokal MTA. Hvis
+        du ikke har en MTA installert og ikke Ã¸nsker Ã¥ installere
+        en, endre <filename>install/install.cfg</filename> Ã¥ bruke en SMTP
         server i stedet. Ellers vil installasjonen mislykkes.
       </para>
     </note>
@@ -118,7 +118,7 @@ make CPPFLAGS=-std=c++11</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
@@ -126,23 +126,23 @@ cp -v policy/*.txt /usr/share/doc/tripwire-&tripwire-version;</userinput></scree
 
     <note>
       <para>
-        I løpet av <command>make install</command>, flere spørsmål
-        blir spurt, inkludert passord. Hvis du vil lage et skript, må du
-        anvende en <application>sed</application> før du kjører
+        I lÃ¸pet av <command>make install</command>, flere spÃ¸rsmÃ¥l
+        blir spurt, inkludert passord. Hvis du vil lage et skript, mÃ¥ du
+        anvende en <application>sed</application> fÃ¸r du kjÃ¸rer
         <command>make install</command>:
       </para>
 
 <screen><userinput>sed -i -e 's@installer/install.sh@&amp; -n -s <replaceable>&lt;site-password&gt;</replaceable> -l <replaceable>&lt;local-password&gt;</replaceable>@' Makefile</userinput></screen>
 
       <para>
-        Selvfølgelig bør du gjøre dette med dummy passord og endre dem
+        SelvfÃ¸lgelig bÃ¸r du gjÃ¸re dette med dummy passord og endre dem
         seinere.
       </para>
 
       <para>
-        Et annet problem ved skripting er at installasjonsprogrammet avsluttes når
-        standard inngang ikke er en terminal. Du kan deaktivere denne oppførselen
-        med følgende sed:
+        Et annet problem ved skripting er at installasjonsprogrammet avsluttes nÃ¥r
+        standard inngang ikke er en terminal. Du kan deaktivere denne oppfÃ¸rselen
+        med fÃ¸lgende sed:
       </para>
 
 <screen><userinput>sed '/-t 0/,+3d' -i installer/install.sh</userinput></screen>
@@ -156,7 +156,7 @@ cp -v policy/*.txt /usr/share/doc/tripwire-&tripwire-version;</userinput></scree
 
     <para>
       <command>sed ... installer/install.cfg</command>: Denne kommandoen forteller
-      pakken å installere programdatabasen og rapporter i
+      pakken Ã¥ installere programdatabasen og rapporter i
       <filename class="directory">/var/lib/tripwire</filename> og setter inn
       riktig plassering for mansider og dokumentasjon.
     </para>
@@ -164,19 +164,19 @@ cp -v policy/*.txt /usr/share/doc/tripwire-&tripwire-version;</userinput></scree
     <para>
       <command>find ...</command>, <command>sed ...</command>, og
       <command>autoreconf -fi</command>: Byggesystemet er ubrukelig som det er, og
-      må endres for at byggingen skal lykkes.
+      mÃ¥ endres for at byggingen skal lykkes.
     </para>
 
     <para>
-      <option>CPPFLAGS=-std=c++11</option>: Innstilling av C++ forprosessorens
-      flagg til versjon 11 er nødvendig for å forhindre konflikt med
+      <parameter>CPPFLAGS=-std=c++11</parameter>: Innstilling av C++ forprosessorens
+      flagg til versjon 11 er nÃ¸dvendig for Ã¥ forhindre konflikt med
       standardversjon som er c++17 i nyere versjon av gcc.
     </para>
 
     <para>
       <command>make install</command>: Denne kommandoen oppretter
-      <application>Tripwire</application> sikkerhetsnøkler samt installerer
-      binærfilene. Det er to nøkler: en stedsnøkkel og en lokal nøkkel som er
+      <application>Tripwire</application> sikkerhetsnÃ¸kler samt installerer
+      binÃ¦rfilene. Det er to nÃ¸kler: en stedsnÃ¸kkel og en lokal nÃ¸kkel som er
       lagret i <filename class="directory">/etc/tripwire/</filename>.
     </para>
 
@@ -210,35 +210,35 @@ cp -v policy/*.txt /usr/share/doc/tripwire-&tripwire-version;</userinput></scree
 
       <para>
         <application>Tripwire</application> bruker en regelfil til
-        å finne ut hvilke filer som er integritetssjekket. Standard
+        Ã¥ finne ut hvilke filer som er integritetssjekket. Standard
         regelfil (<filename>/etc/tripwire/twpol.txt</filename>) er for en
-        standardinstallasjon og må oppdateres for ditt
+        standardinstallasjon og mÃ¥ oppdateres for ditt
         system.
       </para>
 
       <para>
-        Regelfiler bør skreddersys til hver enkelt distribusjon og/eller
-        installasjon. Noen eksempler på regelfiler kan finnes i <filename
+        Regelfiler bÃ¸r skreddersys til hver enkelt distribusjon og/eller
+        installasjon. Noen eksempler pÃ¥ regelfiler kan finnes i <filename
         class="directory">/usr/share/doc/tripwire/</filename>.
       </para>
 
       <para>
-        Hvis ønskelig, kopier regelfilen du vil prøve til <filename
-        class="directory">/etc/tripwire/</filename> i stedet for å bruke
+        Hvis Ã¸nskelig, kopier regelfilen du vil prÃ¸ve til <filename
+        class="directory">/etc/tripwire/</filename> i stedet for Ã¥ bruke
         standard regelfil, <filename>twpol.txt</filename>.  Det er imidlertid
-        anbefalt at du redigerer regelfilen. Få ideer fra
+        anbefalt at du redigerer regelfilen. FÃ¥ ideer fra
         eksempler ovenfor og les
         <filename>/usr/share/doc/tripwire/policyguide.txt</filename> for
         tilleggsinformasjon. <filename>twpol.txt</filename> er en god
-        regelfil for å lære om <application>Tripwire</application>
+        regelfil for Ã¥ lÃ¦re om <application>Tripwire</application>
         da den vil merke eventuelle endringer i filsystemet og til og med kan brukes
-        som en irriterende måte å holde styr på endringer for avinstallering av
+        som en irriterende mÃ¥te Ã¥ holde styr pÃ¥ endringer for avinstallering av
         programvare.
       </para>
 
       <para>
         Etter at regelfilen din er redigert til din tilfredshet kan du
-        starte konfigurasjonstrinnene (kjør som <systemitem
+        starte konfigurasjonstrinnene (kjÃ¸r som <systemitem
         class='username'>root</systemitem>) bruker:
       </para>
 
@@ -259,56 +259,56 @@ tripwire --init</userinput></screen>
       <para>
         <application>Tripwire</application> vil identifisere filendringer i
         de kritiske systemfilene som er spesifisert i regelfilen. Bruk av
-        <application>Tripwire</application> mens du gjør hyppige endringer i
+        <application>Tripwire</application> mens du gjÃ¸r hyppige endringer i
         disse mappene vil flagge alle disse endringene. Det er mest nyttig
-        etter at et system har nådd en konfigurasjon som brukeren vurderer
+        etter at et system har nÃ¥dd en konfigurasjon som brukeren vurderer
         stabil.
       </para>
 
       <para>
-        Å bruke <application>Tripwire</application> etter å ha opprettet en
-        regelfil for å kjøre en rapport, bruk følgende kommando:
+        Ã… bruke <application>Tripwire</application> etter Ã¥ ha opprettet en
+        regelfil for Ã¥ kjÃ¸re en rapport, bruk fÃ¸lgende kommando:
       </para>
 
 <screen role="root"><userinput>tripwire --check &gt; /etc/tripwire/report.txt</userinput></screen>
 
       <para>
-        Se utdataene for å sjekke integriteten til filene dine. En automatisk
-        integritetsrapport kan produseres ved å bruke en cron fasilitet for å planlegge
-        kjøringene.
+        Se utdataene for Ã¥ sjekke integriteten til filene dine. En automatisk
+        integritetsrapport kan produseres ved Ã¥ bruke en cron fasilitet for Ã¥ planlegge
+        kjÃ¸ringene.
       </para>
 
       <para>
-        Rapporter lagres binært og om ønskelig kryptert. Se rapporter,
+        Rapporter lagres binÃ¦rt og om Ã¸nskelig kryptert. Se rapporter,
         som <systemitem class="username">root</systemitem> bruker, med:
       </para>
 
 <screen role="nodump"><userinput>twprint --print-report -r /var/lib/tripwire/report/<replaceable>&lt;report-name.twr&gt;</replaceable></userinput></screen>
 
       <para>
-        Etter at du har kjørt en integritetssjekk, bør du undersøke rapporten (eller
+        Etter at du har kjÃ¸rt en integritetssjekk, bÃ¸r du undersÃ¸ke rapporten (eller
         e-posten) og endre deretter <application>Tripwire</application> database
-        for å gjenspeile de endrede filene på systemet ditt. Dette er for at
+        for Ã¥ gjenspeile de endrede filene pÃ¥ systemet ditt. Dette er for at
         <application>Tripwire</application> vil ikke varsle deg kontinuerlig
-        om filer du har endret med vilje er et sikkerhetsbrudd. Å gjøre
-        dette må du først <command>ls -l /var/lib/tripwire/report/</command>
-        og legg merke til navnet på den nyeste filen som starter med systemnavnet ditt
+        om filer du har endret med vilje er et sikkerhetsbrudd. Ã… gjÃ¸re
+        dette mÃ¥ du fÃ¸rst <command>ls -l /var/lib/tripwire/report/</command>
+        og legg merke til navnet pÃ¥ den nyeste filen som starter med systemnavnet ditt
         som presentert av kommandoen <userinput>uname -n</userinput> og
         ender med <filename>.twr</filename>. Disse filene ble opprettet under
-        rapportoppretting og den nyeste er nødvendig for å oppdatere
+        rapportoppretting og den nyeste er nÃ¸dvendig for Ã¥ oppdatere
         <application>Tripwire</application> databasen til systemet ditt. Som
         <systemitem class='username'>root</systemitem> bruker, skriv inn
-        følgende kommando og bruk det riktige rapportnavnet:
+        fÃ¸lgende kommando og bruk det riktige rapportnavnet:
       </para>
 
 <screen role="nodump"><userinput>tripwire --update --twrfile /var/lib/tripwire/report/<replaceable>&lt;report-name.twr&gt;</replaceable></userinput></screen>
 
       <para>
         Du vil bli plassert i <application>Vim</application> med en kopi
-        av rapporten foran deg. Hvis alle endringene var gode, så bare
-        skriv <command>:wq</command> og etter å ha tastet inn din lokale nøkkel,
+        av rapporten foran deg. Hvis alle endringene var gode, sÃ¥ bare
+        skriv <command>:wq</command> og etter Ã¥ ha tastet inn din lokale nÃ¸kkel,
         databasen vil bli oppdatert. Hvis det er filer du fortsatt vil
-        bli advart om, fjern 'x' før filnavnet i rapporten og
+        bli advart om, fjern 'x' fÃ¸r filnavnet i rapporten og
         skriv <command>:wq</command>.
       </para>
 
@@ -318,8 +318,8 @@ tripwire --init</userinput></screen>
       <title>Endre regelfilen</title>
 
       <para>
-        Hvis du er misfornøyd med regelfilen din og ønsker å endre den
-        eller bruke en ny, endre regelfilen og utfør deretter følgende
+        Hvis du er misfornÃ¸yd med regelfilen din og Ã¸nsker Ã¥ endre den
+        eller bruke en ny, endre regelfilen og utfÃ¸r deretter fÃ¸lgende
         kommandoer som <systemitem class='username'>root</systemitem> bruker:
       </para>
 
@@ -355,7 +355,7 @@ tripwire --init</userinput></screen>
         <term><command>siggen</command></term>
         <listitem>
           <para>
-            er et signaturinnsamlingsverktøy som viser
+            er et signaturinnsamlingsverktÃ¸y som viser
             hash funksjonsverdiene for de angitte filene
           </para>
           <indexterm zone="tripwire siggen">
@@ -380,7 +380,7 @@ tripwire --init</userinput></screen>
         <term><command>twadmin</command></term>
         <listitem>
           <para>
-            administrativt og verktøy som brukes til å utføre
+            administrativt og verktÃ¸y som brukes til Ã¥ utfÃ¸re
             visse administrative funksjoner knyttet til
             <application>Tripwire</application> filer og konfigurasjons
             alternativer
