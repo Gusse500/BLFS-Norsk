@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -10,9 +10,6 @@
   <!ENTITY zsh-size          "3.2 MB">
   <!ENTITY zsh-buildsize     "48 MB (inkluderer dokumentasjon og tester)">
   <!ENTITY zsh-time          "1.6 SBU (Bruker parallellisme=4; inkludert dokumentasjon og tester)">
-
-  <!ENTITY zsh-doc-md5sum    "8db53446f613521fb4f9b0bd9f6adda1">
-  <!ENTITY zsh-doc-size      "3.0 MB">
 ]>
 
 <sect1 id="zsh" xreflabel="zsh-&zsh-version;">
@@ -30,13 +27,13 @@
 
     <para>
       <application>zsh</application> pakken inneholder en kommando
-      tolk (skall) som kan brukes som et interaktivt påloggingsskall og som
+      tolk (skall) som kan brukes som et interaktivt pÃ¥loggingsskall og som
       en skallscript kommandoprosessor. Av standard skall,
-      <application>zsh</application> ligner mest på
+      <application>zsh</application> ligner mest pÃ¥
       <application>ksh</application> men inkluderer mange forbedringer.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -57,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &zsh-size;
+          NedlastingsstÃ¸rrelse: &zsh-size;
         </para>
       </listitem>
       <listitem>
@@ -72,29 +69,9 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Valgfri Dokumentasjon: <ulink
-          url="https://www.zsh.org/pub/zsh-&zsh-version;-doc.tar.xz"/>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Dokumentasjonens MD5 sum: &zsh-doc-md5sum;
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Dokumentasjonens nedlastingsstørrelse: &zsh-doc-size;
-        </para>
-      </listitem>
-    </itemizedlist>
-
     <note>
       <para>
-        Når det er en ny <application>zsh</application> utgivelse, gamle
+        NÃ¥r det er en ny <application>zsh</application> utgivelse, gamle
         filer vist ovenfor flyttes til en ny servermappe:
         <ulink url="https://www.zsh.org/pub/old/"/>.
       </para>
@@ -104,8 +81,9 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="pcre"/> og
-      <xref linkend="valgrind"/>
+      <xref linkend="pcre"/>,
+      <xref linkend="valgrind"/>, og
+      <ulink url='https://fbb-git.gitlab.io/yodl/'>yodl</ulink>
     </para>
 
   </sect2>
@@ -114,22 +92,34 @@
     <title>Installasjon av zsh</title>
 
     <para>
-      Hvis du lastet ned den valgfrie dokumentasjonen, pakk den ut med
-      følgende kommando:
+      Tilpass dokumentasjonsbyggesystemet for texinfo-7.0 eller nyere:
     </para>
 
-<screen><userinput>tar --strip-components=1 -xvf ../zsh-&zsh-version;-doc.tar.xz</userinput></screen>
+<screen><userinput>sed -e 's/set_from_init_file/texinfo_&amp;/' \
+    -i Doc/Makefile.in</userinput></screen>
+
+    <para>
+      Dokumentasjonsfilene inneholder referanser til zsh konfigurasjon
+      filer i <filename class='directory'>/etc</filename>, men vi vil
+      bruke <filename class='directory'>/etc/zsh</filename> for Ã¥ holde disse
+      konfigurasjonsfiler i stedet. Byggesystemet vil fikse de
+      referanser hvis <application>yodl</application> pakken er
+      tilgjengelig, men det er utenfor omfanget av BLFS. SÃ¥ vi mÃ¥ ordne opp
+      referansene manuelt:
+    </para>
+
+<screen><userinput>sed 's|/etc/z|/etc/zsh/z|g' -i Doc/*.*</userinput></screen>
 
 <!--    <note>
       <para>
-        Å bruke et skript til å bygge med "su -c script" kan produsere en morsom
+        Ã… bruke et skript til Ã¥ bygge med "su -c script" kan produsere en morsom
         konfigurer feilmelding: "ingen kontrollerende tty". Hvis dette skjer, legg til
-        bryteren -\-with-tcsetpgrp for å konfigurere.
+        bryteren -\-with-tcsetpgrp for Ã¥ konfigurere.
       </para>
     </note>
 -->
     <para>
-      Installer <application>zsh</application> ved å kjøre følgende
+      Installer <application>zsh</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -137,48 +127,37 @@
             --sysconfdir=/etc/zsh    \
             --enable-etcdir=/etc/zsh \
             --enable-cap             \
-            --enable-gdbm                             &amp;&amp;
-make                                                  &amp;&amp;
+            --enable-gdbm                      &amp;&amp;
+make                                           &amp;&amp;
 
-makeinfo  Doc/zsh.texi --plaintext -o Doc/zsh.txt     &amp;&amp;
-makeinfo  Doc/zsh.texi --html      -o Doc/html        &amp;&amp;
-makeinfo  Doc/zsh.texi --html --no-split --no-headers -o Doc/zsh.html</userinput></screen>
+makeinfo  Doc/zsh.texi --html      -o Doc/html &amp;&amp;
+makeinfo  Doc/zsh.texi --plaintext -o zsh.txt  &amp;&amp;
+makeinfo  Doc/zsh.texi --html --no-split --no-headers -o zsh.html</userinput></screen>
 
     <para>
       Hvis du har <xref linkend="texlive"/>
-      installert, kan du bygge PDF format av dokumentasjonen ved å kjøre
-      følgende kommando:
+      installert, kan du bygge PDF format av dokumentasjonen ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommando:
     </para>
 
 <screen remap="doc"><userinput>texi2pdf  Doc/zsh.texi -o Doc/zsh.pdf</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install                              &amp;&amp;
-make infodir=/usr/share/info install.info &amp;&amp;
-
-install -v -m755 -d                 /usr/share/doc/zsh-&zsh-version;/html &amp;&amp;
-install -v -m644 Doc/html/*         /usr/share/doc/zsh-&zsh-version;/html &amp;&amp;
-install -v -m644 Doc/zsh.{html,txt} /usr/share/doc/zsh-&zsh-version;</userinput></screen>
-
-    <para>
-      Hvis du lastet ned den valgfrie dokumentasjonen, installer den ved å kjøre
-      følgende kommandoer som
-      <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>make htmldir=/usr/share/doc/zsh-&zsh-version;/html install.html &amp;&amp;
-install -v -m644 Doc/zsh.dvi /usr/share/doc/zsh-&zsh-version;</userinput></screen>
+<screen role="root"><userinput>make install                                                    &amp;&amp;
+make infodir=/usr/share/info install.info                       &amp;&amp;
+make htmldir=/usr/share/doc/zsh-&zsh-version;/html install.html           &amp;&amp;
+install -v -m644 zsh.{html,txt} Etc/FAQ /usr/share/doc/zsh-&zsh-version;</userinput></screen>
 
     <para>
       Hvis du har bygget PDF formatet til dokumentasjonen, installer
-      den ved å kjøre følgende kommando som
+      den ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -195,8 +174,8 @@ install -v -m644 Doc/zsh.dvi /usr/share/doc/zsh-&zsh-version;</userinput></scree
       <parameter>--enable-etcdir=/etc/zsh</parameter>: Disse parameterne
       brukes slik at alle <application>zsh</application> konfigurasjonsfiler
       er konsolidert inn i <filename class='directory'>/etc/zsh</filename>
-      mappen. Utelat disse parameterne hvis du ønsker å beholde historisk
-      kompatibilitet ved å ha alle filene plassert i
+      mappen. Utelat disse parameterne hvis du Ã¸nsker Ã¥ beholde historisk
+      kompatibilitet ved Ã¥ ha alle filene plassert i
       <filename class='directory'>/etc</filename> mappen.
     </para>
 
@@ -212,7 +191,7 @@ install -v -m644 Doc/zsh.dvi /usr/share/doc/zsh-&zsh-version;</userinput></scree
 
     <para>
       <option>--enable-pcre</option>: Dette alternativet lar zsh bruke
-      <application>PCRE</application> regulære uttrykksbibliotek i skallets
+      <application>PCRE</application> regulÃ¦re uttrykksbibliotek i skallets
       innbygginger.
     </para>
   </sect2>
@@ -232,28 +211,29 @@ install -v -m644 Doc/zsh.dvi /usr/share/doc/zsh-&zsh-version;</userinput></scree
         <filename>/etc/zsh/zlogin</filename> og
         <filename>/etc/zsh/zlogout</filename>.
         Du finner mer informasjon om disse i
-        <filename>zsh(1)</filename> og relaterte manualsider.
+        <ulink role='man' url='&man;zsh.1'>zsh(1)</ulink> og relaterte
+        manualsider.
       </para>
 
       <para>
-        Første gang zsh kjøres, vil du bli spurt av meldinger som spør
-        flere spørsmål. Svarene vil bli brukt til å lage en
-        <filename>~/.zshrc</filename> fil. Hvis du ønsker å kjøre disse spørsmålene
-        igjen, kjør <command>zsh
+        FÃ¸rste gang zsh kjÃ¸res, vil du bli spurt av meldinger som spÃ¸r
+        flere spÃ¸rsmÃ¥l. Svarene vil bli brukt til Ã¥ lage en
+        <filename>~/.zshrc</filename> fil. Hvis du Ã¸nsker Ã¥ kjÃ¸re disse spÃ¸rsmÃ¥lene
+        igjen, kjÃ¸r <command>zsh
         /usr/share/zsh/&zsh-version;/functions/zsh-newuser-install -f</command>.
       </para>
 
       <para>
         Det er flere innebygde avanserte ledetekster. I
-        <command>zsh</command> skallet, start avansert støtte med
+        <command>zsh</command> skallet, start avansert stÃ¸tte med
         <command>autoload -U promptinit</command>, deretter
-        <command>promptinit</command>. Tilgjengelige ledetekstnavn er oppført med
+        <command>promptinit</command>. Tilgjengelige ledetekstnavn er oppfÃ¸rt med
         <command>prompt -l</command>. Velg en bestemt med
         <command>prompt <literal>&lt;prompt-name&gt;</literal></command>.
         Vis alle tilgjengelige
         ledetekster med <command>prompt -p</command>. Bortsett fra listen og
         viste kommandoer ovenfor, kan du sette inn de andre i
-        <filename>~/.zshrc</filename> sånn at de utføres automatisk ved
+        <filename>~/.zshrc</filename> sÃ¥nn at de utfÃ¸res automatisk ved
         skallstart, med ledeteksten du valgte.
       </para>
 
@@ -283,8 +263,8 @@ install -v -m644 Doc/zsh.dvi /usr/share/doc/zsh-&zsh-version;</userinput></scree
       <title>Konfigurasjonsinformasjon</title>
 
       <para>
-        Oppdater <filename>/etc/shells</filename> å inkludere
-        <application>zsh</application> navn på skallprogram (som
+        Oppdater <filename>/etc/shells</filename> Ã¥ inkludere
+        <application>zsh</application> navn pÃ¥ skallprogram (som
         <systemitem class="username">root</systemitem> bruker):
       </para>
 
@@ -321,8 +301,8 @@ EOF</userinput></screen>
         <term><command>zsh</command></term>
         <listitem>
           <para>
-            er et skall som har kommandolinjeredigering, innebygd stavemåte
-            korreksjon, programmerbar kommandofullføring, skallfunksjoner (med
+            er et skall som har kommandolinjeredigering, innebygd stavemÃ¥te
+            korreksjon, programmerbar kommandofullfÃ¸ring, skallfunksjoner (med
             automatisk lasting), en historiemekanisme og en rekke andre funksjoner
           </para>
           <indexterm zone="zsh zsh-prog">
