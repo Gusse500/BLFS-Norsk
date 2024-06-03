@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -27,12 +27,12 @@
 
     <para>
       <application>libpwquality</application> pakken gir vanlige
-      funksjoner for kvalitetskontroll av passord og også poengsum basert på
-      deres tilsynelatende tilfeldighet. Biblioteket gir også en funksjon for
-      å generere tilfeldige passord med god uttalbarhet.
+      funksjoner for kvalitetskontroll av passord og ogsÃ¥ poengsum basert pÃ¥
+      deres tilsynelatende tilfeldighet. Biblioteket gir ogsÃ¥ en funksjon for
+      Ã¥ generere tilfeldige passord med god uttalbarhet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libpwquality-size;
+          NedlastingsstÃ¸rrelse: &libpwquality-size;
         </para>
       </listitem>
       <listitem>
@@ -79,37 +79,33 @@
     <para role="recommended">
       <xref linkend="linux-pam"/>
     </para>
-<!-- Do not advertise python 2 since python 3 can be used
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
-    <para role="optional">
-      <xref linkend="python2"/>
-    </para>
--->
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av libpwquality</title>
 
     <para>
-      Installer <application>libpwquality</application> ved å kjøre følgende
+      Installer <application>libpwquality</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
 <screen><userinput>./configure --prefix=/usr                      \
             --disable-static                   \
             --with-securedir=/usr/lib/security \
-            --with-python-binary=python3       &amp;&amp;
-make</userinput></screen>
+            --disable-python-bindings          &amp;&amp;
+make &amp;&amp;
+&build-wheel-cmd; $PWD/python</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>make install &amp;&amp;
+&install-wheel; pwquality</userinput></screen>
 
   </sect2>
 
@@ -117,9 +113,11 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--with-python-binary=python3</parameter>: Denne parameteren gir
-      plasseringen av <application>Python</application> binær. Standaren
-      er <parameter>python</parameter>, og krever <xref linkend="python2"/>.
+      <parameter>--disable-python-bindings</parameter>: Denne parameteren
+      deaktiverer bygging av Python bindinger med de foreldede
+      <command>python3 setup.py build</command> kommando. Eksplisitte
+      instruksjon for Ã¥ bygge Python 3 bindingen med
+      <command>pip3 wheel</command> kommandoen er gitt.
     </para>
 
   </sect2>
@@ -128,11 +126,11 @@ make</userinput></screen>
     <title>Konfigurere libpwquality</title>
 
     <para>
-      <application>libpwquality</application> er ment å være en
-      funksjonell erstatning for den nå foreldede
-      <filename>pam_cracklib.so</filename> PAM modulen. For å konfigurere systemet
-      å bruke <filename>pam_pwquality</filename> modulen, kjør
-      følgende kommandoer som
+      <application>libpwquality</application> er ment Ã¥ vÃ¦re en
+      funksjonell erstatning for den nÃ¥ foreldede
+      <filename>pam_cracklib.so</filename> PAM modulen. For Ã¥ konfigurere systemet
+      Ã¥ bruke <filename>pam_pwquality</filename> modulen, kjÃ¸r
+      fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -177,7 +175,7 @@ EOF
           pam_pwquality.so og libpwquality.so
         </seg>
         <seg>
-          Ingen
+          /usr/lib/python3.11/site-packages/pwquality-&libpwquality-version;.dist-info
           <!-- /etc/security was installed by Linux-PAM -->
         </seg>
       </seglistitem>
@@ -192,7 +190,7 @@ EOF
         <term><command>pwmake</command></term>
         <listitem>
           <para>
-            er et enkelt konfigurerbart verktøy for å generere tilfeldig
+            er et enkelt konfigurerbart verktÃ¸y for Ã¥ generere tilfeldig
             og relativt lett uttalbare passord
           </para>
           <indexterm zone="libpwquality pwmake">
@@ -205,7 +203,7 @@ EOF
         <term><command>pwscore</command></term>
         <listitem>
           <para>
-            er et enkelt verktøy for å sjekke kvaliteten på et passord
+            er et enkelt verktÃ¸y for Ã¥ sjekke kvaliteten pÃ¥ et passord
           </para>
           <indexterm zone="libpwquality pwscore">
             <primary sortas="b-pwscore">pwscore</primary>
@@ -217,7 +215,7 @@ EOF
         <term><filename class="libraryfile">libpwquality.so</filename></term>
         <listitem>
           <para>
-            inneholder API funksjoner for å sjekke passordkvaliteten
+            inneholder API funksjoner for Ã¥ sjekke passordkvaliteten
           </para>
           <indexterm zone="libpwquality libpwquality-lib">
             <primary sortas="c-libpwquality">libpwquality.so</primary>
@@ -229,7 +227,7 @@ EOF
         <term><filename class="libraryfile">pam_pwquality.so</filename></term>
         <listitem>
           <para>
-            er en <application>Linux PAM</application> modul som brukes til å utføre
+            er en <application>Linux PAM</application> modul som brukes til Ã¥ utfÃ¸re
             kvalitetskontroll av passord
           </para>
           <indexterm zone="libpwquality pam_pwquality">
