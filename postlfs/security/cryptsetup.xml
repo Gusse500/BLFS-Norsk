@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY cryptsetup-download-http "&kernel-dl;/linux/utils/cryptsetup/v&cryptsetup-minor;/cryptsetup-&cryptsetup-version;.tar.xz">
   <!ENTITY cryptsetup-download-ftp  " ">
-  <!ENTITY cryptsetup-md5sum        "2303d57e78d4977344188a46e125095c">
+  <!ENTITY cryptsetup-md5sum        "7210d45a19703bca547e8ba190278cb0">
   <!ENTITY cryptsetup-size          "11 MB">
-  <!ENTITY cryptsetup-buildsize     "29 MB (legg til 5 MB for tester)">
-  <!ENTITY cryptsetup-time          "0.2 SBU (legg til 19 SBU for tester)">
+  <!ENTITY cryptsetup-buildsize     "33 MB (legg til 5 MB for tester)">
+  <!ENTITY cryptsetup-time          "0.2 SBU (legg til 8.9 SBU for tester)">
 ]>
 
 <sect1 id="cryptsetup" xreflabel="cryptsetup-&cryptsetup-version;">
@@ -26,11 +26,11 @@
     <title>Introduksjon til cryptsetup</title>
 
     <para>
-      cryptsetup brukes til å sette opp transparent kryptering av blokkenheter
-       ved å bruke kjernens krypterings API.
+      cryptsetup brukes til Ã¥ sette opp transparent kryptering av blokkenheter
+       ved Ã¥ bruke kjernens krypterings API.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -51,7 +51,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &cryptsetup-size;
+          NedlastingsstÃ¸rrelse: &cryptsetup-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +71,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/cryptsetup-&cryptsetup-version;-upstream_fixes-1.patch"/>
         </para>
       </listitem>
@@ -80,7 +80,7 @@
 
     <bridgehead renderas="sect3">cryptsetup Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="json-c"/>,
       <xref linkend="lvm2"/>, og
@@ -89,6 +89,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <xref linkend="asciidoctor"/>,
       <xref linkend="libpwquality"/>,
       <ulink url="https://github.com/P-H-C/phc-winner-argon2">argon2</ulink>,
       <ulink url="https://www.libssh.org/">libssh</ulink>, og
@@ -102,8 +103,8 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Krypterte blokkenheter krever kjernestøtte. For å bruke det
-      passende kjernekonfigurasjonsparametere må angis:
+      Krypterte blokkenheter krever kjernestÃ¸tte. For Ã¥ bruke det
+      passende kjernekonfigurasjonsparametere mÃ¥ angis:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -118,55 +119,59 @@
     <sect2 role="installation">
       <title>Installasjon av cryptsetup</title>
 
-<!-- No longer needed with 2.3.2
     <para>
-      Først bruker du en oppdatering for å fikse et byggeproblem forårsaket av API endringer i
-      <xref role="nodep" linkend="json-c"/>:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../cryptsetup-&cryptsetup-version;-upstream_fixes-1.patch</userinput></screen>
--->
-
-    <para>
-      Installer <application>cryptsetup</application> ved å kjøre følgende
+      Installer <application>cryptsetup</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-ssh-token &amp;&amp;
+<screen><userinput>./configure --prefix=/usr       \
+            --disable-ssh-token \
+            --disable-asciidoc  &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatet, kjør som <systemitem
+      For Ã¥ teste resultatet, kjÃ¸r som <systemitem
       class="username">root</systemitem> bruker: <command>make check</command>.
       Noen tester vil mislykkes hvis de riktige kjernekonfigurasjonsalternativene ikke er
-      satt. Noen tilleggsalternativer som kan være nødvendige for tester er:
-      CONFIG_SCSI_LOWLEVEL,
-      CONFIG_SCSI_DEBUG,
-      CONFIG_BLK_DEV_DM_BUILTIN,
-      CONFIG_CRYPTO_USER,
-      CONFIG_CRYPTO_CRYPTD,
-      CONFIG_CRYPTO_LRW,
-      CONFIG_CRYPTO_XTS,
-      CONFIG_CRYPTO_ESSIV,
-      CONFIG_CRYPTO_CRCT10DIF,
-      CONFIG_CRYPTO_AES_TI,
-      CONFIG_CRYPTO_AES_NI_INTEL,
-      CONFIG_CRYPTO_BLOWFISH,
-      CONFIG_CRYPTO_CAST5,
-      CONFIG_CRYPTO_SERPENT,
-      CONFIG_CRYPTO_SERPENT_SSE2_X86_64,
-      CONFIG_CRYPTO_SERPENT_AVX_X86_64,
-      CONFIG_CRYPTO_SERPENT_AVX2_X86_64, and
-      CONFIG_CRYPTO_TWOFISH_X86_64.
+      satt. Noen tilleggsalternativer som kan vÃ¦re nÃ¸dvendige for tester er:
+<screen><literal>CONFIG_SCSI_LOWLEVEL,
+CONFIG_SCSI_DEBUG,
+CONFIG_BLK_DEV_DM_BUILTIN,
+CONFIG_CRYPTO_USER,
+CONFIG_CRYPTO_CRYPTD,
+CONFIG_CRYPTO_LRW,
+CONFIG_CRYPTO_XTS,
+CONFIG_CRYPTO_ESSIV,
+CONFIG_CRYPTO_CRCT10DIF,
+CONFIG_CRYPTO_AES_TI,
+CONFIG_CRYPTO_AES_NI_INTEL,
+CONFIG_CRYPTO_BLOWFISH,
+CONFIG_CRYPTO_CAST5,
+CONFIG_CRYPTO_SERPENT,
+CONFIG_CRYPTO_SERPENT_SSE2_X86_64,
+CONFIG_CRYPTO_SERPENT_AVX_X86_64,
+CONFIG_CRYPTO_SERPENT_AVX2_X86_64, and
+CONFIG_CRYPTO_TWOFISH_X86_64</literal></screen>
       <!--I had 1 of 21 tests fail with the above crypto options in the
       kernel.  Eight tests were not run.  Version 2.4.3.
       Failed test  was tcrypt-compat-test
       tcrypt-images/tc_1-ripemd160-cbc-aes [FAILED]
-      bdubbs -->
+      bdubbs 
+
+      Version 2.6.1 12/03/2023 -bdubbs
+      2 of 26 tests failed (6 tests were not run)
+      FAIL: keyring-compat-test
+      FAIL: tcrypt-compat-test
+
+      Version 2.7.0 01/25/2024 -bdubbs
+      2 of 25 tests failed (8 tests were not run)
+      FAIL: keyring-compat-test
+      FAIL: tcrypt-compat-test
+      -->
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -176,8 +181,17 @@ make</userinput></screen>
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
     <para>
-      <option>--disable-ssh-token</option>:  Dette alternativet er nødvendig hvis
+      <parameter>--disable-ssh-token</parameter>:  Dette alternativet er nÃ¸dvendig hvis
       den valgfrie libssh avhengigheten ikke er installert.
+    </para>
+    
+    <para>
+      <parameter>--disable-asciidoc</parameter>: Denne bryteren deaktiverer
+      regenerering av manualsidene. Fjern denne bryteren hvis du har
+      <xref linkend="asciidoctor" role="nodep"/> installert og Ã¸nsker Ã¥
+      regenerer manualsidene. VÃ¦r oppmerksom pÃ¥ at selv om denne bryteren brukes,
+      de forhÃ¥ndsgenererte manualsidene sendes i tarballen, og de vil
+      fortsatt vÃ¦re installert.
     </para>
   </sect2>
 
@@ -185,7 +199,7 @@ make</userinput></screen>
     <title>Konfigurere cryptsetup</title>
 
     <para>
-      På grunn av antall mulige konfigurasjoner, oppsett av krypterte
+      PÃ¥ grunn av antall mulige konfigurasjoner, oppsett av krypterte
       volumer ligger utenfor BLFS bokens omfang. Vennligst se
       konfigurasjonsveiledning i cryptsetup <ulink
       url="https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions#2-setup">
@@ -227,7 +241,7 @@ make</userinput></screen>
         <term><command>cryptsetup</command></term>
         <listitem>
           <para>
-             brukes til å konfigurere dm-crypt administrerte enhets mappetilordninger
+            brukes til Ã¥ konfigurere dm-crypt administrerte enhets mappetilordninger
           </para>
           <indexterm zone="cryptsetup cryptsetup-prog">
             <primary sortas="b-cryptsetup">cryptsetup</primary>
@@ -239,7 +253,7 @@ make</userinput></screen>
         <term><command>cryptsetup-reencrypt</command></term>
         <listitem>
           <para>
-             er et verktøy for frakoblet LUKS enhets rekryptering
+            er et verktÃ¸y for frakoblet LUKS enhets rekryptering
           </para>
           <indexterm zone="cryptsetup cryptsetup-reencrypt">
             <primary sortas="b-cryptsetup-reencrypt">cryptsetup-reencrypt</primary>
@@ -251,7 +265,7 @@ make</userinput></screen>
         <term><command>integritysetup</command></term>
         <listitem>
           <para>
-             er et verktøy for å administrere dm-integrity (blokknivåintegritet) volumer
+            er et verktÃ¸y for Ã¥ administrere dm-integrity (blokknivÃ¥integritet) volumer
           </para>
           <indexterm zone="cryptsetup integritysetup">
             <primary sortas="b-integritysetup">integritysetup</primary>
@@ -263,9 +277,9 @@ make</userinput></screen>
         <term><command>veritysetup</command></term>
         <listitem>
           <para>
-             brukes til å konfigurere dm-verity administrerte enhetsmappe tilordninger.
-             Enhetskartlegging verifiseringsmål gir skrivebeskyttet transparent integritets
-             kontroll av blokkenheter ved hjelp av kjernekrypterings API
+            brukes til Ã¥ konfigurere dm-verity administrerte enhetsmappe tilordninger.
+            Enhetskartlegging verifiseringsmÃ¥l gir skrivebeskyttet transparent integritets
+            kontroll av blokkenheter ved hjelp av kjernekrypterings API
           </para>
           <indexterm zone="cryptsetup veritysetup">
             <primary sortas="b-veritysetup">veritysetup</primary>
