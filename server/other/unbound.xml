@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY unbound-download-http "https://nlnetlabs.nl/downloads/unbound/unbound-&unbound-version;.tar.gz">
   <!ENTITY unbound-download-ftp  " ">
-  <!ENTITY unbound-md5sum        "bb96df2dc579c11ada537dbc52781abc">
-  <!ENTITY unbound-size          "6.0 MB">
-  <!ENTITY unbound-buildsize     "141 MB (med dokumenter; legg til 10 MB for tester)">
-  <!ENTITY unbound-time          "0.5 SBU (Bruker parallellisme=4; med dokumenter; legg til 0,4 SBU for tester)">
+  <!ENTITY unbound-md5sum        "73ca28029afc478639506b7d86076944">
+  <!ENTITY unbound-size          "6.1 MB">
+  <!ENTITY unbound-buildsize     "145 MB (med dokumenter; legg til 13 MB for tester)">
+  <!ENTITY unbound-time          "0.3 SBU (Bruker parallellisme=4; med dokumenter; legg til 0,4 SBU for tester)">
 ]>
 
 <sect1 id="unbound" xreflabel="Unbound-&unbound-version;">
@@ -27,13 +27,13 @@
 
     <para>
       <application>Unbound</application> er en validerende, rekursiv og caching
-      DNS løser. Den er designet som et sett med modulære komponenter som
+      DNS lÃ¸ser. Den er designet som et sett med modulÃ¦re komponenter som
       innlemmer moderne funksjoner, for eksempel forbedret sikkerhet (DNSSEC)
-      validering, Internet Protocol versjon 6 (IPv6) og en klientløser
+      validering, Internet Protocol versjon 6 (IPv6) og en klientlÃ¸ser
       bibliotek API som en integrert del av arkitekturen.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &unbound-size;
+          NedlastingsstÃ¸rrelse: &unbound-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +71,7 @@
 
     <bridgehead renderas="sect3">Unbound Avhengigheter</bridgehead>
 <!--
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="openssl"/>
  broken?
@@ -96,8 +96,8 @@
     <title>Installasjon av Unbound</title>
 
     <para>
-      Det bør være en dedikert bruker og gruppe til å ta kontroll over
-      <command>unbound</command> nissen etter at den er startet. Utsted følgende
+      Det bÃ¸r vÃ¦re en dedikert bruker og gruppe til Ã¥ ta kontroll over
+      <command>unbound</command> nissen etter at den er startet. Utsted fÃ¸lgende
       kommandoer som <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -106,7 +106,7 @@ useradd -c "Unbound DNS Resolver" -d /var/lib/unbound -u 88 \
         -g unbound -s /bin/false unbound</userinput></screen>
 
     <para>
-      Installer <application>Unbound</application> ved å kjøre følgende
+      Installer <application>Unbound</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -117,25 +117,25 @@ useradd -c "Unbound DNS Resolver" -d /var/lib/unbound -u 88 \
 make</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend="doxygen"/> pakken er installert og du ønsker å bygge
-      html dokumentasjon, kjør følgende kommando:
+      Hvis du har <xref linkend="doxygen"/> pakken er installert og du Ã¸nsker Ã¥ bygge
+      html dokumentasjon, kjÃ¸r fÃ¸lgende kommando:
     </para>
 
 <screen remap="doc"><userinput>make doc</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør <command>make check</command>.
+      For Ã¥ teste resultatene, kjÃ¸r <command>make check</command>.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
 mv -v /usr/sbin/unbound-host /usr/bin/</userinput></screen>
 
     <para>
-      Hvis du har bygget dokumentasjonen, installer den ved å kjøre følgende
+      Hvis du har bygget dokumentasjonen, installer den ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer som <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -152,8 +152,8 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
       href="../../xincludes/static-libraries.xml"/>
 
     <para>
-      <option>--with-libevent</option>: Dette alternativet aktiverer libevent støtte
-      som tillater bruk av store utgående portområder.
+      <option>--with-libevent</option>: Dette alternativet aktiverer libevent stÃ¸tte
+      som tillater bruk av store utgÃ¥ende portomrÃ¥der.
     </para>
 
     <para>
@@ -184,9 +184,9 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
 
       <para>
         I standardkonfigurasjonen, <command>unbound</command> vil binde seg til
-        localhost (127.0.0.1 IP-adresse) og tillate rekursive spørringer kun fra
+        localhost (127.0.0.1 IP-adresse) og tillate rekursive spÃ¸rringer kun fra
         localhost klienter. Hvis du vil bruke <command>unbound</command> for
-        lokal DNS løsning, kjør følgende kommando som
+        lokal DNS lÃ¸sning, kjÃ¸r fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -199,18 +199,18 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
       </para>
 
       <para revision="sysv">
-        Når <application>Unbound</application> er installert, noen
+        NÃ¥r <application>Unbound</application> er installert, noen
         pakkebygg mislykkes hvis filen <filename>/etc/unbound/root.key</filename> ikke
-        er funnet. Denne filen opprettes ved å kjøre oppstartsskriptet (installerings
-        instruksjonene nedenfor). Alternativt kan den opprettes ved å kjøre
-        følgende kommando som <systemitem class="username">root</systemitem>
+        er funnet. Denne filen opprettes ved Ã¥ kjÃ¸re oppstartsskriptet (installerings
+        instruksjonene nedenfor). Alternativt kan den opprettes ved Ã¥ kjÃ¸re
+        fÃ¸lgende kommando som <systemitem class="username">root</systemitem>
         bruker:
       </para>
 
       <para revision="systemd">
-        Når <application>Unbound</application> er installert, noen
+        NÃ¥r <application>Unbound</application> er installert, noen
         pakkebygg mislykkes hvis filen <filename>/etc/unbound/root.key</filename> ikke
-        er funnet. Opprett denne filen ved å kjøre følgende kommando som
+        er funnet. Opprett denne filen ved Ã¥ kjÃ¸re fÃ¸lgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -224,7 +224,7 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
 
       <para>
         Hvis du vil at <application>Unbound</application> server skal
-        starte automatisk når systemet startes opp, installer
+        starte automatisk nÃ¥r systemet startes opp, installer
         <phrase revision="sysv"><filename>/etc/rc.d/init.d/unbound</filename>
         init skriptet</phrase>
         <phrase revision="systemd"><filename>unbound.service</filename>
@@ -275,7 +275,7 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
         <term><command>unbound</command></term>
         <listitem>
           <para>
-            er en DNS løser nisse
+            er en DNS lÃ¸ser nisse
           </para>
           <indexterm zone="unbound unbound-prog">
             <primary sortas="b-unbound">unbound</primary>
@@ -287,7 +287,7 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
         <term><command>unbound-anchor</command></term>
         <listitem>
           <para>
-            utfører oppsett eller oppdatering av rottillitsankeret for DNSSEC
+            utfÃ¸rer oppsett eller oppdatering av rottillitsankeret for DNSSEC
             validering
           </para>
           <indexterm zone="unbound unbound-anchor">
@@ -313,8 +313,8 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
         <term><command>unbound-control</command></term>
         <listitem>
           <para>
-            utfører fjernadministrasjon på <command>unbound</command> DNS
-            løseren
+            utfÃ¸rer fjernadministrasjon pÃ¥ <command>unbound</command> DNS
+            lÃ¸seren
           </para>
           <indexterm zone="unbound unbound-control">
             <primary sortas="b-unbound-control">unbound-control</primary>
@@ -326,7 +326,7 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
         <term><command>unbound-control-setup</command></term>
         <listitem>
           <para>
-            genererer et selvsignert sertifikat og private nøkler for serveren
+            genererer et selvsignert sertifikat og private nÃ¸kler for serveren
             og klienten
           </para>
           <indexterm zone="unbound unbound-control-setup">
@@ -339,7 +339,7 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
         <term><command>unbound-host</command></term>
         <listitem>
           <para>
-            er et DNS oppslagsverktøy som ligner på <command>host</command> fra
+            er et DNS oppslagsverktÃ¸y som ligner pÃ¥ <command>host</command> fra
             <xref linkend="bind-utils"/>
           </para>
           <indexterm zone="unbound unbound-host">

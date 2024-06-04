@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -28,11 +28,11 @@
 
     <para>
       <application>vsftpd</application> pakken inneholder en veldig
-      sikker og veldig liten FTP nisse. Dette er nyttig for å betjene filer
+      sikker og veldig liten FTP nisse. Dette er nyttig for Ã¥ betjene filer
       over et nettverk.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &vsftpd-size;
+          NedlastingsstÃ¸rrelse: &vsftpd-size;
         </para>
       </listitem>
       <listitem>
@@ -70,7 +70,7 @@
 
     <bridgehead renderas="sect3">vsftpd Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libnsl"/>
     </para>
@@ -91,11 +91,11 @@
     <title>Installasjon av vsftpd</title>
 
     <para>
-      Av sikkerhetsgrunner, å kjøre <application>vsftpd</application>
-      som en uprivilegert bruker og gruppe oppmuntres. Det bør også være en bruker
-      opprettet for å kartlegge anonyme brukere. Som <systemitem
-      class="username">root</systemitem> bruker, opprette de nødvendige mappene,
-      brukere og grupper med følgende kommandoer:
+      Av sikkerhetsgrunner, Ã¥ kjÃ¸re <application>vsftpd</application>
+      som en uprivilegert bruker og gruppe oppmuntres. Det bÃ¸r ogsÃ¥ vÃ¦re en bruker
+      opprettet for Ã¥ kartlegge anonyme brukere. Som <systemitem
+      class="username">root</systemitem> bruker, opprette de nÃ¸dvendige mappene,
+      brukere og grupper med fÃ¸lgende kommandoer:
     </para>
 
 <screen role="root"><userinput>install -v -d -m 0755 &vsftpd-empty; &amp;&amp;
@@ -107,7 +107,7 @@ useradd -c "vsftpd User"  -d /dev/null -g vsftpd -s /bin/false -u 47 vsftpd &amp
 useradd -c anonymous_user -d /home/ftp -g ftp    -s /bin/false -u 45 ftp</userinput></screen>
 
     <para>
-      Gcc-10 og senere flagger en feil for en implisitt type cast. Gjør det
+      Gcc-10 og senere flagger en feil for en implisitt type cast. GjÃ¸r det
       eksplisitt:
     </para>
 
@@ -115,7 +115,7 @@ useradd -c anonymous_user -d /home/ftp -g ftp    -s /bin/false -u 45 ftp</userin
 
     <para>
       Bygg <application>vsftpd</application> som en uprivilegert bruker
-      ved å bruke følgende kommando:
+      ved Ã¥ bruke fÃ¸lgende kommando:
     </para>
 
 <screen><userinput>make</userinput></screen>
@@ -126,7 +126,7 @@ useradd -c anonymous_user -d /home/ftp -g ftp    -s /bin/false -u 45 ftp</userin
 
     <para>
       Igjen, bli <systemitem class="username">root</systemitem>
-      bruker og installere <application>vsftpd</application> med følgende
+      bruker og installere <application>vsftpd</application> med fÃ¸lgende
       kommandoer:
     </para>
 
@@ -150,7 +150,7 @@ install -v -m 644 vsftpd.conf   /etc</userinput></screen>
 
     <note>
       <para>
-        <filename class="directory">/home/ftp</filename> bør ikke være
+        <filename class="directory">/home/ftp</filename> bÃ¸r ikke vÃ¦re
         eid av brukeren <systemitem class="username">vsftpd</systemitem>,
         eller brukeren <systemitem class="username">ftp</systemitem>.
       </para>
@@ -158,13 +158,13 @@ install -v -m 644 vsftpd.conf   /etc</userinput></screen>
 
     <para>
       <command>echo "#define VSF_BUILD_TCPWRAPPERS" >>builddefs.h</command>:
-      Bruk denne før <command>make</command> for å legge til støtte for
+      Bruk denne fÃ¸r <command>make</command> for Ã¥ legge til stÃ¸tte for
       <application>tcpwrappers</application>.
     </para>
 
     <para>
       <command>echo "#define VSF_BUILD_SSL" >>builddefs.h</command>:
-      Bruk denne før <command>make</command> for å legge til støtte for SSL.
+      Bruk denne fÃ¸r <command>make</command> for Ã¥ legge til stÃ¸tte for SSL.
     </para>
 
     <para>
@@ -201,10 +201,10 @@ install -v -m 644 vsftpd.conf   /etc</userinput></screen>
         kun anonym konfigurasjonsfil som ble kopiert til
         <filename class='directory'>/etc</filename> ovenfor. Mens fortsatt som
         <systemitem class="username">root</systemitem>, denne filen burde bli
-        endret fordi det nå anbefales å kjøre <command>vsftpd</command>
-        i frittstående modus. Også bør du
+        endret fordi det nÃ¥ anbefales Ã¥ kjÃ¸re <command>vsftpd</command>
+        i frittstÃ¥ende modus. OgsÃ¥ bÃ¸r du
         spesifisere rettighetsseparasjonsbrukeren opprettet ovenfor. Endelig,
-        bør du spesifisere <command>chroot</command> mappen.
+        bÃ¸r du spesifisere <command>chroot</command> mappen.
         <command>man vsftpd.conf</command> vil gi deg alle detaljene.
       </para>
 
@@ -219,12 +219,12 @@ EOF</userinput></screen>
               when that option is set or not
 
       <para>
-        vsftpd nissen bruker seccomp for å forbedre sikkerheten som standard.
-        Men det er kjent å forårsake at vsftpd ikke kan håndtere ftp
+        vsftpd nissen bruker seccomp for Ã¥ forbedre sikkerheten som standard.
+        Men det er kjent Ã¥ forÃ¥rsake at vsftpd ikke kan hÃ¥ndtere ftp
         <literal>LIST</literal> kommandoen med nyere kjerneversjoner. Legg til
         en linje til <filename>/etc/vsftpd.conf</filename> (som
-        <systemitem class="username">root</systemitem> bruker) å deaktivere
-        seccomp og omgå dette problemet:
+        <systemitem class="username">root</systemitem> bruker) Ã¥ deaktivere
+        seccomp og omgÃ¥ dette problemet:
       </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/vsftpd.conf &lt;&lt; "EOF"
@@ -232,7 +232,7 @@ EOF</userinput></screen>
 EOF</userinput></screen>
 -->
       <para>
-        For å aktivere lokale pålogginger, legg til følgende til
+        For Ã¥ aktivere lokale pÃ¥logginger, legg til fÃ¸lgende til
         <filename>/etc/vsftpd.conf</filename> filen (som
         <systemitem class="username">root</systemitem> bruker):
       </para>
@@ -243,12 +243,12 @@ EOF</userinput></screen>
 
       <para>
         I tillegg, hvis du bruker <application>Linux-PAM</application> og
-        <application>vsftpd</application> med lokale brukerpålogginger, trenger du
+        <application>vsftpd</application> med lokale brukerpÃ¥logginger, trenger du
         a <application>Linux-PAM</application> konfigurasjonsfilen. Som
         <systemitem class="username">root</systemitem> bruker, opprett
-        <filename>/etc/pam.d/vsftpd</filename> filen, og legg til de nødvendige
-        konfigurasjonsendringer for <application>Linux-PAM</application> øktstøtte
-        ved å bruke følgende kommandoer:
+        <filename>/etc/pam.d/vsftpd</filename> filen, og legg til de nÃ¸dvendige
+        konfigurasjonsendringer for <application>Linux-PAM</application> Ã¸ktstÃ¸tte
+        ved Ã¥ bruke fÃ¸lgende kommandoer:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/pam.d/vsftpd &lt;&lt; "EOF" &amp;&amp;
