@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -7,9 +7,9 @@
 <!-- lightdm -->
   <!ENTITY lightdm-download-http "https://github.com/CanonicalLtd/lightdm/releases/download/&lightdm-version;/lightdm-&lightdm-version;.tar.xz">
   <!ENTITY lightdm-download-ftp  " ">
-  <!ENTITY lightdm-md5sum        "e62a5da6c35f612e4d9575eda5c8d467">
-  <!ENTITY lightdm-size          "508 KB">
-  <!ENTITY lightdm-buildsize     "20 MB">
+  <!ENTITY lightdm-gtk-greeter-md5sum        "35752d730f39293c2bbe884ef6963830">
+  <!ENTITY lightdm-gtk-greeter-size          "592 KB">
+  <!ENTITY lightdm-gtk-greeter-buildsize     "5.2 MB">
   <!ENTITY lightdm-time          "0.2 SBU ">
 
 <!-- lightdm-gtk-greeter -->
@@ -36,10 +36,10 @@
 
     <para>
       <application>lightdm</application> pakken inneholder en lettvekt
-      skjermbehandler basert på GTK.
+      skjermbehandler basert pÃ¥ GTK.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Lightdm Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -60,7 +60,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &lightdm-size;
+          NedlastingsstÃ¸rrelse: &lightdm-size;
         </para>
       </listitem>
       <listitem>
@@ -79,9 +79,9 @@
 
     <note>
       <para>
-        greeter er et program for å presentere en grafisk påloggingsskjerm. Det
+        greeter er et program for Ã¥ presentere en grafisk pÃ¥loggingsskjerm. Det
         er flere alternative hilsener, men gtk+ pakken er referanse
-        gjennomføringen. For en liste over andre hilser, se <ulink
+        gjennomfÃ¸ringen. For en liste over andre hilser, se <ulink
         url="https://en.wikipedia.org/wiki/LightDM"/>.
       </para>
     </note>
@@ -104,7 +104,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &lightdm-gtk-greeter-size;
+          NedlastingsstÃ¸rrelse: &lightdm-gtk-greeter-size;
         </para>
       </listitem>
       <listitem>
@@ -121,7 +121,7 @@
 
     <bridgehead renderas="sect3">Lightdm Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="exo"/> (for greeter),
 <!-- required by exo      <xref linkend="gtk3"/>, -->
@@ -131,7 +131,7 @@
 <!-- Neither lightdm-1.30.0 nor lightdm-gtk-greeter-2.0.8
      mention pcre in their configure scripts
       <xref linkend="pcre"/>-->
-      <xref role='runtime' linkend='xorg-server'/> (Kjøretid)
+      <xref role='runtime' linkend='xorg-server'/> (KjÃ¸retid)
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -143,7 +143,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref role="runtime" linkend="accountsservice"/> (kjøretid),
+      <xref role="runtime" linkend="accountsservice"/> (kjÃ¸retid),
       <xref linkend="at-spi2-core"/>,
       <xref linkend="gtk-doc"/>,
       &qt5-deps;,
@@ -158,9 +158,9 @@
     <title>Installasjon av Lightdm</title>
 
     <para>
-      Først oppretter du en dedikert bruker og gruppe for å ta
+      FÃ¸rst oppretter du en dedikert bruker og gruppe for Ã¥ ta
       kontroll over <command>lightdm</command> nissen etter at den er
-      startet. Utfør følgende kommandoer som
+      startet. UtfÃ¸r fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -172,13 +172,13 @@ useradd  -c "Lightdm Daemon" \
 
     <para revision="sysv">
       Deretter endrer du <application>Linux-PAM</application> konfigurasjonsfiler
-      sånn at <application>elogind</application> blir brukt:
+      sÃ¥nn at <application>elogind</application> blir brukt:
     </para>
 
 <screen revision="sysv"><userinput>sed -i s/systemd/elogind/ data/pam/*</userinput></screen>
 
     <para>
-      Installer <application>lightdm</application> ved å kjøre følgende
+      Installer <application>lightdm</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -199,7 +199,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install                                                  &amp;&amp;
@@ -212,7 +212,7 @@ install -v -dm755 -o lightdm -g lightdm /var/cache/lightdm    &amp;&amp;
 install -v -dm770 -o lightdm -g lightdm /var/log/lightdm</userinput></screen>
 
      <para>
-       Nå bygg greeter:
+       NÃ¥ bygg greeter:
      </para>
 
 <screen><userinput>tar -xf ../lightdm-gtk-greeter-&lightdm-gtk-greeter-version;.tar.gz &amp;&amp;
@@ -232,14 +232,14 @@ cd lightdm-gtk-greeter-&lightdm-gtk-greeter-version; &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
   <note>
     <para>
-      Hvis du installerte Xorg i /opt, må du lage en symbolsk
+      Hvis du installerte Xorg i /opt, mÃ¥ du lage en symbolsk
       lenke slik at lightdm kan finne Xorg serveren. Som
       <systemitem class="username">root</systemitem> bruker:
     </para>
@@ -255,22 +255,22 @@ make</userinput></screen>
     <para>
 
       <command>sed ... /usr/bin/lightdm-session</command>:
-      Denne kommandoen sikrer at den første påloggingen via greeter kildene
+      Denne kommandoen sikrer at den fÃ¸rste pÃ¥loggingen via greeter kildene
       /etc/profile og ~/.bash_profile.  Uten dette, kommandoer som avhenger av
-      forskjellige miljøvariabler fungerer kanskje ikke som forventet.
+      forskjellige miljÃ¸variabler fungerer kanskje ikke som forventet.
     </para>
 <!--
     <para>
       <parameter>ITSTOOL=/bin/true</parameter>: selv om
-      <xref linkend="itstool"/> ikke er nødvendig i et normalt bygg,
-      <command>configure</command> kaster en feil hvis den ikke blir funnet på
+      <xref linkend="itstool"/> ikke er nÃ¸dvendig i et normalt bygg,
+      <command>configure</command> kaster en feil hvis den ikke blir funnet pÃ¥
       systemet. Denne parameteren forhindrer feilen.
     </para>
 
     <para>
       <parameter>HAVE_EXO_CSOURCE=yes</parameter>: selv om
-      <command>exo-csource</command> ikke er nødvendig i et normalt bygg,
-      <command>configure</command> kaster en feil hvis den ikke blir funnet på
+      <command>exo-csource</command> ikke er nÃ¸dvendig i et normalt bygg,
+      <command>configure</command> kaster en feil hvis den ikke blir funnet pÃ¥
       systemet. Denne parameteren forhindrer feilen.
     </para>
 -->
@@ -283,7 +283,18 @@ make</userinput></screen>
       <title>Konfigurasjonsfiler</title>
 
       <para>
-        /etc/lightdm/{lightdm,users,keys}.conf
+         /etc/lightdm/{lightdm,users,keys,lightdm-gtk-greeter}.conf
+      </para>
+
+      <para>
+        Konfigurasjonsfilene tilbyr mange alternativer. Hvis du for eksempel har
+        et oppsett med flere skjermer, men foretrekker at pÃ¥loggingsvinduet vises pÃ¥
+        bare Ã©n skjerm, sett 'active-monitor=&lt;monitor-name&gt;' i
+        <filename>lightdm-gtk-greeter.conf</filename>. For eksempel kan du
+        bruke <option>active-monitor=HDMI-1</option>.  Du kan bestemme
+        monitor-names med <command>xrandr --listmonitors</command>. Merk at
+        skjermnavnene kan endres hvis du endrer grafikkdriveren
+        og du mÃ¥ kanskje justere konfigurasjonen deretter.
       </para>
 
       <indexterm zone="lightdm lightdm-config">
@@ -314,12 +325,12 @@ make</userinput></screen>
       </indexterm>
 
       <para revision="sysv">
-        For å starte <command>lightdm</command> automatisk når systemet er
-        byttet til kjørenivå 5, installer
+        For Ã¥ starte <command>lightdm</command> automatisk nÃ¥r systemet er
+        byttet til kjÃ¸renivÃ¥ 5, installer
         <filename>/etc/rc.d/init.d/xdm</filename> skriptet og
         <filename>/etc/sysconfig/xdm</filename> konfigurasjonsfilen
         inkludert i <xref linkend="bootscripts"/> pakken
-        og juster <filename>/etc/inittab</filename> ved å kjøre
+        og juster <filename>/etc/inittab</filename> ved Ã¥ kjÃ¸re
         som <systemitem class="username">root</systemitem> bruker:
       </para>
 
@@ -346,8 +357,8 @@ make</userinput></screen>
 
 <!-- "make install-lightdm already does this already
       <para>
-        Alternativt kan kjørenivået settes permanent til 5 ved å starte
-        <command>lightdm</command> greeter skjermen automatisk ved å endre
+        Alternativt kan kjÃ¸renivÃ¥et settes permanent til 5 ved Ã¥ starte
+        <command>lightdm</command> greeter skjermen automatisk ved Ã¥ endre
         <filename>/etc/inittab</filename>.  Som <systemitem
         class="username">root</systemitem> bruker:
       </para>
@@ -358,16 +369,16 @@ sed -i '/initdefault/ s/3/5/' /etc/inittab</userinput></screen>
     </sect3>
 
     <sect3 id="lightdm-sessions">
-      <title>Tilgjengelige Økter</title>
+      <title>Tilgjengelige Ã˜kter</title>
 
       <para>
-        greeter tilbyr en liste over tilgjengelige økter,
-        avhengig av Vindusbehandlere og Skrivebordsmiljø installert.
-        Listen inkluderer økter som har en tilsvarende
+        greeter tilbyr en liste over tilgjengelige Ã¸kter,
+        avhengig av Vindusbehandlere og SkrivebordsmiljÃ¸ installert.
+        Listen inkluderer Ã¸kter som har en tilsvarende
         <filename>.desktop</filename> fil installert under
         <filename class="directory">/usr/share/xsessions</filename>. Mesteparten av
-        Vindusbehandlere og Skrivebordsmiljøer gir disse filene
-        automatisk, men om nødvendig kan du inkludere en egendefinert.
+        Vindusbehandlere og SkrivebordsmiljÃ¸er gir disse filene
+        automatisk, men om nÃ¸dvendig kan du inkludere en egendefinert.
       </para>
 
     </sect3>
@@ -416,7 +427,7 @@ sed -i '/initdefault/ s/3/5/' /etc/inittab</userinput></screen>
         <term><command>lightdm</command></term>
         <listitem>
           <para>
-            er en skjerm og påloggings behandler
+            er en skjerm og pÃ¥loggings behandler
           </para>
           <indexterm zone="lightdm lightdm-prog">
             <primary sortas="b-lightdm">lightdm</primary>
@@ -429,9 +440,9 @@ sed -i '/initdefault/ s/3/5/' /etc/inittab</userinput></screen>
         <listitem>
           <para>
             er en hjelpeprosess som viser greeter,
-            et grafisk brukergrensesnitt som utfører brukerautentisering
+            et grafisk brukergrensesnitt som utfÃ¸rer brukerautentisering
             og starter den valgte vindusbehandlingen
-            eller visningsmiljø
+            eller visningsmiljÃ¸
           </para>
           <indexterm zone="lightdm lightdm-gtk-greeter">
             <primary sortas="b-lightdm-gtk-greeter">lightdm-gtk-greeter</primary>
