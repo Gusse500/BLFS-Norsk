@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY postgresql-download-http "https://ftp.postgresql.org/pub/source/v&postgresql-version;/postgresql-&postgresql-version;.tar.bz2">
-  <!--  <!ENTITY postgresql-download-ftp  "ftp://ftp.postgresql.org/pub/source/v&postgresql-version;/postgresql-&postgresql-version;.tar.bz2"> -->
   <!ENTITY postgresql-download-ftp  " ">
-  <!ENTITY postgresql-md5sum        "f2f861fb99d742cb9c2f8aa46a8a947d">
-  <!ENTITY postgresql-size          "22 MB">
-  <!ENTITY postgresql-buildsize     "229 MB (legg til 42 MB for tester)">
-  <!ENTITY postgresql-time          "0.6 SBU (med parallellitet=4, legg til 0,2 SBU for tester)">
+  <!ENTITY postgresql-md5sum        "3d19d93434666db5d33e692472915ae5">
+  <!ENTITY postgresql-size          "24 MB">
+  <!ENTITY postgresql-buildsize     "227 MB (add 43 MB for tests)">
+  <!ENTITY postgresql-time          "0.8 SBU (med parallellitet=4, legg til 0,2 SBU for tester)">
 ]>
 
 <sect1 id="postgresql" xreflabel="PostgreSQL-&postgresql-version;">
@@ -32,7 +31,7 @@
       fra Berkeley Postgres databasebehandlingssystem.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &postgresql-size;
+          NedlastingsstÃ¸rrelse: &postgresql-size;
         </para>
       </listitem>
       <listitem>
@@ -72,7 +71,6 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <!-- <xref linkend="tcl"/>, (er i LFS kjernen) -->
       <xref linkend="icu"/>,
       <xref linkend="libxml2"/>,
       <xref linkend="libxslt"/>,
@@ -82,7 +80,7 @@
       <ulink url="https://developer.apple.com/bonjour/">Bonjour</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri (For å regenerere dokumentasjon)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (For Ã¥ regenerere dokumentasjon)</bridgehead>
     <para role="optional">
       <xref linkend="fop"/>,
       <xref linkend="sgml-dtd"/>,
@@ -92,7 +90,7 @@
       <xref linkend="perl-sgmlspm"/>
     </para>
 
-    <para condition="html" role="usernotes">Redaktørens notater:
+    <para condition="html" role="usernotes">RedaktÃ¸rens notater:
     <ulink url="&blfs-wiki;/postgresql"/></para>
 
   </sect2>
@@ -101,8 +99,8 @@
     <title>Installasjon av PostgreSQL</title>
 
     <para>
-      For økt sikkerhet er det bedre å ha en dedikert gruppe og bruker
-      for å kjøre PostgreSQL serveren. Først utstedt som
+      For Ã¸kt sikkerhet er det bedre Ã¥ ha en dedikert gruppe og bruker
+      for Ã¥ kjÃ¸re PostgreSQL serveren. FÃ¸rst utstedt som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -115,13 +113,13 @@ useradd -c "PostgreSQL Server" -g postgres -d /srv/pgsql/data \
         Det er flere konfigurasjonselementer som legger til mer
         funksjonalitet med valgfrie pakker til
         <application>PostgreSQL</application>.  Bruk <command>./configure
-        --help</command> for å se en liste.
+        --help</command> for Ã¥ se en liste.
       </para>
     </note>
 
     <para>
       Installer <application>PostgreSQL</application> med
-      følgende kommandoer:
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>sed -i '/DEFAULT_PGSOCKET_DIR/s@/tmp@/run/postgresql@' src/include/pg_config_manual.h &amp;&amp;
@@ -134,45 +132,45 @@ make</userinput></screen>
     <para>
       Det er en rekke programmer i
       <filename class="directory">contrib/</filename> mappen. Hvis du
-      skal kjøre denne installasjonen som en server og ønsker å bygge noen av
+      skal kjÃ¸re denne installasjonen som en server og Ã¸nsker Ã¥ bygge noen av
       dem, skriv inn <command>make -C contrib</command> eller <command>make -C
       contrib/<replaceable>&lt;SUBDIR-NAME&gt;</replaceable></command> for
       hver undermappe.
     </para>
 
     <para>
-      Tester må kjøres som en uprivilegert bruker fordi de må starte en
+      Tester mÃ¥ kjÃ¸res som en uprivilegert bruker fordi de mÃ¥ starte en
       midlertidig server og dette forhindres som root bruker. For den samme
-      grunn, må du stoppe alle PostgreSQL servere hvis noen kjører. Hvis en
-      tidligere versjon av PostgreSQL er installert, kan det være nødvendig å bruke
-      <command>--disable-rpath</command> med <command>configure</command> for å
-      unngå feil, men å <emphasis>installere binærfiler opprettet ved hjelp av denne
-      bryteren anbefales ikke</emphasis>. For å teste resultatene, kjør:
+      grunn, mÃ¥ du stoppe alle PostgreSQL servere hvis noen kjÃ¸rer. Hvis en
+      tidligere versjon av PostgreSQL er installert, kan det vÃ¦re nÃ¸dvendig Ã¥ bruke
+      <command>--disable-rpath</command> med <command>configure</command> for Ã¥
+      unngÃ¥ feil, men Ã¥ <emphasis>installere binÃ¦rfiler opprettet ved hjelp av denne
+      bryteren anbefales ikke</emphasis>. For Ã¥ teste resultatene, kjÃ¸r:
       <command>make check</command>.
     </para>
 
     <note>
-      <para>Hvis du installerer <application>PostgreSQL</application> for å
+      <para>Hvis du installerer <application>PostgreSQL</application> for Ã¥
       oppgradere en eksisterende installasjon, er det viktige trinn du trenger
-      å følge. Hvis hovedversjonen av det nye bygget er større enn
+      Ã¥ fÃ¸lge. Hvis hovedversjonen av det nye bygget er stÃ¸rre enn
       forrige versjon, er det en sjanse for at datafilformatet har endret seg.
-      Ny programvare kan ikke virke på de eksisterende datafilene. I dette tilfellet
-      vil serveren ikke starte fordi de gamle programmene har blitt overskrevet, så
-      dataene er utilgjengelige før filformatet er konvertert.</para>
+      Ny programvare kan ikke virke pÃ¥ de eksisterende datafilene. I dette tilfellet
+      vil serveren ikke starte fordi de gamle programmene har blitt overskrevet, sÃ¥
+      dataene er utilgjengelige fÃ¸r filformatet er konvertert.</para>
 
       <para>
-        Før oppgradering av en eksisterende installasjon av PostgreSQL, sjekk
-        dokumentasjonen for eventuelle hensyn som du må ha i bakhodet
+        FÃ¸r oppgradering av en eksisterende installasjon av PostgreSQL, sjekk
+        dokumentasjonen for eventuelle hensyn som du mÃ¥ ha i bakhodet
         under oppgraderingen. Merk at nye hovedversjoner kan bruke et annet
-        binært format i dataobjektene, noe som forårsaker potensielle inkompatibiliteter.
-        For mer informasjon, sjekk oppstrøms dokumentasjon om
+        binÃ¦rt format i dataobjektene, noe som forÃ¥rsaker potensielle inkompatibiliteter.
+        For mer informasjon, sjekk oppstrÃ¸ms dokumentasjon om
         oppgradering av PostgreSQL her.
         <ulink url="https://www.postgresql.org/docs/current/upgrading.html"/>.
       </para>
 
-      <para>På dette punktet kan du ha både de gamle og de nye binærfilene
-      installert på filsystemet ditt. Disse binærfilene kan brukes til å utføre en
-      oppgradering av eksisterende databasefiler. For følgende instruksjoner
+      <para>PÃ¥ dette punktet kan du ha bÃ¥de de gamle og de nye binÃ¦rfilene
+      installert pÃ¥ filsystemet ditt. Disse binÃ¦rfilene kan brukes til Ã¥ utfÃ¸re en
+      oppgradering av eksisterende databasefiler. For fÃ¸lgende instruksjoner
       antas det at
       <itemizedlist>
         <listitem><para>De aktuelle datafilene er lagret i
@@ -181,15 +179,15 @@ make</userinput></screen>
         <listitem><para>De oppgraderte datafilene vil bli lagret i
           <filename class="directory">/srv/pgsql/newdata</filename></para>
         </listitem>
-        <listitem><para>Det er nok diskplass til å holde de aktuelle
+        <listitem><para>Det er nok diskplass til Ã¥ holde de aktuelle
           datafilene to ganger. Oppgraderingen er ikke en innebygd oppgradering, men
           den vil kopiere dataene til nye databasefiler.</para>
         </listitem>
       </itemizedlist>
       </para>
 
-      <para>Gjør først en midlertidig installasjon som gir tilgang til de nye
-      binære filene mye enklere:</para>
+      <para>GjÃ¸r fÃ¸rst en midlertidig installasjon som gir tilgang til de nye
+      binÃ¦re filene mye enklere:</para>
 <screen role="nodump"><userinput>make DESTDIR=$(pwd)/DESTDIR install</userinput></screen>
 
       <para>Deretter oppretter du en mappe som kan skrives av
@@ -198,7 +196,7 @@ make</userinput></screen>
 
 <screen role="nodump"><userinput>install -d -o postgres $(pwd)/DESTDIR/tmp</userinput></screen>
 
-      <para>Stopp nå den eksisterende forekomsten av <application>PostgreSQL</application>
+      <para>Stopp nÃ¥ den eksisterende forekomsten av <application>PostgreSQL</application>
       og start oppgraderingsprosessen som
       <systemitem class="username">root</systemitem> bruker:</para>
 
@@ -218,11 +216,11 @@ su postgres -c "../usr/bin/pg_upgrade \
                     -D /srv/pgsql/newdata -B ../usr/bin"
 popd</userinput></screen>
 
-      <para>På dette tidspunktet er databasefilene tilgjengelige på to steder på
+      <para>PÃ¥ dette tidspunktet er databasefilene tilgjengelige pÃ¥ to steder pÃ¥
       disken. De gamle dataene ligger i
       <filename class="directory">/srv/pgsql/data</filename>, og de nye dataene
       er i <filename class="directory">/srv/pgsql/newdata</filename>.
-      Det anbefales å sikkerhetskopiere de gamle databasefilene før du fortsetter.</para>
+      Det anbefales Ã¥ sikkerhetskopiere de gamle databasefilene fÃ¸r du fortsetter.</para>
 
       <para>Deretter fjerner du de gamle databasefilene og gir nytt navn til den nye
       datamappen som <systemitem class="username">root</systemitem> bruker:</para>
@@ -233,7 +231,7 @@ mv /srv/pgsql/newdata /srv/pgsql/data</userinput></screen>
     </note>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install      &amp;&amp;
@@ -248,21 +246,21 @@ make install-docs</userinput></screen>
 
     <tip>
       <para>
-        Hvis du bare har tenkt å bruke <application>PostgreSQL</application> som en
-        klient for å koble til en server på en annen maskin, er installasjonen din
-        fullført og du bør ikke kjøre de resterende kommandoene.
+        Hvis du bare har tenkt Ã¥ bruke <application>PostgreSQL</application> som en
+        klient for Ã¥ koble til en server pÃ¥ en annen maskin, er installasjonen din
+        fullfÃ¸rt og du bÃ¸r ikke kjÃ¸re de resterende kommandoene.
       </para>
     </tip>
 
     <para>
       Hvis du har oppgradert en eksisterende database, hopp over resten av
       kommandoene fordi databasen din er klar til bruk. Hvis dette er
-      første gang du installerer <application>PostgreSQL</application>,
+      fÃ¸rste gang du installerer <application>PostgreSQL</application>,
       fortsett med initialiseringen.
     </para>
 
     <para>
-      Initialiser en databaseklynge med følgende kommandoer utstedt av
+      Initialiser en databaseklynge med fÃ¸lgende kommandoer utstedt av
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -271,7 +269,7 @@ install -v -dm755 /run/postgresql &amp;&amp;
 chown -Rv postgres:postgres /srv/pgsql /run/postgresql</userinput></screen>
 
     <para>
-      Initialiser nå databasen som <systemitem
+      Initialiser nÃ¥ databasen som <systemitem
       class="username">root</systemitem> bruker:
     </para>
 
@@ -289,28 +287,28 @@ chown -Rv postgres:postgres /srv/pgsql /run/postgresql</userinput></screen>
     </para>
 
     <para>
-      <parameter>--enable-thread-safety</parameter>: Denne bryteren gjør
-       klientbiblioteker trådsikre ved å tillate samtidige tråder i
+      <parameter>--enable-thread-safety</parameter>: Denne bryteren gjÃ¸r
+       klientbiblioteker trÃ¥dsikre ved Ã¥ tillate samtidige trÃ¥der i
       <filename class="libraryfile">libpq</filename> og ECPG programmer til
       trygt kontrollere deres private tilkoblingsbehandler.
     </para>
 
     <para>
-      <option>--with-openssl</option>: bygger pakken med støtte for
+      <option>--with-openssl</option>: bygger pakken med stÃ¸tte for
       <application>OpenSSL</application> krypterte tilkoblinger.
     </para>
 
     <para>
-      <option>--with-perl</option>: bygger PL/Perl serversiden språk.
+      <option>--with-perl</option>: bygger PL/Perl serversiden sprÃ¥k.
     </para>
 
     <para>
       <option>--with-python</option>: bygger PL/Python serversiden
-      språk. Python3 brukes som standard, Python2 støttes ikke lenger.
+      sprÃ¥k. Python3 brukes som standard, Python2 stÃ¸ttes ikke lenger.
     </para>
 
     <para>
-      <option>--with-tcl</option>: bygger PL/Tcl serversiden språk.
+      <option>--with-tcl</option>: bygger PL/Tcl serversiden sprÃ¥k.
     </para>
 
   </sect2>
@@ -340,12 +338,12 @@ chown -Rv postgres:postgres /srv/pgsql /run/postgresql</userinput></screen>
       </indexterm>
 
       <para>
-        <envar>PGDATA</envar> miljøvariabelen er brukt til å
-        skille databaseklynger fra hverandre ved å sette den til
-        verdien på mappen som inneholder den ønskede klyngen.
+        <envar>PGDATA</envar> miljÃ¸variabelen er brukt til Ã¥
+        skille databaseklynger fra hverandre ved Ã¥ sette den til
+        verdien pÃ¥ mappen som inneholder den Ã¸nskede klyngen.
         De tre konfigurasjonsfilene finnes i hver <filename
         class="directory">PGDATA/</filename> mappe. Detaljer om
-        formatet på filene og alternativene som kan angis i hver
+        formatet pÃ¥ filene og alternativene som kan angis i hver
         finnes i <filename>
         /usr/share/doc/postgresql-&postgresql-version;/html/index.html</filename>.
       </para>
@@ -375,10 +373,10 @@ chown -Rv postgres:postgres /srv/pgsql /run/postgresql</userinput></screen>
     </sect3>
 
     <sect3>
-      <title>Starte PostgreSQL Serveren og lage en Prøvedatabase</title>
+      <title>Starte PostgreSQL Serveren og lage en PrÃ¸vedatabase</title>
 
       <para>
-        Databaseserveren kan startes manuelt med følgende kommando
+        Databaseserveren kan startes manuelt med fÃ¸lgende kommando
         (som <systemitem class="username">root</systemitem> bruker):
       </para>
 
@@ -386,17 +384,17 @@ chown -Rv postgres:postgres /srv/pgsql /run/postgresql</userinput></screen>
                   /srv/pgsql/data/logfile 2&gt;&amp;1 &amp;'</userinput></screen>
       <note>
         <para>
-          Hvis du skripter denne delen, bør du vente på at serveren
-          starter før du går videre, ved å legge til for eksempel
+          Hvis du skripter denne delen, bÃ¸r du vente pÃ¥ at serveren
+          starter fÃ¸r du gÃ¥r videre, ved Ã¥ legge til for eksempel
           <command>sleep 2</command> etter kommandoen ovenfor.
         </para>
       </note>
 
       <para>
         Instruksjonene nedenfor viser hvordan du oppretter en database, legger til en tabell i
-        den, setter inn noen rader i tabellen og velger dem for å bekrefte at
+        den, setter inn noen rader i tabellen og velger dem for Ã¥ bekrefte at
         installasjonen fungerer som den skal. Fortsatt som bruker <systemitem
-        class="username">root</systemitem>, kjør:
+        class="username">root</systemitem>, kjÃ¸r:
       </para>
 
 <screen role="root"><userinput>su - postgres -c '/usr/bin/createdb test' &amp;&amp;
@@ -411,7 +409,7 @@ echo "insert into t1 values ('Jesse', 'Ontario');" \
 echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></screen>
 
       <para>
-        Når du er ferdig med testingen, kan du stenge serveren ved å
+        NÃ¥r du er ferdig med testingen, kan du stenge serveren ved Ã¥
         utstede som <systemitem class="username">root</systemitem>:
       </para>
 
@@ -437,9 +435,8 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
           pg_config, pg_controldata, pg_ctl, pg_dump, pg_dumpall, pg_isready,
           pg_receivewal, pg_recvlogical, pg_resetwal, pg_restore, pg_rewind,
           pg_test_fsync, pg_test_timing, pg_upgrade, pg_verifybackup,
-          pg_waldump, pgbench,
-          postgres, postmaster (avviklet), psql, reindexdb, vacuumdb,
-          eventuelt, hvis Tcl støtte er bygget, pltcl_delmod,
+          pg_waldump, pgbench, postgres, psql, reindexdb, vacuumdb,
+          eventuelt, hvis Tcl stÃ¸tte er bygget, pltcl_delmod,
           pltcl_listmod, pltcl_loadmod, og valgfritt (i contrib/) oid2name,
           pg_standby, vacuumlo, og mange andre
 
@@ -448,7 +445,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
           libecpg.{so,a}, libecpg_compat.{so,a}, libpgcommon.a,
           libpgcommon_shlib.a, libpgfeutils.a, libpgport.a, libpgport_shlib.a,
           libpgtypes.{so,a}, libpq.{so,a}, ulike tegnsettmoduler og
-          valgfrie programmeringsspråkmoduler under /usr/lib/postgresql
+          valgfrie programmeringssprÃ¥kmoduler under /usr/lib/postgresql
         </seg>
         <seg>
           /usr/include/{libpq,postgresql},
@@ -468,7 +465,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>clusterdb</command></term>
         <listitem>
           <para>
-            er et verktøy for å samle tabeller i en
+            er et verktÃ¸y for Ã¥ samle tabeller i en
             <application>PostgreSQL</application> database
           </para>
           <indexterm zone="postgresql clusterdb">
@@ -555,7 +552,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>oid2name</command></term>
         <listitem>
           <para>
-            løser OID-er (objekt-IDer) og filnoder i en PostgreSQL
+            lÃ¸ser OID-er (objekt-IDer) og filnoder i en PostgreSQL
             datamappe
           </para>
           <indexterm zone="postgresql oid2name">
@@ -592,7 +589,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pg_basebackup</command></term>
         <listitem>
           <para>
-            tar grunnleggende sikkerhetskopier av en kjørende
+            tar grunnleggende sikkerhetskopier av en kjÃ¸rende
             <application>PostgreSQL</application> klynge
           </para>
           <indexterm zone="postgresql pg_basebackup">
@@ -657,7 +654,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <listitem>
           <para>
             dumper databasedata og metadata inn i skript som brukes
-            for å gjenskape databasen
+            for Ã¥ gjenskape databasen
           </para>
           <indexterm zone="postgresql pg_dump">
             <primary sortas="b-pg_dump">pg_dump</primary>
@@ -694,7 +691,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pg_receivewal</command></term>
         <listitem>
           <para>
-            brukes til å streame write-ahead logger fra en PostgreSQL server
+            brukes til Ã¥ streame write-ahead logger fra en PostgreSQL server
           </para>
           <indexterm zone="postgresql pg_receivewal">
             <primary sortas="b-pg_receivewal">pg_receivewal</primary>
@@ -706,7 +703,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pg_recvlogical</command></term>
         <listitem>
           <para>
-            kontroller PostgreSQL logiske dekodingsstrømmer
+            kontroller PostgreSQL logiske dekodingsstrÃ¸mmer
           </para>
           <indexterm zone="postgresql pg_recvlogical">
             <primary sortas="b-pg_recvlogical">pg_recvlogical</primary>
@@ -745,7 +742,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <listitem>
           <para>
             synkroniserer en PostgreSQL datamappe med andre
-            datamapper som ble forgrenet fra den første
+            datamapper som ble forgrenet fra den fÃ¸rste
           </para>
           <indexterm zone="postgresql pg_rewind">
             <primary sortas="b-pg_rewind">pg_rewind</primary>
@@ -757,7 +754,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pg_standby</command></term>
         <listitem>
           <para>
-            støtter opprettelsen av en PostgreSQL varm standby server
+            stÃ¸tter opprettelsen av en PostgreSQL varm standby server
           </para>
           <indexterm zone="postgresql pg_standby">
             <primary sortas="b-pg_standby">pg_standby</primary>
@@ -781,7 +778,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pg_test_timing</command></term>
         <listitem>
           <para>
-            måler timing overhead
+            mÃ¥ler timing overhead
           </para>
           <indexterm zone="postgresql pg_test_timing">
             <primary sortas="b-pg_test_timing">pg_test_timing</primary>
@@ -830,7 +827,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pgbench</command></term>
         <listitem>
           <para>
-            kjører en benchmark test på PostgreSQL
+            kjÃ¸rer en benchmark test pÃ¥ PostgreSQL
           </para>
           <indexterm zone="postgresql pgbench">
             <primary sortas="b-pgbench">pgbench</primary>
@@ -842,7 +839,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pltcl_delmod</command></term>
         <listitem>
           <para>
-            er et støtteskript som brukes til å slette en modul fra en
+            er et stÃ¸tteskript som brukes til Ã¥ slette en modul fra en
             PL/<application>Tcl</application> tabell. Kommandoen
             krever at
             <ulink url="https://flightaware.github.io/Pgtcl/">Pgtcl</ulink>
@@ -858,7 +855,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pltcl_listmod</command></term>
         <listitem>
           <para>
-            er et støtteskript som brukes til å liste modulene i en
+            er et stÃ¸tteskript som brukes til Ã¥ liste modulene i en
             PL/<application>Tcl</application> tabell. Kommandoen
             krever at
             <ulink url="https://flightaware.github.io/Pgtcl/">Pgtcl</ulink>
@@ -874,7 +871,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>pltcl_loadmod</command></term>
         <listitem>
           <para>
-            er et støtteskript som brukes til å laste en modul inn i en
+            er et stÃ¸tteskript som brukes til Ã¥ laste en modul inn i en
             PL/<application>Tcl</application> tabell. Kommandoen
             krever at
             <ulink url="https://flightaware.github.io/Pgtcl/">Pgtcl</ulink>
@@ -898,6 +895,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         </listitem>
       </varlistentry>
 
+<!--
       <varlistentry id="postmaster">
         <term><command>postmaster</command></term>
         <listitem>
@@ -910,6 +908,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
           </indexterm>
         </listitem>
       </varlistentry>
+-->
 
       <varlistentry id="psql">
         <term><command>psql</command></term>
@@ -927,7 +926,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>reindexdb</command></term>
         <listitem>
           <para>
-            er et verktøy for å gjenoppbygge indekser i en database
+            er et verktÃ¸y for Ã¥ gjenoppbygge indekser i en database
           </para>
           <indexterm zone="postgresql reindexdb">
             <primary sortas="b-reindexdb">reindexdb</primary>
@@ -939,7 +938,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>vacuumdb</command></term>
         <listitem>
           <para>
-            komprimerer databaser og genererer statistikk for spørringsanalysatoren
+            komprimerer databaser og genererer statistikk for spÃ¸rringsanalysatoren
           </para>
           <indexterm zone="postgresql vacuumdb">
             <primary sortas="b-vacuumdb">vacuumdb</primary>
@@ -951,7 +950,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><command>vacuumlo</command></term>
         <listitem>
           <para>
-            fjerner foreldreløse store objekter fra en PostgreSQL database
+            fjerner foreldrelÃ¸se store objekter fra en PostgreSQL database
           </para>
           <indexterm zone="postgresql vacuumlo">
             <primary sortas="b-vacuumlo">vacuumlo</primary>
@@ -963,7 +962,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><filename class="libraryfile">libecpg.{so,a}</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner for å støtte innebygd SQL i C programmer
+            inneholder funksjoner for Ã¥ stÃ¸tte innebygd SQL i C programmer
           </para>
           <indexterm zone="postgresql libecpg">
             <primary sortas="c-libecpg">libecpg.{so,a}</primary>
@@ -999,7 +998,7 @@ echo "select * from t1;" | (su - postgres -c '/usr/bin/psql test')</userinput></
         <term><filename class="libraryfile">libpgtypes.{so,a}</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner for å håndtere Postgres datatyper
+            inneholder funksjoner for Ã¥ hÃ¥ndtere Postgres datatyper
           </para>
           <indexterm zone="postgresql libpgtypes">
             <primary sortas="c-libpgtypes">libpgtypes.{so,a}</primary>

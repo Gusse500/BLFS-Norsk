@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,13 +6,11 @@
 
 
   <!ENTITY mariadb-download-http "https://downloads.mariadb.org/interstitial/mariadb-&mariadb-version;/source/mariadb-&mariadb-version;.tar.gz">
-  <!--<!ENTITY mariadb-download-ftp  "ftp://mirrors.fe.up.pt/pub/mariadb/mariadb-&mariadb-version;/source/mariadb-&mariadb-version;.tar.gz">-->
-  <!-- FTP site only keeps the most current version.-->
   <!ENTITY mariadb-download-ftp  " ">
-  <!ENTITY mariadb-md5sum        "b6f3b3af44f72bcf32cba31071e7642d">
-  <!ENTITY mariadb-size          "92 MB">
-  <!ENTITY mariadb-buildsize     "2.6 GB (723 MB installert)">
-  <!ENTITY mariadb-time          "8.4SBU (med parallellitet=4, legg til 0,3 SBU for tester)">
+  <!ENTITY mariadb-md5sum        "904693e6fb92aa8804a6cb161441b474">
+  <!ENTITY mariadb-size          "96 MB">
+  <!ENTITY mariadb-buildsize     "1.9 GB (415 MB installed)">
+  <!ENTITY mariadb-time          "8.7 SBU (med parallellitet=4, legg til 0,3 SBU for tester)">
 ]>
 
 <sect1 id="mariadb" xreflabel="MariaDB-&mariadb-version;">
@@ -34,7 +32,7 @@
       databasestyringssystem.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &mariadb-size;
+          NedlastingsstÃ¸rrelse: &mariadb-size;
         </para>
       </listitem>
       <listitem>
@@ -72,8 +70,8 @@
 
     <note>
       <para>
-        Den installerte størrelsen på MariaDB er 658 MB, men den kan bli
-        redusert med ca. 252 MB, hvis ønskelig, ved å fjerne <filename
+        Den installerte stÃ¸rrelsen pÃ¥ MariaDB er 723 MB, men den kan bli
+        redusert med ca. 262 MB, hvis Ã¸nskelig, ved Ã¥ fjerne <filename
         class="directory">/usr/share/mysql/test</filename>
         mappen etter installasjonen.
       </para>
@@ -83,7 +81,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering for å forhindre en stack-knusingsfeil ved bruk av openssl-3:
+          NÃ¸dvendig oppdatering for Ã¥ forhindre en stack-knusingsfeil ved bruk av openssl-3:
           <ulink url="&patch-root;/mariadb-&mariadb-version;-openssl3_fix-1.patch"/>
         </para>
       </listitem>
@@ -91,7 +89,7 @@
 -->
     <bridgehead renderas="sect3">MariaDB Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>
     </para>
@@ -135,15 +133,15 @@
 
     <warning>
       <para>
-        MariaDB og MySQL kan ikke installeres på samme system uten
+        MariaDB og MySQL kan ikke installeres pÃ¥ samme system uten
         omfattende endringer i byggekonfigurasjonen til en av de to applikasjonene.
       </para>
     </warning>
 
     <para>
-      Av sikkerhetsgrunner, å kjøre serveren som en uprivilegert bruker
-      og gruppe oppfordres sterkt. Utsted følgende (som
-      <systemitem class="username">root</systemitem>) for å opprette
+      Av sikkerhetsgrunner, Ã¥ kjÃ¸re serveren som en uprivilegert bruker
+      og gruppe oppfordres sterkt. Utsted fÃ¸lgende (som
+      <systemitem class="username">root</systemitem>) for Ã¥ opprette
       bruker og gruppe:
     </para>
 
@@ -157,57 +155,57 @@ useradd -c "MySQL Server" -d /srv/mysql -g mysql -s /bin/false -u 40 mysql</user
 <screen><userinput remap="pre">patch -Np1 -i ../mariadb-&mariadb-version;-openssl3_fix-1.patch</userinput></screen>
 -->
     <para>
-      Installer <application>MariaDB</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>MariaDB</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_BUILD_TYPE=Release                      \
-      -DCMAKE_INSTALL_PREFIX=/usr                     \
-      -DGRN_LOG_PATH=/var/log/groonga.log             \
+cmake -DCMAKE_BUILD_TYPE=Release                       \
+      -DCMAKE_INSTALL_PREFIX=/usr                      \
+      -DGRN_LOG_PATH=/var/log/groonga.log              \
       -DINSTALL_DOCDIR=share/doc/mariadb-&mariadb-version;       \
       -DINSTALL_DOCREADMEDIR=share/doc/mariadb-&mariadb-version; \
-      -DINSTALL_MANDIR=share/man                      \
-      -DINSTALL_MYSQLSHAREDIR=share/mysql             \
-      -DINSTALL_MYSQLTESTDIR=share/mysql/test         \
-      -DINSTALL_PAMDIR=lib/security                   \
-      -DINSTALL_PAMDATADIR=/etc/security              \
-      -DINSTALL_PLUGINDIR=lib/mysql/plugin            \
-      -DINSTALL_SBINDIR=sbin                          \
-      -DINSTALL_SCRIPTDIR=bin                         \
-      -DINSTALL_SQLBENCHDIR=share/mysql/bench         \
-      -DINSTALL_SUPPORTFILESDIR=share/mysql           \
-      -DMYSQL_DATADIR=/srv/mysql                      \
-      -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock       \
-      -DWITH_EXTRA_CHARSETS=complex                   \
-      -DWITH_EMBEDDED_SERVER=ON                       \
-      -DSKIP_TESTS=ON                                 \
-      -DTOKUDB_OK=0                                   \
+      -DINSTALL_MANDIR=share/man                       \
+      -DINSTALL_MYSQLSHAREDIR=share/mysql              \
+      -DINSTALL_MYSQLTESTDIR=share/mysql/test          \
+      -DINSTALL_PAMDIR=lib/security                    \
+      -DINSTALL_PAMDATADIR=/etc/security               \
+      -DINSTALL_PLUGINDIR=lib/mysql/plugin             \
+      -DINSTALL_SBINDIR=sbin                           \
+      -DINSTALL_SCRIPTDIR=bin                          \
+      -DINSTALL_SQLBENCHDIR=share/mysql/bench          \
+      -DINSTALL_SUPPORTFILESDIR=share/mysql            \
+      -DMYSQL_DATADIR=/srv/mysql                       \
+      -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock        \
+      -DWITH_EXTRA_CHARSETS=complex                    \
+      -DWITH_EMBEDDED_SERVER=ON                        \
+      -DSKIP_TESTS=ON                                  \
+      -DTOKUDB_OK=0                                    \
       .. &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.
-      En test, test-connect, er kjent for å mislykkes.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>make test</command>.
+      En test, test-connect, er kjent for Ã¥ mislykkes.
     </para>
 
     <note><para>
-      Et mer omfattende sett med tester kan kjøres med følgende:</para>
+      Et mer omfattende sett med tester kan kjÃ¸res med fÃ¸lgende:</para>
 
 <screen remap="test"><userinput>pushd mysql-test
 ./mtr --parallel <replaceable>&lt;N&gt;</replaceable> --mem --force
 popd</userinput></screen>
 
     <para>
-      Hvor N er antall tester som skal kjøres parallelt.
-      Over 5400 tester kjøres i ca 24 SBU med N=4. Noen få tester
-      kan mislykkes, hovedsakelig på grunn av tegnsettproblemer.
+      Hvor N er antall tester som skal kjÃ¸res parallelt.
+      Over 5400 tester kjÃ¸res i ca 24 SBU med N=4. Noen fÃ¥ tester
+      kan mislykkes, hovedsakelig pÃ¥ grunn av tegnsettproblemer.
     </para></note>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -234,18 +232,18 @@ mv -v /usr/share/user_map.conf /etc/security</userinput></screen>
 
     <para>
       <parameter>-DWITH_EXTRA_CHARSETS=complex</parameter>: Denne bryteren aktiverer
-      støtte for komplekse tegnsett.
+      stÃ¸tte for komplekse tegnsett.
     </para>
 
     <para>
       <parameter>-DSKIP_TESTS=ON</parameter>: Denne bryteren deaktiverer
-      tester for MariaDB Connector/C som ikke støttes uten
+      tester for MariaDB Connector/C som ikke stÃ¸ttes uten
       ekstra oppsett.
     </para>
 
     <para>
       <option>-DWITHOUT_SERVER=ON</option>: Bruk denne
-      bryteren hvis du ikke vil ha serveren og bare ønsker å bygge
+      bryteren hvis du ikke vil ha serveren og bare Ã¸nsker Ã¥ bygge
       klienten.
     </para>
 
@@ -283,7 +281,7 @@ mv -v /usr/share/user_map.conf /etc/security</userinput></screen>
 
       <para>
         Lag grunnleggende <filename>/etc/mysql/my.cnf</filename>
-        ved å bruke følgende kommando som <systemitem
+        ved Ã¥ bruke fÃ¸lgende kommando som <systemitem
         class="username">root</systemitem> bruker:
       </para>
 
@@ -362,8 +360,8 @@ interactive-timeout
 EOF</userinput></screen>
 
       <para>
-        Du kan nå installere en database og endre eierskapet til
-        uprivilegert bruker og gruppe (utfør som <systemitem
+        Du kan nÃ¥ installere en database og endre eierskapet til
+        uprivilegert bruker og gruppe (utfÃ¸r som <systemitem
         class="username">root</systemitem> bruker):
       </para>
 
@@ -372,8 +370,8 @@ chown -R mysql:mysql /srv/mysql</userinput></screen>
 
       <para>
         Ytterligere konfigurasjon krever at
-        <application>MariaDB</application> serveren kjører. Start
-        serveren ved bruk av følgende kommandoer som <systemitem
+        <application>MariaDB</application> serveren kjÃ¸rer. Start
+        serveren ved bruk av fÃ¸lgende kommandoer som <systemitem
         class="username">root</systemitem> bruker:
       </para>
 
@@ -382,15 +380,15 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
 
       <para>
         En standardinstallasjon setter ikke opp et passord for
-        administrator, så bruk følgende kommando som <systemitem
-        class="username">root</systemitem> bruker til å angi et.
+        administrator, sÃ¥ bruk fÃ¸lgende kommando som <systemitem
+        class="username">root</systemitem> bruker til Ã¥ angi et.
       </para>
 
 <screen role="root"><userinput>mysqladmin -u root password</userinput></screen>
 
       <para>
-        Konfigurasjonen av serveren er nå fullført. Stopp serveren
-        ved å bruke følgende kommando som <systemitem
+        Konfigurasjonen av serveren er nÃ¥ fullfÃ¸rt. Stopp serveren
+        ved Ã¥ bruke fÃ¸lgende kommando som <systemitem
         class="username">root</systemitem> bruker:
       </para>
 
@@ -410,7 +408,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         enheten</phrase> inkludert i
         <xref linkend="bootscripts" revision="sysv"/>
         <xref linkend="systemd-units" revision="systemd"/> pakken som
-        <systemitem class="username">root</systemitem> bruker for å starte
+        <systemitem class="username">root</systemitem> bruker for Ã¥ starte
         <application>MariaDB</application> serveren under oppstart av systemet.
       </para>
 
@@ -425,9 +423,9 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
       <note>
         <para>
           Hvis du allerede har en eksisterende database og denne
-          installasjonen av binærfiler bare var en oppgradering til en nyere
-          versjon, sjekk oppstrømsdokumentasjonen for oppgradering. Det
-          anbefales å kjøre:
+          installasjonen av binÃ¦rfiler bare var en oppgradering til en nyere
+          versjon, sjekk oppstrÃ¸msdokumentasjonen for oppgradering. Det
+          anbefales Ã¥ kjÃ¸re:
           <screen role="nodump"><userinput>mariadb-upgrade</userinput></screen>
         </para>
       </note>
@@ -488,15 +486,15 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
 
 <!--
     <para>
-      Beskrivelser av alle programmene og bibliotekene vil være flere
+      Beskrivelser av alle programmene og bibliotekene vil vÃ¦re flere
       sider lange. Se i stedet man sidene
-      eller nettdokumentasjonen på <ulink
+      eller nettdokumentasjonen pÃ¥ <ulink
       url="https://mariadb.com/kb/en/mariadb-documentation/"/>.
     </para>
 -->
     <para>
-      <application>Perl</application> DBI moduler må installeres
-      for at noen av <application>MariaDB</application> støtteprogrammer vil
+      <application>Perl</application> DBI moduler mÃ¥ installeres
+      for at noen av <application>MariaDB</application> stÃ¸tteprogrammer vil
       fungere ordentlig.
     </para>
 
@@ -509,7 +507,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>aria_chk</command></term>
         <listitem>
           <para>
-            brukes til å sjekke, reparere, optimalisere, sortere og få informasjon
+            brukes til Ã¥ sjekke, reparere, optimalisere, sortere og fÃ¥ informasjon
             om Aria tabeller
           </para>
           <indexterm zone="mariadb aria_chk-mariadb">
@@ -522,7 +520,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>aria_dump_log</command></term>
         <listitem>
           <para>
-            er et verktøy for å dumpe innholdet på Aria loggsider
+            er et verktÃ¸y for Ã¥ dumpe innholdet pÃ¥ Aria loggsider
           </para>
           <indexterm zone="mariadb aria_dump_log-mariadb">
             <primary sortas="b-aria_dump_log-mariadb">aria_dump_log</primary>
@@ -546,7 +544,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>aria_pack</command></term>
         <listitem>
           <para>
-            er et verktøy for å generere komprimerte, skrivebeskyttede Aria tabeller
+            er et verktÃ¸y for Ã¥ generere komprimerte, skrivebeskyttede Aria tabeller
           </para>
           <indexterm zone="mariadb aria_pack-mariadb">
             <primary sortas="b-aria_pack-mariadb">aria_pack</primary>
@@ -618,7 +616,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariabackup</command></term>
         <listitem>
           <para>
-            er et åpen kildekode sikkerhetskopieringsverktøy for InnoDB og XtraDB
+            er et Ã¥pen kildekode sikkerhetskopieringsverktÃ¸y for InnoDB og XtraDB
           </para>
           <indexterm zone="mariadb mariabackup-mariadb">
             <primary sortas="b-mariabackup-mariadb">mariabackup</primary>
@@ -667,7 +665,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-admin</command></term>
         <listitem>
           <para>
-            er en klient for å utføre administrative operasjoner
+            er en klient for Ã¥ utfÃ¸re administrative operasjoner
           </para>
           <indexterm zone="mariadb mariadb-admin-mariadb">
             <primary sortas="b-mariadb-admin-mariadb">mariadb-admin</primary>
@@ -679,7 +677,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-binlog</command></term>
         <listitem>
           <para>
-            leser binære loggfiler
+            leser binÃ¦re loggfiler
           </para>
           <indexterm zone="mariadb mariadb-binlog-mariadb">
             <primary sortas="b-mariadb-binlog-mariadb">mariadb-binlog</primary>
@@ -691,7 +689,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-check</command></term>
         <listitem>
           <para>
-            utfører tabellvedlikehold: Den sjekker, reparerer, optimerer,
+            utfÃ¸rer tabellvedlikehold: Den sjekker, reparerer, optimerer,
              eller analyserer tabeller
           </para>
           <indexterm zone="mariadb mariadb-check-mariadb">
@@ -704,8 +702,8 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-client-test</command></term>
         <listitem>
           <para>
-            brukes til å teste aspekter ved MySQL klient API som ikke kan bli
-            testet med mysqltest og dets testspråk
+            brukes til Ã¥ teste aspekter ved MySQL klient API som ikke kan bli
+            testet med mysqltest og dets testsprÃ¥k
           </para>
           <indexterm zone="mariadb mariadb-client-test-mariadb">
             <primary sortas="b-mariadb-client-test-mariadb">mariadb-client-test</primary>
@@ -717,7 +715,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-client-test-embedded</command></term>
         <listitem>
           <para>
-            er et verktøy for å teste klient API for den innebygde serveren
+            er et verktÃ¸y for Ã¥ teste klient API for den innebygde serveren
           </para>
           <indexterm zone="mariadb mariadb-client-test-embedded-mariadb">
             <primary sortas="b-mariadb-client-test-embedded-mariadb">mariadb-client-test-embedded</primary>
@@ -741,7 +739,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-convert-table-format</command></term>
         <listitem>
           <para>
-            konverterer tabellene i en database til å bruke en bestemt
+            konverterer tabellene i en database til Ã¥ bruke en bestemt
             lagringsmotor
           </para>
           <indexterm zone="mariadb mariadb-convert-table-format-mariadb">
@@ -754,8 +752,8 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadbd-multi</command></term>
         <listitem>
           <para>
-            er designet for å administrere flere mysqld prosesser som lytter etter
-            tilkoblinger på forskjellige Unix socket filer og TCP/IP porter
+            er designet for Ã¥ administrere flere mysqld prosesser som lytter etter
+            tilkoblinger pÃ¥ forskjellige Unix socket filer og TCP/IP porter
           </para>
           <indexterm zone="mariadb mariadbd-multi-mariadb">
             <primary sortas="b-mariadbd-multi-mariadb">mariadbd-multi</primary>
@@ -767,7 +765,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadbd-safe</command></term>
         <listitem>
           <para>
-             er den anbefalte måten å starte en mysqld server på Unix
+             er den anbefalte mÃ¥ten Ã¥ starte en mysqld server pÃ¥ Unix
              og NetWare
           </para>
           <indexterm zone="mariadb mariadbd-safe-mariadb">
@@ -792,7 +790,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-dumpslow</command></term>
         <listitem>
           <para>
-            analyserer MySQL sakte spørringsloggfiler og skriver ut et sammendrag av deres
+            analyserer MySQL sakte spÃ¸rringsloggfiler og skriver ut et sammendrag av deres
             innhold
           </para>
           <indexterm zone="mariadb mariadb-dumpslow-mariadb">
@@ -819,7 +817,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <listitem>
           <para>
             leser filer som inneholder SQL setninger og trekker ut setninger som
-            samsvarer med et gitt regulært uttrykk eller som inneholder USE db_name eller
+            samsvarer med et gitt regulÃ¦rt uttrykk eller som inneholder USE db_name eller
             SET uttalelser
           </para>
           <indexterm zone="mariadb mariadb-find-rows-mariadb">
@@ -845,7 +843,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-hotcopy</command></term>
         <listitem>
           <para>
-            låser tabellen, spyler tabellen og utfører deretter en kopi av
+            lÃ¥ser tabellen, spyler tabellen og utfÃ¸rer deretter en kopi av
             databasen
           </para>
           <indexterm zone="mariadb mariadb-hotcopy-mariadb">
@@ -884,7 +882,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-ldb</command></term>
         <listitem>
           <para>
-            er RocksDB verktøyet
+            er RocksDB verktÃ¸yet
           </para>
           <indexterm zone="mariadb mariadb-ldb-mariadb">
             <primary sortas="b-mariadb-ldb-mariadb">mariadb-ldb</primary>
@@ -896,7 +894,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-plugin</command></term>
         <listitem>
           <para>
-            er et verktøy som lar MySQL administratorer administrere hvilke
+            er et verktÃ¸y som lar MySQL administratorer administrere hvilke
             programtillegg en MySQL server laster inn
           </para>
           <indexterm zone="mariadb mariadb-plugin-mariadb">
@@ -909,7 +907,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-secure-installation</command></term>
         <listitem>
           <para>
-            er et verktøy for å forbedre MySQL installasjonssikkerheten
+            er et verktÃ¸y for Ã¥ forbedre MySQL installasjonssikkerheten
           </para>
           <indexterm zone="mariadb mariadb-secure-installation-mariadb">
             <primary sortas="b-mariadb-secure-installation-mariadb">mariadb-secure-installation</primary>
@@ -921,7 +919,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-service-convert</command></term>
         <listitem>
           <para>
-            genererer en systemd enhet basert på gjeldende mariadb innstillinger
+            genererer en systemd enhet basert pÃ¥ gjeldende mariadb innstillinger
           </para>
           <indexterm zone="mariadb mariadb-service-convert-mariadb">
             <primary sortas="b-mariadb-service-convert-mariadb">mariadb-service-convert</primary>
@@ -957,8 +955,8 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-slap</command></term>
         <listitem>
           <para>
-            er et diagnoseprogram utviklet for å emulere klientbelastning for en
-            MySQL server og for å rapportere tidspunktet for hvert trinn
+            er et diagnoseprogram utviklet for Ã¥ emulere klientbelastning for en
+            MySQL server og for Ã¥ rapportere tidspunktet for hvert trinn
           </para>
           <indexterm zone="mariadb mariadb-slap-mariadb">
             <primary sortas="b-mariadb-slap-mariadb">mariadb-slap</primary>
@@ -970,7 +968,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-test</command></term>
         <listitem>
           <para>
-            kjører en testsak mot en MySQL server og sammenligner eventuelt
+            kjÃ¸rer en testsak mot en MySQL server og sammenligner eventuelt
             utdataen med en resultatfil
           </para>
           <indexterm zone="mariadb mariadb-test-mariadb">
@@ -983,8 +981,8 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-test-embedded</command></term>
         <listitem>
           <para>
-            ligner på <command>mysqltest</command> kommandoen, men er bygget
-            med støtte for den innebygde libmysqld serveren
+            ligner pÃ¥ <command>mysqltest</command> kommandoen, men er bygget
+            med stÃ¸tte for den innebygde libmysqld serveren
           </para>
           <indexterm zone="mariadb mariadb-test-embedded-mariadb">
             <primary sortas="b-mariadb-test-embedded-mariadb">mariadb-test-embedded</primary>
@@ -1008,7 +1006,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-upgrade</command></term>
         <listitem>
           <para>
-            undersøker alle tabeller i alle databaser for inkompatibiliteter med
+            undersÃ¸ker alle tabeller i alle databaser for inkompatibiliteter med
             gjeldende versjon av MySQL Server
           </para>
           <indexterm zone="mariadb mariadb-upgrade-mariadb">
@@ -1021,7 +1019,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb-waitpid</command></term>
         <listitem>
           <para>
-            signaliserer at en prosess skal avsluttes og venter på at prosessen avsluttes
+            signaliserer at en prosess skal avsluttes og venter pÃ¥ at prosessen avsluttes
           </para>
           <indexterm zone="mariadb mariadb-waitpid-mariadb">
             <primary sortas="b-mariadb-waitpid-mariadb">mariadb-waitpid</primary>
@@ -1033,7 +1031,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mariadb_config</command></term>
         <listitem>
           <para>
-            får kompilatorflagg for bruk av MariaDB Connector/C
+            fÃ¥r kompilatorflagg for bruk av MariaDB Connector/C
           </para>
           <indexterm zone="mariadb mariadb_config-mariadb">
             <primary sortas="b-mariadb_config-mariadb">mariadb_config</primary>
@@ -1045,7 +1043,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mbstream</command></term>
         <listitem>
           <para>
-            er et verktøy for å sende InnoDB og XTraDB sikkerhetskopier over en strøm
+            er et verktÃ¸y for Ã¥ sende InnoDB og XTraDB sikkerhetskopier over en strÃ¸m
           </para>
           <indexterm zone="mariadb mbstream-mariadb">
             <primary sortas="b-mbstream-mariadb">mbstream</primary>
@@ -1057,7 +1055,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>msql2mysql</command></term>
         <listitem>
           <para>
-            er et verktøy for å konvertere mSQL programmer for bruk med MySQL
+            er et verktÃ¸y for Ã¥ konvertere mSQL programmer for bruk med MySQL
           </para>
           <indexterm zone="mariadb msql2mysql-mariadb">
             <primary sortas="b-msql2mysql-mariadb">msql2mysql</primary>
@@ -1093,7 +1091,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>myisamchk</command></term>
         <listitem>
           <para>
-            får informasjon om databasetabellene dine eller kontroller, reparerer,
+            fÃ¥r informasjon om databasetabellene dine eller kontroller, reparerer,
             eller optimaliserer dem
           </para>
           <indexterm zone="mariadb myisamchk-mariadb">
@@ -1118,7 +1116,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>myisampack</command></term>
         <listitem>
           <para>
-            er et verktøy for å komprimere MyISAM tabeller
+            er et verktÃ¸y for Ã¥ komprimere MyISAM tabeller
           </para>
           <indexterm zone="mariadb myisampack-mariadb">
             <primary sortas="b-myisampack-mariadb">myisampack</primary>
@@ -1130,7 +1128,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mysql_config</command></term>
         <listitem>
           <para>
-            gir deg nyttig informasjon for å kompilere din MySQL
+            gir deg nyttig informasjon for Ã¥ kompilere din MySQL
             klient og koble den til MySQL
           </para>
           <indexterm zone="mariadb mysql_config-mariadb">
@@ -1143,7 +1141,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>mytop</command></term>
         <listitem>
           <para>
-            er et konsollbasert verktøy for å overvåke trådene og generelt
+            er et konsollbasert verktÃ¸y for Ã¥ overvÃ¥ke trÃ¥dene og generelt
             ytelsen til en MySQL server
           </para>
           <indexterm zone="mariadb mytop-mariadb">
@@ -1156,7 +1154,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>perror</command></term>
         <listitem>
           <para>
-            er et verktøy som viser beskrivelser for systemets eller lagrings
+            er et verktÃ¸y som viser beskrivelser for systemets eller lagrings
             motorfeilkoder
           </para>
           <indexterm zone="mariadb perror-mariadb">
@@ -1181,7 +1179,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>resolve_stack_dump</command></term>
         <listitem>
           <para>
-            løser en numerisk stabeldump til symboler
+            lÃ¸ser en numerisk stabeldump til symboler
           </para>
           <indexterm zone="mariadb resolve_stack_dump-mariadb">
             <primary sortas="b-resolve_stack_dump-mariadb">resolve_stack_dump</primary>
@@ -1193,7 +1191,7 @@ mysqld_safe --user=mysql 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen>
         <term><command>resolveip</command></term>
         <listitem>
           <para>
-            er et verktøy for å løse IP adresser til vertsnavn og
+            er et verktÃ¸y for Ã¥ lÃ¸se IP adresser til vertsnavn og
             omvendt
           </para>
           <indexterm zone="mariadb resolveip-mariadb">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -7,9 +7,9 @@
   <!ENTITY dovecot-download-http
   "https://www.dovecot.org/releases/&dovecot-major;.&dovecot-minor;/dovecot-&dovecot-version;.tar.gz">
   <!ENTITY dovecot-download-ftp  " ">
-  <!ENTITY dovecot-md5sum        "b8add62d0311dcc95ac25b379e8ba043">
-  <!ENTITY dovecot-size          "7.4 MB">
-  <!ENTITY dovecot-buildsize     "235 MB">
+  <!ENTITY dovecot-md5sum        "8961c3dafd845a25fd55e7903ffc3755">
+  <!ENTITY dovecot-size          "7.5 MB">
+  <!ENTITY dovecot-buildsize     "237 MB">
   <!ENTITY dovecot-time          "4.8 SBU">
 ]>
 
@@ -28,13 +28,13 @@
 
     <para>
       <application>Dovecot</application> er en Internet Message Access Protocol
-      (IMAP) og Post Office Protocol (POP) server, skrevet primært med
-      sikkerhet i tankene. <application>Dovecot</application> har som mål å være
-      lett, rask og enkel å sette opp samt svært konfigurerbar og
-      enkelt å utvide med programtillegg..
+      (IMAP) og Post Office Protocol (POP) server, skrevet primÃ¦rt med
+      sikkerhet i tankene. <application>Dovecot</application> har som mÃ¥l Ã¥ vÃ¦re
+      lett, rask og enkel Ã¥ sette opp samt svÃ¦rt konfigurerbar og
+      enkelt Ã¥ utvide med programtillegg..
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &dovecot-size;
+          NedlastingsstÃ¸rrelse: &dovecot-size;
         </para>
       </listitem>
       <listitem>
@@ -74,13 +74,13 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/dovecot-&dovecot-version;-openssl3_fixes-1.patch"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/dovecot-&dovecot-version;-security_fix-1.patch"/>
         </para>
       </listitem>
@@ -88,7 +88,7 @@
 
     <bridgehead renderas="sect3">Dovecot Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libtirpc"/>
     </para>
@@ -118,8 +118,8 @@
     <title>Installasjon av Dovecot</title>
 
     <para>
-      Det bør være dedikerte brukere og grupper for uprivilegerte Dovecot
-      prosesser og for behandling av brukernes pålogginger. Utfør følgende kommandoer
+      Det bÃ¸r vÃ¦re dedikerte brukere og grupper for uprivilegerte Dovecot
+      prosesser og for behandling av brukernes pÃ¥logginger. UtfÃ¸r fÃ¸lgende kommandoer
       som <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -131,19 +131,19 @@ useradd -c "Dovecot login user" -d /dev/null -u 43 \
         -g dovenull -s /bin/false dovenull</userinput></screen>
 
     <para>
-      Først, bruk en oppdatering for å fikse problemer med OpenSSL-3:
+      FÃ¸rst, bruk en oppdatering for Ã¥ fikse problemer med OpenSSL-3:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../dovecot-&dovecot-version;-openssl3_fixes-1.patch</userinput></screen>
 
     <para>
-      Deretter bruker du en oppdatering for å fikse et sikkerhetsproblem:
+      Deretter bruker du en oppdatering for Ã¥ fikse et sikkerhetsproblem:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../dovecot-&dovecot-version;-security_fix-1.patch</userinput></screen>
 
     <para>
-      Installer <application>Dovecot</application> ved å kjøre følgende
+      Installer <application>Dovecot</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -167,13 +167,13 @@ LDFLAGS+=" -ltirpc" \
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør <command>make -k check</command>. <!-- An error
+      For Ã¥ teste resultatene, kjÃ¸r <command>make -k check</command>. <!-- An error
       may be reported if <xref linkend="valgrind"/> is present when running
       the test.-->
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -194,46 +194,46 @@ make</userinput></screen>
     <!-- With merged-/usr, /usr/lib/systemd/system is set by default.
     <para revision="systemd">
       <parameter>- -with-systemdsystemunitdir=/lib/systemd/system</parameter>:
-      Denne bryteren brukes til å angi riktig installasjonsmappe for
+      Denne bryteren brukes til Ã¥ angi riktig installasjonsmappe for
       systemd enheter.
     </para>
     -->
 
     <para>
       <option>--with-ldap</option>: Denne bryteren aktiverer
-      <application>OpenLDAP</application> støtte for autentisering.
+      <application>OpenLDAP</application> stÃ¸tte for autentisering.
     </para>
 
     <para>
       <option>--with-pgsql</option>: Denne bryteren aktiverer
-      <application>PostgreSQL</application> databasestøtte.
+      <application>PostgreSQL</application> databasestÃ¸tte.
     </para>
 
     <para>
       <option>--with-mysql</option>: Denne bryteren aktiverer
-      <application>MySQL</application> databasestøtte.
+      <application>MySQL</application> databasestÃ¸tte.
     </para>
 
     <para>
       <option>--with-sqlite</option>: Denne bryteren aktiverer
-      <application>SQLite</application> databasestøtte.
+      <application>SQLite</application> databasestÃ¸tte.
     </para>
 
     <para>
       <option>--with-lucene</option>: Denne bryteren aktiverer
-      <application>CLucene</application> støtte for fulltekstsøk.
+      <application>CLucene</application> stÃ¸tte for fulltekstsÃ¸k.
     </para>
 
     <para>
       <option>--with-lua</option>: Denne bryteren aktiverer
-      <application>Lua</application> programtilleggstøtte. Dette inkluderer
+      <application>Lua</application> programtilleggstÃ¸tte. Dette inkluderer
       et programtillegg for e-post og push varsling.
     </para>
 
 <!--
     <para>
       <option>- -with-krb5</option>: Denne bryteren aktiverer
-      GSSAPI støtte for autentisering.
+      GSSAPI stÃ¸tte for autentisering.
     </para>
 -->
   </sect2>
@@ -272,7 +272,7 @@ make</userinput></screen>
 <screen role="root"><userinput>cp -rv /usr/share/doc/dovecot-&dovecot-version;/example-config/* /etc/dovecot</userinput></screen>
 
       <para>
-        Følgende konfigurasjon er et enkelt proof of concept med IMAP
+        FÃ¸lgende konfigurasjon er et enkelt proof of concept med IMAP
         tjenesten som bruker lokale brukere for autentisering og postboksplassering.
         Leser filer fra <filename class="directory">conf.d</filename>
         mappen er kommentert ut siden den inkluderte eksempelkonfigurasjonen
@@ -297,9 +297,9 @@ passdb {
 EOF</userinput></screen>
 
       <para>
-        Du vil definitivt lese den offisielle dokumentasjonen på <ulink
-        url="https://wiki2.dovecot.org/"/> hvis du planlegger å bruke
-        <application>Dovecot</application> i et produksjonsmiljø.
+        Du vil definitivt lese den offisielle dokumentasjonen pÃ¥ <ulink
+        url="https://wiki2.dovecot.org/"/> hvis du planlegger Ã¥ bruke
+        <application>Dovecot</application> i et produksjonsmiljÃ¸.
       </para>
 
     </sect3>
@@ -310,15 +310,15 @@ EOF</userinput></screen>
 
       <para revision="sysv">
         Hvis du vil at <application>Dovecot</application>
-        serveren skal starte automatisk når systemet startes opp, installer
+        serveren skal starte automatisk nÃ¥r systemet startes opp, installer
         <filename>/etc/rc.d/init.d/dovecot</filename> init skriptet inkludert i
         <xref linkend="bootscripts"/> pakken.
       </para>
 
       <para revision="systemd">
-        For å starte <command>dovecot</command>
+        For Ã¥ starte <command>dovecot</command>
         nissen ved oppstart, aktiver den tidligere installerte systemd enheten med
-        følgende kommando:
+        fÃ¸lgende kommando:
       </para>
 
       <indexterm zone="dovecot dovecot-init">
@@ -366,7 +366,7 @@ EOF</userinput></screen>
         <term><command>doveadm</command></term>
         <listitem>
           <para>
-            er <application>Dovecot</application> administrasjonsverktøy
+            er <application>Dovecot</application> administrasjonsverktÃ¸y
           </para>
           <indexterm zone="dovecot doveadm">
             <primary sortas="b-doveadm">doveadm</primary>
@@ -379,7 +379,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er <application>Dovecot</application> sin konfigurasjonsdumping
-            verktøy
+            verktÃ¸y
           </para>
           <indexterm zone="dovecot doveconf">
             <primary sortas="b-doveconf">doveconf</primary>
@@ -404,7 +404,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             skriver ut systeminformasjon som er nyttig for Dovecot utviklerne
-            når du sender inn feilrapporter oppstrøms
+            nÃ¥r du sender inn feilrapporter oppstrÃ¸ms
           </para>
           <indexterm zone="dovecot dovecot-sysreport">
             <primary sortas="b-dovecot-sysreport">dovecot-sysreport</primary>
@@ -417,7 +417,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er <application>Dovecot</application> sin postbokssynkronisering
-            verktøy
+            verktÃ¸y
           </para>
           <indexterm zone="dovecot dsync">
             <primary sortas="b-dsync">dsync</primary>

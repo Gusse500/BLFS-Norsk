@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -11,15 +11,15 @@
 
   <title>Viktige Merknader om Oppgradering av Databaseserverprogramvare</title>
 
-    <note><para>Denne delen handler om å installere databaseprogramvare på nytt
-    når en eksisterende database er i bruk. Det gjelder ikke for
+    <note><para>Denne delen handler om Ã¥ installere databaseprogramvare pÃ¥ nytt
+    nÃ¥r en eksisterende database er i bruk. Det gjelder ikke for
     innledende installasjoner eller hvis det ikke finnes en eksisterende database for
-    pakken som oppdateres, men brukere bør lese gjennom den
-    for å bli bevisst på problemer som kan oppstå i fremtiden.</para></note>
+    pakken som oppdateres, men brukere bÃ¸r lese gjennom den
+    for Ã¥ bli bevisst pÃ¥ problemer som kan oppstÃ¥ i fremtiden.</para></note>
 
     <para>La oss starte dette kapittelet med et dramatisk skjermbilde av en feil som
-    virkelig skjedde. Denne feilen vil ikke oppstå hvis du installerer databaseprogramvaren
-    for første gang:</para>
+    virkelig skjedde. Denne feilen vil ikke oppstÃ¥ hvis du installerer databaseprogramvaren
+    for fÃ¸rste gang:</para>
 
 <screen>$ sudo systemctl status postgresql
 -- postgresql.service - PostgreSQL database server
@@ -41,22 +41,22 @@ Oct 26 17:11:53 SRVNAME systemd[1]: postgresql.service: Failed with result 'exit
 Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.</screen>
 
   <para>
-    For å unngå situasjoner som dette (dvs. databaseserverprogramvaren din
-    nekter å starte), les følgende diskusjon om den beste måten å
+    For Ã¥ unngÃ¥ situasjoner som dette (dvs. databaseserverprogramvaren din
+    nekter Ã¥ starte), les fÃ¸lgende diskusjon om den beste mÃ¥ten Ã¥
     oppgradere en DBMS (Databasestyringssystem).
   </para>
 
   <para>
-    Grunnårsaken til feilen vist ovenfor var en oppgradering
+    GrunnÃ¥rsaken til feilen vist ovenfor var en oppgradering
     av serverprogramvaren til en nyere hovedversjon som forlot
-    datafiler urørt. I dette tilfellet var administratoren i stand til å gjenopprette
+    datafiler urÃ¸rt. I dette tilfellet var administratoren i stand til Ã¥ gjenopprette
     DBMS uten tap av data.
   </para>
 
   <para>
-    Selv om du gjør en innledende DBMS installasjon, les gjennom denne
+    Selv om du gjÃ¸r en innledende DBMS installasjon, les gjennom denne
     seksjonen. Den gir informasjon om implementering av sikkerhetskopiering
-    og gjenopprettings prosedyrer (eller i det minste en strategi for å lage
+    og gjenopprettings prosedyrer (eller i det minste en strategi for Ã¥ lage
     dem) som vil tilfredsstille dine behov og garantere sikkerheten
     av dataene dine.
   </para>
@@ -65,12 +65,12 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
     <title>Oppgrader Databaseserverpakker</title>
 
     <para>
-      Databasesystemer fungerer på filer som inneholder databasens metadata og
+      Databasesystemer fungerer pÃ¥ filer som inneholder databasens metadata og
       data. Den interne strukturen til disse filene er optimalisert for bruk
-      av serverprogramvaren. Når slik serverprogramvare oppgraderes,
+      av serverprogramvaren. NÃ¥r slik serverprogramvare oppgraderes,
       den nye programvaren kan bruke et annet filformat enn som
       tidligere var brukt. Noen ganger kan den nye programvaren
-      arbeide med det gamle formatet så vel som det nye&mdash;men uten
+      arbeide med det gamle formatet sÃ¥ vel som det nye&mdash;men uten
       ytelsesforbedringer det nye formatet gir.
       Andre ganger vil den nye serverprogramvaren
       formatere datafilene automatisk etter oppgraderingen.
@@ -78,22 +78,22 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
 
     <para>
       Dessverre er det mest sannsynlige tilfellet at den nye serverprogramvaren
-      klager på utdaterte filformater og utdataer. Når dette skjer,
+      klager pÃ¥ utdaterte filformater og utdataer. NÃ¥r dette skjer,
       og du har overskrevet den gamle serverprogramvaren, kan du ende opp
-      med et ødelagt system og tapte data.
+      med et Ã¸delagt system og tapte data.
     </para>
 
     <para>
-       Endringer i datafilformater skjer vanligvis ved større versjonsendringer, men
-       de kan også forekomme på andre tidspunkter. Før du oppgraderer noen DBMS
-       programvare, sjekk dokumentasjonen for å se om denne oppgraderingen gjør endringer som
+       Endringer i datafilformater skjer vanligvis ved stÃ¸rre versjonsendringer, men
+       de kan ogsÃ¥ forekomme pÃ¥ andre tidspunkter. FÃ¸r du oppgraderer noen DBMS
+       programvare, sjekk dokumentasjonen for Ã¥ se om denne oppgraderingen gjÃ¸r endringer som
        krever omformatering av databasen.
     </para>
 
     <para>
-      Selvfølgelig, hvis du har databaser med innhold som ikke er lett
-      gjenoppbygd, er det alltid en god idé å lage sikkerhetskopier av databasen fra
-      fra tid til annen. Før du oppgraderer serverprogramvaren, bør du kjøre
+      SelvfÃ¸lgelig, hvis du har databaser med innhold som ikke er lett
+      gjenoppbygd, er det alltid en god idÃ© Ã¥ lage sikkerhetskopier av databasen fra
+      fra tid til annen. FÃ¸r du oppgraderer serverprogramvaren, bÃ¸r du kjÃ¸re
       en annen sikkerhetskopi.
     </para>
 
@@ -103,102 +103,102 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
       <note>
         <para>
           En sikkerhetskopi er ubrukelig hvis det ikke er noen bekreftet prosess
-          for å gjenopprette dataene fra denne sikkerhetskopien. Når du kjører en
-          databaseserver, bør du ikke bare lage sikkerhetskopier; du
-          bør også bekrefte at gjenopprettingsprosessen virkelig
-          fungerer. Tiden for å teste gjenopprettingsprosedyren
-          er <emphasis>før</emphasis> du som snarest trenger
-          å gjenopprette tapte data.
+          for Ã¥ gjenopprette dataene fra denne sikkerhetskopien. NÃ¥r du kjÃ¸rer en
+          databaseserver, bÃ¸r du ikke bare lage sikkerhetskopier; du
+          bÃ¸r ogsÃ¥ bekrefte at gjenopprettingsprosessen virkelig
+          fungerer. Tiden for Ã¥ teste gjenopprettingsprosedyren
+          er <emphasis>fÃ¸r</emphasis> du som snarest trenger
+          Ã¥ gjenopprette tapte data.
         </para>
       </note>
 
       <para>
         De fleste databaseserverprogramvare gir noen grunnleggende
-        verktøy for å lage sikkerhetskopier av dataene dine. Vanligvis sikkerhetskopiene opprettet med
-        disse verktøyene kan leses av nyere versjoner av programvaren (via en
-        gjenopprettingsverktøy). Bruk av eldre gjenopprettingsverktøy med nyere sikkerhetskopieringsdata er
-        en dårlig idé; du burde <emphasis>aldri</emphasis> blindt anta det
-        vil fungere. Det kan det, men vanligvis gjør det ikke det.
+        verktÃ¸y for Ã¥ lage sikkerhetskopier av dataene dine. Vanligvis sikkerhetskopiene opprettet med
+        disse verktÃ¸yene kan leses av nyere versjoner av programvaren (via en
+        gjenopprettingsverktÃ¸y). Bruk av eldre gjenopprettingsverktÃ¸y med nyere sikkerhetskopieringsdata er
+        en dÃ¥rlig idÃ©; du burde <emphasis>aldri</emphasis> blindt anta det
+        vil fungere. Det kan det, men vanligvis gjÃ¸r det ikke det.
       </para>
 
       <para>
-        Den enkleste måten å oppgradere databasefilene på er å
+        Den enkleste mÃ¥ten Ã¥ oppgradere databasefilene pÃ¥ er Ã¥
       </para>
 
       <itemizedlist>
         <listitem>
-          <para>Lag en fullstendig sikkerhetskopi av databasen ved å bruke de gamle verktøyene.</para>
+          <para>Lag en fullstendig sikkerhetskopi av databasen ved Ã¥ bruke de gamle verktÃ¸yene.</para>
 
           <para>Dette trinnet oppretter en frakoblet kopi av databasefilene&mdash;for
           langsiktig arkivering, for katastrofegjenoppretting, eller som
-          forberedelse til en oppgradering. Denne offline sikkerhetskopien består av enten (1) en full
+          forberedelse til en oppgradering. Denne offline sikkerhetskopien bestÃ¥r av enten (1) en full
           en-til-en kopi av gjeldende databasefiler, eller (2) en fullstendig sikkerhetskopi av
           databasefiler for et bestemt tidspunkt, pluss alle journaldataene (det vil si
           Oracle&reg; terminologi, kalles det "Kontinuerlig arkivering" eller
           "write ahead log (WAL)" i Postgresql) som beskriver
-          endringer gjort etter dette tidspunktet. Denne andre formen tar mindre tid å lage
-          (hvis DB programvaren gir denne typen journalføring) fordi du bare har
-          å lagre dataene som er endret siden siste fullstendige sikkerhetskopi ble opprettet.</para>
+          endringer gjort etter dette tidspunktet. Denne andre formen tar mindre tid Ã¥ lage
+          (hvis DB programvaren gir denne typen journalfÃ¸ring) fordi du bare har
+          Ã¥ lagre dataene som er endret siden siste fullstendige sikkerhetskopi ble opprettet.</para>
 
           <para>Ved oppgradering av databaseserverprogramvare, en fullstendig sikkerhetskopi
-          (som kan brukes til påfølgende inkrementelle sikkerhetskopier) bør være
-          opprettet; men hvis det er mye data, vil en inkrementell sikkerhetskopi være
+          (som kan brukes til pÃ¥fÃ¸lgende inkrementelle sikkerhetskopier) bÃ¸r vÃ¦re
+          opprettet; men hvis det er mye data, vil en inkrementell sikkerhetskopi vÃ¦re
           nok. Den beste strategien for deg avhenger av
           mengden data som er lagret i databasen din (er det noen hundre tabeller
           rader, eller er det hundrevis av terabyte?). En full backup i sistnevnte tilfelle
-          kan ikke gjøres raskt. For å
+          kan ikke gjÃ¸res raskt. For Ã¥
           fullstendig beskytte dataene dine, lag en sikkerhetskopi av de gamle
           programmene (og/eller deres kilder) og lagre det sammen med datafilene,
-          for å være sikker på at det finnes en reserveløsning hvis
+          for Ã¥ vÃ¦re sikker pÃ¥ at det finnes en reservelÃ¸sning hvis
           den nye programvaren ikke kan lese de gamle dataene.</para>
           </listitem>
 
           <listitem>
             <para>Oppgrader serverprogramvaren</para>
 
-            <para>I dette trinnet, instruksjoner for å bygge databaseserverprogramvaren
-            kjøres akkurat slik de er vist i påfølgende avsnitt
-            om DBM-ene som MariaDB eller Postgresql. Det vil si å bygge
-            programvaren som vanlig ved å bruke BLFS instruksjoner.</para>
+            <para>I dette trinnet, instruksjoner for Ã¥ bygge databaseserverprogramvaren
+            kjÃ¸res akkurat slik de er vist i pÃ¥fÃ¸lgende avsnitt
+            om DBM-ene som MariaDB eller Postgresql. Det vil si Ã¥ bygge
+            programvaren som vanlig ved Ã¥ bruke BLFS instruksjoner.</para>
           </listitem>
 
           <listitem>
-            <para>Gjenopprett databasen ved å bruke de nye verktøyene.</para>
+            <para>Gjenopprett databasen ved Ã¥ bruke de nye verktÃ¸yene.</para>
 
-            <para>For å gjenopprette dataene, verktøyene til den nylig installerte serverprogramvaren
+            <para>For Ã¥ gjenopprette dataene, verktÃ¸yene til den nylig installerte serverprogramvaren
             skal brukes. Under restaureringsprosessen, den nye
-            verktøyet vil opprette og/eller oppgradere datafilene i formatet
+            verktÃ¸yet vil opprette og/eller oppgradere datafilene i formatet
             som ny programvare krever. Det antas at nyere programvare er i stand til
             lese gamle data.</para>
           </listitem>
           </itemizedlist>
 
       <para>
-        Siden du allerede har en sikkerhetskopiprosedyre på plass (og du
+        Siden du allerede har en sikkerhetskopiprosedyre pÃ¥ plass (og du
         har testet gjenopprettingsprosedyren din, ikke sant?), kan dette
-        være den enkleste måten å oppgradere siden du kan bruke dine velkjente
-        prosesser for å oppgradere akkurat som du alltid gjør&mdash;i det minste når det gjelder
+        vÃ¦re den enkleste mÃ¥ten Ã¥ oppgradere siden du kan bruke dine velkjente
+        prosesser for Ã¥ oppgradere akkurat som du alltid gjÃ¸r&mdash;i det minste nÃ¥r det gjelder
         sikkerhetskopieringen og gjenopprettingen.
       </para>
 
     </sect3>
 
     <sect3>
-      <title>Oppgrader Databasefilene ved å Bruke Systemverktøy</title>
+      <title>Oppgrader Databasefilene ved Ã¥ Bruke SystemverktÃ¸y</title>
 
       <para>
         Noen databasesystemer (for eksempel Postgresql) gir
-        et verktøy som kan omformatere (oppgradere) de eksisterende databasefilene
+        et verktÃ¸y som kan omformatere (oppgradere) de eksisterende databasefilene
         til det nye formatet.
-        Hvis du trenger å gjenopprette fra en sikkerhetskopi (for eksempel kjøring av
-        oppgraderingsverktøyet mislyktes) må du installere den gamle programvaren på nytt
-        for å gjenopprette dataene dine.
+        Hvis du trenger Ã¥ gjenopprette fra en sikkerhetskopi (for eksempel kjÃ¸ring av
+        oppgraderingsverktÃ¸yet mislyktes) mÃ¥ du installere den gamle programvaren pÃ¥ nytt
+        for Ã¥ gjenopprette dataene dine.
       </para>
 
       <para>
-        Selv om omformateringsverktøyene kan fungere som annonsert,
-        bør du lage en fullstendig sikkerhetskopi før du kjører dem. En feil
-        kan forårsake alvorlig skade på databasen.
+        Selv om omformateringsverktÃ¸yene kan fungere som annonsert,
+        bÃ¸r du lage en fullstendig sikkerhetskopi fÃ¸r du kjÃ¸rer dem. En feil
+        kan forÃ¥rsake alvorlig skade pÃ¥ databasen.
       </para>
 
     </sect3>
@@ -213,7 +213,7 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
 
       <!-- might add some advanced notes for the DBMS here -->
 
-      <para>Oppstrøms dokumentasjon for sikkerhetskopiering/gjenoppretting:
+      <para>OppstrÃ¸ms dokumentasjon for sikkerhetskopiering/gjenoppretting:
         <ulink url="https://www.postgresql.org/docs/current/backup.html"/>
       </para>
 
@@ -224,7 +224,7 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
 
       <!-- might add some advanced notes for the DBMS here -->
 
-      <para>Oppstrøms dokumentasjon for sikkerhetskopiering/gjenoppretting:
+      <para>OppstrÃ¸ms dokumentasjon for sikkerhetskopiering/gjenoppretting:
         <ulink url="https://mariadb.com/kb/en/backup-and-restore-overview/"/>
       </para>
 
@@ -236,16 +236,16 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
       <!-- might add some advanced notes for the DBMS here -->
 
       <para>Ikke undervurder <application>Sqlite</application>. Det er en
-      funksjonsrikt DBMS. Hovedforskjellen fra de to store aktørene ovenfor er
+      funksjonsrikt DBMS. Hovedforskjellen fra de to store aktÃ¸rene ovenfor er
       at Sqlite ikke gir tilgang via en nettverks API. SQLite databaser
-      er alltid lagret på maskinen som kjører programmet som
-      bruker databasen. Manipulering av datainnhold gjøres via API kall
+      er alltid lagret pÃ¥ maskinen som kjÃ¸rer programmet som
+      bruker databasen. Manipulering av datainnhold gjÃ¸res via API kall
       til bibliotekfunksjoner direkte i programmet.</para>
 
-      <para>I oppstrømsdokumentasjonen kan du finne følgende
+      <para>I oppstrÃ¸msdokumentasjonen kan du finne fÃ¸lgende
       nyttig:</para>
 
-      <para>Dokumentasjon av kommandolinjeverktøyet sqlite3:
+      <para>Dokumentasjon av kommandolinjeverktÃ¸yet sqlite3:
         <ulink url="https://www.sqlite.org/cli.html"/>
       </para>
 
@@ -254,8 +254,8 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
       </para>
 
       <para>Dessverre er det ikke noe dedikert kapittel i
-      oppstrøms dokumentasjon som snakker om sikkerhetskopiering/gjenoppretting, men
-      det er flere artikler om det på
+      oppstrÃ¸ms dokumentasjon som snakker om sikkerhetskopiering/gjenoppretting, men
+      det er flere artikler om det pÃ¥
       Internett. Her er et eksempel.</para>
 
       <para>Dokumentasjon for sikkerhetskopiering/gjenoppretting:
@@ -265,17 +265,17 @@ Oct 26 17:11:53 SRVNAME systemd[1]: Failed to start PostgreSQL database server.<
     </sect3>
 
     <sect3>
-      <title>Berkeley DB</title>
+      <title>LMDB</title>
 
       <!-- might add some advanced notes for the DBMS here -->
 
       <para>Som <application>Sqlite</application>, denne
-      programvaren virker på lokale databasefiler; det er ingen
+      programvaren virker pÃ¥ lokale databasefiler; det er ingen
       nettverksgrensesnitt.</para>
 
-      <para>De relevante ressursene for å sikkerhetskopiere/gjenopprette en Berkeley database
-      er man sidene for <filename>db_dump</filename> og dets
-      motpart <filename>db_load</filename>.</para>
+      <para>De relevante ressursene for Ã¥ sikkerhetskopiere/gjenopprette en LMDB-database
+      er manualsidene for <filename>mdb_dump</filename> og dets
+      motpart <filename>mdb_load</filename>.</para>
 
     </sect3>
   </sect2>
