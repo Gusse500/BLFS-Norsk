@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -23,18 +23,79 @@
  the links all point to the top of the page. -->
 
     <para>
-      Hvis du kun leser tekst på engelsk, og er fornøyd med vanlige libre
-      fonter som er oppført på neste side, trenger du kanskje aldri å bekymre deg for
-      detaljer om hvordan <application>fontconfig</application> virker. Men det er
-      mange ting som kan endres hvis de ikke passer dine behov.
+      Hvis du kun leser tekst pÃ¥ engelsk, og er fornÃ¸yd med vanlige libre
+      fonter som er oppfÃ¸rt pÃ¥ neste side, trenger du kanskje aldri Ã¥ bekymre deg for
+      detaljer om hvordan <application>Fontconfig</application> virker. Men det er
+      mange ting som kan endres hvis de ikke passer dine behov, hvorfor de kanskje ikke alltid fungerer,
+      og for Ã¥ identifisere nettbasert informasjon som ikke lenger er hensiktsmessig.
     </para>
 
     <para>
+      Dessverre er noe av terminologien tvetydig (f.eks. 'font face' kan
+      betyr et navn kjent for Fontconfig, <emphasis>eller</emphasis> det vanlige,
+      kondenserte, etc variasjoner av en font) og 'stil' kan brukes til
+      skille 'vanlig' fra 'kursiv', eller ved Ã¥ beskrive noen klasser av
+      Serif fonter.
+    </para>
+
+    <para>FÃ¸lgende lenker er for Ã¥ hjelpe navigering pÃ¥ denne siden.</para>
+    <itemizedlist>
+      <listitem>
+        <para><xref linkend="xft-font-protocol"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="useful-commands"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="the-various-files"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="rules-to-choose-a-font"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="hinting-and-antialiasing"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="disabling-bitmap-fonts"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="synthetic-changes"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="adding-extra-directories"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="preferring-certain-fonts"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="fontconfig-user-docs"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="prefer-a-specific-font"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="prefer-chosen-CJK-fonts"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="editing-old-style-conf-files"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="font-weights"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="items-which-can-override-fontconfig"/></para>
+      </listitem>
+      <listitem>
+        <para><xref linkend="external-links"/></para>
+      </listitem>
+    </itemizedlist>
+
+    <para>
       Selv om denne siden er lang, skraper den knapt overflaten, og du vil
-      være i stand til å finne mange alternative synspunkter på nettet (men husk
-      at noen ting har endret seg gjennom årene, for eksempel autohinter
-      er ikke lenger standard). Målet her er å gi deg nok informasjon
-      for å forstå endringene du gjør.
+      vÃ¦re i stand til Ã¥ finne mange alternative synspunkter pÃ¥ nettet (men husk
+      at noen ting har endret seg gjennom Ã¥rene, for eksempel autohinter
+      er ikke lenger standard). MÃ¥let her er Ã¥ gi deg nok informasjon
+      for Ã¥ forstÃ¥ endringene du gjÃ¸r.
     </para>
 
     </sect2>
@@ -45,18 +106,18 @@
     <para>
       Xft fontprotokollen gir kantutjevnet skriftgjengivelse gjennom
       <application>freetype</application>, og fonter styres fra
-      klientsiden ved bruk av <application>fontconfig</application> (utenom
-      <xref linkend="rxvt-unicode"/> som kan bruke fonter oppført i
+      klientsiden ved bruk av <application>Fontconfig</application> (utenom
+      <xref linkend="rxvt-unicode"/> som kan bruke fonter oppfÃ¸rt i
       <filename>~/.Xresources</filename>, og <xref linkend="abiword"/> som
-      bruker kun den angitte fonten). Standard søkesti er <filename
+      bruker kun den angitte fonten). Standard sÃ¸kesti er <filename
       class="directory">/usr/share/fonts</filename> og <filename
-      class="directory">~/.local/share/fonts</filename>, selv om for øyeblikket
+      class="directory">~/.local/share/fonts</filename>, selv om for Ã¸yeblikket
       den gamle og utdaterte plasseringen <filename
       class="directory">~/.fonts</filename> virker fortsatt.
-      <application>Fontconfig</application> søker mapper i stien sin
+      <application>Fontconfig</application> sÃ¸ker mapper i stien sin
       rekursivt og opprettholder en hurtigbuffer med fontkarakteristikkene i hver
-      mappe. Hvis hurtiglageret ser ut til å være utdatert, ignoreres den, og
-      informasjon hentes fra selve fonten (det kan ta noen få
+      mappe. Hvis hurtiglageret ser ut til Ã¥ vÃ¦re utdatert, ignoreres den, og
+      informasjon hentes fra selve fonten (det kan ta noen fÃ¥
       sekunder hvis du har mange fonter installert).
     </para>
 
@@ -69,18 +130,18 @@
       opprettet fra <filename class="directory">OTF</filename> og <filename
       class="directory">TTF</filename> <application>X</application> font
       mapper til <filename
-      class="directory">/usr/share/fonts/X11-{OTF,TTF}</filename>. Dette tillater
-      <application>Fontconfig</application> for å bruke OpenType og TrueType
-      fonter levert av <application>X</application>, selv om mange mennesker vil
-      foretrekke å bruke mer moderne fonter.
+      class="directory">/usr/share/fonts/X11-{OTF,TTF}</filename> i Xorg Fonter.
+      Dette tillater <application>Fontconfig</application> Ã¥ bruke OpenType og
+      TrueType fonter levert av <application>X</application>, selv om mange
+      vil foretrekke Ã¥ bruke mer moderne fonter.
     </para>
 
     <para>
-      <application>Fontconfig</application> bruker navn for å definere fonter.
+      <application>Fontconfig</application> bruker navn for Ã¥ definere fonter.
       Applikasjoner bruker vanligvis generiske skriftnavn som "Monospace", "Sans"
-      og "Serif". <application>Fontconfig</application> løser disse navnene
+      og "Serif". <application>Fontconfig</application> lÃ¸ser disse navnene
       til en font som har alle tegn som dekker ortografien til
-      språket som er angitt av lokalinnstillingene.
+      sprÃ¥ket som er angitt av lokalinnstillingene.
     </para>
 
     </sect2>
@@ -89,36 +150,63 @@
     <title>Nyttige kommandoer</title>
 
     <para>
-      Følgende kommandoer kan være nyttige når du arbeider med fontconfig:
+      FÃ¸lgende kommandoer kan vÃ¦re nyttige nÃ¥r du arbeider med
+      <application>Fontconfig</application>,
+      spesielt hvis du er interessert i Ã¥ overstyre hvilken font som skal bli
+      brukt.
     </para>
 
     <para>
       <command>fc-list | less</command> : viser en liste over alle tilgjengelige fonter
-      (/sti/til/filnavn: Fontnavn:stil). Hvis du installerte en font mer enn
-      30 sekunder siden, men det vises ikke, da er det eller en av mappene
-      ikke lesbar av brukeren din.
+      (/sti/til/filnavn: Fontnavn:stil). Hvis du installerte en font og den
+      ikke vises, kan ikke mappen den finnes i leses av
+      brukeren din
     </para>
 
     <para>
       <command>fc-match 'Font Name'</command> : forteller deg hvilken font
       som brukes hvis den navngitte fonten er forespurt. Vanligvis vil du bruke dette til
-      å se hva som skjer hvis en font du ikke har installert blir forespurt, men du
-      kan også bruke den hvis systemet gir deg en annen font enn
-      hva du forventet (kanskje fordi <application>fontconfig</application>
-      tror ikke at fonten støtter språket ditt).
+      Ã¥ se hva som skjer hvis en font du ikke har installert blir forespurt, men du
+      kan ogsÃ¥ bruke den hvis systemet gir deg en annen font enn
+      hva du forventet (kanskje fordi <application>Fontconfig</application>
+      tror ikke at fonten stÃ¸tter sprÃ¥ket ditt).
     </para>
 
     <para>
-      <command>fc-match -a 'Type' | less</command> : gir en liste over alle
-      fonter som kan brukes for den typen (Monospace, Sans, Serif). Noter at
-      i ekstreme tilfeller vil <application>fontconfig</application> ta en glyff fra
-      hvilken som helst tilgjengelig font, selv om den ikke er av den angitte typen, og med mindre den
-      vet om skriftens type, vil den anta at det er Sans.
+      <command>fc-match <replaceable>TYPE</replaceable></command> : viser hvilken
+      font vil bli brukt pÃ¥ gjeldende sprÃ¥k for
+      <!-- match style of TYPE in command and explanations -->
+      <replaceable>TYPE</replaceable> (Monospace, Sans, Serif <emphasis>(fÃ¸rste
+      stor bokstav er valgfritt)</emphasis>). Hvis den skriften ikke kartlegger et
+      kodepunkt, <application>Fontconfig</application> kan ta en glyph fra hvilken som helst
+      tilgjengelig skrift, selv om den ikke er av den angitte typen. Enhver annen verdi
+      for <replaceable>TYPE</replaceable> vil antas Ã¥ vÃ¦re Sans.
     </para>
 
     <para>
-      Hvis du ønsker å vite hvilken font vil brukes til en tekststreng
-      (dvs. en eller flere glyfer, innledet av et mellomrom), lim inn følgende
+      <command>fc-match 'Serif :lang=ja:weight=bold'</command> vil fortelle deg
+      hvilken font og vekt som skal velges for japansk tekst i fet skrift.
+      Det betyr ikke at den rapporterte fonten nÃ¸dvendigvis vil kunne vises
+      Japanske ideogrammer, sÃ¥ en reserve kan brukes, eller noen glyfer kan vÃ¦re
+      savnet. For sprÃ¥kkoder, bruk ISO-639-verdier som 'fr', 'ja', 'zh-cn'.
+      Merk at en ukjent verdi som bare 'zh' ikke vil returnere noen
+      samsvar. For Ã¥ illustrere tilbakefallet, pÃ¥ et system hvor bÃ¥de Noto Sans Mono
+      og DejaVu Sans Mono er installert, <command>fc-match 'monospace
+      :lang=en</command> viser Noto Sans Mono vil bli brukt, men hvis lang er
+      endret til 'ar' (arabisk) DejaVu Sans vil bli brukt.
+    </para>
+
+    <para>
+      Hvis du vil finne ut om en skriftfil har hinting (mange eldre skrifter har ikke,
+      fordi det var patentert) bruk <command>fc-query
+      <replaceable>/sti/til/fontfil</replaceable> | grep 'fonthashint:'</command>:
+      som vil rapportere 'True(s)' eller 'False(s)'. Noen nyere fonter med bÃ¥de TTF
+      og OTF versjoner vil ha hinting i TTF filene.
+    </para>
+
+    <para>
+      Hvis du Ã¸nsker Ã¥ vite hvilken font vil brukes til en tekststreng
+      (dvs. en eller flere glyfer, innledet av et mellomrom), lim inn fÃ¸lgende
       kommando og erstatt <literal>xyz</literal> av teksten du vil
       sjekke:
     </para>
@@ -127,29 +215,29 @@
       <command>FC_DEBUG=4 pango-view --font=monospace -t xyz | grep
       family</command> : dette krever <xref linkend="pango"/> og <xref
       linkend="imagemagick"/> - det vil <xref linkend="display"/>
-      vise teksten i et lite vindu, og etter å ha lukket det den siste
+      vise teksten i et lite vindu, og etter Ã¥ ha lukket det den siste
       linjen av utdata vil vise hvilken font som ble valgt. Dette er
-      spesielt nyttig for CJK språk, og du kan også gi et
-      språk, f.eks. PANGO_LANGUAGE=en;ja (engelsk, anta deretter japansk)
-      eller bare zh-cn (eller andre varianter - 'zh' alene er ikke gyldig).
+      spesielt nyttig for CJK sprÃ¥k, og du kan ogsÃ¥ gi et
+      sprÃ¥k, f.eks. PANGO_LANGUAGE=en;ja (engelsk, anta deretter japansk)
+      eller bare zh-cn (eller andre varianter som zh-sg eller zh-tw).
     </para>
 
     </sect2>
 
-    <sect2 role="configuration" id="the-various-files" xreflabel="De ulike filene">
-    <title>De ulike filene</title>
+    <sect2 role="configuration" id="the-various-files" xreflabe="Konfigurasjonsfilene">
+    <title>Konfigurasjonsfilene</title>
 
     <para>
       Hovedfilene er i <filename class="directory">/etc/fonts/conf.d/</filename>,
-      som var ment å være en mappe fylt med symbolkoblinger til noen av filene
+      som var ment Ã¥ vÃ¦re en mappe fylt med symbolkoblinger til noen av filene
       i <filename class="directory">/usr/share/fontconfig/conf.avail/</filename>.
       Men mange mennesker, og noen pakker, lager filene direkte. Hvert filnavn
-      må være i form av to sifre, en bindestrek, somename.conf og de leses inn
-      i rekkefølge.
+      mÃ¥ vÃ¦re i form av to sifre, en bindestrek, somename.conf og de leses inn
+      i rekkefÃ¸lge.
     </para>
 
     <para>
-      Etter konvensjon er tallene tildelt som følger:
+      Etter konvensjon er tallene tildelt som fÃ¸lger:
     </para>
 
     <itemizedlist>
@@ -195,7 +283,7 @@
       </listitem>
       <listitem>
         <para>
-          80-89 samsvar med målskanning (endre skannede mønstre)
+          80-89 samsvar med mÃ¥lskanning (endre skannede mÃ¸nstre)
         </para>
       </listitem>
       <listitem>
@@ -206,48 +294,161 @@
     </itemizedlist>
 
     <para>
-      Du kan også ha en personlig <filename>fonts.conf</filename> i
+      Du kan ogsÃ¥ ha en personlig <filename>fonts.conf</filename> i
       $XDG_CONFIG_HOME (which is <filename
       class="directory">~/.config/fontconfig/</filename>).
     </para>
 
   </sect2>
 
-  <sect2 role="configuration" id="rules-to-choose-a-font" xreflabel="Reglene for å velge en font">
-  <title>Reglene for å velge en font</title>
+  <sect2 role="configuration" id="rules-to-choose-a-font" xreflabel="Reglene for Ã¥ velge en font">
+  <title>Reglene for Ã¥ velge en font</title>
 
     <para>
       Hvis den forespurte fonten er installert, og forutsatt at den inneholder
-      kodepunkter <emphasis>nødvendig</emphasis> for gjeldende språk (i
+      kodepunkter <emphasis>nÃ¸dvendig</emphasis> for gjeldende sprÃ¥k (i
       kilden, se .orth-filene i <filename
     class="directory">fc-lang/</filename> mappen), vil den bli brukt.
     </para>
 
     <para>
       Derimot, hvis dokumentet eller siden ba om en font som ikke er installert
-      (eller noen ganger ikke inneholder alle de nødvendige kodepunktene)
-      følgende regler kommer inn: Først,
-      <filename>30-metric-aliases.conf</filename> brukes til å kartlegge aliaser for
-      noen fonter med samme beregninger (samme størrelse osv.). Etter det, en
-      ukjent font vil bli søkt etter i <filename>45-latin.conf</filename> -
-      hvis det blir funnet, vil det bli kartlagt som Serif eller Monospace eller Sans, ellers
-      vil antas å være Sans. Deretter <filename>50-latin.conf</filename>
-      gir ordnede lister over reservene - <xref linkend="dejavu-fonts"/>
-      vil bli brukt hvis du installerte dem. Kyrillisk og gresk ser ut til å bli
-      behandlet på samme måte. Det finnes lignende filer med et 65- prefiks for
-      Persiske og andre ikke-latinske skriftsystemer. Alle disse filene foretrekker
-      kommersielle fonter hvis de er til stede, selv om moderne libre fonter er
-      ofte minst like.
+      (eller noen ganger ikke inneholder alle de nÃ¸dvendige kodepunktene)
+      fÃ¸lgende regler kommer inn: FÃ¸rst,
+      <filename>30-metric-aliases.conf</filename> brukes til Ã¥ kartlegge aliaser for
+      noen fonter med samme beregninger (samme stÃ¸rrelse osv.). Merk at det finnes
+      bÃ¥de svake og sterke aliaser slik at aliaser for en form som f.eks
+      Helvetica eller Times New Roman kan tilfredsstilles av den andre stilen, dvs.
+      alt som er et alias for Arial eller Times i disse eksemplene. noen
+      eksempler pÃ¥ latinske skrifter med samme beregninger finner du i
+      'Erstatninger' PDFer pÃ¥ <ulink
+      url="http://zarniwhoop.uk/files/PDF-substitutes/">zarniwhoop.uk.</ulink>
     </para>
 
     <para>
-      Siden fontconfig-2.12.5, er det også generisk familietilpasning for noen
+      Etter det vil en ukjent font bli sÃ¸kt etter i
+      <filename>45-latin.conf</filename>:
+      'Latin' dekker kyrillisk og gresk, og kartlegger nÃ¥ ogsÃ¥ system-ui fonter som
+      brukes for brukergrensesnittmeldinger i andre alfabeter. Hvis fonten
+      er funnet vil det bli kartlagt som serif, sans-serif, monospace, fantasy,
+      kursiv, eller system-ui. Ellers vil 49-sansserif.conf anta at det er
+      Sans.
+    </para>
+    <para>
+      Deretter <filename>60-latin.conf</filename>
+      gir ordnede lister over reservene - <xref linkend="noto-fonts"/>
+      vil bli brukt hvis du installerte dem. Kyrillisk og gresk ser ut til Ã¥ bli
+      behandlet pÃ¥ samme mÃ¥te. Alle disse filene foretrekker
+      kommersielle fonter hvis de er til stede, selv om moderne libre fonter er
+      ofte minst like. Til slutt, hvis et kodepunkt fortsatt ikke er funnet, kan det
+      tas fra hvilken som helst tilgjengelig systemfont. FÃ¸lgende detaljer
+      nevner kun fritt tilgjengelige fonter.
+    </para>
+
+    <para>
+      Standard persiske fonter behandles i
+      <filename>65-fonts-persian.conf</filename>. Det ser ut som om alle de oppfÃ¸rte
+      fonter er kommersielle. Bruke skrifter som stÃ¸tter persisk (som har sin egen
+      variant av det arabiske alfabetet, og dets egne skriftstiler) er utenfor
+      ferdighetene til BLFS redaktÃ¸rene.
+    </para>
+
+    <para>
+      Alle gjenvÃ¦rende skript for hvilke <application>Fontconfig</application> har
+      preferanser (CJK-skript,
+      Indiske skript) er behandlet i <filename>65-nonlatin.conf</filename>.
+      Disse er igjen nominelt gruppert som Serif, Sans-Serif, Monospace. Av
+      gratis fonter, WenQuanYi Zen Hei (Pan-CJK Sans) kommer fÃ¸rst for bÃ¥de Serif
+      og for Sans. Derfor, hvis du installerer dette som en reserve, men Ã¸nsker Ã¥
+      bruke forskjellige fonter for japansk eller koreansk du mÃ¥ sette opp en
+      preferanse. PÃ¥ samme mÃ¥te er den gamle fireflysung Serif-fonten ogsÃ¥ oppfÃ¸rt for
+      Sans.
+    </para>
+
+    <para>
+      Etter Pan-CJK og kinesiske fonter kommer flere japanske fonter og deretter
+      flere koreanske fonter (begge delt riktig mellom Sans og Serif).
+      Til slutt kommer de forskjellige Lohit Indic-familiene (Ã©n fontfil per skript),
+      merket som bÃ¥de Sans og Serif.
+    </para>
+
+    <para>
+      Monospace fontene som er oppfÃ¸rt i <filename>65-nonlatin.conf</filename>
+      inkludere ikke WenQuanYi Zen Hei selv om det vil vÃ¦re tilgjengelig som en
+      fallback hvis installert. Flere japanske gotiske fonter er oppfÃ¸rt, fulgt
+      av AR PL KaitiM GB (en zh-sc 'Brush'-font), AR PL Serif-fonter for zh-sc
+      (SungtiL) og zh-tw (Mingti2L), noen koreanske Sans-fonter og de forskjellige
+      Lohit Indic-familier.
+    </para>
+
+    <para>
+     For UI fonter er forskjellige Noto Sans UI fonter de eneste oppfÃ¸rte gratis skriftene.
+    </para>
+
+    <para>
+      De forskjellige Noto CJK fontene er <emphasis>ikke</emphasis> blant de oppfÃ¸rte
+      fonter, muligens foretrakk RedHat utviklerne andre fonter. Disse
+      kommer nÃ¥ i mange varianter, og de fleste brukere som bruker disse vil ikke installere
+      andre CJK fonter.
+    </para>
+
+    <para>
+      FÃ¸r Fontconfig-2.14 var den fÃ¸rste foretrukne latinske fontfamilien Bitstream
+      Vera. I praksis ble det lite brukt fordi det dekket sÃ¥ lite. Etter
+      at DejaVu var den neste foretrukne familien, sÃ¥ folk ble anbefalt Ã¥
+      installer det. Det har nÃ¥ endret seg, Bitstream Vera er erstattet av
+      relevante Noto fonter (Serif, Sans, Sans Mono), sÃ¥ disse vil bli foretrukket hvis
+      de er installert, etterfulgt av DejaVu.
+    </para>
+
+    <para>
+      For serif kunne Times New Roman ha blitt alias fra Liberation Serif eller
+      Tinos og Times fra TeX Gyre Termes, sÃ¥ selv om de navngitte fontene ikke er
+      gratis, de metriske kompatible skriftene kan brukes. Ignorerer andre ikke-frie skrifter,
+      den resterende rekkefÃ¸lgen for serif er: Times New Roman, Luxi Serif, Nimbus Roman
+      No9 L, og Times. I praksis betyr det disse skriftene pÃ¥ slutten av listen
+      vil neppe bli brukt med mindre en nettside ber om dem.
+    </para>
+
+    <para>
+      For sans-serif er den gjenvÃ¦rende rekkefÃ¸lgen alt som er tilordnet Arial, Luxi Sans,
+      Nimbus Sans L, og alt som er kartlagt til Helvetica.
+    </para>
+
+    <para>
+      De resterende alternativene for monospace er Inconsolata, alt kartlagt
+      til Courier New, Luxi Mono, Nimbus Mono og alt som er kartlagt til Courier.
+    </para>
+
+    <para>
+      For 'fantasy' er det ingen gratis fonter, sÃ¥
+      <application>Fontconfig</application> vil falle tilbake til sans-serif.
+    </para>
+
+    <para>
+      For 'kursiv' er den eneste gratis fonten TeX Gyre Chorus som et alias for
+      ITC Zapf kanselli, ellers vil <application>Fontconfig</application> 
+      igjen falle tilbake til sans-serif.
+    </para>
+
+    <para>
+      System-ui kategorien er uvanlig. Det er for grensesnittmeldinger, sÃ¥ noen
+      skript trenger spesialversjoner for Ã¥ passe inn i den tilgjengelige plassen. For latin,
+      Gresk og kyrillisk en vanlig sans-font burde passe uten problemer. Derimot,
+      den fÃ¸rste foretrukne fonten er Cantarell, etterfulgt av Noto Sans UI. Cantarell
+      startet som en latinsk sans-serif font, som har blitt forgrenet i Gnome under
+      samme navn, men de gir bare kilden. Noto Sans UI fontene er
+      for andre sprÃ¥k.
+     </para>
+
+    <para>
+      Siden Fontconfig-2.12.5, er det ogsÃ¥ generisk familietilpasning for noen
       emoji og matematiske fonter, se {45,60}-generic.conf.
     </para>
 
     <para>
       I de sjeldne tilfellene hvor en font ikke inneholder alle forventede
-      kodepunkter, se 'Prøv den første:' på <xref
+      kodepunkter, se 'PrÃ¸v den fÃ¸rste:' pÃ¥ <xref
       linkend="I-stared-into-the-fontconfig"/> for de lange detaljene.
     </para>
 
@@ -257,19 +458,20 @@
   <title>Antyding og Anti-aliasing</title>
 
     <para>
-      Det er mulig å endre hvordan, eller om, fonter antydes. Følgende
+      Det er mulig Ã¥ endre hvordan, eller om, fonter antydes. FÃ¸lgende
       eksempelfil inneholder standardinnstillingene, men med kommentarer.
       Innstillingene er mye ned til brukerens preferanser og til valget
-      av fonttyper, så en endring som forbedrer noen sider kan forverre andre.
+      av fonttyper, sÃ¥ en endring som forbedrer noen sider kan forverre andre.
       Den foretrukket plassering for denne filen er:
      <filename>~/.config/fontconfig/fonts.conf</filename>
     </para>
 
     <para>
-      For å prøve ut forskjellige innstillinger, må du kanskje avslutte Xorg og deretter
-      kjøre <command>startx</command> en gang til slik at alle applikasjoner bruker de nye
-      innstillingene. Hvis du bruker Gnome, KDE eller LXQt, kan skrivebordene deres overstyre
-      disse endringene. For å utforske mulighetene, lag en fil for brukeren din:
+      For Ã¥ prÃ¸ve ut forskjellige innstillinger, mÃ¥ du kanskje avslutte Xorg og deretter
+      kjÃ¸re <command>startx</command> en gang til slik at alle applikasjoner bruker de nye
+      innstillingene. Flere ting kan overstyre fontconfig innstillingene, se
+      <xref linkend="items-which-can-override-fontconfig"/> nedenfor for mer
+      detaljer. For Ã¥ utforske mulighetene, lag en fil for brukeren din:
     </para>
 
 <screen><userinput>mkdir -pv ~/.config/fontconfig &amp;&amp;
@@ -292,9 +494,12 @@ cat > ~/.config/fontconfig/fonts.conf &lt;&lt; "EOF"
 
     &lt;!-- options for hintstyle:
     hintfull: is supposed to give a crisp font that aligns well to the
-    character-cell grid but at the cost of its proper shape.
+    character-cell grid but at the cost of its proper shape. However, anything
+    using Pango >= 1.44 will not support full hinting, Pango now uses harfbuzz
+    for hinting. Apps which use Skia (e.g. Chromium, Firefox) should not be
+    affected by this. <!-- https://github.com/harfbuzz/harfbuzz/issues/2394 -->
 
-    hintmedium: poorly documented, maybe a synonym for hintfull.
+    hintmedium: is reported to be broken.
     hintslight is the default: - supposed to be more fuzzy but retains shape.
 
     hintnone: seems to turn hinting off.
@@ -316,15 +521,42 @@ cat > ~/.config/fontconfig/fonts.conf &lt;&lt; "EOF"
 EOF</userinput></screen>
 
     <para>
-      Du må nå redigere filen i ditt foretrukne redigeringsprogram.
+      Du mÃ¥ nÃ¥ redigere filen i ditt foretrukne redigeringsprogram. Mange av de
+      ulike innstillinger gir svÃ¦rt subtile forskjeller og resultatene kan variere
+      for noen av skriftene du bruker.
     </para>
 
+    <note>
+      <para>
+        Hint, hvis aktivert, gjÃ¸res i <application>FreeType</application>.
+        Siden FreeType-2.7 er standard TrueType tolk v40. Den
+        originale v35 hint kan aktiveres av en miljÃ¸variabel, men
+        er egentlig bare passende for originale Microsoft TTF fonter (Arial, osv.).
+        V38 hinter (Infinality) er ikke bygget som standard og alle alternativene
+        for Ã¥ stille den er fjernet. For fullstendige detaljer se <xref
+        linkend="subpixel-hinting"/> (Spoiler: det er INGEN sub-piksel hint,
+        koden ignorerer ganske enkelt <emphasis>alle</emphasis> horisontale hint
+        instruksjoner).
+      </para>
+
+      <para>
+        Xorg antar at skjermer har 96 punkter per tomme (DPI). De fleste LCD skjermer er
+        nÃ¦r dette, men noen mennesker oppdager fargekanter hvis skjermen deres
+        avviker fra den stÃ¸rrelsen. Se <xref linkend="calc-dpi"/>.
+      </para>
+
+      <para>
+        Hvis du har en High DPI skjerm (ofte beskrevet som '4K' eller stÃ¸rre), vil du
+        sannsynligvis bruke stÃ¸rre skriftstÃ¸rrelser og dra nytte av Ã¥ deaktivere hinting.
+      </para>
+    </note>
+
     <para>
-      For flere eksempler se blfs støttetråden som startet på <ulink
+      For flere eksempler se blfs stÃ¸ttetrÃ¥den som startet pÃ¥ <ulink
       url="https://lists.linuxfromscratch.org/sympa/arc/blfs-support/2016-09/msg00128.html">2016-09/00128</ulink>,
       spesielt <ulink
       url="https://lists.linuxfromscratch.org/sympa/arc/blfs-support/2016-09/msg00137.html">2016-09/00137</ulink>,
-      og originaloppretteren sin foretrukne løsning på <ulink
+      og originaloppretteren sin foretrukne lÃ¸sning pÃ¥ <ulink
       url="https://lists.linuxfromscratch.org/sympa/arc/blfs-support/2016-09/msg00147.html">2016-09/00147</ulink>.
       Det er andre eksempler i <xref linkend="arch-fontconfig"/> og <xref
       linkend="gentoo-fontconfig"/>.
@@ -332,15 +564,15 @@ EOF</userinput></screen>
 
   </sect2>
 
-  <sect2 role="configuration" id="disabling-bitmap-fonts" xreflabel="Disabling Bitmap fonts">
+  <sect2 role="configuration" id="disabling-bitmap-fonts" xreflabel="Deaktivering av Bitmap Fonter">
   <title>Deaktivering av Bitmap Fonter</title>
 
     <para>
       I tidligere versjoner av BLFS var de stygge gamle Xorg bitmap fontene
-      installert. Nå er det mange som ikke trenger å installere noen av dem. Men hvis
+      installert. NÃ¥ er det mange som ikke trenger Ã¥ installere noen av dem. Men hvis
       du av en eller annen grunn har installert en eller flere punktgrafikkfonter, kan du
-      hindre dem i å bli brukt av <application>fontconfig</application> ved å
-      opprette følgende fil som &root; bruker :
+      hindre dem i Ã¥ bli brukt av <application>Fontconfig</application> ved Ã¥
+      opprette fÃ¸lgende fil som &root; bruker :
     </para>
 
 <screen role="root"><userinput>cat > /etc/fonts/conf.d/70-no-bitmaps.conf &lt;&lt; "EOF"
@@ -360,66 +592,86 @@ EOF</userinput></screen>
 
   </sect2>
 
-  <sect2 role="configuration" id="adding-extra-directories" xreflabel="Adding extra font directories">
+  <sect2 role="configuration" id="synthetic-changes" xreflabel="Syntetiske endringer">
+  <title>Syntetiske endringer</title>
+
+  <para>
+    I <filename>90-synthetic.conf</filename> det finnes eksempler pÃ¥ Ã¥ aktivere
+    syntetisk skrÃ¥stilt og dristig til en font. Den syntetiske oppmuntrende kan
+    brukes pÃ¥ en synlig svak skrift, men resultatene er ikke alltid like
+    forventet: Med bare embolden, <application>Epiphany</application> viste
+    mÃ¸rkere skrifter mens <application>Firefox</application> gjorde ikke - sÃ¥ selv om
+    <application>Cairo</application> brukes nÃ¥ av
+    <application>firefox</application> kommentaren om innstilling av vekt er ennÃ¥
+    gyldig. Men setter begge deler, <application>Epiphany</application> vil vise fet skrift
+    tekst som standard, men den vil vise tung tekst hvis markup for fet brukes. I begge
+    tilfeller heller ikke
+    <application>libreOffice</application> eller <application>falkon</application>
+    viste tykkere tekst.
+  </para>
+
+  </sect2>
+
+  <sect2 role="configuration" id="adding-extra-directories" xreflabel="Legge til ekstra fontmapper">
   <title>Legge til ekstra fontmapper</title>
 
     <para>
       Normalt er systemfonter og brukerfonter installert i mapper under
       stedene spesifisert i <xref linkend="xft-font-protocol"/> og det
-      er ingen åpenbar grunn til å plassere dem andre steder. Imidlertid en full BLFS installasjon
+      er ingen Ã¥penbar grunn til Ã¥ plassere dem andre steder. Imidlertid en full BLFS installasjon
       av <xref linkend="texlive"/> putter mange fonter i <filename
       class="directory">/opt/texlive/&texlive-year;/texmf-dist/fonts/</filename>
       i <filename class="directory">opentype/</filename> og <filename
-      class="directory">truetype/</filename> undermapper. Selv om å trekke inn
+      class="directory">truetype/</filename> undermapper. Selv om Ã¥ trekke inn
       alle disse filene kan virke nyttige (det lar deg bruke dem i ikke
       <application>TeX</application> programmer), det er flere problemer med
-      en slik tilnærming:
+      en slik tilnÃ¦rming:
     </para>
 
     <orderedlist>
       <listitem>
         <para>
-          Det er hundrevis av filer, noe som gjør det vanskelig å velge fonter.
+          Det er hundrevis av filer, noe som gjÃ¸r det vanskelig Ã¥ velge fonter.
         </para>
       </listitem>
       <listitem>
         <para>
-          Noen av filene gjør rare ting, for eksempel å vise semaforflagg
+          Noen av filene gjÃ¸r rare ting, for eksempel Ã¥ vise semaforflagg
           i stedet for ASCII bokstaver, eller kartlegge kyrilliske kodepunkter til tegnformer
           passende for gammelkirkeslavisk i stedet for det forventede
-          nåværende form: greit hvis det er det du trenger, men smertefullt for normalt
+          nÃ¥vÃ¦rende form: greit hvis det er det du trenger, men smertefullt for normalt
           bruk.
         </para>
       </listitem>
       <listitem>
         <para>
-          Flere fonter har flere størrelser og ugjennomtrengelige korte navn, som
-          begge gjør det enda vanskeligere å velge riktig font.
+          Flere fonter har flere stÃ¸rrelser og ugjennomtrengelige korte navn, som
+          begge gjÃ¸r det enda vanskeligere Ã¥ velge riktig font.
         </para>
       </listitem>
       <listitem>
         <para>
-          Når en font legges til CTAN, er den ledsaget av TeX pakker for å bruke
+          NÃ¥r en font legges til CTAN, er den ledsaget av TeX pakker for Ã¥ bruke
           de i gamle motorene (<application>xelatex</application>
           trenger normalt ikke dette), og da er versjonen ofte frosset mens
           fonten vedlikeholdes separat. Noen av disse fontene som f.eks <xref
-          linkend="dejavu-fonts"/> er sannsynligvis allerede installert på BLFS
+          linkend="dejavu-fonts"/> er sannsynligvis allerede installert pÃ¥ BLFS
           systemet i en nyere versjon, og hvis du har flere versjoner av en font
           er det uklart hvilken som skal brukes av
-          <application>fontconfig</application>.
+          <application>Fontconfig</application>.
         </para>
       </listitem>
     </orderedlist>
 
     <para>
-      Noen ganger er det imidlertid nyttig å se på disse skriftene i ikke-TeX
-      applikasjoner, om bare for å se om du ønsker å installere en nåværende
+      Noen ganger er det imidlertid nyttig Ã¥ se pÃ¥ disse skriftene i ikke-TeX
+      applikasjoner, om bare for Ã¥ se om du Ã¸nsker Ã¥ installere en nÃ¥vÃ¦rende
       versjon. Hvis du har installert alle <application>texlive</application>,
-      følgende eksempel vil lage en av Arkandis Open Type fontene
+      fÃ¸lgende eksempel vil lage en av Arkandis Open Type fontene
       tilgjengelig for andre applikasjoner, og alle tre av ParaType TrueType
-      fonter. Juster eller gjenta linjene etter ønske, for enten å lage alle
+      fonter. Juster eller gjenta linjene etter Ã¸nske, for enten Ã¥ lage alle
       <filename class="directory">opentype/</filename> eller <filename
-      class="directory">truetype</filename> fonter tilgjengelig, eller for å velge
+      class="directory">truetype</filename> fonter tilgjengelig, eller for Ã¥ velge
       forskjellige fontmapper. Som <systemitem
       class="username">root</systemitem> bruker:
     </para>
@@ -434,58 +686,65 @@ EOF</userinput></screen>
 EOF</userinput></screen>
 
     <para>
-      Hvis du gjør dette, husk å endre alle forekomster av året i den filen
-      når du oppgraderer <application>texlive</application> til en senere utgivelse.
+      Hvis du gjÃ¸r dette, husk Ã¥ endre alle forekomster av Ã¥ret i den filen
+      nÃ¥r du oppgraderer <application>texlive</application> til en senere utgivelse.
     </para>
 
   </sect2>
 
 
-  <sect2 role="configuration" id="preferring-certain-fonts" xreflabel="Preferring certain fonts">
+  <sect2 role="configuration" id="preferring-certain-fonts" xreflabel="Foretrekke visse fonter">
   <title>Foretrekke visse fonter</title>
 
     <para>
-      Det er mange grunner til at folk ønsker å ha sider som spesifiserer en
-      bestemt font ved bruk av en annen font, eller foretrekker spesifikke fonter i
-      Monospace eller Sans eller Serif. Som du vil forvente, er det en rekke
-      ulike måter å oppnå dette på.
+      Med unntak av nettsider som bruker WOFF fonter og enten deler
+      dem eller lenker til google for Ã¥ laste dem ned, har nettsider tradisjonelt
+      foreslÃ¥tt en liste over foretrukne fontfamilienavn hvis de brydde seg (f.eks.
+      Times New Roman, Serif). Det er mange grunner til at folk Ã¸nsker Ã¥
+      ha sider som spesifiserer en foretrukket font, bruker en annen font, eller
+      foretrekker spesifikke fonter i Monospace eller Sans eller Serif. Som du forventer,
+      det er en rekke forskjellige mÃ¥ter Ã¥ oppnÃ¥ dette pÃ¥.
     </para>
 
-    <bridgehead renderas="sect3" id="fontconfig-user-docs"
-    xreflabel="fontconfig-user-docs">Fontconfig brukerdokumenter</bridgehead>
+  </sect2>
 
-      <para>
-        <application>Fontconfig</application> installerer brukerdokumentasjon som
-        inkluderer et eksempel 'Brukerkonfigurasjonsfil' som bl.a
-        foretrekker <xref linkend="wenquanyi-zenhei"/> (en Sans font) hvis en
-        <emphasis>Serif</emphasis> font er forespurt for kinesisk (denne delen
-        kan være anakronistisk med mindre du har ikke-gratis kinesiske fonter, fordi
-        i <filename>65-nonlatin.conf</filename> denne fonten er allerede blant
-        foretrukne fonter når Serif er spesifisert for kinesisk) og å foretrekke
-        moderne <xref linkend="VLGothic"/> font hvis en Sans font er spesifisert på en
-        Japansk side (ellers ville et par andre fonter være foretrukket hvis
-        de er installert).
-      </para>
+  <sect2 role="configuration" id="fontconfig-user-docs" xreflabel="Fontconfig brukerdokumentasjon">
+  <title>Fontconfig brukerdokumentasjon</title>
 
-      <para>
-        Hvis du har installert gjeldende versjon, er brukerdokumentasjonen
-        tilgjengelig i HTML, PDF og tekstversjoner på <filename
-        class="directory">/usr/share/doc/fontconfig-&fontconfig-version;/</filename>
-        : endre versjonen hvis du installerte en annen.
-      </para>
+    <para>
+      <application>Fontconfig</application> installerer brukerdokumentasjon som
+      inkluderer et eksempel 'Brukerkonfigurasjonsfil' som bl.a
+      foretrekker <xref linkend="wenquanyi-zenhei"/> (en Sans font) hvis en
+      <emphasis>Serif</emphasis> font er forespurt for kinesisk (denne delen
+      kan vÃ¦re anakronistisk med mindre du har ikke-gratis kinesiske fonter, fordi
+      i <filename>65-nonlatin.conf</filename> denne fonten er allerede blant
+      foretrukne fonter nÃ¥r Serif er spesifisert for kinesisk) og foretrekke
+      moderne <xref linkend="VLGothic"/> font hvis en Sans font er spesifisert pÃ¥ en
+      Japansk side (ellers ville et par andre fonter vÃ¦re foretrukket hvis
+      de er installert).
+    </para>
 
-    <bridgehead renderas="sect3" id="prefer-a-specific-font"
-    xreflabel="fontconfig-prefer-specific-font">Foretrekke en bestemt font</bridgehead>
+    <para>
+      Hvis du har installert gjeldende versjon, er brukerdokumentasjonen
+      tilgjengelig i HTML, PDF og tekst versjoner pÃ¥ <filename
+      class="directory">/usr/share/doc/fontconfig-&fontconfig-version;/</filename>
+      : endre versjonen hvis du installerte en annen versjon.
+    </para>
 
-      <para>
-        Som et eksempel, hvis du av en eller annen grunn ønsker å bruke <ulink
-        url="https://www.fontsquirrel.com/fonts/nimbus-roman-no9-l">Nimbus Roman
-        No9 L</ulink> fonten når det refereres til Times New Roman (de er
-        metrisk lik, og foretrukket for Times Roman, men Serif fonten
-        fra <xref linkend="liberation-fonts"/> vil bli foretrukket for Times
-        <emphasis>New</emphasis> Roman font hvis installert), som en individuell bruker
-        kan du installere fonten og deretter lage følgende fil:
-      </para>
+  </sect2>
+
+  <sect2 role="configuration" id="prefer-a-specific-font" xreflabel="Foretrekke en bestemt font">
+  <title>Foretrekke en bestemt font</title>
+
+    <para>
+      For eksempel, hvis du av en eller annen grunn Ã¸nsket Ã¥ bruke <ulink
+      url="https://www.fontsquirrel.com/fonts/nimbus-roman-no9-l">Nimbus Roman
+      No9 L</ulink> font uansett hvor det refereres til Times New Roman (de er
+      metrisk lik, og foretrukket for Times Roman, men Serif-fonten
+      fra <xref linkend="liberation-fonts"/> vil bli foretrukket for Times
+      <emphasis>New</emphasis> Roman font hvis installert), som en individuell bruker
+      kan du installere fonten og deretter lage fÃ¸lgende fil:
+    </para>
 
 <screen><userinput>mkdir -pv ~/.config/fontconfig/conf.d &amp;&amp;
 cat >  ~/.config/fontconfig/conf.d/35-prefer-nimbus-for-timesnew.conf &lt;&lt; "EOF"
@@ -494,7 +753,7 @@ cat >  ~/.config/fontconfig/conf.d/35-prefer-nimbus-for-timesnew.conf &lt;&lt; "
 &lt;fontconfig&gt;
 &lt;!-- prefer Nimbus Roman No9 L for Times New Roman as well as for Times,
  without this Tinos and Liberation Serif take precedence for Times New Roman
- before fontconfig falls back to whatever matches Times --&gt;
+ before Fontconfig falls back to whatever matches Times --&gt;
     &lt;alias binding="same"&gt;
         &lt;family&gt;Times New Roman&lt;/family&gt;
         &lt;accept&gt;
@@ -504,64 +763,75 @@ cat >  ~/.config/fontconfig/conf.d/35-prefer-nimbus-for-timesnew.conf &lt;&lt; "
 &lt;/fontconfig&gt;</literal>
 EOF</userinput></screen>
 
-      <para>
-        Dette er noe du vanligvis ville gjort i en individuell brukerinnstilling,
-        men filen i dette tilfellet har fått prefikset '35-' slik at den
-        kan om ønskelig brukes over hele systemet i <filename
-        class="directory">/etc/fonts/conf.d/</filename>.
-      </para>
+    <para>
+      Dette er noe du vanligvis ville gjort i en individuell brukerinnstilling,
+      men filen i dette tilfellet har fÃ¥tt prefikset '35-' slik at den
+      kan om Ã¸nskelig brukes over hele systemet i <filename
+      class="directory">/etc/fonts/conf.d/</filename>.
+    </para>
 
-    <bridgehead renderas="sect3" id="prefer-chosen-CJK-fonts"
-    xreflabel="Prefer chosen CJK fonts">Foretrekk valgte CJK fonter</bridgehead>
+  </sect2>
 
-      <para>
-        Følgende eksempel på en lokal konfigurasjon (dvs. en som gjelder
-        for alle brukere av maskinen) gjør flere ting:
-      </para>
+  <sect2 role="configuration" id="prefer-chosen-CJK-fonts" xreflabel="Foretrekke valgte CJK fonter">
+  <title>Foretrekke valgte CJK fonter</title>
 
-      <orderedlist>
-        <listitem>
-          <para>
-            Hvis en Serif font er spesifisert, vil den foretrekke <xref
-            linkend="UMing"/> varianter, slik at i zh-cn, zh-hk og zh-tw
-            språk ting skal se bra ut (også zh-sg som faktisk bruker
-            samme innstillinger som zh-cn) <emphasis>uten</emphasis> å påvirke
-            Japansk.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Den foretrekker Japaneske <xref linkend="IPAex"/> hvis de har blitt
-            installert (skjønt <xref linkend="VLGothic"/> vil ha forrang
-            for (Japansk) Sans hvis den også er installert.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Fordi <xref linkend="wenquanyi-zenhei"/> dekker Koreansk Hangul
-            glyffer og er også foretrukket for Serif i
-            <filename>65-nonlatin.conf</filename>, hvis den er installert, vil den bli brukt
-            som standard for Koreansk serif. For å få en skikkelig Serif font,
-            UnBatang fonten er spesifisert her - endre den linjen hvis du har installert
-            en annen Serif font enn de valgte <xref
-            linkend="Korean-fonts"/>.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Monospace fontene tvinges til de foretrukne Sans skriftene. Hvis
-            teksten er på Koreansk da vil <xref linkend="wenquanyi-zenhei"/> bli
-            brukt.
-          </para>
-        </listitem>
-      </orderedlist>
+    <para>
+      FÃ¸lgende eksempel pÃ¥ en lokal konfigurasjon (dvs. en som gjelder
+      for alle brukere av maskinen) gjÃ¸r flere ting. Det er spesielt
+      passende der det ikke er angitt noe sprÃ¥k, eller for lesing av CJK tekst
+      i et ikke-CJK lokalitet, og hvor de japanske formene for kodepunktene
+      deles med kinesere foretrekkes. Spesielt alternativ
+      tilnÃ¦rminger ville vÃ¦re Ã¥ spesifisere en kinesisk font foran en japansk
+      font, noe som betyr at bare Kana symboler vil bli brukt fra den japanske
+      fonten, eller for Ã¥ ikke spesifisere DejaVu slik at den fÃ¸rste fonten i hvert sett
+      av preferanser foretrekkes for tekst som bruker latinske alfabeter.
+    </para>
 
-      <para>
-        I en ikke-CJK lokalitet er resultatet at passende fonter vil bli brukt for
-        alle varianter av kinesisk, japansk og Hangul-koreansk. Alle andre språk
-        bør allerede fungere hvis en font er til stede. Som <systemitem
-        class="username">root</systemitem> bruker:
-      </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Hvis en Serif font er spesifisert, foretrekker den <xref linkend="dejavu-fonts"/>.
+          Hvis Han kodepunkter blir funnet, eller det japanske sprÃ¥ket er spesifisert,
+          Mincho-fonten fra <xref linkend="IPAex"/> vil bli brukt. Hvis Hangul
+          kodepunkter er funnet eller det koreanske sprÃ¥ket er spesifisert, UnBatang
+          (se <xref linkend="Korean-fonts"/>) vil bli brukt: Endre den linjen
+          Hvis du installerte en annen koreansk serif font. Etter det,
+          <xref linkend="wenquanyi-zenhei"/>  (Sans, men en standard for Serif
+          og monospace) brukes. En tidligere versjon av denne siden nevnt
+          bruker UMing som er en tradisjonell kinesisk font som sendes
+          med en gammel conf-fil som foretrekker den for zh-tw og zh-hk sprÃ¥k
+          koder (og for sans-serif og monospace). Men uten conf-filen,
+          <application>Fontconfig</application> vil bare behandle det som passende
+          for zh-hk.
+          Conf-filen mÃ¥ redigeres til gjeldende stil og vil da bli det
+          prepended, sÃ¥ Ã¥ spesifisere UMing hÃ¸rer ikke hjemme i denne
+          <filename>local.conf</filename> filen.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For Sans Serif preferanser begynner igjen med <xref linkend="dejavu-fonts"/>,
+          deretter <xref linkend="VLGothic"/> for japansk fÃ¸r man faller tilbake til
+          WenQuanYi Zen Hei som er Sans og dekker bÃ¥de kinesisk og koreansk
+          Hangul.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Monospace fontene tvinges til de foretrukne Sans skriftene. Hvis
+          teksten er pÃ¥ kinesisk eller koreansk da vil <xref
+          linkend="wenquanyi-zenhei"/> bli brukt.
+        </para>
+      </listitem>
+    </orderedlist>
+
+    <para>
+      I en ikke-CJK lokale er resultatet at passende fonter vil bli brukt for
+      alle varianter av kinesisk, japansk og Hangul-koreansk (men japanske varianter
+      av tegnene som deles med kinesiske Han, vil bli brukt). Alle andre sprÃ¥k
+      bÃ¸r allerede fungere hvis en font er til stede. Som <systemitem
+      class="username">root</systemitem> bruker:
+    </para>
 
 <screen role="root"><userinput>cat > /etc/fonts/local.conf &lt;&lt; "EOF"
 <literal>&lt;?xml version='1.0'?&gt;
@@ -570,7 +840,7 @@ EOF</userinput></screen>
     &lt;alias&gt;
         &lt;family&gt;serif&lt;/family&gt;
         &lt;prefer&gt;
-            &lt;family&gt;AR PL UMing&lt;/family&gt;
+            &lt;family&gt;DejaVu Serif&lt;/family&gt;
             &lt;family&gt;IPAexMincho&lt;/family&gt;
             &lt;!-- WenQuanYi is preferred as Serif in 65-nonlatin.conf,
             override that so a real Korean font can be used for Serif --&gt;
@@ -580,17 +850,17 @@ EOF</userinput></screen>
     &lt;alias&gt;
          &lt;family&gt;sans-serif&lt;/family&gt;
          &lt;prefer&gt;
-             &lt;family&gt;WenQuanYi Zen Hei&lt;/family&gt;
+             &lt;family&gt;DejaVu Sans&lt;/family&gt;
              &lt;family&gt;VL Gothic&lt;/family&gt;
-             &lt;family&gt;IPAexGothic&lt;/family&gt;
+         &lt;!-- This assumes WenQuanYi is good enough for Korean Sans --&gt;
          &lt;/prefer&gt;
+             &lt;family&gt;DejaVu Sans Mono&lt;/family&gt;
     &lt;/alias&gt;
     &lt;alias&gt;
          &lt;family&gt;monospace&lt;/family&gt;
          &lt;prefer&gt;
              &lt;family&gt;VL Gothic&lt;/family&gt;
-             &lt;family&gt;IPAexGothic&lt;/family&gt;
-             &lt;family&gt;WenQuanYi Zen Hei&lt;/family&gt;
+         &lt;!-- This assumes WenQuanYi is good enough for Korean Monospace --&gt;
          &lt;/prefer&gt;
     &lt;/alias&gt;
 &lt;/fontconfig&gt;</literal>
@@ -598,16 +868,15 @@ EOF</userinput></screen>
 
   </sect2>
 
-
   <sect2 role="configuration" id="editing-old-style-conf-files"
   xreflabel="Editing Old-Style conf files">
   <title>Redigering av gammeldagse conf filer</title>
 
     <para>
-      Noen skrifter, spesielt kinesiske skrifter, leveres med conf filer som kan være
+      Noen skrifter, spesielt kinesiske skrifter, leveres med conf filer som kan vÃ¦re
       installert i <filename class="directory">/etc/fonts/conf.d</filename>.
-      Men hvis du gjør det og deretter bruker en terminal til å kjøre en hvilken som helst kommando som
-      bruker <application>fontconfig</application> du kan se feilmeldinger som f.eks
+      Men hvis du gjÃ¸r det og deretter bruker en terminal til Ã¥ kjÃ¸re en hvilken som helst kommando som
+      bruker <application>Fontconfig</application> du kan se feilmeldinger som f.eks
       som :
     </para>
 
@@ -619,26 +888,25 @@ EOF</userinput></screen>
 
     <para>
       I praksis fungerer ikke disse gamle reglene. For ikke-CJK brukere,
-      <application>fontconfig</application> vil vanligvis gjøre en god jobb
-      <emphasis>uten</emphasis> disse reglene. Deres opprinnelse går tilbake til når
-      CJK brukere trengte håndlagde punktgrafikk for å være lesbare i små størrelser, og
-      de så stygge ut ved siden av kantutjevnede latinske glyfer - de foretrakk å
-      bruke samme CJK skrift for de latinske tegnene. Det er en bivirkning ved å
-      gjøre dette : fonten (Serif) brukes ofte også for Sans, og i en slik
+      <application>Fontconfig</application> vil vanligvis gjÃ¸re en god jobb
+      <emphasis>uten</emphasis> disse reglene. Deres opprinnelse gÃ¥r tilbake til nÃ¥r
+      CJK brukere trengte hÃ¥ndlagde punktgrafikk for Ã¥ vÃ¦re lesbare i smÃ¥ stÃ¸rrelser, og
+      de sÃ¥ stygge ut ved siden av kantutjevnede latinske glyfer - de foretrakk Ã¥
+      bruke samme CJK skrift for de latinske tegnene. Det er en bivirkning ved Ã¥
+      gjÃ¸re dette : fonten (Serif) brukes ofte ogsÃ¥ for Sans, og i en slik
       situasjon den (engelsk) teksten i <application>Gtk</application> menyene vil
       bruke denne fonten - sammenlignet med systemfonter, i tillegg til at den er serif
-      både svak og ganske liten. Det kan gjøre det ubehagelig å lese.
+      bÃ¥de svak og ganske liten. Det kan gjÃ¸re det ubehagelig Ã¥ lese.
     </para>
 
     <para>
-      Likevel kan disse gamle conf filene fikses hvis du ønsker å bruke dem.
-      Følgende eksempel er den første delen av
+      Likevel kan disse gamle conf filene fikses hvis du Ã¸nsker Ã¥ bruke dem.
+      FÃ¸lgende eksempel er den fÃ¸rste delen av
       <filename>64-arphic-uming.conf</filename> fra <xref linkend="UMing"/> -
-      det er mange flere lignende elementer som også må endres :
+      det er mange flere lignende elementer som ogsÃ¥ mÃ¥ endres :
     </para>
 
-    <para>
-      <literallayout>
+<screen role="root">
    &lt;match target="pattern"&gt;
        &lt;test qual="any" name="lang" compare="contains"&gt;
            &lt;string&gt;zh-cn&lt;/string&gt;
@@ -650,23 +918,22 @@ EOF</userinput></screen>
        &lt;edit name="family" mode="prepend" binding="strong"&gt;
            &lt;string&gt;AR PL UMing CN&lt;/string&gt;
        &lt;/edit&gt;
-    &lt;/match&gt;</literallayout>
-    </para>
+   &lt;/match&gt;
+</screen>
 
     <para>
-      Prosessen for å rette opp dette er grei, men kjedelig - for alle
-      elementer som produserer en feilmelding ved å bruke redigeringsprogrammet (som &root;
+      Prosessen for Ã¥ rette opp dette er grei, men kjedelig - for alle
+      elementer som produserer en feilmelding ved Ã¥ bruke redigeringsprogrammet (som &root;
       bruker) rediger den installerte
-      filen for å gjenta hele blokken så mange ganger som det er flere
-      variabler, reduser deretter hvert eksempel til å ha bare ett av dem. Du kan
-      ønske å jobbe med en feil om gangen, lagre filen etter hver rettelse, og
-      fra en eget terminal kjør en kommando som f.eks <command>fc-list 2>&amp;1 |
-      less</command> for å se at reparasjonen fungerte. For blokken ovenfor, den reparerte
-      versjonen vil være :
+      filen for Ã¥ gjenta hele blokken sÃ¥ mange ganger som det er flere
+      variabler, reduser deretter hvert eksempel til Ã¥ ha bare ett av dem. Du kan
+      Ã¸nske Ã¥ jobbe med en feil om gangen, lagre filen etter hver rettelse, og
+      fra en eget terminal kjÃ¸r en kommando som f.eks <command>fc-list 2>&amp;1 |
+      less</command> for Ã¥ se at reparasjonen fungerte. For blokken ovenfor, den reparerte
+      versjonen vil vÃ¦re :
     </para>
 
-    <para>
-      <literallayout>
+<screen role="root">
    &lt;match target="pattern"&gt;
        &lt;test qual="any" name="lang" compare="contains"&gt;
            &lt;string&gt;zh-cn&lt;/string&gt;
@@ -688,14 +955,164 @@ EOF</userinput></screen>
        &lt;edit name="family" mode="prepend" binding="strong"&gt;
            &lt;string&gt;AR PL UMing CN&lt;/string&gt;
        &lt;/edit&gt;
-    &lt;/match&gt;</literallayout>
+    &lt;/match&gt;
+</screen>
+
+  </sect2>
+
+  <sect2 role="configuration" id="font-weights" xreflabel="Om fontvekter">
+  <title>Om fontvekter</title>
+
+    <para>
+      Da denne siden og neste side fÃ¸rst ble opprettet, kom latinske fonter
+      med maksimalt to vekter - enten vanlig eller bok (bok typisk
+      har en stÃ¸rre X-hÃ¸yde for Ã¥ gjÃ¸re det lettere Ã¥ lese i store tekstblokker),
+      og fet - og kanskje en kursiv (eller skrÃ¥stilt) stil. Noen fÃ¥ fonter hadde ogsÃ¥
+      Kondenserte overflater (for Ã¥ passe inn mer tekst i en linje og brukes vanligvis bare nÃ¥r
+      spesifisert). Uten CSS-markering (Cascading Style Sheets) brukte teksten
+      Vanlig eller bokvekt unntatt nÃ¥r &lt;b&gt; ... &lt;/b&gt; markering var
+      brukes til fet tekst. Kursive stiler vil bli pÃ¥beropt av &lt;i&gt; ... &lt;/i&gt;
+      markup, sammen med fet markup for fet kursiv.
+    </para>
+
+    <para>
+      Noen overflater inneholder nÃ¥ opptil 9 vekter, muligens ogsÃ¥ med variabel skrift
+      (for Ã¥ spare plass ved Ã¥ inkludere alle alternativene i Ã©n fil og ev
+      tillater mellomvekter). For de fleste skrivebordsbrukere som ikke trenger dette
+      bredt utvalg av vekter for Ã¥ lage innhold, er det enklere Ã¥ bare installere
+      en eller to vekter. Hvis et overflate har individuell vekt pluss en variabel skrift,
+      den variable fonten er vanligvis pÃ¥ toppnivÃ¥et i den medfÃ¸lgende mappen,
+      med individuelle vekter i en <filename class="directory">static/</filename>
+      undermappe. Bortsett fra nÃ¥r du fÃ¸rst vurderer en skrift, gir det ingen mening Ã¥
+      installer bÃ¥de statisk og variabel, og heller ikke alle mulige vekter.
+    </para>
+
+    <para>
+      Vektene er merket fra 100 (tynn) til 900 (svart eller tung) i CSS
+      terminologi, hvor 400 er normal og 700 fet. Hele settet med vekter
+      er beskrevet pÃ¥ <xref linkend="css-weights"/>.
+    </para>
+
+    <para>
+      Hvis du har installert en font med en rekke vekter, kan du kopiere <ulink
+      url="https://&lfs-domainname;/~ken/font-weights.html">font-weights.html</ulink>
+      til din lokale maskin. Som sendt vil den bruke din standard Serif font forutsatt
+      du har en. Rediger den for Ã¥ peke pÃ¥ en spesifikk installert font ved Ã¥ bruke navnet
+      kjent for <application>Fontconfig</application> (ogsÃ¥ i *EDITME FONTNAME*
+      tekstelementer) og Ã¥pne den
+      fra skrivebordsnettleseren. Du kan ogsÃ¥ bruke den til Ã¥ se pÃ¥ en skrift med bare
+      to installerte vekter, f.eks. for testing for Ã¥ se om du foretrekker andre vekter.
+    </para>
+
+    <para>
+      Til tross for detaljene i den Mozilla lenken, ser det ut til at hvis bare normal og
+      fete vekter er installert, SemiBold (600) vises med fet skrift.
+    </para>
+
+    <para>
+      Det ser ut til Ã¥ vÃ¦re et lite rom for Ã¥ endre hvilke vekter som brukes til
+      normal og fet <emphasis>hvis bare to vekter er installert</emphasis>.
+      Firefox, og sannsynligvis andre nettlesere, vil se etter den neste vekten tyngre
+      enn normalt. Hvis det er mindre enn fet (Medium, kanskje SemiFet - usikker)
+      det vil bli brukt til normal og deretter neste hÃ¸yere vekt, hvis noen vil vÃ¦re
+      brukes for fet skrift, slik at du kan gjÃ¸re skriftene litt mÃ¸rkere. Omvendt,
+      hvis bare en vekt mindre enn normalt er installert, for eksempel Light, det
+      vil bli brukt for bÃ¥de normale og fete vekter (sÃ¸ket oppover skjer
+      fÃ¸rst).
+    </para>
+
+    <para>
+      Hvis du fjerner noen vekter av en systemfont, mÃ¥ du kanskje kjÃ¸re
+      <command>fc-cache</command> som &root; bruker og logg deretter helt ut
+      for Ã¥ tÃ¸mme hurtiglagre knyttet til brukeren din.
+      <!-- I don't know for sure that there are user caches retained until you
+     log out, but certainly leaving X and restarting the browser is not always
+     adequate : ken -->
+
+  </sect2>
+
+  <sect2 role="configuration" id="items-which-can-override-fontconfig" xreflabel="Elementer som kan overstyre Fontconfig">
+  <title>Elementer som kan overstyre Fontconfig</title>
+
+    <para>
+      Flere skrivebordsmiljÃ¸er, samt noen programmer, vil bruke
+      <application>Fontconfig</application>
+      for Ã¥ finne fonter, men kan overstyre visse ting.
+    </para>
+
+    <para>
+      <application>GNOME</application>: Innstillingene i
+      org.gnome.desktop.interface kan bli oppdatert med
+      <application>dconf-editor</application>. Du kan stille inn fontene til din
+      preferanse og Ã¸nsket punktstÃ¸rrelse. For Ã¥ bruke skriftene valgt av
+      <application>Fontconfig</application> spesifisere f.eks. 'Sans 12', Serif 11',
+      'Mono 10' etter Ã¸nske. Se ogsÃ¥ gjennom antialiasing, hinting og rgba
+      innstillinger. Alternativt, <xref linkend="gnome-tweaks"/> kan ogsÃ¥ oppdatere
+      fontinnstillingene i et GUI skjema.
+    </para>
+
+    <para>
+      <application>LXQt</application>: Endre fontinnstillinger etter behov for Ã¥
+      samsvare <application>Fontconfig</application> i
+      <application>lxqt-config-appearance</application>.
+    </para>
+
+    <para>
+      <application>KDE Plasma</application>: Innstillingene kan justeres i
+      <application>System Settings</application> under Appearance -> Fonts. Dette
+      vil opprette eller endre <filename>~/.config/fontconfig/fonts.conf</filename>
+      selv om <filename>~/.config/fontconfig/fonts.conf</filename>, hvis
+      installert, kan overstyre det.
+    </para>
+
+    <para>
+      <application>Xfce desktop</application>: Innstillingene kan justeres i
+      <application>Settings</application> -> Appearance -> Fonts. Spesifiser dine
+      foretrukne fonter, f.eks. 'Sans Regular' (for Ã¥ bruke normal overflate og vekt
+      i stedet for fet og/eller kursiv) og juster punktstÃ¸rrelsen i alternativet.
+      Se gjennom alternativene for gjengivelse og DPI.
+    </para>
+
+    <para>
+      <application>Firefox</application>: Denne nettleseren lar deg spesifisere dens
+      standard fonter. For 115esr-serien, bruk "Hamburger"-menyen for Ã¥ gÃ¥ til
+      Preferanser, Generelt og under Fonts -> Advanced velg Sans Serif, Serif
+      eller Monospace etter behov hvis du Ã¸nsker Ã¥ bruke skriftene som samsvarer med
+      <application>Fontconfig</application>.  Still inn punktstÃ¸rrelsene som Ã¸nsket. I
+      senere versjoner er innstillingene pÃ¥ Preferences -> Fonts.
+    </para>
+
+    <para>
+      <application>Libreoffice</application>: Tester med engelsk tekst med en
+      gammel japansk font (HanaMinA) som stÃ¸tter flere europeiske sprÃ¥k men
+      hadde bare Ã©n vekt og ingen kursiv eller skrÃ¥stilte viste at selv om
+      <application>Libreoffice</application> bruker
+      <application>Fontconfig</application> for Ã¥ finne fonten laget den sin egen
+      fet eller skrÃ¥stilt tekst. Det er ikke klart om det vil gjÃ¸re det samme hvor en font
+      faktisk har fet vekt eller en kursiv stil. Det viser ogsÃ¥ dokumentasjon
+      at <application>Libreoffice</application> har sine egne erstatningsregler
+      for nÃ¥r et kodepunkt ikke finnes i den valgte fonten, men er uklart om
+      disse reglene gjelder pÃ¥ Linux som bruker Fontconfig.
+    </para>
+
+    <para>
+      <application>Pango</application>: som nevnt i eksempelet
+      <filename>~/.config/fontconfig</filename> ovenfor, alt som bruker Pango-1.44
+ (fra 2019) eller senere bruker nÃ¥ <application>Harfbuzz</application> for
+      hint, <application>FreeType</application>, og
+      <literal>hintfull</literal> er ikke stÃ¸ttet.
+    </para>
+
+    <para>
+      <application>Thunderbird</application>: Skriftinnstillingene kan endres
+      ved Ã¥ gÃ¥ til "Rediger -> Innstillinger" og deretter rulle ned til "Fonts &amp;
+      Colors".
     </para>
 
   </sect2>
 
-
-  <sect2 role="configuration" id="see-also" xreflabel="See Also">
-  <title>Se Også</title>
+  <sect2 role="configuration" id="external-links" xreflabel="Eksterne linker">
+  <title>Eksterne linker</title>
 
     <bridgehead renderas="sect3" id="I-stared-into-the-fontconfig"
     xreflabel="I stared into the fontconfig">I stared into the fontconfig ...</bridgehead>
@@ -703,24 +1120,65 @@ EOF</userinput></screen>
     <para>
       Blogginnleggene av <ulink
       url="https://eev.ee/blog/2015/05/20/i-stared-into-the-fontconfig-and-the-fontconfig-stared-back-at-me/">Eevee</ulink>
-      er spesielt nyttige hvis <application>fontconfig</application> ikke
-      tror den valgte fonten støtter språket ditt, og for å foretrekke noen
-      ikke-MS japanske fonter når en stygg MS-font allerede er installert.
+      er spesielt nyttige hvis <application>Fontconfig</application> ikke
+      tror den valgte fonten stÃ¸tter sprÃ¥ket ditt, og for Ã¥ foretrekke noen
+      ikke-MS japanske fonter nÃ¥r en stygg MS-font allerede er installert.
+    </para>
+
+    <bridgehead renderas="sect3" id="subpixel-hinting"
+    xreflabel="subpixel-hinting">subpixel-hinting</bridgehead>
+
+    <para>Dokumentasjonen til FreeType v40 tolken pÃ¥ <ulink
+      url="https://freetype.org/freetype2/docs/hinting/subpixel-hinting.html">freetype
+      docs</ulink>
+      forklarer hvordan gjeldende hinter fungerer, og hvorfor den forrige (langsomme) Infinality
+      tolk ble byttet ut.
+    </para>
+
+    <bridgehead renderas="sect3" id="calc-dpi"
+    xreflabel="calc-dpi">Beregner DPI</bridgehead>
+
+    <para>Et gammelt svar pÃ¥ <ulink
+      url="https://askubuntu.com/questions/197828/how-to-find-and-change-the-screen-dpi/">askubuntu</ulink>
+      gir noen detaljer om beregning av en skjerms punkter per tomme, men i hovedsak
+      mÃ¥ler du bare bredden og hÃ¸yden pÃ¥ det synlige panelet, konverterer til
+      tommer hvis du bruker metriske mÃ¥l, og del pÃ¥ antall piksler.
+      Da kan du sende <option>-dpi <replaceable>90</replaceable></option> nÃ¥r
+      du starter Xorg ved Ã¥ bruke din egen verdi.
+    </para>
+
+    <bridgehead renderas="sect3" id="css-weights"
+    xreflabel="Table of CSS font weights">Tabell over CSS fontvekter</bridgehead>
+
+    <para>Kanskje mer enn du noen gang Ã¸nsket Ã¥ vite er pÃ¥ <ulink
+      url="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight">Mozilla
+      CSS docs</ulink>.
+    </para>
+
+    <bridgehead renderas="sect3" id="ttfautohint"
+    xreflabel="Applying autohinting to a font">Bruke autohint pÃ¥ en skrift</bridgehead>
+
+    <para>
+      Hvis du bruker hinting og har en TTF (ikke OTF) font som mangler hint
+      men tillater deg Ã¥ forgrene den, kan du kanskje bruke hint ved Ã¥ bruke <ulink
+      url="https://freetype.org/ttfautohint/">ttfautohint</ulink> som er basert
+      pÃ¥ den gamle autohinteren. Fra og med versjon 1.8.4 klarer den ikke Ã¥ bygge uten Qt5.
+      <!-- switch exists, configure passes but build fails -->
     </para>
 
     <bridgehead renderas="sect3" id="arch-fontconfig"
-    xreflabel="Fontconfig in the Arch wiki">Fontconfig in the Arch wiki</bridgehead>
+    xreflabel="Fontconfig i Arch wiki">Fontconfig i Arch wiki</bridgehead>
 
     <para>
-      Arch har mye informasjon i sin wiki på <ulink
+      Arch har mye informasjon i sin wiki pÃ¥ <ulink
       url="https://wiki.archlinux.org/index.php/font_configuration">font_configuration</ulink>.
     </para>
 
     <bridgehead renderas="sect3" id="gentoo-fontconfig"
-    xreflabel="Fontconfig in the Gentoo wiki">Fontconfig in the Gentoo wiki</bridgehead>
+    xreflabel="Fontconfig i Gentoo wiki">Fontconfig i Gentoo wiki</bridgehead>
 
     <para>
-      Gentoo har noe informasjon i sin wiki på <ulink
+      Gentoo har noe informasjon i sin wiki pÃ¥ <ulink
       url="https://wiki.gentoo.org/wiki/Fontconfig">Fontconfig</ulink> selv om
       mange av detaljene (hva du skal aktivere, og Infinality) er spesifikke for
       Gentoo.
