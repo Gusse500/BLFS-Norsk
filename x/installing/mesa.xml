@@ -1,20 +1,19 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY mesa-download-http "https://mesa.freedesktop.org/archive/mesa-&mesa-version;.tar.xz">
-  <!ENTITY mesa-download-ftp  "ftp://ftp.freedesktop.org/pub/mesa/mesa-&mesa-version;.tar.xz">
-  <!ENTITY mesa-md5sum        "5dd176e3f283143cc193b5a8264a206e">
-  <!ENTITY mesa-size          "18 MB">
-  <!ENTITY mesa-buildsize     "462 MB (med dokumenter, legg til 221 MB for tester)">
-  <!ENTITY mesa-time          "2.6 SBU (med dokumenter; legg til 0,6 SBU for tester; begge med parallellitet=4)">
+  <!ENTITY mesa-download-ftp  " ">
+  <!ENTITY mesa-md5sum        "9e7fa53b68fa6b60dba0bbfa8da7d0a9">
+  <!ENTITY mesa-size          "20 MB">
+  <!ENTITY mesa-buildsize     "618 MB (med dokumenter, legg til 220 MB for tester)">
+  <!ENTITY mesa-time          "3.1 SBU (med dokumenter; legg til 0,6 SBU for tester; begge med parallellitet=4)">
 ]>
 
 <sect1 id="mesa" xreflabel="Mesa-&mesa-version;">
   <?dbhtml filename="mesa.html"?>
-
 
   <title>Mesa-&mesa-version;</title>
 
@@ -33,11 +32,11 @@
     <note>
       <para>
         <application>Mesa</application> oppdateres relativt ofte. Du kanskje
-        ønsker å bruke den siste tilgjengelige &mesa-major-minor;.x mesa versjonen.
+        Ã¸nsker Ã¥ bruke den siste tilgjengelige &mesa-major-minor;.x mesa versjonen.
       </para>
     </note>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -58,7 +57,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &mesa-size;
+          NedlastingsstÃ¸rrelse: &mesa-size;
         </para>
       </listitem>
       <listitem>
@@ -80,7 +79,7 @@
         <para>
           Anbefalt oppdatering:
           <ulink url="&patch-root;/mesa-add_xdemos-2.patch"/>
-          (installerer 2 demoprogrammer for testing av Mesa - ikke nødvendig hvis du
+          (installerer 2 demoprogrammer for testing av Mesa - ikke nÃ¸dvendig hvis du
           installer <ulink url="https://archive.mesa3d.org/demos/">
           mesa-demos</ulink> pakken)
         </para>
@@ -89,7 +88,7 @@
 
     <bridgehead renderas="sect3">Mesa Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="xorg7-lib"/>,
       <xref linkend="libdrm"/>, og
@@ -99,21 +98,25 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
 
-      <xref role="first" linkend="libva"/> (for å gi VA-API støtte for noen
-      gallium drivere, merk at det er en sirkulær avhengighet. Du må
-      bygge <application>libva</application> først uten EGL og GLX støtte,
-      installer denne pakken og bygg på nytt <application>libva</application>),
+      <xref linkend="glslang"/> (pÃ¥krevd for Vulkan stÃ¸tte),
 
-      <xref linkend="libvdpau"/> (for å bygge VDPAU drivere),
+      <xref role="first" linkend="libva"/> (for Ã¥ gi VA-API stÃ¸tte for noen
+      gallium drivere, merk at det er en sirkulÃ¦r avhengighet. Du mÃ¥
+      bygge <application>libva</application> fÃ¸rst uten EGL og GLX stÃ¸tte,
+      installer denne pakken og bygg pÃ¥ nytt <application>libva</application>),
+
+      <xref linkend="libvdpau"/> (for Ã¥ bygge VDPAU drivere),
 
       <xref linkend="llvm"/> (kreves for Gallium3D, nouveau og radeonsi
       drivere og for swrast, programvaren rasterizer som noen ganger refereres til
       til som llvmpipe. Se <ulink role="nodep"
-      url="https://docs.mesa3d.org/systems.html"/> for mer informasjon), og
+      url="https://docs.mesa3d.org/systems.html"/> for mer informasjon),
 
-      <xref linkend="wayland-protocols"/> (påkrevd for
+      <xref linkend="wayland-protocols"/> (pÃ¥krevd for
         <xref role="nodep" linkend='plasma5-build'/>,
-        GNOME, og anbefales for <xref role="nodep" linkend='gtk3'/>)
+        GNOME, og anbefales for <xref role="nodep" linkend='gtk3'/>), og
+
+      <xref linkend="vulkan-loader"/> (pÃ¥krevd for Vulkan stÃ¸tte)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -124,25 +127,25 @@
       <xref linkend="nettle"/>,
       <xref linkend="valgrind"/>,
       <ulink url="https://archive.mesa3d.org/demos/">mesa-demos</ulink>
-      (gir mer enn 300 ekstra demoer for å teste
+      (gir mer enn 300 ekstra demoer for Ã¥ teste
       <application>Mesa</application>; dette inkluderer de samme programmene lagt til av
       oppdateringen ovenfor),
       <ulink url="https://omxil.sourceforge.net/">Bellagio OpenMAX Integration
-      Layer</ulink> (for mobile plattformer),
-      <ulink url="https://github.com/KhronosGroup/glslang">glslang</ulink>
-      (for vulkan drivere),
+      Layer</ulink> (for mobile platforms), og
+      <!--<ulink url="https://github.com/KhronosGroup/glslang">glslang</ulink>
+      (for vulkan drivere),-->
       <ulink url="https://github.com/tizonia/tizonia-openmax-il/wiki/Tizonia-OpenMAX-IL/">
-      libtizonia</ulink>,  og
-      <ulink url="https://github.com/KhronosGroup/Vulkan-Loader">Vulkan-Loader</ulink>
+      libtizonia</ulink>,
+      <!--<ulink url="https://github.com/KhronosGroup/Vulkan-Loader">Vulkan-Loader</ulink>-->
     </para>
 <!--
     <note>
       <para>
         Instruksjonene nedenfor forutsetter at
         <application>LLVM</application> med r600/amdgpu og vertsbakstykke
-        og informasjon om kjøretidstype (RTTI - nødvendig for nouveau) er installert.
-        Du må endre instruksjonene hvis du
-         velger å ikke installere alle disse. For en forklaring av Gallium3D se
+        og informasjon om kjÃ¸retidstype (RTTI - nÃ¸dvendig for nouveau) er installert.
+        Du mÃ¥ endre instruksjonene hvis du
+         velger Ã¥ ikke installere alle disse. For en forklaring av Gallium3D se
         <ulink url="https://en.wikipedia.org/wiki/Gallium3D"/>.
       </para>
     </note>
@@ -154,8 +157,8 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Aktiver følgende alternativer i kjernekonfigurasjonen og
-      kompiler kjernen på nytt om nødvendig:
+      Aktiver fÃ¸lgende alternativer i kjernekonfigurasjonen og
+      kompiler kjernen pÃ¥ nytt om nÃ¸dvendig:
      </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -164,8 +167,8 @@
     <note>
       <para>
         Det tilsvarende Mesa Gallium3D drivernavnet er gitt som
-        kommentar for konfigurasjonsoppføringene. Hvis du ikke vet navnet
-        på Mesa Gallium3D driveren for din GPU, se <xref
+        kommentar for konfigurasjonsoppfÃ¸ringene. Hvis du ikke vet navnet
+        pÃ¥ Mesa Gallium3D driveren for din GPU, se <xref
         linkend="mesa-gallium-drivers"/> under.
       </para>
 
@@ -178,24 +181,24 @@
       </para>
 
       <para>
-        Å velge <option>CONFIG_DRM_RADEON</option> eller
+        Ã… velge <option>CONFIG_DRM_RADEON</option> eller
         <option>CONFIG_DRM_AMDGPU</option> som
         <quote><literal>y</literal></quote> anbefales ikke. Hvis det er, alle
-        nødvendige fastvare må bygges som en del av kjernebildet eller
+        nÃ¸dvendige fastvare mÃ¥ bygges som en del av kjernebildet eller
         initramfs for at driveren skal fungere riktig.
       </para>
 
       <para>
         Underpostene under <option>CONFIG_DRM_AMDGPU</option> er brukt
-        for å sikre at AMDGPU kjernedriveren støtter alle GPUer som bruker
-        <literal>radeonsi</literal> driver. De er ikke nødvendig hvis du
+        for Ã¥ sikre at AMDGPU kjernedriveren stÃ¸tter alle GPUer som bruker
+        <literal>radeonsi</literal> driver. De er ikke nÃ¸dvendig hvis du
         ikke trenger <option>CONFIG_DRM_AMDGPU</option>. De
-        kan være unødvendig for noen GPU modeller.
+        kan vÃ¦re unÃ¸dvendig for noen GPU modeller.
       </para>
 
       <para>
         For <literal>swrast</literal>, <option>CONFIG_DRM_VGEM</option>
-        er strengt tatt ikke nødvendig, men anbefales som en optimalisering.
+        er strengt tatt ikke nÃ¸dvendig, men anbefales som en optimalisering.
       </para>
     </note>
     <indexterm zone="mesa mesa-kernel">
@@ -205,10 +208,9 @@
 
   <sect2 role="installation">
     <title>Installasjon av Mesa</title>
-
     <para>
-      Hvis du har lastet ned xdemos oppdateringen (nødvendig hvis du tester Xorg
-      installasjon i henhold til BLFS instruksjoner), bruk den ved å kjøre følgende
+      Hvis du har lastet ned xdemos oppdateringen (nÃ¸dvendig hvis du tester Xorg
+      installasjon i henhold til BLFS instruksjoner), bruk den ved Ã¥ kjÃ¸re fÃ¸lgende
       kommando:
     </para>
 
@@ -223,9 +225,9 @@
 <!--
     <note>
       <para>
-        Målene ovenfor, og innholdet nedenfor, er for en fullstendig konstruksjon.
-        Mange vil ikke ønske å installere drivere de ikke kan bruke, så
-        følgende avsnitt forklarer hvordan man begrenser sjåførene, og gir en
+        MÃ¥lene ovenfor, og innholdet nedenfor, er for en fullstendig konstruksjon.
+        Mange vil ikke Ã¸nske Ã¥ installere drivere de ikke kan bruke, sÃ¥
+        fÃ¸lgende avsnitt forklarer hvordan man begrenser sjÃ¥fÃ¸rene, og gir en
         eksempel som kan reduseres eller endres etter behov.
       </para>
     </note>
@@ -235,21 +237,21 @@
     <para>
       (ikke-gallium) DRI-driverne tilgjengelig i X86 er auto, <emphasis>eller
       alternativt et valg fra</emphasis> i915, i965, nouveau, r100, r200,
-      og swrast. Bruk 'auto' for å bygge alle tilgjengelige DRI-drivere, eller bruk en
-      tom streng (DRI_DRIVERS="") hvis du kun ønsker å bygge gallium-drivere.
+      og swrast. Bruk 'auto' for Ã¥ bygge alle tilgjengelige DRI-drivere, eller bruk en
+      tom streng (DRI_DRIVERS="") hvis du kun Ã¸nsker Ã¥ bygge gallium-drivere.
     </para>
 
     <para>
       Plattformene ("vindussystemene") tilgjengelig for X86 linux er x11, wayland,
-      drm, og uten overflate. Ved ikke å spesifisere noe, mesonen
+      drm, og uten overflate. Ved ikke Ã¥ spesifisere noe, mesonen
       build-system vil bygge for alle disse plattformene hvis du har
       avhengigheter, identiske med hvis du hadde spesifisert '-Dplatforms=auto'.
     </para>
 
     <para>
-      Endre kommandoene nedenfor for dine ønskede drivere. Driverne som er oppført
+      Endre kommandoene nedenfor for dine Ã¸nskede drivere. Driverne som er oppfÃ¸rt
       nedenfor vil dekke de fleste moderne skjermkort og virtuelle maskiner. For hjelp i
-      velge sjåfører se <ulink url="https://docs.mesa3d.org/systems.html"/>.
+      velge sjÃ¥fÃ¸rer se <ulink url="https://docs.mesa3d.org/systems.html"/>.
 -->
       <!-- these two don't seem to be mentioned in that mesa link -->
 <!--
@@ -259,7 +261,7 @@
 
     <note>
       <para>
-        Selv om nouveau-driverne kan bygges for både gallium og dri, er de
+        Selv om nouveau-driverne kan bygges for bÃ¥de gallium og dri, er de
         i915-driveren kan bare bygges for den ene eller den andre.
       </para>
     </note>
@@ -268,8 +270,18 @@
 DRI_DRIVERS="i965,nouveau"</userinput></screen>
 -->
 
+    <!-- https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/22021 -->
+<!-- No longer needed
     <para>
-      Installer <application>Mesa</application> ved å kjøre følgende
+      Remove two unneeded references to LLVM headers to avoid a build
+      failure with LLVM 17 or later:
+    </para>
+
+<screen><userinput>sed '/Scalar.h/d;/Utils.h/d' \
+    -i src/gallium/auxiliary/gallivm/lp_bld_init.c</userinput></screen>
+-->
+    <para>
+      Installer <application>Mesa</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -281,7 +293,7 @@ meson setup                   \
       --buildtype=release     \
       -Dplatforms=x11,wayland \
       -Dgallium-drivers=auto  \
-      -Dvulkan-drivers=""     \
+      -Dvulkan-drivers=auto   \
       -Dvalgrind=disabled     \
       -Dlibunwind=disabled    \
       ..                      &amp;&amp;
@@ -289,29 +301,29 @@ meson setup                   \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted:
+      For Ã¥ teste resultatene, utsted:
       <command>meson configure -Dbuild-tests=true &amp;&amp; ninja test</command>.
-	  Tre tester relatert til mesa:intel er kjent for å mislykkes.
     </para>
 <!-- All 88 tests passed for me for 22.3.3 [pierre]
      All 90 tests passed for me for 23.1.0 [bdubbs]
+     89 Tests passed for me, 1 timeout on 23.1.8 [rahul]
+     All 98 tests passed for me for 23.3.1 [bdubbs]
 -->
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
-      Hvis ønskelig, installer den valgfrie dokumentasjonen ved å kjøre
-      følgende kommandoer som
+      Hvis Ã¸nskelig, installer den valgfrie dokumentasjonen ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"
-        remap="doc"><userinput>install -v -dm755 /usr/share/doc/mesa-&mesa-version; &amp;&amp;
-cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
+         remap="doc"><userinput>cp -rv ../docs -T /usr/share/doc/mesa-&mesa-version;</userinput></screen>
 
   </sect2>
 
@@ -320,9 +332,9 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
 
     <para>
       <parameter>--buildtype=release</parameter>: Denne bryteren sikrer et
-      fullt optimalisert bygg, og deaktiverer feilsøkingspåstander som vil
+      fullt optimalisert bygg, og deaktiverer feilsÃ¸kingspÃ¥stander som vil
       kraftig bremse ned bibliotekene i visse brukstilfeller. Uten denne
-      bryteren, kan byggestørrelsene spenne over 2 GB.
+      bryteren, kan byggestÃ¸rrelsene spenne over 2 GB.
     </para>
 
     <para>
@@ -334,25 +346,25 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
       serier), <literal>r600</literal> (for AMD/ATI Radeon HD 2000-6000
       serier), <literal>radeonsi</literal> (for AMD Radeon HD 7000 eller nyere
       AMD GPU modeller), <literal>nouveau</literal>
-      (for støttede NVIDIA GPUer er de oppført som alle
+      (for stÃ¸ttede NVIDIA GPUer er de oppfÃ¸rt som alle
       <quote>3D features</quote> enten <quote>DONE</quote> eller
       <quote>N/A</quote> in <ulink
       url='https://nouveau.freedesktop.org/FeatureMatrix.html'>the Nouveau
       status page</ulink>), <literal>virgl</literal> (for QEMU virtual GPU
-      med <application>virglrender</application> støtte; merk at BLFS
+      med <application>virglrender</application> stÃ¸tte; merk at BLFS
       <xref linkend='qemu'/> ikke er bygget med
       <application>virglrender</application>), <literal>svga</literal>
       (for VMWare virtual GPU), <literal>swrast</literal> (bruker CPU for 3D
-      rasterisering; Vær oppmerksom på at det er mye tregere enn å bruke en moderne
-      3D-kompatibel GPU, så den bør bare brukes hvis GPUen ikke støttes
+      rasterisering; VÃ¦r oppmerksom pÃ¥ at det er mye tregere enn Ã¥ bruke en moderne
+      3D-kompatibel GPU, sÃ¥ den bÃ¸r bare brukes hvis GPUen ikke stÃ¸ttes
       av andre drivere), <literal>iris</literal> (for Intel GPUs sendt
       med Broadwell eller nyere CPUer), <literal>crocus</literal> (for Intel
       GMA 3000, X3000 serier, 4000 serier, or X4000 serier GPUer levert med
       brikkesett, eller Intel HD GPUer levert med pre-Broadwell CPUs),
       <literal>i915</literal> (for Intel GMA 900, 950, 3100, eller 3150 GPUer
       leveres med brikkesett eller Atom D/N 4xx/5xx CPUer). Du kan erstatte
-      <literal>auto</literal> med en kommadelt liste kun for å bygge
-      en undergruppe av disse driverne hvis du nøyaktig vet hvilke drivere du
+      <literal>auto</literal> med en kommadelt liste kun for Ã¥ bygge
+      en undergruppe av disse driverne hvis du nÃ¸yaktig vet hvilke drivere du
       trenger for eksempel
       <option>-Dgallium-drivers=radeonsi,iris,swrast</option>.
     </para>
@@ -360,30 +372,28 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
     <para>
       <parameter>-Dosmesa=true</parameter>: Denne bryteren aktiverer bygging av
       <filename class="libraryfile">libOSMesa</filename> bibliotek og
-      gir Gallium3D støtte i den. Det krever swrast gallium driveren.
+      gir Gallium3D stÃ¸tte i den. Det krever swrast gallium driveren.
     </para>
 -->
 
     <para>
-      <parameter>-Dplatforms="..."</parameter>: Denne parameteren
-      kontrollerer hvilke vindussystemer som skal støttes. Tilgjengelige
+      <parameter>-Dplatforms=...</parameter>: Denne parameteren
+      kontrollerer hvilke vindussystemer som skal stÃ¸ttes. Tilgjengelige
       linux plattformer er x11 og wayland.
     </para>
 
     <para>
-      <parameter>-Dvulkan-drivers=""</parameter>: Denne bryteren lar deg velge
-      hvilke Vulkan drivere som blir bygget. Standard er auto, men dette krever
-      den valgfrie avhengigheten <filename>glslang</filename> og
-      <application>Vulkan-Loader</application>.  Vulkan er en nyere API
-      designet for å bruke GPUene med en ytelse som er bedre enn OpenGL,
-      men ingenting i BLFS drar nytte av det foreløpig. Så vi passerer en tom
-      liste for å fjerne behovet for disse avhengighetene.
+      <parameter>-Dvulkan-drivers=auto</parameter>: Denne bryteren muliggjÃ¸r stÃ¸tte
+      for Vulkan grafikk API. Den bygger automatisk alle grafikkdrivere
+      som er tilgjengelig for Vulkan. Hvis du Ã¸nsker Ã¥ bygge spesifikke drivere,
+      gyldige alternativer inkluderer 'amd', 'intel', 'intel_hasvk' og 'swrast'. Hvis du
+      ikke Ã¸nsker Vulkan stÃ¸tte, endre 'auto' til "".
     </para>
 
     <para>
       <parameter>-Dvalgrind=disabled</parameter>: Denne parameteren deaktiverer
       bruken av Valgrind under byggeprosessen. Fjern denne parameteren
-      hvis du har Valgrind installert, og ønsker å se etter minnelekkasjer.
+      hvis du har Valgrind installert, og Ã¸nsker Ã¥ se etter minnelekkasjer.
     </para>
 
     <para>
@@ -393,15 +403,15 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
 
     <para>
       <command>meson configure -Dbuild-tests=true</command>: Denne kommandoen vil
-      rekonfigurere byggingen for å sette <option>-Dbuild-tests=true</option>, men
+      rekonfigurere byggingen for Ã¥ sette <option>-Dbuild-tests=true</option>, men
       behold de andre alternativene som er spesifisert i <command>meson setup</command>
-      kommandoen uendret. Det tillater <command>ninja test</command> å bygge og
-      kjøre enhetstester.
+      kommandoen uendret. Det tillater <command>ninja test</command> Ã¥ bygge og
+      kjÃ¸re enhetstester.
     </para>
 
     <para>
       <option>-Degl-native-platform="..."</option>: Denne parameteren
-      kontrollerer hvilken støtte for Embedded Graphics Library som skal bygges. Tilgjengelig
+      kontrollerer hvilken stÃ¸tte for Embedded Graphics Library som skal bygges. Tilgjengelig
       linux alternativer er auto (standard), x11, wayland, surfaceless og drm.
     </para>
 
@@ -413,7 +423,9 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
     <segmentedlist>
       <segtitle>Installerte Programmer</segtitle>
       <segtitle>Installerte Biblioteker</segtitle><!-- in /usr/lib -->
-      <segtitle>Installerte Drivere</segtitle><!-- in /usr/lib/<subdir> -->
+      <segtitle>Installerte DRI Drivere</segtitle><!-- in /usr/lib/dri -->
+      <segtitle>Installerte VDPAU Drivere</segtitle><!-- in /usr/lib/vdpau -->
+      <segtitle>Installerte Vulkan Drivere</segtitle><!-- in /usr/lib -->
       <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
@@ -449,9 +461,11 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
           radeonsi_drv_video.so,
           swrast_dri.so,
           virtio_gpu_dri.so,
-          virtio_gpu_drv_video.so,
-          vmwgfx_dri.so,
+          virtio_gpu_drv_video.so, og
+          vmwgfx_dri.so
           <!-- End DRI Drivers -->
+        </seg>
+        <seg>
           <!-- Begin VDPAU drivers -->
           libvdpau_nouveau.so,
           libvdpau_r300.so
@@ -462,11 +476,18 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
           (Mange av disse driverne er hardt koblet).
         </seg>
         <seg>
+          libvulkan_intel_hasvk.so,
+          libvulkan_intel.so,
+          libvulkan_lvp.so, and
+          libvulkan_radeon.so
+        </seg>
+        <seg>
           <!-- $XORG_PREFIX/include/GL is installed by xorg-protos -->
           $XORG_PREFIX/{include/{EGL,GLES,GLES2,GLES3,KHR},
           $XORG_PREFIX/lib/{dri,vdpau}},
-          $XORG_PREFIX/share/drirc.d (inneholder løsninger for ulike applikasjoner,
+          $XORG_PREFIX/share/drirc.d (inneholder lÃ¸sninger for ulike applikasjoner,
           spesielt nettlesere og spill),
+          $XORG_PREFIX/share/vulkan,
           and /usr/share/doc/mesa-&mesa-version;
         </seg>
       </seglistitem>
@@ -481,7 +502,7 @@ cp -rfv ../docs/* /usr/share/doc/mesa-&mesa-version;</userinput></screen>
         <term><command>glxgears</command></term>
         <listitem>
           <para>
-            er en GL demo som er nyttig for feilsøking av grafikk
+            er en GL demo som er nyttig for feilsÃ¸king av grafikk
             problemer
           </para>
           <indexterm zone="mesa glxgears">
