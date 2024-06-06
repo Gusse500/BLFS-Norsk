@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY at-spi2-core-download-http
-           "&gnome-download-http;/at-spi2-core/2.48/at-spi2-core-&at-spi2-core-version;.tar.xz">
-  <!ENTITY at-spi2-core-download-ftp
-           "&gnome-download-ftp;/at-spi2-core/2.48/at-spi2-core-&at-spi2-core-version;.tar.xz">
-  <!ENTITY at-spi2-core-md5sum        "4ef1875d9e7035f672d494b997c892af">
-  <!ENTITY at-spi2-core-size          "541 KB">
-  <!ENTITY at-spi2-core-buildsize     "20 MB (med tester)">
-  <!ENTITY at-spi2-core-time          "mindre enn 0,1 SBU (med tester, bortsett fra hvis det er en timeout)">
+           "&gnome-download-http;/at-spi2-core/2.50/at-spi2-core-&at-spi2-core-version;.tar.xz">
+  <!ENTITY at-spi2-core-download-ftp  " ">
+  <!ENTITY at-spi2-core-md5sum        "14a15f1087292f18a1ab02c2bdd0ce53">
+  <!ENTITY at-spi2-core-size          "556 KB">
+  <!ENTITY at-spi2-core-buildsize     "24 MB (med tester)">
+  <!ENTITY at-spi2-core-time          "0.2 SBU (med tester)">
 ]>
 
 <sect1 id="at-spi2-core" xreflabel="at-spi2-core-&at-spi2-core-version;">
@@ -30,12 +29,12 @@
     <para>
       <application>At-Spi2 Core</application> pakken inneholder en
       omfattende tilgjengelighetsrammeverk for hjelpemidler
-      tilgjengelig på <application>GNOME</application> plattformen. Dette inkluderer
-      et sett med grensesnitt som er implementert av andre verktøysett og
+      tilgjengelig pÃ¥ <application>GNOME</application> plattformen. Dette inkluderer
+      et sett med grensesnitt som er implementert av andre verktÃ¸ysett og
       applikasjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -56,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &at-spi2-core-size;
+          NedlastingsstÃ¸rrelse: &at-spi2-core-size;
         </para>
       </listitem>
       <listitem>
@@ -73,17 +72,17 @@
 
     <bridgehead renderas="sect3">At-Spi2 Core Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="dbus"/>,
       <xref linkend="glib2"/>,
       <!-- Reports "Cannot get the default GSettingsSchemaSource" on
            startup w/o it. -->
-      <xref role="runtime" linkend="gsettings-desktop-schemas"/> (Kjøretid),
+      <xref role="runtime" linkend="gsettings-desktop-schemas"/> (KjÃ¸retid),
       og <xref linkend="xorg7-lib"/>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri (Påkrevd hvis du bygger GNOME)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (PÃ¥krevd hvis du bygger GNOME)</bridgehead>
     <para role="optional">
       <xref linkend="gobject-introspection"/>
     </para>
@@ -99,7 +98,7 @@
     <title>Installasjon av At-Spi2 Core</title>
 
     <para>
-      Installer <application>At-Spi2 Core</application> ved å kjøre følgende
+      Installer <application>At-Spi2 Core</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -119,15 +118,15 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Testpakken krever også at glib skjemaene til pakken
-      allerede er installert. For å teste resultatene, installer pakken først,
+      Testpakken krever ogsÃ¥ at glib skjemaene til pakken
+      allerede er installert. For Ã¥ teste resultatene, installer pakken fÃ¸rst,
       deretter utsted: <command>dbus-run-session ninja test</command>.
-      En test, <filename>atk-test</filename>, er kjent for tidsavbrudd på noen
+      En test, <filename>atk-test</filename>, er kjent for tidsavbrudd pÃ¥ noen
       systemer.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="systemd"><userinput>ninja install</userinput></screen>
@@ -151,10 +150,17 @@ rm /tmp/at-spi-dbus-bus.service</userinput></screen>
 
     <para>
       <option>-Ddocs=true</option>: Bruk denne bryteren hvis du vil bygge
-      dokumentasjon. Merk at du må ha både
+      dokumentasjon. Merk at du mÃ¥ ha bÃ¥de
       <xref role="nodep" linkend="gi-docgen"/>
-      og <xref linkend='sphinx'/> installert på systemet ditt.
+      og <xref linkend='sphinx'/> installert pÃ¥ systemet ditt.
     </para>
+
+    <!-- For when we remove gtk2 from the book:
+    <para>
+      <parameter>-Dgtk2_atk_adaptor=false</parameter>: Denne bryteren deaktiverer
+      bygging av GTK+-2 modulen for denne pakken.
+    </para>
+    -->
 
   </sect2>
 
@@ -213,7 +219,7 @@ rm /tmp/at-spi-dbus-bus.service</userinput></screen>
         <term><filename class="libraryfile">libatk-1.0.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som brukes av hjelpemidler for å
+            inneholder funksjoner som brukes av hjelpemidler for Ã¥
             samhandle med skrivebordsapplikasjoner
           </para>
           <indexterm zone="at-spi2-core libatk-1.0">
@@ -226,7 +232,7 @@ rm /tmp/at-spi-dbus-bus.service</userinput></screen>
         <term><filename class="libraryfile">libatk-bridge.so</filename></term>
         <listitem>
           <para>
-            inneholder Verktøysett for tilgjengelighet GTK+-2 broen
+            inneholder VerktÃ¸ysett for tilgjengelighet GTK+-2 broen
           </para>
           <indexterm zone="at-spi2-core libatk-bridge">
             <primary sortas="c-libatk-bridge">libatk-bridge.so</primary>
@@ -238,7 +244,7 @@ rm /tmp/at-spi-dbus-bus.service</userinput></screen>
         <term><filename class="libraryfile">libatk-bridge-2.0.so</filename></term>
         <listitem>
           <para>
-            inneholder Verktøysett for tilgjengelighet GTK+ modulen
+            inneholder VerktÃ¸ysett for tilgjengelighet GTK+ modulen
           </para>
           <indexterm zone="at-spi2-core libatk-bridge-2.0">
             <primary sortas="c-libatk-bridge-2.0">libatk-bridge-2.0.so</primary>

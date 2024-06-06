@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY xwayland-download-http "&xorg-download-http;/xserver/xwayland-&xwayland-version;.tar.xz">
-  <!ENTITY xwayland-download-ftp  "&xorg-download-ftp;/xserver/xwayland-&xwayland-version;.tar.xz">
-  <!ENTITY xwayland-md5sum        "a6b4e8814d32c080510104888f752d74">
+  <!ENTITY xwayland-download-ftp  " ">
+  <!ENTITY xwayland-md5sum        "9d04fbe9c3a531c9cd08d38f51788ae6">
   <!ENTITY xwayland-size          "1.2 MB">
-  <!ENTITY xwayland-buildsize     "27 MB (legg til 364 MB for tester)">
+  <!ENTITY xwayland-buildsize     "53 MB (legg til 364 MB for tester)">
   <!ENTITY xwayland-time          "0.2 SBU (med parallellitet=4; legg til 1.7 SBU for tester, ikke inkludert klonetid)">
 ]>
 
@@ -27,12 +27,12 @@
 
     <para>
       <application>Xwayland</application> pakken er en Xorg server
-      som kjører på toppen av wayland serveren. Den har blitt skilt fra
-      Xorg hovedserverpakke. Den lar X klienter kjøre inne i en
-      wayland økt.
+      som kjÃ¸rer pÃ¥ toppen av wayland serveren. Den har blitt skilt fra
+      Xorg hovedserverpakke. Den lar X klienter kjÃ¸re inne i en
+      wayland Ã¸kt.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &xwayland-size;
+          NedlastingsstÃ¸rrelse: &xwayland-size;
         </para>
       </listitem>
       <listitem>
@@ -70,12 +70,12 @@
 
     <bridgehead renderas="sect3">Xwayland Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libxcvt"/>,
       <xref linkend="pixman"/>,
       <xref linkend="wayland-protocols"/>,
-	  <xref role='runtime' linkend="xorg7-app"/> (kjøretid), og
+	  <xref role='runtime' linkend="xorg7-app"/> (kjÃ¸retid), og
       <xref linkend="xorg7-font"/> (bare font-util)
     </para>
 
@@ -88,12 +88,13 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="git"/> (for å laste ned pakker som trengs for testene),
+      <xref linkend="git"/> (for Ã¥ laste ned pakker som trengs for testene),
+      <xref linkend="libei"/>,
       <xref linkend="libgcrypt"/>,
       <xref linkend="nettle"/>,
       <xref linkend="xmlto"/>,
       <xref linkend="xorg7-legacy"/>
-         (bare bdftopcf, for å bygge fonter som kreves for testene),
+         (bare bdftopcf, for Ã¥ bygge fonter som kreves for testene),
       <ulink url="https://gitlab.freedesktop.org/xorg/test/rendercheck">rendercheck</ulink> (for tester), og
       <ulink url="https://wayland.pages.freedesktop.org/weston/">weston</ulink> (for tester)
     </para>
@@ -104,7 +105,7 @@
     <title>Installasjon av Xwayland</title>
 
     <para>
-      Installer <application>xwayland</application> ved å kjøre følgende
+      Installer <application>xwayland</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -120,10 +121,10 @@ meson setup --prefix=$XORG_PREFIX         \
 ninja</userinput></screen>
 
     <para>
-      Å bygge testrammeverket krever litt arbeid. Først,
+      Ã… bygge testrammeverket krever litt arbeid. FÃ¸rst,
       <ulink url="https://wayland.pages.freedesktop.org/weston/">weston</ulink>
       bringer inn flere avhengigheter, men antallet kan reduseres med
-      å deaktivere unødvendige funksjoner. <command>meson</command> kommandoer
+      Ã¥ deaktivere unÃ¸dvendige funksjoner. <command>meson</command> kommandoer
       for en nedstrippet oppbygging av <application>weston</application> er vist
       i <ulink
       url="https://gitlab.freedesktop.org/xorg/xserver/-/blob/xwayland-22.1/.gitlab-ci/debian-install.sh">
@@ -134,15 +135,15 @@ ninja</userinput></screen>
     </para>
 <!--
     <para>
-      Videre må en X server kjøres under byggingen av
-      <application>xts</application>. Hvis du ikke kjører testene i et
-      grafisk miljø, må du aktivere <command>Xvfb</command>
-      ved å fjerne <parameter>-Dxvfb=false</parameter> ovenfor.
+      Videre mÃ¥ en X server kjÃ¸res under byggingen av
+      <application>xts</application>. Hvis du ikke kjÃ¸rer testene i et
+      grafisk miljÃ¸, mÃ¥ du aktivere <command>Xvfb</command>
+      ved Ã¥ fjerne <parameter>-Dxvfb=false</parameter> ovenfor.
       Instruksjonene nedenfor forventer at dette er gjort.
     </para>
 -->
     <para>
-      Å kjøre testene innebærer å laste ned to andre rammeverk, i tillegg
+      Ã… kjÃ¸re testene innebÃ¦rer Ã¥ laste ned to andre rammeverk, i tillegg
       til de nevnte valgfrie avhengighetene:
     </para>
 
@@ -168,14 +169,14 @@ unset DISPLAY VFB_PID        &amp;&amp;
 popd</userinput></screen>
 
     <para>
-      Da kan testene kjøres med:
+      Da kan testene kjÃ¸res med:
     </para>
 
 <screen remap="test"><userinput>XTEST_DIR=$(pwd)/tools/xts PIGLIT_DIR=$(pwd)/tools/piglit ninja test</userinput></screen>
 
     <!-- The xfontset tests fail on my system -renodr -->
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root" revision="sysv"><userinput>ninja install &amp;&amp;
@@ -187,7 +188,7 @@ EOF</userinput></screen>
 
     <para>
       Hvis <xref linkend='xorg-server'/> ikke er installert og du planlegger ikke
-      å installere det senere, kan du installere <command>Xvfb</command> fra denne
+      Ã¥ installere det senere, kan du installere <command>Xvfb</command> fra denne
       pakken.  Som &root; bruker:
     </para>
 
@@ -201,26 +202,26 @@ EOF</userinput></screen>
     <para>
       <command>sed -i '/install_man/,$d' meson.build</command>: Forhindrer
       installering av en manualside for <command>Xserver</command>,
-      som også leveres av <xref linkend='xorg-server'/>.  Fjern denne
+      som ogsÃ¥ leveres av <xref linkend='xorg-server'/>.  Fjern denne
       kommandoen hvis <xref linkend='xorg-server'/> ikke er installert og du
-      ikke planlegger å installere den senere.
+      ikke planlegger Ã¥ installere den senere.
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 <!--
     <para>
-      <parameter>-Dxvfb=false</parameter>: Hindrer å bygge
-      <command>xvfb</command> program, som også er installert av
-      <xref linkend="xorg-server"/>. Fjern dette alternativet hvis du ikke planlegger å
+      <parameter>-Dxvfb=false</parameter>: Hindrer Ã¥ bygge
+      <command>xvfb</command> program, som ogsÃ¥ er installert av
+      <xref linkend="xorg-server"/>. Fjern dette alternativet hvis du ikke planlegger Ã¥
       installere X serveren.
     </para>
 
     <para>
       <command>mkdir -pv /etc/X11/xorg.conf.d</command>: Denne mappen er
-      nødvendig for å sette konfigurasjonsfiler for Xwayland. Denne kommandoen sikrer
-      at den eksisterer, ettersom noen applikasjoner kan bruke den uten først
-      å skape den.
+      nÃ¸dvendig for Ã¥ sette konfigurasjonsfiler for Xwayland. Denne kommandoen sikrer
+      at den eksisterer, ettersom noen applikasjoner kan bruke den uten fÃ¸rst
+      Ã¥ skape den.
     </para>
 -->
     <para revision="sysv">
@@ -262,7 +263,7 @@ EOF</userinput></screen>
         <term><command>Xwayland</command></term>
         <listitem>
           <para>
-            Lar X klienter kjøre under wayland
+            Lar X klienter kjÃ¸re under wayland
           </para>
           <indexterm zone="xwayland Xwayland">
             <primary sortas="b-Xwayland">Xwayland</primary>

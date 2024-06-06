@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY cairo-download-http "&gnome-download-http;/cairo/&cairo-minor;/cairo-&cairo-version;.tar.xz">
+  <!ENTITY cairo-download-http "https://www.cairographics.org/releases/cairo-&cairo-version;.tar.xz">
   <!--<!ENTITY cairo-download-http "https://www.cairographics.org/snapshots/cairo-&cairo-version;.tar.xz">
   <!ENTITY cairo-download-http "&sources-anduin-http;/cairo/cairo-&cairo-version;.tar.xz">-->
   <!ENTITY cairo-download-ftp  " ">
-  <!ENTITY cairo-md5sum        "c5a6f255af72a2e5faa8e6a53dd882e2">
-  <!ENTITY cairo-size          "33 MB">
-  <!ENTITY cairo-buildsize     "137 MB">
-  <!ENTITY cairo-time          "0.4 SBU (Bruke parallellisme=4)">
+  <!ENTITY cairo-md5sum        "3f0685fbadc530606f965b9645bb51d9">
+  <!ENTITY cairo-size          "32 MB">
+  <!ENTITY cairo-buildsize     "98 MB">
+  <!ENTITY cairo-time          "0.3 SBU (Bruke parallellisme=4)">
 ]>
 
 <sect1 id="cairo" xreflabel="Cairo-&cairo-version;">
@@ -28,24 +28,24 @@
     <title>Introduksjon til Cairo</title>
 
     <para>
-      <application>Cairo</application> er et 2D grafikkbibliotek med støtte for
-      flere utdataenheter. For tiden støttede utdatamål inkluderer
-      <application>X</application> Vindussystem, win32, image buffers,
+      <application>Cairo</application> er et 2D grafikkbibliotek med stÃ¸tte for
+      flere utdataenheter. For tiden stÃ¸ttede utdatamÃ¥l inkluderer
+      <application>X</application> Vindussystem, Win32, image buffers,
       PostScript, PDF and SVG. Eksperimentelle bakstykker inkluderer OpenGL, Quartz og
-      XCB fil utdata. <application>Cairo</application> er designet for å produsere
-      konsistent utdata på alle utskriftsmedier mens du drar nytte av skjermen
-      sin maskinvareakselerasjon når tilgjengelig (f.eks. gjennom X Render
+      XCB fil utdata. <application>Cairo</application> er designet for Ã¥ produsere
+      konsistent utdata pÃ¥ alle utskriftsmedier mens du drar nytte av skjermen
+      sin maskinvareakselerasjon nÃ¥r tilgjengelig (f.eks. gjennom X Render
       Utvidelse). <application>Cairo</application> API gir operasjoner
-      som ligner på tegningsoperatørene til PostScript og PDF. Operasjoner i
+      som ligner pÃ¥ tegningsoperatÃ¸rene til PostScript og PDF. Operasjoner i
       <application>Cairo</application> inkludere stryke og fylle kubikk
       B&eacute;zier splines, transformere og komponere gjennomsiktige bilder,
       og kantutjevnet tekstgjengivelse. Alle tegneoperasjoner kan transformeres
       av hvilken som helst
       <ulink url="https://en.wikipedia.org/wiki/Affine_transformation">affine
-      transformation</ulink> (skala, rotasjon, skjæring osv.).
+      transformation</ulink> (skala, rotasjon, skjÃ¦ring osv.).
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -66,7 +66,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &cairo-size;
+          NedlastingsstÃ¸rrelse: &cairo-size;
         </para>
       </listitem>
       <listitem>
@@ -83,7 +83,7 @@
 
     <bridgehead renderas="sect3">Cairo Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libpng"/> og
       <xref linkend="pixman"/>
@@ -92,7 +92,7 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="fontconfig"/>,
-      <xref linkend="glib2"/> (påkrevd for de fleste GUIer), og
+      <xref linkend="glib2"/> (pÃ¥krevd for de fleste GUIer), og
       <xref linkend="xorg7-lib"/>
     </para>
 
@@ -119,9 +119,9 @@
 
     <note>
       <para>
-        Det er en sirkulær avhengighet mellom cairo og harfbuzz.
-        Hvis cairo bygges før harfbuzz, er det nødvendig å gjenoppbygge cairo
-        etter harfbuzz for å bygge pango.
+        Det er en sirkulÃ¦r avhengighet mellom cairo og harfbuzz.
+        Hvis cairo bygges fÃ¸r harfbuzz, er det nÃ¸dvendig Ã¥ gjenoppbygge cairo
+        etter harfbuzz for Ã¥ bygge pango.
       </para>
     </note>
 
@@ -132,6 +132,7 @@
 
     <!-- /usr/include/ansidecl.h says "This file is part of the GNU C
     Library", but it's actually installed by Binutils.  -->
+<!--
     <para>
       Tilpass denne pakken for Binutils-2.39 eller nyere:
     </para>
@@ -139,79 +140,72 @@
 <screen><userinput>sed 's/PTR/void */' -i util/cairo-trace/lookup-symbol.c</userinput></screen>
 
     <para>
-      Fiks en pkg-config fil som kan forårsake feil senere:
+      Fiks en pkg-config fil som kan forÃ¥rsake feil senere:
     </para>
 
 <screen><userinput>sed -e "/@prefix@/a exec_prefix=@exec_prefix@" \
     -i util/cairo-script/cairo-script-interpreter.pc.in</userinput></screen>
+-->
 
     <para>
-      Installer <application>Cairo</application> ved å kjøre følgende
+      Installer <application>Cairo</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr    \
-            --disable-static \
-            --enable-tee &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Denne pakken har ikke en fungerende testpakke.
-      <!-- The test suite can be run with 'make check', but 488 tests fail and
+      <!-- The test suite can be run with 'ninja test', but 488 tests fail and
       59 tests pass. This seems to be due to minute changes in the expected
       output, similar to librsvg's tests. Since it's a huge chunk of the tests,
       let's keep it as "broken" for now.-->
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-<!-- Not needed with 1.17.4
+<!-- Enabled by default in 1.18.0 (would be -Dtee=enabled otherwise)
     <para>
-      <parameter>autoreconf -fv</parameter>: Dette forhindrer
-      <command>configure</command> ender feil med gjeldende versjon
-      av <application>automake</application> fordi AM_INIT_AUTOMAKE
-      definisjoner kom fra en tidligere versjon.
+      <parameter>- -enable-tee</parameter>: Denne bryteren aktiverer
+      eksperimentell tee overflate bakstykke som er nÃ¸dvendig hvis du bruker
+      systeminstallert <application>Cairo</application> med Mozilla applikasjoner.
+    </para>
+-->
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <option>-Dxlib-xcb=enabled</option>: Denne bryteren aktiverer flere
+      eksperimentelle Xlib/XCB funksjoner brukt av noen vindusbehandlere.
+    </para>
+
+<!-- Removed in 1.18.0
+    <para>
+      <option>- -enable-gl</option>: Denne bryteren aktiverer
+      <application>Cairo</application> sin eksperimentelle
+      <application>OpenGL</application> overflate som
+      er nÃ¸dvendig for <application>Wayland</application>
+      kompositor og noen andre pakker som ikke er
+      del av BLFS.
     </para>
 -->
 
     <para>
-      <parameter>--enable-tee</parameter>: Denne bryteren aktiverer
-      eksperimentell tee overflate bakstykke som er nødvendig hvis du bruker
-      systeminstallert <application>Cairo</application> med Mozilla applikasjoner.
-    </para>
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/static-libraries.xml"/>
-
-    <para>
-      <option>--enable-xlib-xcb</option>: Denne bryteren aktiverer flere
-      eksperimentelle Xlib/XCB funksjoner brukt av noen vindusbehandlere.
-    </para>
-
-    <para>
-      <option>--enable-gl</option>: Denne bryteren aktiverer
-      <application>Cairo</application> sin eksperimentelle
-      <application>OpenGL</application> overflate som
-      er nødvendig for <application>Wayland</application>
-      kompositor og noen andre pakker som ikke er
-      del av BLFS.
-    </para>
-
-<!--<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/gtk-doc-rebuild.xml"/>
-      NOTE: For this version, no docs are installed by default -->
-
-    <para>
-      <option>--enable-gtk-doc</option>: Bruk denne parameteren hvis GTK-Doc er
-      installert og du ønsker å opprette og installere dokumentasjonen.
+      <option>-Dgtk_doc=true</option>: Bruk denne parameteren hvis GTK-Doc er
+      installert og du Ã¸nsker Ã¥ opprette og installere dokumentasjonen.
     </para>
 
   </sect2>
@@ -229,11 +223,13 @@ make</userinput></screen>
           cairo-trace
         </seg>
         <seg>
-          libcairo.so, libcairo-gobject.so og
+          libcairo.so,
+          libcairo-gobject.so, og
           libcairo-script-interpreter.so
         </seg>
         <seg>
-          /usr/{include,lib,share/gtk-doc/html}/cairo
+          /usr/include/cairo and
+          /usr/lib/cairo
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -242,20 +238,6 @@ make</userinput></screen>
       <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
-
-<!--
-     <varlistentry id="cairo-sphinx">
-        <term><command>cairo-sphinx</command></term>
-        <listitem>
-          <para>
-            er et internt verktøy for regresjonsanalyse
-          </para>
-          <indexterm zone="cairo cairo-sphinx">
-            <primary sortas="b-cairo-sphinx">cairo-sphinx</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
--->
 
       <varlistentry id="cairo-trace">
         <term><command>cairo-trace</command></term>
@@ -274,8 +256,8 @@ make</userinput></screen>
         <term><filename class="libraryfile">libcairo.so</filename></term>
         <listitem>
           <para>
-            inneholder 2D grafikkfunksjonene som kreves for å gjengi
-            ulike produksjonsmål
+            inneholder 2D grafikkfunksjonene som kreves for Ã¥ gjengi
+            ulike produksjonsmÃ¥l
           </para>
           <indexterm zone="cairo libcairo">
             <primary sortas="c-libcairo">libcairo.so</primary>
@@ -301,8 +283,8 @@ make</userinput></screen>
         <term><filename class="libraryfile">libcairo-script-interpreter.so</filename></term>
         <listitem>
           <para>
-            inneholder skripttolkerfunksjonene for å utføre og
-            manipulere <application>Cairo</application> utførelsesspor
+            inneholder skripttolkerfunksjonene for Ã¥ utfÃ¸re og
+            manipulere <application>Cairo</application> utfÃ¸relsesspor
           </para>
           <indexterm zone="cairo libcairo-script-interpreter">
             <primary sortas="c-libcairo-script-interpreter">libcairo-script-interpreter.so</primary>
