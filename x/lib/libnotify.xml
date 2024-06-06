@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY libnotify-download-http "&gnome-download-http;/libnotify/0.8/libnotify-&libnotify-version;.tar.xz">
-  <!ENTITY libnotify-download-ftp  "&gnome-download-ftp;/libnotify/0.8/libnotify-&libnotify-version;.tar.xz">
-  <!ENTITY libnotify-md5sum        "ee2d2934a9dcfd5b1305188201e1cd50">
+  <!ENTITY libnotify-download-ftp  " ">
+  <!ENTITY libnotify-md5sum        "952e55f45067b6a5b9eab4310c9cd658">
   <!ENTITY libnotify-size          "104 KB">
   <!ENTITY libnotify-buildsize     "2.3 MB">
   <!ENTITY libnotify-time          "0.1 SBU">
@@ -26,14 +26,14 @@
     <title>Introduksjon til libnotify</title>
 
     <para>
-      <application>libnotify</application> biblioteket brukes til å sende skrivebord
-      varsler til en varslingsnisse, som definert på Desktop
-      Notifications spec. Disse varslene kan brukes til å informere brukeren om
-      en hendelse eller vise en eller annen form for informasjon uten å komme i brukerens
+      <application>libnotify</application> biblioteket brukes til Ã¥ sende skrivebord
+      varsler til en varslingsnisse, som definert pÃ¥ Desktop
+      Notifications spec. Disse varslene kan brukes til Ã¥ informere brukeren om
+      en hendelse eller vise en eller annen form for informasjon uten Ã¥ komme i brukerens
       vei.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libnotify-size;
+          NedlastingsstÃ¸rrelse: &libnotify-size;
         </para>
       </listitem>
       <listitem>
@@ -71,12 +71,12 @@
 
     <bridgehead renderas="sect3">libnotify Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="gtk3"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt (Nødvendig hvis det skal bygges GNOME)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (NÃ¸dvendig hvis det skal bygges GNOME)</bridgehead>
     <para role="optional">
       <xref linkend="gobject-introspection"/>
     </para>
@@ -87,15 +87,17 @@
       <xref linkend="xmlto"/>
     </para>
 
-    <bridgehead renderas="sect4">Påkrevd (kjøretid)</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd (kjÃ¸retid)</bridgehead>
     <para role="required">
-      <xref role="runtime" linkend="notification-daemon"/> eller
-      <xref role="nodep" linkend="xfce4-notifyd"/>
+      <xref role="runtime" linkend="notification-daemon"/>,
+      <xref role="nodep" linkend="xfce4-notifyd"/>, eller
+      <xref role="nodep" linkend="lxqt-notificationd"/>
     </para>
 
     <note>
       <para>
-        <application>GNOME Skall</application> og <application>KDE KWin</application>
+        <application>GNOME Skall</application> og
+        <application>KDE KWin</application>
         gir deres egne varslingsnisser.
       </para>
     </note>
@@ -106,7 +108,7 @@
     <title>Installasjon av libnotify</title>
 
     <para>
-      Installer <application>libnotify</application> ved å kjøre følgende
+      Installer <application>libnotify</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -125,7 +127,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
       API dokumentasjonen for denne pakken, utsted:
     </para>
 
@@ -136,11 +138,14 @@ meson configure -Dgtk_doc=true         &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install &amp;&amp;
-mv -v /usr/share/doc/libnotify{,-&libnotify-version;}</userinput></screen>
+if [ -e /usr/share/doc/libnotify ]; then
+  rm -rf /usr/share/doc/libnotify-&libnotify-version;
+  mv -v  /usr/share/doc/libnotify{,-&libnotify-version;}
+fi</userinput></screen>
 
   </sect2>
 
@@ -183,7 +188,7 @@ mv -v /usr/share/doc/libnotify{,-&libnotify-version;}</userinput></screen>
         <term><command>notify-send</command></term>
         <listitem>
           <para>
-            er en kommando som brukes til å sende varsler
+            er en kommando som brukes til Ã¥ sende varsler
           </para>
           <indexterm zone="libnotify notify-send">
             <primary sortas="b-notify-send">notify-send</primary>
