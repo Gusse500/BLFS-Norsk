@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY xorg-server-download-http "&xorg-download-http;/xserver/xorg-server-&xorg-server-version;.tar.xz">
-  <!ENTITY xorg-server-download-ftp  "&xorg-download-ftp;/xserver/xorg-server-&xorg-server-version;.tar.xz">
-  <!ENTITY xorg-server-md5sum        "79a6eb04b1b17ad6c7aab46da73944e8">
+  <!ENTITY xorg-server-download-ftp  " ">
+  <!ENTITY xorg-server-md5sum        "57a4ef6ea505254599d9bbe29b0eb769">
   <!ENTITY xorg-server-size          "4.8 MB">
-  <!ENTITY xorg-server-buildsize     "188 MB (med tester)">
-  <!ENTITY xorg-server-time          "0.6 SBU (bruke parallellisme=4; med tester)">
+  <!ENTITY xorg-server-buildsize     "164 MB (med tester)">
+  <!ENTITY xorg-server-time          "0.3 SBU (bruke parallellisme=4; med tester)">
   <!ENTITY modesetting_drv
            "<filename class='libraryfile'>modesetting_drv</filename>">
   <!ENTITY BLFS113 "https://www.linuxfromscratch.org/blfs/view/11.3/x/x7driver.html">
@@ -34,7 +34,7 @@
       av X Vindussystemet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -55,7 +55,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &xorg-server-size;
+          NedlastingsstÃ¸rrelse: &xorg-server-size;
         </para>
       </listitem>
       <listitem>
@@ -75,14 +75,14 @@
       <listitem>
         <para>
           Med fjerning av xf86-video-* driverne, alternativet TearFree
-          er ikke lenger funksjonell. For å omgå dette har oppstrøms lagt til
+          er ikke lenger funksjonell. For Ã¥ omgÃ¥ dette har oppstrÃ¸ms lagt til
           TearFree alternativet til standard modusinnstillingsdriver. Denne oppdateringen
-          tilbakeporterer denne funksjonen. Påfør denne oppdateringen hvis du skal bruke Xorg
-          i et miljø uten en kompositor (som TWM, IceWM, Openbox,
-          Fluxbox, eller Sawfish).
+          tilbakeporterer denne funksjonen. PÃ¥fÃ¸r denne oppdateringen hvis du skal bruke Xorg
+          i et miljÃ¸ uten en kompositor (som TWM, IceWM, Openbox,
+          eller Fluxbox).
         </para>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/xorg-server-&xorg-server-version;-tearfree_backport-1.patch"/>
         </para>
       </listitem>
@@ -90,41 +90,63 @@
 
     <bridgehead renderas="sect3">Xorg Server Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libxcvt"/>,
       <xref linkend="pixman"/>,
-      <xref linkend="xorg7-font"/> (bare font-util), og ved kjøretid:
+      <xref linkend="xorg7-font"/> (bare font-util), og ved kjÃ¸retid:
       <xref role="runtime" linkend="xkeyboard-config"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <phrase revision="sysv"><xref role="runtime"
-                                    linkend="elogind"/> (kjøretid),</phrase>
+      <phrase revision="sysv"><xref linkend='dbus'/>,
+      <xref role="runtime" linkend="elogind"/> (kjÃ¸retid;
+      <systemitem class='library'>libelogind</systemitem> ogsÃ¥ referert
+      ved byggetid, men det er egentlig ikke nyttig),</phrase>
       <xref linkend="libepoxy"/> (trengs for glamor),
       <xref linkend="libtirpc"/>,
       <phrase revision="systemd"><xref role="runtime"
-                                       linkend="systemd"/> (kjøretid),</phrase>
-      og <xref role='runtime' linkend='xorg-libinput-driver'/> (kjøretid)
+                                       linkend="systemd"/> (kjÃ¸retid),</phrase>
+      og <xref role='runtime' linkend='xorg-libinput-driver'/> (kjÃ¸retid)
     </para>
+
+    <!-- TODO: Add -Dsystemd_logind=yes explicitly (like -Dglamor=true) to
+         make this more clear for BLFS 12.2.  Now (Feb 16 2024) this package
+         is already under 12.1 freeze. -->
+    <note>
+      <para>
+        Selv om det er mulig<phrase revision='sysv'> Ã¥ bygge denne pakken
+        uten <xref linkend='dbus'/> installert eller</phrase> Ã¥ kjÃ¸re Xorg
+        serveren uten
+        <phrase revision='sysv'><xref linkend='elogind'/></phrase><phrase
+        revision='systemd'><xref linkend='systemd'/>
+        (bygget om med PAM)</phrase> fungerer, vil det kreve Ã¥ kjÃ¸re
+        Xorg serveren som &root; bruker ellers vil Xorg serveren fungere feil
+        eller til og med ikke starte. BLFS redaktÃ¸rene frarÃ¥der sterkt Ã¥
+        hoppe over <phrase revision='sysv'>disse to
+        avhengighetene</phrase><phrase revision='systemd'>denne
+        avhengigheten</phrase>.  Ikke prÃ¸v Ã¥ gjÃ¸re det med mindre du virkelig vet
+        hva gjÃ¸r du.
+      </para>
+    </note>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref role="runtime" linkend="acpid"/> (kjøretid),
-      <xref linkend="doxygen"/> (for å bygge API dokumentasjon),
-      <xref linkend="fop"/> (for å bygge dokumentasjon),
+      <xref role="runtime" linkend="acpid"/> (kjÃ¸retid),
+      <xref linkend="doxygen"/> (for Ã¥ bygge API dokumentasjon),
+      <xref linkend="fop"/> (for Ã¥ bygge dokumentasjon),
       <xref linkend="libunwind"/>,
       <xref linkend="nettle"/>,
       <xref linkend="libgcrypt"/>,
       <xref linkend="xcb-util-keysyms"/>,
       <xref linkend="xcb-util-image"/>,
       <xref linkend="xcb-util-renderutil"/>,
-      <xref linkend="xcb-util-wm"/> (alle fire for å bygge Xephyr),
-      <xref linkend="xmlto"/> (for å bygge dokumentasjon),
+      <xref linkend="xcb-util-wm"/> (alle fire for Ã¥ bygge Xephyr),
+      <xref linkend="xmlto"/> (for Ã¥ bygge dokumentasjon),
       <xref linkend="xkeyboard-config"/> (for tester),
       <ulink url="https://gitlab.freedesktop.org/xorg/test/rendercheck">rendercheck</ulink> (for tester), og
-      <ulink url="https://www.x.org/archive/individual/doc/">xorg-sgml-doctools</ulink> (for å bygge dokumentasjon)
+      <ulink url="https://www.x.org/archive/individual/doc/">xorg-sgml-doctools</ulink> (for Ã¥ bygge dokumentasjon)
     </para>
   </sect2>
 
@@ -134,16 +156,16 @@
     <para>
       De tradisjonelle Device Dependent X (DDX) driverne er fjernet
       fra BLFS til fordel for &modesetting_drv; driver som blir
-      bygget som en del av denne pakken. For å bruke &modesetting_drv; driver,
-      kjernen må gi en Direct Rendering Manager (DRM) driver for
+      bygget som en del av denne pakken. For Ã¥ bruke &modesetting_drv; driver,
+      kjernen mÃ¥ gi en Direct Rendering Manager (DRM) driver for
       din GPU.
     </para>
 
     <para>
-      Hvis GPUen din støtter 3D akselerasjon og <xref linkend='mesa'/>
-      gir en Gallium3D driver for å utnytte 3D funksjonen, burde
-      du allerede ha aktivert de nødvendige kjernekonfigurasjonsalternativene
-      i <xref linkend='mesa-kernel'/>.  Ellers må du finne
+      Hvis GPUen din stÃ¸tter 3D akselerasjon og <xref linkend='mesa'/>
+      gir en Gallium3D driver for Ã¥ utnytte 3D funksjonen, burde
+      du allerede ha aktivert de nÃ¸dvendige kjernekonfigurasjonsalternativene
+      i <xref linkend='mesa-kernel'/>.  Ellers mÃ¥ du finne
       kjernekonfigurasjonsalternativ for DRM driveren for GPU og aktiver
       den. Spesielt de virtuelle GPUene levert av en virtuell maskin
       behandler:
@@ -153,10 +175,10 @@
       href="xorg-server-kernel.xml"/>
 
     <para>
-      Hvis kjernen ikke gir en DRM driver for din GPU, på de fleste x86
-      systemer <quote>simple frame buffer</quote> DRM driver som kjører på
+      Hvis kjernen ikke gir en DRM driver for din GPU, pÃ¥ de fleste x86
+      systemer <quote>simple frame buffer</quote> DRM driver som kjÃ¸rer pÃ¥
       VESA eller UEFI rammebuffer kan brukes som reserve. Aktiver
-      følgende alternativer i kjernekonfigurasjonene hvis du ikke har en
+      fÃ¸lgende alternativer i kjernekonfigurasjonene hvis du ikke har en
       dedikert DRM driver for GPUen, eller du vil holde det enkle
       rammebufferdriver som en reserve i tilfelle den dedikerte driveren feiler:
     </para>
@@ -165,17 +187,17 @@
       href="xorg-server-simpledrm-kernel.xml"/>
 
     <para>
-      For å la kjernen skrive ut feilsøkingsmeldinger på et tidlig oppstartsstadium,
+      For Ã¥ la kjernen skrive ut feilsÃ¸kingsmeldinger pÃ¥ et tidlig oppstartsstadium,
       <option>CONFIG_DRM</option> og <option>CONFIG_DRM_SIMPLEDRM</option>
-      bør ikke bygges som kjernemoduler med mindre en initramfs vil bli
+      bÃ¸r ikke bygges som kjernemoduler med mindre en initramfs vil bli
       brukt.
     </para>
 
     <para>
-      Hvis du vil bruke den enkle rammebufferdriveren på et oppstartet system
-      via BIOS (i stedet for UEFI), legg til følgende linje før den første
+      Hvis du vil bruke den enkle rammebufferdriveren pÃ¥ et oppstartet system
+      via BIOS (i stedet for UEFI), legg til fÃ¸lgende linje fÃ¸r den fÃ¸rste
       <literal>menuentry</literal> blokk i
-      <filename>/boot/grub/grub.cfg</filename> filen for å initialisere VESA
+      <filename>/boot/grub/grub.cfg</filename> filen for Ã¥ initialisere VESA
       rammebuffer:
     </para>
 
@@ -183,12 +205,12 @@
 
     <para>
       Du kan erstatte <literal>1024</literal>, <literal>768</literal>, og
-      <literal>32</literal> med en oppløsning og fargedybdeinnstilling
+      <literal>32</literal> med en opplÃ¸sning og fargedybdeinnstilling
       egnet for skjermen din.
     </para>
 
     <para>
-      Hvis alle disse DRM driverne ikke fungerer for deg og du må bruke
+      Hvis alle disse DRM driverne ikke fungerer for deg og du mÃ¥ bruke
       en DDX driver med en ikke-DRM kjerne GPU driver (vanligvis kalt
       <option>CONFIG_FB_*</option> i kjernekonfigurasjonen, eller eksisterende
       som out-tree kjernemoduler), eller du trenger en enhetsspesifikk
@@ -207,8 +229,8 @@
      <title>Installasjon av Xorg Server</title>
  
     <para>
-      For det første, hvis du trenger TearFree alternativet for å omgå skjermrivning,
-      påfør den tilbakeporterte oppdateringen:
+      For det fÃ¸rste, hvis du trenger TearFree alternativet for Ã¥ omgÃ¥ skjermrivning,
+      pÃ¥fÃ¸r den tilbakeporterte oppdateringen:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../xorg-server-&xorg-server-version;-tearfree_backport-1.patch</userinput></screen>
@@ -219,7 +241,7 @@
     <title>Installasjon av Xorg Server</title>
 
     <para>
-      Installer serveren ved å kjøre følgende kommandoer:
+      Installer serveren ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -233,13 +255,13 @@ meson setup ..              \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>. Du
-      vil trenge å kjøre <command>ldconfig</command> som <systemitem
-      class="username">root</systemitem> bruker først ellers kan noen tester mislykkes.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>. Du
+      vil trenge Ã¥ kjÃ¸re <command>ldconfig</command> som <systemitem
+      class="username">root</systemitem> bruker fÃ¸rst ellers kan noen tester mislykkes.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem>
+      NÃ¥, som <systemitem class="username">root</systemitem>
       bruker:
     </para>
 
@@ -260,24 +282,24 @@ mkdir -pv /etc/X11/xorg.conf.d</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>-Dglamor=true</parameter>: Sørg for å bygge Glamor
-      modulen. Det er nødvendig for å bygge &modesetting_drv; driver
+      <parameter>-Dglamor=true</parameter>: SÃ¸rg for Ã¥ bygge Glamor
+      modulen. Det er nÃ¸dvendig for Ã¥ bygge &modesetting_drv; driver
       som erstatter de tradisjonelle Device Dependent X (DDX) driverne.
     </para>
 
     <para>
       <option>-Dsuid_wrapper=true</option>: Bygger suid-root
-      innpakning for eldre driverstøtte på rotløse xserver systemer.
+      innpakning for eldre driverstÃ¸tte pÃ¥ rotlÃ¸se xserver systemer.
     </para>
-
+<!-- commented out because this option defaults to auto
     <para>
       <option>-Dsystemd_logind=false</option>:
       Denne bryteren deaktiverer <phrase revision="systemd">systemd-logind</phrase>
       <phrase revision="sysv">elogind</phrase> integrasjon, som tillater Xorg Server
-      å virke uten å ha <phrase revision="systemd">systemd</phrase>
+      Ã¥ virke uten Ã¥ ha <phrase revision="systemd">systemd</phrase>
       <phrase revision="elogind">elogind</phrase> PAM modulen konfigurert.
     </para>
-
+-->
     <para revision="sysv">
       <command>cat &gt;&gt; /etc/sysconfig/createfiles...</command>: Denne
       kommandoen oppretter <filename class="directory">/tmp/.ICE-unix</filename>
@@ -287,7 +309,7 @@ mkdir -pv /etc/X11/xorg.conf.d</userinput></screen>
     </para>
 
     <para>
-      <option>-Dxephyr=true</option>: Dette alternativet tillater å bygge Xephyr hvis dens
+      <option>-Dxephyr=true</option>: Dette alternativet tillater Ã¥ bygge Xephyr hvis dens
       avhengigheter er oppfylt.
     </para>
 
@@ -352,7 +374,7 @@ mkdir -pv /etc/X11/xorg.conf.d</userinput></screen>
         <term><command>Xephyr</command></term>
         <listitem>
           <para>
-            er en nestet X server som støtter moderne X utvidelser
+            er en nestet X server som stÃ¸tter moderne X utvidelser
           </para>
           <indexterm zone="xorg-server Xephyr-x7">
             <primary sortas="b-Xephyr">Xephyr</primary>
