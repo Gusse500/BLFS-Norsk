@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,9 +6,9 @@
 
   <!ENTITY colord-gtk-download-http "https://www.freedesktop.org/software/colord/releases/colord-gtk-&colord-gtk-version;.tar.xz">
   <!ENTITY colord-gtk-download-ftp  " ">
-  <!ENTITY colord-gtk-md5sum        "08c245d6482b3923a2b6a09f7fbbe612">
+  <!ENTITY colord-gtk-md5sum        "d436740c06e42af421384f16b2a9a0a7">
   <!ENTITY colord-gtk-size          "24 KB">
-  <!ENTITY colord-gtk-buildsize     "6.1 MB">
+  <!ENTITY colord-gtk-buildsize     "2.1 MB">
   <!ENTITY colord-gtk-time          "mindre enn 0.1 SBU">
 ]>
 
@@ -31,7 +31,7 @@
       <application>Colord</application>.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &colord-gtk-size;
+          NedlastingsstÃ¸rrelse: &colord-gtk-size;
         </para>
       </listitem>
       <listitem>
@@ -69,7 +69,7 @@
 
     <bridgehead renderas="sect3">Colord GTK Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="colord"/> og
       <xref linkend="gtk3"/>
@@ -78,7 +78,6 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="gobject-introspection"/>,
-      <xref linkend="gtk2"/>,
       <xref linkend="gtk4"/>, og
       <xref linkend="vala"/>
     </para>
@@ -96,12 +95,12 @@
 
     <warning>
       <para>
-        Hvis du bygger dokumentasjonen <command>ninja -j1</command> må brukes.
+        Hvis du bygger dokumentasjonen <command>ninja -j1</command> mÃ¥ brukes.
       </para>
     </warning>
 
     <para>
-      Installer <application>Colord GTK</application> ved å kjøre følgende
+      Installer <application>Colord GTK</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -110,7 +109,6 @@ cd    build &amp;&amp;
 
 meson setup --prefix=/usr       \
             --buildtype=release \
-            -Dgtk2=true         \
             -Dgtk4=true         \
             -Dvapi=true         \
             -Ddocs=false        \
@@ -119,9 +117,9 @@ meson setup --prefix=/usr       \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
-      Testene må kjøres fra en X økt, og kan kreve
-      en fargeprofil for din primære skjerm.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
+      Testene mÃ¥ kjÃ¸res fra en X Ã¸kt, og kan kreve
+      en fargeprofil for din primÃ¦re skjerm.
       <!-- on an ASUS 32" IPS display, I have a color profile and it works
            properly. On the other hand, with a Dell SP2208WFP LCD,
            no color profile is available and the tests fail. It seems to
@@ -129,7 +127,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -148,12 +146,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Dgtk2=true</parameter>: Denne bryteren gjør det mulig å bygge
-      GTK+-2 bindingene for colord.
-    </para>
-
-    <para>
-      <parameter>-Dgtk4=true</parameter>: Denne bryteren gjør det mulig å bygge
+      <parameter>-Dgtk4=true</parameter>: Denne bryteren gjÃ¸r det mulig Ã¥ bygge
       GTK-4 bindingene for colord. Sett dette alternativet til 'false' hvis du
       ikke har <xref linkend="gtk4" role="nodep"/> installert.
     </para>
@@ -168,6 +161,12 @@ ninja</userinput></screen>
       <parameter>-Dman=false</parameter>: Denne bryteren deaktiverer generering
       av manualsidene for denne pakken. Fjern denne bryteren hvis du har
       namespaced versjoner av Docbook XSL stilarkene installert.
+    </para>
+
+    <para>
+      <option>-Dgtk2=true</option>: Denne bryteren gjÃ¸r det mulig Ã¥ bygge
+      GTK+-2 bindingene for colord. Men siden gtk2 er utdatert
+      anbefales det ikke Ã¥ bygge disse bindingene.
     </para>
 
     <!--
@@ -192,8 +191,7 @@ ninja</userinput></screen>
           cd-convert
         </seg>
         <seg>
-          libcolord-gtk.so,
-          libcolord-gtk2.so, og
+          libcolord-gtk.so, og
           libcolord-gtk4.so
         </seg>
         <seg>
@@ -212,7 +210,7 @@ ninja</userinput></screen>
         <term><command>cd-convert</command></term>
         <listitem>
           <para>
-            er et Fargebehandler testverktøy
+            er et Fargebehandler testverktÃ¸y
           </para>
           <indexterm zone="colord-gtk cd-convert">
             <primary sortas="b-cd-convert">cd-convert</primary>
@@ -229,19 +227,6 @@ ninja</userinput></screen>
           </para>
           <indexterm zone="colord-gtk libcolord-gtk">
             <primary sortas="c-libcolord-gtk">libcolord-gtk.so</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="libcolord-gtk2">
-        <term><filename class="libraryfile">libcolord-gtk2.so</filename></term>
-        <listitem>
-          <para>
-            inneholder <application>Colord</application>
-            <application>GTK+-2</application> bindinger
-          </para>
-          <indexterm zone="colord-gtk libcolord-gtk2">
-            <primary sortas="c-libcolord-gtk2">libcolord-gtk2.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>
