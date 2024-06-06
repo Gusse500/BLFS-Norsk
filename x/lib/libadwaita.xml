@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY libadwaita-download-http "&gnome-download-http;/libadwaita/&libadwaita-minor;/libadwaita-&libadwaita-version;.tar.xz">
-  <!ENTITY libadwaita-download-ftp  "&gnome-download-ftp;/libadwaita/&libadwaita-minor;/libadwaita-&libadwaita-version;.tar.xz">
-  <!ENTITY libadwaita-md5sum        "80d33605da8d22ebf6bdc8bfd81ad792">
-  <!ENTITY libadwaita-size          "3.0 MB">
-  <!ENTITY libadwaita-buildsize     "38 MB (med tester)">
+  <!ENTITY libadwaita-download-ftp  " ">
+  <!ENTITY libadwaita-md5sum        "915a76f3b8c96292e5c77e0b8a368330">
+  <!ENTITY libadwaita-size          "3.8 MB">
+  <!ENTITY libadwaita-buildsize     "52 MB (med tester)">
   <!ENTITY libadwaita-time          "0.2 SBU (med parallellitet=4; med tester)">
 ]>
 
@@ -28,10 +28,10 @@
     <para>
       <application>libadwaita</application> pakken gir ekstra
       GTK4 UI skjermelement for bruk i utvikling av brukergrensesnitt. Det er brukt
-      primært for GNOME applikasjoner.
+      primÃ¦rt for GNOME applikasjoner.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,7 +52,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libadwaita-size;
+          NedlastingsstÃ¸rrelse: &libadwaita-size;
         </para>
       </listitem>
       <listitem>
@@ -69,8 +69,9 @@
 
     <bridgehead renderas="sect3">libadwaita Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
+      <xref linkend="appstream"/> og
       <xref linkend="gtk4"/>
     </para>
 
@@ -89,8 +90,22 @@
   <sect2 role="installation">
     <title>Installasjon av libadwaita</title>
 
+ <!-- Fixed in 1.4.2
     <para>
-      Installer <application>libadwaita</application> ved å kjøre følgende
+      Tilpass noe AppStream API bruk for AppStream-1.0.0 eller nyere:
+    </para>
+
+<screen><userinput>sed -e "/releases =/s/=.*/ =                             \
+        as_release_list_get_entries                      \
+        (as_component_get_releases_plain (component));/" \
+    -e "/ developer_name =/s/=.*/ =                      \
+        as_developer_get_name                            \
+        (as_component_get_developer (component));/"      \
+    -i src/adw-about-window.c</userinput></screen>
+-->
+
+    <para>
+      Installer <application>libadwaita</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -101,7 +116,7 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend='gi-docgen'/> installert og ønsker å bygge
+      Hvis du har <xref linkend='gi-docgen'/> installert og Ã¸nsker Ã¥ bygge
       API dokumentasjonen for denne pakken, utsted:
     </para>
 
@@ -110,12 +125,12 @@ meson configure -Dgtk_doc=true                    &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
-      Testene må kjøres fra en grafisk sesjon.
+      For Ã¥ teste resultatene, kjÃ¸r: <command>ninja test</command>.
+      Testene mÃ¥ kjÃ¸res fra en grafisk sesjon.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -159,7 +174,7 @@ ninja</userinput></screen>
         <term><command>adwaita-1-demo</command></term>
         <listitem>
           <para>
-            gir et eksempel på hvordan du bruker
+            gir et eksempel pÃ¥ hvordan du bruker
             <application>libadwaita</application> biblioteket
           </para>
           <indexterm zone="libadwaita1 adwaita-1-demo">
@@ -172,7 +187,7 @@ ninja</userinput></screen>
         <term><filename class="libraryfile">libadwaita-1.so</filename></term>
         <listitem>
           <para>
-            gir ekstra GTK skjermelementer for å bruke til å lage brukergrensesnitt
+            gir ekstra GTK skjermelementer for Ã¥ bruke til Ã¥ lage brukergrensesnitt
           </para>
           <indexterm zone="libadwaita1 libadwaita-1">
             <primary sortas="c-libadwaita-1">libadwaita-1.so</primary>

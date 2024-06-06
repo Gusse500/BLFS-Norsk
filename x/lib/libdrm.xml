@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY libdrm-download-http "https://dri.freedesktop.org/libdrm/libdrm-&libdrm-version;.tar.xz">
   <!ENTITY libdrm-download-ftp  " ">
-  <!ENTITY libdrm-md5sum        "5403981a20c964f4c893ff91393652bd">
-  <!ENTITY libdrm-size          "459 KB">
-  <!ENTITY libdrm-buildsize     "8.6 MB (med tester)">
-  <!ENTITY libdrm-time          "mindre enn 0,1 SBU (med tester) med parallellitet=4">
+  <!ENTITY libdrm-md5sum        "f8521de37ccbd15987b843a83fabd567">
+  <!ENTITY libdrm-size          "472 KB">
+  <!ENTITY libdrm-buildsize     "8.4 MB (med tester)">
+  <!ENTITY libdrm-time          "mindre enn 0,1 SBU (med tester)">
   <!-- With version 2.4.102, the tests add 1 second to my build. -->
   <!-- The 'threaded' test adds about 15 seconds if you're on an NVIDIA system
        due to it directly interacting with the GPU. -->
@@ -30,13 +30,13 @@
 
     <para>
       <application>Libdrm</application> gir et brukerromsbibliotek for
-      tilgang til direkte gjengivelsesbehandling (DRM) på operativsystemer som
-      støtter ioctl grensesnittet. Libdrm er et bibliotek på lavt nivå, vanligvis brukt
+      tilgang til direkte gjengivelsesbehandling (DRM) pÃ¥ operativsystemer som
+      stÃ¸tter ioctl grensesnittet. Libdrm er et bibliotek pÃ¥ lavt nivÃ¥, vanligvis brukt
       av grafikkdrivere som Mesa DRI drivere, X drivere, libva og
       lignende prosjekter.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -57,7 +57,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &libdrm-size;
+          NedlastingsstÃ¸rrelse: &libdrm-size;
         </para>
       </listitem>
       <listitem>
@@ -76,17 +76,17 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="xorg7-lib"/> (for Intel KMS API støtte kreves av Mesa)
+      <xref linkend="xorg7-lib"/> (for Intel KMS API stÃ¸tte kreves av Mesa)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="cairo"/> (for tester),
-      <xref linkend="cmake"/> (kan brukes til å finne avhengigheter uten pkgconfig filer),
+      <xref linkend="cmake"/> (kan brukes til Ã¥ finne avhengigheter uten pkgconfig filer),
       <xref linkend="DocBook"/>,
       <xref linkend="docbook-xsl"/>,
       <xref linkend="docutils"/>, og
-      <xref linkend="libxslt"/> (for å bygge manual sider),
+      <xref linkend="libxslt"/> (for Ã¥ bygge manual sider),
       <xref linkend="libatomic_ops"/> (kreves av arkitekturer uten opprinnelige atomoperasjoner),
       <xref linkend="valgrind"/>, og
       <ulink url="https://cunit.sourceforge.net/">CUnit</ulink> (for AMDGPU tester)
@@ -97,8 +97,16 @@
   <sect2 role="installation">
     <title>Installasjon av Libdrm</title>
 
+<!--
     <para>
-      Installer <application>libdrm</application> ved å kjøre følgende
+      LÃ¸s fÃ¸rst et problem med Ã¥ bygge libdrm_intel biblioteket:
+    </para>
+
+<screen><userinput>sed -i '/not.*system/s/system/cpu_family/' meson.build</userinput></screen>
+-->
+
+    <para>
+      Installer <application>libdrm</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -113,7 +121,7 @@ meson setup --prefix=$XORG_PREFIX \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør <command>ninja test</command>. <!--One test,
+      For Ã¥ teste resultatene, kjÃ¸r <command>ninja test</command>. <!--One test,
       'threaded' in the nouveau subdirectory, is known to fail with a
       30 second timeout.-->
       <!-- Regarding the 'threaded' test, it's now skipped by default (2.4.102)
@@ -129,7 +137,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
@@ -143,15 +151,15 @@ ninja</userinput></screen>
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dudev=true</parameter>: Denne parameteren muliggjør støtte for bruk av
+      <parameter>-Dudev=true</parameter>: Denne parameteren muliggjÃ¸r stÃ¸tte for bruk av
       <application>Udev</application> i stedet for <command>mknod</command>.
     </para>
 
     <para>
       <parameter>-Dvalgrind=disabled</parameter>: Denne parameteren deaktiverer
-      bygging av libdrm med valgrind støtte. Dette fikser byggingen sysprof og
-      andre pakker som bruker libdrm. Endre denne parameteren til "enabled"
-      (eller fjern den) hvis du trenger støtte til valgrind.
+      bygging av libdrm med valgrind stÃ¸tte. Dette fikser Ã¥ bygge noen pakker
+      som bruker libdrm. Endre denne parameteren til "aktivert" (eller fjern den) hvis du
+      trenger stÃ¸tte for valgrind.
     </para>
 
   </sect2>
