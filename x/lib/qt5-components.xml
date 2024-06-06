@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -9,8 +9,8 @@
 
   <!ENTITY qt5-download-http "&qt5-url;/qt-everywhere-opensource-src-&qt5-version;.tar.xz">
   <!ENTITY qt5-download-ftp  " ">
-  <!ENTITY qt5-md5sum        "fb41d86bea6bc4886030a5092c910b09">
-  <!ENTITY qt5-size          "varierer">
+  <!ENTITY qt5-md5sum        "3fb1cd4f763f5d50d491508b7b99fb77">
+  <!ENTITY qt5-size          "630 MB">
   <!ENTITY qt5-buildsize     "varierer">
   <!ENTITY qt5-time          "varierer">
 ]>
@@ -21,7 +21,7 @@
   <title>qt-components-&qt5-version;</title>
 
   <indexterm zone="qt5-components">
-    <primary sortas="a-Qt-components">Qt Komponenter</primary>
+    <primary sortas="a-Qt5-components">Qt Komponenter</primary>
   </indexterm>
 
   <sect2 role="package">
@@ -33,7 +33,7 @@
       fulle <xref linkend="qt5"/> pakken er bygget.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -52,12 +52,12 @@
           Nedlasting MD5 sum: &qt5-md5sum;
         </para>
       </listitem>
-<!--
       <listitem>
         <para>
-          Nedlastingsstørrelse: &qt5-size;
+          NedlastingsstÃ¸rrelse: &qt5-size;
         </para>
       </listitem>
+<!--
       <listitem>
         <para>
           Estimert diskplass som kreves: &qt5-buildsize;
@@ -75,18 +75,18 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nå, som <application>qt5</application> oppdateringer er begrenset til
-          kommersielle kunder, oppstrøms oppdateringer for de ulike modulene er
+          NÃ¥, som <application>qt5</application> oppdateringer er begrenset til
+          kommersielle kunder, oppstrÃ¸ms oppdateringer for de ulike modulene er
           vedlikeholdt hos kde.
           Oppdateringer for modulene som kreves av pakker i BLFS har blitt
-          samlet for den ikke-modulære qt5 byggingen vi bruker.
+          samlet for den ikke-modulÃ¦re qt5 byggingen vi bruker.
         </para>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/qt-everywhere-opensource-src-&qt5-version;-kf5-1.patch"/>
         </para>
         <para>
-          Detaljer om kde vedlikeholdet kan finnes på
+          Detaljer om kde vedlikeholdet kan finnes pÃ¥
           <ulink url="https://dot.kde.org/2021/04/06/announcing-kdes-qt-5-patch-collection"/>
           og <ulink url="https://community.kde.org/Qt5PatchCollection"/>.
         </para>
@@ -95,7 +95,7 @@
 
     <bridgehead renderas="sect3">qt5 komponenter Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="qt5-alternate"/>
     </para>
@@ -108,18 +108,13 @@
       <xref linkend="libwebp"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalte avhengigheter for multimedia</bridgehead>
+    <bridgehead renderas="sect4">Anbefalte avhengigheter for qtmultimedia</bridgehead>
     <para role="recommended">
       <xref linkend="gst10-plugins-good"/>,
       <xref linkend="gst10-plugins-bad"/>, og
       <xref linkend="gst10-plugins-ugly"/>
     </para>
 
-    <!--
-    <para condition="html" role="usernotes">
-       Redaktørens notater: <ulink url="&blfs-wiki;/qt5"/>
-    </para>
-    -->
   </sect2>
 
   <sect2 role="installation">
@@ -134,15 +129,15 @@
       <emphasis role="bold">qtdoc</emphasis>, og
       <emphasis role="bold">qtmultimedia</emphasis>.
       Bare de komponentene som er spesifisert for en bestemt
-      pakke er nødvendig. Du trenger bare å bygge de relevante komponentene.
+      pakke er nÃ¸dvendig. Du trenger bare Ã¥ bygge de relevante komponentene.
     </para>
 
     <para>
-      Først, bruk en oppdatering for å trekke inn rettelsene vedlikeholdt av KDE for noen av de
-      moduler oppført ovenfor:
+      FÃ¸rst, bruk en oppdatering for Ã¥ trekke inn rettelsene vedlikeholdt av KDE for noen av de
+      moduler oppfÃ¸rt ovenfor:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../qt-everywhere-opensource-src-5.15.10-kf5-1.patch</userinput></screen>
+<screen><userinput remap="pre">patch -Np1 -i ../qt-everywhere-opensource-src-&qt5-version;-kf5-1.patch</userinput></screen>
 
     <para>
       Neste, hvis du installerer <emphasis role="bold">qtlocation</emphasis>,
@@ -155,11 +150,11 @@
        qtlocation/src/3rdparty/mapbox-gl-native/src/mbgl/gl/stencil_mode.hpp</userinput></screen>
 
     <para>
-      Installer hver ønsket komponent ved å kjøre følgende kommandoer:
+      Installer hver Ã¸nsket komponent ved Ã¥ kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
-<screen><userinput>cd &lt;component&gt;
-qmake &lt;component&gt;.pro
+<screen><userinput>cd <replaceable>&lt;component&gt;</replaceable>
+qmake <replaceable>&lt;component&gt;</replaceable>.pro
 make</userinput></screen>
 
     <para>
@@ -173,7 +168,7 @@ make</userinput></screen>
 
     <para>
       Fjern referanser til byggemappen fra installert bibliotek
-      avhengighetsfiler (prl) ved å kjøre følgende
+      avhengighetsfiler (prl) ved Ã¥ kjÃ¸re fÃ¸lgende
       kommando som &root; bruker:
     </para>
 
@@ -199,9 +194,9 @@ make</userinput></screen>
           libQt5&lt;component&gt;.so
         </seg>
         <seg>
-          $QTDIR/qml/&lt;component&gt;,
-          $QTDIR/lib/&lt;component&gt;, og
-          $QTDIR/include/&lt;component&gt;
+          $QT5DIR/qml/&lt;component&gt;,
+          $QT5DIR/lib/cmake/&lt;component&gt;, og
+          $QT5DIR/include/&lt;component&gt;
         </seg>
       </seglistitem>
     </segmentedlist>
