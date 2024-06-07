@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY xfce4-notifyd-download-http
-           "https://archive.xfce.org/src/apps/xfce4-notifyd/0.8/xfce4-notifyd-&xfce4-notifyd-version;.tar.bz2">
+           "https://archive.xfce.org/src/apps/xfce4-notifyd/0.9/xfce4-notifyd-&xfce4-notifyd-version;.tar.bz2">
   <!ENTITY xfce4-notifyd-download-ftp  " ">
-  <!ENTITY xfce4-notifyd-md5sum        "4bbeff59d9c872961f7236c226652895">
-  <!ENTITY xfce4-notifyd-size          "668 KB">
-  <!ENTITY xfce4-notifyd-buildsize     "11 MB">
+  <!ENTITY xfce4-notifyd-md5sum        "17ac99e99e82ae6c9fbefc77ecc7208b">
+  <!ENTITY xfce4-notifyd-size          "715 KB">
+  <!ENTITY xfce4-notifyd-buildsize     "12 MB">
   <!ENTITY xfce4-notifyd-time          "mindre enn 0.1 SBU">
 ]>
 
@@ -29,14 +29,14 @@
     <para>
       <application>Xfce4 Varslingsnissen</application> er en liten
       program som implementerer "server-side"-delen av Freedesktop
-      skrivebords varslingsspesifikasjon. Programmer som ønsker å sprette opp en
-      varslingsboble på en standard måte kan bruke
-      <application>Xfce4-Notifyd</application> til å gjøre det ved å sende standard
-      meldinger over <application>D-Bus</application> ved å bruke
+      skrivebords varslingsspesifikasjon. Programmer som Ã¸nsker Ã¥ sprette opp en
+      varslingsboble pÃ¥ en standard mÃ¥te kan bruke
+      <application>Xfce4-Notifyd</application> til Ã¥ gjÃ¸re det ved Ã¥ sende standard
+      meldinger over <application>D-Bus</application> ved Ã¥ bruke
       org.freedesktop.Notifications grensesnittet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -57,7 +57,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &xfce4-notifyd-size;
+          NedlastingsstÃ¸rrelse: &xfce4-notifyd-size;
         </para>
       </listitem>
       <listitem>
@@ -74,10 +74,11 @@
 
     <bridgehead renderas="sect3">The Xfce4 Varslingsnisse Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="libnotify"/>,
       <xref linkend="libxfce4ui"/>,
+      <xref linkend="libcanberra"/>,
       <xref linkend="xfce4-dev-tools"/><!-- for build only -->, og
       <xref linkend="xfce4-panel"/>
     </para>
@@ -88,11 +89,16 @@
     <title>Installasjon av Xfce4 Varslingsnissen</title>
 
     <para>
-      Installer <application>Xfce4 Varslingsnissen</application> ved å
-      kjøre følgende kommandoer:
+      Installer <application>Xfce4 Varslingsnissen</application> ved Ã¥
+      kjÃ¸re fÃ¸lgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
+<screen revision="systemd"><userinput>./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
+make</userinput></screen>
+
+<screen revision="sysv"><userinput>./configure --prefix=/usr     \
+            --sysconfdir=/etc \
+            --disable-systemd &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -100,15 +106,15 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
       Du kan teste varslingsnissen med kommandoen
-      <command>notify-send</command>, skal kjøres i et grafisk
-      miljø:
+      <command>notify-send</command>, skal kjÃ¸res i et grafisk
+      miljÃ¸:
     </para>
 
 <screen><userinput>notify-send -i info Information "Hi ${USER}, This is a Test"</userinput></screen>
