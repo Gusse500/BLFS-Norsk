@@ -13,7 +13,7 @@
   <!ENTITY qtwebengine-md5sum        "9f430acf599605c762a8098000155045">
   <!ENTITY qtwebengine-size          "307 MB">
   <!ENTITY qtwebengine-buildsize     "5.1 GB (154 MB installert)">
-  <!ENTITY qtwebengine-time          "45 SBU (Bruke parallellisme=4)">
+  <!ENTITY qtwebengine-time          "45 SBU (Bruke parallellisme=8)">
 ]>
 
 <sect1 id="qtwebengine" xreflabel="qtwebengine-&qtwebengine-version;">
@@ -112,7 +112,7 @@
       again, these relate to chromium.
 
       When I noticed some updates in late March I was searching for one of the
-      CVEs mentioned, and google found a link to a review page for Michael BrÃ¼ning
+      CVEs mentioned, and google found a link to a review page for Michael Brüning
       at https://codereview.qt-project.org/q/owner:michael.bruning%2540qt.io At that
       time I could see various unmerged items, so I waited. The items for the
       90-based chromium module are not relevant to 5.15-series (possibly they will
@@ -270,8 +270,8 @@
       <xref linkend="nss"/>,
       <xref linkend="pciutils"/>,
       <xref linkend="python311"/>, og
-      <xref linkend='qt5'/> eller
-	  <xref role="nodep" linkend='qt5-components'/> med qtlocation og qtwebchannel)
+      (<xref linkend='qt5'/> eller
+       <xref role="nodep" linkend='qt5-components'/> med qtlocation og qtwebchannel)
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -304,6 +304,8 @@
       <ulink url="https://google.github.io/snappy/">snappy</ulink>
     </para>
 
+  </sect2>
+
   <sect2 role="installation">
     <title>Installasjon av qtwebengine</title>
 
@@ -332,7 +334,7 @@
 
 <!--<para>
       Bruk nå en oppdatering for å oppdatere fra 5.15.6 til sikkerheten og andre rettelser
-      inneholdt i 5.15.7-kilden:
+      inneholdt i 5.15.7 kilden:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../qtwebengine-&qtwebengine-version;-5.15.7-1.patch</userinput></screen>-->
@@ -342,7 +344,7 @@
       og for å tvinge den til å bruke python3:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../qtwebengine-&qtwebengine-version;-build_fixes-1.patch</userinput></screen>
+<screen><userinput remap="pre">patch -Np1 -i ../qtwebengine-&qtwebengine-version;-build_fixes-2.patch</userinput></screen>
 
     <para>
       Hvis du bygger med systemets <xref linkend='ffmpeg'/> som redaktørene
@@ -362,7 +364,7 @@
       Ellers, fiks et problem i levert ffmpeg som forårsaker at det ikke blir bygget
       med Binutils 2.41 eller nyere:
     </para>
- 
+
 <screen><userinput remap="pre">sed 's/(uint8_t)\(([^)]*)\|shift\)/\1 \&amp; 0x1F/' \
     -i src/3rdparty/chromium/third_party/ffmpeg/libavcodec/x86/mathops.h</userinput></screen>
     -->
@@ -669,7 +671,7 @@ make</userinput></screen>
       <para>
         Hvis du oppgraderer fra en eldre mindre versjon av denne
         applikasjon, for at enkelte nettsider skal lastes, må du kanskje
-        fjerne <emphasis>nettleser</emphasis> mellomlagring, f.eks. til
+        fjerne <emphasis>nettleseren</emphasis> sin mellomlagring, f.eks. til
         <application>falkon</application> vil de bli funnet i
         <filename class="directory">~/.cache/falkon/</filename>.
         Du må gjøre dette hvis nettleseren begynner å gjengi
@@ -721,7 +723,7 @@ make</userinput></screen>
       <seglistitem>
         <seg>
           qtwebengine_convert_dict og
-          QtWebEngineProcess (i $QT5DIR/libexec)
+          QtWebEngineProcess (in $QT5DIR/libexec)
         </seg>
         <seg>
           libQt5Pdf.so,
