@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -10,7 +10,7 @@
   <!ENTITY tigervnc-size          "1.8 MB">
   <!ENTITY tigervnc-buildsize     "97 MB">
   <!ENTITY tigervnc-time          "0.4 SBU (Bruke parallellisme=4)">
-  <!ENTITY tigervnc-xorg-version  "21.1.6">
+  <!ENTITY tigervnc-xorg-version  "21.1.11">
 ]>
 
 <sect1 id="tigervnc" xreflabel="tigervnc-&tigervnc-version;">
@@ -29,11 +29,11 @@
     <para>
       <application>Tigervnc</application> er en avansert VNC (Virtual
       Network Computing) implementering. Den tillater opprettelse av en Xorg server
-      som ikke knyttes til en fysisk konsoll og gir også en klient for
+      som ikke knyttes til en fysisk konsoll og gir ogsÃ¥ en klient for
       visning av det eksterne grafiske skrivebordet.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -54,7 +54,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &tigervnc-size;
+          NedlastingsstÃ¸rrelse: &tigervnc-size;
         </para>
       </listitem>
       <listitem>
@@ -73,7 +73,7 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Påkrevd fil:
+          PÃ¥krevd fil:
           <ulink url="&xorg-download-http;/xserver/xorg-server-&tigervnc-xorg-version;.tar.xz"/>
         </para>
       </listitem>
@@ -81,8 +81,8 @@
 
     <note>
       <para>
-        Versjonen av <application>Xorg</application> kan til slutt bli noen få
-        versjoner utdatert, men er nødvendig for de nødvendige tilpasningene
+        Versjonen av <application>Xorg</application> kan til slutt bli noen fÃ¥
+        versjoner utdatert, men er nÃ¸dvendig for de nÃ¸dvendige tilpasningene
         for denne pakken.
       </para>
     </note>
@@ -90,13 +90,13 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
+          NÃ¸dvendig oppdatering:
           <ulink url="&patch-root;/tigervnc-&tigervnc-version;-configuration_fixes-1.patch"/>
         </para>
       </listitem>
       <listitem revision='sysv'>
         <para>
-          Valgfri fil for å starte serveren uten en skjermbehandler:
+          Valgfri fil for Ã¥ starte serveren uten en skjermbehandler:
           <ulink url="&sources-anduin-http;/tigervnc/vncserver"/>
         </para>
       </listitem>
@@ -108,7 +108,7 @@
       </listitem>
       <listitem revision='systemd'>
         <para>
-          Valgfri fil for å starte serveren uten en skjermbehandler:
+          Valgfri fil for Ã¥ starte serveren uten en skjermbehandler:
           <ulink url="&sources-anduin-http;/tigervnc/Xsession"/>
         </para>
       </listitem>
@@ -116,7 +116,7 @@
 
     <bridgehead renderas="sect3">Tigervnc Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="cmake"/>,
       <xref linkend="fltk"/>,
@@ -144,7 +144,7 @@
     <title>Installasjon av Tigervnc</title>
 
     <para>
-      Først må du justere konfigurasjonsfilene for å gjøre dem
+      FÃ¸rst mÃ¥ du justere konfigurasjonsfilene for Ã¥ gjÃ¸re dem
       kompatibel med LFS systemer:
       <!-- Replaces an incompatible PAM file and disables SELinux support
            in systemd units. Also modifies the search path for
@@ -154,7 +154,7 @@
 <screen><userinput remap="pre">patch -Np1 -i ../tigervnc-&tigervnc-version;-configuration_fixes-1.patch</userinput></screen>
 
     <para>
-      Installer <application>tigervnc</application> ved å kjøre følgende
+      Installer <application>tigervnc</application> ved Ã¥ kjÃ¸re fÃ¸lgende
       kommandoer:
     </para>
 
@@ -228,7 +228,7 @@ popd</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>#Install viewer
@@ -240,14 +240,14 @@ make install &amp;&amp;
 [ -e /usr/bin/Xvnc ] || ln -svf $XORG_PREFIX/bin/Xvnc /usr/bin/Xvnc</userinput></screen>
 
    <para revision="sysv">
-     Til slutt, modifiser PAM filen til å være kompatibel med elogind:
+     Til slutt, modifiser PAM filen til Ã¥ vÃ¦re kompatibel med elogind:
    </para>
 
 <screen role="root" revision="sysv"><userinput>sed -i 's/pam_systemd.so/pam_elogind.so/' /etc/pam.d/tigervnc</userinput></screen>
 
 <!-- These are installed as part of 'make install' for the client.
     <para>
-      Til slutt oppretter du en menyoppføring. Som
+      Til slutt oppretter du en menyoppfÃ¸ring. Som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -273,12 +273,12 @@ ln -sfv tigervnc_24.png /usr/share/pixmaps/tigervnc.png</userinput></screen>
 
     <para>
       <command>tar -xf .. xorg-server...</command>: Denne kommandoen pakker ut
-      standard Xorg pakken inn i treet på et sted som trengs for modifikasjon.
+      standard Xorg pakken inn i treet pÃ¥ et sted som trengs for modifikasjon.
     </para>
 
     <para>
       <parameter>--disable ...</parameter>: De fleste alternativene som vanligvis er
-      nødvendig for standard Xorg serveren er ikke nødvendig for Xvnc
+      nÃ¸dvendig for standard Xorg serveren er ikke nÃ¸dvendig for Xvnc
       forekomsten som bygges.
     </para>
 
@@ -295,30 +295,30 @@ ln -sfv tigervnc_24.png /usr/share/pixmaps/tigervnc.png</userinput></screen>
     <title>Konfigurere Tigervnc</title>
 
     <para revision='sysv'>
-      Standardinstallasjonen av denne pakken gjør noen endringer i måten den
+      Standardinstallasjonen av denne pakken gjÃ¸r noen endringer i mÃ¥ten den
       benyttes. vncserver perl skriptet er plassert i /usr/bin/libexec og
-      serveren er designet for å kjøres via en systemd stil .service-fil eller
+      serveren er designet for Ã¥ kjÃ¸res via en systemd stil .service-fil eller
       vncession skript som root bruker. Manualsiden for vncserver er plassert
-      i avsnitt 8 på manualsidene. De nye prosedyrene krever at en 
+      i avsnitt 8 pÃ¥ manualsidene. De nye prosedyrene krever at en 
       skjermbehandler blir installerert.
     </para>
 
     <para revision='sysv'>
-      For å gjenopprette den forrige oppførselen, installer de ekstra nedlastede
+      For Ã¥ gjenopprette den forrige oppfÃ¸rselen, installer de ekstra nedlastede
       filene som <systemitem class="username">root</systemitem> bruker:</para>
 
 <screen role="root" revision='sysv'><userinput>install -m755 --owner=root ../vncserver /usr/bin &amp;&amp;
 cp ../vncserver.1 /usr/share/man/man1</userinput></screen>
 
     <para revision='sysv'>
-      Ved å bruke de tidligere prosedyrene, de brukerspesifikke konfigurasjonsfilene til
+      Ved Ã¥ bruke de tidligere prosedyrene, de brukerspesifikke konfigurasjonsfilene til
       vncserver er i <filename class='directory'>.vnc</filename>
       mappen i brukerens hjemmemappe.
       <filename>xstartup</filename> filen i den mappen er et skript
-      som spesifisere hvilke kommandoer som skal kjøres når et VNC skrivebord startes. Hvis ingen
+      som spesifisere hvilke kommandoer som skal kjÃ¸res nÃ¥r et VNC skrivebord startes. Hvis ingen
       <filename>xstartup</filename> fil eksisterer, <command>vncserver</command>
-      vil prøve å starte en xterm i en twm økt. En eksempel
-      <filename>xstartup</filename> vil være:
+      vil prÃ¸ve Ã¥ starte en xterm i en twm Ã¸kt. En eksempel
+      <filename>xstartup</filename> vil vÃ¦re:
     </para>
 
 <screen revision='sysv'>#!/bin/sh
@@ -327,8 +327,8 @@ cp ../vncserver.1 /usr/share/man/man1</userinput></screen>
 startlxde &amp;</screen>
 
     <para revision='sysv'>
-      <filename>xstartup</filename> filen må være kjørbar for
-      at kommandoer i den som skal utføres, så kjør <command>chmod a+x
+      <filename>xstartup</filename> filen mÃ¥ vÃ¦re kjÃ¸rbar for
+      at kommandoer i den som skal utfÃ¸res, sÃ¥ kjÃ¸r <command>chmod a+x
       ~/.vnc/xstartup</command>.
     </para>
 
@@ -346,24 +346,24 @@ startlxde &amp;</screen>
     <note revision="systemd">
       <para>
         Denne delen er valgfri og er bare nyttig hvis du vil ha VNC
-        økter starter ved systemoppstart. Begge konfigurasjonsmetodene kan
+        Ã¸kter starter ved systemoppstart. Begge konfigurasjonsmetodene kan
         sameksistere i samme system.
       </para>
     </note>
     -->
     <para revision="systemd">
-      På systemd systemer er en annen metode for konfigurasjon tilgjengelig.
-      Denne konfigurasjonen gir den ekstra fordelen ved å lage tigervnc
-      systemd klar for VNC økter og tillater skrivebordsmiljøer som
-      <application>GNOME</application> å autostarte tjenester når VNC
-      økten er startet. Denne konfigurasjonen gir også den ekstra fordelen
-      av å starte VNC økter ved systemoppstart. For å sette opp VNC serveren
-      på denne måten, følg disse instruksjonene.
+      PÃ¥ systemd systemer er en annen metode for konfigurasjon tilgjengelig.
+      Denne konfigurasjonen gir den ekstra fordelen ved Ã¥ lage tigervnc
+      systemd klar for VNC Ã¸kter og tillater skrivebordsmiljÃ¸er som
+      <application>GNOME</application> Ã¥ autostarte tjenester nÃ¥r VNC
+      Ã¸kten er startet. Denne konfigurasjonen gir ogsÃ¥ den ekstra fordelen
+      av Ã¥ starte VNC Ã¸kter ved systemoppstart. For Ã¥ sette opp VNC serveren
+      pÃ¥ denne mÃ¥ten, fÃ¸lg disse instruksjonene.
     </para>
 
     <para revision="systemd">
-       Installer først en rudimentær Xsession fil slik at VNC serveren
-       kan initialisere X økter riktig:
+       Installer fÃ¸rst en rudimentÃ¦r Xsession fil slik at VNC serveren
+       kan initialisere X Ã¸kter riktig:
     </para>
 
 <screen role="root" revision="systemd"><userinput>install -vdm755 /etc/X11/tigervnc &amp;&amp;
@@ -372,15 +372,15 @@ install -v -m755 ../Xsession /etc/X11/tigervnc</userinput></screen>
     <para revision="systemd">
       Deretter setter du opp en brukertilordning i
       <filename>/etc/tigervnc/vncserver.users</filename>. Dette forteller VNC
-      Server hvilken økt som er tildelt til en bruker.
+      Server hvilken Ã¸kt som er tildelt til en bruker.
       <!-- For example: :1=renodr will assign 'renodr' to :1 -->
     </para>
 
 <screen role="root" revision="systemd"><userinput>echo ":1=$(whoami)" >> /etc/tigervnc/vncserver.users</userinput></screen>
 
     <para revision="systemd">
-      Deretter setter du opp en konfigurasjonsfil for å fortelle
-      <application>vncserver</application> hvilket skrivebordsmiljø skal bli
+      Deretter setter du opp en konfigurasjonsfil for Ã¥ fortelle
+      <application>vncserver</application> hvilket skrivebordsmiljÃ¸ skal bli
       brukt og hvilken skjermgeometri som skal brukes. Det er flere andre
       alternativer som kan defineres i denne filen, men de er utenfor omfanget
       av BLFS.
@@ -392,20 +392,20 @@ cat &gt; ~/.vnc/config &lt;&lt; EOF
 # The session must match one listed in /usr/share/xsessions.
 # Ensure that there are no spaces at the end of the lines.
 
-session=LXDE
+session=lxqt
 geometry=1024x768
 
 # End ~/.vnc/config</literal>
 EOF</userinput></screen>
 
     <para revision="systemd">
-      For å starte VNC Server, kjør følgende kommando:
+      For Ã¥ starte VNC Server, kjÃ¸r fÃ¸lgende kommando:
     </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl start vncserver@:1</userinput></screen>
 
     <para revision="systemd">
-      For å starte VNC Server når systemet starter opp, kjør følgende kommando:
+      For Ã¥ starte VNC Server nÃ¥r systemet starter opp, kjÃ¸r fÃ¸lgende kommando:
     </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable vncserver@:1</userinput></screen>
@@ -443,7 +443,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er en X VNC server (Virtual Network Computing).
-             Den er basert på en standard X server, men den har en
+             Den er basert pÃ¥ en standard X server, men den har en
              <quote>virtuell</quote> skjerm i stedet for en fysisk
           </para>
           <indexterm zone="tigervnc xvnc">
@@ -456,7 +456,7 @@ EOF</userinput></screen>
         <term><command>vncconfig</command></term>
         <listitem>
           <para>
-            er et program for å konfigurere og kontrollere en VNC server
+            er et program for Ã¥ konfigurere og kontrollere en VNC server
           </para>
           <indexterm zone="tigervnc vncconfig">
             <primary sortas="b-vncconfig">vncconfig</primary>
@@ -468,7 +468,7 @@ EOF</userinput></screen>
         <term><command>vncpasswd</command></term>
         <listitem>
           <para>
-            lar deg angi passordet som brukes for å få tilgang til VNC skrivebord
+            lar deg angi passordet som brukes for Ã¥ fÃ¥ tilgang til VNC skrivebord
           </para>
           <indexterm zone="tigervnc vncpasswd">
             <primary sortas="b-vncpasswd">vncpasswd</primary>
@@ -480,7 +480,7 @@ EOF</userinput></screen>
         <term><command>vncserver</command></term>
         <listitem>
           <para>
-            er et perl skript som brukes til å starte eller stoppe en VNC server
+            er et perl skript som brukes til Ã¥ starte eller stoppe en VNC server
           </para>
           <indexterm zone="tigervnc vncserver">
             <primary sortas="b-vncserver">vncserver</primary>
@@ -492,7 +492,7 @@ EOF</userinput></screen>
         <term><command>vncviewer</command></term>
         <listitem>
           <para>
-            er en klient som brukes til å koble til VNC skrivebord
+            er en klient som brukes til Ã¥ koble til VNC skrivebord
           </para>
           <indexterm zone="tigervnc vncviewer">
             <primary sortas="b-vncviewer">vncviewer</primary>
@@ -504,7 +504,7 @@ EOF</userinput></screen>
         <term><command>x0vncserver</command></term>
         <listitem>
           <para>
-            er et program for å lage en X visning på en fysisk
+            er et program for Ã¥ lage en X visning pÃ¥ en fysisk
             terminal tilgjengelig via TigerVNC eller kompatible seere
           </para>
           <indexterm zone="tigervnc x0vncserver">

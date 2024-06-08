@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
@@ -6,10 +6,10 @@
 
   <!ENTITY transmission-download-http "https://github.com/transmission/transmission/releases/download/&transmission-version;/transmission-&transmission-version;.tar.xz">
   <!ENTITY transmission-download-ftp  " ">
-  <!ENTITY transmission-md5sum        "1d92edb61c82422211dbc751f4657489">
-  <!ENTITY transmission-size          "9.6 MB">
-  <!ENTITY transmission-buildsize     "347 MB (med GTK og QT5 gui grensesnitt)">
-  <!ENTITY transmission-time          "1.4 SBU (med GTK gui grensesnitt; bruker parallellisme=4) 5 SBU med både GTK og QT5">
+  <!ENTITY transmission-md5sum        "d3cda868215246644c429b18a30f7e47">
+  <!ENTITY transmission-size          "9.2 MB">
+  <!ENTITY transmission-buildsize     "229 MB (med GTK og QT5 gui grensesnitt)">
+  <!ENTITY transmission-time          "2.3 SBU (med GTK gui grensesnitt; bruker parallellisme=4)">
 ]>
 
 <sect1 id="transmission" xreflabel="Transmission-&transmission-version;">
@@ -26,13 +26,13 @@
     <title>Introduksjon til Transmission</title>
 
     <para>
-      <application>Transmission</application> er en åpen kildekode BitTorrent klient
-      på tvers av plattformer. Dette er nyttig for å laste ned store filer (som f.eks
-      Linux ISO-er) og reduserer behovet for distributører å levere server
-      båndbredde.
+      <application>Transmission</application> er en Ã¥pen kildekode BitTorrent klient
+      pÃ¥ tvers av plattformer. Dette er nyttig for Ã¥ laste ned store filer (som f.eks
+      Linux ISO-er) og reduserer behovet for distributÃ¸rer Ã¥ levere server
+      bÃ¥ndbredde.
     </para>
 
-    &lfs120_checked;
+    &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -53,7 +53,7 @@
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &transmission-size;
+          NedlastingsstÃ¸rrelse: &transmission-size;
         </para>
       </listitem>
       <listitem>
@@ -71,7 +71,7 @@
 
     <bridgehead renderas="sect3">Transmission Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <bridgehead renderas="sect4">PÃ¥krevd</bridgehead>
     <para role="required">
       <xref linkend="curl"/>
     </para>
@@ -80,18 +80,19 @@
     <para role="recommended">
       <xref linkend="libevent"/> og
       <xref linkend="libpsl"/>
-      (for å bruke systembiblioteker i stedet for medfølgende)
+      (for Ã¥ bruke systembiblioteker i stedet for medfÃ¸lgende)
     </para>
 
-    <bridgehead renderas="sect4">Anbefalt (for å bygge en GUI)</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt (for Ã¥ bygge en GUI)</bridgehead>
     <para role="recommended">
       <xref linkend="gtkmm3"/> eller
-      &qt5-deps;
+      &qt5-deps; eller
+      <xref linkend="qt6" role="nodep"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="nodejs"/> (for å bygge nettklienten, ikke nødvendig under kjøring),
+      <xref linkend="nodejs"/> (for Ã¥ bygge nettklienten, ikke nÃ¸dvendig under kjÃ¸ring),
       <ulink url="https://github.com/ubuntu/gnome-shell-extension-appindicator">appindicator</ulink>,
       <ulink url="https://github.com/jech/dht">dht</ulink>,
       <ulink url="https://github.com/libb64/libb64">libb64</ulink>,
@@ -102,7 +103,7 @@
     </para>
 
     <para condition="html" role="usernotes">
-      Redaktørens notater: <ulink url="&blfs-wiki;/transmission"/>
+      RedaktÃ¸rens notater: <ulink url="&blfs-wiki;/transmission"/>
     </para>
   </sect2>
 
@@ -110,8 +111,8 @@
     <title>Installasjon av Transmission</title>
 
     <para>
-      Installer <application>Transmission</application> ved å kjøre
-      følgende kommandoer:
+      Installer <application>Transmission</application> ved Ã¥ kjÃ¸re
+      fÃ¸lgende kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
@@ -126,13 +127,13 @@ make</userinput></screen>
 
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      NÃ¥, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para>
-      Siden transmission.png ser ut til å mangle, opprett den fra svg::
+      Deretter oppretter du transmission.png fra SVG filen:
     </para>
 
 <screen role="root"><userinput>rsvg-convert                                               \
@@ -146,26 +147,27 @@ make</userinput></screen>
 
     <para>
       <option>-DENABLE_QT=OFF</option>: Denne bryteren deaktiverer bygging av
-      <application>Qt5</application> klienten. Standard er å bygge den
-      hvis &qt5-deps; er installert.
+      <application>Qt</application> grensesnittet. Standard er Ã¥ bygge den
+      hvis &qt5-deps; eller <xref linkend="qt6"/> er installert.
     </para>
 
     <para>
       <option>-DENABLE_GTK=OFF</option>: Denne bryteren deaktiverer bygging av
-      GTK+-3 cli klienten. Standard er å bygge den
+      GTK+-3 cli grensesnittet. Standard er Ã¥ bygge den
       hvis <xref linkend="gtkmm3"/> er installert.
     </para>
 
     <para>
       <option>-DENABLE_WEB=OFF</option>: Denne bryteren deaktiverer bygging av
-      nettklienten. Standard er å bygge den hvis <xref linkend="nodejs"/>
+      nettklienten. Standard er Ã¥ bygge den hvis <xref linkend="nodejs"/>
       er installert.
     </para>
 
     <para>
       <option>-DREBUILD_WEB=ON</option>: Denne bryteren tvinger ombygging av
-      nettklienten. Trenger <xref linkend="nodejs"/> og en nettverkstilkobling.
-      Standard er å ikke gjenoppbygge.
+      nettklienten. Dette alternativet trenger <xref linkend="nodejs"/> Ã¥ vÃ¦re
+      installert samt en internettforbindelse. Standard er Ã¥ ikke
+      bygge opp klienten pÃ¥ nytt.
     </para>
   </sect2>
 
@@ -179,15 +181,20 @@ make</userinput></screen>
 
       <seglistitem>
         <seg>
-          transmission-cli, transmission-create, transmission-daemon,
-          transmission-edit, transmission-gtk or transmission-qt,
-          transmission-remote, og transmission-show
+          <!--transmission-cli,-->
+          transmission-create,
+          transmission-daemon,
+          transmission-edit,
+          transmission-gtk,
+          transmission-qt,
+          transmission-remote, and
+          transmission-show
         </seg>
         <seg>
           Ingen
         </seg>
         <seg>
-          /usr/share/transmission (inneholder nettklienten, valgfri) og
+          /usr/share/transmission (inneholder nettklienten) og
           /usr/share/doc/transmission-&transmission-version;
         </seg>
       </seglistitem>
@@ -198,6 +205,7 @@ make</userinput></screen>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
+<!-- Not seen in 4.0.4 or 4.0.5
       <varlistentry id="transmission-cli">
         <term><command>transmission-cli</command></term>
         <listitem>
@@ -210,12 +218,13 @@ make</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
+-->
 
       <varlistentry id="transmission-create">
         <term><command>transmission-create</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy som brukes til å lage .torrent filer
+            er et kommandolinjeverktÃ¸y som brukes til Ã¥ lage .torrent filer
           </para>
           <indexterm zone="transmission transmission-create">
             <primary sortas="b-transmission-create">transmission-create</primary>
@@ -227,8 +236,8 @@ make</userinput></screen>
         <term><command>transmission-daemon</command></term>
         <listitem>
           <para>
-            er en nissebasert overføringsøkt som kan kontrolleres via
-            RPC kommandoer fra transmission sitt nettgrensesnitt eller
+            er en nissebasert overfÃ¸ringsÃ¸kt som kan kontrolleres via
+            RPC kommandoer fra Transmission sitt nettgrensesnitt eller
             <command>transmission-remote</command>
           </para>
           <indexterm zone="transmission transmission-daemon">
@@ -241,7 +250,7 @@ make</userinput></screen>
         <term><command>transmission-edit</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy for å endre .torrent filene sine kunngjørings URLer
+            er et kommandolinjeverktÃ¸y for Ã¥ endre .torrent filene sine kunngjÃ¸rings URLer
           </para>
           <indexterm zone="transmission transmission-edit">
             <primary sortas="b-transmission-edit">transmission-edit</primary>
@@ -265,7 +274,7 @@ make</userinput></screen>
         <term><command>transmission-qt</command></term>
         <listitem>
           <para>
-            er en Qt bittorrent klient
+            er en Qt basert bittorrent klient
           </para>
           <indexterm zone="transmission transmission-qt">
             <primary sortas="b-transmission-qt">transmission-qt</primary>
@@ -277,7 +286,7 @@ make</userinput></screen>
         <term><command>transmission-remote</command></term>
         <listitem>
           <para>
-            er et fjernkontrollverktøy for transmission-daemon og transmission
+            er et fjernkontrollverktÃ¸y for transmission-daemon og transmission
           </para>
           <indexterm zone="transmission transmission-remote">
             <primary sortas="b-transmission-remote">transmission-remote</primary>
@@ -289,7 +298,7 @@ make</userinput></screen>
         <term><command>transmission-show</command></term>
         <listitem>
           <para>
-            er et kommandolinjeverktøy å vise bittorrent .torrent filene sine metadata
+            er et kommandolinjeverktÃ¸y Ã¥ vise bittorrent .torrent filene sine metadata
           </para>
           <indexterm zone="transmission transmission-show">
             <primary sortas="b-transmission-show">transmission-show</primary>
