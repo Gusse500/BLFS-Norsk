@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY qcoro-download-http "https://github.com/danvratil/qcoro/archive/v&qcoro-version;/qcoro-&qcoro-version;.tar.gz">
+  <!ENTITY qcoro-download-ftp  " ">
+  <!ENTITY qcoro-md5sum        "2af4e86cd77493cd41ba5ffcac33d5f4">
+  <!ENTITY qcoro-size          "148 KB">
+  <!ENTITY qcoro-buildsize     "8.4 MB (Legg til 19 MB for tester)">
+  <!ENTITY qcoro-time          "0.4 SBU (Legg til 0.5 SBU for tester)">
+]>
+
+<sect1 id="qcoro" xreflabel="qcoro-&qcoro-version;">
+  <?dbhtml filename="qcoro.html"?>
+
+  <title>qcoro-&qcoro-version;</title>
+
+  <indexterm zone="qcoro">
+    <primary sortas="b-qcoro">qcoro</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til qcoro</title>
+
+    <para>
+      Denne pakken inneholder et sett med verktøy for å bruke C++20 korutiner med Qt.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&qcoro-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&qcoro-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &qcoro-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &qcoro-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &qcoro-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &qcoro-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">qcoro Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="qt6"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av qcoro</title>
+
+    <para>
+      Installer <application>qcoro</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=$QT6DIR \
+      -D CMAKE_BUILD_TYPE=Release     \
+      -D BUILD_TESTING=OFF            \
+      -D QCORO_BUILD_EXAMPLES=OFF     \
+      -D BUILD_SHARED_LIBS=ON         \
+       ..                             &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      For å teste denne pakken, fjern 'BUILD_TESTING=OFF'-parameteren
+      over og kjør:
+    </para>
+
+<screen><userinput>make test</userinput></screen>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren er
+      brukt for å bruke et høyere nivå av kompilatoroptimaliseringer.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>Ingen</seg>
+        <seg>
+          libQCoro6Core.so,
+          libQCoro6DBus.so,
+          libQCoro6Network.so,
+          libQCoro6Qml.so,
+          libQCoro6Quick.so, og
+          libQCoro6WebSockets.so
+        </seg>
+        <seg>
+          Nine directories in $QT6DIR/lib/cmake/ og 
+          $QT6DIR/include/qcoro6
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+<!--
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="mozcerts">
+        <term><command>mozcerts-qt6</command></term>
+        <listitem>
+          <para>
+            er et kommandolinjeverktøy for å konvertere certdata.txt til
+            outfile.pem filer
+          </para>
+          <indexterm zone="qcoro mozcerts">
+            <primary sortas="b-mozcerts">mozcerts-qt6</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qcorotool">
+        <term><command>qcorotool-qt6</command></term>
+        <listitem>
+          <para>
+            er et kommandolinjeverktøy for å utføre ulike kryptografiske
+            operasjoner med qcoro
+          </para>
+          <indexterm zone="qcoro qcorotool">
+            <primary sortas="b-qcorotool">qcorotool-qt6</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libqcoro">
+        <term><filename class="libraryfile">libqcoro-qt6.so</filename></term>
+        <listitem>
+          <para>
+            er Qt Cryptography Architecture (qcoro) bibliotek
+          </para>
+          <indexterm zone="qcoro libqcoro">
+            <primary sortas="c-libqcoro">libqcoro-qt6.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+-->
+  </sect2>
+
+</sect1>

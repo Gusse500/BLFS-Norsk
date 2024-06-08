@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY protobuf-download-http "https://github.com/protocolbuffers/protobuf/releases/download/v&protobuf-version;/protobuf-&protobuf-version;.tar.gz">
+  <!ENTITY protobuf-md5sum        "c96aaf02c8acea549d65bb7b2d549bf6">
+  <!ENTITY protobuf-size          "6.0 MB">
+  <!ENTITY protobuf-buildsize     "81 MB">
+  <!ENTITY protobuf-time          "1.0 SBU (med parallellisme=4)">
+]>
+
+<sect1 id="protobuf" xreflabel="Protobuf-&protobuf-version;">
+  <?dbhtml filename="protobuf.html"?>
+
+  <title>Protobuf-&protobuf-version;</title>
+
+  <indexterm zone="protobuf">
+    <primary sortas="a-protobuf">Protobuf</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Protobuf</title>
+
+    <para>
+      <application>Protobuf</application> pakken inneholder verktøy og
+      biblioteker for bruk av data i Googles datautvekslingsformat.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&protobuf-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &protobuf-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &protobuf-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &protobuf-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &protobuf-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Protobuf Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="abseil-cpp"/> og
+      <xref linkend="cmake"/>
+    </para>
+    
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <ulink url="https://github.com/google/googletest">gtest (for tester)</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Protobuf</title>
+
+    <para>
+      Installer <application>Protobuf</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr      \
+      -DCMAKE_BUILD_TYPE=Release       \
+      -Dprotobuf_BUILD_TESTS=OFF       \
+      -Dprotobuf_ABSL_PROVIDER=package \
+      -Dprotobuf_BUILD_LIBUPB=OFF      \
+      -Dprotobuf_BUILD_SHARED_LIBS=ON  \
+      -Dutf8_range_ENABLE_INSTALL=OFF  \
+      -G Ninja ..                      &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Denne pakken kommer med en testpakke, men den krever
+      <ulink url="https://github.com/google/googletest">gtest</ulink>, som
+      ikke er en del av BLFS.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>sed 's/utf8_range//' -i *.pc &amp;&amp;
+ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <command>sed 's/utf8_range//' -i *.pc</command>: Denne kommandoen fjerner en
+      gjenværende referanse til libutf8_range fra pkg-config-filene installert
+      av denne pakken.
+    </para>
+
+    <para>
+      <parameter>-Dprotobuf_BUILD_TESTS=OFF</parameter>: Denne parameteren forhindrer
+      testene fra å bygges pga
+      <ulink url="https://github.com/google/googletest">gtest</ulink> ikke er
+      en del av BLFS.
+    </para>
+
+    <para>
+      <parameter>-Dprotobuf_ABSL_PROVIDER=package</parameter>: Denne parameteren
+      lar byggesystemet bruke den systeminstallerte kopien av
+      <xref linkend="abseil-cpp" role="nodep"/>.
+    </para>
+
+    <para>
+      <parameter>-Dprotobuf_BUILD_SHARED_LIBS=ON</parameter>: Denne parameteren
+      gjør det mulig å bygge delte versjoner av bibliotekene som tilbys av denne pakken
+      i stedet for statiske versjoner.
+    </para>
+
+    <para>
+      <parameter>-Dutf8_range_ENABLE_INSTALL=OFF</parameter>: Denne parameteren
+      deaktiverer installasjon av utf8_range statiske bibliotek. Funksjonene
+      levert av dette biblioteket og brukt av protobuf er allerede innebygd i
+      <filename class='libraryfile'>libprotobuf.so</filename>, så å installere
+      en full kopi av det statiske biblioteket sløser bare med diskplass.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          protoc-26.1.0 og protoc (en symbolkobling til protoc-26.1.0)
+        </seg>
+        <seg>
+          libprotobuf.so,
+          libprotobuf-lite.so, og
+          libprotoc.so
+        </seg>
+        <seg>
+          /usr/include/google,
+          /usr/include/java,
+          /usr/include/upb_generator, og
+          /usr/lib/cmake/protobuf
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="protoc">
+        <term><command>protoc</command></term>
+        <listitem>
+          <para>
+            analyserer protokollbufferfiler og genererer utdata for flere
+            programmeringsspråk og formater
+          </para>
+          <indexterm zone="protobuf protoc">
+            <primary sortas="b-protoc">protoc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libprotobuf">
+        <term><filename class="libraryfile">libprotobuf.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner for bruk av data i Googles datautveksling
+            format
+          </para>
+          <indexterm zone="protobuf libprotobuf">
+            <primary sortas="c-libprotobuf">libprotobuf.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libprotobuf-lite">
+        <term><filename class="libraryfile">libprotobuf-lite.so</filename></term>
+        <listitem>
+          <para>
+            inneholder en enklere versjon av funksjonene for å utnytte data i
+            Googles datautvekslingsformat
+          </para>
+          <indexterm zone="protobuf libprotobuf-lite">
+            <primary sortas="c-libprotobuf-lite">libprotobuf-lite.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libprotoc">
+        <term><filename class="libraryfile">libprotoc.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som brukes av protoc under kjøretid for utdata
+            for flere programmeringsspråk og formater
+          </para>
+          <indexterm zone="protobuf libprotoc">
+            <primary sortas="c-libprotoc">libprotoc.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>

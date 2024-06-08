@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY protobuf-c-download-http "https://github.com/protobuf-c/protobuf-c/releases/download/v&protobuf-c-version;/protobuf-c-&protobuf-c-version;.tar.gz">
+  <!ENTITY protobuf-c-md5sum        "03030a3994b9f89ef166336048992484">
+  <!ENTITY protobuf-c-size          "496 KB">
+  <!ENTITY protobuf-c-buildsize     "60 MB">
+  <!ENTITY protobuf-c-time          "0.6 SBU">
+]>
+
+<sect1 id="protobuf-c" xreflabel="Protobuf-c-&protobuf-c-version;">
+  <?dbhtml filename="protobuf-c.html"?>
+
+  <title>Protobuf-c-&protobuf-c-version;</title>
+
+  <indexterm zone="protobuf-c">
+    <primary sortas="a-protobuf-c">Protobuf-c</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Protobuf-c</title>
+
+    <para>
+      <application>Protobuf-c</application> pakken inneholder en
+      implementering av dataserialiseringsformatet for Google Protocol Buffers
+      i C.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&protobuf-c-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &protobuf-c-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &protobuf-c-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &protobuf-c-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &protobuf-c-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/protobuf-c-&protobuf-c-version;-consolidated_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Protobuf-c Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="protobuf"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="doxygen"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Protobuf-c</title>
+
+    <para>
+      Først, bruk noen oppstrømsrettinger for å gjøre denne pakken kompatibel 
+      med protobuf-26.1:
+    </para>
+
+    <screen role="pre"><userinput>patch -Np1 -i ../protobuf-c-&protobuf-c-version;-consolidated_fixes-1.patch</userinput></screen>
+
+    <para>
+      Installer <application>Protobuf-c</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>make check</command>.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/static-libraries.xml"/>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          protoc-gen-c og protoc-c (symbolkoblet til protoc-gen-c)
+        </seg>
+        <seg>
+          libprotobuf-c.so
+        </seg>
+        <seg>
+          /usr/include/google og
+          /usr/include/protobuf-c
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="protoc-c">
+        <term><command>protoc-c</command></term>
+        <listitem>
+          <para>
+            genererer C-deskriptorkode fra en .proto fil
+          </para>
+          <indexterm zone="protobuf-c protoc-c">
+            <primary sortas="b-protoc-c">protoc-c</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libprotobuf-c">
+        <term><filename class="libraryfile">libprotobuf-c.so</filename></term>
+        <listitem>
+          <para>
+            inneholder en C-implementering av dataene fra Google Protocol Buffers
+            serialiseringsformat
+          </para>
+          <indexterm zone="protobuf-c libprotobuf-c">
+            <primary sortas="c-libprotobuf-c">libprotobuf-c.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>

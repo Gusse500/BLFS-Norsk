@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libjxl-download-http "https://github.com/libjxl/libjxl/archive/v&libjxl-version;/libjxl-&libjxl-version;.tar.gz">
+  <!ENTITY libjxl-md5sum        "e383b622cb2caef4dfcc8047f5a0fe72">
+  <!ENTITY libjxl-size          "1.8 MB">
+  <!ENTITY libjxl-buildsize     "53 MB">
+  <!ENTITY libjxl-time          "0.8 SBU (med parallellisme=4)">
+
+]>
+
+<sect1 id="libjxl" xreflabel="libjxl-&libjxl-version;">
+  <?dbhtml filename="libjxl.html"?>
+
+  <title>libjxl-&libjxl-version;</title>
+
+  <indexterm zone="libjxl">
+    <primary sortas="a-libjxl">libjxl</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libjxl</title>
+
+    <para>
+      <application>libjxl</application> pakken inneholder referanse
+      implementering av JPEG XL bildeformatet.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libjxl-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libjxl-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libjxl-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libjxl-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libjxl-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libjxl Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="brotli"/>,
+      <xref linkend="cmake"/>,
+      <xref linkend="giflib"/>,
+      <xref linkend="highway"/>,
+      <xref linkend="lcms2"/>,
+      <xref linkend="libjpeg"/>, og
+      <xref linkend="libpng"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="gdk-pixbuf"/> (for programtillegget)
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="doxygen"/> og <xref linkend="graphviz"/>
+      (for dokumentasjon),
+      <xref linkend="gimp"/> (for programtillegget),
+      <xref linkend="java"/> (for JAR),
+      <xref linkend="libavif"/>,
+      <xref linkend="libwebp"/>,
+      <ulink url="https://www.openexr.com/">OpenEXR</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libjxl</title>
+
+    <para>
+      Installer <application>libjxl</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr             \
+      -D CMAKE_BUILD_TYPE=Release              \
+      -D BUILD_TESTING=OFF                     \
+      -D BUILD_SHARED_LIBS=ON                  \
+      -D JPEGXL_ENABLE_SKCMS=OFF               \
+      -D JPEGXL_ENABLE_SJPEG=OFF               \
+      -D JPEGXL_ENABLE_PLUGINS=ON              \
+      -D JPEGXL_INSTALL_JARDIR=/usr/share/java \
+      -G Ninja ..                              &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Denne pakken kommer med en testpakke, men den krever
+      <ulink url="https://github.com/google/googletest">gtest</ulink>, som
+      ikke er i BLFS.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install &amp;&amp;
+gdk-pixbuf-query-loaders --update-cache</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <command>gdk-pixbuf-query-loaders --update-cache</command>: Denne kommandoen
+      regenererer <application>GDK Pixbuf</application> loader cache så
+      at den er klar over JPEG-XL-lasteren.
+    </para>
+
+    <para>
+      <parameter>-DBUILD_TESTING=OFF</parameter>: Denne parameteren deaktiverer
+      tester fordi de krever
+      <ulink url="https://github.com/google/googletest">gtest</ulink>, hvilken
+      ikke er i BLFS. Hvis du ønsker å kjøre testene og har
+      <ulink url="https://github.com/google/googletest">gtest</ulink> installert,
+      fjern denne parameteren.
+    </para>
+
+    <para>
+      <parameter>-DBUILD_SHARED_LIBS=ON</parameter>: Denne parameteren aktiverer
+      bygging av delte versjoner av bibliotekene i stedet for statiske.
+    </para>
+    
+    <para>
+      <parameter>-DJPEGXL_ENABLE_SKCMS=OFF</parameter>: Denne parameteren deaktiverer
+      byggestøtte for Skia's <application>skcms</application> siden det er
+      ikke nødvendig for BLFS formålet og krever
+      <ulink url="https://skia.googlesource.com/skcms/">skcms</ulink>.
+    </para>
+    
+    <para>
+      <parameter>-DJPEGXL_ENABLE_SJPEG=OFF</parameter>: Denne parameteren deaktiverer
+      støtte for SimpleJPEG siden det ikke er nødvendig for BLFS formålet og
+      krever <ulink url="https://github.com/webmproject/sjpeg">sjpeg</ulink>.
+    </para>
+    
+    <para>
+      <parameter>-DJPEGXL_ENABLE_PLUGINS=ON</parameter>: Denne parameteren aktiverer
+      Programtilleggstøtte, som lager programtillegg for <xref linkend="gimp"/> og 
+      <xref linkend="gdk-pixbuf"/> hvis disse pakkene er installert.
+    </para>
+
+    <para>
+      <parameter>-DJPEGXL_INSTALL_JARDIR=/usr/share/java</parameter>: Dette
+      parameter plasserer JAR filen for JPEG XL støtte i riktig
+      mappe hvis <xref linkend="java"/> er installert.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          benchmark_xl,
+          cjxl,
+          djxl, og
+          jxlinfo
+        </seg>
+        <seg>
+          libjxl.so,
+          libjxl_cms.so,
+          libjxl_extras_codec.so,
+          libjxl_jni.so,
+          libjxl_threads.so, og
+          libpixbufloader-jxl.so (in /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders),
+        </seg>
+        <seg>
+          /usr/include/jxl
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="benchmark_xl">
+        <term><command>benchmark_xl</command></term>
+        <listitem>
+          <para>
+            kjører ytelsesreferanser mot libjxl
+          </para>
+          <indexterm zone="libjxl benchmark_xl">
+            <primary sortas="b-benchmark_xl">benchmark_xl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="cjxl">
+        <term><command>cjxl</command></term>
+        <listitem>
+          <para>
+            komprimerer bilder til JPEG XL formatet
+          </para>
+          <indexterm zone="libjxl cjxl">
+            <primary sortas="b-cjxl">cjxl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="djxl">
+        <term><command>djxl</command></term>
+        <listitem>
+          <para>
+            dekomprimerer bilder fra JPEG XL formatet til andre formater
+          </para>
+          <indexterm zone="libjxl djxl">
+            <primary sortas="b-djxl">djxl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="jxlinfo">
+        <term><command>jxlinfo</command></term>
+        <listitem>
+          <para>
+            viser informasjon om JPEG XL bilder
+          </para>
+          <indexterm zone="libjxl jxlinfo">
+            <primary sortas="b-jxlinfo">jxlinfo</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libjxl-lib">
+        <term><filename class="libraryfile">libjxl.so</filename></term>
+        <listitem>
+          <para>
+            inneholder referanseimplementeringen av JPEG XL standarden
+          </para>
+          <indexterm zone="libjxl libjxl-lib">
+            <primary sortas="c-libjxl">libjxl.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libjxl_cms">
+        <term><filename class="libraryfile">libjxl_cms.so</filename></term>
+        <listitem>
+          <para>
+            inneholder støtte for Little CMS i libjxl
+          </para>
+          <indexterm zone="libjxl libjxl_cms">
+            <primary sortas="c-libjxl_cms">libjxl_cms.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry id="libjxl_extras_codec">
+        <term><filename class="libraryfile">libjxl_extras_codec.so</filename></term>
+        <listitem>
+          <para>
+            inneholder ekstra kodekstøtte for JPEG XL bilder
+          </para>
+          <indexterm zone="libjxl libjxl_extras_codec">
+            <primary sortas="c-libjxl_extras_codec">libjxl_extras_codec.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry id="libjxl_jni">
+        <term><filename class="libraryfile">libjxl_jni.so</filename></term>
+        <listitem>
+          <para>
+            inneholder et Java grensesnitt for å støtte JPEG XL på systemer hvor
+            <xref linkend="java"/> var installert på byggetidspunktet
+          </para>
+          <indexterm zone="libjxl libjxl_jni">
+            <primary sortas="c-libjxl_jni">libjxl_jni.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry id="libjxl_threads">
+        <term><filename class="libraryfile">libjxl_threads.so</filename></term>
+        <listitem>
+          <para>
+            inneholder trådunksjoner for JPEG XL
+          </para>
+          <indexterm zone="libjxl libjxl_threads">
+            <primary sortas="c-libjxl_threads">libjxl_threads.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry id="libpixbufloader-jxl">
+        <term><filename class="libraryfile">libpixbufloader-jxl.so</filename></term>
+        <listitem>
+          <para>
+            inneholder en laster for gdk-pixbuf for å la den laste inn JPEG XL bilder
+          </para>
+          <indexterm zone="libjxl libpixbufloader-jxl">
+            <primary sortas="c-libpixbufloader-jxl">libpixbufloader-jxl.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
