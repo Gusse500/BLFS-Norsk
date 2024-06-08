@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY highway-download-http "https://github.com/google/highway/archive/&highway-version;/highway-&highway-version;.tar.gz">
+  <!ENTITY highway-md5sum        "8b3d090a2d081730b40bca5ae0d65f11">
+  <!ENTITY highway-size          "2.1 MB">
+  <!ENTITY highway-buildsize     "21 MB">
+  <!ENTITY highway-time          "0.8 SBU (med parallellitet=4)">
+]>
+
+<sect1 id="highway" xreflabel="highway-&highway-version;">
+  <?dbhtml filename="highway.html"?>
+
+   <title>highway-&highway-version;</title>
+
+  <indexterm zone="highway">
+    <primary sortas="a-highway">highway</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til highway</title>
+
+    <para>
+      <application>highway</application> pakken inneholder et C++ bibliotek
+      som gir flyttbart SIMD/vektor innhold.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&highway-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &highway-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &highway-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &highway-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &highway-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">highway Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="cmake"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av highway</title>
+
+    <para>
+      Installer <application>highway</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D CMAKE_BUILD_TYPE=Release  \
+      -D BUILD_TESTING=OFF         \
+      -D BUILD_SHARED_LIBS=ON      \
+      -G Ninja ..                  &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Denne pakken kommer med en testpakke, men den krever
+      <ulink url="https://github.com/google/googletest">gtest</ulink>, som
+      ikke er i BLFS.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-DBUILD_TESTING=OFF</parameter>: Denne parameteren deaktiverer
+      testpakken fra å bygges pga
+      <ulink url="https://github.com/google/googletest">gtest</ulink> ikke er en
+      del av BLFS. Uten denne parameteren vil CMake laste ned denne pakken
+      under konfigurasjonsprosessen. Hvis du ønsker å kjøre testene, installer
+      <ulink url="https://github.com/google/googletest">gtest</ulink> og så
+      fjern denne parameteren.
+    </para>
+
+    <para>
+      <parameter>-DBUILD_SHARED_LIBS=ON</parameter>: Denne parameteren aktiverer
+      bygging av delte versjoner av bibliotekene i stedet for statiske versjoner.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libhwy.so,
+          libhwy_contrib.so, og
+          libhwy_test.so
+        </seg>
+        <seg>
+          /usr/include/hwy og
+          /usr/lib/cmake/hwy
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libhwy">
+        <term><filename class="libraryfile">libhwy.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som gir flyttbar SIMD/vektor innhold
+          </para>
+          <indexterm zone="highway libhwy">
+            <primary sortas="c-libhwy">libhwy.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libhwy_contrib">
+        <term><filename class="libraryfile">libhwy_contrib.so</filename></term>
+        <listitem>
+          <para>
+            inneholder flere tillegg til Highway, inkludert en rekke dot
+            produkt, bilde, matte og sorterings rutiner
+          </para>
+          <indexterm zone="highway libhwy_contrib">
+            <primary sortas="c-libhwy_contrib">libhwy_contrib.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry id="libhwy_test">
+        <term><filename class="libraryfile">libhwy_test.so</filename></term>
+        <listitem>
+          <para>
+            inneholder testhjelpere for Highway
+          </para>
+          <indexterm zone="highway libhwy_test">
+            <primary sortas="c-libhwy_test">libhwy_test.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
