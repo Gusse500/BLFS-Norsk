@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY dtc-download-http "https://kernel.org/pub/software/utils/dtc/dtc-&dtc-version;.tar.xz">
+  <!ENTITY dtc-md5sum        "228576aceed3aa89f54283aa0f1eb820">
+  <!ENTITY dtc-size          "164 KB">
+  <!ENTITY dtc-buildsize     "14 MB">
+  <!ENTITY dtc-time          "mindre enn 0.1 SBU">
+]>
+
+<!-- Try to keep the indentation used in this file-->
+<sect1 id="dtc" xreflabel="dtc-&dtc-version;">
+  <?dbhtml filename="dtc.html"?>
+
+  <title>Dtc-&dtc-version;</title>
+
+  <indexterm zone="dtc">
+    <primary sortas="a-dtc">dtc</primary>
+  </indexterm>
+
+  <!--Required section-->
+  <sect2 role="package">
+    <title>Introduksjon til Dtc</title>
+
+    <para>
+      <application>dtc</application> pakken inneholder enhetstreet
+      kompiler for å jobbe med enhetstrekilde og binære filer og også
+      libfdt, et verktøybibliotek for lesing og manipulering av enhetstrær
+      i binært format.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&dtc-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &dtc-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &dtc-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &dtc-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &dtc-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Dtc Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend='libyaml'/>,
+      <xref linkend='setuptools_scm'/>,
+      <xref linkend='swig'/>, og
+      <xref linkend='texlive'/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Dtc</title>
+
+    <para>
+      Installer <application>dtc</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr        \
+            --buildtype=release  \
+            -Dpython=disabled .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>meson test -v</command>.
+      <!-- https://github.com/dgibson/dtc/commit/32174a66efa4 -->
+      To tester navngitt <filename>cell-overflow.dts</filename> og
+      <filename>cell-overflow-results.dts</filename> er kjent for å mislykkes.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+    <screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para>
+      Fortsatt som &root; bruker, fjern det ubrukelige statiske biblioteket:
+    </para>
+
+    <screen role="root"><userinput>rm /usr/lib/libfdt.a</userinput></screen>
+
+    <para>
+      Hvis du har <xref linkend='texlive'/> installert, kan du bygge PDF
+      formatet til dokumentasjonen ved å gi følgende kommando:
+    </para>
+
+    <screen remap="doc"><userinput>pushd ../Documentation
+  latexmk -bibtex --pdf dtc-paper &amp;&amp;
+  latexmk -bibtex --pdf dtc-paper -c
+popd</userinput></screen>
+
+    <para>
+      For å installere dokumentasjonen, som &root; bruker utsted følgende
+      kommando:
+    </para>
+
+    <screen role="root"><userinput>cp -R ../Documentation -T /usr/share/doc/dtc-&dtc-version;</userinput></screen>
+
+    <para>
+      Hvis du har installert både <xref linkend='setuptools_scm'/> og
+      <xref linkend='swig'/> og du ønsker å installere Python 3 bindingen
+      av denne pakken, bygg Python 3 modulen:
+    </para>
+ 
+    <screen role="nodump"><userinput>sed -i '/use_scm_version/a "fallback_version": "1.7.0",' ../setup.py &amp;&amp;
+&build-wheel-cmd; ..</userinput></screen>
+
+    <para>
+      Som &root; bruker, installer Python 3 modulen:
+    </para>
+
+    <screen role="nodump"><userinput>&install-wheel; libfdt</userinput></screen>
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-Dpython=disabled</parameter>: Denne bryteren forhindrer å
+      bygge Python 3 bindingen med den avviklede metoden
+      (kjøre <command>setup.py</command> direkte). Vi vil bygge
+      Python 3 binding med <command>pip3 wheel</command> kommandoen
+      separat om ønskelig.
+    </para>
+
+    <para>
+      <command>sed ... ../setup.py</command>: Denne kommandoen lar deg bygge
+      Python 3 bindingen fra en utgivelses tarball (i stedet for en Git
+      checkout).
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installert Mappe</segtitle>
+
+      <seglistitem>
+        <seg>
+          convert-dtsv0, dtc, dtdiff, fdtdump, fdtget, fdtoverlay,
+          og fdtput
+        </seg>
+        <seg>
+          libfdt.so
+        </seg>
+        <seg>
+          /usr/lib/python&python3-majorver;/site-packages/libfdt-&dtc-version;.dist-info
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="convert-dtsv0">
+        <term><command>convert-dtsv0</command></term>
+        <listitem>
+          <para>
+            konverterer enhetstre v0 kilde til enhetstre v1
+          </para>
+          <indexterm zone="dtc convert-dtsv0">
+            <primary sortas="b-convert-dtsv0">convert-dtsv0</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="dtc-prog">
+        <term><command>dtc</command></term>
+        <listitem>
+          <para>
+            kompilerer enhetstrekilde (dts) til binær blob for enhetstre
+            (dtb), eller dekompilerer dtb til dts
+          </para>
+          <indexterm zone="dtc dtc-prog">
+            <primary sortas="b-dtc">dtc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="dtdiff">
+        <term><command>dtdiff</command></term>
+        <listitem>
+          <para>
+            sammenligner to forskjellige enhetstre
+          </para>
+          <indexterm zone="dtc dtdiff">
+            <primary sortas="b-dtdiff">dtdiff</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="fdtdump">
+        <term><command>fdtdump</command></term>
+        <listitem>
+          <para>
+            skriver ut en lesbar versjon av en flat enhetstre fil
+          </para>
+          <indexterm zone="dtc fdtdump">
+            <primary sortas="b-fdtdump">fdtdump</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="fdtget">
+        <term><command>fdtget</command></term>
+        <listitem>
+          <para>
+            leser verdier fra enhetstreet
+          </para>
+          <indexterm zone="dtc fdtget">
+            <primary sortas="b-fdtget">fdtget</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="fdtoverlay">
+        <term><command>fdtoverlay</command></term>
+        <listitem>
+          <para>
+            påfører en rekke overlegg på en baseenhets treblob
+          </para>
+          <indexterm zone="dtc fdtoverlay">
+            <primary sortas="b-fdtoverlay">fdtoverlay</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="fdtput">
+        <term><command>fdtput</command></term>
+        <listitem>
+          <para>
+            skriver en egenskapsverdi til et enhetstre
+          </para>
+          <indexterm zone="dtc fdtput">
+            <primary sortas="b-fdtput">fdtput</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libfdt">
+        <term><filename class="libraryfile">libfdt.so</filename></term>
+        <listitem>
+          <para>
+            er et hjelpebibliotek for lesing og manipulering av enhetstrær
+            i binært format
+          </para>
+          <indexterm zone="dtc libfdt">
+            <primary sortas="c-libfdt">libfdt.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
