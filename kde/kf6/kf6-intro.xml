@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+ <!ENTITY % general-entities SYSTEM "../../general.ent">
+ %general-entities;
+
+  <!ENTITY kf6-download-http "&kf6-download-http;">
+  <!ENTITY kf6-download-ftp  " ">
+  <!ENTITY kf6-md5sum        "See Below">
+  <!ENTITY kf6-size          "30 MB">
+  <!ENTITY kf6-buildsize     "11.7 MB">
+  <!ENTITY kf6-time          "0.4 SBU">
+]>
+
+<sect1 id="kf6-intro" xreflabel="Introduction to KF6">
+  <?dbhtml filename="kf6-intro.html"?>
+
+
+  <title>KDE Rammeverk 6 Konfigurasjon før Installasjon</title>
+
+  <indexterm zone="kf5-intro">
+     <primary sortas="g-kf5">KDE Rammeverk Introduksjon</primary>
+  </indexterm>
+
+  <para>
+    KF6 kan installeres i <filename class="directory">/usr</filename> eller
+    <filename class="directory">/opt/kf6</filename>. BLFS redaktører
+    anbefaler sistnevnte i BLFS miljøet.
+  </para>
+
+  <sect2>
+    <title>Installere i /usr</title>
+
+    <para>
+      Et alternativ er å installere <application>KDE Rammeverk</application>
+      i <filename class="directory">/usr</filename> hierarkiet.
+      Dette skaper et enklere oppsett, men gjør det vanskeligere å prøve
+      flere versjoner av <application>KDE Rammeverk</application>.
+    </para>
+
+<screen><userinput>export KF6_PREFIX=/usr</userinput></screen>
+
+    <para>
+      Det er en god ide å legge til følgende variabler til ditt
+      system eller personlige profiler:
+    </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/profile.d/qt6.sh &lt;&lt; "EOF"
+<literal># Begin kf6 extension for /etc/profile.d/qt6.sh
+
+pathappend /usr/lib/plugins        QT_PLUGIN_PATH
+pathappend $QT6DIR/lib/plugins     QT_PLUGIN_PATH
+
+pathappend /usr/lib/qt6/qml        QML2_IMPORT_PATH
+pathappend $QT6DIR/lib/qml         QML2_IMPORT_PATH
+
+# End extension for /etc/profile.d/qt6.sh</literal>
+EOF
+
+cat &gt; /etc/profile.d/kf6.sh &lt;&lt; "EOF"
+<literal># Begin /etc/profile.d/kf6.sh
+
+export KF6_PREFIX=/usr
+
+# End /etc/profile.d/kf6.sh</literal>
+EOF</userinput></screen>
+
+    <note>
+      <para>
+        Hvis <application>qt6</application> var installert i <filename
+        class="directory">/usr</filename>, <filename
+        class="directory">$QT6DIR/lib/</filename> deler av stiene ovenfor
+        må kanskje endres til <filename
+        class="directory">$QT6DIR/lib/qt6/</filename>.
+      </para>
+    </note>
+
+    <para>
+      I tillegg, hvis <xref linkend="sudo"/> er installert, disse variablene
+      bør være tilgjengelig for superbrukeren. Utfør følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/sudoers.d/qt &lt;&lt; "EOF"
+<literal>Defaults env_keep += QT_PLUGIN_PATH
+Defaults env_keep += QML2_IMPORT_PATH</literal>
+EOF
+
+cat &gt;&gt; /etc/sudoers.d/kde &lt;&lt; "EOF"
+<literal>Defaults env_keep += KF6_PREFIX</literal>
+EOF</userinput></screen>
+
+  </sect2>
+
+  <sect2>
+    <title>Installere i /opt</title>
+
+    <para>
+      En metode for å bygge installasjoner med flere versjoner av
+      <application>KDE Rammeverk</application> i
+      <filename class="directory">/opt</filename> hierarkiet:
+    </para>
+
+<screen><userinput>export KF6_PREFIX=/opt/kf6</userinput></screen>
+
+    <para>
+      Hvis du ikke installerer <application>KDE Rammeverk</application>
+      i <filename class="directory">/usr</filename>, må du
+      gjøre noen ekstra konfigurasjonsendringer. Beste praksis er å legge
+      de til ditt system eller din personlige profil:
+    </para>
+
+<screen role="root"><userinput>cat &gt; /etc/profile.d/kf6.sh &lt;&lt; "EOF"
+<literal># Begin /etc/profile.d/kf6.sh
+
+export KF6_PREFIX=/opt/kf6
+
+pathappend $KF6_PREFIX/bin              PATH
+pathappend $KF6_PREFIX/lib/pkgconfig    PKG_CONFIG_PATH
+
+pathappend $KF6_PREFIX/etc/xdg          XDG_CONFIG_DIRS
+pathappend $KF6_PREFIX/share            XDG_DATA_DIRS
+
+pathappend $KF6_PREFIX/lib/plugins      QT_PLUGIN_PATH
+pathappend $KF6_PREFIX/lib/plugins/kcms QT_PLUGIN_PATH
+
+pathappend $KF6_PREFIX/lib/qml          QML2_IMPORT_PATH
+
+pathappend $KF6_PREFIX/lib/python&python3-majorver;/site-packages PYTHONPATH
+
+pathappend $KF6_PREFIX/include          CPLUS_INCLUDE_PATH
+# End /etc/profile.d/kf6.sh</literal>
+EOF
+
+cat &gt;&gt; /etc/profile.d/qt6.sh &lt;&lt; "EOF"
+<literal># Begin Qt6 changes for KF6
+
+pathappend /usr/lib/plugins            QT_PLUGIN_PATH
+pathappend $QT6DIR/plugins             QT_PLUGIN_PATH
+pathappend $QT6DIR/qml                 QML2_IMPORT_PATH
+
+# End Qt6 changes for KF6</literal>
+EOF</userinput></screen>
+
+    <para>
+      Utvid din <filename>/etc/ld.so.conf</filename> fil:
+    </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/ld.so.conf &lt;&lt; "EOF"
+<literal># Begin KF6 addition
+
+/opt/kf6/lib
+
+# End KF6 addition</literal>
+EOF</userinput></screen>
+
+    <indexterm zone="kf6-intro">
+      <primary sortas="e-etc-ld.so.conf">/etc/ld.so.conf</primary>
+    </indexterm>
+
+    <para revision="sysv">
+      Flere <application>KDE Rammeverk</application> og
+      <application>Plasma</application> pakker installerer
+      filer i <application>D-Bus</application> og
+      <application>Polkit</application> mappene. Ved installasjon av
+      <application>KDE Rammeverk</application> på et annet sted enn
+      <filename class="directory">/usr</filename>,
+      <application>D-Bus</application> og <application>Polkit</application>
+      må kunne finne disse filene.
+      Den enkleste måten å oppnå dette på er å lage følgende symbolkoblinger (som
+      <systemitem class="username">root</systemitem> bruker):
+    </para>
+
+<screen role="root"
+        revision="sysv"><userinput>install -v -dm755           $KF6_PREFIX/{etc,share} &amp;&amp;
+ln -sfv /etc/dbus-1         $KF6_PREFIX/etc         &amp;&amp;
+ln -sfv /usr/share/dbus-1   $KF6_PREFIX/share       &amp;&amp;
+ln -sfv /usr/share/polkit-1 $KF6_PREFIX/share</userinput></screen>
+
+    <para revision="systemd">
+      Flere <application>KDE Rammeverk</application> og
+      <application>KDE Plasma</application> pakker installeres
+      filer i <application>D-Bus</application>,
+      <application>Polkit</application>, og
+      <application>systemd</application> mappene. Når installering av
+      <application>KDE 6</application> på et annet sted enn
+      <filename class="directory">/usr</filename>,
+      <application>D-Bus</application>, <application>Polkit</application>,
+      og <application>systemd</application>
+      må kunne finne disse filene.
+      Den enkleste måten å oppnå dette på er å lage følgende symbolkoblinger (som
+      <systemitem class="username">root</systemitem> bruker):
+    </para>
+
+<screen role="root"
+        revision="systemd"><userinput>install -v -dm755           $KF6_PREFIX/{etc,share} &amp;&amp;
+ln -sfv /etc/dbus-1         $KF6_PREFIX/etc         &amp;&amp;
+ln -sfv /usr/share/dbus-1   $KF6_PREFIX/share       &amp;&amp;
+ln -sfv /usr/share/polkit-1 $KF6_PREFIX/share       &amp;&amp;
+install -v -dm755           $KF6_PREFIX/lib         &amp;&amp;
+ln -sfv /usr/lib/systemd    $KF6_PREFIX/lib</userinput></screen>
+
+    <para>
+      Noen pakker kan også installere ikoner fra "hicolor"-ikonsettet. Siden det
+      ikonsettet brukes av mange pakker, er det en god ide å lage en
+      symbolkobling til den i <filename class="directory">/usr/share</filename>
+      for å unngå å ha flere installasjoner av <xref linkend="hicolor-icon-theme"/>.
+      Kjør følgende kommandoer som <systemitem class="username">root</systemitem>
+      bruker:
+    </para>
+
+<screen role="root"><userinput>install -v -dm755                $KF6_PREFIX/share/icons &amp;&amp;
+ln -sfv /usr/share/icons/hicolor $KF6_PREFIX/share/icons</userinput></screen>
+
+    <tip>
+      <para>
+        Noen ganger er installasjonsbanene hardkodet til installerte filer.
+        Dette er grunnen til at <filename class="directory">/opt/kf6</filename>
+        brukes som installasjonsprefiks i stedet for <filename
+        class="directory">/opt/kf6-&kf6-version;</filename>. Etter installasjon av
+        <application>KDE Rammeverk</application>, du kan gi nytt navn til mappen
+        og lage en symbolkobling:
+      </para>
+
+<screen role="root"><userinput>mv /opt/kf6{,-&kf6-version;}
+ln -sfv kf6-&kf6-version; /opt/kf6</userinput></screen>
+
+      <para>
+        Senere kan det være lurt å installere andre versjoner av
+        <application>KDE Rammeverk</application>. For å gjøre det, bare fjern
+        symbolkoblingen og bruk <filename class="directory">/opt/kf6</filename>
+        som prefiks igjen. Hvilken versjon av
+        <application>KDE Rammeverk</application> du bruker avhenger bare av
+        hvor symbolkoblingen peker. Ingen annen rekonfigurering vil være nødvendig.
+      </para>
+    </tip>
+
+  </sect2>
+
+</sect1>
