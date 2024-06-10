@@ -4,19 +4,19 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libkexiv2-download-http "&kf5apps-download-http;/libkexiv2-&kf5apps-version;.tar.xz">
+  <!ENTITY libkexiv2-download-http "&kf6apps-download-http;/libkexiv2-&kf6apps-version;.tar.xz">
   <!ENTITY libkexiv2-download-ftp  " ">
-  <!ENTITY libkexiv2-md5sum        "fbb745604cccbec99980cd702eb50684">
+  <!ENTITY libkexiv2-md5sum        "783c13c9dc28806c021064403f9ac6ba">
   <!ENTITY libkexiv2-size          "60 KB">
-  <!ENTITY libkexiv2-buildsize     "3.3 MB">
+  <!ENTITY libkexiv2-buildsize     "3.6 MB">
   <!ENTITY libkexiv2-time          "0.2 SBU">
 ]>
 
-<sect1 id="libkexiv2" xreflabel="libkexiv2-&kf5apps-version;">
+<sect1 id="libkexiv2" xreflabel="libkexiv2-&kf6apps-version;">
   <?dbhtml filename="libkexiv2.html"?>
 
 
-  <title>libkexiv2-&kf5apps-version;</title>
+  <title>libkexiv2-&kf6apps-version;</title>
 
   <indexterm zone="libkexiv2">
     <primary sortas="a-libkexiv2">libkexiv2</primary>
@@ -65,22 +65,12 @@
         </para>
       </listitem>
     </itemizedlist>
-<!--
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nødvendig oppdatering for å bygge mot exiv2-0.28 og høyere.
-          <ulink url="&patch-root;/libkexiv2-&kf5apps-version;-exiv_0_28-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
--->
+
     <bridgehead renderas="sect3">libkexiv2 Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="kf5-frameworks"/> og
+      <xref linkend="kf6-frameworks"/> og
       <xref linkend="exiv2"/>
     </para>
 
@@ -88,14 +78,7 @@
 
   <sect2 role="installation">
     <title>Installasjon av libkexiv2</title>
-<!--
-    <para>
-      Først, fiks bygging mot exiv2-0.28 og høyere:
-      og brukt:
-    </para>
 
-<screen><userinput>patch -Np1 -i ../libkexiv2-&kf5apps-version;-exiv_0_28-1.patch</userinput></screen>
--->
     <para>
       Installer <application>libkexiv2</application> ved å kjøre følgende
       kommandoer:
@@ -104,10 +87,11 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=$KF5_PREFIX \
-      -DCMAKE_BUILD_TYPE=Release         \
-      -DBUILD_TESTING=OFF                \
-      -Wno-dev .. &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=$KF6_PREFIX \
+      -D CMAKE_BUILD_TYPE=Release         \
+      -D BUILD_WITH_QT6=ON                \
+      -D BUILD_TESTING=OFF                \
+      -W no-dev .. &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -135,11 +119,11 @@ make</userinput></screen>
           Ingen
         </seg>
         <seg>
-          libKF5KExiv2.so
+          libKExiv2Qt6.so
         </seg>
         <seg>
-          $KF5_PREFIX/include/KF5/KExiv2 og
-          $KF5_PREFIX/lib/cmake/KF5KExiv2
+          $KF5_PREFIX/include/KExiv2Qt6 og
+          $KF5_PREFIX/lib/cmake/KExiv2Qt6
         </seg>
       </seglistitem>
     </segmentedlist>
