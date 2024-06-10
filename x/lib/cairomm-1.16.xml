@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY cairomm-1.16-download-http "https://www.cairographics.org/releases/cairomm-&cairomm-1.16-version;.tar.xz">
+  <!ENTITY cairomm-1.16-download-ftp  " ">
+  <!ENTITY cairomm-1.16-md5sum        "4c7afc4ab5177655724ea4b31794db30">
+  <!ENTITY cairomm-1.16-size          "620 KB">
+  <!ENTITY cairomm-1.16-buildsize     "25 MB (med tester)">
+  <!ENTITY cairomm-1.16-time          "0.2 SBU (med tester)">
+]>
+
+<sect1 id="cairomm-1.16" xreflabel="libcairomm-&cairomm-1.16-version;">
+  <?dbhtml filename="cairomm-1.16.html"?>
+
+
+  <title>libcairomm-1.16 (cairomm-&cairomm-1.16-version;)</title>
+
+  <indexterm zone="cairomm-1.16">
+    <primary sortas="a-libcairomm-1.16">libcairomm-1.16</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til libcairomm-1.16</title>
+
+    <para>
+      <application>libcairomm-1.16</application> pakken gir et C++
+      grensesnitt til <application>Cairo</application>. Denne versjonen av API
+      er nødvendig for å støtte gtkmm-4.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&cairomm-1.16-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&cairomm-1.16-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &cairomm-1.16-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &cairomm-1.16-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &cairomm-1.16-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &cairomm-1.16-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libcairomm-1.16 Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="cairo"/> og
+      <xref linkend="libsigc3"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="boost"/> (for tester)
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="doxygen"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libcairomm-1.16</title>
+
+    <para>
+      Installer <application>Cairomm-1.16</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir bld &amp;&amp;
+cd    bld &amp;&amp;
+
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release \
+      -Dbuild-tests=true  \
+      -Dboost-shared=true &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å kjøre testpakken, kjør: <command>ninja test</command>.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-Dbuild-tests=true</parameter>: Denne bryteren er for å bygge
+      enhetstestene. Fjern hvis du ikke har installert <xref linkend="boost"/>.
+    </para>
+
+    <para>
+      <parameter>-Dboost-shared=true</parameter>: Denne bryteren gjør at pakken
+      bruker den delte versjonen av boost bibliotekene. Det kreves hvis du ikke har
+      installert de statiske boost bibliotekene, og du har sendt
+      <parameter>-Dbuild-tests=true</parameter>.
+    </para>
+
+    <para>
+      <option>-Dbuild-documentation=true</option>: Denne bryteren bygger
+      html dokumentasjon hvis doxygen er installert.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libcairomm-1.16.so
+        </seg>
+        <seg>
+          /usr/{lib,include}/cairomm-1.16 and
+          /usr/share/{devhelp/books,doc}/cairomm-1.16 (optional)
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libcairomm-1.16">
+        <term><filename class="libraryfile">libcairomm-1.16.so</filename></term>
+        <listitem>
+          <para>
+            inneholder <application>Cairo</application> API klasser
+          </para>
+          <indexterm zone="cairomm-1.16 libcairomm-1.16">
+            <primary sortas="c-libcairomm-1.16">libcairomm-1.16.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
