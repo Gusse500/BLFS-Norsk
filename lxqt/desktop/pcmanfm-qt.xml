@@ -4,19 +4,19 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY pcmanfm-qt-download-http "https://github.com/lxqt/pcmanfm-qt/releases/download/&pcmanfm-qt-version;/pcmanfm-qt-&pcmanfm-qt-version;.tar.xz">
+  <!ENTITY pcmanfm-qt-download-http "https://github.com/lxqt/pcmanfm-qt/releases/download/&lxqt-version;/pcmanfm-qt-&lxqt-version;.tar.xz">
   <!ENTITY pcmanfm-qt-download-ftp  " ">
-  <!ENTITY pcmanfm-qt-md5sum        "91dfd38d6726ee3ef855beee5a41f8f3">
-  <!ENTITY pcmanfm-qt-size          "384 KB">
-  <!ENTITY pcmanfm-qt-buildsize     "14 MB">
+  <!ENTITY pcmanfm-qt-md5sum        "163f512c5ad0994394fd316a0caaef92">
+  <!ENTITY pcmanfm-qt-size          "388 KB">
+  <!ENTITY pcmanfm-qt-buildsize     "18 MB">
   <!ENTITY pcmanfm-qt-time          "0.4 SBU (Bruke parallellisme=4)">
 ]>
 
-<sect1 id="pcmanfm-qt" xreflabel="pcmanfm-qt-&pcmanfm-qt-version;">
+<sect1 id="pcmanfm-qt" xreflabel="pcmanfm-qt-&lxqt-version;">
   <?dbhtml filename="pcmanfm-qt.html"?>
 
 
-  <title>pcmanfm-qt-&pcmanfm-qt-version;</title>
+  <title>pcmanfm-qt-&lxqt-version;</title>
 
   <indexterm zone="pcmanfm-qt">
     <primary sortas="a-pcmanfm-qt">pcmanfm-qt</primary>
@@ -71,6 +71,7 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
+      <xref linkend="layer-shell-qt"/>,
       <xref linkend="liblxqt"/>,
       <xref linkend="libfm-qt"/>, og
       <xref linkend="lxqt-menu-data"/>
@@ -89,16 +90,31 @@
     <title>Installasjon av pcmanfm-qt</title>
 
     <para>
+      Hvis libLayerShellQtInterface.so er installert i /opt, hjelp denne
+      pakken å finne den. Som &root; bruker:
+    </para>
+
+<screen><userinput>if [   -e /opt/kf6/lib/libLayerShellQtInterface.so -a \
+     ! -e /usr/lib/libLayerShellQtInterface.so ]; then
+
+    ln -sv /opt/kf6/lib/libLayerShellQtInterface.so \
+           /usr/lib/libLayerShellQtInterface.so
+fi</userinput></screen>
+
+
+
+
+    <para>
       Installer <application>pcmanfm-qt</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>mkdir -v build &amp;&amp;
-cd       build &amp;&amp;
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr \
-      -DCMAKE_BUILD_TYPE=Release  \
-      ..       &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D CMAKE_BUILD_TYPE=Release  \
+      ..                           &amp;&amp;
 make</userinput></screen>
 
     <para>
