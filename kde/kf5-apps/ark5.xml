@@ -4,21 +4,21 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY ark5-download-http "&kf5apps-download-http;/ark-&kf5apps-version;.tar.xz">
-  <!ENTITY ark5-download-ftp  " ">
-  <!ENTITY ark5-md5sum        "f249f98d0e7a0b87f6c3dc3fc48618d4">
-  <!ENTITY ark5-size          "2.9 MB">
-  <!ENTITY ark5-buildsize     "34 MB">
-  <!ENTITY ark5-time          "0.3 SBU (bruke parallellisme=4)">
+  <!ENTITY ark-download-http "&kf6apps-download-http;/ark-&kf6apps-version;.tar.xz">
+  <!ENTITY ark-download-ftp  " ">
+  <!ENTITY ark-md5sum        "5bd7fc9981d8baae1669391dc10e1978">
+  <!ENTITY ark-size          "2.9 MB">
+  <!ENTITY ark-buildsize     "38 MB">
+  <!ENTITY ark-time          "0.4 SBU (bruke parallellisme=4)">
 ]>
 
-<sect1 id="ark5" xreflabel="Ark-&kf5apps-version;">
-  <?dbhtml filename="ark5.html"?>
+<sect1 id="ark" xreflabel="ark-&kf6apps-version;">
+  <?dbhtml filename="ark.html"?>
 
 
-  <title>Ark-&kf5apps-version;</title>
+  <title>ark-&kf6apps-version;</title>
 
-  <indexterm zone="ark5">
+  <indexterm zone="ark">
     <primary sortas="a-Ark">Ark</primary>
   </indexterm>
 
@@ -26,7 +26,7 @@
     <title>Introduksjon til Ark</title>
 
     <para>
-      <application>Ark</application> pakken er et KF5 arkivverktøy.
+      <application>Ark</application> pakken er et KF6 arkivverktøy.
       Det er et grafisk grensesnitt til tar og lignende verktøy.
     </para>
 
@@ -36,55 +36,43 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nedlasting (HTTP): <ulink url="&ark5-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&ark-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting (FTP): <ulink url="&ark5-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&ark-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting MD5 sum: &ark5-md5sum;
+          Nedlasting MD5 sum: &ark-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &ark5-size;
+          Nedlastingsstørrelse: &ark-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert diskplass som kreves: &ark5-buildsize;
+          Estimert diskplass som kreves: &ark-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert byggetid: &ark5-time;
+          Estimert byggetid: &ark-time;
         </para>
       </listitem>
     </itemizedlist>
-<!--
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/ark-&kf5apps-version;-upstream_fix-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
--->
 
     <bridgehead renderas="sect3">Ark Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="kf5-frameworks"/> og
+      <xref linkend="kf6-frameworks"/> og
       <xref linkend="libarchive"/>
     </para>
-
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
@@ -100,11 +88,7 @@
 
   <sect2 role="installation">
     <title>Installasjon av Ark</title>
-<!--
-    <para>Først, fiks et problem identifisert oppstrøms:</para>
 
-<screen><userinput>patch -Np1 -i ../ark-&kf5apps-version;-upstream_fix-1.patch</userinput></screen>
--->
     <para>
       Installer <application>Ark</application> ved å kjøre følgende
       kommandoer:
@@ -113,10 +97,10 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=$KF5_PREFIX \
-      -DCMAKE_BUILD_TYPE=Release         \
-      -DBUILD_TESTING=OFF                \
-      -Wno-dev .. &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=$KF6_PREFIX \
+      -D CMAKE_BUILD_TYPE=Release         \
+      -D BUILD_TESTING=OFF                \
+      -W no-dev .. &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -147,9 +131,8 @@ make</userinput></screen>
           libkerfuffle.so
         </seg>
         <seg>
-          $KF5_PREFIX/lib/plugins/kerfuffle,
-          $KF5_PREFIX/share/doc/HTML/*/ark, og
-          $KF5_PREFIX/share/kxmlgui5/ark
+          $KF6_PREFIX/lib/plugins/kerfuffle and
+          $KF6_PREFIX/share/doc/HTML/*/ark
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -159,32 +142,17 @@ make</userinput></screen>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
-     <varlistentry id="ark5-prog">
+     <varlistentry id="ark-prog">
         <term><command>ark</command></term>
         <listitem>
           <para>
-             er en KF5 basert arkivbehandler
+             er en KF6 basert arkivbehandler
           </para>
-          <indexterm zone="ark5 ark5-prog">
+          <indexterm zone="ark ark-prog">
             <primary sortas="b-ark">ark</primary>
           </indexterm>
         </listitem>
       </varlistentry>
-
-<!--
-     <varlistentry id="arkprofile5">
-        <term><command>arkprofile</command></term>
-        <listitem>
-          <para>
-            er et kommandolinjeverktøy for å endre profilen til gjeldende fane
-            alternativer.
-          </para>
-          <indexterm zone="ark5 arkprofile5">
-            <primary sortas="b-arkprofile">arkprofile</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
--->
 
     </variablelist>
 

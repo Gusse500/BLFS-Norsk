@@ -4,21 +4,21 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY kdenlive5-download-http "&kf5apps-download-http;/kdenlive-&kf5apps-version;.tar.xz">
-  <!ENTITY kdenlive5-download-ftp  " ">
-  <!ENTITY kdenlive5-md5sum        "c5e610a27fc99f0a761739aafc897238">
-  <!ENTITY kdenlive5-size          "12 MB">
-  <!ENTITY kdenlive5-buildsize     "201 MB">
-  <!ENTITY kdenlive5-time          "1.4 SBU (bruke parallellisme=4)">
+  <!ENTITY kdenlive-download-http "&kf6apps-download-http;/kdenlive-&kf6apps-version;.tar.xz">
+  <!ENTITY kdenlive-download-ftp  " ">
+  <!ENTITY kdenlive-md5sum        "b7dbeae727a9f084bf5986a33560e90b">
+  <!ENTITY kdenlive-size          "12 MB">
+  <!ENTITY kdenlive-buildsize     "222 MB">
+  <!ENTITY kdenlive-time          "1.5 SBU (bruke parallellisme=4)">
 ]>
 
-<sect1 id="kdenlive5" xreflabel="Kdenlive-&kf5apps-version;">
+<sect1 id="kdenlive" xreflabel="kdenlive-&kf6apps-version;">
   <?dbhtml filename="kdenlive.html"?>
 
 
-  <title>Kdenlive-&kf5apps-version;</title>
+  <title>kdenlive-&kf6apps-version;</title>
 
-  <indexterm zone="kdenlive5">
+  <indexterm zone="kdenlive">
     <primary sortas="a-Kdenlive">Kdenlive</primary>
   </indexterm>
 
@@ -26,7 +26,7 @@
     <title>Introduksjon til Kdenlive</title>
 
     <para>
-      <application>Kdenlive</application> pakken er en KF5 basert video
+      <application>Kdenlive</application> pakken er en KF6 basert video
       redigerer.
     </para>
 
@@ -36,51 +36,41 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nedlasting (HTTP): <ulink url="&kdenlive5-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&kdenlive-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting (FTP): <ulink url="&kdenlive5-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&kdenlive-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting MD5 sum: &kdenlive5-md5sum;
+          Nedlasting MD5 sum: &kdenlive-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &kdenlive5-size;
+          Nedlastingsstørrelse: &kdenlive-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert diskplass som kreves: &kdenlive5-buildsize;
+          Estimert diskplass som kreves: &kdenlive-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert byggetid: &kdenlive5-time;
+          Estimert byggetid: &kdenlive-time;
         </para>
       </listitem>
     </itemizedlist>
-<!--
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/kdenlive-&kf5apps-version;-segfault_fix-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
--->
+
     <bridgehead renderas="sect3">Kdenlive Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="kf5-frameworks"/>,
+      <xref linkend="kf6-frameworks"/>,
       <xref linkend="mlt"/>, og
       <xref role="runtime" linkend="v4l-utils"/> (kjøretid)
     </para>
@@ -94,13 +84,7 @@
 
   <sect2 role="installation">
     <title>Installasjon av Kdenlive</title>
-<!--
-    <para>
-      Bruk først en oppdatering for å fikse segmenteringsfeil når du avslutter Kdenlive:
-    </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../kdenlive-&kf5apps-version;-segfault_fix-1.patch</userinput></screen>
--->
     <para>
       Installer <application>Kdenlive</application> ved å kjøre følgende
       kommandoer:
@@ -109,10 +93,10 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=$KF5_PREFIX \
-      -DCMAKE_BUILD_TYPE=Release         \
-      -DBUILD_TESTING=OFF                \
-      -Wno-dev .. &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=$KF6_PREFIX \
+      -D CMAKE_BUILD_TYPE=Release         \
+      -D BUILD_TESTING=OFF                \
+      -W no-dev .. &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -143,9 +127,8 @@ make</userinput></screen>
           mltpreview.so
         </seg>
         <seg>
-          $KF5_PREFIX/share/doc/HTML/*/kdenlive,
-          $KF5_PREFIX/share/kdenlive, og
-          $KF5_PREFIX/share/kxmlgui5/kdenlive
+          $KF6_PREFIX/share/doc/HTML/*/kdenlive and
+          $KF6_PREFIX/share/kdenlive
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -155,14 +138,14 @@ make</userinput></screen>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
 
-     <varlistentry id="kdenlive">
+     <varlistentry id="kdenlive-prog">
         <term><command>kdenlive</command></term>
         <listitem>
           <para>
              er en åpen kildekode ikke-lineær videoredigerer som støtter
              et stort antall formater
           </para>
-          <indexterm zone="kdenlive5 kdenlive">
+          <indexterm zone="kdenlive kdenlive-prog">
             <primary sortas="b-kdenlive">kdenlive</primary>
           </indexterm>
         </listitem>
@@ -174,7 +157,7 @@ make</userinput></screen>
           <para>
              er et renderprogram for <command>kdenlive</command>
           </para>
-          <indexterm zone="kdenlive5 kdenlive_render">
+          <indexterm zone="kdenlive kdenlive_render">
             <primary sortas="b-kdenlive_render">kdenlive_render</primary>
           </indexterm>
         </listitem>
