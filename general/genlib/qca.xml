@@ -84,7 +84,7 @@
     <para role="required">
     <xref linkend="make-ca"/>,
     <xref linkend="cmake"/>,
-    <xref linkend="qt5"/>, og
+    <xref linkend="qt6"/>, og
     <xref linkend="which"/>
     </para>
 
@@ -97,8 +97,7 @@
     <xref linkend="nss"/>,
     <xref linkend="nspr"/>,
     <xref linkend="p11-kit"/>,
-    <xref linkend="doxygen"/>,
-    <xref linkend="which"/>, og
+    <xref linkend="doxygen"/>, og
     <ulink url="https://botan.randombit.net/">Botan</ulink>
     </para>
 
@@ -121,9 +120,11 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=$QT5DIR            \
-      -DCMAKE_BUILD_TYPE=Release                \
-      -DQCA_MAN_INSTALL_DIR:PATH=/usr/share/man \
+cmake -D CMAKE_INSTALL_PREFIX=$QT6DIR            \
+      -D CMAKE_BUILD_TYPE=Release                \
+      -D QT6=ON                                  \
+      -D QCA_INSTALL_IN_QT_PREFIX=ON             \
+      -D QCA_MAN_INSTALL_DIR:PATH=/usr/share/man \
       .. &amp;&amp;
 make</userinput></screen>
 
@@ -150,6 +151,11 @@ make</userinput></screen>
     </para>
 
     <para>
+      <parameter>-DQT6=ON</parameter>:
+      Sørger for at pakkene er bygget med <xref linkend="qt6"/>.
+    </para>
+
+    <para>
       <parameter>-DQCA_MAN_INSTALL_DIR:PATH=/usr/share/man</parameter>:
       Installer qca mansiden på vanlig plassering.
     </para>
@@ -165,9 +171,9 @@ make</userinput></screen>
       <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>mozcerts-qt5 og qcatool-qt5</seg>
+        <seg>mozcerts-qt6 og qcatool-qt6</seg>
         <seg>
-          libqca-qt5.so,
+          libqca-qt6.so,
           libqca-cyrus-sasl.so,
           libqca-gcrypt.so,
           libqca-gnupg.so,
@@ -177,9 +183,9 @@ make</userinput></screen>
           libqca-softstore.so
         </seg>
         <seg>
-          &qt5-dir;/include/Qca-qt5,
-          &qt5-dir;/lib/cmake/Qca-qt5, og
-          &qt5-dir;/lib/qca-qt5
+          &qt6-dir;/include/Qca-qt6,
+          &qt6-dir;/lib/cmake/Qca-qt6, og
+          &qt6-dir;/lib/qca-qt6
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -190,39 +196,39 @@ make</userinput></screen>
       <?dbhtml list-presentation="table"?>
 
       <varlistentry id="mozcerts">
-        <term><command>mozcerts-qt5</command></term>
+        <term><term><command>mozcerts-qt6</command></term>
         <listitem>
           <para>
             er et kommandolinjeverktøy for å konvertere certdata.txt til
             outfile.pem filer
           </para>
           <indexterm zone="qca mozcerts">
-            <primary sortas="b-mozcerts">mozcerts-qt5</primary>
+            <primary sortas="b-mozcerts">mozcerts-qt6</primary>
           </indexterm>
         </listitem>
       </varlistentry>
 
       <varlistentry id="qcatool">
-        <term><command>qcatool-qt5</command></term>
+        <term><command>qcatool-qt6</command></term>
         <listitem>
           <para>
             er et kommandolinjeverktøy for å utføre ulike kryptografiske
             operasjoner med Qca
           </para>
           <indexterm zone="qca qcatool">
-            <primary sortas="b-qcatool">qcatool-qt5</primary>
+            <primary sortas="b-qcatool">qcatool-qt6</primary>
           </indexterm>
         </listitem>
       </varlistentry>
 
       <varlistentry id="libqca">
-        <term><filename class="libraryfile">libqca-qt5.so</filename></term>
+        <term><filename class="libraryfile">libqca-qt6.so</filename></term>
         <listitem>
           <para>
             er Qt Cryptography Architecture (Qca) biblioteket
           </para>
           <indexterm zone="qca libqca">
-            <primary sortas="c-libqca">libqca-qt5.so</primary>
+            <primary sortas="c-libqca">libqca-qt6.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>
