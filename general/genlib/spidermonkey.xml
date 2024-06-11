@@ -6,8 +6,8 @@
 
   <!ENTITY spidermonkey-download-http "&mozilla-http;/firefox/releases/&spidermonkey-version;esr/source/firefox-&spidermonkey-version;esr.source.tar.xz">
   <!ENTITY spidermonkey-download-ftp  " ">
-  <!ENTITY spidermonkey-md5sum        "9105bdf076d457ce5e0aa5628d5acc84">
-  <!ENTITY spidermonkey-size          "492 MB">
+  <!ENTITY spidermonkey-md5sum        "cfc09ff51934fe137046f481cd14d265">
+  <!ENTITY spidermonkey-size          "483 MB">
   <!ENTITY spidermonkey-buildsize     "3.6 GB (40 MB installert etter fjerning av 36 MB statisk lib; legg til 34 MB for hovedtestene og 37 MB for jit testene)">
   <!ENTITY spidermonkey-time          "1.9 SBU (med parallellitet=4; legg til 1,1 SBU for hovedtestene og 3,7 SBU for jit testene)">
 ]>
@@ -16,7 +16,7 @@
   <?dbhtml filename="spidermonkey.html"?>
 
 
-  <title>SpiderMonkey fra Firefox-&spidermonkey-version;</title>
+  <title>SpiderMonkey fra firefox-&spidermonkey-version;</title>
 
   <indexterm zone="spidermonkey">
     <primary sortas="a-spidermonkey">SpiderMonkey</primary>
@@ -84,8 +84,8 @@
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="icu"/>,
-      <xref linkend="rust"/>,
-      <xref linkend="six"/>, og
+      <xref linkend="rust"/>, og
+      <!--<xref linkend="six"/>, og-->
       <xref linkend="which"/>
     </para>
 
@@ -149,7 +149,7 @@ tar: Exiting with failure status due to previous errors
       </para>
 
     </note>
-
+<!--
     <para>
       Byggesystemet sender flere interne kopier av Python 3
       modulen <filename>six.py</filename>.  De sendte kopiene er for gamle
@@ -160,7 +160,7 @@ tar: Exiting with failure status due to previous errors
 <screen><userinput>for i in $(find -name six.py); do
   ln -sfv /usr/lib/python&python3-majorver;/site-packages/six.py $i;
 done</userinput></screen>
-
+-->
     <para>
       Installer <application>SpiderMonkey</application> ved å kjøre følgende
       kommandoer:
@@ -182,7 +182,6 @@ cd    obj &amp;&amp;
                     --disable-debug-symbols  \
                     --disable-jemalloc       \
                     --enable-readline        \
-                    --enable-rust-simd       \
                     --with-intl-api          \
                     --with-system-icu        \
                     --with-system-zlib       &amp;&amp;
@@ -194,7 +193,7 @@ make</userinput></screen>
       JSTESTS_EXTRA_ARGS="--timeout 300 --wpt=disabled"</command>.
       Det anbefales å omdirigere utdataene til en logg.
       <!-- recheck when ICU gets upgraded -->
-      Fordi vi bygger med systemets ICU, 42 tester
+      Fordi vi bygger med systemets ICU, 39 tester
       (av totalt mer enn 50 000) er kjent for å mislykkes.
       Testpakken kjøres med alle CPU kjerner tilgjengelig: selv i en
       cgroup med færre kjerner tildelt, prøver den fortsatt å skape like mange
@@ -289,12 +288,12 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></sc
       <parameter>--enable-readline</parameter>: Denne bryteren aktiverer Readline
       støtte i SpiderMonkey kommandolinjegrensesnittet.
     </para>
-
+<!--
     <para>
-      <parameter>--enable-rust-simd</parameter>: Denne bryteren aktiverer SIMD
+      <parameter>- -enable-rust-simd</parameter>: Denne bryteren aktiverer SIMD
       optimalisering i den leverte encoding_rs crate.
     </para>
-
+-->
     <para>
       <parameter>--with-intl-api</parameter>: Dette aktiverer
       internasjonaliseringsfunksjoner som kreves av
