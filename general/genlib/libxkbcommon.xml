@@ -6,10 +6,10 @@
 
   <!ENTITY libxkbcommon-download-http "https://xkbcommon.org/download/libxkbcommon-&libxkbcommon-version;.tar.xz">
   <!ENTITY libxkbcommon-download-ftp  " ">
-  <!ENTITY libxkbcommon-md5sum        "90079ab4a0c6fa56dc75abffef9b1bc6">
-  <!ENTITY libxkbcommon-size          "500 KB">
-  <!ENTITY libxkbcommon-buildsize     "23 MB (med tester)">
-  <!ENTITY libxkbcommon-time          "0.4 SBU (med tester)">
+  <!ENTITY libxkbcommon-md5sum        "b05b1a0d473189efb2dd995dd944f152">
+  <!ENTITY libxkbcommon-size          "524 KB">
+  <!ENTITY libxkbcommon-buildsize     "26 MB (med tester)">
+  <!ENTITY libxkbcommon-time          "0.5 SBU (med tester)">
 ]>
 
 <sect1 id="libxkbcommon" xreflabel="libxkbcommon-&libxkbcommon-version;">
@@ -83,7 +83,10 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-       <xref linkend="doxygen"/>
+       <xref linkend="doxygen"/> (for å generere dokumentasjonen) og
+      <command>Xvfb</command> (fra
+      <xref linkend='xorg-server'/> eller
+      <xref role='nodep' linkend='xwayland'/>)
     </para>
 
   </sect2>
@@ -106,7 +109,9 @@ meson setup ..            \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>.
+      For å teste resultatene, sørg for at <command>Xvfb</command> og
+      <xref linkend='xkeyboard-config'/> er tilgjengelig, utsted deretter:
+      <command>ninja test</command>.
     </para>
 
     <para>
@@ -136,15 +141,15 @@ ninja</userinput></screen>
     -->
 
     <para>
-      <parameter>-Denable-docs=false</parameter>: Denne bryteren deaktiverer
-      generering av dokumentasjon. Fjern den hvis <xref linkend="doxygen"/> er
-      installert.
+      <parameter>-Denable-docs=true</parameter>: Denne bryteren aktiverer
+      generering av dokumentasjon. <xref linkend="doxygen"/> er
+      påkrevd.
     </para>
 
     <para>
       <command>mv -v /usr/share/doc/libxkbcommon{,-&libxkbcommon-version;}</command>:
-      Hvis du fjernet -Denable-docs=false, bruk denne kommandoen til å installere
-      dokumentasjonen i en versjonert mappe.
+      Hvis du har laget dokumentasjonen, bruk denne kommandoen for å installere
+      den i en versjonert mappe.
     </para>
 
   </sect2>
