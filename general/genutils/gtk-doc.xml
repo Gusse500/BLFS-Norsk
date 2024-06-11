@@ -6,9 +6,9 @@
 
   <!ENTITY gtk-doc-download-http "&gnome-download-http;/gtk-doc/&gtk-doc-major;/gtk-doc-&gtk-doc-version;.tar.xz">
   <!ENTITY gtk-doc-download-ftp  " ">
-  <!ENTITY gtk-doc-md5sum        "ea6563421abe964d02135ca0d5b8dd8e">
-  <!ENTITY gtk-doc-size          "496 KB">
-  <!ENTITY gtk-doc-buildsize     "13 MB (med tester)">
+  <!ENTITY gtk-doc-md5sum        "f0e7385ba25eddb6ce0953e8cf63d1bf">
+  <!ENTITY gtk-doc-size          "484 KB">
+  <!ENTITY gtk-doc-buildsize     "14 MB (med tester)">
   <!ENTITY gtk-doc-time          "0.2 SBU (med tester)">
 ]>
 
@@ -89,15 +89,17 @@
     <para role="required">
       <xref linkend="DocBook"/>,
       <xref linkend="docbook-xsl"/>,
-      <xref linkend="itstool"/>, og
-      <xref linkend="libxslt"/>
+      <xref linkend="glib2"/>,
+      <xref linkend="itstool"/>, 
+      <xref linkend="libxslt"/>, og
+      <xref linkend="pygments"/>
     </para>
-
+<!--
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref role="runtime" linkend="pygments"/> ved kjøretid
     </para>
-
+-->
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       For tester:
@@ -130,9 +132,11 @@
       følgende kommandoer:
     </para>
 
-<screen><userinput>autoreconf -fiv           &amp;&amp;
-./configure --prefix=/usr &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir -p build &amp;&amp;
+cd       build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Testpakken vil henge hvis pakken (eller en tidligere versjon)
@@ -143,10 +147,10 @@ make</userinput></screen>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For å teste resultatene, kjør: <command>ninja test</command>.
       Noen tester vil mislykkes avhengig av valgfritt installerte pakker.
     </para>
 
