@@ -7,16 +7,16 @@
   <!ENTITY python3-download-http
            "https://www.python.org/ftp/python/&python3-version;/Python-&python3-version;.tar.xz">
   <!ENTITY python3-download-ftp  " ">
-  <!ENTITY python3-md5sum        "e7c178b97bf8f7ccd677b94d614f7b3c">
+  <!ENTITY python3-md5sum        "8defb33f0c37aa4bdd3a38ba52abde4e">
   <!ENTITY python3-size          "20 MB">
-  <!ENTITY python3-buildsize     "337 MB (legg til 57 MB for tester)">
-  <!ENTITY python3-time          "2.5 SBU (legg til 0.7 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY python3-buildsize     "335 MB (legg til 57 MB for tester)">
+  <!ENTITY python3-time          "2.2 SBU (legg til 1.0 SBU for tester; begge bruker parallellisme=4)">
   <!--
   Note: Size does not reflect docs that were installed in LFS.
   -->
   <!ENTITY python3htmldoc-download-http
   "https://www.python.org/ftp/python/doc/&python3-version;/python-&python3-version;-docs-html.tar.bz2">
-  <!ENTITY python3-docs-md5sum "8a6310f6288e7f60c3565277ec3b5279" >
+  <!ENTITY python3-docs-md5sum "6025ee63c0ded34aac874f5da8f1a90c" >
 ]>
 
 <sect1 id="python3" xreflabel="Python-&python3-version;">
@@ -56,9 +56,12 @@
          eventuelle Python3 moduler du har installert. Du burde også
          installer pakker på nytt som genererer Python3 moduler
          inkludert
-         <xref linkend="gobject-introspection"/>,
+         &gobject-introspection;,
          <xref linkend="libxml2"/>,
          <xref linkend="opencv"/>,
+         <xref linkend="fontforge"/>,
+         <xref linkend="gnome-tweaks"/>,
+         <xref linkend="samba"/>, og
          <xref linkend="graphviz"/> (hvis swig er installert).
       </para>
 
@@ -181,29 +184,24 @@
 make</userinput></screen>
 
     <para>
-      <!-- I'm getting a test failure with empty $LANG:
-           "test test_curses failed"
-           "_curses.error: inswstr() returned ERR"
-           not sure why, but let's just work around it with LC_ALL.  
-  
-           For Python-3.12.0 all tests pass with only LANG=en_US.utf8.
-           Total tests: run=41,505 skipped=1,199
-           Total test files: run=477/483 skipped=12 resource_denied=6
+      Noen tester er kjent for å av og til henge på ubestemt tid. Så for å teste
+      resultatene, kjør testpakken, men sett en tidsbegrensning på 2 minutter for hver
+      testforsøk:
+    </para>
 
-           For Python-3.12.1 all tests pass
-           Total tests: run=40,624 skipped=1,136
-           Total test files: run=486/489 skipped=24 resource_denied=3
+<screen remap='test'><userinput>make test TESTOPTS="--timeout 120"</userinput></screen>
 
-           For Python-3.12.2 all tests pass
-           Total tests: run=41,580 skipped=1,144
-           Total test files: run=485/488 skipped=23 resource_denied=3
-      -->
-      For å teste resultatene, utsted <command>LC_ALL=en_US.UTF-8
-      make test</command>.
-      Noen tester kan trenge en Internett tilkobling.
-      To tester navngitt <filename>test_xml_etree</filename> og
-      <filename>test_xml_etree_c</filename> er kjent for å mislykkes med
-      expat-2.6.0 eller nyere.
+    <!-- For Python-3.12.3 all tests pass
+         Total tests: run=41,778 skipped=1,155
+         Total test files: run=485/488 skipped=24 resource_denied=3
+    -->
+
+    <para>
+      For et relativt tregt system må du kanskje øke tidsbegrensningen
+      og 1 SBU (målt når du bygger Binutils passerer 1 med én CPU
+      kjerne) bør være nok. Noen tester er flassete, så testpakken vil
+      kjøre mislykkede tester automatisk på nytt. Hvis en test mislyktes, men deretter bestått
+      når den kjøres på nytt, bør den anses som bestått.
     </para>
 
     <para>
@@ -248,12 +246,6 @@ tar --strip-components=1  \
       Python moduler.
     </para>
 -->
-    <para>
-      <option>--with-dbmliborder=bdb:gdbm:ndbm</option>: Bruk denne bryteren
-      hvis du ønsker å bygge <application>Python</application> DBM Modulen
-      mot <application>Berkeley DB</application> i stedet for
-      <application>GDBM</application>.
-    </para>
 
     <para>
       <parameter>--enable-optimizations</parameter>: Denne bryteren aktiverer

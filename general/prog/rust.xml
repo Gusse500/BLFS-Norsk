@@ -6,8 +6,8 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "14a8ac688b461a3127090cad513aee05">
-  <!ENTITY rust-size          "155 MB">
+  <!ENTITY rust-md5sum        "ce1c084daec811aac07951cc954e7809">
+  <!ENTITY rust-size          "152 MB">
   <!ENTITY rust-buildsize     "8.9 GB (298 MB installert); legg til 6,4 GB hvis du kjører testene">
   <!ENTITY rust-time          "6.7 SBU (inkludert nedlastingstid; legg til 6,2 SBU for tester, begge med parallellisme=8)">
 ]>
@@ -144,7 +144,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+    <!-- only keep this here for reuse in case we need a patch
 <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -154,7 +154,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+    -->
     <bridgehead renderas="sect3">Rust Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -170,10 +170,11 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="libssh2"/> og
+      <xref linkend="libssh2"/>,
       <xref linkend="llvm"/>
       (bygget med -DLLVM_LINK_LLVM_DYLIB=ON slik at rust kan lenke til
-      systemets LLVM i stedet for å bygge den sendte versjonen)
+      systemets LLVM i stedet for å bygge den sendte versjonen), og
+      <xref linkend="sqlite"/>
     </para>
 
     <note>
@@ -202,31 +203,6 @@
   <sect2 role="installation">
     <title>Installasjon av Rust</title>
 
-    <note>
-      <para>
-        For øyeblikket produserer rustkompilatoren SSE2 instruksjoner for 32-bit x86,
-        som forårsaker at den genererte koden blir ødelagt på 32-bits systemer uten en
-        SSE2 kompatibel prosessor. Alle x86 prosessormodeller utgitt etter
-        2004 skal være SSE2 kompatibel. Kjør
-        <command>lscpu | grep sse2</command> som en test. Hvis den gir ut
-        noe, er CPUen din SSE2 kompatibel og OK. Ellers kan du prøve
-        å bygge denne pakken <emphasis>på et SSE2 kompatibelt system</emphasis>
-        med følgende rettelse brukt:
-      </para>
-
-      <!-- computeroutput used deliberately to stop anyone from copying
-           blindly -->
-<screen role="nodump"><computeroutput>sed 's@pentium4@pentiumpro@' -i \
-    compiler/rustc_target/src/spec/i686_unknown_linux_gnu.rs</computeroutput></screen>
-
-      <para>
-        Og kopiere resultatet
-        <filename class="directory">/opt/rustc-&rust-version;</filename>
-        til systemet uten SSE2 kapasitet. Men denne endringen er fortsatt
-        under oppstrøms gjennomgang og ikke testet av BLFS redaktører.
-      </para>
-    </note>
-
     <para>
       For å installere i
       <filename class="directory">/opt</filename> mappen, fjerne evt
@@ -250,13 +226,6 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
     </note>
 
     <para>
-      Hvis du kjører testpakken, bruk en oppdatering for å forhindre
-      byggesystemet fra å gjenoppbygge kompilatoren unødvendig:
-    </para>
-
-    <screen><userinput>patch -Np1 -i ../rustc-&rust-version;-testsuite_fix-1.patch</userinput></screen>
-
-    <para>
       Opprett en passende <filename>config.toml</filename> fil som vil
       konfigurere bygget.
     </para>
@@ -269,7 +238,7 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
 # Tell x.py the editors have reviewed the content of this file
 # and updated it to follow the major changes of the building system,
 # so x.py will not warn us to do such a review.
-change-id = 118703
+change-id = 121754
 
 [llvm]
 # by default, rust will build for a myriad of architectures
@@ -350,7 +319,9 @@ EOF</userinput></screen>
        src/tools/cargo/Cargo.toml &amp;&amp; -->
 
 <screen><userinput>{ [ ! -e /usr/include/libssh2.h ] ||
-  export LIBSSH2_SYS_USE_PKG_CONFIG=1; } &amp;&amp;
+  export LIBSSH2_SYS_USE_PKG_CONFIG=1; }    &amp;&amp;
+{ [ ! -e /usr/include/sqlite3.h ] ||
+  export LIBSQLITE3_SYS_USE_PKG_CONFIG=1; } &amp;&amp;
 python3 x.py build</userinput></screen>
 
     <note>
@@ -371,19 +342,29 @@ python3 x.py build</userinput></screen>
 <screen remap="test"><userinput>SSL_CERT_DIR=/etc/ssl/certs \
 python3 ./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
 
-    <!-- https://github.com/rust-lang/rust/pull/115869 -->
+    <!-- highlighting.rs:
+         may be fixed by
+         https://github.com/rust-lang/rust/pull/124398 ?
+         it seems harmless anyway
+
+         issue-21763.rs:
+         https://github.com/rust-lang/rust/pull/115869, see my comment
+
+         regression-bad-location-list-67992.rs: rust bug or gdb bug ???? -->
     <para>
-      To tester,<filename>tests/ui/issues/issue-21763.rs</filename> og
+      Tre tester, <filename>tests/ui/error-emitter/highlighting.rs</filename>,
+      <filename>tests/ui/issues/issue-21763.rs</filename>, og
       <filename>tests/debuginfo/regression-bad-location-list-67992.rs</filename>,
       er kjent for å mislykkes.
     </para>
-
+<!-- Let's just comment this out.  Nobody has tested on a system w/o
+     FileCheck for a long time.
     <para>
       Hvis <command>FileCheck</command> fra <application>LLVM</application> ikke
       har blitt installert, alle 47 tester fra <quote>assembly</quote> pakken
       vil mislykkes.
     </para>
-
+-->
     <para>
       Som med alle store testserier, kan andre tester mislykkes på noen maskiner -
       hvis antallet ekstra feil er lavt,
@@ -428,46 +409,43 @@ python3 ./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></sc
       <para>
         Hvis <command>sudo</command> eller <command>su</command> er påberopt for
         å bytte til &root; bruker, sikre at
-        <envar>LIBSSH2_SYS_USE_PKG_CONFIG</envar> er korrekt sendt ellers
-        vil følgende kommando gjenoppbygge denne pakken fullstendig.  For
-        <command>sudo</command>, bruk
-        <option>--preserve-env=LIBSSH2_SYS_USE_PKG_CONFIG</option> alternativet.
-        For <command>su</command>, <emphasis>ikke</emphasis> bruk
+        <envar>LIBSSH2_SYS_USE_PKG_CONFIG</envar> og
+        <envar>LIBSQLITE3_SYS_USE_PKG_CONFIG</envar> er riktig sendt ellers kan
+ følgende kommando gjenoppbygge <command>cargo</command> med
+ sendte kopier av libssh2 og sqlite.  For <command>sudo</command>,
+        bruk
+        <option>--preserve-env=LIB{SSH2,SQLITE3}_SYS_USE_PKG_CONFIG</option>
+        alternativet.  For <command>su</command>, <emphasis>ikke</emphasis> bruk
         <option>-</option> eller <option>--login</option> alternativene.
       </para>
     </note>
 
-<screen role='root'><userinput>python3 x.py install</userinput></screen>
-
-    <!-- https://github.com/rust-lang/rust/issues/115213 -->
-    <para>
-      Bygningssystemet prøver å installere noen filer to ganger, og under
-      det andre forsøket gir det nytt navn til den gamle (installert i det første
-      forsøk) med <filename class='extension'>.old</filename> suffiks.
-      Som &root; bruker, fjern disse filene:
-    </para>
-
-    <screen role='root'><userinput>find /opt/rustc-&rust-version; -name "*.old" -delete</userinput></screen>
+<screen role='root'><userinput>python3 x.py install rustc std &amp;&amp;
+python3 x.py install --stage=1 cargo clippy rustfmt</userinput></screen>
 
     <para>
-      Fortsatt som &root; bruker, symbolkoble en <application>Zsh</application>
-      fullføringsfilen på riktig plassering:
+      Fortsatt som &root; bruker, fikse installasjonen av dokumentasjonen
+      og symbolkobling av <application>Zsh</application>
     </para>
 
-<screen role='root'><userinput>install -vdm755 /usr/share/zsh/site-functions      &amp;&amp;
+    <screen role='root'><userinput>rm -fv /opt/rustc-&rust-version;/share/doc/rustc-&rust-version;/*.old   &amp;&amp;
+install -vm644 README.md                                \
+               /opt/rustc-&rust-version;/share/doc/rustc-&rust-version; &amp;&amp;
+
+install -vdm755 /usr/share/zsh/site-functions      &amp;&amp;
 ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
         /usr/share/zsh/site-functions</userinput></screen>
 
     <para>
-      Til slutt, deaktiver <envar>LIBSSH2_SYS_USE_PKG_CONFIG</envar> variabelen:
+      Til slutt, deaktiver eksporterte miljøvariabler:
     </para>
 
-<screen><userinput>unset LIBSSH2_SYS_USE_PKG_CONFIG</userinput></screen>
+<screen><userinput>unset LIB{SSH2,SQLITE3}_SYS_USE_PKG_CONFIG</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
-    <title>Parameterforklaringer</title>			
+    <title>Parameterforklaringer</title>
 
     <para>
       <command>ln -svfn rustc-&rust-version; /opt/rustc</command>: hvis dette ikke
@@ -528,6 +506,15 @@ ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
       <command>cargo</command> å koble til systemets libssh2.
     </para>
 
+    <!-- src/tools/cargo/Cargo.toml is specifying "bundled" as the
+         upstream is suggesting to avoid issues building for Windoge.
+         We don't care about Windoge so override this if we have
+         system sqlite3.  -->
+    <para>
+      <command>export LIBSQLITE3_SYS_USE_PKG_CONFIG=1</command>: Tillat
+      <command>cargo</command> for å linke til systemets sqlite.
+    </para>
+
 <!--<para>
       <command>export RUSTFLAGS="$RUSTFLAGS -C link-args=-lffi"</command>:
       Dette legger til en lenke til libffi til eventuelle RUSTFLAGS du allerede passerer
@@ -552,6 +539,13 @@ ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
     <para>
       <parameter>--no-fail-fast</parameter>: denne bryteren sikrer at testpakken
       ikke vil stoppe ved den første feilen.
+    </para>
+
+    <!-- https://github.com/rust-lang/rust/issues/94147 -->
+    <para>
+      <parameter>--stage=1</parameter>: denne bryteren løser et problem som
+      forårsaker at noen Rustc komponenter gjenoppbygges unødvendig
+      <command>python3 x.py install</command>.
     </para>
 
   </sect2>
@@ -579,9 +573,6 @@ ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
 
 pathprepend /opt/rustc/bin           PATH
 
-# Include /opt/rustc/man in the MANPATH variable to access manual pages
-pathappend  /opt/rustc/share/man     MANPATH
-
 # End /etc/profile.d/rustc.sh</literal>
 EOF</userinput></screen>
 
@@ -604,7 +595,7 @@ EOF</userinput></screen>
       <segtitle>Installerte Biblioteker</segtitle>
       <segtitle>Installerte Mapper</segtitle>
 
-      <seglistitem>			
+      <seglistitem>
         <seg>
           cargo-clippy, cargo-fmt, cargo, clippy-driver, rust-gdb,
           rust-gdbgui, rust-lldb, rustc, rustdoc, og rustfmt

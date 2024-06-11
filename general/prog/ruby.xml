@@ -6,10 +6,10 @@
 
   <!ENTITY ruby-download-http "https://cache.ruby-lang.org/pub/ruby/&ruby-minor-version;/ruby-&ruby-version;.tar.xz">
   <!ENTITY ruby-download-ftp  " ">
-  <!ENTITY ruby-md5sum        "b5e59d56faf25b1ec6445abdf203affa">
+  <!ENTITY ruby-md5sum        "e53b4be5688d63206ae1c4ab2e72f67e">
   <!ENTITY ruby-size          "16 MB">
-  <!ENTITY ruby-buildsize     "774 MB (legg til 1,0 GB for C API dokumenter)">
-  <!ENTITY ruby-time          "3.4 SBU (bruker parallellisme=4; med tester og C API dokumenter)">
+  <!ENTITY ruby-buildsize     "1.4 GB (legg til 1,0 GB for C API dokumenter)">
+  <!ENTITY ruby-time          "3.6 SBU (bruker parallellisme=4; med tester og C API dokumenter)">
 ]>
 
 <sect1 id="ruby" xreflabel="Ruby-&ruby-version;">
@@ -82,8 +82,10 @@
       <xref linkend="tk"/>,
       <xref linkend="valgrind"/>, 
       &berkeley-db; og 
-      <ulink url="http://dtrace.org/blogs/about/">DTrace</ulink>
+      <ulink url="https://dtrace.org/about/">DTrace</ulink>
     </para>
+
+    &test-use-internet;
 
   </sect2>
 
@@ -120,11 +122,19 @@ make</userinput></screen>
       relatert til proxy innstillinger (<envar>all_proxy</envar>,
       <envar>ALL_PROXY</envar>, <envar>http_proxy</envar>, og etc.) aktivert,
       testpakken vil avslutte tidlig med meldinger som
-      <computeroutput>net/ftp is not found</computeroutput>.  Så pass på
-      å deaktivere dem for testpakken.   Det er over 26 000 tester.
+      <computeroutput>net/ftp is not found</computeroutput>.  Sørg for at du
+      deaktiver disse variablene for testpakken. Det er over 26 000 tester
       <!-- https://bugs.ruby-lang.org/issues/20106 -->
       12 tester er kjent for å mislykkes på grunn av utløpte sertifikater i
-      testdataen. Noen tester relatert til ipv6 kan indikere feil. Hvis
+      testdataen.
+      <!-- https://github.com/ruby/ruby/pull/10616
+           https://github.com/ruby/ruby/commit/dd5e625d7bcb -->
+      Tre tester navngitt
+      <literal>TestNetHTTPS#test_session_reuse_but_expire</literal>,
+      <literal>OpenSSL::TestASN1#test_utctime</literal>, og
+      <literal>OpenSSL::TestASN1#test_generalizedtime</literal> er kjent
+      å mislykkes med OpenSSL-3.3.0 eller nyere.
+      Noen tester relatert til ipv6 kan indikere feil. Hvis
       tester kjøres i en mappe som har en skrivbar komponent (f.eks.
       /tmp) så kan flere ekstra tester mislykkes.
     </para>
