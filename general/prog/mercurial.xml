@@ -6,10 +6,10 @@
 
   <!ENTITY mercurial-download-http "https://www.mercurial-scm.org/release/mercurial-&mercurial-version;.tar.gz">
   <!ENTITY mercurial-download-ftp  " ">
-  <!ENTITY mercurial-md5sum        "b6c1716150b0da35d44d1155cb3ae853">
+  <!ENTITY mercurial-md5sum        "0a60751c4c03f03eec59387a78f177e7">
   <!ENTITY mercurial-size          "7.9 MB">
-  <!ENTITY mercurial-buildsize     "115 MB (med dokumenter, legg til 1.5 GB for tester)">
-  <!ENTITY mercurial-time          "0.3 SBU (med dokumenter, legg til 14 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY mercurial-buildsize     "80 MB (med dokumenter, legg til 1.6 GB for tester)">
+  <!ENTITY mercurial-time          "0.4 SBU (med dokumenter, legg til 12 SBU for tester; begge bruker parallellisme=8)">
 ]>
 
 <sect1 id="mercurial" xreflabel="Mercurial-&mercurial-version;">
@@ -73,23 +73,21 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-    <xref linkend="docutils"/>
-      (nødvendig for å bygge dokumentasjonen),
-    <xref linkend="git"/>,
-    <xref linkend="gpgme"/> (med Python bindinger),
-    <xref role="runtime" linkend="openssh"/>
-      (kjøretid, for å få tilgang ssh://... depoter),
-    <xref linkend="pygments"/>,
-    <xref linkend="rust"/> (se <filename>rust/README.rst</filename> og <filename>rust/rhg/README.md</filename>),
-    <xref linkend="subversion"/> (med Python bindinger),
-    <ulink url="https://launchpad.net/bzr">Bazaar</ulink>,
-    <ulink url="https://www.nongnu.org/cvs/">CVS</ulink>,
-    <ulink url="https://pypi.python.org/pypi/pyflakes">pyflakes</ulink>,
-    <ulink url="https://www.pyopenssl.org/en/stable/">pyOpenSSL</ulink>, og
-    <ulink url="https://github.com/google/re2/">re2</ulink>
-
+      <xref linkend="docutils"/>
+        (nødvendig for å bygge dokumentasjonen),
+      <xref linkend="git"/>,
+      <xref linkend="gpgme"/> (med Python bindinger),
+      <xref role="runtime" linkend="openssh"/>
+        (kjøretid, for å få tilgang til ssh://... depoter),
+      <xref linkend="pygments"/>,
+      <xref linkend="rust"/> (se <filename>rust/README.rst</filename> og <filename>rust/rhg/README.md</filename>),
+      <xref linkend="subversion"/> (med Python bindinger),
+      <ulink url="https://launchpad.net/bzr">Bazaar</ulink>,
+      <ulink url="https://www.nongnu.org/cvs/">CVS</ulink>,
+      <ulink url="https://pypi.python.org/pypi/pyflakes">pyflakes</ulink>,
+      <ulink url="https://www.pyopenssl.org/en/stable/">pyOpenSSL</ulink>, og
+      <ulink url="https://github.com/google/re2/">re2</ulink>
     </para>
-
 
   </sect2>
 
@@ -109,14 +107,15 @@
     </para>
 
 <screen remap="doc"><userinput>make doc</userinput></screen>
-
+<!--
+    The tests do not hang.  Better to just report what failed.
     <para>
       Hvis du ønsker å kjøre testene, må rusttestene fjernes siden de
       for øyeblikket er ødelagt på grunn av syntaksfeil. For å gjøre dette, utsted:
     </para>
 
 <screen><userinput>sed -i '138,142d' Makefile</userinput></screen>
-
+-->
     <para>
       For å kjøre testpakken, utsted:
     </para>
@@ -128,10 +127,12 @@
 
     <para>
       hvor <replaceable>&lt;N&gt;</replaceable> er et heltall mellom én
-      og antall ( prosessor X tråder ), inkludert. Flere tester
+      og antall ( prosessor X tråder ), inkludert. Tester kan
       mislykkes fordi noen feilmeldinger har endret seg i Python eller
       noen avskrivningsadvarsler skrives ut som ikke var til stede da
-      testen ble designet.
+      testen ble designet. To tester er kjent for å mislykkes: test-duplicateoptions.py
+      og test-profile.t.
+    </para>
       <!--
       # Ran 908 tests, 65 skipped, 4 failed.  real  10m37.422s -bdubbs  6 Sep 22.
       # Ran 881 tests,102 skipped, 23 failed.                  -plabs  17 Nov 22.
@@ -143,7 +144,9 @@
       # Ran 948 tests, 66 skipped, 0 failed. -pierre 12 Jul 23 (mercurial-6.5).
       # Ran 950 tests, 65 skipped, 1 failed. -pierre 8  Nov 23 (mercurial-6.5.3).
       # Ran 948 tests, 66 skipped, 0 failed. -renodr 22 Nov 23 (mercurial-6.6).
+      # Ran 946 tests, 71 skipped, 2 failed. -bdubbs 20 Mar 24 (mercurial-6.7).
       -->
+    <para>
       For å
       undersøke eventuelle tilsynelatende mislykkede tester, kan du bruke
       <command>run-tests.py</command> skriptet. For å se de nesten førti bryterne,
