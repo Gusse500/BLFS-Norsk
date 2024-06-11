@@ -6,10 +6,10 @@
 
   <!ENTITY doxygen-download-http "https://doxygen.nl/files/doxygen-&doxygen-version;.src.tar.gz">
   <!ENTITY doxygen-download-ftp  " ">
-  <!ENTITY doxygen-md5sum        "c7455e9961c3491479929935c5087bf6">
-  <!ENTITY doxygen-size          "8.0 MB">
-  <!ENTITY doxygen-buildsize     "253 MB (med tester)">
-  <!ENTITY doxygen-time          "2.1 SBU (bruker parallellisme=4; med tester)">
+  <!ENTITY doxygen-md5sum        "61a5288e415d7ae4d2cd82eb137d36f8">
+  <!ENTITY doxygen-size          "8.1 MB">
+  <!ENTITY doxygen-buildsize     "247 MB (med tester)">
+  <!ENTITY doxygen-time          "1.2 SBU (med tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="doxygen" xreflabel="Doxygen-&doxygen-version;">
@@ -100,6 +100,11 @@
       <xref linkend="git"/>
     </para>
 
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="qt6"/> (for doxywizard)
+    </para>
+
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="graphviz"/>,
@@ -107,7 +112,7 @@
       <xref linkend="libxml2"/> (påkrevd for testene),
       <xref linkend="llvm"/> (med clang),
       <!-- Can someone check this? With LLVM7, it fails to build. -->
-      &qt5-deps; (for doxywizard),
+      &qt5-deps; ((avviklet),
       <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>),
       <xref linkend="xapian"/> (for doxyindexer), og
       <ulink url="https://javacc.github.io/javacc/">javacc</ulink>
@@ -117,7 +122,7 @@
 
   <sect2 role="installation">
     <title>Installasjon av Doxygen</title>
-
+<!--
     <note>
       <para>
         Når du untarrer denne pakken, kan du se meldinger som f.eks
@@ -125,7 +130,7 @@
         Disse meldingene er ufarlige og kan trygt ignoreres.
       </para>
     </note>
-
+-->
     <para>
       Først må du fikse noen python skript:
     </para>
@@ -140,16 +145,18 @@
 <screen><userinput>mkdir -v build &amp;&amp;
 cd       build &amp;&amp;
 
-cmake -G "Unix Makefiles"         \
-      -DCMAKE_BUILD_TYPE=Release  \
-      -DCMAKE_INSTALL_PREFIX=/usr \
-      -Wno-dev .. &amp;&amp;
-
+cmake -G "Unix Makefiles"          \
+      -D CMAKE_BUILD_TYPE=Release  \
+      -D CMAKE_INSTALL_PREFIX=/usr \
+      -D build_wizard=ON           \
+      -D force_qt=Qt6              \
+      -W no-dev .. &amp;&amp;
 make</userinput></screen>
 
     <para>
       For å teste resultatene, kjør: <command>make tests</command>.
-      <!--En test, 012_cite.dox, er kjent for å mislykkes.-->
+      En test, 012_cite.dox, er kjent for å mislykkes hvis <xref linkend="texlive"/>
+      ikke er <xref linkend="tl-installer"/> installert.
     </para>
 
     <para>
@@ -159,8 +166,9 @@ make</userinput></screen>
       installert, kjør deretter følgende kommando:
     </para>
 
-<screen remap="doc"><userinput>cmake -DDOC_INSTALL_DIR=share/doc/doxygen-&doxygen-version; -Dbuild_doc=ON .. &amp;&amp;
-
+<screen remap="doc"><userinput>cmake  -D build_doc=ON \
+       -D DOC_INSTALL_DIR=share/doc/doxygen-&doxygen-version; \
+       .. &amp;&amp;
 make docs</userinput></screen>
 
     <para>
@@ -182,25 +190,23 @@ install -vm644 ../doc/*.1 /usr/share/man/man1</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <option>-Dbuild_wizard=ON</option>: Bruk denne bryteren hvis
-      <application>Qt5</application> er installert og du ønsker å bygge GUI
-      grenseflaten.
-    </para>
+      <option>-D build_wizard=OFF</option>: Bruk denne bryteren hvis
+      <application>Qt6</application> ikke er installert.
 
     <para>
-      <option>-Dbuild_search=ON</option>: Bruk denne bryteren hvis
+      <option>-D build_search=ON</option>: Bruk denne bryteren hvis
       <application>xapian</application> er installert og du ønsker å bygge
       eksterne søkeverktøy (<command>doxysearch.cgi</command> og
       <command>doxyindexer)</command>.
     </para>
-<!--
-    <para>
-      <option>-Dforce_qt4=ON</option>: Bruk denne bryteren til å bygge
-      <command>doxywizard</command> med Qt4 selv om Qt5 er installert.
-    </para>-->
 
     <para>
-      <option>-Duse_libclang=ON</option>: Bruk denne bryteren hvis
+      <option>-D force_qt6=ON</option>: Bruk denne bryteren til å bygge
+      <command>doxywizard</command> med Qt6 selv om Qt5 er installert.
+    </para>
+
+    <para>
+      <option>-D use_libclang=ON</option>: Bruk denne bryteren hvis
       <application>llvm</application> med <application>clang</application> er
       installert, for å legge til støtte for libclang parsing.
     </para>
