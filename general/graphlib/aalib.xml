@@ -96,6 +96,32 @@
     -i src/aax.c</userinput></screen>
 
     <para>
+      Fiks et overforbruk av enkelte ncurses interne datastrukturer for å tillate å
+      bygge denne pakken med ncurses-6.5 eller nyere:
+    </para>
+
+    <screen><userinput>sed 's/stdscr->_max\([xy]\) + 1/getmax\1(stdscr)/' \
+    -i src/aacurses.c</userinput></screen>
+
+    <para>
+      For å tillate å bygge denne pakken med GCC-14 eller nyere, legg til noen manglende
+      <literal>#include</literal> direktiver og fikse en dårlig
+      <literal>return</literal> uttalelse for å gjøre koden C99-kompatibel.
+      Deretter regenerer <command>configure</command> skript for å sikre
+      C-koden for sonderingssystem også er C99-kompatibel:
+    </para>
+
+<screen><userinput>sed -i '1i#include &lt;stdlib.h&gt;'                            \
+    src/aa{fire,info,lib,linuxkbd,savefont,test,regist}.c &amp;&amp;
+sed -i '1i#include &lt;string.h&gt;'                            \
+    src/aa{kbdreg,moureg,test,regist}.c                   &amp;&amp;
+sed -i '/X11_KBDDRIVER/a#include &lt;X11/Xutil.h&gt;'           \
+    src/aaxkbd.c                                          &amp;&amp;
+sed -i '/rawmode_init/,/^}/s/return;/return 0;/'          \
+    src/aalinuxkbd.c                                      &amp;&amp;
+autoconf</userinput></screen>
+
+    <para>
       Installer <application>AAlib</application> ved å kjøre følgende
       kommandoer:
     </para>
