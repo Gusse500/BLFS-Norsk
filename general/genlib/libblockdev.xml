@@ -7,7 +7,7 @@
   <!ENTITY libblockdev-download-http
     "https://github.com/storaged-project/libblockdev/releases/download/&libblockdev-version;-1/libblockdev-&libblockdev-version;.tar.gz">
   <!ENTITY libblockdev-download-ftp " ">
-  <!ENTITY libblockdev-md5sum        "033f2098a13f9dae6105d0337470efd3">
+  <!ENTITY libblockdev-md5sum        "28d43f2d6bff85245502a8c4c478c5a3">
   <!ENTITY libblockdev-size          "1.0 MB">
   <!ENTITY libblockdev-buildsize     "13 MB">
   <!ENTITY libblockdev-time          "0.1 SBU">
@@ -74,13 +74,12 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="glib2"/>
+      <xref linkend="glib2"/> (GObject Introspection påkrevd for GNOME)
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="cryptsetup"/>,
-      <xref linkend="gobject-introspection"/> (påkrevd for GNOME),
       <xref linkend="keyutils"/>,
       <xref linkend="libbytesize"/>,
       <xref linkend="libnvme"/>, og
@@ -106,15 +105,13 @@
 
   <sect2 role="installation">
     <title>Installasjon av libblockdev</title>
-<!--
+
     <para>
-      For sikkerhet fiks bruken av en glibfunksjon som er utdatert:
+      Først, fiks et problem når du bruker gcc14:
     </para>
 
-<screen><userinput>sed 's/g_memdup/&amp;2/' -i             \
-    src/lib/plugin_apis/vdo.{c,api} \
-    src/plugins/vdo.c</userinput></screen>
--->
+<screen><userinput>find -name Makefile.in -exec sed -i "s/-Werror//" {} \;</userinput></screen>
+
     <para>
       Installer <application>libblockdev</application> ved å kjøre
       følgende kommandoer:
