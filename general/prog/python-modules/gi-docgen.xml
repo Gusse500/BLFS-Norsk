@@ -4,11 +4,11 @@
   <!ENTITY % general-entities SYSTEM "../../../general.ent">
   %general-entities;
 
-  <!ENTITY gi-docgen-download-http "https://files.pythonhosted.org/packages/source/g/gi-docgen/gi-docgen-&gi-docgen-version;.tar.gz">
+  <!ENTITY gi-docgen-download-http "https://files.pythonhosted.org/packages/source/g/gi-docgen/gi_docgen-&gi-docgen-version;.tar.gz">
   <!ENTITY gi-docgen-download-ftp  " ">
   <!ENTITY gi-docgen-md5sum        "&gi-docgen-md5sum;">
   <!ENTITY gi-docgen-size          "2.4 MB">
-  <!ENTITY gi-docgen-buildsize     "18 MB (med tester)">
+  <!ENTITY gi-docgen-buildsize     "17 MB (med tester)">
   <!ENTITY gi-docgen-time          "mindre enn 0.1 SBU (med tester)">
 ]>
 
@@ -77,15 +77,28 @@
         og <xref linkend="typogrify"/>
       </para>
 
-      <bridgehead renderas="sect5">Valgfri (for testing)</bridgehead>
+      <bridgehead renderas="sect5">Valgfri</bridgehead>
       <para role="optional">
-        <xref linkend="pytest"/>
+        <xref role='runtime' linkend='graphviz'/> (kjøretid, for visualisere
+        klassehierarkigrafer) og
+        <xref linkend="pytest"/> (for testing)
       </para>
 
     </sect3>
 
     <sect3 role="installation">
       <title>Installasjon av gi-docgen</title>
+
+    <!-- https://gitlab.gnome.org/GNOME/gi-docgen/-/issues/188 -->
+    <para>
+      Slå av en advarsel fra Graphviz <command>dot</command> verktøyet
+      som vil føre til at dokumentasjon av ulike pakker ikke blir bygget
+      hvis Graphviz er installert, men bygget uten Pango, og
+      <command>gi-docgen</command> påberopes med
+      <option>--fatal-warnings</option> alternativet:
+    </para>
+
+    <screen><userinput>sed -i '/if err:/s/err/proc.returncode/' gidocgen/utils.py</userinput></screen>
 
     <para> Bygg modulen: </para>
 
