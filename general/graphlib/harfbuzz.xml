@@ -7,17 +7,17 @@
   <!ENTITY harfbuzz-download-http
            "https://github.com/harfbuzz/harfbuzz/releases/download/&harfbuzz-version;/harfbuzz-&harfbuzz-version;.tar.xz">
   <!ENTITY harfbuzz-download-ftp  " ">
-  <!ENTITY harfbuzz-md5sum        "7bf11a21c51a4f3ce0728decc4c557d4">
-  <!ENTITY harfbuzz-size          "18 MB">
-  <!ENTITY harfbuzz-buildsize     "153 MB (med tester)">
-  <!ENTITY harfbuzz-time          "0.8 SBU (Bruker parallellisme=4; med tester)">
+  <!ENTITY harfbuzz-md5sum        "81b9d7f1e19ce99c758d598c63543487">
+  <!ENTITY harfbuzz-size          "19 MB">
+  <!ENTITY harfbuzz-buildsize     "155 MB (Med tester)">
+  <!ENTITY harfbuzz-time          "0.8 SBU (Med tester; begge bruker parallellisme=4)">
 ]>
 
-<sect1 id="harfbuzz" xreflabel="HarfBuzz-&harfbuzz-version;">
+<sect1 id="harfbuzz" xreflabel="harfBuzz-&harfbuzz-version;">
   <?dbhtml filename="harfbuzz.html"?>
 
 
-  <title>HarfBuzz-&harfbuzz-version;</title>
+  <title>harfBuzz-&harfbuzz-version;</title>
 
   <indexterm zone="harfbuzz">
     <primary sortas="a-HarfBuzz">HarfBuzz</primary>
@@ -71,15 +71,14 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="gobject-introspection"/> (nødvendig hvis det bygges GNOME),
-      <xref linkend="glib2"/> (nødvendig for Pango),
+      <xref linkend="glib2"/> (påkrevd for Pango; GObject Introspection
+      påkrevd for å bygge GNOME),
       <xref role="first" linkend="graphite2"/> (nødvendig for å bygge
         <xref role="nodep" linkend="texlive"/> eller
         <xref role="nodep" linkend="libreoffice"/> med system harfbuzz),
       <xref linkend="icu"/>, og
       <xref role="first" linkend="freetype2"/>
-      (etter at <xref role="nodep" linkend="harfbuzz"/> er installert, installer på nytt
-      <xref role="nodep" linkend="freetype2"/>)
+      (etter at harfbuzz er installert, installer freetype på nytt)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -121,6 +120,7 @@ cd    build &amp;&amp;
 meson setup ..            \
       --prefix=/usr       \
       --buildtype=release \
+      -Dcpp_std=c++17     \
       -Dgraphite2=enabled &amp;&amp;
 ninja</userinput></screen>
 
@@ -140,6 +140,15 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-Dcpp_std=c++17</parameter>: Denne bryteren sikrer at kompilering av
+      C++ koden følger C++17-standarden, soom overstyrer standarden for
+      denne pakken (C++11). Det kreves for å bygge denne pakken med
+      <xref linkend='icu'/> installert fordi noen ICU deklarasjoner bruker C++17
+      egenskaper. Det er unødvendig hvis <xref linkend='icu'/> ikke er
+      installert, men skader uansett ikke.
+    </para>
 
     <para>
       <parameter>-Dgraphite2=enabled</parameter>: Denne bryteren aktiverer
