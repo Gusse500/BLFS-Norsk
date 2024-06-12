@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-45;/mutter-&mutter-version;.tar.xz">
+  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-46;/mutter-&mutter-version;.tar.xz">
   <!ENTITY mutter-download-ftp  " ">
-  <!ENTITY mutter-md5sum        "74e84722518707c0768f9753fc3492d7">
-  <!ENTITY mutter-size          "2.8 MB">
-  <!ENTITY mutter-buildsize     "70 MB (med tester)">
-  <!ENTITY mutter-time          "0.7 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
+  <!ENTITY mutter-md5sum        "610b76a24ad65ffb6617b2dd74796ebe">
+  <!ENTITY mutter-size          "6.4 MB">
+  <!ENTITY mutter-buildsize     "83 MB (med tester)">
+  <!ENTITY mutter-time          "0.5 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
 ]>
 
 <sect1 id="mutter" xreflabel="Mutter-&mutter-version;">
@@ -83,7 +83,7 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="desktop-file-utils"/>,
-      <xref linkend="gobject-introspection"/>, og
+      &gobject-introspection;, og
       <xref linkend="startup-notification"/>
     </para>
 
@@ -104,7 +104,9 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <!-- sorted as "d" instead of "p" -->
       <xref linkend="python-dbusmock"/> (påkrevd for tester),
+      <xref linkend="libdisplay-info"/>,
 	  <!--<xref linkend="sysprof"/>,-->
       <xref linkend="xorg-server"/> (for X11 økter), og
       <ulink url="&sysprof-url;">sysprof</ulink>
@@ -212,6 +214,9 @@ ninja</userinput></screen>
            (but in editor notes), so claim this a known failure.  -->
       <filename>input-capture</filename> er kjent for å mislykkes.
       <!-- As Xi noted in #18580, this test is flaky. -->
+      En ekstra test kalt
+      <filename>cogl-test-offscreen-texture-formats-gles2</filename> er kjent
+      å mislykkes. <!-- https://gitlab.gnome.org/GNOME/mutter/-/issues/3343 -->
       Noen få andre tester kan mislykkes avhengig av konfigurasjonen.
       Ikke gjør noen mus eller tastatur inndata mens testpakken
       kjører ellers kan noen tester mislykkes.
@@ -298,10 +303,10 @@ ninja</userinput></screen>
           mutter
         </seg>
         <seg>
-          libmutter-13.so og libmutter-test-13.so (valgfri)
+           libmutter-14.so and libmutter-test-14.so (valgfri)
         </seg>
         <seg>
-          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-13
+          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-14
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -325,19 +330,19 @@ ninja</userinput></screen>
       </varlistentry>
 
       <varlistentry id="libmutter">
-        <term><filename class="libraryfile">libmutter-13.so</filename></term>
+        <term><filename class="libraryfile">libmutter-14.so</filename></term>
         <listitem>
           <para>
             inneholder <application>Mutter</application> API funksjoner
           </para>
           <indexterm zone="mutter libmutter">
-            <primary sortas="c-libmutter">libmutter-13.so</primary>
+            <primary sortas="c-libmutter">libmutter-14.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>
 
       <varlistentry id="libmutter-test">
-        <term><filename class="libraryfile">libmutter-test-13.so</filename></term>
+        <term><filename class="libraryfile">libmutter-test-14.so</filename></term>
         <listitem>
           <para>
             inneholder <application>Mutter</application> testpakke API
@@ -346,7 +351,7 @@ ninja</userinput></screen>
             <application>gnome-shell</application> testpakken
           </para>
           <indexterm zone="mutter libmutter-test">
-            <primary sortas="c-libmutter-test">libmutter-test-13.so</primary>
+            <primary sortas="c-libmutter-test">libmutter-test-14.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>
