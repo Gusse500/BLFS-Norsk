@@ -6,8 +6,8 @@
 
   <!ENTITY pciutils-download-http "https://mj.ucw.cz/download/linux/pci/pciutils-&pciutils-version;.tar.gz">
   <!ENTITY pciutils-download-ftp  " ">
-  <!ENTITY pciutils-md5sum        "ca53b87d2a94cdbbba6e09aca90924bd">
-  <!ENTITY pciutils-size          "912 KB">
+  <!ENTITY pciutils-md5sum        "43498696be1ff05c369019296b4dc21d">
+  <!ENTITY pciutils-size          "652.6 KB">
   <!ENTITY pciutils-buildsize     "5.7 MB">
   <!ENTITY pciutils-time          "mindre enn 0.1 SBU">
 ]>
@@ -66,24 +66,26 @@
         </para>
       </listitem>
     </itemizedlist>
-<!-- Needed to update the pci-ids. systemd has a unit and timer for this,
-    but for anyone who updates this file on either platform, it's needed
-    to download the pci.ids file. -->
 
     <bridgehead renderas="sect3">pciutils Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-       <xref linkend="curl"/>,
-       <xref linkend="wget"/>, eller
-       <xref linkend="lynx"/>
-       (for at update-pciids skriptet skal fungere riktig).
+       <xref role="runtime" linkend="hwdata"/> (kjøretid)
     </para>
 
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av PCI Utils</title>
+
+    <para>
+      Forhindre installasjon av <filename>pci.ids</filename> filen
+      for å unngå konflikt med <xref linkend='hwdata'/> pakken:
+    </para>
+
+    <screen><userinput>sed -r '/INSTALL.*(PCI_IDS|update-pciids)/d' \
+    -i Makefile</userinput></screen>
 
     <para>
       Installer <application>PCI Utils</application> ved å
@@ -109,6 +111,11 @@
 
 chmod -v 755 /usr/lib/libpci.so</userinput></screen>
 
+    <para>
+      Deretter installerer du <xref linkend='hwdata'/> pakken for
+      <filename>pci.ids</filename> filen.
+    </para>
+
   </sect2>
 
   <sect2 role="commands">
@@ -118,71 +125,6 @@ chmod -v 755 /usr/lib/libpci.so</userinput></screen>
       <parameter>SHARED=yes</parameter>: Denne parameteren aktiverer bygging
       av det delte biblioteket i stedet for det statiske.
     </para>
-
-    <para>
-      <option>ZLIB=no</option>: Dette alternativet forhindrer komprimering av
-      <filename>pci.ids</filename> filen.
-    </para>
-
-  </sect2>
-
-  <sect2 role="configuration">
-    <title>Konfigurere PCI Utils</title>
-
-    <para>
-      <filename>pci.ids</filename> datafilen blir stadig
-      oppdatert. For å få en gjeldende versjon av denne filen, kjør
-      <command>update-pciids</command> som <systemitem
-      class="username">root</systemitem> bruker. Dette programmet krever
-      <xref linkend="which"/> skript eller program for å finne <xref linkend="curl"/>,
-      <xref linkend="lynx"/>, eller <xref linkend="wget"/> som blir brukt til
-      å laste ned den nyeste filen, og erstatte den eksisterende filen i
-      <filename class="directory">/usr/share/hwdata</filename>.
-    </para>
-
-    <para>
-      Du bør oppdatere <filename>/usr/share/hwdata/pci.ids</filename> filen
-      med jevne mellomrom. <phrase revision="sysv">Hvis du har installert
-      <xref linkend="fcron"/> og fullførte avsnittet om periodiske jobber,
-      utfør</phrase><phrase revision="systemd">Utfør</phrase> følgende
-      kommandoer, som  <systemitem class="username">root</systemitem> bruker,
-      for å lage en <phrase revision="sysv">ukentlig cron jobb:</phrase>
-      <phrase revision="systemd">systemd timer for å oppdatere den ukentlig på søndager
-      klokken 02.30 (lokal tid):</phrase>
-    </para>
-
-<screen role="nodump" revision="sysv"><userinput>cat &gt; /etc/cron.weekly/update-pciids.sh &lt;&lt; "EOF" &amp;&amp;
-<literal>#!/bin/bash
-/usr/sbin/update-pciids</literal>
-EOF
-chmod 754 /etc/cron.weekly/update-pciids.sh</userinput></screen>
-
-<screen role="root" revision="systemd"><userinput>cat &gt; /usr/lib/systemd/system/update-pciids.service &lt;&lt; "EOF" &amp;&amp;
-<literal>[Unit]
-Description=Update pci.ids file
-Documentation=man:update-pciids(8)
-DefaultDependencies=no
-After=local-fs.target network-online.target
-Before=shutdown.target
-
-[Service]
-Type=oneshot
-RemainAfterExit=yes
-ExecStart=/usr/sbin/update-pciids</literal>
-EOF
-cat &gt; /usr/lib/systemd/system/update-pciids.timer &lt;&lt; "EOF" &amp;&amp;
-<literal>[Unit]
-Description=Update pci.ids file weekly
-
-[Timer]
-OnCalendar=Sun 02:30:00
-Persistent=true
-
-[Install]
-WantedBy=timers.target</literal>
-EOF
-systemctl enable update-pciids.timer</userinput></screen>
-
 
   </sect2>
 
@@ -196,13 +138,13 @@ systemctl enable update-pciids.timer</userinput></screen>
 
       <seglistitem>
         <seg>
-          lspci, setpci, og update-pciids
+          lspci, pcilmr, og setpci
         </seg>
         <seg>
           libpci.so
         </seg>
         <seg>
-          /usr/include/pci og /usr/share/hwdata
+          /usr/include/pci
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -225,29 +167,26 @@ systemctl enable update-pciids.timer</userinput></screen>
         </listitem>
       </varlistentry>
 
-      <varlistentry id="setpci">
-        <term><command>setpci</command></term>
+      <varlistentry id="pcilmr">
+        <term><command>pcilmr</command></term>
         <listitem>
           <para>
-            er et verktøy for spørring og konfigurering av PCI enheter
+            er et verktøy for marginering av PCIe koblinger
           </para>
-          <indexterm zone="pciutils setpci">
-            <primary sortas="b-setpci">setpci</primary>
+          <indexterm zone="pciutils pcilmr">
+            <primary sortas="b-pcilmr">pcilmr</primary>
           </indexterm>
         </listitem>
       </varlistentry>
 
-      <varlistentry id="update-pciids">
-        <term><command>update-pciids</command></term>
+      <varlistentry id="setpci">
+        <term><command>setpci</command></term>
         <listitem>
           <para>
-             henter gjeldende versjon av PCI ID listen. <!-- Requires
-            <xref linkend="curl"/>, <xref linkend="lynx"/> or
-            <xref linkend="wget"/>.
-            -->
+             er et verktøy for spørring og konfigurering av PCI enheter
           </para>
-          <indexterm zone="pciutils update-pciids">
-            <primary sortas="b-update-pciids">update-pciids</primary>
+          <indexterm zone="pciutils setpci">
+            <primary sortas="b-setpci">setpci</primary>
           </indexterm>
         </listitem>
       </varlistentry>
