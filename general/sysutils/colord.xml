@@ -68,12 +68,22 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+         Nødvendig oppdatering:
+         <ulink url="&patch-root;/colord-&colord-version;-upstream_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">Colord Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="dbus"/>,
-      <xref linkend="glib2"/>,
+      <xref linkend="glib2"/> (GObject Introspection anbefalt),
       <xref linkend="lcms2"/>,
       <xref linkend="polkit"/>, og
       <!-- Polkit now needed, see #11481 in Trac -->
@@ -83,7 +93,6 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <phrase revision="sysv"><xref linkend="elogind"/>,</phrase>
-      <xref linkend="gobject-introspection"/>,
       <xref linkend="libgudev"/>,
       <xref linkend="libgusb"/>,
       <phrase revision="systemd" role="runtime"><xref linkend="systemd"/>
@@ -107,6 +116,14 @@
 
   <sect2 role="installation">
     <title>Installasjon av Colord</title>
+
+    <para>
+      Først, fiks feil bruk av sqlite API som forårsaker testfeil og potensial
+      kjøretidskrasj<phrase revision='systemd'> og et overstrengt systemd
+      hardingsinnstilling som forårsaker at systemd tjenesten ikke starter</phrase>:
+    </para>
+
+<screen><userinput>patch -Np1 -i ../colord-&colord-version;-upstream_fixes-1.patch</userinput></screen>
 
     <para>
       Det bør være en dedikert bruker og gruppe for å ta kontroll over colord

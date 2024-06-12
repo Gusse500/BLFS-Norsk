@@ -6,10 +6,10 @@
 
   <!ENTITY elogind-download-http "https://github.com/elogind/elogind/archive/v&elogind-version;/elogind-&elogind-version;.tar.gz">
   <!ENTITY elogind-download-ftp  " ">
-  <!ENTITY elogind-md5sum        "2be2c43298e2fc41c5bee33dde605f01">
-  <!ENTITY elogind-size          "1.8 MB">
-  <!ENTITY elogind-buildsize     "45 MB (med tester)">
-  <!ENTITY elogind-time          "0.3 SBU (med parallellitet=4)">
+  <!ENTITY elogind-md5sum        "8653d1959c25b649c398a932ce56b396">
+  <!ENTITY elogind-size          "2.0 MB">
+  <!ENTITY elogind-buildsize     "48 MB (med tester)">
+  <!ENTITY elogind-time          "0.4 SBU (med parallellitet=4; med tester)">
 ]>
 
 <sect1 id="elogind" revision="sysv" xreflabel="elogind-&elogind-version;">
@@ -138,15 +138,7 @@
       kommandoer:
     </para>
 
-<screen><userinput><!--sed -i '/Disable polkit/,+8 d' meson.build &amp;&amp;
-
-sed '/request_name/i\
-r = sd_bus_set_exit_on_disconnect(m->bus, true);\
-if (r &lt; 0)\
-    return log_error_errno(r, "Failed to set exit on disconnect: %m");' \
-    -i src/login/logind.c &amp;&amp;
-
--->mkdir build &amp;&amp;
+<screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
 meson setup ..                              \
@@ -161,12 +153,23 @@ ninja</userinput></screen>
 
     <para>
       For å teste resultatene, utsted: <command>ninja test</command>. Noen få tester
-      blir hoppet over hvis ikke kjøres med <systemitem class="username">root</systemitem>
-      privilegier. To tester navngitt <filename>test-fs-util</filename> og
+      blir hoppet over hvis ikke kjøres med &root; privilegier.
+      Tre tester, <filename>test-login</filename>, <filename>dbus-docs-fresh</filename>,
+      og <filename>check-version-history</filename>, er kjent for å mislykkes.
+      <!--
       <filename>test-id128</filename> krever
       <filename>/etc/machine-id</filename> symbolkobling, så de vil mislykkes hvis
       denne symbolkoblingen ikke opprettes etter instruksjonen i
       <xref linkend='dbus'/> ennå.
+
+      I did have the symlink and test-fs-util still failed (the only
+      one).  The error was 
+         Assertion 'chase_symlinks(q, NULL, CHASE_SAFE, NULL, NULL) >= 0' 
+         failed at src/test/test-fs-util.c:303, function 
+         test_chase_symlinks(). Aborting.
+      Looking at teh code, I don't think that is related to the 
+      /etc/machine-id symlink. - bdubbs, version 252.23
+      -->
     </para>
 
     <para>
