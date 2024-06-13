@@ -7,10 +7,10 @@
   <!ENTITY gst10-plugins-bad-download-http
            "&gstreamer-dl;/gst-plugins-bad/gst-plugins-bad-&gst10-plugins-bad-version;.tar.xz">
   <!ENTITY gst10-plugins-bad-download-ftp  " ">
-  <!ENTITY gst10-plugins-bad-md5sum        "8e81739d264c32a10be011b235b454ce">
-  <!ENTITY gst10-plugins-bad-size          "5.3 MB">
-  <!ENTITY gst10-plugins-bad-buildsize     "177 MB (med tester)">
-  <!ENTITY gst10-plugins-bad-time          "0.9 SBU (Bruker parallellisme=4; med tester)">
+  <!ENTITY gst10-plugins-bad-md5sum        "501e6c5e310fd6f01b0472e0a3e1c0dd">
+  <!ENTITY gst10-plugins-bad-size          "6.7 MB">
+  <!ENTITY gst10-plugins-bad-buildsize     "189 MB (med tester)">
+  <!ENTITY gst10-plugins-bad-time          "0.7 SBU (Bruker parallellisme=4; med tester)">
 ]>
 
 <sect1 id="gst10-plugins-bad" xreflabel="gst-plugins-bad-&gst10-plugins-bad-version;">
@@ -83,7 +83,8 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="libdvdread"/>,
-      <xref linkend="libdvdnav"/>, og
+      <xref linkend="libdvdnav"/>,
+      <xref linkend="libva"/>, og
       <xref linkend="soundtouch"/>
     </para>
 
@@ -106,7 +107,6 @@
       <xref linkend="libsndfile"/>,
       <xref linkend="libssh2"/>,
       <xref linkend="libusb"/>,
-      <xref linkend="libva"/>,
       <xref linkend="libwebp"/>,
       <xref linkend="libxkbcommon"/>,
       <xref linkend="neon"/>,
@@ -125,7 +125,6 @@
       (for Vulkan programtillegg),
       <xref linkend="wayland"/> (<xref linkend="gtk3"/> må bli
       kompilert med wayland støtte),
-      <xref linkend="wpebackend-fdo"/>,
       <xref linkend="x265"/>,
       <!--<ulink url="https://aomedia.googlesource.com/aom/">aom</ulink>,-->
       <ulink url="https://bs2b.sourceforge.net/">bs2b</ulink>,
@@ -138,6 +137,7 @@
       <ulink url="https://pypi.org/project/hotdoc/">hotdoc</ulink>,
       <ulink url="https://www.ladspa.org/">LADSPA</ulink>,
 	  <ulink url="https://github.com/EHfive/ldacBT">ldacBT</ulink>,
+      <ulink url="https://github.com/aja-video/libajantv2">libajantv2</ulink>,
       <ulink url="https://github.com/AVnu/libavtp">libavtp</ulink>,
       <ulink url="https://sourceforge.net/projects/libdc1394/files/libdc1394-2/">libdc1394-2</ulink>,
       <ulink url="https://www.videolan.org/developers/libdca.html">libdca</ulink>,
@@ -172,6 +172,7 @@
       <!--<ulink url="https://vulkan.lunarg.com/sdk/home/">Vulkan</ulink>,-->
       <ulink url="https://github.com/Mindwerks/wildmidi/">WildMidi</ulink>,
       <ulink url="https://webkit.org/wpe/">WPE-WebKit</ulink>,
+      <ulink url="https://github.com/Igalia/WPEBackend-fdo">WPEBackend-fdo</ulink>,
       <ulink url="https://zbar.sourceforge.net/">ZBAR</ulink>,
       <ulink url="https://zapping.sourceforge.net/ZVBI/index.html/">ZVBI</ulink>, og
       <ulink url="https://github.com/zxing/zxing">zxing</ulink>
@@ -196,19 +197,16 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson  setup ..            \
-       --prefix=/usr       \
-       --buildtype=release \
-       -Dgpl=enabled       \
-       -Dpackage-origin=https://www.linuxfromscratch.org/blfs/view/&blfs-version;/ \
-       -Dpackage-name="GStreamer &gst10-plugins-bad-version; BLFS" &amp;&amp;
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release \
+      -D gpl=enabled      &amp;&amp;
 ninja</userinput></screen>
 
     <para>
       For å teste resultatene, kjør: <command>ninja test</command>. Flere tester
-      trenger en terminalemulator i en grafisk sesjon. Tre tester,
-      <emphasis>elements_vacompositor</emphasis>,
-      <emphasis>elements_netsim</emphasis>, og
+      trenger en terminalemulator i en grafisk sesjon. To tester,
+      <emphasis>elements_vapostproc</emphasis> og
       <emphasis>elements_dash_mpd</emphasis>, er kjent for å mislykkes.
 
       <!-- Upstream issue gst-plugins-bad/#1426 -->
@@ -251,14 +249,17 @@ ninja</userinput></screen>
         </seg>
         <seg>
           libgstadaptivedemux-1.0.so,
+          libgstanalytics-1.0.so,
           libgstbadaudio-1.0.so,
           libgstbasecamerabinsrc-1.0.so,
 		  libgstcuda-1.0.so,
           libgstcodecparsers-1.0.so,
           libgstcodecs-1.0.so,
+          libgstdxva-1.0.so,
           libgstinsertbin-1.0.so,
           libgstisoff-1.0.so,
           libgstmpegts-1.0.so,
+          libgstmse-1.0.so,
           libgstphotography-1.0.so,
           libgstplay-1.0.so,
           libgstplayer-1.0.so,

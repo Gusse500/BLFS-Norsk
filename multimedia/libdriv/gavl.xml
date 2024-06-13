@@ -89,13 +89,20 @@
     <title>Installasjon av Gavl</title>
 
     <para>
-      Installer <application>Gavl</application> ved å kjøre
+       Først, fiks et problem med gcc-14 og nyere:
+    </para>
+
+<screen><userinput>sed -i "/stdio/a #include &lt;string.h&gt;" src/fill_test.c</userinput></screen>
+
+    <para>
+      Nå, installer <application>Gavl</application> ved å kjøre
       følgende kommandoer:
     </para>
 
-<screen><userinput>LIBS=-lm                      \
-./configure --prefix=/usr     \
-            --without-doxygen \
+<screen><userinput>LIBS=-lm                         \
+./configure --prefix=/usr        \
+            --without-doxygen    \
+            --with-cpuflags=none \
             --docdir=/usr/share/doc/gavl-&gavl-version; &amp;&amp;
 make</userinput></screen>
 
@@ -123,6 +130,11 @@ make</userinput></screen>
       <parameter>--without-doxygen</parameter>: Denne bryteren deaktiverer bruk av
       Doxygen. Utelat hvis Doxygen er installert og du ønsker å bygge API
       dokumentasjonen.
+    </para>
+
+    <para>
+      <parameter>--with-cpuflags=none</parameter>: Denne bryteren løser et problem med å
+      identifisere egenskapene til systemarkitekturen.
     </para>
 
   </sect2>
