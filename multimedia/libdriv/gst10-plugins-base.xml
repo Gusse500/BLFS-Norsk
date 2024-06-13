@@ -7,10 +7,10 @@
   <!ENTITY gst10-plugins-base-download-http
            "&gstreamer-dl;/gst-plugins-base/gst-plugins-base-&gst10-plugins-base-version;.tar.xz">
   <!ENTITY gst10-plugins-base-download-ftp  " ">
-  <!ENTITY gst10-plugins-base-md5sum        "8b3fdd849cfc198c8e5ceb3d8513661b">
+  <!ENTITY gst10-plugins-base-md5sum        "1a0b9d23878febc0d7559fbee7aedb4a">
   <!ENTITY gst10-plugins-base-size          "2.3 MB">
-  <!ENTITY gst10-plugins-base-buildsize     "96 MB (med tester)">
-  <!ENTITY gst10-plugins-base-time          "0.7 SBU (Bruker parallellisme=4; med tester)">
+  <!ENTITY gst10-plugins-base-buildsize     "91 MB (med tester)">
+  <!ENTITY gst10-plugins-base-time          "1.0 SBU (Bruker parallellisme=4; med tester)">
 ]>
 
 <sect1 id="gst10-plugins-base" xreflabel="gst-plugins-base-&gst10-plugins-base-version;">
@@ -85,7 +85,7 @@
     <para role="recommended">
       <xref linkend="alsa-lib"/>,
       <xref linkend="cdparanoia"/> (for å bygge CDDA programtillegg),
-      <xref linkend="gobject-introspection"/>,
+      &gobject-introspection;,
       <xref linkend="iso-codes"/>,
       <xref linkend="libgudev"/>,
       <xref linkend="libjpeg"/>,
@@ -133,19 +133,18 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson  setup ..               \
-       --prefix=/usr          \
-       --buildtype=release    \
-       --wrap-mode=nodownload \
-       -Dpackage-origin=https://www.linuxfromscratch.org/blfs/view/&blfs-version;/ \
-       -Dpackage-name="GStreamer &gst10-plugins-base-version; BLFS"    &amp;&amp;
+meson setup ..               \
+      --prefix=/usr          \
+      --buildtype=release    \
+      --wrap-mode=nodownload &amp;&amp;
 ninja</userinput></screen>
 
     <para>
       For å teste resultatene, kjør: <command>ninja test</command>. Testene
       krever en X terminal som kjører, ellers vil alle GL testene mislykkes. Fem
       tester kan gi tidsavbrudd på enkelte systemer avhengig av
-      grafikkmaskinvare og hastighet.
+      grafikkmaskinvare og hastighet. En test, <filename>elements_appsrc</filename>, er
+      kjent for å mislykkes på enkelte systemer.
     </para>
 
     <note>
@@ -186,13 +185,23 @@ ninja</userinput></screen>
 
       <seglistitem>
         <seg>
-          gst-device-monitor-1.0, gst-discoverer-1.0, og gst-play-1.0
+          gst-device-monitor-1.0,
+          gst-discoverer-1.0, og
+          gst-play-1.0
         </seg>
         <seg>
-          libgstallocators-1.0.so, libgstapp-1.0.so, libgstaudio-1.0.so,
-          libgstfft-1.0.so, libgstgl-1.0.so, libgstpbutils-1.0.so,
-          libgstriff-1.0.so, libgstrtp-1.0.so, libgstrtsp-1.0.so,
-          libgstsdp-1.0.so, libgsttag-1.0.so, libgstvideo-1.0.so,
+          libgstallocators-1.0.so,
+          libgstapp-1.0.so,
+          libgstaudio-1.0.so,
+          libgstfft-1.0.so,
+          libgstgl-1.0.so,
+          libgstpbutils-1.0.so,
+          libgstriff-1.0.so,
+          libgstrtp-1.0.so,
+          libgstrtsp-1.0.so,
+          libgstsdp-1.0.so,
+          libgsttag-1.0.so,
+          libgstvideo-1.0.so,
           og flere programtillegg under /usr/lib/gstreamer-1.0
         </seg>
         <seg>
