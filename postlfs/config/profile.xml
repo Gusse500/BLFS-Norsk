@@ -171,8 +171,8 @@ export HISTSIZE=1000
 export HISTIGNORE="&amp;:[bf]g:exit"
 
 # Set some defaults for graphical systems
-export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/share/}
-export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:-/etc/xdg/}
+export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/share}
+export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:-/etc/xdg}
 export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/tmp/xdg-$USER}
 
 # Set up a red prompt for root and a green one for users.
@@ -344,9 +344,25 @@ if [ -d /usr/local/share ]; then
 fi
 
 # Set some defaults before other applications add to these paths.
-pathappend /usr/share/man  MANPATH
 pathappend /usr/share/info INFOPATH</literal>
 EOF</userinput></screen>
+
+      <note>
+        <para>
+          <command>man</command> programmet automatisk utleder søkebanen
+          for manualsider ved å undersøke innholdet i
+          <envar>PATH</envar> variabelen, se
+          <ulink role='man' url='&man;manpath.5'>manpath(5)</ulink> for
+          detaljer. Innstilling av <envar>MANPATH</envar> variabel kan overstyre
+          den automatiske utlederen, så BLFS redaksjonen anbefaler ikke å
+          sett det. Hvis du må sette den av en eller annen grunn, er det bedre å starte
+          verdien med et kolon (<literal>:</literal>), for eksempel
+          <command>MANPATH=:/opt/somepkg/share/man:/opt/otherpkg/share/man</command>
+          så stiene som er oppført i <envar>MANPATH</envar> variabeln vil
+          legges til den automatisk utledede verdien i stedet for å
+          overstyre det.
+        </para>
+      </note>
 
     </sect3>
 
@@ -435,8 +451,8 @@ EOF</userinput></screen>
         Dette skriptet setter en miljøvariabel som er nødvendig for
         støtte for morsmål. En full diskusjon om å bestemme denne 
         variabelen kan finnes på siden <ulink
-        url="&lfs-root;/chapter09/profile.html">Oppstartsfilene til
-        Bash skallet</ulink>.
+        url="&lfs-root;/chapter09/locale.html">Konfigurere 
+        systemlokaliteten</ulink> siden.
       </para>
 
 <screen role="root" revision="sysv"><userinput>cat &gt; /etc/profile.d/i18n.sh &lt;&lt; "EOF"
