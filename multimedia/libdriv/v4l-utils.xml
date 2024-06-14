@@ -82,14 +82,14 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="alsa-lib"/>,
-      <xref linkend="glu"/>,
-      <xref linkend="libjpeg"/>, og
-      &qt5-deps;
+      <xref linkend="glu"/>, og
+      <xref linkend="libjpeg"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="doxygen"/>,
+      &qt5-deps; (for qv4l2 og qvidcap),
       <xref linkend="sdl2"/>,
       både <xref linkend="llvm"/> (med Clang og target BPF)
       og <ulink url='https://github.com/libbpf/libbpf'>libbpf</ulink>
@@ -111,8 +111,7 @@
       </para>
 
       <!-- not "nodump" because it's harmless for BLFS anyway -->
-      <screen><userinput>sed '/^ir_bpf_enabled/s/=.*/= false/' \
-    -i utils/keytable/meson.build</userinput></screen>
+      <screen><userinput>sed -i '/^ir_bpf_enabled/s/=.*/= false/' utils/keytable/meson.build</userinput></screen>
     </note>
 
     <para>
@@ -123,12 +122,11 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr          \
-            -Ddoxygen-doc=disabled \
-            -Dgconv=disabled       \
-+           --buildtype=release    .. &amp;&amp;
+meson setup --prefix=/usr           \
+            -D doxygen-doc=disabled \
+            -D gconv=disabled       \
+            --buildtype=release     .. &amp;&amp;
 ninja</userinput></screen>
-
 
     <para>
       Denne pakken kommer ikke med en testpakke.
