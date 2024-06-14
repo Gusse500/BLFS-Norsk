@@ -159,6 +159,64 @@ ninja</userinput></screen>
 
   </sect2>
 
+  <sect2 role="configuration">
+    <title>Konfigurere GeoClue</title>
+
+    <sect3 id="geoclue2-config">
+      <title>Konfigurasjonsfiler</title>
+      <para>
+        <filename>/etc/geoclue/conf.d/90-lfs-google.conf</filename>
+      </para>
+
+      <indexterm zone="geoclue2 geoclue2-config">
+        <primary sortas="etc-geoclue-conf.d-90-lfs-google.conf">/etc/geoclue/conf.d/90-lfs-google.conf</primary>
+      </indexterm>
+    </sect3>
+
+    <sect3><title>Konfigurasjonsinformasjon</title>
+
+      <para>
+        I mars 2024 kunngjorde Mozilla nedleggelsen av Mozilla Location
+        Service. Geoclue bruker denne tjenesten for å bestemme en brukers plassering
+        når andre applikasjoner ber om det. Det eneste støttede alternativet av
+        oppstrøms er å bruke Googles geolokaliseringstjeneste.
+      </para>
+
+      <para>
+        For å bruke Googles geolokaliseringstjeneste må en API nøkkel brukes, og en
+        konfigurasjonsfilen må opprettes. <emphasis role="bold">Denne API nøkkelen
+        er kun beregnet for bruk med LFS. Vennligst ikke bruk denne API nøkkelen hvis du
+        bygger for en annen distro eller distribuerer binære kopier. Hvis du
+        trenger en API nøkkel, kan du be om en på
+        <ulink url="https://www.chromium.org/developers/how-tos/api-keys"/>.</emphasis>
+      </para>
+
+      <para>
+        Opprett konfigurasjonen som trengs for å bruke Googles geolokaliseringstjeneste
+        som &root; bruker:
+      </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/geoclue/conf.d/90-lfs-google.conf &lt;&lt; "EOF"
+<literal># Begin /etc/geoclue/conf.d/90-lfs-google.conf
+
+# This configuration applies for the WiFi source.
+[wifi]
+
+# Set the URL to Google's Geolocation Service.
+url=https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDxKL42zsPjbke5O8_rPVpVrLrJ8aeE9rQ
+
+# End /etc/geoclue/conf.d/90-lfs-google.conf</literal>
+EOF</userinput></screen>
+
+      <para>
+        Hvis du ikke ønsker å be om posisjonen din fra en geolokaliseringstjeneste,
+        kan du hardkode posisjonen din inn <filename>/etc/geolocation</filename>
+        ved hjelp av formatet beskrevet i
+        <ulink role='man' url='&man;geoclue'>geoclue(5)</ulink>.
+      </para>
+    </sect3>
+  </sect2>
+
   <sect2 role="content">
     <title>Innhold</title>
 
