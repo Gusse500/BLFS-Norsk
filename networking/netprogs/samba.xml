@@ -6,9 +6,9 @@
 
   <!ENTITY samba-download-http "https://download.samba.org/pub/samba/stable/samba-&samba-version;.tar.gz">
   <!ENTITY samba-download-ftp  " ">
-  <!ENTITY samba-md5sum        "123979dc044d747be56393dcb455454e">
-  <!ENTITY samba-size          "40 MB">
-  <!ENTITY samba-buildsize     "610 MB (legg til 64 MB for rask test)">
+  <!ENTITY samba-md5sum        "7c12134e6eb4b39f080cf4ebadc57879">
+  <!ENTITY samba-size          "41 MB">
+  <!ENTITY samba-buildsize     "590 MB (legg til 64 MB for rask test)">
   <!ENTITY samba-time          "2.1 SBU (bruker parallellisme=4; legg til 0,4 SBU for rask test)">
 ]>
 
@@ -76,7 +76,6 @@
     <para role="required">
       <xref linkend="gnutls"/>,
       <xref linkend="jansson"/>,
-      <xref linkend="perl-json"/>,
       <xref linkend="libtirpc"/>,
       <xref linkend="perl-parse-yapp"/>, og
       <xref linkend="rpcsvc-proto"/>
@@ -91,7 +90,8 @@
       <xref linkend="icu"/>,
       <xref linkend="libtasn1"/>,
       <xref linkend="libxslt"/> (for dokumentasjon),
-      <xref linkend="linux-pam"/>, og
+      <xref linkend="linux-pam"/>,
+      <xref linkend="mitkrb"/>, og
       <xref linkend="openldap"/>
     </para>
 
@@ -112,7 +112,6 @@
       <xref linkend="libunwind"/>,
 	  <xref linkend="lmdb"/>,
       <xref linkend="markdown"/>,
-      <xref linkend="mitkrb"/>,
       <xref linkend="nss"/>,
       <xref linkend="popt"/>,
       <xref linkend="talloc"/> (inkludert),
@@ -181,6 +180,7 @@ PATH=$PWD/pyvenv/bin:$PATH                 \
     --enable-fhs                           \
     --without-ad-dc                        \
     --without-systemd                      \
+    --with-system-mitkrb5                  \
     --enable-selftest                      &amp;&amp;
 make</userinput></screen>
 
@@ -193,6 +193,7 @@ make</userinput></screen>
     --with-pammodulesdir=/usr/lib/security \
     --enable-fhs                           \
     --without-ad-dc                        \
+    --with-system-mitkrb5                  \
     --enable-selftest                      &amp;&amp;
 make</userinput></screen>
 
@@ -295,6 +296,13 @@ install -v -m755    examples/LDAP/{get*,ol*} \
       informasjon. Fjern denne bryteren hvis du har installert Pythonmodulene
       nødvendig for ADS støtte. Merk at BLFS ikke gir et samba oppstartsskript
       eller systemd enhet for en Active Directory domenekontroller.
+    </para>
+
+    <para>
+      <parameter>--with-system-mitkrb5</parameter>: Aktiverer
+      bygging med systemversjonen av Kerberos. Dette
+      reduserer sikkerhetssårbarheter og reduserer byggetiden.
+      Fjern denne hvis du ikke har <xref linkend="mitkrb"/> installert.
     </para>
 
     <para>
