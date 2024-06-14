@@ -6,10 +6,10 @@
 
   <!ENTITY ffmpeg-download-http "https://ffmpeg.org/releases/ffmpeg-&ffmpeg-version;.tar.xz">
   <!ENTITY ffmpeg-download-ftp  " ">
-  <!ENTITY ffmpeg-md5sum        "341d719415b7f95bb59f5016f2864ac6">
+  <!ENTITY ffmpeg-md5sum        "81d5e65494f573ec28c9f56e99247815">
   <!ENTITY ffmpeg-size          "10 MB">
-  <!ENTITY ffmpeg-buildsize     "237 MB (legg til 1,5 GB for FATE-pakke/testene, legg til 792 MB for dokumentasjon)">
-  <!ENTITY ffmpeg-time          "1.3 SBU (bruker parallellisme=4; legg til 3.2 SBU (med THREADS=4) for å kjøre FATE-pakken etter at eksempelfiler er lastet ned; legg til 0,3 SBU for doxygen dokumenter)">
+  <!ENTITY ffmpeg-buildsize     "201 MB (legg til 1,5 GB for FATE-pakke/testene, legg til 792 MB for dokumentasjon)">
+  <!ENTITY ffmpeg-time          "1.1 SBU (bruker parallellisme=4; legg til 3.2 SBU (med THREADS=4) for å kjøre FATE-pakken etter at eksempelfiler er lastet ned; legg til 0,3 SBU for doxygen dokumenter)">
 ]>
 
 <sect1 id="ffmpeg" xreflabel="FFmpeg-&ffmpeg-version;">
@@ -104,8 +104,13 @@
     <para role="recommended">
       <xref linkend="alsa-lib"/>,
       <xref linkend="libva"/>,
-      <xref linkend="libvdpau"/> (med den tilsvarende driverpakken), og
       <xref linkend="sdl2"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt for systemer med Intel Video</bridgehead>
+    <para role="recommended">
+      <xref linkend="libvdpau"/> og
+      <xref linkend="libvdpau-va-gl"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -118,6 +123,7 @@
       <xref linkend="libdrm"/> (for <quote>kmsgrab</quote> inndata),
       <xref linkend="libwebp"/>,
       <!--<xref linkend="libtheora"/>,-->
+      <xref linkend="libjxl"/>,
       <xref linkend="opencv"/>,
       <xref linkend="openjpeg2"/>,
       <xref linkend="gnutls"/>,
@@ -196,8 +202,7 @@
             --enable-libx264     \
             --enable-libx265     \
             --enable-openssl     \
-            --disable-vulkan     \
-	    --ignore-tests=enhanced-flv-av1 \
+            --ignore-tests=enhanced-flv-av1 \
             --docdir=/usr/share/doc/ffmpeg-&ffmpeg-version; &amp;&amp;
 
 make &amp;&amp;
@@ -416,11 +421,13 @@ grep ^TEST ../fate.log | wc -l</userinput></screen>
       Aktiverer HTTPS protokollen for nettverksstrømmer.
     </para>
 
+<!--
     <para>
       <parameter>--disable-vulkan</parameter>: Deaktiverer Vulkan for
       gjeldende versjon av <xref linkend="vulkan-loader"/> på grunn av
       en API konflikt.
     </para>
+-->
 
     <para>
       <parameter>--ignore-tests=...</parameter>: Deaktiverer tester som mislykkes
