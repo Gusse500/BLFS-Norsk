@@ -105,19 +105,12 @@
       applikasjoner som bruker det delte biblioteket er underlagt en annen
       tillatelse.
     </para>
-<!--
+
     <para>
-      Først, fiks et problem forårsaket av en endring i atferd i GCC-10:
+      Først, fiks et problem med konfigureringsskriptet introdusert av gcc-14:
     </para>
 
-<screen><userinput remap="pre">sed -i 's/^Bookmark/extern Bookmark/' sh_util/gpshare.c</userinput></screen>
--->
-    <para>
-      Deretter oppdaterer du konfigureringsskriptet til å bruke moderne C standarder:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../ncftp-&ncftp-version;-configure_fixes-1.patch &amp;&amp;
-autoreconf -fiv -I autoconf_local</userinput></screen>
+<screen><userinput remap="pre">sed -i 's/def HAVE_STDLIB_H/ 1/;s/extern select/extern int select/' configure</userinput></screen>
 
     <para>
       For å installere <application>NcFTP</application> ved å bruke
