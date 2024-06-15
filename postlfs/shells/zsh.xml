@@ -82,7 +82,8 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="pcre"/>,
-      <xref linkend="valgrind"/>, og
+      <!-- <xref linkend="pcre2"/>, The next zsh release will support it -->
+      <xref linkend="valgrind"/> og
       <ulink url='https://fbb-git.gitlab.io/yodl/'>yodl</ulink>
     </para>
 
@@ -97,6 +98,18 @@
 
 <screen><userinput>sed -e 's/set_from_init_file/texinfo_&amp;/' \
     -i Doc/Makefile.in</userinput></screen>
+
+    <!-- https://github.com/zsh-users/zsh/commit/4c89849c9817
+         https://github.com/zsh-users/zsh/commit/ab4d62eb975a -->
+    <para>
+      Noen programmer ble levert i byggesystemet for å oppdage systemfunksjoner
+      bruker pre-C99 syntaks som er avvist av GCC-14.1 eller nyere. Fiks dem
+      ellers vil Zsh være feilkonfigurert og mislykkes i å bygge:
+    </para>
+
+<screen><userinput>sed -i -e 's/^main/int &amp;/' -e 's/exit(/return(/' aczsh.m4 configure.ac &amp;&amp;
+sed -i 's/test = /&amp;(char**)/'                    configure.ac          &amp;&amp;
+autoconf</userinput></screen>
 
     <para>
       Dokumentasjonsfilene inneholder referanser til zsh konfigurasjon
@@ -188,12 +201,13 @@ install -v -m644 zsh.{html,txt} Etc/FAQ /usr/share/doc/zsh-&zsh-version;</userin
       <parameter>--enable-gdbm</parameter>: Dette alternativet aktiverer
       bruk av <application>GDBM</application> biblioteket.
     </para>
-
+<!-- the next zsh release will support it
     <para>
-      <option>--enable-pcre</option>: Dette alternativet lar zsh bruke
-      <application>PCRE</application> regulære uttrykksbibliotek i skallets
+      <option>- -enable-pcre</option>: Dette alternativet lar zsh bruke
+      <application>PCRE2</application> regulære uttrykksbibliotek i skallets
       innbygginger.
     </para>
+-->
   </sect2>
 
   <sect2 role="configuration">
