@@ -6,10 +6,10 @@
 
   <!ENTITY mesa-download-http "https://mesa.freedesktop.org/archive/mesa-&mesa-version;.tar.xz">
   <!ENTITY mesa-download-ftp  " ">
-  <!ENTITY mesa-md5sum        "9e7fa53b68fa6b60dba0bbfa8da7d0a9">
+  <!ENTITY mesa-md5sum        "a19dd32c64e33de82119dfb37c2320f6">
   <!ENTITY mesa-size          "20 MB">
-  <!ENTITY mesa-buildsize     "618 MB (med dokumenter, legg til 220 MB for tester)">
-  <!ENTITY mesa-time          "3.1 SBU (med dokumenter; legg til 0,6 SBU for tester; begge med parallellitet=4)">
+  <!ENTITY mesa-buildsize     "641 MB (med dokumenter, legg til 263 MB for tester)">
+  <!ENTITY mesa-time          "2.7 SBU (med dokumenter; legg til 0,6 SBU for tester; begge med parallellitet=4)">
 ]>
 
 <sect1 id="mesa" xreflabel="Mesa-&mesa-version;">
@@ -98,26 +98,90 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
 
-      <xref linkend="glslang"/> (påkrevd for Vulkan støtte),
-
-      <xref role="first" linkend="libva"/> (for å gi VA-API støtte for noen
-      gallium drivere, merk at det er en sirkulær avhengighet. Du må
-      bygge <application>libva</application> først uten EGL og GLX støtte,
-      installer denne pakken og bygg på nytt <application>libva</application>),
-
-      <xref linkend="libvdpau"/> (for å bygge VDPAU drivere),
-
-      <xref linkend="llvm"/> (kreves for Gallium3D, nouveau og radeonsi
-      drivere og for swrast, programvaren rasterizer som noen ganger refereres til
-      til som llvmpipe. Se <ulink role="nodep"
-      url="https://docs.mesa3d.org/systems.html"/> for mer informasjon),
-
-      <xref linkend="wayland-protocols"/> (påkrevd for
-        <xref role="nodep" linkend='plasma5-build'/>,
-        GNOME, og anbefales for <xref role="nodep" linkend='gtk3'/>), og
-
-      <xref linkend="vulkan-loader"/> (påkrevd for Vulkan støtte)
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>
+            <xref linkend="glslang"/> og <xref linkend="vulkan-loader"/>
+            (påkrevd for Vulkan støtte)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <xref linkend="libva"/> (å gi VA-API støtte for noen
+            gallium drivere. Merk at det er en sirkulær avhengighet.
+            Du må bygge <application>libva</application> først uten
+            mesas EGL og GLX støtte, installer denne pakken og bygg på nytt 
+            <application>libva</application>)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <xref linkend="libvdpau"/> (for å bygge VDPAU drivere)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <xref linkend="llvm"/> (kreves for r300, r600 og radeonsi
+            drivere, og LLVMpipe programvaren rasterizer som kan lage
+            swrast driver mye raskere)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <xref linkend="wayland-protocols"/> (påkrevd for
+              <xref role="nodep" linkend='plasma-build'/>,
+              GNOME, og anbefalt for 
+              <xref role="nodep" linkend='gtk3'/>)
+          </para>
+        </listitem>
+      </itemizedlist>
     </para>
+
+    <note>
+      <para>
+        <emphasis role="bold">Velge Mesa drivere</emphasis>
+      </para>
+
+      <para>
+        I instruksjonene nedenfor er alle tilgjengelige drivere bygget. Det
+        vil nesten alltid fungere. Det er imidlertid ikke effektivt. Avhengig av
+        videomaskinvaren din, trenger du sannsynligvis bare spesifikke drivere.
+      </para>
+
+      <para>
+        Det første du trenger å vite er hvilken type videoenhet du
+        har. I noen tilfeller er den innebygd i CPU. I andre er er et
+        separat PCI kort. I begge tilfeller kan du fortelle hvilken videomaskinvare du har
+        ha ved å kjøre:
+      </para>
+
+      <para>
+        <command>lspci | grep VGA</command>
+      </para>
+
+      <para>
+        Videoenheten er mest sannsynlig en av tre familier: AMD, Intel eller
+        Nvidia. Se kommandoforklaringene for 'gallium-drivere' nedenfor for å
+        se hvilke alternativer som er tilgjengelige for din spesifikke videomaskinvare (eller
+        emulert videomaskinvare). Du bør sannsynligvis legge til swrast alternativet som
+        en backup driver.
+      </para>
+
+      <para>
+        For 'platforms' kan du velge x11 og/eller wayland. Merk at i BLFS kan
+        for øyeblikket bare Gnome og KDE bruke wayland. Hvis du ikke skal
+        bruke et av de skrivebordsmiljøene vil du sannsynligvis bare ha x11.
+      </para>
+
+      <para>
+        For 'vulkan-drivers' kan det være lurt å begrense utvalget til ditt
+        gjeldende maskinvare. Disse driverne brukes av enkelte applikasjoner.
+        
+        For eksempel vil ffmpeg (inkludert ffplay) bruke Vulkan i stedet for
+        OpenGL for å gjengi video på GPU. Hvis du ikke ønsker å gjøre dette
+        vil du kanskje ikke installere dem.
+      </para> 
+    </note>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
@@ -288,15 +352,14 @@ DRI_DRIVERS="i965,nouveau"</userinput></screen>
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup                   \
-      --prefix=$XORG_PREFIX   \
-      --buildtype=release     \
-      -Dplatforms=x11,wayland \
-      -Dgallium-drivers=auto  \
-      -Dvulkan-drivers=auto   \
-      -Dvalgrind=disabled     \
-      -Dlibunwind=disabled    \
-      ..                      &amp;&amp;
+meson setup ..                 \
+      --prefix=$XORG_PREFIX    \
+      --buildtype=release      \
+      -D platforms=x11,wayland \
+      -D gallium-drivers=auto  \
+      -D vulkan-drivers=auto   \
+      -D valgrind=disabled     \
+      -D libunwind=disabled    &amp;&amp;
 
 ninja</userinput></screen>
 
@@ -340,41 +403,84 @@ ninja</userinput></screen>
     <para>
       <anchor id='mesa-gallium-drivers' xreflabel='Mesa Gallium3D Drivers'/>
       <parameter>-Dgallium-drivers=auto</parameter>: Denne parameteren
-      kontrollerer hvilke Gallium3D drivere som skal bygges.
-      <literal>auto</literal> velger alle tilgjengelige Gallium3D drivere
-      for x86: <literal>r300</literal> (for ATI Radeon 9000 eller Radeon X
-      serier), <literal>r600</literal> (for AMD/ATI Radeon HD 2000-6000
-      serier), <literal>radeonsi</literal> (for AMD Radeon HD 7000 eller nyere
-      AMD GPU modeller), <literal>nouveau</literal>
-      (for støttede NVIDIA GPUer er de oppført som alle
-      <quote>3D features</quote> enten <quote>DONE</quote> eller
-      <quote>N/A</quote> in <ulink
-      url='https://nouveau.freedesktop.org/FeatureMatrix.html'>the Nouveau
-      status page</ulink>), <literal>virgl</literal> (for QEMU virtual GPU
-      med <application>virglrender</application> støtte; merk at BLFS
-      <xref linkend='qemu'/> ikke er bygget med
-      <application>virglrender</application>), <literal>svga</literal>
-      (for VMWare virtual GPU), <literal>swrast</literal> (bruker CPU for 3D
-      rasterisering; Vær oppmerksom på at det er mye tregere enn å bruke en moderne
-      3D-kompatibel GPU, så den bør bare brukes hvis GPUen ikke støttes
-      av andre drivere), <literal>iris</literal> (for Intel GPUs sendt
-      med Broadwell eller nyere CPUer), <literal>crocus</literal> (for Intel
-      GMA 3000, X3000 serier, 4000 serier, or X4000 serier GPUer levert med
-      brikkesett, eller Intel HD GPUer levert med pre-Broadwell CPUs),
-      <literal>i915</literal> (for Intel GMA 900, 950, 3100, eller 3150 GPUer
-      leveres med brikkesett eller Atom D/N 4xx/5xx CPUer). Du kan erstatte
-      <literal>auto</literal> med en kommadelt liste kun for å bygge
-      en undergruppe av disse driverne hvis du nøyaktig vet hvilke drivere du
-      trenger for eksempel
-      <option>-Dgallium-drivers=radeonsi,iris,swrast</option>.
+      kontrollerer hvilke Gallium3D drivere som skal bygges:
+
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>
+            <literal>auto</literal> velger alle tilgjengelige Gallium3D drivere
+            for x86. Med en kommadelt liste, kun en delmengde av disse
+            drivere vil bli bygget. Hvis du nøyaktig vet hvilke drivere du
+            trenger, kan du bygge. for eksempel.
+            <option>-Dgallium-drivers=radeonsi,iris,swrast</option>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>r300</literal> (for ATI Radeon 9000 eller Radeon X seriene) 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>r600</literal> (for AMD/ATI Radeon HD 2000-6000 seriene)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>radeonsi</literal> (for AMD Radeon HD 7000 eller nyere AMD GPU modeller) 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>nouveau</literal> (for Støttede NVIDIA GPUer, de er 
+             listet alle som <quote>3D features</quote> enten <quote>DONE</quote> eller
+             <quote>N/A</quote> i 
+             <ulink url='https://nouveau.freedesktop.org/FeatureMatrix.html'>the Nouveau
+             status page</ulink>)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>virgl</literal> (for en QEMU virtuell GPU
+             med <application>virglrender</application> støtte; merk at BLFS
+             <xref linkend='qemu'/> ikke er bygget med
+             <application>virglrender</application>) 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>svga</literal> (for en VMWare virtuell GPU)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>swrast</literal> (bruker CPU for 3D
+             rasterisering. Merk at det er mye tregere enn å bruke en moderne
+             3D-kompatibel GPU, så den bør bare brukes hvis GPUen ikke støttes
+             av andre drivere), 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>iris</literal> (for Intel GPUer levert med Broadwell
+             eller nyere CPUer)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>crocus</literal> (for Intel GMA 3000, X3000 seriene, 
+             4000 seriene, eller X4000 seriene GPUer levert med brikkesett,
+             eller Intel HD GPUer levert med pre-Broadwell CPUer)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+             <literal>i915</literal> (for Intel GMA 900, 950, 3100, eller 3150 GPUer
+             sendt med brikkesett eller Atom D/N 4xx/5xx CPUer)
+          </para>
+        </listitem>
+      </itemizedlist>
     </para>
-<!--
-    <para>
-      <parameter>-Dosmesa=true</parameter>: Denne bryteren aktiverer bygging av
-      <filename class="libraryfile">libOSMesa</filename> bibliotek og
-      gir Gallium3D støtte i den. Det krever swrast gallium driveren.
-    </para>
--->
 
     <para>
       <parameter>-Dplatforms=...</parameter>: Denne parameteren
@@ -386,8 +492,8 @@ ninja</userinput></screen>
       <parameter>-Dvulkan-drivers=auto</parameter>: Denne bryteren muliggjør støtte
       for Vulkan grafikk API. Den bygger automatisk alle grafikkdrivere
       som er tilgjengelig for Vulkan. Hvis du ønsker å bygge spesifikke drivere,
-      gyldige alternativer inkluderer 'amd', 'intel', 'intel_hasvk' og 'swrast'. Hvis du
-      ikke ønsker Vulkan støtte, endre 'auto' til "".
+      gyldige alternativer inkluderer 'amd', 'intel', 'intel_hasvk' (Haswell CPUs), 
+      og 'swrast'. Hvis du ikke ønsker Vulkan støtte, endre 'auto' til "".
     </para>
 
     <para>
