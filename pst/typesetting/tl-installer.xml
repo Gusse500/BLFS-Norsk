@@ -10,9 +10,27 @@
   <!ENTITY tl-installer-md5sum          "cec36f23d7d4e1a4a2a90f77bad8e667">
   <!ENTITY tl-installer-date             "20230313"> <!-- in the directory name -->
   <!ENTITY tl-installer-size            "5.5 MB">
-
-  <!ENTITY tl-installer-buildsize        "310 MB for grunnleggende TeX og latex, 7,9 GB hvis alt er inkludert">
+  <!ENTITY tl-installer-buildsize        "85 MB for vanlig TeX, typisk 2 til 4 MB for latex og senere motorer, 8,6 GB hvis alt er inkludert">
   <!ENTITY tl-installer-time            "varierer, avhengig av nettverkshastighet og trafikk">
+<!-- The following commit will change future installs so that the scripts in
++texmf-dist linked from bin/ are copied instead of symlinks.
++
++commit 0c9707142465610f0e22745a22bf8c71850cef49
++Author: Karl Berry <karl@freefriends.org>
++Date:   Tue Mar 19 22:03:22 2024 +0000
++
++    (%opts): create the generically-named output files as copies by default.
++    (@cmdline_options): allow -no-copy.
++    (help): document.
++    
++    
++    git-svn-id: svn://tug.org/texlive/trunk@70707 c570f23f-e606-0410-a88d-b1316a301751
++
++That was done to simplify the process (windows has always used copy) and will likely
++make the installed sizes somewhat bigger.
++
++There is an option \-\-no-copy for updmap.pl, unclear if that can be used here,
++and it might have been removed by next year. -->
 ]>
 
 <sect1 id="tl-installer" xreflabel="install-tl-unx">
@@ -30,7 +48,7 @@
 
     <para>
       <application>TeX Live</application> pakken er en omfattende
-      TeX dokumentproduksjonssystem. Det inkluderer TeX, LaTeX2e, ConTeXt,
+      TeX dokumentproduksjonssystem. Det inkluderer TeX, LaTeX2e, LuaLaTeX,
       Metafont, MetaPost, BibTeX og mange andre programmer; en omfattende
       samling av makroer, fonter og dokumentasjon; og støtte til
       typesetting i mange forskjellige skript fra hele verden.
@@ -49,18 +67,29 @@
     <para>
       Det er to grunner til at du kanskje ønsker å installere binærfilene i BLFS:
       enten trenger du en mindre installasjon (f.eks. som et minimum vanlig TeX uten
-      LaTeX2e, ConTeXt, etc), eller du ønsker å bruke <command>tlmgr</command> til
-      å få oppdateringer mens denne versjonen støttes (vanligvis frem til april
+      LaTeX, ConTeXt, etc), eller du ønsker å bruke <command>tlmgr</command> til
+      å få oppdateringer mens denne versjonen støttes (vanligvis frem til mars
       året etter at den ble utgitt). For sistnevnte foretrekker du kanskje å
       installere i din <filename class="directory">/home</filename> mappe
       som en uprivilegert bruker, og for deretter å gjøre tilsvarende endringer i
       PATH i din <filename>~/.bashrc</filename> eller tilsvarende.
     </para>
 
-    <!-- editors: latex-test-20230819.tar.xz at ~/ken/tex-testfiles and the
+    <note>
+      <para>
+        Hvis du ønsker å bruke ConTeXt med <command>luametatex</command> (mesteparten av
+        den gamle MKII og MKIV koden ble fjernet fra TeX Live 2023 av ConTeXt
+        utvikler), bruk av binær er sannsynligvis det enkleste alternativet. Kilden
+        sendes ikke lenger med TeX Live og er dårlig tilpasset å bygge med
+        systemer unntatt de som kjører Mac og Windows. Se kommentar 1 til 5 av
+        <ulink url="&blfs-ticket-root;17823">#17823</ulink>.
+      </para>
+    </note>
+
+    <!-- editors: latex-test-20240320.tar.xz at ~/ken/tex-testfiles and the
     ABOUT.pdf now deal with specifying which collections are needed when using
     binary texlive. Please do not sign off this package without at least
-    testing asy to ensure that the symlinks are as needed. Plese also be aware
+    testing asy to ensure that the symlinks are as needed. Please also be aware
     that removing a collection might leave huge backups in tlpkg/backups -->
 
     &lfs121_checked;
@@ -179,6 +208,21 @@
       BLFS anbefaler <filename class='directory'>/opt/texlive</filename>.
     </para>
 
+    <note>
+     <para>
+       Hvis du har valgt å installere binæren som en vanlig bruker, vil mappen
+       for prefikset må kunne skrives av den brukeren.  
+       <systemitem class="username">root</systemitem> bruker kan chown
+       <filename class="directory">/opt/texlive/2024</filename> til den
+       brukeren før brukeren starter installasjonen.<!-- Problem was reported on
+       texlive list, at least ls-R was involved and maybe other files,
+       suggestion was to remove, chown prefix, reinstall. --> Hvis noen senere
+       endring i den mapen gjøres av <systemitem
+       class="username">root</systemitem> bruker <emphasis>det vil endre
+       eieskapet</emphasis> som bryter bruken av vanlige brukere.
+     </para>
+    </note>
+
     <para>
       Som med alle andre pakker, pakk ut installasjonsprogrammet og bytt til
       mappen, <filename class='directory'>
@@ -186,16 +230,6 @@
       Dette mappenavnet endres når installasjonsprogrammet oppdateres, så bytt ut
       &lt;CCYYMMDD&gt; med riktig mappenavn.
     </para>
-
-    <warning>
-      <para>
-        Hvis du har installert noen av luatex programmene (luatex, luahbtex,
-        luajitex, luajithbtex) eller ConTeXt med luametatex bakstykket det
-        var et sikkerhetsproblem løst ved introduksjonen av luatex v1.17.0.
-        Du bør sjekke versjonen med 'luatex --version' og om den er
-        mindre enn 1.17.0 kan du bruke tlmgr for å oppdatere.
-      </para>
-    </warning>
 
     <note>
       <para>
