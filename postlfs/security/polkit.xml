@@ -89,7 +89,7 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="glib2"/>
+      <xref linkend="glib2"/> (GObject Introspection anbefalt)
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -114,18 +114,6 @@
       </para>
     </note>
 
-
-    <!-- Due to the fact that meson will not autodetect g-i and
-         has it set to required unless you pass an option, and the likelihood
-         of users ignoring a command explanation and then sending in mails
-         regarding KDE or GNOME not working after installing polkit, let's move
-         it to recommended. See #15640 for logic
-    <bridgehead renderas="sect4">Valgfri (Påkrevd hvis du bygger GNOME)</bridgehead>
-    <para role="optional">
-      <xref linkend="gobject-introspection"/>
-    </para>
-    -->
-
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gtk-doc"/>,
@@ -145,7 +133,7 @@
       Én polkit autentiseringsagent for bruk av polkit i et grafiske
       miljø:
       <application>polkit-kde-agent</application> i
-      <xref role="runtime" linkend="plasma5-build"/> for KDE,
+      <xref role="runtime" linkend="plasma-build"/> for KDE,
       agenten bygd inn
       <xref role="runtime" linkend="gnome-shell"/> for GNOME3,
       <xref role="runtime" linkend="polkit-gnome"/> for XFCE, og
@@ -198,8 +186,7 @@ meson setup ..                            \
       --buildtype=release                 \
       -Dman=true                          \
       -Dsession_tracking=libsystemd-login \
-      -Dtests=true                        &amp;&amp;
-ninja</userinput></screen>
+      -Dtests=true</userinput></screen>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
@@ -209,8 +196,26 @@ meson setup ..                      \
       --buildtype=release           \
       -Dman=true                    \
       -Dsession_tracking=libelogind \
-      -Dtests=true                  &amp;&amp;
-ninja</userinput></screen>
+      -Dtests=true</userinput></screen>
+
+    <!-- We have to do this after meson setup because mocklibc is extracted
+         from a tarball by the meson setup command.  Also note that
+         test/mocklibc is useless and patching it won't work.  -->
+    <para>
+      Tilpass nå den sendte mocklibc kopien for å tillate å bygge testpakken
+      med GCC 14 eller nyere:
+    </para>
+
+<screen><userinput>grep 'print_indent'     ../subprojects/mocklibc-1.0/src/netgroup.c \
+     | sed 's/ {/;/' >> ../subprojects/mocklibc-1.0/src/netgroup.h &amp;&amp;
+sed -i '1i#include &lt;stdio.h&gt;'                                      \
+    ../subprojects/mocklibc-1.0/src/netgroup.h</userinput></screen>
+
+    <para>
+      Bygg pakken:
+    </para>
+
+<screen><userinput>ninja</userinput></screen>
 
     <para>
       For å teste resultatene, sørg først for at systemets
@@ -281,7 +286,7 @@ ninja</userinput></screen>
     <para>
       <option>-Dintrospection=false</option>: Bruk dette alternativet hvis du er sikker
       på at du ikke trenger gobject-introspection filer for polkit, eller ikke har
-      gobject-introspection installert.
+      installert <xref linkend='glib2'/> med GObject Introspection.
     </para>
 
     <para>
