@@ -38,6 +38,16 @@
       Rammeverk 5 (KF5)</application> og <application>LXQt</application>.
     </para>
 
+    <important>
+      <para>
+         Installasjonen av de fullstendige Qt5 pakkene er nå avviklet for BLFS
+         på grunn av utgivelsen av <xref linkend="qt6"/>.  Denne siden vil sannsynligvis
+         fjernes snart avhengig av utgivelsen av nye versjoner av pakker
+         som fortsatt bruker Qt5. For disse pakkene bør brukerne bruke 
+         <xref linkend="qt5-alternate"/>.
+      </para>
+    </important>
+
     &lfs121_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
@@ -164,7 +174,7 @@
       <ulink url="https://libproxy.github.io/libproxy/">libproxy</ulink>,
       <ulink url="https://openal.org/">OpenAL</ulink>,
       <ulink url="https://freebsoft.org/speechd/">speech-dispatcher</ulink>, og
-      <ulink url="http:///www.tslib.org/">tslib</ulink>
+      <ulink url="http://www.tslib.org/">tslib</ulink>
     </para>
 
     <!-- Many of the dependencies in the qmake/configure output do not apply
@@ -300,6 +310,14 @@ ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
     -i qtlocation/src/3rdparty/mapbox-gl-native/include/mbgl/util/geometry.hpp \
        qtlocation/src/3rdparty/mapbox-gl-native/include/mbgl/util/string.hpp   \
        qtlocation/src/3rdparty/mapbox-gl-native/src/mbgl/gl/stencil_mode.hpp</userinput></screen>
+
+    <para>
+      Legg til en løsning for å bygge med ICU-75:
+    </para>
+
+<screen><userinput>sed -e "/c++1z/s;^CONFIG;#CONFIG;" \
+    -e "s;c++14;c++17;"            \
+    -i qtlocation/src/3rdparty/mapbox-gl-native/mapbox-gl-native.pro</userinput></screen>
 
     <para>
       Rett opp en sikkerhetssårbarhet i qtbase:

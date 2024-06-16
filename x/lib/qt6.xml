@@ -4,15 +4,15 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY qt6-major "6.6">
+  <!ENTITY qt6-major "6.7">
   <!ENTITY qt6-url   "https://download.qt.io/archive/qt/&qt6-major;/&qt6-version;/single">
 
   <!ENTITY qt6-download-http "&qt6-url;/qt-everywhere-src-&qt6-version;.tar.xz">
   <!ENTITY qt6-download-ftp  " ">
-  <!ENTITY qt6-md5sum        "b92112e12298f4b27050ef7060658191">
-  <!ENTITY qt6-size          "764 MB">
-  <!ENTITY qt6-buildsize     "31 GB (354 MB installert)">
-  <!ENTITY qt6-time          "16 SBU (bruker parallellisme=8)">
+  <!ENTITY qt6-md5sum        "dfe73333c2fa22582ad76a679f0ab1e1">
+  <!ENTITY qt6-size          "892 MB">
+  <!ENTITY qt6-buildsize     "38 GB (376 MB installert)">
+  <!ENTITY qt6-time          "11 SBU (bruker parallellisme=8)">
 ]>
 
 <sect1 id="qt6" xreflabel="Qt-&qt6-version;">
@@ -116,6 +116,7 @@
       <xref linkend="icu"/>,
       <xref linkend="jasper"/>,
       <xref linkend="libjpeg"/>,
+      <xref linkend="libinput"/>,
       <xref linkend="libmng"/>,
       <xref linkend="libpng"/>,
       <xref linkend="libtiff"/>,
@@ -141,7 +142,6 @@
       QtConnectivity moduler),
       <xref linkend="gtk3"/>,
       <xref linkend="ibus"/>,
-      <xref linkend="libinput"/>,
       <xref linkend="mariadb"/>
         eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
       <xref linkend="mitkrb"/>,
@@ -157,7 +157,7 @@
       <ulink url="https://libproxy.github.io/libproxy/">libproxy</ulink>,
       <ulink url="https://openal.org/">OpenAL</ulink>,
       <ulink url="https://freebsoft.org/speechd/">speech-dispatcher</ulink>, og
-      <ulink url="http:///www.tslib.org/">tslib</ulink>
+      <ulink url="http://www.tslib.org/">tslib</ulink>
       <!--<ulink url="https://vulkan.lunarg.com/sdk/home/">Vulkan</ulink>-->
     </para>
 
@@ -206,15 +206,14 @@ ln -sfnv qt-&qt6-version; /opt/qt6</userinput></screen>
       </para>
     </tip>
 
-<!-- Not sure about this for Qt6
     <note>
       <para>
-        Hvis <xref linkend="qca"/> er installert og du er
-        deretter installere eller oppdatere denne pakken på nytt
-        <application>qca</application> må installeres på nytt.
+        Hvis <xref linkend="qca"/> er installert og du
+        deretter installere eller oppdatere denne pakken på nytt må
+        <application>qca</application> installeres på nytt.
       </para>
     </note>
--->
+
   </sect2>
 
   <sect2 role="installation">
@@ -224,7 +223,7 @@ ln -sfnv qt-&qt6-version; /opt/qt6</userinput></screen>
       <para>
         Hvis <application>Qt6</application> blir reinstallert i
         samme mappe som en eksisterende økt, kjør kommandoene utført av
-        <systemitem class="username">root</systemitem>, som
+        &root;, som
         <command>make install</command>, fra en konsoll eller ikke-Qt6 basert
         vindusbehandler. Den overskriver <application>Qt6</application>
         biblioteker som ikke skal være i bruk under installasjonsprosessen.
@@ -273,6 +272,14 @@ ln -sfnv qt-&qt6-version; /opt/qt6</userinput></screen>
     </note>
 
     <para>
+        Deaktiver en motstridende deklarasjon på i686-systemer:
+    </para>
+<screen><userinput>if [ "$(uname -m)" == "i686" ]; then
+    sed -e "/^#elif defined(Q_CC_GNU_ONLY)/s/.*/&amp; \&amp;\&amp; 0/" \
+        -i qtbase/src/corelib/global/qtypes.h
+fi</userinput></screen>
+
+    <para>
       Installer <application>Qt6</application> ved å kjøre følgende kommandoer:
     </para>
 
@@ -313,11 +320,6 @@ ninja</userinput></screen>
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
-
-    <!-- Not sure this is correct for Qt6
-
-         EDITORS NOTE: This package uses INSTALL_ROOT= instead of DESTDIR= for
-         installing in a temporary directory. -->
 
     <para>
       Fjern referanser til byggemappen fra installerte bibliotekers
