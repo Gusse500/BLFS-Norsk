@@ -208,6 +208,7 @@
       <xref linkend="libxml2"/>,
       <xref linkend="psutil"/> (for tester),
       <xref linkend="pygments"/>,
+      <xref linkend="PyYAML"/> (for tester),
       <xref linkend="rsync"/> (for tester),
       <xref linkend="recommonmark"/> (for å bygge dokumentasjonen),
       <phrase revision="systemd"><xref linkend="systemd"/>
@@ -228,7 +229,7 @@
       To ekstra tarballer
       <filename>llvm-cmake-&llvm-maj-version;.src.tar.xz</filename> og
       <filename>llvm-third-party-&llvm-maj-version;.src.tar.xz</filename> er
-      nødvendig for LLVM byggesystemet. Oppstrøms forventer at de trekkes ut
+      nødvendig for LLVM byggesystemet. Oppstrøms forventer at de pakkes ut
       på samme nivå som
       <filename>llvm-&llvm-version;.src.tar.xz</filename> tarballen,
       og de utpakkede mappene omdøpt til
@@ -272,6 +273,14 @@ mv projects/compiler-rt-&llvm-version;.src projects/compiler-rt</userinput></scr
 <screen><userinput>grep -rl '#!.*python' | xargs sed -i '1s/python$/python3/'</userinput></screen>
 
     <para>
+      Sørg for å installere <command>FileCheck</command> programmet som er
+      nødvendig av testpakken til noen pakker (for eksempel
+      <xref linkend='rust'/>):
+    </para>
+
+    <screen><userinput>sed 's/utility/tool/' -i utils/FileCheck/CMakeLists.txt</userinput></screen>
+
+    <para>
       Installer <application>LLVM</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -281,6 +290,7 @@ cd       build &amp;&amp;
 
 CC=gcc CXX=g++                              \
 cmake -DCMAKE_INSTALL_PREFIX=/usr           \
+      -DCMAKE_SKIP_INSTALL_RPATH=ON         \
       -DLLVM_ENABLE_FFI=ON                  \
       -DCMAKE_BUILD_TYPE=Release            \
       -DLLVM_BUILD_LLVM_DYLIB=ON            \
@@ -372,15 +382,8 @@ systemd-run --user --pty -d -G -p LimitCORE=0 ninja check-all</userinput></scree
       En test navngitt <filename>Linux/clone_setns.cpp</filename> vil mislykkes
       hvis <option>CONFIG_USER_NS</option> ikke er aktivert i
       kjernekonfigurasjonen.
-      <!-- https://github.com/llvm/llvm-project/issues/64388 -->
-      Testene navngitt <filename>AtoiAndFriendsOOBTest</filename>,
-      <filename>StrtolOOBTest</filename>,
-      <filename>StrtollOOBTest</filename>,
-      <filename>interception_malloc_test.cpp</filename>, og
-      <filename>scanf-allocate.cpp</filename> er kjent for å mislykkes med
-      Glibc-2.38.
       <!-- 18.1.6: 71637 Passed, 27461 Unsupported, 339 Skipped,
-+                   133 Expectedly Failed -->
+                   133 Expectedly Failed -->
 
       <!-- To editors: it seems there is a more thorough test suite named
            "test-suite-x.y.z.src.tar.xz" on the GitHub release download
@@ -396,8 +399,7 @@ systemd-run --user --pty -d -G -p LimitCORE=0 ninja check-all</userinput></scree
       Nå, som &root; bruker:
     </para>
 
-<screen role="root"><userinput>ninja install &amp;&amp;
-cp bin/FileCheck /usr/bin</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 <!-- as of version 13.0.0, the install process seems to install the html
      documentation and the manual pages. The llvm html documentation
      is installed into /usr/share/doc/LLVM/llvm, while the clang html
@@ -429,6 +431,9 @@ rmdir -v --ignore-fail-on-non-empty /usr/share/doc/LLVM</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/cmake-skip-install-rpath.xml"/>
 
     <para>
       <parameter>-DLLVM_ENABLE_FFI=ON</parameter>: Denne bryteren tillater
@@ -465,7 +470,7 @@ rmdir -v --ignore-fail-on-non-empty /usr/share/doc/LLVM</userinput></screen>
       <parameter>-DLLVM_BUILD_LLVM_DYLIB=ON</parameter>, denne bryteren aktiverer
       kobling av verktøyene mot det delte biblioteket i stedet for de statiske.
       Det reduserer størrelsen litt og sikrer også at llvm-config
-      vil bruke libLLVM-&llvm-maj-version;.so. riktig.
+      vil bruke libLLVM-&llvm-maj-version;.so riktig.
     </para>
 
     <para>
@@ -553,11 +558,12 @@ done</userinput></screen>
       <seglistitem>
         <seg>
           amdgpu-arch,
-          analyze-build, bugpoint, c-index-test, clang, clang++ (symlinks to
+          analyze-build, bugpoint, c-index-test, clang, clang++ (symbolkobling til
           clang-&llvm-maj-version;), clang-&llvm-maj-version;, clang-check, clang-cl,
-          clang-cpp (to siste symbolkoblinger til clang), clang-extdef-mapping, clang-format,
+          clang-cpp (siste to symbolkobling til clang), clang-extdef-mapping, clang-format,
           clang-linker-wrapper,
           clang-offload-bundler, clang-offload-packager,
+          clang-refactor, clang-rename, clang-repl, clang-scan-deps,
           clang-tblgen,
           diagtool, dsymutil, FileCheck, git-clang-format, hmaptool, intercept-build, llc, lli,
           llvm-addr2line (symbolkobling til llvm-symbolizer),
