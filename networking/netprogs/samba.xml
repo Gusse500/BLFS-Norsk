@@ -181,7 +181,8 @@ PATH=$PWD/pyvenv/bin:$PATH                 \
     --without-ad-dc                        \
     --without-systemd                      \
     --with-system-mitkrb5                  \
-    --enable-selftest                      &amp;&amp;
+    --enable-selftest                      \
+    --disable-rpath-install                &amp;&amp;
 make</userinput></screen>
 
 <screen revision="systemd"><userinput>PYTHON=$PWD/pyvenv/bin/python3             \
@@ -194,7 +195,8 @@ make</userinput></screen>
     --enable-fhs                           \
     --without-ad-dc                        \
     --with-system-mitkrb5                  \
-    --enable-selftest                      &amp;&amp;
+    --enable-selftest                      \
+    --disable-rpath-install                &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -303,6 +305,18 @@ install -v -m755    examples/LDAP/{get*,ol*} \
       bygging med systemversjonen av Kerberos. Dette
       reduserer sikkerhetssårbarheter og reduserer byggetiden.
       Fjern denne hvis du ikke har <xref linkend="mitkrb"/> installert.
+    </para>
+
+    <!-- Note that /usr/lib/samba is still in rpath and it's really
+         needed. -->
+    <para>
+      <parameter>--disable-rpath-install</parameter>: Fjerner
+      bibliotekinstallasjonsbanen fra innebygd delt biblioteksøk
+      stier i de installerte binære kjørbare filene og delte bibliotekene.
+      Når denne pakken er installert på standardplasseringen, blir biblioteket
+      installasjonsveien er <filename class='directory'>/usr/lib</filename>.
+      Det søkes alltid etter den dynamiske linkeren, så det er ikke nødvendig
+      bygge den inn i installerte filer.
     </para>
 
     <para>
