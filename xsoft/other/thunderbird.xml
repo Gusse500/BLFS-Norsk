@@ -6,9 +6,9 @@
 
   <!ENTITY thunderbird-download-http "&mozilla-http;/thunderbird/releases/&thunderbird-version;/source/thunderbird-&thunderbird-version;.source.tar.xz">
   <!ENTITY thunderbird-download-ftp  " ">
-  <!ENTITY thunderbird-md5sum        "00100df1feb11016fed632db29fbcfb8">
-  <!ENTITY thunderbird-size          "516 MB">
-  <!ENTITY thunderbird-buildsize     "6.4 GB (229 MB installert)">
+  <!ENTITY thunderbird-md5sum        "70e73e3c5381ad8d8242eb66e80f223b">
+  <!ENTITY thunderbird-size          "509 MB">
+  <!ENTITY thunderbird-buildsize     "6.5 GB (229 MB installert)">
   <!ENTITY thunderbird-time          "12 SBU (på en 8 kjernes maskin)">
   <!-- Removed the -j1 time because python and rust do not obey it, although
        the C/C++ code appears to obey it.
@@ -84,7 +84,7 @@
       <xref linkend="nodejs"/>,
       <xref linkend="pulseaudio"/> (eller <xref linkend="alsa-lib"/> hvis du redigerer
       mozconfig; selv om det nå er avviklet av mozilla),
-      <xref linkend="python311"/> (gjenoppbygd med sqlite modulen),
+      <xref linkend="python"/> (gjenoppbygd med sqlite modulen),
       <xref linkend="startup-notification"/>, og
       <xref linkend="unzip"/>
       <!--<xref linkend="yasm"/>-->
@@ -222,8 +222,10 @@ ac_add_options --disable-debug
 ac_add_options --disable-debug-symbols
 ac_add_options --disable-tests
 
-# This enables SIMD optimization in the shipped encoding_rs crate.
-ac_add_options --enable-rust-simd
+# The SIMD code relies on the unmaintained packed_simd crate which
+# fails to build with Rustc >= 1.78.0.  We may re-enable it once
+# Mozilla port the code to use std::simd and std::simd is stabilized.
+ac_add_options --disable-rust-simd
 
 ac_add_options --enable-strip
 ac_add_options --enable-install-strip
@@ -244,6 +246,49 @@ ac_add_options --with-system-zlib
 ac_add_options --without-wasm-sandboxed-libraries</literal>
 EOF</userinput></screen>
 
+    <!-- https://github.com/rust-lang/rust-bindgen/pull/2689 -->
+    <para>
+      Tilpass den leverte <application>rust-bindgen</application> kopien for
+      LLVM-18 og senere, og fortell <command>cargo</command> vi har modifisert
+      koden til <application>rust-bindgen</application> så sjekksum
+      verifisering av denne crate skal hoppes over:
+    </para>
+
+    <screen><userinput>sed -e "/match cursor.kind()/a                                    \
+        CXCursor_LinkageSpec => return Err(ParseError::Recurse)," \
+    -i third_party/rust/bindgen/ir/item.rs                        &amp;&amp;
+
+cat &gt;&gt; Cargo.toml &lt;&lt; EOF &amp;&amp;
+<literal>[patch.crates-io.bindgen_0_64_0]
+package = "bindgen"
+version = "0.64.0"
+path = "third_party/rust/bindgen"</literal>
+EOF
+
+sed -r '/name = "bindgen"/,+5 s/^source|^checksum/#&amp;/' \
+    -i Cargo.lock</userinput></screen>
+
+    <!-- https://hg.mozilla.org/mozilla-central/rev/ba6abbd36b49 -->
+    <para>
+      Tilpass WebRTC koden til å bruke 64-biters tidsstempel for å fikse en byggefeil
+      med Clang-18 og senere:
+    </para>
+
+    <screen><userinput>sed 's/uint32_t timestamp/uint64_t timestamp/'                \
+    -i dom/media/gmp-plugin-openh264/gmp-fake-openh264.cpp    \
+       dom/media/gtest/TestGMPRemoveAndDelete.cpp             \
+       dom/media/webrtc/libwebrtcglue/WebrtcGmpVideoCodec.cpp &amp;&amp;
+
+sed '/mInputImageMap/s/uint32_t/uint64_t/' \
+    -i dom/media/webrtc/libwebrtcglue/WebrtcGmpVideoCodec.h</userinput></screen>
+
+    <para>
+      Fjern flere linjer med Rust kode som bare er nyttig for ARM og ikke
+      kompiler med Rustc-1.78.0 eller nyere:
+    </para>
+
+    <screen><userinput>sed '/cfg_attr/,/)]/d' -i gfx/qcms/src/lib.rs</userinput></screen>
+
     <para>
       Påkall nå Python <command>mach</command> skriptet for å kompilere
       <application>Thunderbird</application>:
@@ -256,9 +301,7 @@ EOF</userinput></screen>
 
 <screen><userinput>export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none &amp;&amp;
 export MOZBUILD_STATE_PATH=./mozbuild               &amp;&amp;
-export PYTHON311=/opt/python3.11/bin/python3.11     &amp;&amp;
-$PYTHON311 ./mach build</userinput></screen>
-
+./mach build</userinput></screen>
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
@@ -268,7 +311,7 @@ $PYTHON311 ./mach build</userinput></screen>
       kommandoer som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none $PYTHON311 ./mach install</userinput></screen>
+<screen role="root"><userinput>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none ./mach install</userinput></screen>
 <!-- devs: For DESTDIR install, prepend DESTDIR=<dest> to the above -->
 
     <para>
@@ -276,8 +319,7 @@ $PYTHON311 ./mach build</userinput></screen>
     </para>
 
 <screen><userinput>unset MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE &amp;&amp;
-unset MOZBUILD_STATE_PATH                     &amp;&amp;
-unset PYTHON311</userinput></screen>
+unset MOZBUILD_STATE_PATH</userinput></screen>
 
   </sect2>
 

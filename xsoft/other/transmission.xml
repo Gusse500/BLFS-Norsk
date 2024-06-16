@@ -6,10 +6,10 @@
 
   <!ENTITY transmission-download-http "https://github.com/transmission/transmission/releases/download/&transmission-version;/transmission-&transmission-version;.tar.xz">
   <!ENTITY transmission-download-ftp  " ">
-  <!ENTITY transmission-md5sum        "d3cda868215246644c429b18a30f7e47">
-  <!ENTITY transmission-size          "9.2 MB">
-  <!ENTITY transmission-buildsize     "229 MB (med GTK og QT5 gui grensesnitt)">
-  <!ENTITY transmission-time          "2.3 SBU (med GTK gui grensesnitt; bruker parallellisme=4)">
+  <!ENTITY transmission-md5sum        "8132b9f012b8e6309911c80ee9fd00f7">
+  <!ENTITY transmission-size          "11 MB">
+  <!ENTITY transmission-buildsize     "226 MB (med begge gui grensesnitt)">
+  <!ENTITY transmission-time          "2.3 SBU (med begge gui grensesnitt; bruker parallellisme=4)">
 ]>
 
 <sect1 id="transmission" xreflabel="Transmission-&transmission-version;">
@@ -68,6 +68,15 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/transmission-&transmission-version;-build_fix-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
 
     <bridgehead renderas="sect3">Transmission Avhengigheter</bridgehead>
 
@@ -85,9 +94,8 @@
 
     <bridgehead renderas="sect4">Anbefalt (for å bygge en GUI)</bridgehead>
     <para role="recommended">
-      <xref linkend="gtkmm3"/> eller
-      &qt5-deps; eller
-      <xref linkend="qt6" role="nodep"/>
+      <xref linkend="gtkmm4"/> eller
+      <xref linkend="qt6"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -109,6 +117,12 @@
 
   <sect2 role="installation">
     <title>Installasjon av Transmission</title>
+
+    <para>
+      Først, fiks en byggefeil på grunn av feil utsagn i CMakeLists.txt:
+    </para>
+
+<screen><userinput>patch -Np1 -i ../transmission-&transmission-version;-build_fix-1.patch</userinput></screen>
 
     <para>
       Installer <application>Transmission</application> ved å kjøre
@@ -153,8 +167,8 @@ make</userinput></screen>
 
     <para>
       <option>-DENABLE_GTK=OFF</option>: Denne bryteren deaktiverer bygging av
-      GTK+-3 cli grensesnittet. Standard er å bygge den
-      hvis <xref linkend="gtkmm3"/> er installert.
+       GTK-4 grensesnittet. Standard er å bygge den hvis
+      <xref linkend="gtkmm4"/> er installert.
     </para>
 
     <para>
