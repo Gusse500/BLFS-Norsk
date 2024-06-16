@@ -169,8 +169,19 @@
     </para>
 
 <screen revision="sysv"><userinput>sed -e /service_DATA/d \
-    -i modules/pam_namespace/Makefile.am &amp;&amp;
-autoreconf</userinput></screen>
+    -i modules/pam_namespace/Makefile.am</userinput></screen>
+
+    <!-- https://github.com/linux-pam/linux-pam/issues/809 -->
+    <para>
+      Den sendte <filename>libtool.m4</filename> filen har en konfigurasjon
+      inkonsistent med LFS <filename class='directory'>/usr</filename>
+      hierarkiet. Dette problemet ville forårsake
+      <filename class='libraryfile'>libpam_misc.so</filename> Knyttet til
+      et rpath flagg som noen ganger kan forårsake problemer eller til og med sikkerhetsproblemer.
+      Regenerer byggesystemet for å fikse inkonsekvensen:
+    </para>
+
+<screen><userinput>autoreconf -fi</userinput></screen>
 
     <para>
       Hvis du lastet ned dokumentasjonen, pakk ut tarballen ved å kjøre
