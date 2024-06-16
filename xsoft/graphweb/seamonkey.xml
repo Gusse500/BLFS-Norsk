@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY seamonkey-download-http "&mozilla-http;/seamonkey/releases/&seamonkey-version;/source/seamonkey-&seamonkey-version;.source.tar.xz">
+  <!ENTITY seamonkey-download-http "https://archive.seamonkey-project.org/releases/&seamonkey-version;/source/seamonkey-&seamonkey-version;.source.tar.xz">
   <!ENTITY seamonkey-download-ftp  " ">
-  <!ENTITY seamonkey-md5sum        "6ac064816caa2c3fe6bc1f130bd9599b">
+  <!ENTITY seamonkey-md5sum        "266a86651348e21934707a7ccb3abef3">
   <!ENTITY seamonkey-size          "241 MB">
-  <!ENTITY seamonkey-buildsize     "4.2 GB (159 MB installert)">
-  <!ENTITY seamonkey-time          "11 SBU (med parallellitet=4)">
+  <!ENTITY seamonkey-buildsize     "3.0 GB (148 MB installert)">
+  <!ENTITY seamonkey-time          "3.5 SBU (med parallellitet=8)">
 ]>
 
 <sect1 id="seamonkey" xreflabel="seamonkey-&seamonkey-version;">
@@ -74,15 +74,16 @@
       </listitem>
     </itemizedlist>
 
-     <!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/seamonkey-&seamonkey-version;-consolidated_fixes-1.patch"/>
+          Anbefalt oppdatering (kreves for å bygge med system ICU-75 eller
+          nyere):
+          <ulink url="&patch-root;/seamonkey-&seamonkey-version;-cxx17-1.patch"/>
         </para>
       </listitem>
+    <!--
       <listitem>
         <para>
           Nødvendig Python modul:
@@ -93,8 +94,8 @@
           å gjenoppbygge wheel pakken for SeaMonkey byggesystemet.
         </para>
       </listitem>
-    </itemizedlist>
     -->
+    </itemizedlist>
 
     <note>
       <para>
@@ -195,7 +196,7 @@ ac_add_options --disable-necko-wifi
 # and uncomment this if you installed alsa-lib instead of PulseAudio
 #ac_add_options --enable-alsa
 
-# Comment out following option if you have gconf installed
+# Comment out the following option if you have gconf installed
 ac_add_options --disable-gconf
 
 # Comment out following options if you have not installed
@@ -207,8 +208,7 @@ ac_add_options --with-system-nss
 ac_add_options --with-system-webp
 
 # Disabling debug symbols makes the build much smaller and a little
-# faster. Comment this if you need to run a debugger. Note: This is
-# required for compilation on i686.
+# faster. Comment this if you need to run a debugger.
 ac_add_options --disable-debug-symbols
 <!-- With Firefox ESR 128 we'd replace the following part with
 "- -enable-elf-hack=relr", or remove it if relr becomes the default.
@@ -237,8 +237,9 @@ ac_add_options --disable-crashreporter
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 
-# The Rust code for SIMD optimization is much more outdated than
-# Firefox and Thunderbird, so it does not build with recent Rustc.
+# The SIMD code relies on the unmaintained packed_simd crate which
+# fails to build with Rustc >= 1.78.0.  We may re-enable it once
+# Mozilla port the code to use std::simd and std::simd is stabilized.
 ac_add_options --disable-rust-simd
 
 ac_add_options --enable-strip
@@ -289,12 +290,16 @@ pip3 wheel - -no-build-isolation - -no-deps - -no-cache-dir       \
 
     <para>
       Først, hvis du bygger med system ICU, tilpasser du linjeskiftkartleggingen
-      for ICU-74 og senere:
+      for ICU-74 og senere, og bruk en oppdatering for å bygge denne pakken med
+      C++17-standard fordi deklarasjoner til ICU-75 eller nyere krever noe
+      C++17 funksjoner:
     </para>
 
 <screen><userinput remap="pre">(for i in {43..47}; do
    sed '/ZWJ/s/$/,CLASS_CHARACTER/' -i intl/lwbrk/LineBreaker.cpp || exit $?
-done)</userinput></screen>
+done) &amp;&amp;
+
+patch -Np1 -i ../seamonkey-&seamonkey-version;-cxx17-1.patch</userinput></screen>
 
     <para>
       Løs et problem med den medfølgende 'distro' pythonmodulen:

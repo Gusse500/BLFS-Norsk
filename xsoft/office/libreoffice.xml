@@ -7,24 +7,24 @@
   <!ENTITY libreoffice-dl "https://download.documentfoundation.org/libreoffice/src/&libreoffice-version;">
 
   <!ENTITY libreoffice-core-download-http "&libreoffice-dl;/libreoffice-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-core-md5sum        "d82a556fa5aec1a5d08e0b11363ee936">
-  <!ENTITY libreoffice-core-size          "268 MB">
+  <!ENTITY libreoffice-core-md5sum        "ab7051c5dcf61d0cefd792b30e8c7a59">
+  <!ENTITY libreoffice-core-size          "267 MB">
 
   <!ENTITY libreoffice-dict-download-http "&libreoffice-dl;/libreoffice-dictionaries-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-dict-md5sum        "67e540e2306a7832042f2bd0dc929e79">
+  <!ENTITY libreoffice-dict-md5sum        "87a5d50d9737213bd6aebe7187b8b621">
   <!ENTITY libreoffice-dict-size          "52 MB">
 
   <!ENTITY libreoffice-help-download-http "&libreoffice-dl;/libreoffice-help-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-help-md5sum        "543bfeb28fba6cbf6dbe36dc6e8451e1">
+  <!ENTITY libreoffice-help-md5sum        "d947e4b0a5a032f9e2625d852fd2f797">
   <!ENTITY libreoffice-help-size          "160 MB">
 
   <!ENTITY libreoffice-translations-download-http "&libreoffice-dl;/libreoffice-translations-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-translations-md5sum        "8a03a779d3defa7226c883767202d418">
-  <!ENTITY libreoffice-translations-size          "211 MB">
+  <!ENTITY libreoffice-translations-md5sum        "2907af169593bda1bd8c25c187ac48f5">
+  <!ENTITY libreoffice-translations-size          "210 MB">
 
   <!-- full size remeasured for 7.0.0.3 -->
 
-  <!ENTITY libreoffice-buildsize  "11 GB inkludert tilleggsfilene hvis de ble lastet ned under byggingen (729 MB installert). Å installere hele settet med språk krever mer enn 25 GB (rundt 3 GB installert)">
+  <!ENTITY libreoffice-buildsize  "8.2 GB inkludert tilleggsfilene hvis de ble lastet ned under byggingen (729 MB installert). Å installere hele settet med språk krever mer enn 25 GB (rundt 3 GB installert)">
 
  <!-- Editors: many updates to poppler will break LO using system poppler until
       somebody is able to provide a patch or sed.  In these cases, please mark
@@ -57,7 +57,7 @@
 
        For 7.5.4.2, I increased the parallelism to 8.  -bdubbs
   -->
-  <!ENTITY libreoffice-time "30 SBU med parallellitet=8 (vil variere på grunn av nedlastingstid)">
+  <!ENTITY libreoffice-time "34 SBU med parallellitet=8 (vil variere på grunn av nedlastingstid)">
 
 ]>
 
@@ -189,12 +189,6 @@
         </para>
       </listitem>
 -->
-      <listitem>
-        <para>
-          Nødvendig oppdatering for å fikse byggingen med libxml2-2.12.x:
-          <ulink url="&patch-root;/libreoffice-&libreoffice-dlversion;-consolidated_fixes-1.patch"/>
-        </para>
-      </listitem>
     </itemizedlist>
     <bridgehead renderas="sect3">LibreOffice Avhengigheter</bridgehead>
 
@@ -248,7 +242,7 @@
       <xref linkend="mesa"/>,
       <xref linkend="nss"/>,
       <xref linkend="openldap"/> (hvis du kobler til en LDAP server),
-      <xref linkend="poppler"/>,
+      <xref linkend="poppler"/> (for øyeblikket ødelagt),
       <xref linkend="postgresql"/>,
       <xref linkend="redland"/>, og
       <xref linkend="unixodbc"/>
@@ -256,6 +250,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <xref linkend="abseil-cpp"/>,
       <xref linkend="avahi"/>,
       <xref linkend="bluez"/>,
       <xref linkend="dconf"/>,
@@ -264,12 +259,11 @@
       <xref linkend="evolution-data-server"/>,
       <xref linkend="gdb"/>,
       <xref linkend="gnutls"/>,
-      <xref linkend="kf5-frameworks"/>,
+      <xref linkend="kf6-frameworks"/>,
       <xref linkend="libpaper"/>,
       <xref linkend="mariadb"/> eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
       <xref linkend="mitkrb"/>,
       <xref linkend="nasm"/>,
-	  &qt5-deps;,
       <xref linkend="qt6"/>,
       <xref linkend="sane"/>,
       <xref linkend="telepathy-glib"/>,
@@ -363,17 +357,18 @@ cd libreoffice-&libreoffice-dlversion;</userinput></screen>
 -->
 
     <para>
-      Først, fiks en byggefeil med libxml2 og en feil med kobling til zlib:
+      Først, fiks en feil med kobling til zlib:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../libreoffice-&libreoffice-dlversion;-consolidated_fixes-1.patch</userinput></screen>
+<screen><userinput remap="pre">sed -i '/icuuc \\/a zlib\\' writerperfect/Library_wpftdraw.mk</userinput></screen>
 
+<!--
     <para>
       Deretter fikser du en byggefeil med ICU-74+:
     </para>
 
 <screen><userinput>sed -e /LBCM/d -i i18npool/source/breakiterator/data/line.txt</userinput></screen>
-
+-->
     <para>
       Hvis du har lastet ned ordbøkene, hjelp og oversettelser tarballene,
       opprett symbolkoblinger til dem fra kildemappen slik at de ikke blir
@@ -475,7 +470,6 @@ sed -e "/distro-install-file-lists/d" -i Makefile.in &amp;&amp;
              --with-system-gpgmepp       \
              --with-system-graphite      \
              --with-system-harfbuzz      \
-             --with-system-icu           \
              --with-system-jpeg          \
              --with-system-lcms2         \
              --with-system-libatomic_ops \
@@ -491,6 +485,21 @@ sed -e "/distro-install-file-lists/d" -i Makefile.in &amp;&amp;
              --with-system-libtiff       \
              --with-system-libwebp       \
              --with-system-zlib</userinput></screen>
+
+<!-- this one might be to be removed with one of the next
+     releases of LO (after 24.2.1.2) as it seems the issue
+     is known by upstream:
+     https://www.mail-archive.com/libreoffice@lists.freedesktop.org/msg336884.html
+
+     Removed from above: - -with-system-icu due to problem with version icu-75.1
+-->
+    <para>
+      Rett opp en feilkonfigurasjon ved installasjon på 32-bits maskiner:
+    </para>
+<screen><userinput>if [ "$(uname -m)" == "i686" ]; then
+    sed -e "s/LFS_CFLAGS=$/&amp;-D_FILE_OFFSET_BITS=64/" -i config_host.mk
+fi</userinput></screen>
+
 <!--
     <para>
       Instruksjonene nedenfor vil bare bygge pakken uten å kjøre
@@ -666,21 +675,17 @@ fi</userinput></screen>
     </para>
 
     <para>
+      <parameter>--with-system-icu</parameter>: Bruk den installerte versjonen av
+      icu. Denne versjonen av libreoffice (24.2.3.2) er brutt med icu-75.1.
+    </para>
+
+    <para>
       <parameter>--with-system-*</parameter>: Disse bryterne forhindrer
       <application>LibreOffice</application> fra å prøve å kompilere sine egne
       versjoner av disse avhengighetene. Hvis du ikke har installert noen av
       avhengighetene, fjern de tilsvarende bryterne.
     </para>
 
-<!--
-    <para>
-      <command>CPPFLAGS='-DU_USING_ICU_NAMESPACE=1' make ...</command>: <xref
-      linkend="icu"/> har fjernet et implisitt navneområde <quote>using</quote>
-      fra deklarasjonsfilene. Innstilling <envar>U_USING_ICU_NAMESPACE</envar> til
-      1 gjør det mulig å gjenopprette den tidligere oppførselen, som er nødvendig for å bygge
-      <application>libreoffice</application>.
-    </para>
--->
     <para>
       <command>make distro-pack-install</command>: Dette gjør en normal
       installasjon, men hvis du legger til en DESTDIR miljøvariabel vil den også
@@ -730,11 +735,15 @@ fi</userinput></screen>
       i stedet for skia.
     </para>
 
+<!-- This needs KF5, and has not been ported to KF6. However, enable-kf6 brings
+     in a new VCL plugin so that it works properly in Plasma 6, so it's not
+     needed.
     <para>
-      <option>--enable-gtk3-kde5</option>: Denne bryteren tillater Visual Class
+      <option>- -enable-gtk3-kde5</option>: Denne bryteren tillater Visual Class
       Bibliotek, som er ansvarlig for skjermelementer, skal bygges med KF5 
       fildialoger hvis GTK+-3, Qt5 og Plasma alle er tilgjengelige.
     </para>
+-->
 
     <para>
       <option>--enable-lto</option>: Denne bryteren vil aktivere Link Time
@@ -764,30 +773,31 @@ fi</userinput></screen>
       systemversjoner.
     </para>
 
+<!-- We no longer carry KDE 5, so let's only cover KDE 6.
     <para>
-      <!-- Brings in - -enable-qt5 as well. -->
-      <option>--enable-kf5</option>: Bygger med KDE/Plasma integrasjon. Hvis
-      &qt5-deps; og/eller <xref linkend="kf5-frameworks"/> ikke er
+      <option>- -enable-kf5</option>: Builds with KDE/Plasma integration. If
+      &qt5-deps; and/or <xref linkend="kf6-frameworks"/> ikke er
       installert i <filename class="directory">/usr</filename>, inkludere
       og bibliotek mapper må spesifiseres i <envar>QT5INC</envar>,
       <envar>QT5LIB</envar>, <envar>KF5INC</envar>, og <envar>KF5LIB</envar>,
       henholdsvis.
     </para>
-
+-->
     <para>
       <option>--enable-evolution2</option>: Aktiverer støtte for Evolution
       adressebøker gjennom Evolution Data Server. Merk at Evolution Data
       Serveren må være installert for at denne funksjonen skal fungere.
     </para>
 
+<!-- Let's not encourage the use of Qt5 since LXQt and Plasma now use Qt6.
     <para>
-      <option>--enable-qt5</option>: Denne bryteren muliggjør støtte for integrasjon
+      <option>- -enable-qt5</option>: Denne bryteren muliggjør støtte for integrasjon
       med Qt5 og Qt5 temamotoren. Hvis &qt5-deps; ikke er installert i
       <filename class="directory">/usr</filename>, include og biblioteker
       mapper må spesifiseres i <envar>QT5INC</envar> og
       <envar>QT5LIB</envar> miljøvariabler.
     </para>
-
+-->
     <para>
       <option>--enable-qt6</option>: Denne bryteren aktiverer støtte for integrasjon
       med Qt6 og Qt6 temamotoren. Hvis <xref linkend="qt6"/> ikke er
@@ -796,32 +806,21 @@ fi</userinput></screen>
       <envar>QT6LIB</envar> miljøvariabler.
     </para>
 
-    <!-- For when we add KDE 6 to the book next cycle.
     <para>
-      <!- - Brings in - -enable-qt5 as well. - ->
-      <option>- -enable-kf6</option>: Builds with KDE/Plasma integration. If
-      <xref linkend="qt6"/> and/or <xref linkend="kf6-frameworks"/> are not
-      installed in <filename class="directory">/usr</filename>, the include
-      and library directories must be specified in <envar>QT6INC</envar>,
-      <envar>QT6LIB</envar>, <envar>KF6INC</envar>, and <envar>KF6LIB</envar>,
-      respectively.
+      <option>--enable-kf6</option>: Bygger med KDE/Plasma integrasjon. Hvis
+      <xref linkend="qt6"/> og/eller <xref linkend="kf6-frameworks"/> ikke er
+      installert i <filename class="directory">/usr</filename>, include
+      og bibliotekmapper må spesifiseres i <envar>QT6INC</envar>,
+      <envar>QT6LIB</envar>, <envar>KF6INC</envar>, og <envar>KF6LIB</envar>,
+      hhv. Dette inkluderer en stil programtilleg og KIO integrasjon.
     </para>
-    -->
 
-    <!--
     <para>
-      Currently broken by ICU68 (TRUE and FALSE need to be true and false) on
-      libe-book and perhaps elsewhere - commented explanation retained.  ken
-      <option>- -with-system-icu</option>: This command would use the system
-      version of <xref linkend="icu"/> which is normally considered to be a good
-      thing to do. However, one of the very minor packages pulled in by
-      <application>LibreOffice</application>, libfreehand-0.1.2, does not compile
-      with ICU-65.1 because of a missing semi-colon at the end of one line in one
-      of its files. Do not use this option unless you have separately installed a
-      patched or newer version of
-      <ulink url="https://wiki.documentfoundation.org/DLP/Libraries/libfreehand">libfreehand</ulink>.
+      <option>--with-system-abseil</option>: Denne bryteren aktiverer bruk av systemversjonen
+      av Abseil C++ bibliotekene i stedet for den medfølgende kopien. Legg til denne
+      bryteren hvis <xref linkend="abseil-cpp"/> er installert og du ønsker å bruke
+      den i stedet for den medfølgende kopien.
     </para>
-    -->
 
   </sect2>
 
