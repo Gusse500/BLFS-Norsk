@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY spirv-llvm-translator-download-http "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v&spirv-llvm-translator-version;/SPIRV-LLVM-Translator-&spirv-llvm-translator-version;.tar.gz">
+  <!ENTITY spirv-llvm-translator-md5sum        "bdf8c56560b187e198f9e4139cdb79a2">
+  <!ENTITY spirv-llvm-translator-size          "1.6 MB">
+  <!ENTITY spirv-llvm-translator-buildsize     "42 MB">
+  <!ENTITY spirv-llvm-translator-time          "0.6 SBU (med parallellisme=4)">
+]>
+
+<sect1 id="spirv-llvm-translator" xreflabel="SPIRV-LLVM-Translator-&spirv-llvm-translator-version;">
+  <?dbhtml filename="spirv-llvm-translator.html"?>
+
+  <title>SPIRV-LLVM-Translator-&spirv-llvm-translator-version;</title>
+
+  <indexterm zone="spirv-llvm-translator">
+    <primary sortas="a-spirv-llvm-translator">SPIRV-LLVM-Translator</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til SPIRV-LLVM-Translator</title>
+
+    <para>
+      <application>SPIRV-LLVM-Translator</application> pakken inneholder et
+      bibliotek og verktøy for konvertering mellom LLVM IR og SPIR-V kode.
+      Denne pakken støtter for øyeblikket bare OpenCL/Compute versjonen av SPIR-V.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&spirv-llvm-translator-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &spirv-llvm-translator-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &spirv-llvm-translator-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &spirv-llvm-translator-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &spirv-llvm-translator-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">SPIRV-LLVM-Translator Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="libxml2"/>,
+      <xref linkend="llvm"/>, og
+      <xref linkend="spirv-tools"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av SPIRV-LLVM-Translator</title>
+
+    <para>
+      Installer <application>SPIRV-LLVM-Translator</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr               \
+      -D CMAKE_BUILD_TYPE=Release                \
+      -D BUILD_SHARED_LIBS=ON                    \
+      -D CMAKE_SKIP_INSTALL_RPATH=ON             \
+      -D LLVM_EXTERNAL_SPIRV_HEADERS_SOURCE=/usr \
+      -G Ninja ..                                &amp;&amp;
+ninja</userinput></screen>
+
+    <!-- This package does come with a test suite, but needs an internal
+    utility from LLVM's source tree. Let's not mention it for now. -->
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-D BUILD_SHARED_LIBS=ON</parameter>: Denne parameteren tvinger
+      bygging av delte versjoner av bibliotekene.
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/cmake-skip-install-rpath.xml"/>
+
+    <para>
+      <parameter>-D LLVM_EXTERNAL_SPIRV_HEADERS_SOURCE=/usr</parameter>:
+      Denne parameteren lar byggesystemet bruke versjonen av
+      SPIRV-deklarasjoner som burde vært installert som en avhengighet av
+      SPIRV-Tools, i stedet for å laste ned en unødvendig kopi av
+      deklarasjonene.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          llvm-spirv
+        </seg>
+        <seg>
+          libLLVMSPIRVLib.so
+        </seg>
+        <seg>
+          /usr/include/LLVMSPIRVLib
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="llvm-spirv">
+        <term><command>llvm-spirv</command></term>
+        <listitem>
+          <para>
+            konverterer mellom LLVM IR og SPIR-V kode
+          </para>
+          <indexterm zone="spirv-llvm-translator llvm-spirv">
+            <primary sortas="b-llvm-spirv">llvm-spirv</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libLLVMSPIRVLib">
+        <term><filename class="libraryfile">libLLVMSPIRVLib.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som konverterer mellom LLVM IR og SPIR-V kode
+          </para>
+          <indexterm zone="spirv-llvm-translator libLLVMSPIRVLib">
+            <primary sortas="c-libLLVMSPIRVLib">libLLVMSPIRVLib.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
