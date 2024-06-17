@@ -89,7 +89,7 @@
 <screen><userinput>./configure --prefix=/usr \
             --sysconfdir=/etc \
             --with-readline=gnu &amp;&amp;
-make -j1</userinput></screen>
+make -j1 RPATH=</userinput></screen>
 
     <para>
       For å teste resultatene, utsted: <command>LC_ALL=C make check</command>.
@@ -101,7 +101,7 @@ make -j1</userinput></screen>
 
 <screen role='root'><userinput>make install_doc_dir=/usr/share/doc/slang-&slang-version;   \
      SLSH_DOC_DIR=/usr/share/doc/slang-&slang-version;/slsh \
-     install</userinput></screen>
+     RPATH= install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
@@ -114,10 +114,18 @@ make -j1</userinput></screen>
     </para>
 
     <para>
-      <command>make install_doc_dir=/usr/share/doc/slang-&slang-version;
-      SLSH_DOC_DIR=/usr/share/doc/slang-&slang-version;/slsh install</command>:
-      Denne kommandoen installerer denne pakken med en versjonert dokumentasjon
-      installasjonsmappe.
+      <parameter>RPATH=</parameter>: Dette overstyrer <command>make</command>
+      variabel forhindrer hardkoding av biblioteksøkestier (rpath) inn i
+      binære kjørbare filer og delte biblioteker. Denne pakken gjør det ikke
+      trenger rpath for en installasjon til standardplasseringen, og rpath kan
+      noen ganger forårsake uønskede effekter eller til og med sikkerhetsproblemer.
+    </para>
+
+    <para>
+      <parameter>install_doc_dir=/usr/share/doc/slang-&slang-version;
+      SLSH_DOC_DIR=/usr/share/doc/slang-&slang-version;/slsh</parameter>:
+      Dette overstyrer <command>make</command> variabler sikrer installasjon av
+      denne pakken med en versjonert dokumentasjonsinstallasjonsmappe.
     </para>
 
   </sect2>
