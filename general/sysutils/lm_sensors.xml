@@ -133,9 +133,10 @@
     </para>
 
 <!-- <screen><userinput>patch -Np1 -i ../lm_sensors-&lm_sensors-version;-upstream_fixes-1.patch &amp;&amp; -->
-<screen><userinput>make PREFIX=/usr        \
-     BUILD_STATIC_LIB=0 \
-     MANDIR=/usr/share/man</userinput></screen>
+<screen><userinput>make PREFIX=/usr           \
+     BUILD_STATIC_LIB=0    \
+     MANDIR=/usr/share/man \
+     EXLDFLAGS=</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -161,6 +162,14 @@ cp -rv              README INSTALL doc/* \
       <parameter>BUILD_STATIC_LIB=0</parameter>: Denne parameteren deaktiverer
       kompilering og installering av den statiske versjonen av
       <filename class="libraryfile">libsensors</filename>.
+    </para>
+
+    <para>
+      <parameter>EXLDFLAGS=</parameter>: Denne parameteren deaktiverer
+      hardkodende biblioteksøkestier (rpath) inn i
+      binære kjørbare filer og delte biblioteker. Denne pakken trenger ikke
+      rpath for en installasjon til standardplasseringen, og rpath
+      kan noen ganger forårsake uønskede effekter eller til og med sikkerhetsproblemer.
     </para>
 
     <para>
