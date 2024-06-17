@@ -138,7 +138,8 @@ sed -i -e '/eq 0/{N;s/12 //}'    plugins/kdb/db2/libdb2/test/run.test &amp;&amp;
             --with-system-et         \
             --with-system-ss         \
             --with-system-verto=no   \
-            --enable-dns-for-realm &amp;&amp;
+            --enable-dns-for-realm   \
+            --disable-rpath          &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -170,18 +171,6 @@ make</userinput></screen>
 
 <screen role="root"><userinput>make install &amp;&amp;
 cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
-
-    <!-- libsoup3 FTBFS with these flags if -Dgssapi=enabled (not used by
-         the book) -->
-    <para>
-      Fortsatt som &root; bruker, fjern linkerflagginnstillingen RPATH fra
-      <command>krb5-config</command> skriptet. Disse flaggene er unødvendige for
-      en installasjon i standardprefikset
-      (<filename class='directory'>/usr</filename>) og de kan forårsake at noen
-      pakker ikke klarer å bygge:
-    </para>
-
-    <screen role='root'><userinput>sed '/PROG_RPATH_FLAGS/d' -i /usr/bin/krb5-config</userinput></screen>
 
   </sect2>
 
@@ -230,6 +219,16 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
     <para>
       <parameter>--enable-dns-for-realm</parameter>: Denne bryteren tillater
       realms som skal løses ved hjelp av DNS serveren.
+    </para>
+
+    <!-- libsoup3 FTBFS with rpath enabled if -Dgssapi=enabled (not used by
+         the book) -->
+    <para>
+      <parameter>--disable-rpath</parameter>: Denne bryteren forhindrer
+      hardkodende biblioteksøkestier (rpath) inn i den binære kjørbare filen
+      og delte biblioteker. Denne pakken trenger ikke rpath for en
+      installasjon på standardplasseringen, og rpath kan noen ganger forårsake
+      uønskede effekter eller til og med sikkerhetsproblemer.
     </para>
 
     <para>
