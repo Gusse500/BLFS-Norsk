@@ -73,6 +73,12 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/libxml2-&libxml2-version;-upstream_fixes-1.patch"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           Valgfri testpakke:
           <ulink url="https://www.w3.org/XML/Test/xmlts&testsuite-version;.tar.gz"/> - Dette
           aktiverer <command>make check</command> å gjøre fullstendig testing.
@@ -95,6 +101,17 @@
 
   <sect2 role="installation">
     <title>Installasjon av libxml2</title>
+
+    <para>
+      Først, fiks ett problem som bryter <option>--path</option> valget
+      for <command>xmllint</command> og <command>xsltproc</command>
+      (fra <xref linkend='libxslt'/>), og et annet problem som bryter noen
+      <literal>xpointer</literal> attributter i
+      <literal>xi:xinclude</literal> direktiver. Begge problemene kan bryte
+      genereringen av manualsider for noen pakker:
+    </para>
+
+    <screen><userinput>patch -Np1 -i ../libxml2-&libxml2-version;-upstream_fixes-1.patch</userinput></screen>
 
     <para>
       Installer <application>libxml2</application> ved å kjøre følgende
