@@ -173,20 +173,20 @@
 <screen><userinput>mkdir build                         &amp;&amp;
 cd    build                         &amp;&amp;
 
-cmake  -DCMAKE_BUILD_TYPE=Release   \
-       -DCMAKE_INSTALL_PREFIX=/usr  \
-       -DTESTDATADIR=$PWD/testfiles \
-       -DENABLE_QT5=OFF             \
-       -DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
-       ..                           &amp;&amp;
-make</userinput></screen>
+cmake -D CMAKE_BUILD_TYPE=Release   \
+      -D CMAKE_INSTALL_PREFIX=/usr  \
+      -D TESTDATADIR=$PWD/testfiles \
+      -D ENABLE_QT5=OFF             \
+      -D ENABLE_UNSTABLE_API_ABI_HEADERS=ON \
+      -G Ninja ..                   &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       For å kjøre testpakken, er noen testcaser nødvendig og kan
       kun hentes fra et git lager. Kommandoen for å laste ned
       de er:
 <command>git clone --depth 1 https://gitlab.freedesktop.org/poppler/test.git testfiles</command>.
-      Kjør deretter: <command>LC_ALL=en_US.UTF-8 make test</command>.
+      Kjør deretter: <command>LC_ALL=en_US.UTF-8 ninja test</command>.
       En undertest av check_qt6_signature_basics er kjent for å mislykkes.
     </para>
 
@@ -194,7 +194,7 @@ make</userinput></screen>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
       For å installere dokumentasjonen, kjør følgende kommandoer som
@@ -219,7 +219,7 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
       Nå,som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make prefix=/usr install</userinput></screen>
+<screen role="root"><userinput>ninja prefix=/usr install</userinput></screen>
 
   </sect2>
 
@@ -227,61 +227,61 @@ cd poppler-data-&poppler-data-version;</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren brukes
+      <parameter>-D CMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren brukes
       for å bruke et høyere nivå av kompilatoroptimaliseringer.
     </para>
 
     <para>
-      <parameter>-DTESTDATADIR=$PWD/testfiles</parameter>: Forteller
+      <parameter>-D TESTDATADIR=$PWD/testfiles</parameter>: Forteller
       testprogrammene hvor hjelpefilene er plassert.
     </para>
-<!--
+
     <para>
-      <parameter>-DENABLE_QT5=OFF</parameter>: Denne bryteren er nødvendig for å
+      <parameter>-D ENABLE_QT5=OFF</parameter>: Denne bryteren er nødvendig for å
       forhindre en feil når Qt5 ikke er installert. Fjern den hvis du
-      har installert <xref linkend="qt6" role="nodep"/>.
+      har installert &qt5-deps;.
     </para>
--->
+
     <para>
-      <parameter>-DENABLE_UNSTABLE_API_ABI_HEADERS=ON</parameter>: Installerer noen gamle
+      <parameter>-D ENABLE_UNSTABLE_API_ABI_HEADERS=ON</parameter>: Installerer noen gamle
       <application>Xpdf</application> deklarasjoner som kreves av visse programmer.
       <!--(e.g. <application>Inkscape</application>).-->
     </para>
 
     <para>
-      <option>-DENABLE_GTK_DOC=ON</option>: Bruk denne parameteren hvis
+      <option>-D ENABLE_GTK_DOC=ON</option>: Bruk denne parameteren hvis
       GTK-Doc <!--and Pygments--> er installert og du ønsker å gjenoppbygge og
       installere API dokumentasjonen.
     </para>
 
     <para>
-      <option>-DENABLE_QT5=OFF</option>: Bruk denne parameteren hvis
-      &qt5-deps; ikke er installert. 
+      <option>-D ENABLE_QT6=OFF</option>:: Bruk denne parameteren hvis
+      <xref linkend='qt6'/> ikke er installert. 
     </para>
 
     <para>
-      <option>-DENABLE_BOOST=OFF</option>: Bruk denne parameteren hvis du
+      <option>-D ENABLE_BOOST=OFF</option>: Bruk denne parameteren hvis du
       ikke har installert <application>boost</application> (Splash-backend for
       Qt5 anbefaler boost).
     </para>
 
     <para>
-      <option>-DENABLE_NSS3=OFF</option>: Bruk denne parameteren hvis du ikke
+      <option>-D ENABLE_NSS3=OFF</option>: Bruk denne parameteren hvis du ikke
       har installert <application>nss</application>.
     </para>
 
     <para>
-      <option>-DENABLE_GPGME=OFF</option>: Bruk denne parameteren hvis du ikke
+      <option>-D ENABLE_GPGME=OFF</option>: Bruk denne parameteren hvis du ikke
       har installert <application>gpgme</application>.
     </para>
 
     <para>
-      <option>-DENABLE_LIBTIFF=OFF</option>: Bruk denne parameteren hvis du ikke
+      <option>-D ENABLE_LIBTIFF=OFF</option>: Bruk denne parameteren hvis du ikke
       har installert <application>libtiff</application>.
     </para>
 
     <para>
-      <command>LC_ALL=en_US.UTF-8 make test</command>: Kjører testpakken.
+      <command>LC_ALL=en_US.UTF-8 ninja test</command>: Kjører testpakken.
       miljøvariabelen LC_ALL=en_US.UTF-8 er bare nødvendig hvis
       standard lokalitet ikke inkluderer UTF-8.
     </para>
