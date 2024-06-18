@@ -7,12 +7,13 @@
   <!ENTITY python3-download-http
            "https://www.python.org/ftp/python/&python3-version;/Python-&python3-version;.tar.xz">
   <!ENTITY python3-download-ftp  " ">
-  <!ENTITY python3-md5sum        "8defb33f0c37aa4bdd3a38ba52abde4e">
+  <!ENTITY python3-md5sum        "d68f25193eec491eb54bc2ea664a05bd">
   <!ENTITY python3-size          "20 MB">
-  <!ENTITY python3-buildsize     "335 MB (legg til 57 MB for tester)">
-  <!ENTITY python3-time          "2.2 SBU (legg til 1.0 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY python3-buildsize     "336 MB (legg til 59 MB for tester)">
+  <!ENTITY python3-time          "2.3 SBU (legg til 1.5 SBU for tester; begge bruker parallellisme=4)">
   <!--
   Note: Size does not reflect docs that were installed in LFS.
+  Test time measured with 60 second timeout.
   -->
   <!ENTITY python3htmldoc-download-http
   "https://www.python.org/ftp/python/doc/&python3-version;/python-&python3-version;-docs-html.tar.bz2">
@@ -191,9 +192,14 @@ make</userinput></screen>
 
 <screen remap='test'><userinput>make test TESTOPTS="--timeout 120"</userinput></screen>
 
-    <!-- For Python-3.12.3 all tests pass
+    <!-- 
+         For Python-3.12.3 all tests pass
          Total tests: run=41,778 skipped=1,155
          Total test files: run=485/488 skipped=24 resource_denied=3
+
+         For Python-3.13.4 
+         Total tests: run=42,152 failures=6 skipped=1,234
+         Total test files: run=487/489 failed=4 skipped=17 resource_denied=6 rerun=4
     -->
 
     <para>
@@ -202,6 +208,11 @@ make</userinput></screen>
       kjerne) bør være nok. Noen tester er flassete, så testpakken vil
       kjøre mislykkede tester automatisk på nytt. Hvis en test mislyktes, men deretter bestått
       når den kjøres på nytt, bør den anses som bestått.
+    </para>
+
+    <para>
+      Av over 42 000 tester er følgende kjent for å mislykkes: test__xxsubinterpreters,
+      test_import, test_interpreters, og test_threading.
     </para>
 
     <para>
