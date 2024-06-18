@@ -136,14 +136,19 @@
         </listitem>
         <listitem>
           <para>
-            <xref linkend="libclc"/> og <xref linkend="ply"/> (påkrevd for
-            Intel driverne)
+            <xref linkend="libclc"/> (påkrevd for Intel iris
+            gallium driver)
           </para>
         </listitem>
         <listitem>
           <para>
-            <xref linkend="cbindgen"/> and <xref linkend="rust-bindgen"/>
-            (required for the swrast Vulkan driver and the Nouveau driver)
+            <xref linkend="ply"/> (påkrevd for Intel vulkan driver)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <xref linkend="cbindgen"/> og <xref linkend="rust-bindgen"/>
+            (påkrevd for Nouveau Vulkan og Nouveau driver)
           </para>
         </listitem>
       </itemizedlist>
@@ -164,16 +169,15 @@
         Det første du trenger å vite er hvilken type videoenhet du
         har. I noen tilfeller er den innebygd i CPU. I andre er er et
         separat PCI kort. I begge tilfeller kan du fortelle hvilken videomaskinvare du har
-        ha ved å kjøre:
+        ha ved å installere <xref linkend='pciutils'/> og kjøre:
       </para>
 
-      <para>
-        <command>lspci | grep VGA</command>
-      </para>
+      <screen role='nodump'><userinput>lspci | grep VGA</userinput></screen>
 
       <para>
         Videoenheten er mest sannsynlig en av tre familier: AMD, Intel eller
-        Nvidia. Se kommandoforklaringene for 'gallium-drivere' nedenfor for å
+        Nvidia. Se parameterforklaringene for
+        <parameter>-D gallium-drivers=auto</parameter> nedenfor for å
         se hvilke alternativer som er tilgjengelige for din spesifikke videomaskinvare (eller
         emulert videomaskinvare). Du bør sannsynligvis legge til swrast alternativet som
         en backup driver.
@@ -192,6 +196,11 @@
         For eksempel vil ffmpeg (inkludert ffplay) bruke Vulkan i stedet for
         OpenGL for å gjengi video på GPU. Hvis du ikke ønsker å gjøre dette
         vil du kanskje ikke installere dem.
+        Se parameterforklaringene for
+        <parameter>-D vulkan-drivers=auto</parameter> nedenfor for å
+        se hvilke alternativer som er tilgjengelige for din spesifikke videomaskinvare (eller
+        emulert videomaskinvare). Du bør sannsynligvis legge til swrast alternativet
+        som backupdriver med mindre du ikke trenger Vulkan i det hele tatt.
       </para> 
     </note>
 
@@ -380,7 +389,7 @@ ninja</userinput></screen>
 
     <para>
       For å teste resultatene, utsted:
-      <command>meson configure -Dbuild-tests=true &amp;&amp; ninja test</command>.
+      <command>meson configure -D build-tests=true &amp;&amp; ninja test</command>
     </para>
 <!-- All 88 tests passed for me for 22.3.3 [pierre]
      All 90 tests passed for me for 23.1.0 [bdubbs]
@@ -417,7 +426,7 @@ ninja</userinput></screen>
 
     <para>
       <anchor id='mesa-gallium-drivers' xreflabel='Mesa Gallium3D Drivers'/>
-      <parameter>-Dgallium-drivers=auto</parameter>: Denne parameteren
+      <parameter>-D gallium-drivers=auto</parameter>: Denne parameteren
       kontrollerer hvilke Gallium3D drivere som skal bygges:
 
       <itemizedlist spacing="compact">
@@ -426,8 +435,8 @@ ninja</userinput></screen>
             <literal>auto</literal> velger alle tilgjengelige Gallium3D drivere
             for x86. Med en kommadelt liste, kun en delmengde av disse
             drivere vil bli bygget. Hvis du nøyaktig vet hvilke drivere du
-            trenger, kan du bygge. for eksempel.
-            <option>-Dgallium-drivers=radeonsi,iris,swrast</option>.
+            trenger, kan du velge dem eksplisitt. for eksempel.
+            <option>-D gallium-drivers=radeonsi,iris,swrast</option>.
           </para>
         </listitem>
         <listitem>
@@ -478,7 +487,7 @@ ninja</userinput></screen>
         <listitem>
           <para>
              <literal>iris</literal> (for Intel GPUer levert med Broadwell
-             eller nyere CPUer)
+             eller nyere CPUer, eller som et dedikert PCIe kort)
           </para>
         </listitem>
         <listitem>
@@ -494,17 +503,77 @@ ninja</userinput></screen>
              sendt med brikkesett eller Atom D/N 4xx/5xx CPUer)
           </para>
         </listitem>
+        <listitem>
+          <para>
+             <literal>zink</literal> (å bruke Vulkan for å implementere OpenGL,
+             er for tiden ikke veldig nyttig på x86, men det kan erstatte andre
+             drivere for moderne GPU modeller i fremtiden)
+          </para>
+        </listitem>
       </itemizedlist>
     </para>
 
     <para>
-      <parameter>-Dplatforms=...</parameter>: Denne parameteren
+      <parameter>-D vulkan-drivers=auto</parameter>: Denne parameteren
+      kontrollerer hvilke Gallium3D drivere som skal bygges:
+
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>
+            <literal>auto</literal> velger alle tilgjengelige Vulkan drivere
+            for x86. Med en kommadelt liste, kun en delmengde av disse
+            drivere vil bli bygget. Hvis du nøyaktig vet hvilke drivere du
+            trenger, kan du velge dem eksplisitt. for eksempel.
+            <option>-D gallium-drivers=amd,nouveau,swrast</option>.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <literal>amd</literal> (for AMD Radeon HD 7730 eller nyere AMD GPUer)
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <literal>intel</literal> (for Intel GPUer levert med Skylake
+            eller nyere CPUer, eller som et dedikert PCIe kort)
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <literal>intel_hasvk</literal> (for Intel GPUer levert med
+            Ivy Bridge, Haswell, eller Broadwell CPUer)
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <literal>nouveau</literal> (for GTX 16XX, RTX 20XX, eller
+            nyere NVIDIA GPUer)
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <literal>swrast</literal> (bruker CPU for 3D-rasterisering.
+            Merk at det er mye tregere enn å bruke en moderne 3D-kompatibel GPU,
+            så den bør bare brukes hvis GPUen ikke støttes av andre
+            drivere)
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+
+    <para>
+      <parameter>-D platforms=...</parameter>: Denne parameteren
       kontrollerer hvilke vindussystemer som skal støttes. Tilgjengelige
       linux plattformer er x11 og wayland.
     </para>
 
     <para>
-      <parameter>-Dvulkan-drivers=auto</parameter>: Denne bryteren muliggjør støtte
+      <parameter>-D vulkan-drivers=auto</parameter>: Denne bryteren muliggjør støtte
       for Vulkan grafikk API. Den bygger automatisk alle grafikkdrivere
       som er tilgjengelig for Vulkan. Hvis du ønsker å bygge spesifikke drivere,
       gyldige alternativer inkluderer 'amd', 'intel', 'intel_hasvk' (Haswell CPUer),
@@ -513,26 +582,26 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Dvalgrind=disabled</parameter>: Denne parameteren deaktiverer
+      <parameter>-D valgrind=disabled</parameter>: Denne parameteren deaktiverer
       bruken av Valgrind under byggeprosessen. Fjern denne parameteren
       hvis du har Valgrind installert, og ønsker å se etter minnelekkasjer.
     </para>
 
     <para>
-      <parameter>-Dlibunwind=disabled</parameter>: Denne parameteren deaktiverer
+      <parameter>-D libunwind=disabled</parameter>: Denne parameteren deaktiverer
       bruken av libunwind.
     </para>
 
     <para>
-      <command>meson configure -Dbuild-tests=true</command>: Denne kommandoen vil
-      rekonfigurere byggingen for å sette <option>-Dbuild-tests=true</option>, men
+      <command>meson configure -D build-tests=true</command>: Denne kommandoen vil
+      rekonfigurere byggingen for å sette <option>-D build-tests=true</option>, men
       behold de andre alternativene som er spesifisert i <command>meson setup</command>
       kommandoen uendret. Det tillater <command>ninja test</command> å bygge og
       kjøre enhetstester.
     </para>
 
     <para>
-      <option>-Degl-native-platform="..."</option>: Denne parameteren
+      <option>-D egl-native-platform="..."</option>: Denne parameteren
       kontrollerer hvilken støtte for Embedded Graphics Library som skal bygges. Tilgjengelig
       linux alternativer er auto (standard), x11, wayland, surfaceless og drm.
     </para>
