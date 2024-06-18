@@ -7,7 +7,7 @@
   <!--  <!ENTITY systemd-download-http "https://anduin.linuxfromscratch.org/LFS/systemd-&systemd-version;-&systemd-stable;.tar.xz"> For whenever we move to a stable snapshot for backports -->
   <!ENTITY systemd-download-http "https://github.com/systemd/systemd/archive/v&systemd-version;/systemd-&systemd-version;.tar.gz">
   <!ENTITY systemd-download-ftp  " ">
-  <!ENTITY systemd-md5sum        "521cda27409a9edf0370c128fae3e690">
+  <!ENTITY systemd-md5sum        "4796b6eb1e23d809a1f11426d171b065">
   <!ENTITY systemd-size          "15 MB">
   <!ENTITY systemd-buildsize     "198 MB (med tester)">
   <!ENTITY systemd-time          "3.7 SBU (med tester)">
@@ -176,29 +176,6 @@
 <screen><userinput remap="pre">sed -i -e 's/GROUP="render"/GROUP="video"/' \
        -e 's/GROUP="sgx", //' rules.d/50-udev-default.rules.in</userinput></screen>
 
-     <para>
-       Deretter fikser du kompatibilitet med API deklarasjoner fra linux-6.9 og nyere:
-     </para>
-
-<screen><userinput remap="pre">sed -i '/DEVMEM_MAGIC 0/{n;n;a \
-/* cb12fd8e0dabb9a1c8aef55a6a41e2c255fcdf4b (6.8) */ \
-#ifndef PID_FS_MAGIC \
-#define PID_FS_MAGIC 0x50494446 \
-#endif
-}' src/basic/missing_magic.h
-
-sed -i '/OVERLAYFS_SUPER_MAGIC/a \
-pidfs,           {PID_FS_MAGIC}' src/basic/filesystems-gperf.gperf</userinput></screen>
-
-    <para>
-      Nå fiks en sikkerhetssårbarhet i DNSSEC verifiseringen av
-      <command>systemd-resolved</command> og en feil som ødelegger kjøring av
-      <command>systemd-analyze verify</command> på en instansiert systemd
-      enhet:
-    </para>
-
-    <screen><userinput>patch -Np1 -i ../systemd-&systemd-version;-upstream_fixes-1.patch</userinput></screen>
-
     <para>
       Gjenoppbygg <application>systemd</application> ved å kjøre
       følgende kommandoer:
@@ -241,9 +218,7 @@ ninja</userinput></screen>
 
     <para>
       For å teste resultatene, utsted: <command>ninja test</command>.
-      <!-- test-netlink: https://github.com/systemd/systemd/issues/27969 -->
-      Testene navngitt <filename>test-stat-util</filename> og
-      <filename>test-netlink</filename> er kjent for å mislykkes
+      Testen navngitt <filename>test-stat-util</filename> er kjent for å mislykkes
       hvis noen kjernefunksjoner ikke er aktivert.
       Hvis testpakken kjøres som &root; bruker, noen
       andre tester kan mislykkes fordi de er avhengige av ulike kjerne
