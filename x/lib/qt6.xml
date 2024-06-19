@@ -9,10 +9,10 @@
 
   <!ENTITY qt6-download-http "&qt6-url;/qt-everywhere-src-&qt6-version;.tar.xz">
   <!ENTITY qt6-download-ftp  " ">
-  <!ENTITY qt6-md5sum        "dfe73333c2fa22582ad76a679f0ab1e1">
+  <!ENTITY qt6-md5sum        "06d35b47349c7c0a45710daad359e07b">
   <!ENTITY qt6-size          "892 MB">
-  <!ENTITY qt6-buildsize     "38 GB (376 MB installert)">
-  <!ENTITY qt6-time          "11 SBU (bruker parallellisme=8)">
+  <!ENTITY qt6-buildsize     "37 GB (376 MB installert)">
+  <!ENTITY qt6-time          "12 SBU (bruker parallellisme=8)">
 ]>
 
 <sect1 id="qt6" xreflabel="Qt-&qt6-version;">
@@ -33,9 +33,7 @@
       som er mye brukt for å utvikle applikasjonsprogramvare med et grafisk
       brukergrensesnitt (GUI) (i hvilke tilfeller <application>Qt6</application> er
       klassifisert som et skjermelement verktøysett), og brukes også til å utvikle ikke-GUI
-      programmer som kommandolinjeverktøy og konsoller for servere. <!--To av de
-      store brukere av <application>Qt</application> er <application>KDE
-      Rammerverk 5 (KF5)</application> og <application>LXQt</application>.-->
+      programmer som kommandolinjeverktøy og konsoller for servere.
     </para>
 
     &lfs121_checked;
@@ -73,29 +71,7 @@
         </para>
       </listitem>
     </itemizedlist>
-<!--
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nå som <application>Qt5</application> oppdateringer er begrenset til
-          kommersielle kunder, oppstrøms oppdateringer for de ulike modulene er
-          blir kurert hos kde.
-          Oppdateringer for modulene som kreves av pakker i BLFS har vært
-          samlet for den ikke-modulære Qt5 byggingen vi bruker.
-        </para>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/qt-everywhere-opensource-src-&qt6-version;-kf5-1.patch"/>
-        </para>
-        <para>
-          Detaljer om kde kurasjonen kan finnes på
-          <ulink url="https://dot.kde.org/2021/04/06/announcing-kdes-qt-5-patch-collection"/>
-          and <ulink url="https://community.kde.org/Qt5PatchCollection"/>.
-        </para>
-      </listitem>
-    </itemizedlist>
--->
+
     <bridgehead renderas="sect3">Qt6 Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -332,11 +308,6 @@ ninja</userinput></screen>
 
     <para>
       Installer bilder og lag menyoppføringer for installerte applikasjoner.
-      <!--<envar>QT6BINDIR</envar> variabel brukes her for å peke på
-      mappen for de kjørbare programmene. Hvis du har endret bindir
-      ovenfor, <envar>QT5BINDIR</envar> må justeres nedenfor. Vær sikker
-      at <envar>QT5BINDIR</envar> variabel er definert i roots
-      miljø og som &root; bruker:-->
       Igjen som &root; bruker:
     </para>
 
@@ -408,43 +379,10 @@ Type=Application
 Categories=Qt;Development;Debugger;</literal>
 EOF</userinput></screen>
 
-<!--
-    <para>
-      Noen pakker som f.eks <xref linkend='vlc'/> se etter visse
-      kjørbare filer med suffikset -qt6. Kjør følgende kommando som
-      <systemitem class="username">root</systemitem> bruker
-      for å lage de nødvendige symbolkoblingene:
-    </para>
-
-<screen role="root"><userinput>for file in moc uic rcc qmake lconvert lrelease lupdate; do
-  ln -sfvn $QT5BINDIR/$file /usr/bin/$file-qt6
-done</userinput></screen>
--->
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
-    <!--
-    <para>
-      <command>sed ...</command>: Tillater bruk av
-      <application>Python 3</application> i stedet for <application>Python
-      2</application>. Denne kommandoen ødelegger bygget for QtWebEngine, så ikke
-      bruk den hvis du fjerner <parameter>-skip qtwebengine</parameter>
-      bryteren.
-    </para>
-
-    Ignored
-    <para>
-      <parameter>-confirm-license</parameter>: Godta lisens
-      uten å spørre brukeren under konfigurasjonen.
-    </para>
-
-    Ignored
-    <para>
-      <parameter>-opensource</parameter>: Installer åpen kildekode
-      versjon av <application>Qt</application>.
-    </para>
-    -->
     <para>
       <parameter>-nomake examples</parameter>: Denne bryteren
       deaktiverer bygging av eksempelprogrammene inkludert
@@ -520,27 +458,7 @@ done</userinput></screen>
 <screen role="root"><userinput>cat &gt; /etc/sudoers.d/qt &lt;&lt; "EOF"
 <literal>Defaults env_keep += QT6DIR</literal>
 EOF</userinput></screen>
-<!--
-      <bridgehead renderas="sect4">Hvis du installerte Qt5 i /usr</bridgehead>
 
-      <para>
-        Hvis du installerte <application>Qt5</application> i
-        <filename class="directory">/usr</filename>, opprette en
-        miljøvariabel som kreves av visse pakker.
-        Som <systemitem class="username">root</systemitem> bruker:
-      </para>
-
-<screen role="nodump"><userinput>cat &gt; /etc/profile.d/qt6.sh &lt;&lt; "EOF"
-<literal># Begin /etc/profile.d/qt6.sh
-
-QT5DIR=/usr
-export QT5DIR
-
-# End /etc/profile.d/qt6.sh</literal>
-EOF</userinput></screen>
-
-      <bridgehead renderas="sect4">If you did not install Qt5 in /usr</bridgehead>
-i-->
       <para>
         Du må nå oppdatere
         følgende konfigurasjonsfiler slik at <application>Qt6</application> blir
@@ -782,11 +700,6 @@ EOF</userinput></screen>
           libQt6Xml.so
         </seg>
         <seg>
-          <!--/usr/include/qt6,
-          /usr/lib/qt6,
-          /usr/share/doc/qt6, og
-          /usr/share/qt6
-          ELLER-->
           /opt/qt6 og
           /opt/qt-&qt6-version;
         </seg>
