@@ -12,7 +12,7 @@
   <!ENTITY qt5-md5sum        "3fb1cd4f763f5d50d491508b7b99fb77">
   <!ENTITY qt5-size          "630 MB">
   <!ENTITY qt5-buildsize     "15 GB (264 MB installert)">
-  <!ENTITY qt5-time          "16 SBU (bruke parallellisme=8)">
+  <!ENTITY qt5-time          "16 SBU (bruke parallellisme=4)">
 ]>
 
 <sect1 id="qt5" xreflabel="Qt-&qt5-version;">
@@ -125,7 +125,7 @@
       <xref linkend="at-spi2-core"/>,
       <xref linkend="make-ca"/>,
       <xref linkend="cups"/>,
-	  <phrase revision='sysv'><xref linkend="dbus"/>,</phrase>
+      <phrase revision='sysv'><xref linkend="dbus"/>,</phrase>
       <xref linkend="double-conversion"/>,
       <xref linkend="glib2"/>,
       <xref linkend="gst10-plugins-base"/> (QtMultimedia bakstykke),
@@ -139,6 +139,7 @@
       <xref linkend="libwebp"/>,
       <xref linkend="libxkbcommon"/>,
       <xref linkend="mesa"/>,
+      <xref linkend="mtdev"/>,
       <xref linkend="pcre2"/>,
       <xref linkend="sqlite"/>,
       <xref linkend="wayland"/> (<application>Mesa</application>
@@ -154,13 +155,12 @@
     <para role="optional">
       <xref role="runtime" linkend="bluez"/> (for sdpscanner, og ved kjøretid for
       QtConnectivity modulen),
-	  <xref linkend="gtk3"/>,
+      <xref linkend="gtk3"/>,
       <xref linkend="ibus"/>,
       <xref linkend="libinput"/>,
       <xref linkend="mariadb"/>
         eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
       <xref linkend="mitkrb"/>,
-      <xref linkend="mtdev"/>
       <xref linkend="pciutils"/>,
       <xref linkend="postgresql"/>,
       <xref linkend="pulseaudio"/>,
@@ -215,7 +215,7 @@ ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
         opprett den nye versjonsmappen, og lag på nytt 
         <filename class="directory">/opt/qt5</filename> symbolkoblingen igjen før
         bygging av den nye versjonen.
-        Hvilken versjon av <application>Qt5</application> you
+        Hvilken versjon av <application>Qt5</application> du
         bruker avhenger bare av hvor symbollinken peker.
       </para>
     </tip>
@@ -255,7 +255,7 @@ ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
     <note>
       <para>
         Byggetiden og plassen som kreves for hele
-        <application>Qt5</application> er ganske lang. Instruksjonene nedenfor
+        <application>Qt5</application> er ganske lang/stor. Instruksjonene nedenfor
         bygger ikke veiledninger og eksemplene. Fjerning av
         <parameter>-nomake</parameter> linjen vil skape et komplett bygg.
       </para>
@@ -263,12 +263,13 @@ ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
 
     <note>
       <para>
-        BLFS redaktørene anbefaler ikke å installere 
-        <application>Qt5</application> inn i <filename class="directory">/usr</filename> hierarkiet fordi det 
+        BLFS redaktørene anbefaler ikke å installere
+        <application>Qt5</application> inn i
+        <filename class="directory">/usr</filename> hierarkiet fordi det
         blir vanskelig å finne komponenter og for å oppdatere til en ny versjon. 
-        Hvis du ønsker å installere <application>Qt5</application> i 
-        <filename class="directory">/usr</filename>, mappene må
-        spesifiseres eksplisitt. I dette tilfellet setter du 
+        Hvis du ønsker å installere <application>Qt5</application> i
+        <filename class="directory">/usr</filename>, må mappene 
+        spesifiseres eksplisitt. I dette tilfellet setter du
         <envar>QT5PREFIX=/usr</envar> og legg til følgende til konfigureringsargumentene 
         nedenfor:
       </para>
@@ -293,31 +294,14 @@ ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
 
     <para>
       Oppdateringen er ment å brukes i et git depot. Ellers vil noen
- filer som bør endres av <command>configure</command> etter
- anvendingen av oppdateringen ikke berøres. Heldigvis er det nok å lage en
+      filer som bør endres av <command>configure</command> etter
+      anvendingen av oppdateringen ikke berøres. Heldigvis er det nok å lage en
       <filename class="directory">.git</filename> mappe i
       <filename class="directory">qmake</filename> mappen hvor
       <command>configure</command> skriptet kjøres:
     </para>
 
     <screen><userinput remap="pre">mkdir -pv qtbase/.git</userinput></screen>
-
-    <para>
-      Legg til en annen fiks for å bygge med GCC-13:
-    </para>
-
-<screen><userinput>sed -e "/pragma once/a#include &lt;cstdint&gt;"                                      \
-    -i qtlocation/src/3rdparty/mapbox-gl-native/include/mbgl/util/geometry.hpp \
-       qtlocation/src/3rdparty/mapbox-gl-native/include/mbgl/util/string.hpp   \
-       qtlocation/src/3rdparty/mapbox-gl-native/src/mbgl/gl/stencil_mode.hpp</userinput></screen>
-
-    <para>
-      Legg til en løsning for å bygge med ICU-75:
-    </para>
-
-<screen><userinput>sed -e "/c++1z/s;^CONFIG;#CONFIG;" \
-    -e "s;c++14;c++17;"            \
-    -i qtlocation/src/3rdparty/mapbox-gl-native/mapbox-gl-native.pro</userinput></screen>
 
     <para>
       Rett opp en sikkerhetssårbarhet i qtbase:
@@ -340,6 +324,7 @@ ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
             -nomake examples                          \
             -no-rpath                                 \
             -syslog                                   \
+            -skip qtlocation                          \
             -skip qtwebengine                         &amp;&amp;
 make</userinput></screen>
 
@@ -354,6 +339,7 @@ make</userinput></screen>
             -nomake examples                          \
             -no-rpath                                 \
             -journald                                 \
+            -skip qtlocation                          \
             -skip qtwebengine                         &amp;&amp;
 make</userinput></screen>
 
@@ -467,7 +453,7 @@ EOF</userinput></screen>
     </para>
 
 <screen role="root"><userinput>for file in moc uic rcc qmake lconvert lrelease lupdate; do
-   ln -sfvn $QT5BINDIR/$file /usr/bin/$file-qt5
+  ln -sfvn $QT5BINDIR/$file /usr/bin/$file-qt5
 done</userinput></screen>
 
   </sect2>
@@ -518,9 +504,17 @@ done</userinput></screen>
     </para>
 
     <para>
+      <parameter>-skip qtlocation</parameter>: Denne bryteren deaktiverer bygging av
+      Qt5 plasseringsmodulen. Noen avhengigheter av denne modulen er
+      sendt i tarballen men kopiene er utdaterte, så disse
+      avhengigheter vil ikke bygge med <xref linkend='gcc'/> og
+      <xref linkend='icu'/>.  Ingenting i BLFS trenger denne modulen.
+    </para>
+
+    <para>
       <parameter>-skip qtwebengine</parameter>: Denne bryteren deaktiverer bygging av
-      QtWebEngine. BLFS redaksjonen har valgt å bygge <xref
-      linkend="qtwebengine"/> separat.
+      QtWebEngine.  BLFS støtter bare <xref linkend="qtwebengine"/>
+      fra Qt6.
     </para>
 
     <para>
@@ -595,7 +589,7 @@ ldconfig</userinput></screen>
 
       <para>
         Som <systemitem class="username">root</systemitem> bruker, opprett
-        <filename>/etc/profile.d/qt5.sh</filename> filen:
+        the <filename>/etc/profile.d/qt5.sh</filename> filen:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/profile.d/qt5.sh &lt;&lt; "EOF"
@@ -671,7 +665,7 @@ EOF</userinput></screen>
           libQt5SerialPort.so, libQt5ServiceSupport.a, libQt5Sql.so,
           libQt5Svg.so, libQt5Test.so, libQt5TextToSpeech.so,
           libQt5ThemeSupport.a, libQt5UiTools.a, libQt5VirtualKeyboard.so,
-          ibQt5VulkanSupport.a, libQt5WaylandClient.so,
+          libQt5VulkanSupport.a, libQt5WaylandClient.so,
           libQt5WaylandCompositor.so, libQt5WebChannel.so, libQt5WebSockets.so,
           libQt5WebView.so, libQt5Widgets.so, libQt5X11Extras.so,
           libQt5XcbQpa.so, libQt5XkbCommonSupport.a, libQt5Xml.so,
@@ -683,8 +677,8 @@ EOF</userinput></screen>
           /usr/lib/qt5,
           /usr/share/doc/qt5, og
           /usr/share/qt5
-          eller
-          /opt/qt5 and
+          ELLER
+          /opt/qt5 og
           /opt/qt-&qt5-version;
         </seg>
       </seglistitem>
@@ -819,7 +813,7 @@ EOF</userinput></screen>
         <term><command>lupdate</command></term>
         <listitem>
           <para>
-            finner det oversettbare
+            finner oversettbare
             strenger i den angitte kilden, overskriften og Qt Designer
             grensesnittfiler, og lagrer de utpakkede meldingene i
             oversettelsesfiler for å bli behandlet av lrelease
