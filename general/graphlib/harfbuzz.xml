@@ -7,10 +7,10 @@
   <!ENTITY harfbuzz-download-http
            "https://github.com/harfbuzz/harfbuzz/releases/download/&harfbuzz-version;/harfbuzz-&harfbuzz-version;.tar.xz">
   <!ENTITY harfbuzz-download-ftp  " ">
-  <!ENTITY harfbuzz-md5sum        "81b9d7f1e19ce99c758d598c63543487">
-  <!ENTITY harfbuzz-size          "19 MB">
-  <!ENTITY harfbuzz-buildsize     "155 MB (Med tester)">
-  <!ENTITY harfbuzz-time          "0.8 SBU (Med tester; begge bruker parallellisme=4)">
+  <!ENTITY harfbuzz-md5sum        "0035c129cb1646ab1cff65e5ef7153db">
+  <!ENTITY harfbuzz-size          "17 MB">
+  <!ENTITY harfbuzz-buildsize     "138 MB (Med tester)">
+  <!ENTITY harfbuzz-time          "0.7 SBU (Med tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="harfbuzz" xreflabel="harfBuzz-&harfbuzz-version;">
@@ -117,11 +117,10 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup ..            \
-      --prefix=/usr       \
-      --buildtype=release \
-      -Dcpp_std=c++17     \
-      -Dgraphite2=enabled &amp;&amp;
+meson setup ..             \
+      --prefix=/usr        \
+      --buildtype=release  \
+      -D graphite2=enabled &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -140,7 +139,7 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-
+<!--
     <para>
       <parameter>-Dcpp_std=c++17</parameter>: Denne bryteren sikrer at kompilering av
       C++ koden følger C++17-standarden, soom overstyrer standarden for
@@ -149,21 +148,14 @@ ninja</userinput></screen>
       egenskaper. Det er unødvendig hvis <xref linkend='icu'/> ikke er
       installert, men skader uansett ikke.
     </para>
-
+-->
     <para>
       <parameter>-Dgraphite2=enabled</parameter>: Denne bryteren aktiverer
       <application>Graphite2</application> støtte, som er nødvendig for
       å bygge <xref linkend="texlive"/> eller <xref linkend="libreoffice"/>
       med system harfbuzz.
     </para>
-<!--
-    <para>
-      <parameter>-Dbenchmark=disabled</parameter>: Denne bryteren deaktiverer
-      nedlasting og bygging av <application>google-benchmark</application>
-      delprosjekt, som krever <xref linkend="git"/>, og er ikke
-      brukbar for ikke-utviklere.
-    </para>
--->
+
     <para>
       <option>-Ddocs=disabled</option>: Hvis <xref linkend="gtk-doc"/> er
       installert, er dokumentasjonen bygget og installert. Denne bryteren
