@@ -4,13 +4,13 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libinput-version "1.26.0">
+  <!ENTITY libinput-version "1.26.1">
 
 <!--  <!ENTITY libinput-download-http "https://www.freedesktop.org/software/libinput/libinput-&libinput-version;.tar.xz">-->
   <!ENTITY libinput-download-http "https://gitlab.freedesktop.org/libinput/libinput/-/archive/&libinput-version;/libinput-&libinput-version;.tar.gz"
 >
   <!ENTITY libinput-download-ftp  " ">
-  <!ENTITY libinput-md5sum        "05451ab8d64d5525dd9a355ccdc657fd">
+  <!ENTITY libinput-md5sum        "aae34911d662f77c1cd9be60c8502664">
   <!ENTITY libinput-size          "1.0 MB">
   <!ENTITY libinput-buildsize     "11 MB (legg til 23 MB for dokumentasjon og 9,6 MB for tester)">
   <!ENTITY libinput-time          "0.1 SBU (legg til 0,1 SBU for dokumentasjon og 4,9 SBU for tester)">
@@ -144,13 +144,13 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=$XORG_PREFIX    \
-            --buildtype=release      \
-            -Ddebug-gui=false        \
-            -Dtests=false            \
-            -Dlibwacom=false         \
-            -Dudev-dir=/usr/lib/udev \
-            ..                      &amp;&amp;
+meson setup ..                  \
+      --prefix=$XORG_PREFIX     \
+      --buildtype=release       \
+      -D debug-gui=false        \
+      -D tests=false            \
+      -D libwacom=false         \
+      -D udev-dir=/usr/lib/udev &amp;&amp;
 ninja</userinput></screen>
 
       <note>
@@ -175,7 +175,7 @@ ninja</userinput></screen>
 <screen role="root"><userinput>ninja install</userinput></screen>
 
       <para>
-        Hvis du har gitt <option>-Ddocumentation=true</option> til
+        Hvis du har gitt <option>-D documentation=true</option> til
         <command>meson</command>, kan du installere den genererte dokumentasjonen
         ved å kjøre følgende kommandoer som <systemitem
         class="username">root</systemitem> bruker:
@@ -196,26 +196,26 @@ cp -rv Documentation/* /usr/share/doc/libinput-&libinput-version;/html</userinpu
         href="../../xincludes/meson-buildtype-release.xml"/>
 
       <para>
-        <parameter>-Ddebug-gui=false</parameter>: Denne bryteren
+        <parameter>-D debug-gui=false</parameter>: Denne bryteren
         deaktiverer opprettelse av en visuell feilsøkingshjelper for libinput. Fjern
         hvis du vil ha det, og du har <xref linkend="gtk3"/> installert.
       </para>
 
       <para>
-        <parameter>-Dtests=false</parameter>: Denne bryteren deaktiverer kompilering av
+        <parameter>-D tests=false</parameter>: Denne bryteren deaktiverer kompilering av
         hovedtestene. Selv med testene definert som false,, kan du fortsatt kjøre
         de fire første mindre testene, som vanlig bruker, men en vil bli hoppet over hvis
         <xref linkend="pyparsing"/> ikke er installert.
       </para>
 
       <para>
-        <parameter>-Dlibwacom=false</parameter>: Fjern dette alternativet hvis du
+        <parameter>-D libwacom=false</parameter>: Fjern dette alternativet hvis du
         har <xref linkend="libwacom"/> installert, eller hvis du installerer
         GNOME.
       </para>
 
       <para>
-        <parameter>-Dudev-dir=/usr/lib/udev</parameter>: I tilfelle at
+        <parameter>-D udev-dir=/usr/lib/udev</parameter>: I tilfelle at
         verdien av <envar>XORG_PREFIX</envar> ikke er satt til
         <filename class='directory'>/usr</filename>, dette alternativet forhindrer
         pakken fra å installere Udev regler og hjelpere i
@@ -226,7 +226,7 @@ cp -rv Documentation/* /usr/share/doc/libinput-&libinput-version;/html</userinpu
       </para>
 
       <para>
-        <option>-Ddocumentation=true</option>: Denne bryteren aktiverer
+        <option>-D documentation=true</option>: Denne bryteren aktiverer
         generering av dokumentasjonen. Legg den til hvis du vil generere
         dokumentasjonen. Du må ha <xref linkend="doxygen"/> og
         <xref linkend="graphviz"/> installert.
