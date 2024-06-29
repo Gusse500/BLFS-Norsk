@@ -68,6 +68,16 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/seahorse-&seahorse-version;-upstream_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">Seahorse Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -77,17 +87,17 @@
       <xref linkend="gpgme"/>,
       <xref linkend="itstool"/>,
       <xref linkend="libhandy1"/>,
-      <xref linkend="libpwquality"/> og
-      <xref linkend="libsecret"/>
+      <xref linkend="libpwquality"/>,
+      <xref linkend="libsecret"/>, og
+      <xref linkend="vala"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="libsoup3"/>,
-      <xref linkend="p11-kit"/>,
+      <xref linkend="p11-kit"/>, og
 <!--      <xref linkend="openldap"/>, hentet fra gnupg2 -->
-      <xref linkend="openssh"/> (for å administrere SSH nøkler) og
-      <xref linkend="vala"/>
+      <xref linkend="openssh"/> (for å administrere SSH nøkler)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -106,13 +116,18 @@
     <title>Installasjon av Seahorse</title>
 
     <para>
+      Først bruker du en oppdatering for byggefeil utløst av GnuPG-2.4 eller
+      nyere, og GCC-14 eller nyere:
+    </para>
+
+    <screen><userinput>patch -Np1 -i ../seahorse-&seahorse-version;-upstream_fixes-1.patch</userinput></screen>
+
+    <para>
       Installer <application>Seahorse</application> ved å kjøre følgende
       kommandoer:
     </para>
 
 <screen><userinput>sed -i -r 's:"(/apps):"/org/gnome\1:' data/*.xml &amp;&amp;
-
-sed -i "s/'2.3.0'/'2.3.0', '2.4.0'/" meson.build &amp;&amp;
 
 mkdir build &amp;&amp;
 cd    build &amp;&amp;
