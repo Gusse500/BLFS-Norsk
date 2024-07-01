@@ -85,6 +85,8 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="bind-utils"/>,
+      <xref linkend='cracklib'/> (<filename>/usr/share/dict/words</filename>
+      referert av noen tester),
       <xref linkend="gnupg2"/> (for å autentisere pakken),
       <xref linkend="keyutils"/>,
       <xref linkend="openldap"/>,<!-- Seems so that mit has its own
@@ -125,11 +127,7 @@
     </para>
 
 <screen><userinput>cd src &amp;&amp;
-<!-- dejagnu is not used anymore for tests
-sed -i -e 's@\^u}@^u cols 300}@' tests/dejagnu/config/default.exp     &amp;&amp;
--->
-sed -i -e '/eq 0/{N;s/12 //}'    plugins/kdb/db2/libdb2/test/run.test &amp;&amp;
-<!--sed -i '/t_kadm5.py/d'           lib/kadm5/Makefile.in                &amp;&amp;-->
+sed -i -e '/eq 0/{N;s/12 //}' plugins/kdb/db2/libdb2/test/run.test &amp;&amp;
 
 ./configure --prefix=/usr            \
             --sysconfdir=/etc        \
@@ -177,6 +175,7 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
+    <!-- https://krbdev.mit.edu/rt/Ticket/Display.html?id=9129 -->
     <para>
       <command>sed</command> kommandoene fjerner en
       test som er kjent for å mislykkes.
