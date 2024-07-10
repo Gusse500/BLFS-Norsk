@@ -28,7 +28,7 @@ export LC_ALL=en_US.utf8
 export TZ=America/Chicago
 
 commit_date=$(git show -s --format=format:"%cd" --date=local)
-short_date=$(date --date "$commit_date" "+%Y-%m-%d")
+short_date=$(date --date "$commit_date" "+%d.%m.%Y")
 
 year=$(date --date "$commit_date" "+%Y")
 month=$(date --date "$commit_date" "+%B")
@@ -42,7 +42,7 @@ case $day in
     * ) suffix="th";;
 esac
 
-full_date="$month $day$suffix, $year"
+full_date="$day.$month.$year"
 
 sha="$(git describe --abbrev=1)"
 version=$(echo "$sha" | sed 's/-g[^-]*$//')
