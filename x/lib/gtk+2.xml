@@ -67,6 +67,16 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/gtk+-&gtk2-version;-consolidated_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">GTK+ 2 Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -90,7 +100,6 @@
       &gobject-introspection; og
       <xref linkend="gtk-doc"/>
     </para>
-
   </sect2>
 
   <sect2 role="installation">
@@ -102,10 +111,9 @@
     </para>
 
 <screen><userinput>sed -e 's#l \(gtk-.*\).sgml#&amp; -o \1#' \
-    -i docs/{faq,tutorial}/Makefile.in      &amp;&amp;
-
-./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
-
+    -i docs/{faq,tutorial}/Makefile.in                  &amp;&amp;
+patch -p1 -i ../gtk+-&gtk2-version;-consolidated_fixes-1.patch &amp;&amp;
+./configure --prefix=/usr --sysconfdir=/etc             &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -148,6 +156,13 @@ make</userinput></screen>
       <filename>Makefile</filename>ene. Denne <command>sed</command> fikser
       <filename>Makefile</filename>ene.
     </para>
+
+    <para>
+      <command>patch -p1 -i ../gtk+-&gtk2-version;-consolidated_fixes-1.patch ...</command>:
+      Denne oppdateringen lar pakken kompilere med gcc-14 og forhindrer også
+      lasting av moduler fra gjeldende mappe.
+    </para>
+
     <!-- This still seems to have problems with docbook-utils installed.
          However, since it's already been tagged, I'll leave it alone. -->
 <!--
