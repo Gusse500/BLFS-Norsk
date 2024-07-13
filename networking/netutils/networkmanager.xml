@@ -7,8 +7,8 @@
   <!ENTITY NetworkManager-download-http
 "&gnome-download-http;/NetworkManager/&NetworkManager-minor;/NetworkManager-&NetworkManager-version;.tar.xz">
   <!ENTITY NetworkManager-download-ftp  " ">
-  <!ENTITY NetworkManager-md5sum        "a03d302085a799ed76f4034198408062">
-  <!ENTITY NetworkManager-size          "5.7 MB">
+  <!ENTITY NetworkManager-md5sum        "418994d70bee71a502d9df92c70bca61">
+  <!ENTITY NetworkManager-size          "5.8 MB">
   <!ENTITY NetworkManager-buildsize     "299 MB (med tester og dokumentasjon)">
   <!ENTITY NetworkManager-time          "0.9 SBU (med tester, bruker parallellisme=4)">
 ]>
@@ -114,7 +114,6 @@
       <xref linkend="ModemManager"/>,
       (<xref linkend="qt5"/> eller
        <xref role="node" linkend="qt5-components"/> med qtdoc) (for eksempler),
-      <xref linkend="ModemManager"/>,
 	  <xref linkend="upower"/>,
       <xref linkend="valgrind"/>,
       <ulink url="https://thekelleys.org.uk/dnsmasq/doc.html">dnsmasq</ulink>,
@@ -201,16 +200,16 @@ CXXFLAGS+="-O2 -fPIC"            \
 meson setup ..                   \
       --prefix=/usr              \
       --buildtype=release        \
-      -Dlibaudit=no              \
-      -Dnmtui=true               \
-      -Dovs=false                \
-      -Dppp=false                \
-      -Dselinux=false            \
-      -Dsession_tracking=elogind \
-      -Dmodem_manager=false      \
-      -Dsystemdsystemunitdir=no  \
-      -Dsystemd_journal=false    \
-      -Dqt=false                 &amp;&amp;
+      -D libaudit=no              \
+      -D nmtui=true               \
+      -D ovs=false                \
+      -D ppp=false                \
+      -D selinux=false            \
+      -D session_tracking=elogind \
+      -D modem_manager=false      \
+      -D systemdsystemunitdir=no  \
+      -D systemd_journal=false    \
+      -D qt=false                 &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
@@ -220,14 +219,14 @@ CXXFLAGS+="-O2 -fPIC"            \
 meson setup ..                   \
       --prefix=/usr              \
       --buildtype=release        \
-      -Dlibaudit=no              \
-      -Dnmtui=true               \
-      -Dovs=false                \
-      -Dppp=false                \
-      -Dselinux=false            \
-      -Dqt=false                 \
-      -Dsession_tracking=systemd \
-      -Dmodem_manager=false      &amp;&amp;
+      -D libaudit=no              \
+      -D nmtui=true               \
+      -D ovs=false                \
+      -D ppp=false                \
+      -D selinux=false            \
+      -D qt=false                 \
+      -D session_tracking=systemd \
+      -D modem_manager=false      &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -282,44 +281,44 @@ done</userinput></screen>
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <option>-Ddocs=true</option>: Bruk denne bryteren for å aktivere bygging
+      <option>-D docs=true</option>: Bruk denne bryteren for å aktivere bygging
       av mansider og dokumentasjon hvis <xref linkend="gtk-doc"/> er installert.
     </para>
 
     <para>
-      <parameter>-Dnmtui=true</parameter>: Denne bryteren gjør det mulig å bygge
+      <parameter>-D nmtui=true</parameter>: Denne bryteren gjør det mulig å bygge
       <command>nmtui</command>.
     </para>
 
     <para revision="sysv">
-      <parameter>-Dsystemdsystemunitdir=no</parameter> og
-      <parameter>-Dsystemd_journal=false</parameter>: systemd er ikke
+      <parameter>-D systemdsystemunitdir=no</parameter> og
+      <parameter>-D systemd_journal=false</parameter>: systemd er ikke
       brukt til sysv init systemer, så unngå å installere enheter og bruke
       systemd journal.
     </para>
 
     <para>
-      <parameter>-Dovs=false</parameter>: Denne bryteren deaktiverer Open
+      <parameter>-D ovs=false</parameter>: Denne bryteren deaktiverer Open
       vSwitch integrasjon fordi den trenger <xref linkend='jansson'/>.
       Fjern den hvis du har <xref linkend='jansson'/> installert på systemet
       ditt.
     </para>
 
     <para>
-      <parameter>-Dmodem_manager=false</parameter>: Denne bryteren er nødvendig hvis
+      <parameter>-D modem_manager=false</parameter>: Denne bryteren er nødvendig hvis
       <application>ModemManager</application> ikke er installert. Utelat denne bryteren
       hvis du har bygget <application>ModemManager</application> og
       <application>mobile-broadband-provider-info</application>.
     </para>
 
     <para revision="sysv">
-      <parameter>-Dsession_tracking=elogind</parameter>: Denne bryteren
+      <parameter>-D session_tracking=elogind</parameter>: Denne bryteren
       brukes til å sette <command>elogind</command> som
       standardprogram for øktsporing.
     </para>
 
     <para revision="systemd">
-      <parameter>-Dsession_tracking=systemd</parameter>: Denne bryteren
+      <parameter>-D session_tracking=systemd</parameter>: Denne bryteren
       brukes til å sette <command>systemd-logind</command> som
       standardprogram for øktsporing.
     </para>
@@ -331,7 +330,7 @@ done</userinput></screen>
     </para>
 -->
     <para>
-      <parameter>-Dppp=false</parameter>: Denne bryteren deaktiverer
+      <parameter>-D ppp=false</parameter>: Denne bryteren deaktiverer
       <application>PPP</application> støtte i
       <application>NetworkManager</application> siden programmene er nødvendige
       for det ikke er installert. Fjern denne bryteren hvis du trenger PPP støtte og
@@ -339,33 +338,33 @@ done</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Dlibaudit=no</parameter> og
+      <parameter>-D libaudit=no</parameter> og
       <parameter>-Dselinux=false</parameter>: Denne bryteren deaktiverer støtte for
       libaudit og SELinux siden de ikke brukes i BLFS.
     </para>
 
     <para>
-      <parameter>-Dqt=false</parameter>: deaktiverer
+      <parameter>-D qt=false</parameter>: deaktiverer
       <parameter>-Dqt=false</parameter>: Denne bryteren deaktiverer
       <application>Qt</application> eksempler. Utelat hvis du har
       <application>Qt</application> tilgjengelig og ønsker å installere eksemplene.
     </para>
 
     <para>
-      <option>-Dcrypto=gnutls</option>: Bruk denne bryteren hvis du har GnuTLS
+      <option>-D crypto=gnutls</option>: Bruk denne bryteren hvis du har GnuTLS
       installert og ønsker å bruke den til sertifikat og nøkkel operasjoner i
       NetworkManager, i stedet for å bruke NSS (standard).
     </para>
 
     <para>
-      <option>-Dcrypto=null</option>: Bruk denne bryteren hvis verken NSS eller
+      <option>-D crypto=null</option>: Bruk denne bryteren hvis verken NSS eller
       GnuTLS er installert, men du vil uansett bygge NetworkManager. Denne
       bryteren vil få NetworkManager til å mangle noen funksjoner (for eksempel
       802.1X).
     </para>
 
     <para>
-      <option>-Dsuspend_resume=upower</option>: Bruk denne bryteren hvis
+      <option>-D suspend_resume=upower</option>: Bruk denne bryteren hvis
       du har <xref linkend='upower'/> installert og ønsker å bruke den
       (i stedet for &logind;) for å suspendere og gjenoppta støtte.
     </para>

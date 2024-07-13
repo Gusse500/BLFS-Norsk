@@ -6,16 +6,16 @@
 
   <!ENTITY firefox-download-http "&mozilla-http;/firefox/releases/&firefox-version;esr/source/firefox-&firefox-version;esr.source.tar.xz">
   <!ENTITY firefox-download-ftp  " ">
-  <!ENTITY firefox-md5sum        "4f50cdde9c8ea7a3dba886ebbab7d970">
-  <!ENTITY firefox-size          "482 MB">
+  <!ENTITY firefox-md5sum        "df9b2b465d99a050464bd71eae73a6f1">
+  <!ENTITY firefox-size          "542 MB">
 
   <!-- NB with stylo, much of the build uses rust, and therefore cargo files.
     But the extra cached cargo files, if any, seem to be minimal -->
-  <!ENTITY firefox-buildsize     "5.8 GB (199 MB installert) uten tester">
+  <!ENTITY firefox-buildsize     "6.7 GB (223 MB installert) uten tester">
   <!-- editors: with ff63 and rust-1.29, ./mach build -j4 is probably the
    most practical way to get a timing on a machine with more cores, if taking
    cores offline is not practical. If in doubt, round up -->
-  <!ENTITY firefox-time          "12 SBU bruker -j8, uten tester">
+  <!ENTITY firefox-time          "15 SBU bruker -j8, uten tester">
 ]>
 
 <sect1 id="firefox" xreflabel="Firefox-&firefox-version;">
@@ -367,6 +367,7 @@ esac</userinput></screen>
 <screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;-ffmpeg_6-1.patch</userinput></screen>-->
 
     <!-- https://github.com/rust-lang/rust-bindgen/pull/2689 -->
+<!--
     <para>
       Tilpass det leverte <application>rust-bindgen</application> kopi for
  LLVM-18 og senere, og fortell <command>cargo</command> vi har modifisert
@@ -387,8 +388,10 @@ EOF
 
 sed -r '/name = "bindgen"/,+5 s/^source|^checksum/#&amp;/' \
     -i Cargo.lock</userinput></screen>
+-->
 
     <!-- https://hg.mozilla.org/mozilla-central/rev/ba6abbd36b49 -->
+<!--
     <para>
       Tilpass WebRTC koden til å bruke 64-biters tidsstempel for å fikse en byggefeil
       med Clang-18 og senere:
@@ -408,6 +411,7 @@ sed '/mInputImageMap/s/uint32_t/uint64_t/' \
     </para>
 
     <screen><userinput>sed '/cfg_attr/,/)]/d' -i gfx/qcms/src/lib.rs</userinput></screen>
+-->
 
     <para>
       Påkall nå Python <command>mach</command> skript for å kompilere pakken.
