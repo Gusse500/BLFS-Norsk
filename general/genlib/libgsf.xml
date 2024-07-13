@@ -67,6 +67,16 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/libgsf-&libgsf-version;-upstream_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">libgsf Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -93,11 +103,18 @@
     <title>Installasjon av libgsf</title>
 
     <para>
+      Først, fiks byggingen av <application>libgsf</application> med libxml2-2.13:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../libgsf-&libgsf-version;-upstream_fixes-1.patch</userinput></screen>
+
+    <para>
       Installer <application>libgsf</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+<screen><userinput>autoreconf -fiv                            &amp;&amp;
+./configure --prefix=/usr --disable-static &amp;&amp;
 make</userinput></screen>
 
     <para>
