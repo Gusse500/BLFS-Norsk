@@ -6,10 +6,10 @@
 
   <!ENTITY gdb-download-http "&gnu-http;/gdb/gdb-&gdb-version;.tar.xz">
   <!ENTITY gdb-download-ftp  " ">
-  <!ENTITY gdb-md5sum        "4452f575d09f94276cb0a1e95ecff856">
+  <!ENTITY gdb-md5sum        "494e3beaac44e66367c3e443a4414529">
   <!ENTITY gdb-size          "23 MB">
-  <!ENTITY gdb-buildsize     "964 MB (legg til 805 MB for dokumenter; legg til 654 MB for tester)">
-  <!ENTITY gdb-time          "1.8 SBU (legg til 0,4 SBU for dokumenter; legg til 15 SBU for tester; alle bruker parallellisme=4)">
+  <!ENTITY gdb-buildsize     "806 MB (legg til 1.0 GB for dokumenter; legg til 720 MB for tester)">
+  <!ENTITY gdb-time          "0.9 SBU (legg til 0.4 SBU for dokumenter; se nedenfor for tester; alle bruker parallellisme=8)">
 ]>
 
 <sect1 id="gdb" xreflabel="GDB-&gdb-version;">
@@ -133,19 +133,41 @@ make</userinput></screen>
 <screen remap="doc"><userinput>make -C gdb/doc doxy</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør:
+      Det anbefales ikke å kjøre testene. Resultatene varierer mye avhengig av
+      systemarkitekturen og hvilke valgfrie avhengigheter som er installert
+      og hvilken versjon av gcc som brukes. På ett testet system var det
+      140 uventede feil (av over 108 000 tester) og på et annet system
+      var det "bare" 32 uventede feil. Tiden for å kjøre testene
+      varierer fra ca. 6 SBU til over 15 SBU ved bruk av -j8. Dette avhenger
+      på antall tester som får tidsavbrudd og andre faktorer.  
+    </para>
+
+    <tip>
+      <para>
+         Med en vanlig <command>make check</command>, er det mange advarsel
+         meldinger om en manglende global konfigurasjonsfil. Disse kan 
+         unngås ved å kjøre <command>touch global.exp</command> og forberede
+         <command>make check</command> kommandoen med
+         <command>DEJAGNU=$PWD/global.exp</command>.  I tillegg kan testene
+         bruke mindre tid betraktelig ved å bruke <command>make</command> valget
+         "-j&lt;N&gt;" hvor &lt;N&gt; er antall kjerner på systemet ditt.
+      </para>
+    </tip>
+
+    <para>
+      For å teste resultatene uansett, utsted:
     </para>
 
 <screen remap="test"><userinput>pushd gdb/testsuite &amp;&amp;
 make  site.exp      &amp;&amp;
-echo  "set gdb_test_timeout 120" &gt;&gt; site.exp &amp;&amp;
-runtest
+echo  "set gdb_test_timeout 30" &gt;&gt; site.exp &amp;&amp;
+make check 2&gt;1 | tee gdb-check.log
 popd</userinput></screen>
 
     <para>
       Se <emphasis>gdb/testsuite/README</emphasis> og <ulink
       url="https://sourceware.org/gdb/wiki/TestingGDB">TestingGDB</ulink>.
-      Det er mange problemer med testpakken:
+      Det er mange ytterligere problemer med testpakken:
     </para>
 
     <itemizedlist>
@@ -197,8 +219,9 @@ or this
         </para>
       </listitem>
 -->
-      <listitem>
+<!--      <listitem>
         <para>
+		-->
 <!-- for gdb-11.1, gcc-11.2 - pierre
           A test run of the test suite had about 1700 unexpected failures
           (out of over 80000 tests). Over 1370 of the failures were related
@@ -207,10 +230,13 @@ or this
           A test run of the test suite had a little over 200 unexpected failures
           out of over 94000 tests.-->
 <!-- for gdb-13.0, gcc-12.2.0 - bdubbs
-          En testkjøring av testpakken hadde 33 uventede feil
+          A test run of the test suite had 33 unexpected failures
+          out of over 106000 tests. -->
+<!-- for gdb-13.2, gcc-13.1.0 - pierre
+          A test run of the test suite had 183 unexpected failures
           out of over 105000 tests. -->
 <!-- for gdb-14.1, gcc 13.2.0 - rahul -->
-          En testkjøring av testpakken hadde 51 uventede feil
+<!--          En testkjøring av testpakken hadde 51 uventede feil
           av de over 106 000 testene.
         </para>
       </listitem>
@@ -221,7 +247,7 @@ or this
           SSH.
         </para>
       </listitem>
-
+-->
       <listitem>
         <para>
           På noen AMD baserte systemer, over 200 ekstra tester
