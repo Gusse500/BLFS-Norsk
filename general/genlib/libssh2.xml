@@ -77,7 +77,6 @@
       </listitem>
     </itemizedlist>
 
-
     <bridgehead renderas="sect3">libssh2 Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -103,12 +102,14 @@
 
     <para>
       Hvis du ønsker å teste pakken, ekskluder testene som krever et statisk
-      bibliotek:
+      bibliotek, og fjerne referansen til en usikker algoritme som er fjernet
+      siden OpenSSH 9.8:
     </para>
 
 <screen><userinput>sed -E '/^DOCKER_TEST/,/^SSHD_TEST/s/test_(auth_keyboard_info.* |hostkey |simple)/$(NOTHING)/' \
     -i tests/Makefile.inc &amp;&amp;
-autoreconf -fi</userinput></screen>
+autoreconf -fi &amp;&amp;
+sed 's/ssh-dss,//' -i tests/openssh_server/sshd_config</userinput></screen>
 
     <para>
       Installer <application>libssh2</application> ved å kjøre følgende
