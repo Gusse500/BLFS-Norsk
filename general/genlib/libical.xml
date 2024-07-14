@@ -96,6 +96,15 @@
   <sect2 role="installation">
     <title>Installasjon av libical</title>
 
+    <!-- https://github.com/libical/libical/pull/690 -->
+    <para>
+      Hvis <xref linkend='icu'/> er installert, fiks en inkompatibilitet
+      med ICU 75 eller senere:
+    </para>
+
+    <screen><userinput>sed '/getKeywordValuesForLocale/s/NULL/""/' \
+    -i ../src/libical/icalrecur.c</userinput></screen>
+
     <para>
       Installer <application>libical</application> ved å kjøre
       følgende kommandoer:
@@ -130,12 +139,12 @@ make</userinput></screen>
 
 <screen remap="doc"><userinput>make docs</userinput></screen>
 
+    <!-- https://github.com/libical/libical/pull/684
+         It looks like an ICU bug but I've not got time to investigate
+         carefully.  -->
     <para>
       For å teste resultatene, utsted: <command>make test</command>.
-      <!-- En test, timezones, er kjent for å mislykkes på SysV systemer. -->
-      <!-- På systemd symlinker vi gjeldende tidssone til
-           /etc/localtime, som er det libical forventer.
-           Dette gjøres nå også på SysV.-->
+      En test navngitt <literal>icalrecurtest-r</literal> er kjent for å mislykkes.
     </para>
 
     <para>
