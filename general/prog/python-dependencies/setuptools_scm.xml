@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../../general.ent">
   %general-entities;
 
-  <!ENTITY setuptools_scm-download-http "https://files.pythonhosted.org/packages/source/s/setuptools_scm/setuptools-scm-&setuptools_scm-version;.tar.gz">
+  <!ENTITY setuptools_scm-download-http "https://files.pythonhosted.org/packages/source/s/setuptools_scm/setuptools_scm-&setuptools_scm-version;.tar.gz">
   <!ENTITY setuptools_scm-download-ftp  " ">
   <!ENTITY setuptools_scm-md5sum        "&setuptools_scm-md5sum;">
   <!ENTITY setuptools_scm-size          "70 KB">
@@ -69,8 +69,7 @@
 
       <bridgehead renderas="sect5">Påkrevd</bridgehead>
       <para role="required">
-        <xref linkend="packaging"/> og
-        <xref linkend="typing_extensions"/>
+        <xref linkend="packaging"/>
       </para>
 
       <bridgehead renderas="sect5">Valgfri (for testing)</bridgehead>
@@ -99,19 +98,19 @@
 
     <para>
       For å teste installasjonen, sørg for at <xref linkend='pytest'/> er
-      installert og kjør:
+      installert og kjør (<literal>HOME=</literal> forhindrer at
+      <filename>.gitconfig</filename> filen i hjemmemappen
+      forstyrrer testene):
     </para>
 
 <screen remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
 testenv/bin/pip3 install build                 &amp;&amp;
-testenv/bin/python -m pytest</userinput></screen>
+HOME= testenv/bin/python -m pytest</userinput></screen>
 
     <para>
       Hvis <xref linkend='git'/> og/eller <xref linkend='mercurial'/> ikke er
       installert, vil testene avhengig av den(e) som mangler, hoppes over.
       Noen tester kan påkalle <xref linkend='sudo'/> og be om et passord.
-      Noen tester kan mislykkes hvis din <application>git</application>
-      konfigurasjonen ikke er den som forventes av testpakken.
     </para>
 
     </sect3>
