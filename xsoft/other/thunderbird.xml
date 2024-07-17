@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY thunderbird-download-http "&mozilla-http;/thunderbird/releases/&thunderbird-version;/source/thunderbird-&thunderbird-version;.source.tar.xz">
+  <!ENTITY thunderbird-download-http "&mozilla-http;/thunderbird/releases/&thunderbird-version;esr/source/thunderbird-&thunderbird-version;esr.source.tar.xz">
   <!ENTITY thunderbird-download-ftp  " ">
-  <!ENTITY thunderbird-md5sum        "699134531dc31e9e7e62c47b82773508">
-  <!ENTITY thunderbird-size          "515 MB">
-  <!ENTITY thunderbird-buildsize     "6.1 GB (224 MB installert)">
-  <!ENTITY thunderbird-time          "12 SBU (på en 8 kjernes maskin)">
+  <!ENTITY thunderbird-md5sum        "f20899eb706a94076ac88dfe97cc7a88">
+  <!ENTITY thunderbird-size          "642 MB">
+  <!ENTITY thunderbird-buildsize     "7.8 GB (256 MB installert)">
+  <!ENTITY thunderbird-time          "16 SBU (på en 8 kjernes maskin)">
   <!-- Removed the -j1 time because python and rust do not obey it, although
        the C/C++ code appears to obey it.
 
@@ -17,11 +17,11 @@
        -->
 ]>
 
-<sect1 id="thunderbird" xreflabel="Thunderbird-&thunderbird-version;">
+<sect1 id="thunderbird" xreflabel="Thunderbird-&thunderbird-version;esr">
   <?dbhtml filename="thunderbird.html" ?>
 
 
-  <title>Thunderbird-&thunderbird-version;</title>
+  <title>Thunderbird-&thunderbird-version;esr</title>
 
   <indexterm zone="thunderbird">
     <primary sortas="a-Thunderbird">Thunderbird</primary>
@@ -247,6 +247,7 @@ ac_add_options --without-wasm-sandboxed-libraries</literal>
 EOF</userinput></screen>
 
     <!-- https://github.com/rust-lang/rust-bindgen/pull/2689 -->
+<!--
     <para>
       Tilpass den leverte <application>rust-bindgen</application> kopien for
       LLVM-18 og senere, og fortell <command>cargo</command> vi har modifisert
@@ -267,8 +268,10 @@ EOF
 
 sed -r '/name = "bindgen"/,+5 s/^source|^checksum/#&amp;/' \
     -i Cargo.lock</userinput></screen>
+-->
 
     <!-- https://hg.mozilla.org/mozilla-central/rev/ba6abbd36b49 -->
+<!--
     <para>
       Tilpass WebRTC koden til å bruke 64-biters tidsstempel for å fikse en byggefeil
       med Clang-18 og senere:
@@ -288,6 +291,7 @@ sed '/mInputImageMap/s/uint32_t/uint64_t/' \
     </para>
 
     <screen><userinput>sed '/cfg_attr/,/)]/d' -i gfx/qcms/src/lib.rs</userinput></screen>
+-->
 
     <para>
       Påkall nå Python <command>mach</command> skriptet for å kompilere
@@ -300,8 +304,9 @@ sed '/mInputImageMap/s/uint32_t/uint64_t/' \
     </note>
 
 <screen><userinput>export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none &amp;&amp;
-export MOZBUILD_STATE_PATH=./mozbuild               &amp;&amp;
+export MOZBUILD_STATE_PATH=$(pwd)/mozbuild          &amp;&amp;
 ./mach build</userinput></screen>
+
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
@@ -381,7 +386,7 @@ unset MOZBUILD_STATE_PATH</userinput></screen>
 
       <para>
         Først åpner du konfigurasjonsdialogen ved å åpne <quote>Edit</quote>
-        nedtrekksmenyen. Velg <quote>Preferences</quote> og bla nedover
+        nedtrekksmenyen. Velg <quote>Settings</quote> og bla nedover
         til bunnen av siden. Klikk deretter på <quote>Config Editor</quote>
         knappen. Klikk på <quote>I accept the risk!</quote> knappen.
         Dette vil vise en liste over konfigurasjonspreferansene og
@@ -396,13 +401,15 @@ unset MOZBUILD_STATE_PATH</userinput></screen>
         ønskede data i feltene når du blir bedt om det.
       </para>
 
+ <!-- Doesn't seem to be present anymore in 128.0
       <para>
         Konfigurasjons preferanseelementet du må sjekke slik at
         <application>Thunderbird</application> bruker en spesifisert nettleser er
         <parameter>network.protocol-handler.app.http</parameter> som bør
         settes til banen til ønsket nettleser, f.eks.
         <option>/usr/bin/firefox</option>.
-      </para>
+     </para>
+-->
 <!--  Bad URL
       <tip>
         <para>
