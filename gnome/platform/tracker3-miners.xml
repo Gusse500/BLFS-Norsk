@@ -66,7 +66,6 @@
       </listitem>
     </itemizedlist>
 
-<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -76,7 +75,6 @@
         </para>
       </listitem>
     </itemizedlist>
--->
 
     <bridgehead renderas="sect3">Tracker-miners Avhengigheter</bridgehead>
 
@@ -157,14 +155,12 @@
 <screen remap="test"><userinput>sed -i s/120/<replaceable>200</replaceable>/ tests/functional-tests/meson.build</userinput></screen>
     </note>
 
-<!-- Applied in 3.6.2
     <para>
-      Først må du fikse noen problemer med den nylige tilstrammingen av seccomp
-      sandkassen:
+      Først, fiks ett problem i TIFF-ekstraktoren og et annet problem i
+      Landlock sandkassen:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../tracker-miners-&tracker3-miners-version;-upstream_fixes-1.patch</userinput></screen>
--->
 
     <para>
       Installer <application>Tracker-miners</application> ved å kjøre følgende
@@ -177,28 +173,35 @@ cd    build &amp;&amp;
 
 meson setup --prefix=/usr       \
             --buildtype=release \
-            -Dman=false         \
+            -D man=false        \
             ..                  &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr                 \
-            --buildtype=release           \
-            -Dsystemd_user_services=false \
-            -Dman=false                   \
-            ..                            &amp;&amp;
+meson setup --prefix=/usr                  \
+            --buildtype=release            \
+            -D systemd_user_services=false \
+            -D man=false                   \
+            ..                             &amp;&amp;
 ninja</userinput></screen>
 
-      <!-- tiff-photo-1 fails due to
-+      https://gitlab.gnome.org/GNOME/tracker-miners/-/issues/341 -->
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+    <screen role="root"><userinput>ninja install</userinput></screen>
+
     <para>
       For å teste resultatene, kjør (justere den individuelle testtidsavbruddet til en
       verdi som passer for din maskin, se merknaden ovenfor):
     </para>
 
-<screen remap="test"><userinput>dbus-run-session env TRACKER_TESTS_AWAIT_TIMEOUT=<replaceable>20</replaceable> ninja test &amp;&amp;
+<screen remap="test"><userinput>meson configure -D debug=true &amp;&amp;
+dbus-run-session env LC_ALL=C.UTF-8 TRACKER_TESTS_AWAIT_TIMEOUT=<replaceable>20</replaceable> \
+                 ninja test &amp;&amp;
 rm -rf ~/tracker-tests</userinput></screen>
 
     <note>
@@ -207,12 +210,6 @@ rm -rf ~/tracker-tests</userinput></screen>
         de må fjernes etterpå.
       </para>
     </note>
-
-    <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>ninja install</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
@@ -222,20 +219,20 @@ rm -rf ~/tracker-tests</userinput></screen>
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dman=false</parameter>: Denne bryteren forhindrer byggeprosessen
+      <parameter>-D man=false</parameter>: Denne bryteren forhindrer byggeprosessen
       fra å generere mansider. Utelat denne bryteren hvis du har
       <xref linkend="asciidoc" role="nodep"/> installert og ønsker å generere og
       installere mansidene.
     </para>
 
     <para revision="sysv">
-      <parameter>-Dsystemd_user_services=false</parameter>: Denne bryteren forhindrer
+      <parameter>-D systemd_user_services=false</parameter>: Denne bryteren forhindrer
       byggeprosessen fra å installere systemd enheter siden de er ubrukelige
       på SysV systemer.
     </para>
 
     <para>
-      <option>-Dseccomp=false</option>: Dette alternativet deaktiverer seccomp system
+      <option>-D seccomp=false</option>: Dette alternativet deaktiverer seccomp system
       anropsfilter. På noen arkitekturer, som i686 og ARM, fungerer funksjonene
       som tracker-miners bruker er ikke bevoktet ordentlig, og tracker-miners
       vil bli drept med en SIGSYS som resultat.  Merk at deaktivering av
@@ -245,7 +242,7 @@ rm -rf ~/tracker-tests</userinput></screen>
     </para>
 
     <para>
-      <option>-Dlandlock=disabled</option>: Denne bryteren deaktiverer
+      <option>-D landlock=disabled</option>: Denne bryteren deaktiverer
       Sandkasse for filtilgang til landlås. Bruk den hvis du ikke vil bygge
       kjernen med Landlock støtte. Merk at deaktivering av Landlock kan
       forårsake at systemet blir kompromittert mer alvorlig i tilfelle en sikkerhethets
@@ -253,12 +250,12 @@ rm -rf ~/tracker-tests</userinput></screen>
     </para>
 
     <para>
-      <option>-Dminer_rss=false</option>: Bruk dette alternativet hvis du ikke har
+      <option>-D miner_rss=false</option>: Bruk dette alternativet hvis du ikke har
       installert den anbefalte avhengigheten libgrss.
     </para>
 
     <para>
-      <option>-Dbattery_detection=none</option>: Bruk dette alternativet hvis du ikke har
+      <option>-D battery_detection=none</option>: Bruk dette alternativet hvis du ikke har
       installert den anbefalte avhengigheten upower. Ikke bruk dette
       alternativet hvis systemet ditt har et batteri (bærbar batteri eller UPS), eller
       tracker miners kan kaste bort batteristrøm og levetid når 
