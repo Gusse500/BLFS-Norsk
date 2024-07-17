@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY freerdp-download-http "https://github.com/freerdp/freerdp/archive/&freerdp-version;/FreeRDP-&freerdp-version;.tar.gz">
+  <!ENTITY freerdp-md5sum        "b1674bac82fecf8d3c9783e21ad247f2">
+  <!ENTITY freerdp-size          "9.7 MB">
+  <!ENTITY freerdp-buildsize     "130 MB">
+  <!ENTITY freerdp-time          "0.7 SBU">
+]>
+
+<sect1 id="freerdp" xreflabel="FreeRDP-&freerdp-version;">
+  <?dbhtml filename="freerdp.html"?>
+
+  <title>FreeRDP-&freerdp-version;</title>
+
+  <indexterm zone="freerdp">
+    <primary sortas="a-freerdp">FreeRDP</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til FreeRDP</title>
+
+    <para>
+      <application>FreeRDP</application> pakken inneholder biblioteker og
+      verktøy for å bruke Remote Desktop Protocol. Dette inkluderer verktøy for
+      å kjøre en RDP server samt koble til en datamaskin ved hjelp av RDP. Dette
+      brukes først og fremst for å koble til Microsoft Windows datamaskiner, men kan
+      også brukes på Linux og macOS.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&freerdp-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &freerdp-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &freerdp-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &freerdp-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &freerdp-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">FreeRDP Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="ffmpeg"/>,
+      <xref linkend="icu"/>, og
+      <xref linkend="xorg7-lib"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="cairo"/>,
+      <xref linkend="docbook-xsl"/>,
+      <xref linkend="fuse3"/>,
+      <xref linkend="json-c"/>,
+      <xref linkend="mitkrb"/>,
+      <xref linkend="libusb"/>,
+      <xref linkend="libxkbcommon"/>, og
+      <xref linkend="wayland"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="cups"/>,
+      <xref linkend="faac"/>,
+      <xref linkend="faad2"/>,
+      <xref linkend="lame"/>,
+      <xref linkend="linux-pam"/>,
+      <xref linkend="pulseaudio"/>,
+      <ulink url="https://github.com/DaveGamble/cJSON">cJSON</ulink>,
+      <ulink url="https://www.quut.com/gsm/">GSM</ulink>,
+      <ulink url="https://github.com/OCL-dev/ocl-icd">ocl-icd</ulink>,
+      <ulink url="https://github.com/Mbed-TLS/mbedtls">mbedTLS</ulink>,
+      <ulink url="https://www.openh264.org/">openh264</ulink>,
+      <ulink url="https://pcsclite.apdu.fr/">pcsclite</ulink>,
+      <ulink url="https://github.com/libsdl-org/SDL_ttf">SDL_ttf</ulink>,
+      <ulink url="https://github.com/chirlu/soxr">soxr</ulink>, og
+      <ulink url="https://github.com/uriparser/uriparser">uriparser</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av FreeRDP</title>
+
+    <para>
+      Installer <application>FreeRDP</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr                                         \
+      -D CMAKE_SKIP_INSTALL_RPATH=OFF                                      \
+      -D CMAKE_BUILD_TYPE=Release                                          \
+      -D WITH_CAIRO=ON                                                     \
+      -D WITH_CLIENT_SDL=OFF                                               \
+      -D WITH_DSP_FFMPEG=ON                                                \
+      -D WITH_FFMPEG=ON                                                    \
+      -D WITH_PCSC=OFF                                                     \
+      -D WITH_SERVER=ON                                                    \
+      -D WITH_SERVER_CHANNELS=ON                                           \
+      -D DOCBOOKXSL_DIR=/usr/share/xml/docbook/xsl-stylesheets-nons-&docbook-xsl-version; \
+      -W no-dev                                                            \
+      -G Ninja                                                             .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/cmake-skip-install-rpath.xml"/>
+
+    <para>
+      <parameter>-D DOCBOOKXSL_DIR=/usr/share/xml/docbook/xsl-stylesheets-nons-&docbook-xsl-version;</parameter>:
+      Denne parameteren peker CMake til plasseringen av Docbook XSL
+      stilark, og er nødvendig fordi BLFS ikke bruker namespaced versjoner
+      av stilarkene. Dette er nødvendig for å lage manualsider. Hvis du ikke
+      ønsker manualsider, send -DWITH_MANPAGES=OFF til CMake i stedet.
+    </para>
+
+    <para>
+      <parameter>-D WITH_CAIRO=ON</parameter>: Denne parameteren bruker Cairo for å
+      støtte høy DPI og vindustørrelse.
+    </para>
+
+    <para>
+      <parameter>-D WITH_CLIENT_SDL=OFF</parameter>: Denne parameteren deaktiverer
+      bruk av SDL for å tegne vinduet når du bruker FreeRDP klienten. Dette er
+      deaktivert fordi det avhenger av
+      <ulink url="https://github.com/libsdl-org/SDL_ttf">SDL_ttf</ulink>.
+      Fjern denne bryteren hvis du har SDL_ttf pakken installert.
+    </para>
+
+    <para>
+      <parameter>-D WITH_FFMPEG=ON</parameter>: Denne parameteren aktiverer støtte
+      for bruk av ffmpeg for H.264 grafikkgjengivelsesmodus, som er nødvendig
+      ved tilkobling via RDP til Windows Server 2012 (eller Windows 8) eller nyere
+      verter.
+    </para>
+
+    <para>
+      <parameter>-D WITH_DSP_FFMPEG=ON</parameter>: Denne parameteren aktiverer
+      støtte for bruk av ffmpeg for av lyd og mikrofon omdirigering.
+    </para>
+
+    <para>
+      <parameter>-D WITH_PCSC=OFF</parameter>: Denne parameteren deaktiverer støtte
+      for SmartCards siden BLFS ikke har den nødvendige avhengigheten for det.
+    </para>
+
+    <para>
+      <parameter>-D WITH_SERVER=ON</parameter>: Denne parameteren gjør det mulig å bygge
+      FreeRDP serverkomponentene. Fjern denne parameteren hvis du ikke vil
+      bruke FreeRDP serveren.
+    </para>
+
+    <para>
+      <parameter>-D WITH_SERVER_CHANNELS=ON</parameter>: Denne parameteren bygger
+      ekstra programtillegg for FreeRDP serveren.
+    </para>
+
+    <para>
+      <option>-D WITH_LAME=ON</option>: Bruk dette alternativet hvis du ønsker å aktivere
+      støtte for bruk av LAME for å gi MP3 Audio Codec støtte.
+    </para>
+    
+    <para>
+      <option>-D WITH_FAAC=ON</option>: Bruk dette alternativet hvis du ønsker å aktivere
+      støtte for bruk av FAAC for å gi AAC Audio Codec støtte.
+    </para>
+    
+    <para>
+      <option>-D WITH_FAAD2=ON</option>: Bruk dette alternativet hvis du ønsker å aktivere
+      støtte for bruk av FAAD2 for å gi AAC Audio Codec støtte.
+    </para>
+    
+    <para>
+      <option>-D WITH_MBEDTLS=ON</option>: Bruk dette alternativet hvis du har den
+      valgfrie avhengigheten
+      <ulink url="https://github.com/Mbed-TLS/mbedtls">mbedTLS</ulink> installert
+      og ønsker å bruke det som et alternativ til OpenSSL for kryptografistøtte.
+    </para>
+
+    <para>
+      <option>-D WITH_OPENCL=ON</option>: Bruk dette alternativet hvis du har den
+      valgfrie avhengigheten
+      <ulink url="https://github.com/OCL-dev/ocl-icd">ocl-icd</ulink>
+      installert og ønsker å bruke OpenCL støtte.
+    </para>
+
+    <para>
+      <option>-D WITH_OPENH264=ON</option>: Bruk dette alternativet hvis du har den
+      valgfrie avhengigheten
+      <ulink url="https://www.openh264.org/">openh264</ulink> installert og
+      ønsker å bruke den for H.264 støtte i stedet for ffmpeg.
+    </para>
+    
+    <para>
+      <option>-D WITH_GSM=ON</option>: Bruk dette alternativet hvis du har den valgfrie
+      avhengigheten <ulink url="https://www.quut.com/gsm/">GSM</ulink> installert
+      og ønsker å bruke GSM som en lydkodek.
+    </para>
+    
+    <para>
+      <option>-D WITH_SOXR=ON</option>: Bruk dette alternativet hvis du har den valgfrie
+      avhengigheten <ulink url="https://github.com/chirlu/soxr">soxr</ulink>
+      installert og ønsker å bruke den i stedet for ffmpeg for multimedia omdirigering.
+    </para>
+    
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          freerdp-proxy,
+          freerdp-shadow-cli,
+          sfreerdp,
+          sfreerdp-server,
+          winpr-hash,
+          winpr-makecert,
+          wlfreerdp,
+          xfreerdp
+        </seg>
+        <seg>
+          libfreerdp3.so,
+          libfreerdp-client3.so,
+          libfreerdp-server3.so,
+          libfreerdp-server-proxy3.so,
+          libfreerdp-shadow3.so,
+          libfreerdp-shadow-subsystem3.so,
+          librtdk0.so,
+          libuwac0.so,
+          libwinpr3.so, og
+          libwinpr-tools3.so
+        </seg>
+        <seg>
+          /usr/include/{freerdp3,rdtk0,uwac0,winpr3},
+          /usr/lib/cmake/{FreeRDP3,FreeRDP-Client3,FreeRDP-Proxy3,FreeRDP-Server3,rdtk0,uwac0,WinPR3,WinPR-tools3},
+          /usr/lib/freerdp3,
+          /usr/share/FreeRDP
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <!-- If the program or library name conflicts with (is the same as) the
+      package name, add -prog or -lib to the varlistentry entity id
+      and the 2nd entry of the indexterm zone entity -->
+
+      <varlistentry id="freerdp-proxy">
+        <term><command>freerdp-proxy</command></term>
+        <listitem>
+          <para>
+            konfigurerer FreeRDP til å bruke en proxy server
+          </para>
+          <indexterm zone="freerdp freerdp-proxy">
+            <primary sortas="b-freerdp-proxy">freerdp-proxy</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="freerdp-shadow-cli">
+        <term><command>freerdp-shadow-cli</command></term>
+        <listitem>
+          <para>
+            grensesnitt med skyggefunksjonaliteten i FreeRDP
+          </para>
+          <indexterm zone="freerdp freerdp-shadow-cli">
+            <primary sortas="b-freerdp-shadow-cli">freerdp-shadow-cli</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="sfreerdp">
+        <term><command>sfreerdp</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å dele en X-skjerm over RDP
+          </para>
+          <indexterm zone="freerdp sfreerdp">
+            <primary sortas="b-sfreerdp">sfreerdp</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="sfreerdp-server">
+        <term><command>sfreerdp-server</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å dele en X-skjerm over RDP
+          </para>
+          <indexterm zone="freerdp sfreerdp-server">
+            <primary sortas="b-sfreerdp-server">sfreerdp-server</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="winpr-hash">
+        <term><command>winpr-hash</command></term>
+        <listitem>
+          <para>
+            oppretter en NTLM hash fra et brukernavn og passordpar
+          </para>
+          <indexterm zone="freerdp winpr-hash">
+            <primary sortas="b-winpr-hash">winpr-hash</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="winpr-makecert">
+        <term><command>winpr-makecert</command></term>
+        <listitem>
+          <para>
+            oppretter X.509-sertifikater for bruk med FreeRDP
+          </para>
+          <indexterm zone="freerdp winpr-makecert">
+            <primary sortas="b-winpr-makecert">winpr-makecert</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="wlfreerdp">
+        <term><command>wlfreerdp</command></term>
+        <listitem>
+          <para>
+            er en RDP klient for Wayland
+          </para>
+          <indexterm zone="freerdp wlfreerdp">
+            <primary sortas="b-wlfreerdp">wlfreerdp</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="xfreerdp">
+        <term><command>xfreerdp</command></term>
+        <listitem>
+          <para>
+            er en RDP klient for for X11
+          </para>
+          <indexterm zone="freerdp xfreerdp">
+            <primary sortas="b-xfreerdp">xfreerdp</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libfreerdp3">
+        <term><filename class="libraryfile">libfreerdp3.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner som gir RDP klient og server funksjonalitet
+          </para>
+          <indexterm zone="freerdp libfreerdp3">
+            <primary sortas="c-libfreerdp3">libfreerdp3.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
