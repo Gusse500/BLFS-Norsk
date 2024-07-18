@@ -131,31 +131,32 @@ xreflabel="evolution-data-server-&evolution-data-server-version;">
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr    \
-      -DSYSCONF_INSTALL_DIR=/etc     \
-      -DENABLE_VALA_BINDINGS=ON      \
-      -DENABLE_INSTALLED_TESTS=ON    \
-      -DWITH_OPENLDAP=OFF            \
-      -DWITH_KRB5=OFF                \
-      -DENABLE_INTROSPECTION=ON      \
-      -DENABLE_GTK_DOC=OFF           \
-      -DWITH_LIBDB=OFF               \
-      -Wno-dev -G Ninja ..           &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr    \
+      -D SYSCONF_INSTALL_DIR=/etc     \
+      -D ENABLE_VALA_BINDINGS=ON      \
+      -D ENABLE_INSTALLED_TESTS=ON    \
+      -D WITH_OPENLDAP=OFF            \
+      -D WITH_KRB5=OFF                \
+      -D ENABLE_INTROSPECTION=ON      \
+      -D ENABLE_GTK_DOC=OFF           \
+      -D WITH_LIBDB=OFF               \
+      -D WITH_SYSTEMDUSERUNITDIR=no   \
+      -W no-dev -G Ninja ..           &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr    \
-      -DSYSCONF_INSTALL_DIR=/etc     \
-      -DENABLE_VALA_BINDINGS=ON      \
-      -DENABLE_INSTALLED_TESTS=ON    \
-      -DWITH_OPENLDAP=OFF            \
-      -DWITH_KRB5=OFF                \
-      -DENABLE_INTROSPECTION=ON      \
-      -DENABLE_GTK_DOC=OFF           \
-      -DWITH_LIBDB=OFF               \
-      -Wno-dev -G Ninja ..           &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr    \
+      -D SYSCONF_INSTALL_DIR=/etc     \
+      -D ENABLE_VALA_BINDINGS=ON      \
+      -D ENABLE_INSTALLED_TESTS=ON    \
+      -D WITH_OPENLDAP=OFF            \
+      -D WITH_KRB5=OFF                \
+      -D ENABLE_INTROSPECTION=ON      \
+      -D ENABLE_GTK_DOC=OFF           \
+      -D WITH_LIBDB=OFF               \
+      -W no-dev -G Ninja ..           &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -186,32 +187,32 @@ ninja</userinput></screen>
 -->
 
     <para>
-      <parameter>-DENABLE_VALA_BINDINGS=ON</parameter>: Denne bryteren
+      <parameter>-D ENABLE_VALA_BINDINGS=ON</parameter>: Denne bryteren
       bygger Vala bindingene. Fjern hvis du ikke
       har <xref linkend="vala"/> installert.
     </para>
 
     <para>
-      <parameter>-DENABLE_GTK_DOC=OFF</parameter>: Denne bryteren
+      <parameter>-D ENABLE_GTK_DOC=OFF</parameter>: Denne bryteren
       deaktiverer bygging av API dokumentasjonen. Det er ødelagt for
       denne pakken på grunn av bruken av et lenge utdatert gtk-doc program
       som ikke lenger er tilgjengelig.
     </para>
 
     <para>
-      <parameter>-DWITH_LIBDB=OFF</parameter>: Denne bryteren tillater bygging
+      <parameter>-D WITH_LIBDB=OFF</parameter>: Denne bryteren tillater bygging
       av denne pakken uten &berkeley-db;.  <!--Denne pakken bruker kun
       &berkeley-db; for å importere data fra svært utdaterte utgivelser.-->
       <xref linkend="sqlite"/> brukes til normal drift.
     </para>
 
     <para>
-      <option>-DENABLE_OAUTH2_WEBKITGTK4=OFF</option>: Bruk denne bryteren hvis
+      <option>-D ENABLE_OAUTH2_WEBKITGTK4=OFF</option>: Bruk denne bryteren hvis
       du ikke bygde <xref linkend="webkitgtk" role="nodep"/> med GTK-4.
     </para>
 
     <para revision="sysv">
-      <parameter>-DWITH_SYSTEMDUSERUNITDIR=no</parameter>: Denne bryteren
+      <parameter>-D WITH_SYSTEMDUSERUNITDIR=no</parameter>: Denne bryteren
       deaktiverer installasjon av systemd enheter, som ikke brukes for et Sysv
       bygg.
     </para>
