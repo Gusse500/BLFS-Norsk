@@ -85,15 +85,15 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr      \
-      -DCMAKE_BUILD_TYPE=Release       \
-      -DCMAKE_SKIP_INSTALL_RPATH=ON    \
-      -Dprotobuf_BUILD_TESTS=OFF       \
-      -Dprotobuf_ABSL_PROVIDER=package \
-      -Dprotobuf_BUILD_LIBUPB=OFF      \
-      -Dprotobuf_BUILD_SHARED_LIBS=ON  \
-      -Dutf8_range_ENABLE_INSTALL=OFF  \
-      -G Ninja ..                      &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr      \
+      -D CMAKE_BUILD_TYPE=Release       \
+      -D CMAKE_SKIP_INSTALL_RPATH=ON    \
+      -D protobuf_BUILD_TESTS=OFF       \
+      -D protobuf_ABSL_PROVIDER=package \
+      -D protobuf_BUILD_LIBUPB=OFF      \
+      -D protobuf_BUILD_SHARED_LIBS=ON  \
+      -D utf8_range_ENABLE_INSTALL=OFF  \
+      -G Ninja ..                       &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -124,26 +124,26 @@ ninja install</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Dprotobuf_BUILD_TESTS=OFF</parameter>: Denne parameteren forhindrer
+      <parameter>-D protobuf_BUILD_TESTS=OFF</parameter>: Denne parameteren forhindrer
       testene fra å bygges pga
       <ulink url="https://github.com/google/googletest">gtest</ulink> ikke er
       en del av BLFS.
     </para>
 
     <para>
-      <parameter>-Dprotobuf_ABSL_PROVIDER=package</parameter>: Denne parameteren
+      <parameter>-D protobuf_ABSL_PROVIDER=package</parameter>: Denne parameteren
       lar byggesystemet bruke den systeminstallerte kopien av
       <xref linkend="abseil-cpp" role="nodep"/>.
     </para>
 
     <para>
-      <parameter>-Dprotobuf_BUILD_SHARED_LIBS=ON</parameter>: Denne parameteren
+      <parameter>-D protobuf_BUILD_SHARED_LIBS=ON</parameter>: Denne parameteren
       gjør det mulig å bygge delte versjoner av bibliotekene som tilbys av denne pakken
       i stedet for statiske versjoner.
     </para>
 
     <para>
-      <parameter>-Dutf8_range_ENABLE_INSTALL=OFF</parameter>: Denne parameteren
+      <parameter>-D utf8_range_ENABLE_INSTALL=OFF</parameter>: Denne parameteren
       deaktiverer installasjon av utf8_range statiske bibliotek. Funksjonene
       levert av dette biblioteket og brukt av protobuf er allerede innebygd i
       <filename class='libraryfile'>libprotobuf.so</filename>, så å installere

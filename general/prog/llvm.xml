@@ -289,20 +289,20 @@ mv projects/compiler-rt-&llvm-version;.src projects/compiler-rt</userinput></scr
 <screen><userinput>mkdir -v build &amp;&amp;
 cd       build &amp;&amp;
 
-CC=gcc CXX=g++                              \
-cmake -DCMAKE_INSTALL_PREFIX=/usr           \
-      -DCMAKE_SKIP_INSTALL_RPATH=ON         \
-      -DLLVM_ENABLE_FFI=ON                  \
-      -DCMAKE_BUILD_TYPE=Release            \
-      -DLLVM_BUILD_LLVM_DYLIB=ON            \
-      -DLLVM_LINK_LLVM_DYLIB=ON             \
-      -DLLVM_ENABLE_RTTI=ON                 \
-      -DLLVM_TARGETS_TO_BUILD="host;AMDGPU" \
-      -DLLVM_BINUTILS_INCDIR=/usr/include   \
-      -DLLVM_INCLUDE_BENCHMARKS=OFF         \
-      -DCLANG_DEFAULT_PIE_ON_LINUX=ON       \
-      -DCLANG_CONFIG_FILE_SYSTEM_DIR=/etc/clang \
-      -Wno-dev -G Ninja ..                  &amp;&amp;
+CC=gcc CXX=g++                               \
+cmake -D CMAKE_INSTALL_PREFIX=/usr           \
+      -D CMAKE_SKIP_INSTALL_RPATH=ON         \
+      -D LLVM_ENABLE_FFI=ON                  \
+      -D CMAKE_BUILD_TYPE=Release            \
+      -D LLVM_BUILD_LLVM_DYLIB=ON            \
+      -D LLVM_LINK_LLVM_DYLIB=ON             \
+      -D LLVM_ENABLE_RTTI=ON                 \
+      -D LLVM_TARGETS_TO_BUILD="host;AMDGPU" \
+      -D LLVM_BINUTILS_INCDIR=/usr/include   \
+      -D LLVM_INCLUDE_BENCHMARKS=OFF         \
+      -D CLANG_DEFAULT_PIE_ON_LINUX=ON       \
+      -D CLANG_CONFIG_FILE_SYSTEM_DIR=/etc/clang \
+      -W no-dev -G Ninja ..                  &amp;&amp;
 ninja</userinput></screen>
 <!-- Commented out because myst-parser is not in BLFS and we cannot test
     <para>
@@ -311,10 +311,10 @@ ninja</userinput></screen>
       manualsider med følgende kommandoer:
     </para>
 
-<screen remap="doc"><userinput>cmake -DLLVM_BUILD_DOCS=ON            \
-      -DLLVM_ENABLE_SPHINX=ON         \
-      -DSPHINX_WARNINGS_AS_ERRORS=OFF \
-      -Wno-dev -G Ninja ..            &amp;&amp;
+<screen remap="doc"><userinput>cmake -D LLVM_BUILD_DOCS=ON            \
+      -D LLVM_ENABLE_SPHINX=ON         \
+      -D SPHINX_WARNINGS_AS_ERRORS=OFF \
+      -W no-dev -G Ninja ..            &amp;&amp;
 ninja docs-llvm-html  docs-llvm-man</userinput></screen>
 
     <para>
@@ -439,26 +439,26 @@ rmdir -v - -ignore-fail-on-non-empty /usr/share/doc/LLVM</userinput></screen>
       href="../../xincludes/cmake-skip-install-rpath.xml"/>
 
     <para>
-      <parameter>-DLLVM_ENABLE_FFI=ON</parameter>: Denne bryteren tillater
+      <parameter>-D LLVM_ENABLE_FFI=ON</parameter>: Denne bryteren tillater
       <application>LLVM</application> å bruke
       <application>libffi</application>.
     </para>
 
     <para>
-      <parameter>-DLLVM_BUILD_LLVM_DYLIB=ON</parameter>: Denne bryteren bygger
+      <parameter>-D LLVM_BUILD_LLVM_DYLIB=ON</parameter>: Denne bryteren bygger
       bibliotekene som statiske og kobler dem alle sammen til en unik delt.
       Dette er den anbefalte måten å bygge et delt bibliotek på.
     </para>
 
     <para>
-      <parameter>-DCMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren aktiverer
+      <parameter>-D CMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren aktiverer
       kompilatoroptimaliseringer for å øke hastigheten på koden og redusere størrelsen.
       Den deaktiverer også noen kompileringskontroller som ikke er nødvendige på en
       produksjonssystem.
     </para>
 
     <para>
-      <parameter>-DLLVM_TARGETS_TO_BUILD="host;AMDGPU"</parameter>: Denne
+      <parameter>-D LLVM_TARGETS_TO_BUILD="host;AMDGPU"</parameter>: Denne
       bryteren gjør det mulig å bygge for samme mål som verten, og også for
       r600 AMD GPU som brukes av Mesa r600 og radeonsi drivere.
       Standard er
@@ -469,21 +469,21 @@ rmdir -v - -ignore-fail-on-non-empty /usr/share/doc/LLVM</userinput></screen>
     </para>
 
     <para>
-      <parameter>-DLLVM_LINK_LLVM_DYLIB=ON</parameter>: Brukes sammen med
-      <parameter>-DLLVM_BUILD_LLVM_DYLIB=ON</parameter>, denne bryteren aktiverer
+      <parameter>-D LLVM_LINK_LLVM_DYLIB=ON</parameter>: Brukes sammen med
+      <parameter>-D LLVM_BUILD_LLVM_DYLIB=ON</parameter>, denne bryteren aktiverer
       kobling av verktøyene mot det delte biblioteket i stedet for de statiske.
       Det reduserer størrelsen litt og sikrer også at llvm-config
       vil bruke libLLVM-&llvm-maj-version;.so riktig.
     </para>
 
     <para>
-      <parameter>-DLLVM_ENABLE_RTTI=ON</parameter>: Denne bryteren brukes til
+      <parameter>-D LLVM_ENABLE_RTTI=ON</parameter>: Denne bryteren brukes til
       å bygge LLVM med informasjon om kjøretidstype. Dette er nødvendig for å bygge
       <xref linkend="mesa"/>.
     </para>
 
     <para>
-      <parameter>-DLLVM_BINUTILS_INCDIR=/usr/include</parameter>: Denne bryteren
+      <parameter>-D LLVM_BINUTILS_INCDIR=/usr/include</parameter>: Denne bryteren
       brukes til å fortelle byggesystemet plasseringen av binutils deklarasjoner,
       som ble installert i LFS. Dette tillater bygging av
       <filename class="libraryfile">LLVMgold.so</filename>, som trengs
@@ -492,36 +492,36 @@ rmdir -v - -ignore-fail-on-non-empty /usr/share/doc/LLVM</userinput></screen>
     </para>
 
     <para>
-      <parameter>-DLLVM_INCLUDE_BENCHMARKS=OFF</parameter>:
+      <parameter>-D LLVM_INCLUDE_BENCHMARKS=OFF</parameter>:
       brukes til å deaktivere generasjonsbyggmål for LLVM
       benchmarks. Dette alternativet krever tilleggskode som
       ikke er tilgjengelig for øyeblikket.
     </para>
 
     <para>
-      <parameter>-DCLANG_DEFAULT_PIE_ON_LINUX=ON</parameter>: gjør
+      <parameter>-D CLANG_DEFAULT_PIE_ON_LINUX=ON</parameter>: gjør
       <option>-fpie</option> alternativet standard når du kompilerer programmer.
       Sammen med <xref linkend="gASLR"/> funksjonen aktivert i kjernen,
       dette beseirer en slags angrep basert på kjente minneoppsett.
     </para>
 
     <para>
-      <parameter>-DCLANG_CONFIG_FILE_SYSTEM_DIR=/etc/clang</parameter>:
+      <parameter>-D CLANG_CONFIG_FILE_SYSTEM_DIR=/etc/clang</parameter>:
       gjør at <command>clang</command> og <command>clang++</command>
       søker <filename class='directory'>/etc/clang</filename> for
       konfigurasjonsfiler.
     </para>
 
     <para>
-      <option>-DBUILD_SHARED_LIBS=ON</option>: hvis brukt i stedet for
-      <parameter>-DLLVM_BUILD_LLVM_DYLIB=ON</parameter> og
-      <parameter>-DLLVM_LINK_LLVM_DYLIB=ON</parameter>, bygger alle
+      <option>-D BUILD_SHARED_LIBS=ON</option>: hvis brukt i stedet for
+      <parameter>-D LLVM_BUILD_LLVM_DYLIB=ON</parameter> og
+      <parameter>-D LLVM_LINK_LLVM_DYLIB=ON</parameter>, bygger alle
       <application>LLVM</application> biblioteker (ca. 60) som delte
       biblioteker i stedet for statiske.
     </para>
 
     <para>
-      <option>-DLLVM_ENABLE_DOXYGEN</option>: Gjør det mulig å generere
+      <option>-D LLVM_ENABLE_DOXYGEN</option>: Gjør det mulig å generere
       søkbar HTML dokumentasjon hvis du har installert <xref
       linkend="doxygen"/>. Du bør kjøre <command>make doxygen-html</command>
       etterpå, og installer den genererte dokumentasjonen manuelt.
