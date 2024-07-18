@@ -161,10 +161,10 @@ chown -v postfix:postfix /var/mail</userinput></screen>
 
       <note>
         <para>
-          For alle varianter av CCARGS bør du sørge for at -DNO_NIS er
+          For alle varianter av CCARGS bør du sørge for at -D NO_NIS er
           spesifisert slik at byggingen ikke prøver å få tilgang til en rpcsvc 
           deklarasjonen som ikke finnes i BLFS.  Hvis &berkeley-db; ikke
-          er installert, -DNO_DB må spesifiseres også.
+          er installert, -D NO_DB må spesifiseres også.
         </para>
       </note>
 
@@ -177,7 +177,7 @@ chown -v postfix:postfix /var/mail</userinput></screen>
         i henhold til notatet ovenfor:
       </para>
 
-<screen><userinput>CCARGS="-DNO_NIS -DNO_DB"
+<screen><userinput>CCARGS="-D NO_NIS -D NO_DB"
 AUXLIBS=""</userinput></screen>
 
       <para>
@@ -198,7 +198,7 @@ AUXLIBS=""</userinput></screen>
         </para>
 
 <screen><userinput>if [ -r /usr/lib/libsasl2.so ]; then
-  CCARGS="$CCARGS -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl"
+  CCARGS="$CCARGS -D USE_SASL_AUTH -D USE_CYRUS_SASL -I/usr/include/sasl"
   AUXLIBS="$AUXLIBS -lsasl2"
 fi</userinput></screen>
       </sect4>
@@ -211,7 +211,7 @@ fi</userinput></screen>
         </para>
 
 <screen><userinput>if [ -r /usr/lib/liblmdb.so ]; then
-  CCARGS="$CCARGS -DHAS_LMDB"
+  CCARGS="$CCARGS -D HAS_LMDB"
   AUXLIBS="$AUXLIBS -llmdb"
 fi</userinput></screen>
       </sect4>
@@ -225,7 +225,7 @@ fi</userinput></screen>
         </para>
 
 <screen><userinput>if [ -r /usr/lib/libldap.so -a -r /usr/lib/liblber.so ]; then
-  CCARGS="$CCARGS -DHAS_LDAP"
+  CCARGS="$CCARGS -D HAS_LDAP"
   AUXLIBS="$AUXLIBS -lldap -llber"
 fi</userinput></screen>
 
@@ -240,7 +240,7 @@ fi</userinput></screen>
         </para>
 
 <screen><userinput>if [ -r /usr/lib/libsqlite3.so ]; then
-  CCARGS="$CCARGS -DHAS_SQLITE"
+  CCARGS="$CCARGS -D HAS_SQLITE"
   AUXLIBS="$AUXLIBS -lsqlite3 -lpthread"
 fi</userinput></screen>
 
@@ -255,7 +255,7 @@ fi</userinput></screen>
         </para>
 
 <screen><userinput>if [ -r /usr/lib/libmysqlclient.so ]; then
-  CCARGS="$CCARGS -DHAS_MYSQL -I/usr/include/mysql"
+  CCARGS="$CCARGS -D HAS_MYSQL -I/usr/include/mysql"
   AUXLIBS="$AUXLIBS -lmysqlclient -lz -lm"
 fi</userinput></screen>
 
@@ -270,7 +270,7 @@ fi</userinput></screen>
         </para>
 
 <screen><userinput>if [ -r /usr/lib/libpq.so ]; then
-  CCARGS="$CCARGS -DHAS_PGSQL -I/usr/include/postgresql"
+  CCARGS="$CCARGS -D HAS_PGSQL -I/usr/include/postgresql"
   AUXLIBS="$AUXLIBS -lpq -lz -lm"
 fi</userinput></screen>
 
@@ -286,7 +286,7 @@ fi</userinput></screen>
         </para>
 
 <screen><literal>if [ -r <replaceable>&lt;/path/to/CDB&gt;</replaceable>/libcdb.a ]; then
-  CCARGS="$CCARGS -DHAS_CDB"
+  CCARGS="$CCARGS -D HAS_CDB"
   AUXLIBS="$AUXLIBS <replaceable>&lt;/path/to/CDB&gt;</replaceable>/libcdb.a"
 fi</literal></screen>
 
@@ -301,7 +301,7 @@ fi</literal></screen>
         </para>
 
 <screen><userinput>if [ -r /usr/lib/libssl.so -a -r /usr/lib/libcrypto.so ]; then
-  CCARGS="$CCARGS -DUSE_TLS -I/usr/include/openssl/"
+  CCARGS="$CCARGS -D USE_TLS -I/usr/include/openssl/"
   AUXLIBS="$AUXLIBS -lssl -lcrypto"
 fi</userinput></screen>
         <para>
@@ -368,7 +368,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      <option>CCARGS="-DNO_EAI ..."</option>: dette vil slå av SMTPUTF8
+      <option>CCARGS="-D NO_EAI ..."</option>: dette vil slå av SMTPUTF8
       støtte, for eksempel hvis resten av e-postadressens infrastruktur
       ikke kan håndtere UTF-8-e-postadresser og meldingsdeklarasjonsverdier.
     </para>
