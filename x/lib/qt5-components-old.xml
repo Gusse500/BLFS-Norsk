@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY qt5-major "5.15">
+  <!ENTITY qt5-url   "https://download.qt.io/archive/qt/&qt5-major;/&qt5-version;/single">
+
+  <!ENTITY qt5-download-http "&qt5-url;/qt-everywhere-opensource-src-&qt5-version;.tar.xz">
+  <!ENTITY qt5-download-ftp  " ">
+  <!ENTITY qt5-md5sum        "3fb1cd4f763f5d50d491508b7b99fb77">
+  <!ENTITY qt5-size          "630 MB">
+  <!ENTITY qt5-buildsize     "varierer">
+  <!ENTITY qt5-time          "varierer">
+]>
+
+<sect1 id="qt5-components" xreflabel="qt-components-&qt5-version;">
+  <?dbhtml filename="qt5-components.html" ?>
+
+  <title>qt-components-&qt5-version;</title>
+
+  <indexterm zone="qt5-components">
+    <primary sortas="a-Qt5-components">Qt Components</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til qt5 components</title>
+
+    <para>
+      Disse instruksjonene viser hvordan du bygger ytterligere Qt5 komponenter utover
+      <xref linkend="qt5-alternate"/>.  De gjelder ikke hvis den
+      fulle <xref linkend="qt5"/> pakken er bygget.
+    </para>
+
+    &lfs121_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&qt5-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&qt5-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &qt5-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &qt5-size;
+        </para>
+      </listitem>
+<!--
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &qt5-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &qt5-time;
+        </para>
+      </listitem>
+-->
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nå som <application>qt5</application> oppdateringer er begrenset til
+          kommersielle kunder, oppstrøms patcher for de ulike modulene er
+          blir kurert hos kde.
+          Patcher for modulene som kreves av pakker i BLFS har vært
+          samlet for den ikke-modulære qt5-byggingen vi bruker.
+        </para>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/qt-everywhere-opensource-src-&qt5-version;-kf5-1.patch"/>
+        </para>
+        <para>
+          Detaljer om kde kurasjonen kan finnes på
+          <ulink url="https://dot.kde.org/2021/04/06/announcing-kdes-qt-5-patch-collection"/>
+          og <ulink url="https://community.kde.org/Qt5PatchCollection"/>.
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">qt5 components Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="qt5-alternate"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalte avhengigheter for qtimageformats</bridgehead>
+    <para role="recommended">
+      <xref linkend="jasper"/>,
+      <xref linkend="libmng"/>,
+      <xref linkend="libtiff"/>, og
+      <xref linkend="libwebp"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalte avhengigheter for qtmultimedia</bridgehead>
+    <para role="recommended">
+      <xref linkend="gst10-plugins-good"/>,
+      <xref linkend="gst10-plugins-bad"/>, og
+      <xref linkend="gst10-plugins-ugly"/>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av qt5 komponenter</title>
+
+    <para>
+      Det er noen ekstra komponenter som trengs for forskjellige pakker i BLFS.
+      Disse er
+      <emphasis role="bold">qtimageformats</emphasis>,
+      <emphasis role="bold">qtwebchannel</emphasis>,
+      <emphasis role="bold">qtdoc</emphasis>, og
+      <emphasis role="bold">qtmultimedia</emphasis>.
+      Bare de komponentene som er spesifisert for en bestemt
+      pakke er nødvendig. Du trenger bare å bygge de relevante komponentene.
+    </para>
+
+    <para>
+      Først, bruk en oppdatering for å trekke inn rettelsene kurert av KDE for noen av de
+      moduler oppført ovenfor:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../qt-everywhere-opensource-src-&qt5-version;-kf5-1.patch</userinput></screen>
+
+    <para>
+      Installer hver ønsket komponent ved å kjøre følgende kommandoer:
+    </para>
+
+<screen><userinput>cd <replaceable>&lt;component&gt;</replaceable>
+qmake <replaceable>&lt;component&gt;</replaceable>.pro
+make</userinput></screen>
+
+    <para>
+      Som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+    <!-- EDITORS NOTE: This package uses INSTALL_ROOT= instead of DESTDIR= for
+         installing in a temporary directory. -->
+
+    <para>
+      Fjern referanser til byggekatalogen fra installert bibliotek
+      avhengighetsfiler (prl) ved å kjøre følgende
+      kommando som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>find $QT5DIR/ -name \*.prl \
+   -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;</userinput></screen>
+
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libQt5&lt;component&gt;.so
+        </seg>
+        <seg>
+          $QT5DIR/qml/&lt;component&gt;,
+          $QT5DIR/lib/cmake/&lt;component&gt;, og
+          $QT5DIR/include/&lt;component&gt;
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

@@ -11,8 +11,8 @@
   <!ENTITY qt5-download-ftp  " ">
   <!ENTITY qt5-md5sum        "3fb1cd4f763f5d50d491508b7b99fb77">
   <!ENTITY qt5-size          "630 MB">
-  <!ENTITY qt5-buildsize     "varierer">
-  <!ENTITY qt5-time          "varierer">
+  <!ENTITY qt5-buildsize     "8.5 GB (154 MB installert)">
+  <!ENTITY qt5-time          "7.4 SBU (bruke parallellisme=4)">
 ]>
 
 <sect1 id="qt5-components" xreflabel="qt-components-&qt5-version;">
@@ -21,17 +21,31 @@
   <title>qt-components-&qt5-version;</title>
 
   <indexterm zone="qt5-components">
-    <primary sortas="a-Qt5-components">Qt Komponenter</primary>
+    <primary sortas="a-Qt5-">Qt Komponenter</primary>
   </indexterm>
 
   <sect2 role="package">
     <title>Introduksjon til qt5 komponenter</title>
 
     <para>
-      Disse instruksjonene viser hvordan du bygger ytterligere Qt5 komponenter utover
-      <xref linkend="qt5-alternate"/>.  De gjelder ikke hvis
-      fulle <xref linkend="qt5"/> pakken er bygget.
+      <application>Qt5</application> er et applikasjonsrammeverk på tvers av plattformer
+      som er mye brukt for å utvikle applikasjonsprogramvare med et grafisk
+      brukergrensesnitt (GUI) (i hvilke tilfeller <application>qt5</application> er
+      klassifisert som et widget-verktøysett), og brukes også til å utvikle ikke-GUI
+      programmer som kommandolinjeverktøy og konsoller for servere. To av
+      store brukere av <application>qt</application> er <application>KDE
+      Frameworks 5 (KF5)</application> og <application>LXQt</application>.
     </para>
+
+    <important>
+      <para>
+         Den fulle <application>qt5</application> pakken består av 43 separate
+         komponenter. Disse instruksjonene bruker en liten delmengde av hele
+         <application>qt5</application> installasjonsinstruksjoner.
+         De dekker komponentene som trengs for å bygge
+         pakker i BLFS. 
+      </para>
+    </important>
 
     &lfs121_checked;
 
@@ -57,7 +71,6 @@
           Nedlastingsstørrelse: &qt5-size;
         </para>
       </listitem>
-<!--
       <listitem>
         <para>
           Estimert diskplass som kreves: &qt5-buildsize;
@@ -68,14 +81,13 @@
           Estimert byggetid: &qt5-time;
         </para>
       </listitem>
--->
     </itemizedlist>
 
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nå, som <application>qt5</application> oppdateringer er begrenset til
+          Nå som <application>qt5</application> oppdateringer er begrenset til
           kommersielle kunder, oppstrøms oppdateringer for de ulike modulene er
           vedlikeholdt hos kde.
           Oppdateringer for modulene som kreves av pakker i BLFS har blitt
@@ -91,63 +103,225 @@
           og <ulink url="https://community.kde.org/Qt5PatchCollection"/>.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/qt-everywhere-opensource-src-&qt5-version;-security_fix-1.patch"/>
+        </para>
+      </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">qt5 komponenter Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">qt5 Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="qt5-alternate"/>
+      <xref linkend="xorg7-lib"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalte avhengigheter for qtimageformats</bridgehead>
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="jasper"/>,
-      <xref linkend="libmng"/>,
-      <xref linkend="libtiff"/>, og
-      <xref linkend="libwebp"/>
+      <xref linkend="alsa-lib"/>,
+      <xref linkend="at-spi2-core"/>,
+      <xref linkend="cups"/>,
+      <phrase revision='sysv'><xref linkend="dbus"/>,</phrase>
+      <xref linkend="double-conversion"/>,
+      <xref linkend="glib2"/>,
+      <xref linkend="harfbuzz"/>,
+      <xref linkend="icu"/>,
+      <xref linkend="hicolor-icon-theme"/>,
+      <xref linkend="mesa"/>,
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libxkbcommon"/>,
+      <xref linkend="sqlite"/>,
+      <xref linkend="wayland"/> (<application>Mesa</application>
+      må bygges med <application>Wayland</application> EGL
+      backend),
+      <xref linkend="xcb-util-image"/>,
+      <xref linkend="xcb-util-keysyms"/>,
+      <xref linkend="xcb-util-renderutil"/>, og
+      <xref linkend="xcb-util-wm"/>
     </para>
 
-    <bridgehead renderas="sect4">Anbefalte avhengigheter for qtmultimedia</bridgehead>
-    <para role="recommended">
-      <xref linkend="gst10-plugins-good"/>,
-      <xref linkend="gst10-plugins-bad"/>, og
-      <xref linkend="gst10-plugins-ugly"/>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="gtk3"/>,
+      <xref linkend="libinput"/>
+      <xref linkend="mariadb"/>
+        eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
+      <xref linkend="mitkrb"/>,
+      <xref linkend="mtdev"/>
+      <xref linkend="postgresql"/>, og
+      <xref linkend="unixodbc"/>
     </para>
 
   </sect2>
 
-  <sect2 role="installation">
-    <title>Installasjon av qt5 komponenter</title>
+  <sect2 role="qt5-prefix">
+    <title>Stille inn installasjonsprefikset</title>
+
+    <bridgehead renderas="sect3">Installing in /opt/qt5</bridgehead>
 
     <para>
-      Det er noen ekstra komponenter som trengs for forskjellige pakker i BLFS.
-      Disse er
-      <emphasis role="bold">qtimageformats</emphasis>,
-      <emphasis role="bold">qtwebchannel</emphasis>,
-      <emphasis role="bold">qtdoc</emphasis>, og
-      <emphasis role="bold">qtmultimedia</emphasis>.
-      Bare de komponentene som er spesifisert for en bestemt
-      pakke er nødvendig. Du trenger bare å bygge de relevante komponentene.
+      BLFS redaktørene anbefaler å installere <application>qt5</application> i en
+      mappe annet enn <filename class="directory">/usr</filename>, dvs.
+      <filename class="directory">/opt/qt5</filename>.  For å gjøre dette, still inn
+      følgende miljøvariabel:
     </para>
 
+<screen><userinput>export QT5PREFIX=/opt/qt5</userinput></screen>
+
+    <tip>
+      <para>
+        Noen ganger er installasjonsbanene hardkodet til installerte filer.
+        Dette er grunnen <filename class="directory">/opt/qt5</filename>
+        brukes som installasjonsprefiks i stedet for <filename
+        class="directory">/opt/qt-&qt5-version;</filename>. For å lage en
+        versjonert <application>qt5</application> mappe etter at
+        installasjonen er fullført, kan du gi nytt navn til mappen og opprette en symbolkobling:
+      </para>
+
+<screen role="root"><userinput>mkdir -pv /opt/qt-&qt5-version;
+ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
+
+      <para>
+        Senere kan du ønske å installere andre versjoner av
+        <application>qt5</application>. For å gjøre det, fjern bare symbolkoblingen
+        og bruk <filename class="directory">/opt/qt5</filename> som
+        prefikset igjen. Hvilken versjon av <application>qt5</application> du
+        bruker avhenger bare av hvor symbollinken peker.
+      </para>
+    </tip>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av qt5</title>
+
+    <warning>
+      <para>
+        Hvis <application>qt5</application> blir reinstallert i
+        samme mappe som en eksisterende forekomst, kjør kommandoene utført av
+        &root;, som
+        <command>make install</command>, fra en konsoll eller ikke-qt5 basert
+        vindusbehandler. Den overskriver <application>qt5</application>
+        biblioteker som ikke skal være i bruk under installasjonsprosessen.
+      </para>
+    </warning>
+
+    <caution>
+      <para>
+        Hvis du ikke installerte noen av de anbefalte avhengighetene, undersøk
+        <command>./configure --help</command> utdata for å sjekke hvordan du deaktiverer
+        dem eller bruk interne versjoner samlet i kildens tarball.
+      </para>
+    </caution>
+
+    <note>
+      <para>
+        BLFS redaktørene anbefaler ikke å installere
+        <application>qt5</application> inn i
+        <filename class="directory">/usr</filename> hierarkiet fordi det
+        blir vanskelig å finne komponenter og å oppdatere til en ny versjon.
+        Hvis du ønsker å installere <application>qt5</application> i
+        <filename class="directory">/usr</filename>, mappene må
+        spesifiseres eksplisitt. I dette tilfellet, sett
+        <envar>QT5PREFIX=/usr</envar> og legg til følgende i konfigurerings
+        argumentene nedenfor:
+      </para>
+
+<screen role="nodump"><userinput>            -archdatadir    /usr/lib/qt5                \
+            -bindir         /usr/bin                    \
+            -plugindir      /usr/lib/qt5/plugins        \
+            -importdir      /usr/lib/qt5/imports        \
+            -headerdir      /usr/include/qt5            \
+            -datadir        /usr/share/qt5              \
+            -docdir         /usr/share/doc/qt5          \
+            -translationdir /usr/share/qt5/translations \
+            -examplesdir    /usr/share/doc/qt5/examples</userinput></screen>
+    </note>
+
     <para>
-      Først, bruk en oppdatering for å trekke inn rettelsene vedlikeholdt av KDE for noen av de
-      moduler oppført ovenfor:
+      Bruk nå en oppdatering for å trekke inn rettelsene kurert av kde for disse
+      moduler som kreves av pakker nevnt i denne boken:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../qt-everywhere-opensource-src-&qt5-version;-kf5-1.patch</userinput></screen>
 
     <para>
-      Installer hver ønsket komponent ved å kjøre følgende kommandoer:
+      Oppdateringen er ment å brukes i et git depot. Ellers vil noen
+      filer som bør endres av <command>configure</command> etter
+      bruk av oppdateringen ikke berøres. Heldigvis er det nok å lage en
+      <filename class="directory">.git</filename> mappe i
+      <filename class="directory">qmake</filename> mappen hvor
+      <command>configure</command> skriptet kjøres:
     </para>
 
-<screen><userinput>cd <replaceable>&lt;component&gt;</replaceable>
-qmake <replaceable>&lt;component&gt;</replaceable>.pro
+    <screen><userinput remap="pre">mkdir -pv qtbase/.git</userinput></screen>
+
+    <para>
+      Rett opp en sikkerhetssårbarhet i qtbase:
+    </para>
+
+<screen><userinput>patch -Np1 -i ../qt-everywhere-opensource-src-&qt5-version;-security_fix-1.patch</userinput></screen>
+
+    <para>
+      På dette tidspunktet ønsker vi å sette opp å hoppe over de fleste komponentene. Gjør det med:
+    </para>
+
+<screen><userinput>ls -Fd qt* | grep / | sed 's/^/-skip /;s@/@@' > tempconf &amp;&amp;
+sed -i -r '/base|tools|x11extras|svg|declarative|wayland/d' tempconf</userinput></screen>
+
+    <para>
+      Hvis du ønsker å installere <xref linkend='NetworkManager'/> eksempler, kjør:
+      <command>sed -i '/qtdoc/d' tempconf</command>.
+    </para>
+
+    <para>
+      Hvis du velger å ikke installere <xref linkend='qt6'/> og ønsker å bruke qt5 med
+      wireshark, kjør: <command>sed -i '/qtmultimedia/d' tempconf</command>.
+    </para>
+
+    <para>
+      Nå, installer <application>qt5</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen revision="sysv"><userinput>./configure -prefix $QT5PREFIX   \
+            -sysconfdir /etc/xdg \
+            -confirm-license     \
+            -opensource          \
+            -dbus-linked         \
+            -openssl-linked      \
+            -system-harfbuzz     \
+            -system-sqlite       \
+            -nomake examples     \
+            -no-rpath            \
+            -syslog              \
+            $(cat tempconf)      \
+            &amp;&amp;
+make</userinput></screen>
+
+<screen revision="systemd"><userinput>./configure -prefix $QT5PREFIX   \
+            -sysconfdir /etc/xdg \
+            -confirm-license     \
+            -opensource          \
+            -dbus-linked         \
+            -openssl-linked      \
+            -system-harfbuzz     \
+            -system-sqlite       \
+            -nomake examples     \
+            -no-rpath            \
+            -journald            \
+            $(cat tempconf)      \
+            &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Som &root; bruker:
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -161,9 +335,240 @@ make</userinput></screen>
       kommando som &root; bruker:
     </para>
 
-<screen role="root"><userinput>find $QT5DIR/ -name \*.prl \
+<screen role="root"><userinput>find $QT5PREFIX/ -name \*.prl \
    -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;</userinput></screen>
 
+    <para>
+      Installer bilder og lag menyoppføringer for installerte applikasjoner.
+      <envar>QT5BINDIR</envar> variabelen brukes her for å peke på
+      mappen for de kjørbare programmene. Hvis du har endret bindir
+      ovenfor, <envar>QT5BINDIR</envar> må justeres nedenfor. Vær sikker
+      at <envar>QT5BINDIR</envar> variabel er definert i root sitt
+      miljø og som <systemitem class="username">root</systemitem>
+      bruker:
+    </para>
+
+<screen role="root"><userinput>QT5BINDIR=$QT5PREFIX/bin
+
+install -v -dm755 /usr/share/pixmaps/                  &amp;&amp;
+
+install -v -Dm644 qttools/src/assistant/assistant/images/assistant-128.png \
+                  /usr/share/pixmaps/assistant-qt5.png &amp;&amp;
+
+install -v -Dm644 qttools/src/designer/src/designer/images/designer.png \
+                  /usr/share/pixmaps/designer-qt5.png  &amp;&amp;
+
+install -v -Dm644 qttools/src/linguist/linguist/images/icons/linguist-128-32.png \
+                  /usr/share/pixmaps/linguist-qt5.png  &amp;&amp;
+
+install -v -Dm644 qttools/src/qdbus/qdbusviewer/images/qdbusviewer-128.png \
+                  /usr/share/pixmaps/qdbusviewer-qt5.png &amp;&amp;
+
+install -dm755 /usr/share/applications &amp;&amp;
+
+cat &gt; /usr/share/applications/assistant-qt5.desktop &lt;&lt; EOF
+<literal>[Desktop Entry]
+Name=Qt5 Assistant
+Comment=Shows Qt5 documentation and examples
+Exec=$QT5BINDIR/assistant
+Icon=assistant-qt5.png
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;Documentation;</literal>
+EOF
+
+cat &gt; /usr/share/applications/designer-qt5.desktop &lt;&lt; EOF
+<literal>[Desktop Entry]
+Name=Qt5 Designer
+GenericName=Interface Designer
+Comment=Design GUIs for Qt5 applications
+Exec=$QT5BINDIR/designer
+Icon=designer-qt5.png
+MimeType=application/x-designer;
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;</literal>
+EOF
+
+cat &gt; /usr/share/applications/linguist-qt5.desktop &lt;&lt; EOF
+<literal>[Desktop Entry]
+Name=Qt5 Linguist
+Comment=Add translations to Qt5 applications
+Exec=$QT5BINDIR/linguist
+Icon=linguist-qt5.png
+MimeType=text/vnd.trolltech.linguist;application/x-linguist;
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;</literal>
+EOF
+
+cat &gt; /usr/share/applications/qdbusviewer-qt5.desktop &lt;&lt; EOF
+<literal>[Desktop Entry]
+Name=Qt5 QDbusViewer
+GenericName=D-Bus Debugger
+Comment=Debug D-Bus applications
+Exec=$QT5BINDIR/qdbusviewer
+Icon=qdbusviewer-qt5.png
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;Debugger;</literal>
+EOF</userinput></screen>
+
+    <para>
+      Noen pakker som f.eks <xref linkend='vlc'/> se etter visse
+      kjørbare filer med suffikset -qt5. Kjør følgende kommando som
+      &root; bruker for å lage de nødvendige symbolkoblingene:
+    </para>
+
+<screen role="root"><userinput>for file in moc uic rcc qmake lconvert lrelease lupdate; do
+  ln -sfvn $QT5BINDIR/$file /usr/bin/$file-qt5
+done</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-confirm-license</parameter>: Godta lisens
+      uten å spørre brukeren under konfigurasjonen.
+    </para>
+
+    <para>
+      <parameter>-opensource</parameter>: Installer åpen kildekode
+      versjon av <application>qt</application>.
+    </para>
+
+    <para>
+      <parameter>-nomake examples</parameter>: Denne bryteren
+      deaktiverer bygging av eksempelprogrammene inkludert
+      i kilden tarball. Fjern den hvis du vil bygge
+      dem.
+    </para>
+
+    <para>
+      <parameter>-system-sqlite</parameter>: Denne bryteren muliggjør bruk
+      av systemversjonen av <application>SQLite</application>.
+    </para>
+
+    <para>
+      <parameter>-system-harfbuzz</parameter>: Denne bryteren muliggjør bruk
+      av systemversjonen av <application>Harfbuzz</application>.
+    </para>
+
+    <para>
+      <parameter>-dbus-linked</parameter>
+      <parameter>-openssl-linked</parameter>: Disse
+      brytere muliggjør eksplisitt kobling av
+      <application>D-Bus</application> og
+      <application>OpenSSL</application> biblioteker i
+      <application>qt5</application> biblioteker i stedet for å
+      <command>dlopen()</command>-ing dem.
+    </para>
+
+    <para revision="sysv">
+      <parameter>-syslog</parameter>: Denne bryteren lar deg sende qt meldinger
+      til <command>syslog</command> loggingssystem.
+    </para>
+
+    <para revision="systemd">
+      <parameter>-journald</parameter>: Denne bryteren lar deg sende qt meldinger
+      til <command>journald</command> loggingssystem.
+    </para>
+
+    <para>
+      <command>$(cat tempconf)</command>: Denne kommandoen gir en liste over
+      komponenter som ikke skal bygges. Disse oppføringene er i form av
+      "-skip &lt;component&gt;".
+    </para>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere qt5</title>
+
+    <sect3 id="qt5-config">
+      <title>Konfigurasjonsinformasjon</title>
+
+      <para>
+        Hvis <xref linkend="sudo"/> er installert, skal QT5DIR være tilgjengelig for
+        superbrukeren også. Utfør følgende kommandoer som
+        &root; bruker:
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/sudoers.d/qt &lt;&lt; "EOF"
+<literal>Defaults env_keep += QT5DIR</literal>
+EOF</userinput></screen>
+
+      <bridgehead renderas="sect4">Hvis du har installert qt5 i /usr</bridgehead>
+
+      <para>
+        Hvis du har installert <application>qt5</application> i
+        <filename class="directory">/usr</filename>, opprett en
+        miljøvariabel som kreves av visse pakker.
+        Som <systemitem class="username">root</systemitem> bruker:
+      </para>
+
+<screen role="nodump"><userinput>cat &gt; /etc/profile.d/qt5.sh &lt;&lt; "EOF"
+<literal># Begin /etc/profile.d/qt5.sh
+
+QT5DIR=/usr
+export QT5DIR
+
+# End /etc/profile.d/qt5.sh</literal>
+EOF</userinput></screen>
+
+      <bridgehead renderas="sect4">Hvis du ikke installerte qt5 i /usr</bridgehead>
+
+      <para>
+        Hvis du har installert <application>qt5</application> på et annet sted
+        enn <filename class="directory">/usr</filename>, må du oppdatere
+        følgende konfigurasjonsfiler slik at <application>qt5</application> er
+        riktig funnet av andre pakker og systemprosesser.
+      </para>
+
+      <para>
+        Som <systemitem class="username">root</systemitem> bruker, oppdater
+        <filename>/etc/ld.so.conf</filename> filen og den dynamiske linkeren
+        kjøretidsbufferfil:
+      </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/ld.so.conf &lt;&lt; EOF
+<literal># Begin Qt addition
+
+/opt/qt5/lib
+
+# End Qt addition</literal>
+EOF
+
+ldconfig</userinput></screen>
+
+      <indexterm zone="qt5-components qt5-config">
+        <primary sortas="e-etc-ld.so.conf">/etc/ld.so.conf</primary>
+      </indexterm>
+
+      <para>
+        Som &root; bruker, opprett <filename>/etc/profile.d/qt5.sh</filename> filen:
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/profile.d/qt_5.sh &lt;&lt; "EOF"
+<literal># Begin /etc/profile.d/qt_5.sh
+
+QT5DIR=/opt/qt5
+
+pathappend $QT5DIR/bin           PATH
+pathappend $QT5DIR/lib/pkgconfig PKG_CONFIG_PATH
+
+export QT5DIR
+
+# End /etc/profile.d/qt_5.sh</literal>
+EOF</userinput></screen>
+
+    </sect3>
 
   </sect2>
 
@@ -177,19 +582,636 @@ make</userinput></screen>
 
       <seglistitem>
         <seg>
-          Ingen
+          assistant, designer, fixqt4headers.pl, lconvert,
+          linguist, lprodump, lrelease, lrelease-pro, lupdate, lupdate-pro,
+          moc, pixeltool, qcollectiongenerator, qdbus, qdbuscpp2xml,
+          qdbusviewer, qdbusxml2cpp, qdistancefieldgenerator, qdoc,
+          qhelpgenerator, qlalr, qmake, qml, qmlcachegen, qmleasing,
+          qmlformat, qmlimportscanner, qmllint, qmlmin, qmlplugindump,
+          qmlpreview, qmlprofiler, qmlscene, qmltestrunner, qmltime,
+          qmltyperegistrar,
+          qtattributionscanner, qtdiag, qtpaths, qtplugininfo,
+          qtwaylandscanner, qvkgen, rcc, syncqt.pl, tracegen, og
+          uic
         </seg>
         <seg>
-          libQt5&lt;component&gt;.so
+          libQt5AccessibilitySupport.a,
+          libQt5Bootstrap.a,
+          libQt5Concurrent.so,
+          libQt5Core.so,
+          libQt5DBus.so,
+          libQt5Designer.so,
+          libQt5DesignerComponents.so,
+          libQt5DeviceDiscoverySupport.a,
+          libQt5EdidSupport.a,
+          libQt5EglFSDeviceIntegration.so,
+          libQt5EglFsKmsSupport.so,
+          libQt5EglSupport.a,
+          libQt5EventDispatcherSupport.a,
+          libQt5FbSupport.a,
+          libQt5FontDatabaseSupport.a,
+          libQt5GlxSupport.a,
+          libQt5Gui.so,
+          libQt5Help.so,
+          libQt5InputSupport.a,
+          libQt5KmsSupport.a,
+          libQt5LinuxAccessibilitySupport.a,
+          libQt5Network.so,
+          libQt5OpenGL.so,
+          libQt5OpenGLExtensions.a,
+          libQt5PacketProtocol.a,
+          libQt5PlatformCompositorSupport.a,
+          libQt5PrintSupport.so,
+          libQt5Qml.so,
+          libQt5QmlDebug.a,
+          libQt5QmlDevTools.a,
+          libQt5QmlModels.so,
+          libQt5QmlWorkerScript.so,
+          libQt5Quick.so,
+          libQt5QuickParticles.so,
+          libQt5QuickShapes.so,
+          libQt5QuickTest.so,
+          libQt5QuickWidgets.so,
+          libQt5ServiceSupport.a,
+          libQt5Sql.so,
+          libQt5Svg.so,
+          libQt5Test.so,
+          libQt5ThemeSupport.a,
+          libQt5UiTools.a,
+          libQt5WaylandClient.so,
+          libQt5WaylandCompositor.so,
+          libQt5Widgets.so,
+          libQt5X11Extras.so,
+          libQt5XcbQpa.so,
+          libQt5XkbCommonSupport.a,
+          libQt5Xml.so,
+          og flere programtillegg under /opt/qt5/{plugins,qml}
         </seg>
         <seg>
-          $QT5DIR/qml/&lt;component&gt;,
-          $QT5DIR/lib/cmake/&lt;component&gt;, og
-          $QT5DIR/include/&lt;component&gt;
+          /usr/include/qt5,
+          /usr/lib/qt5,
+          /usr/share/doc/qt5, og
+          /usr/share/qt5
+          ELLER
+          /opt/qt5 og
+          /opt/qt-&qt5-version;
         </seg>
       </seglistitem>
     </segmentedlist>
 
+    <bridgehead renderas="sect3">Korte beskrivelser</bridgehead>
+
+    <variablelist id='qt5-descriptions' xreflabel="Qt5 Short Descriptions">
+      <bridgehead renderas="sect3">Korte beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="assistant-qt5">
+        <term><command>assistant</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å presentere nettbasert dokumentasjon
+          </para>
+          <indexterm zone="qt5-components assistant-qt5">
+            <primary sortas="b-assistant-qt5">assistant</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="designer-qt5">
+        <term><command>designer</command></term>
+        <listitem>
+          <para>
+            er en fullverdig GUI-bygger. Det inkluderer
+            kraftige funksjoner som forhåndsvisningsmodus, automatisk widget
+            layout, støtte for egendefinerte widgets og en avansert
+            eiendomsredaktør
+          </para>
+          <indexterm zone="qt5-components designer-qt5">
+            <primary sortas="b-designer-qt5">designer</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="fixqt4headers.pl">
+        <term><command>fixqt4headers.pl</command></term>
+        <listitem>
+          <para>
+            er et skript for å erstatte alle Qt 4 stiler inkluderer med Qt 5 inkluderer
+          </para>
+          <indexterm zone="qt5-components fixqt4headers.pl">
+            <primary sortas="b-fixqt4headers.pl">fixqt4headers.pl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lconvert-qt5">
+        <term><command>lconvert</command></term>
+        <listitem>
+          <para>
+            er en del av Qt5s Linguist-verktøykjede. Den kan brukes som en
+            frittstående verktøy for å konvertere og filtrere oversettelsesdatafiler
+          </para>
+          <indexterm zone="qt5-components lconvert-qt5">
+            <primary sortas="b-lconvert-qt5">lconvert</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="linguist-qt5">
+        <term><command>linguist</command></term>
+        <listitem>
+          <para>
+            gir støtte for å oversette applikasjoner til
+            lokale språk
+          </para>
+          <indexterm zone="qt5-components linguist-qt5">
+            <primary sortas="b-linguist-qt5">linguist</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lrelease-qt5">
+        <term><command>lrelease</command></term>
+        <listitem>
+          <para>
+            er et enkelt kommandolinjeverktøy. Den leser XML-basert oversettelse
+            fil i TS-format og produserer meldingsfiler som brukes av
+            applikasjon
+          </para>
+          <indexterm zone="qt5-components lrelease-qt5">
+            <primary sortas="b-lrelease-qt5">lrelease</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lrelease-pro">
+        <term><command>lrelease-pro</command></term>
+        <listitem>
+          <para>
+            trekker ut prosjektinformasjon fra qmake-prosjekter og passerer
+            det til lrelease
+          </para>
+          <indexterm zone="qt5-components lrelease-pro">
+            <primary sortas="b-lrelease-pro">lrelease-pro</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lupdate-qt5">
+        <term><command>lupdate</command></term>
+        <listitem>
+          <para>
+            finner oversettbare
+            strenger i den angitte kilden, overskriften og Qt Designer
+            grensesnittfiler, og lagrer de utpakkede meldingene i
+            oversettelsesfiler som skal behandles av lrelease
+          </para>
+          <indexterm zone="qt5-components lupdate-qt5">
+            <primary sortas="b-lupdate-qt5">lupdate</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="lupdate-pro">
+        <term><command>lupdate-pro</command></term>
+        <listitem>
+          <para>
+            leser en Qt-prosjektfil, og sender den innsamlede informasjonen
+            til lupdate
+          </para>
+          <indexterm zone="qt5-components lupdate-pro">
+            <primary sortas="b-lupdate-pro">lupdate-pro</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="moc-qt5">
+        <term><command>moc</command></term>
+        <listitem>
+          <para>
+            genererer Qt metaobjektstøttekode
+          </para>
+          <indexterm zone="qt5-components moc-qt5">
+            <primary sortas="b-moc-qt5">moc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="pixeltool-qt5">
+        <term><command>pixeltool</command></term>
+        <listitem>
+          <para>
+            er en skrivebordsforstørrelsesglass og mens du beveger musen rundt
+            skjermen vil den vise det forstørrede innholdet i vinduet
+          </para>
+          <indexterm zone="qt5-components pixeltool-qt5">
+            <primary sortas="b-pixeltool-qt5">pixeltool</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qcollectiongenerator-qt5">
+        <term><command>qcollectiongenerator</command></term>
+        <listitem>
+          <para>
+            behandler og konverterer Qt hjelpefiler
+          </para>
+          <indexterm zone="qt5-components qcollectiongenerator-qt5">
+            <primary sortas="b-qcollectiongenerator-qt5">qcollectiongenerator-qt5</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdbuscpp2xml-qt5">
+        <term><command>qdbuscpp2xml</command></term>
+        <listitem>
+          <para>
+            tar en C++ kildefil og genererer en D-Bus XML definisjon
+            av grensesnittet
+          </para>
+          <indexterm zone="qt5-components qdbuscpp2xml-qt5">
+            <primary sortas="b-qdbuscpp2xml-qt5">qdbuscpp2xml</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdbus-qt5">
+        <term><command>qdbus</command></term>
+        <listitem>
+          <para>
+            viser tilgjengelige tjenester, objektbaner, metoder, signaler og
+            egenskapene til objekter på en buss
+          </para>
+          <indexterm zone="qt5-components qdbus-qt5">
+            <primary sortas="b-qdbus-qt5">qdbus</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdbusviewer-qt5">
+        <term><command>qdbusviewer</command></term>
+        <listitem>
+          <para>
+            er en grafisk D-Bus nettleser
+          </para>
+          <indexterm zone="qt5-components qdbusviewer-qt5">
+            <primary sortas="b-qdbusviewer-qt5">qdbusviewer</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdbusxml2cpp-qt5">
+        <term><command>qdbusxml2cpp</command></term>
+        <listitem>
+          <para>
+            er et verktøy som kan brukes til å analysere grensesnittbeskrivelser
+            og produsere statisk kode som representerer disse grensesnittene,
+          </para>
+          <indexterm zone="qt5-components qdbusxml2cpp-qt5">
+            <primary sortas="b-qdbusxml2cpp-qt5">qdbusxml2cpp</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdistancefieldgenerator-qt5">
+        <term><command>qdistancefieldgenerator</command></term>
+        <listitem>
+          <para>
+            lar en fontbuffer forhåndsgenereres for at Text.QtRendering skal øke hastigheten
+            oppstart av en applikasjon hvis brukergrensesnittet har mye tekst,
+            eller flere fonter, eller en stor mengde distinkte tegn, f.eks. i
+            CJK skrivesystemer
+          </para>
+          <indexterm zone="qt5-components qdistancefieldgenerator-qt5">
+            <primary sortas="b-qdistancefieldgenerator-qt5">qdistancefieldgenerator</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qdoc-qt5">
+        <term><command>qdoc</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes av <application>Qt</application> Utviklere for å
+            generere dokumentasjon for programvareprosjekter
+          </para>
+          <indexterm zone="qt5-components qdoc-qt5">
+            <primary sortas="b-qdoc-qt5">qdoc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qhelpgenerator-qt5">
+        <term><command>qhelpgenerator</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å generere en <application>Qt</application>
+            komprimert hjelpefil
+          </para>
+          <indexterm zone="qt5-components qhelpgenerator-qt5">
+            <primary sortas="b-qhelpgenerator-qt5">qhelpgenerator</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qlalr-qt5">
+        <term><command>qlalr</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å generere kode fra grammatikkspesifikasjoner
+          </para>
+          <indexterm zone="qt5-components qlalr-qt5">
+            <primary sortas="b-qlalr-qt5">qlalr</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmake-qt5">
+        <term><command>qmake</command></term>
+        <listitem>
+          <para>
+            bruker informasjon som er lagret i prosjektfiler til
+            bestemme hva som skal gå i makefilene det
+            genererer
+          </para>
+          <indexterm zone="qt5-components qmake-qt5">
+            <primary sortas="b-qmake-qt5">qmake</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="qml">
+        <term><command>qml</command></term>
+        <listitem>
+          <para>
+            kjører en QML fil
+          </para>
+          <indexterm zone="qt5-components qml">
+            <primary sortas="b-qml">qml</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="qmlcachegen">
+        <term><command>qmlcachegen</command></term>
+        <listitem>
+          <para>
+            støtter oppretting av cache filer på byggetidspunktet
+          </para>
+          <indexterm zone="qt5-components qmlcachegen">
+            <primary sortas="b-qmlcachegen">qmlcachegen</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="qmleasing-qt5">
+        <term><command>qmleasing</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å definere lettelseskurvene ved hjelp av en
+            interaktiv kurveredigerer
+          </para>
+          <indexterm zone="qt5-components qmleasing-qt5">
+            <primary sortas="b-qmleasing-qt5">qmleasing</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlformat-qt5">
+        <term><command>qmlformat</command></term>
+        <listitem>
+          <para>
+            formaterer QML-filer i henhold til QML kodingskonvensjonene
+          </para>
+          <indexterm zone="qt5-components qmlformat-qt5">
+            <primary sortas="b-qmlformat-qt5">qmlformat</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlimportscanner-qt5">
+        <term><command>qmlimportscanner</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å importere QML filer fra en mappe
+          </para>
+          <indexterm zone="qt5-components qmlimportscanner-qt5">
+            <primary sortas="b-qmlimportscanner-qt5">qmlimportscanner</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmllint-qt5">
+        <term><command>qmllint</command></term>
+        <listitem>
+          <para>
+            er en syntakskontroll for QML filer
+          </para>
+          <indexterm zone="qt5-components qmllint-qt5">
+            <primary sortas="b-qmllint-qt5">qmllint</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlmin-qt5">
+        <term><command>qmlmin</command></term>
+        <listitem>
+          <para>
+            fjerner kommentarer og layouttegn fra en QML fil
+          </para>
+          <indexterm zone="qt5-components qmlmin-qt5">
+            <primary sortas="b-qmlmin-qt5">qmlmin</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="qmlplugindump-qt5">
+        <term><command>qmlplugindump</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å lage en qmltypes fil
+          </para>
+          <indexterm zone="qt5-components qmlplugindump-qt5">
+            <primary sortas="b-qmlplugindump-qt5">qmlplugindump</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlpreview-qt5">
+        <term><command>qmlpreview</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å analysere QML applikasjoner
+          </para>
+          <indexterm zone="qt5-components qmlpreview-qt5">
+            <primary sortas="b-qmlpreviewr-qt5">qmlpreview</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlprofiler-qt5">
+        <term><command>qmlprofiler</command></term>
+        <listitem>
+          <para>
+            er et verktøy som ser på QML og JavaScript filer på disk og
+            oppdaterer applikasjonen live med eventuelle endringer
+          </para>
+          <indexterm zone="qt5-components qmlprofiler-qt5">
+            <primary sortas="b-qmlprofiler-qt5">qmlprofiler</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmlscene-qt5">
+        <term><command>qmlscene</command></term>
+        <listitem>
+          <para>
+            er et verktøy som laster og viser QML dokumenter selv før
+            søknaden er komplett
+          </para>
+          <indexterm zone="qt5-components qmlscene-qt5">
+            <primary sortas="b-qmlscene-qt5">qmlscene</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qmltestrunner-qt5">
+        <term><command>qmltestrunner</command></term>
+        <listitem>
+          <para>
+            er et verktøy som brukes til å lage tester
+          </para>
+          <indexterm zone="qt5-components qmltestrunner-qt5">
+            <primary sortas="b-qmltestrunner-qt5">qmltestrunner</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qtattributionsscanner-qt5">
+        <term><command>qtattributionsscanner</command></term>
+        <listitem>
+          <para>
+            behandler qt_attribution.json filer i Qt kilder
+          </para>
+          <indexterm zone="qt5-components qtattributionsscanner-qt5">
+            <primary sortas="b-qtattributionsscanner-qt5">qtattributionsscanner</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qtdiag-qt5">
+        <term><command>qtdiag</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å rapportere diagnostisk informasjon om Qt og dens
+            miljø
+          </para>
+          <indexterm zone="qt5-components qtdiag-qt5">
+            <primary sortas="b-qtdiag-qt5">qtdiag</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qtpaths-qt5">
+        <term><command>qtpaths</command></term>
+        <listitem>
+          <para>
+            er et verktøy for å spørre Qt baneinformasjon
+          </para>
+          <indexterm zone="qt5-components qtpaths-qt5">
+            <primary sortas="b-qtpaths-qt5">qtpaths</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qtplugininfo">
+        <term><command>qtplugininfo</command></term>
+        <listitem>
+          <para>
+            dumper metadata om Qt-plugins i JSON-format
+          </para>
+          <indexterm zone="qt5-components qtplugininfo">
+            <primary sortas="b-qtplugininfo">qtplugininfo</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qtwaylandscanner">
+        <term><command>qtwaylandscanner</command></term>
+        <listitem>
+          <para>
+            konverterer Wayland spesifikasjonsfiler til C++ deklarasjoner og kode nødvendig for
+            QtWayland
+          </para>
+          <indexterm zone="qt5-components qtwaylandscanner">
+            <primary sortas="b-qtwaylandscanner">qtwaylandscanner</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="qvkgen">
+        <term><command>qvkgen</command></term>
+        <listitem>
+          <para>
+            konverterer Vulkan specfiles til C++ deklarasjoner og kode
+          </para>
+          <indexterm zone="qt5-components qvkgen">
+            <primary sortas="b-qvkgen">qvkgen</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="rcc-qt5">
+        <term><command>rcc</command></term>
+        <listitem>
+          <para>
+            er en ressurskompiler som brukes sammen med designer
+          </para>
+          <indexterm zone="qt5-components rcc-qt5">
+            <primary sortas="b-rcc-qt5">rcc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="syncqt.pl-qt5">
+        <term><command>syncqt.pl</command></term>
+        <listitem>
+          <para>
+            er et skript for å lage videresendings deklarasjonene i include
+            mapper. Det er et internt utviklingsverktøy
+          </para>
+          <indexterm zone="qt5-components syncqt.pl-qt5">
+            <primary sortas="b-syncqt.pl-qt5">syncqt.pl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="tracegen">
+        <term><command>tracegen</command></term>
+        <listitem>
+          <para>
+            er en sporingsgenerator for LTTng eller ETW
+          </para>
+          <indexterm zone="qt5-components tracegen">
+            <primary sortas="b-tracegen">tracegen</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="uic-qt5">
+        <term><command>uic</command></term>
+        <listitem>
+          <para>
+            er en Qt brukergrensesnitt kompilator
+          </para>
+          <indexterm zone="qt5-components uic-qt5">
+            <primary sortas="b-uic-qt5">uic</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
   </sect2>
 
 </sect1>
