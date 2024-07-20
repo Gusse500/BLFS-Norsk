@@ -9,10 +9,10 @@
 
   <!ENTITY qt5-download-http "&qt5-url;/qt-everywhere-opensource-src-&qt5-version;.tar.xz">
   <!ENTITY qt5-download-ftp  " ">
-  <!ENTITY qt5-md5sum        "3fb1cd4f763f5d50d491508b7b99fb77">
+  <!ENTITY qt5-md5sum        "0265e7988790d8845441558130d59311">
   <!ENTITY qt5-size          "630 MB">
-  <!ENTITY qt5-buildsize     "8.5 GB (154 MB installert)">
-  <!ENTITY qt5-time          "7.4 SBU (bruke parallellisme=4)">
+  <!ENTITY qt5-buildsize     "9.0 GB (154 MB installert)">
+  <!ENTITY qt5-time          "7.5 SBU (bruke parallellisme=4)">
 ]>
 
 <sect1 id="qt5-components" xreflabel="qt-components-&qt5-version;">
@@ -101,12 +101,6 @@
           Detaljer om kde vedlikeholdet kan finnes på
           <ulink url="https://dot.kde.org/2021/04/06/announcing-kdes-qt-5-patch-collection"/>
           og <ulink url="https://community.kde.org/Qt5PatchCollection"/>.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/qt-everywhere-opensource-src-&qt5-version;-security_fix-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
@@ -259,12 +253,6 @@ ln -sfnv qt-&qt5-version; /opt/qt5</userinput></screen>
     <screen><userinput remap="pre">mkdir -pv qtbase/.git</userinput></screen>
 
     <para>
-      Rett opp en sikkerhetssårbarhet i qtbase:
-    </para>
-
-<screen><userinput>patch -Np1 -i ../qt-everywhere-opensource-src-&qt5-version;-security_fix-1.patch</userinput></screen>
-
-    <para>
       På dette tidspunktet ønsker vi å sette opp å hoppe over de fleste komponentene. Gjør det med:
     </para>
 
@@ -297,8 +285,7 @@ sed -i -r '/base|tools|x11extras|svg|declarative|wayland/d' tempconf</userinput>
             -nomake examples     \
             -no-rpath            \
             -syslog              \
-            $(cat tempconf)      \
-            &amp;&amp;
+            $(cat tempconf)      &amp;&amp;
 make</userinput></screen>
 
 <screen revision="systemd"><userinput>./configure -prefix $QT5PREFIX   \
@@ -312,8 +299,7 @@ make</userinput></screen>
             -nomake examples     \
             -no-rpath            \
             -journald            \
-            $(cat tempconf)      \
-            &amp;&amp;
+            $(cat tempconf)      &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -866,7 +852,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er et verktøy som kan brukes til å analysere grensesnittbeskrivelser
-            og produsere statisk kode som representerer disse grensesnittene,
+            og produsere statisk kode som representerer disse grensesnittene
           </para>
           <indexterm zone="qt5-components qdbusxml2cpp-qt5">
             <primary sortas="b-qdbusxml2cpp-qt5">qdbusxml2cpp</primary>
