@@ -31,8 +31,8 @@
       <application>Gimp-Print</application>) pakken inneholder høye
       kvalitetsdrivere for mange merker og modeller av skrivere for bruk med
       <xref linkend="cups"/>
-      oge
-      <application>GIMP-2.0</application>. Se en liste over støttede skrivere på
+      <!--og
+      <application>GIMP-2.0</application>.--> Se en liste over støttede skrivere på
       <ulink url="https://gutenprint.sourceforge.net/p_Supported_Printers.php"/>.
     </para>
 
@@ -78,8 +78,8 @@
     so that we can use gutenprint's driver to print photos there -->
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="cups"/> og
-      <xref linkend="gimp"/>
+      <xref linkend="cups"/><!-- og
+      <xref linkend="gimp"/>-->
     </para>
 
     <bridgehead renderas="sect4">Anbefalt (ved kjøretid)</bridgehead>
@@ -147,7 +147,10 @@
 <screen><userinput>sed -i 's|$(PACKAGE)/doc|doc/$(PACKAGE)-$(VERSION)|' \
        {,doc/,doc/developer/}Makefile.in &amp;&amp;
 
-./configure --prefix=/usr --disable-static &amp;&amp;
+./configure --prefix=/usr                 \
+            --disable-static              \
+            --without-gimp2               \
+            --without-gimp2-as-gutenprint &amp;&amp;
 make</userinput></screen>
 
     <!-- this is supposed to discourage you from running the tests if you upgrade
@@ -188,6 +191,11 @@ install -v -m644    doc/gutenprintui2/html/* \
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
+
+    <para>
+      <parameter>--without-gimp2</parameter>: Denne bryteren deaktiverer støtte
+      for GIMP fordi den ikke har blitt oppdatert for å støtte GIMP3 ennå.
+    </para>
 
   </sect2>
 
