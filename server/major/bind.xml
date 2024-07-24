@@ -7,8 +7,8 @@
   <!ENTITY bind-download-http "https://ftp.isc.org/isc/bind9/&bind-version;/bind-&bind-version;.tar.xz">
   <!ENTITY bind-download-ftp  " ">
   <!ENTITY bind-md5sum        "&bind-md5;">
-  <!ENTITY bind-size          "5.2 MB">
-  <!ENTITY bind-buildsize     "127 MB (21 MB installert)">
+  <!ENTITY bind-size          "5.5 MB">
+  <!ENTITY bind-buildsize     "138 MB (22 MB installert)">
   <!ENTITY bind-time          "0.5 SBU (med parallellitet=4; ca. 40 minutter noe prosessoruavhengig, for å kjøre hele testpakken)">
 ]>
 
@@ -81,6 +81,7 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
+      <xref linkend="liburcu"/> og
       <xref linkend="libuv"/>
     </para>
 
@@ -106,15 +107,6 @@
       <ulink url="&w3m-url;">w3m</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Valgfrie databasebakstykker</bridgehead>
-    <para role="optional">
-      <xref linkend="mariadb"/> eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
-      <xref linkend="openldap"/>,
-      <xref linkend="postgresql"/>, 
-      <xref linkend="unixodbc"/>, og
-      &berkeley-db;
-    </para>
-
     <bridgehead renderas="sect4">Valgfri (for å kjøre testpakken)</bridgehead>
     <para role="optional">
       <xref linkend="perl-net-dns"/>
@@ -128,16 +120,6 @@
 
   <sect2 role="installation">
     <title>Installasjon av BIND</title>
-
-<!--
-    <para>
-      For å sikre at <application>BIND</application> vil bygge dnssec-keymgr,
-      installer en python modul som <systemitem
-      class="username">root</systemitem> user:
-    </para>
-
-<screen role="root"><userinput>pip3 install ply</userinput></screen>
--->
 
     <note>
       <para>
@@ -179,12 +161,20 @@ make</userinput></screen>
       Testpakken kan indikere at noen tester er hoppet over avhengig av
       hvilke konfigurasjonsalternativer som brukes. Noen tester er merket
       <quote>UNTESTED</quote> eller til og med mislykkes hvis <xref linkend="perl-net-dns"/>
-      ikke er installert. Two tests, <filename>resolver</filename> and
-      <filename>dispatch</filename>, er kjent for å mislykkes.
+      ikke er installert. En test, <filename>dnssec</filename>, er kjent for å mislykkes.
+      Testene krever
+      <ulink url="https://hypothesis.readthedocs.org/">hypothesis</ulink>
+      python modul, som ikke er i BLFS. For å omgå dette, instruksjonene
+      nedenfor opprette et Python virtuelt miljø og installer deretter modulen
+      der inne før du kjører testene.
       For å kjøre testene, som en uprivilegert bruker, kjør:
     </para>
 
-<screen remap="test"><userinput>make -k check</userinput></screen>
+<screen remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
+source testenv/bin/activate                    &amp;&amp;
+pip3 install hypothesis                        &amp;&amp;
+make -k check                                  &amp;&amp;
+deactivate</userinput></screen>
 
     <para>
       Igjen som <systemitem class="username">root</systemitem>, rydd opp i
@@ -226,14 +216,6 @@ install doc/dnssec-guide/* /usr/share/doc/bind-&bind-version;/dnssec-guide</user
       <filename class='directory'>/usr/etc</filename>.
     </para>
 
-    <!-- Seems to be removed in 9.18.0
-    <para>
-      <parameter>- -with-libtool</parameter>: Denne parameteren tvinger
-      bygging av dynamiske biblioteker og kobler de installerte binærfilene til disse
-      bibliotekene.
-    </para>
-    -->
-
     <para>
       <option>--with-libidn2</option>: Denne parameteren aktiverer
       IDNA2008 (Internationalized Domain Names in Applications)
@@ -246,18 +228,13 @@ install doc/dnssec-guide/* /usr/share/doc/bind-&bind-version;/dnssec-guide</user
       nyttig på servere som mottar et stort antall forespørsler.
     </para>
 
+<!-- Removed in 9.20.0 (and support has been in LFS for years)
     <para>
-      <option>--disable-linux-caps</option>: BIND kan også bygges uten
+      <option>- -disable-linux-caps</option>: BIND kan også bygges uten
       kapasitetsstøtte ved å bruke dette alternativet, på bekostning av noe tap av
       sikkerhet.
     </para>
-
-    <para>
-      <option>--with-dlz-{mysql,bdb,filesystem,ldap,odbc,stub}</option>: Bruk
-      ett (eller flere) av disse alternativene for å legge til støtte for dynamisk lastbare soner.
-      For mer informasjon se <ulink
-      url="https://bind-dlz.sourceforge.net/">bind-dlz.sourceforge.net</ulink>.
-    </para>
+-->
 
     <para>
       <option>--disable-doh</option>: Bruk dette alternativet hvis du ikke har
@@ -608,16 +585,15 @@ dig www.&lfs-domainname;</userinput></screen>
 
         <seg>arpaname, ddns-confgen, delv, dig, dnssec-cds,
         dnssec-dsfromkey, dnssec-importkey, dnssec-keyfromlabel, dnssec-keygen,
-        dnssec-revoke, dnssec-settime, dnssec-signzone,
+        dnssec-ksr, dnssec-revoke, dnssec-settime, dnssec-signzone,
         dnssec-verify, host, mdig, named, named-checkconf,
         named-checkzone, named-compilezone, named-journalprint,
         named-nzd2nzf, named-rrchecker, nsec3hash, nslookup, nsupdate, rndc,
         rndc-confgen, og tsig-keygen (symbolkobling)</seg>
 
-        <seg>libbind9.so, libdns.so, libirs.so, libisc.so, libisccc.so,
-        libisccfg.so, og libns.so</seg>
+        <seg>libdns.so, libisc.so, libisccc.so, libisccfg.so, and libns.so</seg>
 
-        <seg>/usr/include/{bind9,dns,dst,irs,isc,isccc,isccfg,ns},
+        <seg>/usr/include/{dns,dst,irs,isc,isccc,isccfg,ns},
         /usr/lib/bind,
         og /srv/named</seg>
       </seglistitem>
@@ -736,6 +712,18 @@ dig www.&lfs-domainname;</userinput></screen>
           </para>
           <indexterm zone="bind dnssec-keymgr">
             <primary sortas="b-dnssec-keymgr">dnssec-keymgr</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="dnssec-ksr">
+        <term><command>dnssec-ksr</command></term>
+        <listitem>
+          <para>
+            oppretter signert nøkkelrespons (SKR)-filer for offline KSK-oppsett
+          </para>
+          <indexterm zone="bind dnssec-ksr">
+            <primary sortas="b-dnssec-ksr">dnssec-ksr</primary>
           </indexterm>
         </listitem>
       </varlistentry>
