@@ -73,6 +73,20 @@
     <title>Installasjon av Compface</title>
 
     <para>
+      Først må du fikse konfigureringsskriptet slik at det er C99 kompatibelt:
+    </para>
+
+<screen><userinput remap="pre">autoreconf</userinput></screen>
+
+    <para>
+      Deretter fikser du en byggefeil som oppstår med GCC 14:
+    </para>
+
+<screen><userinput remap="pre">sed -e '/compface.h/a #include &lt;unistd.h&gt;' \
+    -i cmain.c                             \
+    -i uncmain.c</userinput></screen>
+
+    <para>
       Installer <application>Compface</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -103,7 +117,7 @@ install -m755 -v xbm2xface.pl /usr/bin</userinput></screen>
 
       <seglistitem>
         <seg>compface, uncompface og xbm2xface.pl</seg>
-        <seg>libcompface.{so,a}</seg>
+        <seg>libcompface.a</seg>
         <seg>Ingen</seg>
       </seglistitem>
     </segmentedlist>
@@ -152,14 +166,14 @@ install -m755 -v xbm2xface.pl /usr/bin</userinput></screen>
       </varlistentry>
 
       <varlistentry id="libcompface">
-        <term><filename class="libraryfile">libcompface.{so,a}</filename></term>
+        <term><filename class="libraryfile">libcompface.a</filename></term>
         <listitem>
           <para>
             lar komprimerings- og dekompresjonsalgoritmene bli
             brukt i andre programmer som MTA-er
           </para>
           <indexterm zone="compface libcompface">
-            <primary sortas="c-libcompface">libcompface.{so,a}</primary>
+            <primary sortas="c-libcompface">libcompface.a</primary>
           </indexterm>
         </listitem>
       </varlistentry>
