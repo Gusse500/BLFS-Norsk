@@ -112,8 +112,14 @@ make</userinput></screen>
          one failure.
          https://gitlab.gnome.org/GNOME/librsvg/-/issues/1021 -->
     <para>
-      For å teste resultatene, utsted: <command>LC_ALL=C make -k check</command>.
-      <!-- https://gitlab.gnome.org/GNOME/librsvg/-/issues/1085 -->
+      For å teste resultatene, utsted:
+    </para>
+
+    <screen remap='test'><userinput>cargo update --precise 0.3.36 time &amp;&amp;
+LC_ALL=C make check -k</userinput></screen>
+
+    <!-- https://gitlab.gnome.org/GNOME/librsvg/-/issues/1085 -->
+    <para>
       En test navngitt <literal>bugs_bug749415_svg</literal> er kjent for å mislykkes.
     </para>
 
@@ -153,6 +159,13 @@ make</userinput></screen>
       <parameter>DOC_INSTALL_DIR='$(docdir)'</parameter>: Denne overstyringen
       sikrer at installasjon av API dokumentasjonen på forventet plassering
       hvis <xref linkend='gi-docgen'/> er installert.
+    </para>
+
+    <para>
+      <command>cargo update --precise=0.3.36 time</command>: Dette oppdaterer
+      <filename>Cargo.lock</filename> filen til å referere til versjon 0.3.36
+      av tidscraten for testpakken. Opprinnelig refererer det til
+      versjon 0.3.34 som ikke klarer å bygge med Rustc-1.80.0 eller nyere.
     </para>
 
     <para>
