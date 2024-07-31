@@ -86,6 +86,8 @@
       <ulink url="https://gitlab.com/AOMediaCodec/SVT-AV1">svt-av1</ulink>
     </para>
 
+    &test-use-internet;
+
   </sect2>
 
   <sect2 role="installation">
@@ -101,17 +103,21 @@ cd    build &amp;&amp;
 
 cmake -D CMAKE_INSTALL_PREFIX=/usr \
       -D CMAKE_BUILD_TYPE=Release  \
-      -D AVIF_CODEC_AOM=SYSYEM     \
+      -D AVIF_CODEC_AOM=SYSTEM     \
       -D AVIF_BUILD_GDK_PIXBUF=ON  \
       -D AVIF_LIBYUV=OFF           \
       -G Ninja .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Denne pakken kommer med en testpakke, men den krever
-      <ulink url="https://github.com/google/googletest">gtest</ulink>, som
-      ikke er en del av BLFS.
+      For å teste pakken (merk at det vil føre til at byggesystemet
+      laster ned en kopi av
+      <ulink url="https://github.com/google/googletest">gtest</ulink> og
+      bygg testpakken med kopien), utsted:
     </para>
+
+<screen remap='test'><userinput>cmake .. -D AVIF_GTEST=LOCAL -D AVIF_BUILD_TESTS=ON &amp;&amp;
+ninja &amp;&amp; ninja test</userinput></screen>
 
     <para>
       Nå, som &root; bruker:
