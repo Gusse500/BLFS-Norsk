@@ -4,10 +4,10 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY polkit-download-http "https://gitlab.freedesktop.org/polkit/polkit/-/archive/&polkit-version;/polkit-&polkit-version;.tar.gz">
+  <!ENTITY polkit-download-http "https://github.com/polkit-org/polkit/archive/&polkit-version;/polkit-&polkit-version;.tar.gz">
   <!ENTITY polkit-download-ftp  " ">
-  <!ENTITY polkit-md5sum        "97db655618e1483706fbc764787c7d6e">
-  <!ENTITY polkit-size          "744 KB">
+  <!ENTITY polkit-md5sum        "8e9f2377fc7b4010bd29b97d2e288b4f">
+  <!ENTITY polkit-size          "444 KB">
   <!ENTITY polkit-buildsize     "7.2 MB (med tester)">
   <!ENTITY polkit-time          "0.3 SBU (med tester; bruke parallellisme=4)">
 ]>
@@ -146,7 +146,7 @@
         da er <xref linkend="DocBook"/> og <xref linkend="docbook-xsl"/> 
         nødvendig. Hvis du har installert <xref linkend="libxslt"/>, men du
         ikke ønsker å installere noen av DocBook pakkene som er nevnt, vil du
-        trenge å bruke <option>-Dman=false</option> i instruksjonene
+        trenge å bruke <option>-D man=false</option> i instruksjonene
         under.
       </para>
     </note>
@@ -181,21 +181,21 @@ useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup ..                             \
-      --prefix=/usr                        \
-      --buildtype=release                  \
-      -D man=true                          \
-      -D session_tracking=libsystemd-login \
+meson setup ..                   \
+      --prefix=/usr              \
+      --buildtype=release        \
+      -D man=true                \
+      -D session_tracking=logind \
       -D tests=true</userinput></screen>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup ..                       \
-      --prefix=/usr                  \
-      --buildtype=release            \
-      -D man=true                    \
-      -D session_tracking=libelogind \
+meson setup ..                    \
+      --prefix=/usr               \
+      --buildtype=release         \
+      -D man=true                 \
+      -D session_tracking=elogind \
       -D tests=true</userinput></screen>
 
     <!-- We have to do this after meson setup because mocklibc is extracted
@@ -240,14 +240,14 @@ sed -i '1 i #include &lt;stdio.h&gt;' ../subprojects/mocklibc-1.0/src/netgroup.h
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dtests=true</parameter>: Denne bryteren lar deg kjøre
+      <parameter>-D tests=true</parameter>: Denne bryteren lar deg kjøre
       testpakken av denne pakken. Siden <application>Polkit</application> er
       brukt for autorisasjoner, kan integriteten påvirke systemsikkerheten.
       Så det anbefales å kjøre testpakken som bygger denne pakken.
     </para>
 
     <para>
-      <option>-Djs_engine=mozjs</option>: Denne bryteren tillater bruk av
+      <option>-D js_engine=mozjs</option>: Denne bryteren tillater bruk av
       <xref linkend="spidermonkey"/> JavaScript motoren i stedet for
       <xref linkend='duktape'/> JavaScript motoren.
     </para>
@@ -265,14 +265,14 @@ sed -i '1 i #include &lt;stdio.h&gt;' ../subprojects/mocklibc-1.0/src/netgroup.h
     -->
 
     <para>
-      <option>-Dos_type=lfs</option>: Bruk denne bryteren hvis du ikke opprettet
+      <option>-D os_type=lfs</option>: Bruk denne bryteren hvis du ikke opprettet
       <filename>/etc/lfs-release</filename> filen ellers vil distribusjons automatiske
       deteksjon mislykkes, og du vil ikke kunne bruke
       <application>Polkit</application>.
     </para>
 
     <para>
-      <option>-Dauthfw=shadow</option>: Denne bryteren aktiverer
+      <option>-D authfw=shadow</option>: Denne bryteren aktiverer
       pakken til å bruke <application>Shadow</application> i stedet for
       <application>Linux PAM</application> Autentiseringsrammeverk. Bruk det
       hvis du ikke har installert <application>Linux PAM</application>.
@@ -284,23 +284,23 @@ sed -i '1 i #include &lt;stdio.h&gt;' ../subprojects/mocklibc-1.0/src/netgroup.h
     -->
 
     <para>
-      <option>-Dintrospection=false</option>: Bruk dette alternativet hvis du er sikker
+      <option>-D introspection=false</option>: Bruk dette alternativet hvis du er sikker
       på at du ikke trenger gobject-introspection filer for polkit, eller ikke har
       installert <xref linkend='glib2'/> med GObject Introspection.
     </para>
 
     <para>
-      <option>-Dman=false</option>: Bruk dette alternativet til å deaktivere generering og
+      <option>-D man=false</option>: Bruk dette alternativet til å deaktivere generering og
       installasjon av manualsider. Dette er nyttig hvis libxslt ikke er installert.
     </para>
 
     <para>
-      <option>-Dexamples=true</option>: Bruk dette alternativet til å bygge eksempel
+      <option>-D examples=true</option>: Bruk dette alternativet til å bygge eksempel
       programmer.
     </para>
 
     <para>
-      <option>-Dgtk_doc=true</option>: Bruk dette alternativet for å aktivere bygging og
+      <option>-D gtk_doc=true</option>: Bruk dette alternativet for å aktivere bygging og
       installering av API dokumentasjonen.
     </para>
 
