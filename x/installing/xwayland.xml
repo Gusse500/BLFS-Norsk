@@ -6,7 +6,7 @@
 
   <!ENTITY xwayland-download-http "&xorg-download-http;/xserver/xwayland-&xwayland-version;.tar.xz">
   <!ENTITY xwayland-download-ftp  " ">
-  <!ENTITY xwayland-md5sum        "4bfc87a030c58867f6fd36c5a8463545">
+  <!ENTITY xwayland-md5sum        "312c5cf17d1b147df1b787fd170958e1">
   <!ENTITY xwayland-size          "1.2 MB">
   <!ENTITY xwayland-buildsize     "28 MB (legg til 362 MB for tester)">
   <!ENTITY xwayland-time          "0.2 SBU (med parallellitet=4; legg til 1.7 SBU for tester, ikke inkludert klonetid)">
@@ -114,10 +114,10 @@
 mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=$XORG_PREFIX          \
-            --buildtype=release            \
-            -D xkb_output_dir=/var/lib/xkb \
-            ..                             &amp;&amp;
+meson setup ..                       \
+      --prefix=$XORG_PREFIX          \
+      --buildtype=release            \
+      -D xkb_output_dir=/var/lib/xkb &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -133,15 +133,7 @@ ninja</userinput></screen>
      had an obsolete version of weston, but now they take weston from
      debian so the command to build it has been removed. -->
     </para>
-<!--
-    <para>
-      Videre må en X server kjøres under byggingen av
-      <application>xts</application>. Hvis du ikke kjører testene i et
-      grafisk miljø, må du aktivere <command>Xvfb</command>
-      ved å fjerne <parameter>-Dxvfb=false</parameter> ovenfor.
-      Instruksjonene nedenfor forventer at dette er gjort.
-    </para>
--->
+
     <para>
       Å kjøre testene innebærer å laste ned to andre rammeverk, i tillegg
       til de nevnte valgfrie avhengighetene:
@@ -209,21 +201,7 @@ EOF</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-<!--
-    <para>
-      <parameter>-Dxvfb=false</parameter>: Hindrer å bygge
-      <command>xvfb</command> program, som også er installert av
-      <xref linkend="xorg-server"/>. Fjern dette alternativet hvis du ikke planlegger å
-      installere X serveren.
-    </para>
 
-    <para>
-      <command>mkdir -pv /etc/X11/xorg.conf.d</command>: Denne mappen er
-      nødvendig for å sette konfigurasjonsfiler for Xwayland. Denne kommandoen sikrer
-      at den eksisterer, ettersom noen applikasjoner kan bruke den uten først
-      å skape den.
-    </para>
--->
     <para revision="sysv">
       <command>cat &gt;&gt; /etc/sysconfig/createfiles...</command>: Denne
       kommandoen oppretter <filename class="directory">/tmp/.X11-unix</filename>
