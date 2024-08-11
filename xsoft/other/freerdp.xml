@@ -5,10 +5,10 @@
   %general-entities;
 
   <!ENTITY freerdp-download-http "https://github.com/freerdp/freerdp/archive/&freerdp-version;/FreeRDP-&freerdp-version;.tar.gz">
-  <!ENTITY freerdp-md5sum        "b1674bac82fecf8d3c9783e21ad247f2">
-  <!ENTITY freerdp-size          "9.7 MB">
-  <!ENTITY freerdp-buildsize     "130 MB">
-  <!ENTITY freerdp-time          "0.7 SBU">
+  <!ENTITY freerdp-md5sum        "4658086473bb78ab6b1d876efe454e12">
+  <!ENTITY freerdp-size          "9.8 MB">
+  <!ENTITY freerdp-buildsize     "131 MB">
+  <!ENTITY freerdp-time          "0.6 SBU">
 ]>
 
 <sect1 id="freerdp" xreflabel="FreeRDP-&freerdp-version;">
@@ -87,6 +87,8 @@
     <para role="optional">
       <xref linkend="cups"/>,
       <xref linkend="faac"/>,
+      <xref linkend="fdk-aac"/>,
+      <xref linkend="freerdp"/>,
       <xref linkend="faad2"/>,
       <xref linkend="lame"/>,
       <xref linkend="linux-pam"/>,
@@ -115,19 +117,19 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -D CMAKE_INSTALL_PREFIX=/usr                                         \
-      -D CMAKE_SKIP_INSTALL_RPATH=OFF                                      \
-      -D CMAKE_BUILD_TYPE=Release                                          \
-      -D WITH_CAIRO=ON                                                     \
-      -D WITH_CLIENT_SDL=OFF                                               \
-      -D WITH_DSP_FFMPEG=ON                                                \
-      -D WITH_FFMPEG=ON                                                    \
-      -D WITH_PCSC=OFF                                                     \
-      -D WITH_SERVER=ON                                                    \
-      -D WITH_SERVER_CHANNELS=ON                                           \
+cmake -D CMAKE_INSTALL_PREFIX=/usr   \
+      -D CMAKE_SKIP_INSTALL_RPATH=ON \
+      -D CMAKE_BUILD_TYPE=Release    \
+      -D WITH_CAIRO=ON               \
+      -D WITH_CLIENT_SDL=OFF         \
+      -D WITH_DSP_FFMPEG=ON          \
+      -D WITH_FFMPEG=ON              \
+      -D WITH_PCSC=OFF               \
+      -D WITH_SERVER=ON              \
+      -D WITH_SERVER_CHANNELS=ON     \
       -D DOCBOOKXSL_DIR=/usr/share/xml/docbook/xsl-stylesheets-nons-&docbook-xsl-version; \
-      -W no-dev                                                            \
-      -G Ninja                                                             .. &amp;&amp;
+      -W no-dev                      \
+      -G Ninja ..                    &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -211,7 +213,12 @@ ninja</userinput></screen>
       <option>-D WITH_FAAD2=ON</option>: Bruk dette alternativet hvis du ønsker å aktivere
       støtte for bruk av FAAD2 for å gi AAC Audio Codec støtte.
     </para>
-    
+
+    <para>
+      <option>-D WITH_FDK_AAC=ON</option>: Bruk dette alternativet hvis du ønsker å
+      aktiver støtte for bruk av fdk-aac for å gi AAC Audio Codec støtte.
+    </para>
+
     <para>
       <option>-D WITH_MBEDTLS=ON</option>: Bruk dette alternativet hvis du har den
       valgfrie avhengigheten

@@ -6,9 +6,9 @@
 
   <!ENTITY libei-download-http "https://gitlab.freedesktop.org/libinput/libei/-/archive/&libei-version;/libei-&libei-version;.tar.gz">
   <!ENTITY libei-download-ftp  " ">
-  <!ENTITY libei-md5sum        "39d18e5c56834d0b3e62b1e2af41a7a5">
+  <!ENTITY libei-md5sum        "aeaffcb5afb5ad0bb9981eb93c4cd610">
   <!ENTITY libei-size          "228 KB">
-  <!ENTITY libei-buildsize     "5.2 MB">
+  <!ENTITY libei-buildsize     "5.4 MB">
   <!ENTITY libei-time          "mindre enn 0.1 SBU">
 ]>
 
@@ -77,8 +77,9 @@
       <phrase revision="sysv"><xref linkend="elogind"/>,</phrase>
       <xref linkend="libevdev"/>,
       <xref linkend="libxkbcommon"/>,
-      <xref linkend="libxml2"/>, og
-      <ulink url="https://github.com/nemequ/munit">munit</ulink>
+      <xref linkend="libxml2"/>,
+      <ulink url="https://github.com/nemequ/munit">munit</ulink>, og
+      <ulink url="https://pypi.org/project/structlog/">structlog</ulink>
     </para>
   </sect2>
 
@@ -93,17 +94,19 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr --buildtype=release -Dtests=disabled .. &amp;&amp;
+meson setup --prefix=/usr --buildtype=release -D tests=disabled .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
       Denne pakken kommer med en testpakke, men den krever en ekstern
-      avhengighet. Hvis du har
-      <ulink url="https://github.com/nemequ/munit">munit</ulink> installert og
-      ønsker å kjøre testpakken, kjør følgende kommandoer:
+      avhengighet. Hvis du har både
+      <ulink url="https://github.com/nemequ/munit">munit</ulink> og
+      <ulink url="https://pypi.org/project/structlog/">structlog</ulink>
+      installert og ønsker å kjøre testpakken, kjør følgende 
+      kommandoer:
     </para>
 
-<screen remap="test"><userinput>meson configure -Dtests=enabled .. &amp;&amp;
+<screen remap="test"><userinput>meson configure -D tests=enabled .. &amp;&amp;
 ninja test</userinput></screen>
 
     <para>
@@ -119,14 +122,6 @@ ninja test</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-
-    <para>
-      <parameter>-Dtests=disabled</parameter>: Denne bryteren unngår en avhengighet
-      av <ulink url="https://github.com/nemequ/munit">munit</ulink>. Fjern denne
-      bryteren hvis du har <application>munit</application> installert og ønsker å
-      kjøre testpakken.
-    </para>
-    
   </sect2>
 
   <sect2 role="content">
