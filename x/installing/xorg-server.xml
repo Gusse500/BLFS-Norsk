@@ -235,11 +235,6 @@
 
 <screen><userinput remap="pre">patch -Np1 -i ../xorg-server-&xorg-server-version;-tearfree_backport-2.patch</userinput></screen>
 
-  </sect2>
-
-  <sect2 role="installation">
-    <title>Installasjon av Xorg Server</title>
-
     <para>
       Installer serveren ved å kjøre følgende kommandoer:
     </para>
@@ -250,8 +245,8 @@ cd    build &amp;&amp;
 meson setup ..              \
       --prefix=$XORG_PREFIX \
       --localstatedir=/var  \
-      -Dglamor=true         \
-      -Dxkb_output_dir=/var/lib/xkb &amp;&amp;
+      -D glamor=true        \
+      -D xkb_output_dir=/var/lib/xkb &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -282,13 +277,13 @@ mkdir -pv /etc/X11/xorg.conf.d</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>-Dglamor=true</parameter>: Sørg for å bygge Glamor
+      <parameter>-D glamor=true</parameter>: Sørg for å bygge Glamor
       modulen. Det er nødvendig for å bygge &modesetting_drv; driver
       som erstatter de tradisjonelle Device Dependent X (DDX) driverne.
     </para>
 
     <para>
-      <option>-Dsuid_wrapper=true</option>: Bygger suid-root
+      <option>-D suid_wrapper=true</option>: Bygger suid-root
       innpakning for eldre driverstøtte på rotløse xserver systemer.
     </para>
 <!-- commented out because this option defaults to auto
@@ -309,7 +304,7 @@ mkdir -pv /etc/X11/xorg.conf.d</userinput></screen>
     </para>
 
     <para>
-      <option>-Dxephyr=true</option>: Dette alternativet tillater å bygge Xephyr hvis dens
+      <option>-D xephyr=true</option>: Dette alternativet tillater å bygge Xephyr hvis dens
       avhengigheter er oppfylt.
     </para>
 
