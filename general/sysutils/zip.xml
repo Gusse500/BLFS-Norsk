@@ -74,17 +74,11 @@
     <title>Installasjon av Zip</title>
 
     <para>
-      Først må du gjøre pakken kompatibel med gcc-14:
-    </para>
-
-<screen><userinput>sed -i '205 s/CC=gcc/CC="gcc -std=gnu89"/' unix/Makefile</userinput></screen>
-
-    <para>
       Installer <application>Zip</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>make -f unix/Makefile generic_gcc</userinput></screen>
+<screen><userinput>make -f unix/Makefile generic CC="gcc -std=gnu89"</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -102,12 +96,21 @@
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>make prefix=/usr -f unix/Makefile install</command>: Dette
-      kommandoen overstyrer <varname>prefix</varname> variabel som er satt til
+      <parameter>CC="gcc -std=gnu89"</parameter>: Denne parameteren
+      overstyrer <varname>CC</varname> variabelen som er satt til
+      <command>cc</command> i <filename>unix/Makefile</filename> filen.
+      I LFS <command>cc</command> er en symbolkobling til <command>gcc</command>,
+      og den bruker <option>-std=gnu17</option> (ISO 9899:2017 med GNU
+      utvidelser) som standard, men Zip er en <quote>legacy</quote> pakke
+      der noen grammatikkkonstruksjoner er ugyldige i ISO 9899:1999 og nyere
+      standarder.
+    </para>
+
+    <para>
+      <parameter>prefix=/usr</parameter>: Denne parameteren
+      overstyrer <varname>prefix</varname> variabelen som er satt til
       <filename class='directory'>/usr/local</filename> i
-      <filename>unix/Makefile</filename>.
-      Alternativer til <parameter>generic_gcc</parameter> kan sees med en
-      <command>make -f unix/Makefile list</command> kommandoen.
+      <filename>unix/Makefile</filename> filen.
     </para>
 
   </sect2>

@@ -8,10 +8,10 @@
   <!ENTITY vim-download-http "http://ftp.vim.org/vim/unix/vim-&vim-version;.tar.bz2">-->
   <!ENTITY vim-download-http "https://github.com/vim/vim/archive/v&vim-version;/vim-&vim-version;.tar.gz">
   <!ENTITY vim-download-ftp  " ">
-  <!ENTITY vim-md5sum        "79dfe62be5d347b1325cbd5ce2a1f9b3">
+  <!ENTITY vim-md5sum        "c512a99b3704f193be1a181cc644b2b2">
   <!ENTITY vim-size          "17 MB">
-  <!ENTITY vim-buildsize     "125 MB (add 67 MB for tests)">
-  <!ENTITY vim-time          "0.3 SBU (med parallellitet=4; legg til 3.0 SBU for tester)">
+  <!ENTITY vim-buildsize     "134 MB (add 74 MB for tests)">
+  <!ENTITY vim-time          "0.3 SBU (med parallellitet=4; legg til 11 SBU for tester)">
 ]>
 
 <sect1 id="vim" xreflabel="Vim-&vim-version;">
@@ -120,14 +120,7 @@
         under et annet navn som f.eks <filename>vi</filename>.
       </para>
     </note>
-<!--
-    <para>
-      Først, hvis du bygger Lua tolken for VIM, må du tilpasse den til en
-      API-endring i lua-5.4.0:
-    </para>
 
-<screen><userinput remap="pre">sed -i '461 s/static int/int/' src/if_lua.c</userinput></screen>
--->
     <para>
       Installer <application>Vim</application> ved å kjøre følgende
       kommandoer:
@@ -163,19 +156,24 @@ make</userinput></screen>
     </note>
 
     <para>
-      For å teste resultatene, kjør: <command>make -j1 test</command>, eller
-      <command>bwrap --dev-bind / / --dev-bind /dev/null /etc/vimrc make -j1
-      test</command> hvis du kjører testene med <xref linkend='bubblewrap'/>
-      og <filename>/etc/vimrc</filename> skjult.
-      Selv om en av testene ikke klarer å produsere filen
-      <filename>test.out</filename> i <filename
-      class="directory">src/testdir</filename>, de resterende testene vil
+      For å teste resultatene, utsted: <command>make -j1 test</command>
+      Testfeil, hvis noen, vil produsere filen
+      <filename>test.log</filename> i <filename
+      class="directory">src/testdir</filename>. De resterende testene vil
       fortsatt bli utført. Hvis alt går bra, vil loggen rapportere
       <literal>ALL DONE</literal>. Noen tester merket som
       <quote>flaky</quote> kan av og til mislykkes og kan ignoreres.
       Testene er kjent for å mislykkes hvis utdata blir omdirigert til en fil,
       og også hvis de kjøres i en 'screen' økt.
     </para>
+
+    <note>
+      <para>
+        Hvis du kjører testene med <xref linkend='bubblewrap'/> og 
+        <filename>/etc/vimrc</filename> skjult, bruk 
+        <command>bwrap --dev-bind / / --dev-bind /dev/null /etc/vimrc make -j1 test</command>.
+      </para>
+    </note>
 
     <note>
       <para>
