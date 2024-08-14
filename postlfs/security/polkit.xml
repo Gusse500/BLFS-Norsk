@@ -117,7 +117,7 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gtk-doc"/>,
-      <xref linkend="python-dbusmock"/>, og
+      <xref linkend="python-dbusmock"/> (påkrevd for tester), og
       <xref linkend="spidermonkey"/> (kan brukes i stedet for duktape)
     </para>
 
@@ -213,19 +213,6 @@ meson setup ..                    \
       -D session_tracking=elogind \
       -D tests=true</userinput></screen>
 
-    <!-- We have to do this after meson setup because mocklibc is extracted
-         from a tarball by the meson setup command.  Also note that
-         test/mocklibc is useless and patching it won't work.  -->
-    <para>
-      Tilpass nå den sendte mocklibc kopien for å tillate å bygge testpakken
-      med GCC 14 eller nyere:
-    </para>
-
-<screen><userinput>grep 'print_indent'             ../subprojects/mocklibc-1.0/src/netgroup.c \
-     | sed 's/ {/;/' >>         ../subprojects/mocklibc-1.0/src/netgroup.h &amp;&amp;
-
-sed -i '1 i #include &lt;stdio.h&gt;' ../subprojects/mocklibc-1.0/src/netgroup.h</userinput></screen>
-
     <para>
       Bygg pakken:
     </para>
@@ -267,18 +254,6 @@ sed -i '1 i #include &lt;stdio.h&gt;' ../subprojects/mocklibc-1.0/src/netgroup.h
       <xref linkend='duktape'/> JavaScript motoren.
     </para>
 
-    <!--
-    <para revision="sysv">
-      <parameter>- -disable-libsystemd-login</parameter>: Denne bryteren tvinger
-      polkit å bygge med elogind støtte (hvis tilgjengelig) i stedet for
-      systemd-login.
-    </para>
-
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/static-libraries.xml"/>
-    -->
-
     <para>
       <option>-D os_type=lfs</option>: Bruk denne bryteren hvis du ikke opprettet
       <filename>/etc/lfs-release</filename> filen ellers vil distribusjons automatiske
@@ -292,11 +267,6 @@ sed -i '1 i #include &lt;stdio.h&gt;' ../subprojects/mocklibc-1.0/src/netgroup.h
       <application>Linux PAM</application> Autentiseringsrammeverk. Bruk det
       hvis du ikke har installert <application>Linux PAM</application>.
     </para>
-
-    <!--
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-    href="../../xincludes/gtk-doc-rebuild.xml"/>
-    -->
 
     <para>
       <option>-D introspection=false</option>: Bruk dette alternativet hvis du er sikker
