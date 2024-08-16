@@ -184,26 +184,26 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup ..                \
-      --prefix=/usr           \
-      --buildtype=release     \
-      -Ddefault-dnssec=no     \
-      -Dfirstboot=false       \
-      -Dinstall-tests=false   \
-      -Dldconfig=false        \
-      -Dman=auto              \
-      -Dsysusers=false        \
-      -Drpmmacrosdir=no       \
-      -Dhomed=disabled        \
-      -Duserdb=false          \
-      -Dmode=release          \
-      -Dpam=enabled           \
-      -Dpamconfdir=/etc/pam.d \
-      -Ddev-kvm-mode=0660     \
-      -Dnobody-group=nogroup  \
-      -Dsysupdate=disabled    \
-      -Dukify=disabled        \
-      -Ddocdir=/usr/share/doc/systemd-&systemd-version; &amp;&amp;
+meson setup ..                 \
+      --prefix=/usr            \
+      --buildtype=release      \
+      -D default-dnssec=no     \
+      -D firstboot=false       \
+      -D install-tests=false   \
+      -D ldconfig=false        \
+      -D man=auto              \
+      -D sysusers=false        \
+      -D rpmmacrosdir=no       \
+      -D homed=disabled        \
+      -D userdb=false          \
+      -D mode=release          \
+      -D pam=enabled           \
+      -D pamconfdir=/etc/pam.d \
+      -D dev-kvm-mode=0660     \
+      -D nobody-group=nogroup  \
+      -D sysupdate=disabled    \
+      -D ukify=disabled        \
+      -D docdir=/usr/share/doc/systemd-&systemd-version; &amp;&amp;
 
 ninja</userinput></screen>
 <!-- Regarding homed and userdb, see the note below in Command Explanations-->
@@ -240,19 +240,19 @@ ninja</userinput></screen>
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-Dpamconfdir=/etc/pam.d</parameter>: Tvinger PAM filene til
+      <parameter>-D pamconfdir=/etc/pam.d</parameter>: Tvinger PAM filene til
       å installeres i /etc/pam.d i stedet for /usr/lib/pam.d.
     </para>
 
     <para>
-      <parameter>-Duserdb=false</parameter>: Fjerner en nisse som ikke gjør
+      <parameter>-D userdb=false</parameter>: Fjerner en nisse som ikke gjør
       noe under en BLFS konfigurasjon. Hvis du ønsker å aktivere
       <application>userdbd</application> nissen, erstatte "false" med "true"
       i mesonkommandoen ovenfor.
     </para>
 
     <para>
-      <parameter>-Dhomed=disabled</parameter>: Fjerner en nisse som ikke gjør
+      <parameter>-D homed=disabled</parameter>: Fjerner en nisse som ikke gjør
       noe under en BLFS konfigurasjon, spesielt ved å bruke kontoer
       opprettet med useradd. For å aktivere systemd-homed, sørg først for at du har
       <xref linkend="cryptsetup"/> og <xref linkend="libpwquality"/> installert,
@@ -261,7 +261,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Dukify=disabled</parameter>: Fjerner et skript for å
+      <parameter>-D ukify=disabled</parameter>: Fjerner et skript for å
       kombinere en kjerne, en initramfs og en kjernekommandolinje osv.
       inn i en UEFI applikasjon som kan lastes inn av UEFI fastvaren
        for å starte den innebygde Linux kjernen. Det er ikke nødvendig for å starte opp et
