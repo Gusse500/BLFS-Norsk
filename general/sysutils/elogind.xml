@@ -141,14 +141,14 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup ..                              \
-      --prefix=/usr                         \
-      --buildtype=release                   \
-      -Dman=auto                            \
-      -Ddocdir=/usr/share/doc/elogind-&elogind-version; \
-      -Dcgroup-controller=elogind           \
-      -Ddev-kvm-mode=0660                   \
-      -Ddbuspolicydir=/etc/dbus-1/system.d &amp;&amp;
+meson setup ..                               \
+      --prefix=/usr                          \
+      --buildtype=release                    \
+      -D man=auto                            \
+      -D docdir=/usr/share/doc/elogind-&elogind-version; \
+      -D cgroup-controller=elogind           \
+      -D dev-kvm-mode=0660                   \
+      -D dbuspolicydir=/etc/dbus-1/system.d &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -199,12 +199,12 @@ ln -sfvn elogind /usr/include/systemd</userinput></screen>
     </para>
     -->
     <para>
-      <parameter>-Ddocdir=/usr/share/doc/elogind-&elogind-version;</parameter>:
+      <parameter>-D docdir=/usr/share/doc/elogind-&elogind-version;</parameter>:
       Dette er nødvendig for å installere dokumentasjon i en versjonert mappe.
     </para>
 
     <para>
-      <parameter>-Dcgroup-controller=elogind</parameter>: Denne bryteren er
+      <parameter>-D cgroup-controller=elogind</parameter>: Denne bryteren er
       nødvendig for å bygge denne pakken når kjernen ikke er bygget med
       <option>CONFIG_CGROUPS</option> aktivert. Noter at
       <application>elogind</application> strengt tatt trenger
@@ -213,34 +213,34 @@ ln -sfvn elogind /usr/include/systemd</userinput></screen>
     </para>
 
     <para>
-      <parameter>-Ddbuspolicydir=/etc/dbus-1/system.d</parameter>: Denne bryteren
+      <parameter>-D dbuspolicydir=/etc/dbus-1/system.d</parameter>: Denne bryteren
       angir plasseringen av <application>D-Bus</application> retningslinje
       mappen.
     </para>
 
     <para>
-      <parameter>-Ddev-kvm-mode=0660</parameter>: LFS udev-regelen setter
+      <parameter>-D dev-kvm-mode=0660</parameter>: LFS udev-regelen setter
       modus for <filename class='devicefile'>/dev/kvm</filename> til 0660.
       Dette alternativet sikrer elogind udev reglene er i samsvar med LFS
       konfigurasjonen.
     </para>
 
     <para>
-      <parameter>-Dman=auto</parameter>: Standardverdien for denne bryteren er
+      <parameter>-D man=auto</parameter>: Standardverdien for denne bryteren er
       <emphasis>false</emphasis>. Sette den til <emphasis>auto</emphasis>
       tillater å bygge og installere manualsidene hvis de anbefalte
       avhengigheter er installert.
     </para>
 
     <para>
-      <option>-Dhtml=auto</option>: Standardverdien for denne bryteren er
+      <option>-D html=auto</option>: Standardverdien for denne bryteren er
       <emphasis>false</emphasis>. Sette den til <emphasis>auto</emphasis>
       tillater å bygge og installere html dokumentasjonen hvis de anbefalte
       avhengigheter er installert.
     </para>
 
     <para>
-      <option>-Ddefault-kill-user-processes=false</option>: Avgjør om
+      <option>-D default-kill-user-processes=false</option>: Avgjør om
       prosessene til en bruker skal drepes når brukeren logger ut.
       Standard er <emphasis>true</emphasis>, men dette beseirer den tradisjonelle
       bruken av <command>screen</command> eller <command>tmux</command>. Dette kan
