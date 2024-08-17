@@ -105,29 +105,45 @@ make</userinput></screen>
       Denne pakken kommer ikke med en testpakke.
     </para>
 
+    <!-- To editors: hard coded versions "209", "212", and "3.6" are not a
+         bug.  This <important> block should be removed when we update x265
+         to 3.7 (or 4.0 or whatever new version).  The problem only happens
+         when we downgrade libx265.so, upgrading is OK (as long as following
+         the LFS package management page).  -->
+    <important>
+      <para>
+        Hvis du nedgraderer fra bleeding-edge x265-20240812 (det har vært
+        feilaktig brukt i BLFS utviklingsboken i flere dager),
+        fjern det delte biblioteket fra x265-20240812 som &root; bruker:
+      </para>
+
+      <screen role='root'><userinput>rm -fv /usr/lib/libx265.so.212</userinput></screen>
+
+      <para>
+        Dette er for å forhindre <command>ldconfig</command> fra å gjenskape
+        symbolkoblingen <filename>libx265.so</filename> med målet
+        <filename>/usr/lib/libx265.so.212</filename> som ser ut til å være
+        <quote>en nyere versjon</quote> qav <filename>libx265.so.209</filename>
+        fra x265-3.6.
+      </para>
+    </important>
+
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      For å installere pakken må du først fjerne eventuelle gamle bibliotekversjoner.
+      Etter installasjonen fjerner du et statisk bibliotek.
+      Som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install &amp;&amp;
-rm -vf /usr/lib/libx265.a </userinput></screen>
+rm -vf /usr/lib/libx265.a</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
       <title>Parameterforklaringer</title>
 
-<!--
       <para>
-        <parameter>-D GIT_ARCHETYPE=1</parameter>: Upstream gir ikke lenger
-        utgivelser. BLFS bruker et git øyeblikksbilde, men hvis byggeren ikke har
-        installert <application>git</application> bygget vil ikke installere
-        det delte biblioteket eller pkgconfig filen uten denne bryteren.
-      </para>
--->
-
-      <para>
-        <parameter>-Wno-dev</parameter>: Denne bryteren brukes til å undertrykke advarsler
+        <parameter>-W no-dev</parameter>: Denne bryteren brukes til å undertrykke advarsler
         beregnet på pakkens utviklere.
       </para>
 
