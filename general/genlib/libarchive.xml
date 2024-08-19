@@ -30,7 +30,7 @@
       grensesnitt for lesing/skriving av ulike komprimeringsformater.
     </para>
 
-    &lfs121_checked;
+    &lfs122_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -79,14 +79,17 @@
 -->
     <bridgehead renderas="sect3">libarchive Avhengigheter</bridgehead>
 
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="libxml2"/>
+    </para>
+
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="libxml2"/>,
       <xref linkend="lzo"/>, 
       <xref linkend="nettle"/>, og
       <xref linkend="pcre2"/>
     </para>
-
   </sect2>
 
   <sect2 role="installation">
@@ -97,7 +100,7 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+<screen><userinput>./configure --prefix=/usr --disable-static --without-expat &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -118,11 +121,19 @@ make</userinput></screen>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
 
+    <!-- https://github.com/libarchive/libarchive/issues/2146 -->
     <para>
-      <option>--without-xml2</option>: Denne bryteren setter expat for xar arkiv
+      <parameter>--without-expat</parameter>: Denne bryteren deaktiverer bruk av
+      expat for støtte for xar format. På grunn av en feil vil Xar leseren sløyfe
+      uendelig hvis expat brukes. Oppstrøms foretrekker libxml2 for xar
+      støtte uansett
+    </para>
+<!--
+    <para>
+      <option>- -without-xml2</option>: Denne bryteren setter expat for xar arkiv
       formatstøtte i stedet for foretrukket libxml2 hvis begge pakkene er installert.
     </para>
-
+-->
     <para>
       <option>--without-nettle</option>: Denne bryteren setter OpenSSL for kryptostøtte
       i stedet for foretrukket Nettle hvis begge pakkene er installert.
