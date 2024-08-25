@@ -33,7 +33,7 @@
       <application>ksh</application> men inkluderer mange forbedringer.
     </para>
 
-    &lfs121_checked;
+    &lfs122_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -106,8 +106,13 @@
       ellers vil Zsh være feilkonfigurert og mislykkes i å bygge:
     </para>
 
-<screen><userinput>sed -i -e 's/^main/int &amp;/' -e 's/exit(/return(/' aczsh.m4 configure.ac &amp;&amp;
-sed -i 's/test = /&amp;(char**)/'                    configure.ac          &amp;&amp;
+<screen><userinput>sed -e 's/^main/int &amp;/'      \
+    -e 's/exit(/return(/'    \
+    -i aczsh.m4 configure.ac &amp;&amp;
+
+sed -e 's/test = /&amp;(char**)/' \
+    -i configure.ac           &amp;&amp;
+
 autoconf</userinput></screen>
 
     <para>
@@ -120,7 +125,8 @@ autoconf</userinput></screen>
       referansene manuelt:
     </para>
 
-<screen><userinput>sed 's|/etc/z|/etc/zsh/z|g' -i Doc/*.*</userinput></screen>
+<screen><userinput>sed -e 's|/etc/z|/etc/zsh/z|g' \
+    -i Doc/*.*</userinput></screen>
 
 <!--    <note>
       <para>

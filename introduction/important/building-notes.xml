@@ -333,6 +333,7 @@ tar -xvf filename.tar.bz2</userinput></screen>
 cat &gt; /etc/systemd/system/user@.service.d/delegate.conf &lt;&lt; EOF &amp;&amp;
 <literal>[Service]
 Delegate=memory cpuset</literal>
+EOF
 systemctl daemon-reload</userinput></screen>
 
     <para revision='systemd'>
@@ -419,10 +420,11 @@ EOF</userinput></screen>
       spesifisere <literal>0,2,4,6</literal> i stedet for <literal>0-3</literal>.
       Merk at de andre CPU modeller kan bruke et annet kartleggingsskjema.
       Hvis du ikke er sikker på kartleggingen mellom de logiske kjernene
-      og de fysiske kjernene, kjør <command>grep -E '^processor|^core'
-      /proc/cpuinfo</command> som vil sende ut logiske kjerne IDer i
-      <computeroutput>processor</computeroutput> linjer og fysisk kjerne
-      IDer i <computeroutput>core id</computeroutput> linjer.
+      og de fysiske kjernene, kjør <command>lscpu --extended</command>
+      kommandoen som vil gi ut logiske kjerne IDer i
+      <computeroutput>CPU</computeroutput> kolonnen og fysisk kjerne
+      IDer i <computeroutput>CORE</computeroutput> kolonnen.
+
     </para>
 
     <para>
