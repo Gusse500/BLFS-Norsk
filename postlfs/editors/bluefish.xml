@@ -96,12 +96,12 @@
     <title>Installasjon av Bluefish</title>
 
     <para>
-      Først, fiks et problem introdusert av gcc14:
+      Først, deaktiver et programtillegg som krever funksjoner som er fjernet i libxml-2.13.0
+      eller senere:
     </para>
 
-<screen><userinput>sed -e '/HTMLtree.h/a int xmlNanoHTTPFetch(const char* URL, const char* filename, char** contentType);' \
-    -i src/plugin_infbrowser/infb_gui.c
-</userinput></screen>
+<screen><userinput>sed '/infbrowser/d' -i src/Makefile.am &amp;&amp;
+autoreconf</userinput></screen>
 
     <para>
       Installer <application>Bluefish</application> ved å kjøre følgende
