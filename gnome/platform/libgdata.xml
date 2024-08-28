@@ -87,9 +87,10 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gtk-doc"/> (for dokumentasjon),
-      <xref linkend="liboauth"/> (for OAuth v1 støtte), og
-      <xref linkend="uhttpmock"/> (nødvendig for tester)
+      <xref linkend="gtk-doc"/> (for dokumentasjon), og
+      <xref linkend="liboauth"/> (for OAuth v1 støtte) <!-- og
+      <xref linkend="uhttpmock"/> (nødvendig for tester)-->
+      <!-- uhttpmock is commented out until libgdata is ported to soup3 -->
     </para>
 
   </sect2>
@@ -112,6 +113,7 @@ meson setup --prefix=/usr               \
             ..                          &amp;&amp;
 ninja</userinput></screen>
 
+<!--
     <para>
       Hvis du ønsker å kjøre testpakken, sørg for at
       <xref linkend="uhttpmock"/> er installert og fjern
@@ -119,6 +121,15 @@ ninja</userinput></screen>
       <command>meson</command> kommandolinjen. For å teste resultatene,
       kjør: <command>ninja test</command>. Merk at
       testene trenger nettverkstilgang.
+    </para>
+ -->
+
+<!-- Tests requires uhttpmock, but they are only compatible with a version that
+     uses libsoup2. Without this version, all of the tests fail due to mixing
+     symbols from libsoup3 and libsoup2 in the same program. -->
+
+    <para>
+      Denne pakken kommer ikke med en funksjonell testpakke.
     </para>
 
     <para>
