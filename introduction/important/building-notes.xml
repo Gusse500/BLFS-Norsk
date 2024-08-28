@@ -424,7 +424,6 @@ EOF</userinput></screen>
       kommandoen som vil gi ut logiske kjerne IDer i
       <computeroutput>CPU</computeroutput> kolonnen og fysisk kjerne
       IDer i <computeroutput>CORE</computeroutput> kolonnen.
-
     </para>
 
     <para>
@@ -1333,22 +1332,49 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
       </para>
 
       <para>
-        De viktigste distroene bruker mye mer, som f.eks
-        <option>-Wl,-z,now</option> (deaktivere lazy binding for å forbedre
-        <option>-Wl,-z,relro</option>, så <emphasis>hele</emphasis>
-        GOT kan gjøres uforanderlig), <option>-fstack-clash-protection</option>
-        (forhindrer angriperen i å bruke en ukontrollert offset fra en haug
-        adresse for å endre stabelen),
-        <option>-fcf-protection=full</option>
-        (bruke Intel og AMD CET-teknologi for å begrense mål
-        adresser til instruksjoner for kontrollflytoverføring; å gjøre det virkelig
-        effektivt må hele systemet bygges med dette alternativet, Glibc
-        må bygges med <option>--enable-cet</option>, og systemet
-        må kjøre på Intel Tiger Lake eller nyere, eller AMD Zen 3 eller nyere),
-        og <option>-ftrivial-auto-var-init=zero</option> (initialisering
-        av variabler ved å fylle null byte hvis de ellers er
-        uinitialisert).
+        De største distroene bruker mye mer, som f.eks:
       </para>
+
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>-Wl,-z,now</option>: deaktiverer lazy binding for å forbedre
+            <option>-Wl,-z,relro</option>, sånn at
+            <emphasis>hele</emphasis> GOT kan gjøres uforanderlig.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>-fstack-clash-protection</option>: hindrer angriperen
+            fra å bruke en offset som er stor nok og ikke tilstrekkelig kontrollert til å
+            hoppe over stabel guard siden plassert av kjernen og
+            stabel canary plassert ved
+            <option>-fstack-protector=strong</option>, og endre stabelen
+            fra en heapadresse, eller omvendt.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>-ftrivial-auto-var-init=zero</option>: initialiserer
+            noen variabler ved å fylle null byte hvis de ikke er
+            initialisert på andre måter.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>-fcf-protection=full</option>: bruker Intel og AMD
+            CET teknologi for å begrense måladressene for control-flow
+            overføringsinstruksjoner. For å gjøre det virkelig effektivt for en
+            pakke, alle pakker som gir et delt bibliotek for
+            pakken som skal brukes må bygges med dette alternativet, så vel som
+            selve pakken, Glibc må konfigureres med
+            <option>--enable-cet</option> alternativet aktivert, og systemet
+            må kjøre på Intel Tiger Lake eller nyere, eller AMD Zen 3 eller nyere.
+            Dersom kriteriene ikke er oppfylt, vil programmet satt sammen med dette
+            alternativet fortsatt kjøre, men er egentlig ikke beskyttet av CET.
+          </para>
+        </listitem>
+      </itemizedlist>
 
       <para>
         I GCC 14, alternativet <option>-fhardened</option> er en forkortelse
