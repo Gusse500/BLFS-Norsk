@@ -1312,9 +1312,12 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
          videre en del av sin ånd ved å aktivere PIE
         (<option>-fPIE -pie</option>) og SSP
         (<option>-fstack-protector-strong</option>) som standard
-        for GCC og clang. Det som dekkes her er annerledes - for det første
-        må du forsikre deg om at pakken faktisk bruker flaggene du har lagt til
-        og ikke overstyre dem.
+        for GCC og clang.  Og, linkerene (<command>ld.bfd</command>
+        og <command>ld.gold</command>) har også aktivert
+        <option>-Wl,-z,relro</option> (gjør en del av GOT uforanderlig)
+        som standard siden Binutils 2.27. Det som blir dekket her er
+        annerledes - først må du sørge for at pakken faktisk
+        bruker flaggene du har lagt til, og ikke overstyrer dem.
       </para>
 
       <para>
@@ -1330,8 +1333,32 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
       </para>
 
       <para>
-        De viktigste distroene bruker mye mer, for eksempel RELRO (Relocation Read Only)
-        og kanskje <option>-fstack-clash-protection</option>. Du kan også
+        De viktigste distroene bruker mye mer, som f.eks
+        <option>-Wl,-z,now</option> (deaktivere lazy binding for å forbedre
+        <option>-Wl,-z,relro</option>, så <emphasis>entrie</emphasis>
+        GOT kan gjøres uforanderlig), <option>-fstack-clash-protection</option>
+        (forhindrer angriperen i å bruke en ukontrollert offset fra en haug
+        adresse for å endre stabelen),
+        <option>-fcf-protection=full</option>
+        (bruke Intel og AMD CET-teknologi for å begrense mål
+        adresser til instruksjoner for kontrollflytoverføring; å gjøre det virkelig
+        effektivt må hele systemet bygges med dette alternativet, Glibc
+        må bygges med <option>--enable-cet</option>, og systemet
+        må kjøre på Intel Tiger Lake eller nyere, eller AMD Zen 3 eller nyere),
+        og <option>-ftrivial-auto-var-init=zero</option> (initialisering
+        av variabler ved å fylle null byte hvis de ellers er
+        uinitialisert).
+      </para>
+
+      <para>
+        I GCC 14, alternativet <option>-fhardened</option> er en forkortelse
+        for å aktivere alle herdealternativene nevnt ovenfor. Det setter
+        <option>-D _FORTIFY_SOURCE=3</option> istedenfor
+        <option>-D _FORTIFY_SOURCE=2</option>.
+      </para>
+
+      <para>
+        Du kan også
         møte den såkalte <quote>userspace retpoline</quote>
         (<option>-mindirect-branch=thunk</option> etc.) hvilken
         tilsvarer spekter begrensninger som ble tatt i bruk i linuxkjernen
