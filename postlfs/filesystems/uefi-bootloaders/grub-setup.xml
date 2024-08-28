@@ -3,6 +3,8 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY % general-entities SYSTEM "../../../general.ent">
   %general-entities;
+
+  <!ENTITY lfs-kernel-ver "6.10.5-lfs-12.2">
 ]>
 
 <sect1 id="grub-setup" xreflabel="Using GRUB to Set Up the Boot Process with UEFI">
@@ -444,8 +446,8 @@ if loadfont /boot/grub/fonts/unicode.pf2; then
   terminal_output gfxterm
 fi
 
-menuentry "GNU/Linux, Linux 6.7.4-lfs-12.1"  {
-  linux   /boot/vmlinuz-6.7.4-lfs-12.1 root=/dev/sda2 ro
+menuentry "GNU/Linux, Linux &lfs-kernel-ver;" {
+  linux   /boot/vmlinuz-&lfs-kernel-ver; root=/dev/sda2 ro
 }
 
 menuentry "Firmware Setup" {
@@ -458,15 +460,19 @@ menuentry "Firmware Setup" {
       boken</ulink> for grunnleggende kunnskap om
       <filename>grub.cfg</filename> filen.
       <literal>(hd0,2)</literal>, <literal>sda2</literal>, og
-      <literal>6.4.10-lfs-12.0</literal> må stemme overens med din
+      <literal>&lfs-kernel-ver;</literal> må stemme overens med din
       konfigurasjon.
     </para>
 
     <para>
-       <command>insmod all_video</command> direktivet laster ulike
-      moduler for videostøtte. Det er nødvendig for å initialisere EFI
-      framebuffer for at kjernen skal skrive ut meldinger riktig før
-      initialisering av kjerne GPU driver.
+       <command>insmod efi_gop</command> og
+      <command>insmod efi_uga</command> direktiver laster to moduler for
+      EFI basert videostøtte. På de fleste systemer er
+      <literal>efi_gop</literal> modulen nok.
+      <literal>efi_uga</literal> modulen er bare nyttig for eldre systemer,
+      men det er ufarlig å laste den uansett. Videostøtten er nødvendig for at
+      <command>terminal_output gfxterm</command> direktivet egentlig skal
+      virke.
     </para>
 
     <para>

@@ -424,7 +424,6 @@ EOF</userinput></screen>
       kommandoen som vil gi ut logiske kjerne IDer i
       <computeroutput>CPU</computeroutput> kolonnen og fysisk kjerne
       IDer i <computeroutput>CORE</computeroutput> kolonnen.
-
     </para>
 
     <para>
@@ -1312,9 +1311,12 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
          videre en del av sin ånd ved å aktivere PIE
         (<option>-fPIE -pie</option>) og SSP
         (<option>-fstack-protector-strong</option>) som standard
-        for GCC og clang. Det som dekkes her er annerledes - for det første
-        må du forsikre deg om at pakken faktisk bruker flaggene du har lagt til
-        og ikke overstyre dem.
+        for GCC og clang.  Og, linkerene (<command>ld.bfd</command>
+        og <command>ld.gold</command>) har også aktivert
+        <option>-Wl,-z,relro</option> (gjør en del av GOT uforanderlig)
+        som standard siden Binutils 2.27. Det som blir dekket her er
+        annerledes - først må du sørge for at pakken faktisk
+        bruker flaggene du har lagt til, og ikke overstyrer dem.
       </para>
 
       <para>
@@ -1330,8 +1332,59 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
       </para>
 
       <para>
-        De viktigste distroene bruker mye mer, for eksempel RELRO (Relocation Read Only)
-        og kanskje <option>-fstack-clash-protection</option>. Du kan også
+        De største distroene bruker mye mer, som f.eks:
+      </para>
+
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>-Wl,-z,now</option>: deaktiverer lazy binding for å forbedre
+            <option>-Wl,-z,relro</option>, sånn at
+            <emphasis>hele</emphasis> GOT kan gjøres uforanderlig.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>-fstack-clash-protection</option>: hindrer angriperen
+            fra å bruke en offset som er stor nok og ikke tilstrekkelig kontrollert til å
+            hoppe over stabel guard siden plassert av kjernen og
+            stabel canary plassert ved
+            <option>-fstack-protector=strong</option>, og endre stabelen
+            fra en heapadresse, eller omvendt.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>-ftrivial-auto-var-init=zero</option>: initialiserer
+            noen variabler ved å fylle null byte hvis de ikke er
+            initialisert på andre måter.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>-fcf-protection=full</option>: bruker Intel og AMD
+            CET teknologi for å begrense måladressene for control-flow
+            overføringsinstruksjoner. For å gjøre det virkelig effektivt for en
+            pakke, alle pakker som gir et delt bibliotek for
+            pakken som skal brukes må bygges med dette alternativet, så vel som
+            selve pakken, Glibc må konfigureres med
+            <option>--enable-cet</option> alternativet aktivert, og systemet
+            må kjøre på Intel Tiger Lake eller nyere, eller AMD Zen 3 eller nyere.
+            Dersom kriteriene ikke er oppfylt, vil programmet satt sammen med dette
+            alternativet fortsatt kjøre, men er egentlig ikke beskyttet av CET.
+          </para>
+        </listitem>
+      </itemizedlist>
+
+      <para>
+        I GCC 14, alternativet <option>-fhardened</option> er en forkortelse
+        for å aktivere alle herdealternativene nevnt ovenfor. Det setter
+        <option>-D _FORTIFY_SOURCE=3</option> istedenfor
+        <option>-D _FORTIFY_SOURCE=2</option>.
+      </para>
+
+      <para>
+        Du kan også
         møte den såkalte <quote>userspace retpoline</quote>
         (<option>-mindirect-branch=thunk</option> etc.) hvilken
         tilsvarer spekter begrensninger som ble tatt i bruk i linuxkjernen
