@@ -212,7 +212,8 @@ meson setup ..                  \
       --buildtype=release       \
       -D introspection=disabled \
       -D glib_debug=disabled    \
-      -D man-pages=enabled      &amp;&amp;
+      -D man-pages=enabled      \
+      -D sysprof=disabled       &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -292,7 +293,7 @@ ninja</userinput></screen>
         <filename class='directory'>/usr</filename> hierarkiet.
       </para>
     </warning>
-
+    <!-- I cannot reproduce these issues.
     <note>
       <para>
         Hvis du har installert glib-skip warnings-1.patch og har 
@@ -307,7 +308,7 @@ ninja</userinput></screen>
         mislykkes.  
       </para>
     </note>
-
+    -->
     <para>
       For å teste resultatene, etter å ha installert pakkene, utsted:
       <command>LC_ALL=C ninja test</command> som ikke-&root; bruker.
@@ -327,7 +328,16 @@ ninja</userinput></screen>
 
     <para>
       <parameter>-D glib_debug=disabled</parameter>: Denne bryteren gjør at
-      bygget ikke inkluderer feilsøkingsinformasjon i de bygde programmene og bibliotekene..
+      bygget inkluderer ikke noen dyre sjekker for feilsøking i byggeprogrammene
+      og bibliotekene.
+    </para>
+
+    <para>
+      <parameter>-D sysprof=disabled</parameter>: Denne bryteren deaktiverer
+      sporingsstøtte for sysprof. Fjern dette alternativet hvis du vil ha
+      sporingsstøtte. Merk at hvis sysprof ikke er installert, å fjerne
+      dette alternativet vil føre til at byggesystemet laster ned en sysprof kopi
+      fra Internett.
     </para>
 
   </sect2>
