@@ -6,10 +6,10 @@
 
   <!ENTITY glib2-download-http "&gnome-download-http;/glib/&glib2-minor;/glib-&glib2-version;.tar.xz">
   <!ENTITY glib2-download-ftp  " ">
-  <!ENTITY glib2-md5sum        "4334211338220a165350d1c4a1597b0e">
+  <!ENTITY glib2-md5sum        "9f94b8b15bc22dbe6a2c8aafd6fb0293">
   <!ENTITY glib2-size          "5.3 MB">
-  <!ENTITY glib2-buildsize     "189 MB (legg til 22 MB for tester)">
-  <!ENTITY glib2-time          "0.9 SBU (legg til 0.4 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY glib2-buildsize     "197 MB (legg til 22 MB for tester)">
+  <!ENTITY glib2-time          "0.7 SBU (legg til 0.4 SBU for tester; begge bruker parallellisme=4)">
 
   <!ENTITY gobject-introspection-download-http
     "&gnome-download-http;/gobject-introspection/1.80/gobject-introspection-&gobject-introspection-version;.tar.xz">
@@ -109,12 +109,12 @@
     </itemizedlist>
 
     <bridgehead renderas="sect3">GLib Avhengigheter</bridgehead>
-
+<!--
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend='packaging'/>
     </para>
-
+-->
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend='docutils'/>,
@@ -211,6 +211,7 @@ meson setup ..                  \
       --prefix=/usr             \
       --buildtype=release       \
       -D introspection=disabled \
+      -D glib_debug=disabled    \
       -D man-pages=enabled      &amp;&amp;
 ninja</userinput></screen>
 
@@ -300,6 +301,13 @@ ninja</userinput></screen>
       </para>
     </note>
 
+    <note>
+      <para>
+        Hvis du har brukt alternativet -D glib_debug=disabled, vil 17 tester
+        mislykkes.  
+      </para>
+    </note>
+
     <para>
       For å teste resultatene, etter å ha installert pakkene, utsted:
       <command>LC_ALL=C ninja test</command> som ikke-&root; bruker.
@@ -315,6 +323,11 @@ ninja</userinput></screen>
     <para>
       <parameter>-D man-pages=enabled</parameter>: Denne bryteren gjør at
       bygget lager og installerer pakkens manualsider.
+    </para>
+
+    <para>
+      <parameter>-D glib_debug=disabled</parameter>: Denne bryteren gjør at
+      bygget ikke inkluderer feilsøkingsinformasjon i de bygde programmene og bibliotekene..
     </para>
 
   </sect2>
