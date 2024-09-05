@@ -5,9 +5,9 @@
   %general-entities;
 
   <!ENTITY protobuf-download-http "https://github.com/protocolbuffers/protobuf/releases/download/v&protobuf-version;/protobuf-&protobuf-version;.tar.gz">
-  <!ENTITY protobuf-md5sum        "d8e0175333201370faa8d1ea8477f77a">
-  <!ENTITY protobuf-size          "8.7 MB">
-  <!ENTITY protobuf-buildsize     "123 MB">
+  <!ENTITY protobuf-md5sum        "9db90d4ada7418ad5534212cd1ba5093">
+  <!ENTITY protobuf-size          "8.8 MB">
+  <!ENTITY protobuf-buildsize     "124 MB">
   <!ENTITY protobuf-time          "1.0 SBU (med parallellisme=4)">
 ]>
 
@@ -92,7 +92,6 @@ cmake -D CMAKE_INSTALL_PREFIX=/usr      \
       -D protobuf_ABSL_PROVIDER=package \
       -D protobuf_BUILD_LIBUPB=OFF      \
       -D protobuf_BUILD_SHARED_LIBS=ON  \
-      -D utf8_range_ENABLE_INSTALL=OFF  \
       -G Ninja ..                       &amp;&amp;
 ninja</userinput></screen>
 
@@ -106,8 +105,7 @@ ninja</userinput></screen>
       Nå, som &root; bruker:
     </para>
 
-<screen role="root"><userinput>sed 's/utf8_range//' -i *.pc &amp;&amp;
-ninja install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
@@ -116,12 +114,6 @@ ninja install</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/cmake-skip-install-rpath.xml"/>
-
-    <para>
-      <command>sed 's/utf8_range//' -i *.pc</command>: Denne kommandoen fjerner en
-      gjenværende referanse til libutf8_range fra pkg-config-filene installert
-      av denne pakken.
-    </para>
 
     <para>
       <parameter>-D protobuf_BUILD_TESTS=OFF</parameter>: Denne parameteren forhindrer
@@ -140,14 +132,6 @@ ninja install</userinput></screen>
       <parameter>-D protobuf_BUILD_SHARED_LIBS=ON</parameter>: Denne parameteren
       gjør det mulig å bygge delte versjoner av bibliotekene som tilbys av denne pakken
       i stedet for statiske versjoner.
-    </para>
-
-    <para>
-      <parameter>-D utf8_range_ENABLE_INSTALL=OFF</parameter>: Denne parameteren
-      deaktiverer installasjon av utf8_range statiske bibliotek. Funksjonene
-      levert av dette biblioteket og brukt av protobuf er allerede innebygd i
-      <filename class='libraryfile'>libprotobuf.so</filename>, så å installere
-      en full kopi av det statiske biblioteket sløser bare med diskplass.
     </para>
 
   </sect2>
