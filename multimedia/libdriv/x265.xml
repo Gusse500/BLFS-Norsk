@@ -98,6 +98,7 @@
 cd    bld &amp;&amp;
 
 cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D GIT_ARCHETYPE=1           \
       -W no-dev ../source          &amp;&amp;
 make</userinput></screen>
 
@@ -145,6 +146,15 @@ rm -vf /usr/lib/libx265.a</userinput></screen>
       <para>
         <parameter>-W no-dev</parameter>: Denne bryteren brukes til å undertrykke advarsler
         beregnet på pakkens utviklere.
+      </para>
+
+      <para>
+        <parameter>-D GIT_ARCHETYPE=1</parameter>: Denne bryteren er nødvendig
+        fordi byggesystemet ikke vil generere en pkg-config fil eller installere
+        et delt bibliotek med mindre <xref linkend="git"/> er installert. Git kreves
+        ikke for noe annet i denne pakken, så denne bryteren er brukes for å
+        omgå det for brukere som ikke ønsker å installere Git som en
+        byggeavhengighet.
       </para>
 
       <para>
