@@ -308,16 +308,18 @@ EOF</userinput></screen>
     <para>
       Fjern nå noen tester som utløser en fullstendig gjenoppbygging av Rust standarden
       bibliotek og kompilator, fjern en spesiell sak for å støtte
-      <command>cargo</command> testpakken (som vi ikke kjører fordi den er
-      forventet å kjøre i et Rustc git-repository), men utløse en gjenoppbygging
+      <command>cargo</command> testpakken (som vi ikke kjører fordi den
+      forventes å kjøre i et Rustc git depot), men utløse en gjenoppbygging
       av <command>cargo</command> når
       <command>python3 x.py install</command> kjøres, og hindre bygging av en
       komponent ubrukelig for BLFS:
     </para>
 
-    <screen><userinput>sed '/MirOpt/d' -i src/bootstrap/src/core/builder.rs               &amp;&amp;
-sed 's/!path.ends_with("cargo")/true/'                             \
-    -i src/bootstrap/src/core/build_steps/tool.rs                  &amp;&amp;
+    <screen><userinput>sed '/MirOpt/d' -i src/bootstrap/src/core/builder.rs &amp;&amp;
+
+sed 's/!path.ends_with("cargo")/true/' \
+    -i src/bootstrap/src/core/build_steps/tool.rs &amp;&amp;
+
 sed 's/^.*build_wasm.*$/#[allow(unreachable_code)]&amp;return false;/' \
     -i src/bootstrap/src/lib.rs</userinput></screen>
 
@@ -331,10 +333,8 @@ sed 's/^.*build_wasm.*$/#[allow(unreachable_code)]&amp;return false;/' \
        -e '/^curl-sys /s/0.4.48/0.4.50/' \
        src/tools/cargo/Cargo.toml &amp;&amp; -->
 
-<screen><userinput>{ [ ! -e /usr/include/libssh2.h ] ||
-  export LIBSSH2_SYS_USE_PKG_CONFIG=1; }    &amp;&amp;
-{ [ ! -e /usr/include/sqlite3.h ] ||
-  export LIBSQLITE3_SYS_USE_PKG_CONFIG=1; } &amp;&amp;
+<screen><userinput>[ ! -e /usr/include/libssh2.h ] || export LIBSSH2_SYS_USE_PKG_CONFIG=1
+[ ! -e /usr/include/sqlite3.h ] || export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
 python3 x.py build</userinput></screen>
 
     <note>
