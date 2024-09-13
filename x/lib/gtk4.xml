@@ -71,7 +71,6 @@
     <para role="required">
       <xref linkend="fribidi"/>,
       <xref linkend="gdk-pixbuf"/>,
-      <xref linkend="glslc"/>,
       <xref linkend="graphene"/>,
       <xref linkend="iso-codes"/>,
       <xref linkend="libepoxy"/>,
@@ -85,10 +84,12 @@
     <para role="recommended">
       <xref linkend="adwaita-icon-theme"/> (standard for enkelte gtk4 innstillingsnøkler),
       <xref linkend="gst10-plugins-bad"/>,
+      <xref linkend="glslc"/>,
       <xref role='runtime' linkend="gst10-plugins-good"/> (kjøretid,
       bygget med <xref role='nodep' linkend='libvpx'/>),
       <xref linkend="hicolor-icon-theme"/> (nødvendig for tester og for standarder), og
-      <xref linkend="librsvg"/>
+      <xref linkend="librsvg"/>, og
+      <xref linkend="vulkan-loader"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt (Påkrevd hvis GNOME bygges)</bridgehead>
@@ -130,7 +131,7 @@ meson setup --prefix=/usr            \
             --buildtype=release      \
             -D broadway-backend=true \
             -D introspection=enabled \
-            -D vulkan=enabled       \
+            -D vulkan=enabled        \
             .. &amp;&amp;
 ninja</userinput></screen>
 
@@ -245,9 +246,11 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <option>-D vulkan=enabled</option>: Bruk denne bryteren hvis du har
-      <xref linkend="vulkan-loader"/> og <xref linkend="glslc"/> installert 
-      og ønsker å bygge den eksperimentelle Vulkan backend.
+      <option>-D vulkan=disabled</option>: Bruk denne bryteren i stedet for
+      <parameter>-D vulkan=enabled</parameter> hvis du ikke har
+      <xref linkend="vulkan-loader"/> or <xref linkend="glslc"/> installert.
+      Det vil deaktivere Vulkan backend som oppstrøms foretrekker å bruke
+      på Wayland baserte grafiske miljøer.
     </para>
 
   </sect2>
