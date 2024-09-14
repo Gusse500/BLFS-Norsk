@@ -6,9 +6,9 @@
 
   <!ENTITY gtk4-download-http "&gnome-download-http;/gtk/&gtk4-minor;/gtk-&gtk4-version;.tar.xz">
   <!ENTITY gtk4-download-ftp  " ">
-  <!ENTITY gtk4-md5sum        "33666e441030f3a965d2a1d2834dda8a">
+  <!ENTITY gtk4-md5sum        "d7bb643ef30d4611590964d82006fc78">
   <!ENTITY gtk4-size          "18 MB">
-  <!ENTITY gtk4-buildsize     "913 MB (med dokumenter; legg til 143 MB for tester)">
+  <!ENTITY gtk4-buildsize     "914 MB (med dokumenter; legg til 143 MB for tester)">
   <!ENTITY gtk4-time          "1.3 SBU (bruker parallellisme=4; med dokumenter; legg til 1.7 SBU for tester)">
 ]>
 
@@ -71,7 +71,6 @@
     <para role="required">
       <xref linkend="fribidi"/>,
       <xref linkend="gdk-pixbuf"/>,
-      <xref linkend="glslc"/>,
       <xref linkend="graphene"/>,
       <xref linkend="iso-codes"/>,
       <xref linkend="libepoxy"/>,
@@ -85,10 +84,12 @@
     <para role="recommended">
       <xref linkend="adwaita-icon-theme"/> (standard for enkelte gtk4 innstillingsnøkler),
       <xref linkend="gst10-plugins-bad"/>,
+      <xref linkend="glslc"/>,
       <xref role='runtime' linkend="gst10-plugins-good"/> (kjøretid,
       bygget med <xref role='nodep' linkend='libvpx'/>),
       <xref linkend="hicolor-icon-theme"/> (nødvendig for tester og for standarder), og
-      <xref linkend="librsvg"/>
+      <xref linkend="librsvg"/>, og
+      <xref linkend="vulkan-loader"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt (Påkrevd hvis GNOME bygges)</bridgehead>
@@ -99,6 +100,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <xref linkend="avahi"/> (for noen tester),
       <xref linkend="colord"/>,
       <xref linkend="cups"/>,
       <xref linkend="docutils"/>,
@@ -109,7 +111,9 @@
       <xref linkend="libcloudproviders"/>,
       <xref linkend="sassc"/>,
       <xref linkend="tracker3"/>,
-      <ulink url="https://github.com/OpenPrinting/cpdb-libs">cpdb</ulink>, og
+      <ulink url="https://github.com/OpenPrinting/cpdb-libs">cpdb</ulink>,
+      <ulink url="https://pypi.org/project/pydbus/">pydbus</ulink>
+      (for noen tester), og
       <ulink url="&sysprof-url;">sysprof</ulink>
     </para>
 
@@ -130,7 +134,7 @@ meson setup --prefix=/usr            \
             --buildtype=release      \
             -D broadway-backend=true \
             -D introspection=enabled \
-            -D vulkan=enabled       \
+            -D vulkan=enabled        \
             .. &amp;&amp;
 ninja</userinput></screen>
 
@@ -144,21 +148,46 @@ meson configure -D documentation=true                            &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å kjøre testene, utsted: <command>dbus-run-session meson test --setup
-      x11</command>. Hvis du er i en Wayland økt, bytt ut x11 med wayland.
+      For å kjøre testene, utsted:
+    </para>
 
-      Ni tester er kjent for å mislykkes hvis
+    <screen remap='test'><userinput>LIBGL_ALWAYS_SOFTWARE=1 \
+dbus-run-session meson test --setup x11 --no-suite needs-dmabuf</userinput></screen>
+
+    <para>
+      Hvis du er i en Wayland økt, bytt ut de to forekomstene av
+      <literal>x11</literal> med <literal>wayland</literal>.
+
+      En test er kjent for å mislykkes hvis
       <ulink url="https://gitlab.gnome.org/GNOME/cantarell-fonts">Cantrell fonts</ulink>
-      ikke er installert. 
+      ikke er installert.
+
+      Omtrent et dusin av testene er kjent for å mislykkes med mindre (for det meste usynlige)
+      forskjeller mellom gjengivelsen og det leverte referansebildet.
+      Utsted
+      <command>grep 'not ok' meson-logs/testlog-x11.txt -B3</command>
+      (bruk <filename>testlog-wayland.txt</filename> hvis du tester i et Wayland
+      økt) for å liste dem og bildefilene som viser gjengivelsen,
+      referanseutdataen og forskjellene. Du kan ta en titt på
+      disse bildene for å sikre at forskjellene er ubetydelige.
+
+      To <literal>headless</literal> tester er kjent for å mislykkes uten den
+      eksterne avhengigheten pydbus er installert.
       
       Mange tester vil mislykkes hvis <filename>~/.config/gtk-4.0/settings.ini</filename> 
       eksisterer og gtk-modules linjen er ikke kommentert.
-      
+
+      Flere andre tester kan mislykkes av ukjent årsak.
+  
       På systemer med NVIDIA grafikkort kan testene ta betydelig
       lengre enn testtiden ovenfor.
-
+      <!--
       På noen systemer kan så mange som 212 tester mislykkes (av over 6100) av
       ukjente årsaker.
+
+      I hope this is gone with LIBGL_ALWAYS_SOFTWARE and -\-no-suite dmabuf.
+      If not please restore them.  - xry111
+      -->
     </para>
 <!-- [pierre]: 4.6.0, wayland:   727 OK; 2 Expected Fail;   1 Fail; 1  Skipped
      [bdubbs]: 4.6.3, x11,       724 OK, 2 Expected Fail,  12 Fail, 1  Skipped
@@ -188,6 +217,17 @@ ninja</userinput></screen>
                above on X11 in IceWM
      [bdubbs]: 4.16.0, x11,     5896 OK, 0 Expected Fail, 212 Fail, 16 Skipped, 0 Timeout
                above on X11 in XFCE.  Over ssh there were 24 Timeouts
+     [xry111]: 4.16.1, x11,     6121 OK, 0 Expected Fail, 14 Fail, 16 Skipped, 0 Timeout
+               above on X11 (Xwayland) in GNOME
+     [xry111]: 4.16.1, wayland, 6120 OK, 0 Expected Fail, 15 Fail, 16 Skipped, 0 Timeout
+               above on wayland in GNOME
+     [xry111]: 4.16.1, x11,     6119 OK, 0 Expected Fail, 16 Fail, 16 Skipped, 0 Timeout
+               above on X11 (Xwayland) in Weston
+     [xry111]: 4.16.1, x11,     6106 OK, 0 Expected Fail, 18 Fail, 25 Skipped, 2 Timeout
+               above on wayland in Weston
+     [bdubbs]: 4.16.1, x11,     5909 OK, 0 Expected Fail, 203 Fail, 16 Skipped, 26 Timeout
+               Over ssh there were 26 Timeouts.
+               On a direct xfce run (same system) I now get 204 fail and 10 Timeouts. 
 -->
 
     <para>
@@ -245,11 +285,26 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <option>-D vulkan=enabled</option>: Bruk denne bryteren hvis du har
-      <xref linkend="vulkan-loader"/> og <xref linkend="glslc"/> installert 
-      og ønsker å bygge den eksperimentelle Vulkan backend.
+      <option>-D vulkan=disabled</option>: Bruk denne bryteren i stedet for
+      <parameter>-D vulkan=enabled</parameter> hvis du ikke har
+      <xref linkend="vulkan-loader"/> or <xref linkend="glslc"/> installert.
+      Det vil deaktivere Vulkan backend som oppstrøms foretrekker å bruke
+      på Wayland baserte grafiske miljøer.
     </para>
 
+    <para>
+      <envar>LIBGL_ALWAYS_SOFTWARE=1</envar>: Tving testpakken til å bruke
+      softpipe eller llvmpipe driveren fra Mesa. Testpakken er så
+      sensitiv at de mindre forskjellene forårsaket av en annen Mesa
+      driver kan utløse testfeil.
+    </para>
+
+    <para>
+      <parameter>--no-suite dmabuf</parameter>: Deaktiver testene som krever
+      <filename class='devicefile'>/dev/udmabuf</filename>.  Denne filen
+      eksisterer ikke hvis funksjonen ikke er aktivert i kjernekonfigurasjonen,
+      og selv om den eksisterer, kan den ikke nås som uprivilegerte brukere.
+    </para>
   </sect2>
 
   <sect2 role="configuration">
