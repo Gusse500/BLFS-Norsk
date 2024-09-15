@@ -88,23 +88,23 @@ make</userinput></screen>
       For å teste resultatene, kjør: <command>make check</command>.
     </para>
 
-    <note>
-      <para>
-        Hvis du installerer <application>ISO codes</application> over en tidligere
-        installert versjon, vil installasjonstrinnet mislykkes når du oppretter noen
-        symbolkoblinger. For å oppdatere dem riktig, kjør:
-      </para>
-
-<screen><userinput>sed -i '/^LN_S/s/s/sfvn/' */Makefile</userinput></screen>
-
-    </note>
-
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>make install LN_S='ln -sfn'</userinput></screen>
 
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>LN_S='ln -sfn'</parameter>: Denne overstyringen sikrer at
+      installerte symbolkoblinger riktig gjenskapes i tilfelle vi oppgraderer eller
+      installerer pakken på nytt. Det er unødvendig, men ufarlig ved installasjon av
+      pakken på systemet for første gang.
+    </para>
   </sect2>
 
   <sect2 role="content">
