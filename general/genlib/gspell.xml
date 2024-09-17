@@ -6,9 +6,9 @@
 
   <!ENTITY gspell-download-http "&gnome-download-http;/gspell/&gspell-minor;/gspell-&gspell-version;.tar.xz">
   <!ENTITY gspell-download-ftp  " ">
-  <!ENTITY gspell-md5sum        "f1e5f02695aee20ba543352889c28ff5">
-  <!ENTITY gspell-size          "436 KB">
-  <!ENTITY gspell-buildsize     "11 MB (med tester)">
+  <!ENTITY gspell-md5sum        "282c1ed7213a657e47de663fd2a081db">
+  <!ENTITY gspell-size          "116 KB">
+  <!ENTITY gspell-buildsize     "6.7 MB (med tester)">
   <!ENTITY gspell-time          "0.1 SBU (med tester)">
 ]>
 
@@ -94,11 +94,14 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir gspell-build &amp;&amp;
+cd    gspell-build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>make check</command>.  Testene
+      For å teste resultatene, utsted: <command>ninja test</command>.  Testene
       må kjøres i en X økt. En test, test-checker, er kjent for å mislykkes hvis
       den eksterne pakken
       <ulink url="https://hunspell.github.io/">Hunspell</ulink> ikke er
@@ -109,12 +112,14 @@ make</userinput></screen>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
+<!-- not needed because of meson
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/rm-la-file-referring-icu.xml"/>
 
 <screen role="root"><userinput>rm -v /usr/lib/libgspell-1.la</userinput></screen>
+-->
  </sect2>
 
 
