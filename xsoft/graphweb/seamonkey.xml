@@ -301,6 +301,16 @@ done) &amp;&amp;
 
 patch -Np1 -i ../seamonkey-&seamonkey-version;-cxx17-1.patch</userinput></screen>
 
+    <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=1894423 -->
+    <para>
+      Deretter fjerner du en mengde ubrukt kode som bryter C++-standarden.
+      Clang har begynt å avvise den selv om den har vært ubrukt siden
+      19.1.0 utgivelse:
+    </para>
+
+<screen><userinput>sed '/ExclusiveData(ExclusiveData&amp;&amp;/,/^ *}/d' \
+    -i js/src/threading/ExclusiveData.h</userinput></screen>
+
     <para>
       Løs et problem med den medfølgende 'distro' pythonmodulen:
     </para>
