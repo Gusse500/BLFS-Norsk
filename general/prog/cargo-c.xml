@@ -69,6 +69,8 @@
       </listitem>
     </itemizedlist>
 
+    <!-- Moved to an explicit curl command.  See the note below the
+         curl command for reason.
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -80,28 +82,63 @@
         </para>
       </listitem>
 
-    </itemizedlist>
+    </itemizedlist>-->
 
     <bridgehead renderas="sect3">cargo-c Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="curl"/>
+      <xref linkend="rust"/>
     </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="libssh2"/> og
+      <xref linkend="sqlite"/>
+    </para>
+
+    &build-use-internet;
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av cargo.c</title>
+    <title>Installasjon av cargo-c</title>
 
     <para>
-      Installer <application>cargo.c</application> ved å kjøre følgende
+      Først laster du ned en fil for å sikre at <command>cargo</command> 
+ bruker avhengighetsversjonene spesifisert av oppstrømsutviklerne
+ når denne cargo-c versjonen (&cargo-c-version;) ble utgitt.
+ Ellers vil de nyeste versjonene av avhengighetene bli brukt og
+ de kan forårsake brudd:
+    </para>
+
+    <screen><userinput>curl -LO https://github.com/lu-zero/cargo-c/releases/download/v&cargo-c-version;/Cargo.lock</userinput></screen>
+
+    <note>
+      <para>
+        Normalt ville vi lagt en slik nedlasting inn i en
+        <quote>Ytterligere Nedlastinger</quote> seksjon. Men i dette tilfellet 
+        kan vi ikke finne pakkenavnet og versjonen fra filnavnet
+        <filename>Cargo.lock</filename>, så det er bedre å ikke sette
+        tvetydig navngitt fil utenfor
+        <filename class='directory'>cargo-c-&cargo-c-version;</filename>
+        mappen.  Vi bruker <command>curl</command> her fordi
+        <xref linkend='curl'/> pakken burde vært installert
+        som en nødvendig avhengighet av <xref linkend='rust'/>.
+      </para>
+
+      <para>
+        md5sum til filen skal være
+        <literal>&Cargo.lock-md5sum;</literal>.
+      </para>
+    </note>
+
+    <para>
+      Installer <application>cargo-c</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>cp -v ../Cargo.lock . &amp;&amp;
-
-[ ! -e /usr/include/libssh2.h ] || export LIBSSH2_SYS_USE_PKG_CONFIG=1    &amp;&amp;
+<screen><userinput>[ ! -e /usr/include/libssh2.h ] || export LIBSSH2_SYS_USE_PKG_CONFIG=1    &amp;&amp;
 [ ! -e /usr/include/sqlite3.h ] || export LIBSQLITE3_SYS_USE_PKG_CONFIG=1 &amp;&amp;
 
 cargo build --release</userinput></screen>
