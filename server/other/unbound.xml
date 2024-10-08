@@ -6,7 +6,7 @@
 
   <!ENTITY unbound-download-http "https://nlnetlabs.nl/downloads/unbound/unbound-&unbound-version;.tar.gz">
   <!ENTITY unbound-download-ftp  " ">
-  <!ENTITY unbound-md5sum        "fb7cc7922064bf122941b9f135052d00">
+  <!ENTITY unbound-md5sum        "94fee452f4f7c3aad166d65533931c0f">
   <!ENTITY unbound-size          "6.3 MB">
   <!ENTITY unbound-buildsize     "148 MB (med dokumenter; legg til 11 MB for tester)">
   <!ENTITY unbound-time          "0.3 SBU (Bruker parallellisme=4; med dokumenter; legg til 0.3 SBU for tester)">
@@ -84,11 +84,11 @@
       <xref linkend="libevent"/>,
       <xref linkend="nettle"/>,
       <xref linkend="protobuf-c"/> (for dnstap),
-      <!--<xref linkend="python2"/>,-->
       <xref linkend="sphinx"/> (for Python bindinger dokumentasjon),
       <xref linkend="swig"/> (for Python bindinger),
-      <xref linkend="doxygen"/> (for html dokumentasjon), og
-      <ulink url="https://dnstap.info/">dnstap</ulink>
+      <xref linkend="doxygen"/> (for html dokumentasjon),
+      <ulink url="https://dnstap.info/">dnstap</ulink>, og
+      &python2;
     </para>
 
   </sect2>
@@ -153,13 +153,15 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
       href="../../xincludes/static-libraries.xml"/>
 
     <para>
-      <option>--with-libevent</option>: Dette alternativet aktiverer libevent støtte
+      <option>--with-libevent</option>: Dette alternativet aktiverer libevent støtte,
       som tillater bruk av store utgående portområder.
     </para>
 
     <para>
-      <option>--with-pyunbound</option>: Dette alternativet aktiverer bygging av Python
-      bindinger.
+      <option>--with-pyunbound</option>: Dette alternativet gjør det mulig å bygge Python
+      bindinger. Hvis du vil bygge bindingene, må du også sende
+      <envar>PYTHON_VERSION=&python3-majorver;</envar> miljøvariabelen til
+      konfigurere.
     </para>
 
   </sect2>
@@ -287,7 +289,7 @@ install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput>
         <term><command>unbound-anchor</command></term>
         <listitem>
           <para>
-            utfører oppsett eller oppdatering av rottillitsankeret for DNSSEC
+            initialiserer eller oppdaterer rottillitsankeret for DNSSEC
             validering
           </para>
           <indexterm zone="unbound unbound-anchor">
