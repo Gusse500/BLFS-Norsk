@@ -6,10 +6,10 @@
 
   <!ENTITY nodejs-download-http "https://nodejs.org/dist/v&nodejs-version;/node-v&nodejs-version;.tar.xz">
   <!ENTITY nodejs-download-ftp  " ">
-  <!ENTITY nodejs-md5sum        "7df3531c623bd9c63ddbfd61f3eca8a7">
+  <!ENTITY nodejs-md5sum        "2e59511d65c64338b1cf5504c9e18d53">
   <!ENTITY nodejs-size          "40 MB">
-  <!ENTITY nodejs-buildsize     "975 MB (legg til 67 MB for tester)">
-  <!ENTITY nodejs-time          "12 SBU (legg til 2.5 SBU for tester: både ved å bruke parallellisme=8 og 8 CPUer tilgjengelige, deler av testene vil bruke alle tilgjengelige CPUer)">
+  <!ENTITY nodejs-buildsize     "978 MB (legg til 35 MB for tester)">
+  <!ENTITY nodejs-time          "10 SBU (legg til 7.5 SBU for tester: både ved å bruke parallellisme=8 og 8 CPUer tilgjengelige, deler av testene vil bruke alle tilgjengelige CPUer)">
 ]>
 
 <sect1 id="nodejs" xreflabel="nodejs-&nodejs-version;">
@@ -102,6 +102,7 @@
       <command>npm</command> vil bli installert hvis den ikke er til stede)
     </para>
 
+    &test-use-internet;
 
   </sect2>
 
@@ -135,7 +136,7 @@ make</userinput></screen>
 
     <para>
       For å teste resultatene, utsted: <command>make test-only</command>.
-      Av over 5000 tester er 26 i "parallel" testpakken kjent for å mislykkes.
+      Av over 4100 tester er 11 i "parallel" testpakken kjent for å mislykkes.
 <!--
 Mislykkede tester:
 node-v20.17.0/test/parallel/test-https-client-checkServerIdentity.js
@@ -164,6 +165,21 @@ node-v20.17.0/test/parallel/test-tls-set-ciphers.js
 node-v20.17.0/test/parallel/test-tls-sni-option.js
 node-v20.17.0/test/parallel/test-tls-server-verify.js
 node-v20.17.0/test/parallel/test-tls-junk-closes-server.js
+
+node-v20.18.0:
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-net-socket-connect-without-cb.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-process-euid-egid.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-process-initgroups.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-process-setgroups.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-process-uid-gid.js
+out/Release/node - -expose-internals /build/node/node-v20.18.0/test/parallel/test-tcp-wrap-listen.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-tls-cert-regression.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-tls-client-getephemeralkeyinfo.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-tls-getcipher.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-tls-set-ciphers.js
+out/Release/node /build/node/node-v20.18.0/test/parallel/test-tls-junk-closes-server.js
+
+[04:40|% 100|+ 4127|-  11]: Done
 -->
     </para>
 
