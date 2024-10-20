@@ -99,6 +99,14 @@
     <title>Installasjon av librsvg</title>
 
     <para>
+      Først må du fikse installasjonsbanen til API dokumentasjonen:
+    </para>
+
+    <screen><userinput>sed -e "/OUTDIR/s|,| / 'librsvg-2.59.1', '--no-namespace-dir',|" \
+    -e '/output/s|Rsvg-2.0|librsvg-2.59.1|'                      \
+    -i doc/meson.build</userinput></screen>
+
+    <para>
       Installer <application>librsvg</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -107,29 +115,26 @@
 cd    build &amp;&amp;
 
 meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
-meson compile</userinput></screen>     
+ninja</userinput></screen>   
 
     <!-- Be sure to unset GLIB_LOG_LEVEL.  If set, it interferes with the 
          tests. 
 
-         With 2.59.1 one test of 5 fails.
+         With 2.59.1 one test of 5 fails. (I cannot see any failures here,
+         but using rustc-1.82.0.)
      -->
 
     <para>
       For å teste resultatene, utsted:
     </para>
 
-    <screen remap='test'><userinput>meson test --print-errorlogs --no-rebuild</userinput></screen>
-
-    <para>
-      En test, C API tests, er kjent for å mislykkes.
-    </para>
+    <screen remap='test'><userinput>ninja test</userinput></screen>
 
     <para>
       Nå, som &root; bruker:
     </para>
 
-<screen role="root"><userinput>meson install --no-rebuild </userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 <!--
     <note>
       <para>
