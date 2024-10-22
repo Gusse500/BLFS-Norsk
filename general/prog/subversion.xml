@@ -79,16 +79,6 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/subversion-&subversion-version;-upstream_fixes-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
-
     <bridgehead renderas="sect3">Subversion Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -103,17 +93,6 @@
       <xref linkend="swig"/> (for å regenerere byggesystemet)
     </para>
 
-<!-- support for berkeley db is deprecated since 1.8
-    <note>
-      <para>
-        Hvis du trenger <application>Berkeley DB</application> back-end hooks
-        i <application>Subversion</application> å bygge eller støtte BDB baserte
-        depoter, må du ha <application>APR-util</application> knyttet til
-        <application>Berkeley DB</application> biblioteket.
-      </para>
-    </note>
--->
-
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="apache"/>,
@@ -123,12 +102,9 @@
       <xref linkend="doxygen"/> (for å generere HTML dokumentasjon),
       <xref linkend="gnome-keyring"/>,
       <xref linkend="libsecret"/>,
-<!--      <xref linkend="kdelibs"/> (for <ulink url="http://utils.kde.org/projects/kwalletmanager/">KWallet</ulink> support), -->
       <xref linkend="py3c"/> (for python bindinger og tester),
       <xref linkend="python3"/> (med sqlite støtte for testene),
-      <xref linkend="ruby"/>,
-      <!--<xref linkend="swig"/> (for å bygge Perl, Python og Ruby bindinger),-->
-      og
+      <xref linkend="ruby"/>, og
       <ulink url="https://git.netsurf-browser.org/libutf8proc.git/">UTF8proc</ulink>
     </para>
 
@@ -145,37 +121,6 @@
 
   <sect2 role="installation">
     <title>Installasjon av Subversion</title>
-<!--
-      <note>
-        <para>
-          Denne pakken kan mislykkes under opprettingsfasen når du bruker flere
-          prosessorer. Hvis dette skjer, prøv å fortsette med
-          <emphasis>make -j1</emphasis> eller gjøre om hele byggeprosessen med
-          ferske kilder ved hjelp av <emphasis>-j1</emphasis>.
-        </para>
-      </note>
--->
-
-    <para>
-      Først må du tilpasse noen Python skript for å bruke python3:
-    </para>
-
-<screen><userinput remap="pre">grep -rl '^#!.*python$' | xargs sed -i '1s/python/&amp;3/'</userinput></screen>
-
-    <para>
-      Deretter fikser du bygging av denne pakken med GCC 14:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../subversion-&subversion-version;-upstream_fixes-1.patch</userinput></screen>
-
-    <para>
-      Etter å ha modifisert SWIG bindingene som vi gjorde med oppdateringen, byggesystemet
-      må regenereres slik at bindingene fanger opp endringene:
-    </para>
-
-<screen><userinput remap="pre">touch build/generator/swig/*.py &amp;&amp;
-mv -v build-outputs.mk{,.old}   &amp;&amp;
-./autogen.sh --release</userinput></screen>
 
     <para>
       Installer <application>Subversion</application> ved å kjøre følgende
@@ -207,6 +152,7 @@ make</userinput></screen>
       inkludert i <xref linkend="apache-ant"/> og må lastes ned
       for seg selv. For å bygge Java bindingene, kjør følgende kommando:
     </para>
+
     <para>
       <screen><command>make -j1 javahl</command></screen>
     </para>
@@ -216,13 +162,12 @@ make</userinput></screen>
       <application>Python</application>, eller <application>Ruby</application>
       bindinger, kjør en av følgende kommandoer:
     </para>
-    <para>
-      <screen><command>make swig-pl</command> # for <application>Perl</application>
+
+<screen><command>make swig-pl</command> # for <application>Perl</application>
 <command>make swig-py \
      swig_pydir=/usr/lib/python&python3-majorver;/site-packages/libsvn \
      swig_pydir_extra=/usr/lib/python&python3-majorver;/site-packages/svn</command> # for <application>Python</application>
 <command>make swig-rb</command> # for <application>Ruby</application></screen>
-    </para>
 
     <para>
       For å teste resultatene, kjør: <command>make check</command>. Fire tester i
