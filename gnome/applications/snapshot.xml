@@ -6,9 +6,9 @@
 
   <!ENTITY snapshot-download-http "&gnome-download-http;/snapshot/&gnome-46;/snapshot-&snapshot-version;.tar.xz">
   <!ENTITY snapshot-download-ftp  " ">
-  <!ENTITY snapshot-md5sum        "25f97e88005b933c382e5a0c2193599c">
-  <!ENTITY snapshot-size          "22 MB">
-  <!ENTITY snapshot-buildsize     "1.1 GB (2.9 MB installert)">
+  <!ENTITY snapshot-md5sum        "cfae2acf42f18677e6cd7bd716571bd7">
+  <!ENTITY snapshot-size          "8.3 MB">
+  <!ENTITY snapshot-buildsize     "1.2 GB (6.1 MB installert)">
   <!ENTITY snapshot-time          "4.5 SBU">
 ]>
 
@@ -70,13 +70,15 @@
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="libadwaita1"/>,
+      <xref linkend="libgstgtk4"/>,
       <xref linkend="gst10-plugins-bad"/>, og
       <xref linkend="rust"/>
     </para>
 
     <bridgehead renderas="sect4">Påkrevd ved kjøretid</bridgehead>
     <para role="required">
-      <xref role="runtime" linkend="pipewire"/>
+      <xref role="runtime" linkend="pipewire"/> og
+      <xref role="runtime" linkend="xdg-desktop-portal-gnome"/>
     </para>
 
   </sect2>
@@ -91,20 +93,6 @@
       </para>
     </note>
 
-<!-- No longer needed with pango-1.51.0
-    <para>
-      Fjern først en sjekk mot systemets <application>Pango</application>
-      versjon som er for streng:
-    </para>
-    
-<screen><userinput remap="pre">sed '/pango.v1_52/,+1d' -i vendor/pango-sys/Cargo.toml &amp;&amp;
-
-cat &gt;&gt; Cargo.toml &lt;&lt; EOF
-<literal>[patch.crates-io.pango-sys]
-path = "vendor/pango-sys"</literal>
-EOF</userinput></screen>
--->
-
     <para>
       Installer <application>Snapshot</application> ved å kjøre følgende
       kommandoer:
@@ -118,8 +106,6 @@ ninja</userinput></screen>
 
     <para>
       For å teste resultatene, utsted: <command>ninja test</command>.
-      <!--En test er kjent for å mislykkes på grunn av foreldede konstruksjoner i
-      appstream-1.0+-->
     </para>
 
     <para>
