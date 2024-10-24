@@ -5,12 +5,12 @@
   %general-entities;
 
   <!ENTITY nautilus-download-http
-           "&gnome-download-http;/nautilus/&gnome-46;/nautilus-&nautilus-version;.tar.xz">
+            "&gnome-download-http;/nautilus/&gnome-47;/nautilus-&nautilus-version;.tar.xz">
   <!ENTITY nautilus-download-ftp  " ">
-  <!ENTITY nautilus-md5sum        "88acd6bd9c5d01fb02c8827222c07bc5">
+  <!ENTITY nautilus-md5sum        "76d2af66902a174dae0a5c69a9b35c70">
   <!ENTITY nautilus-size          "3.1 MB">
-  <!ENTITY nautilus-buildsize     "88 MB (med tester)">
-  <!ENTITY nautilus-time          "0.5 SBU (med tester, begge ved bruk av parallellitet=4)">
+  <!ENTITY nautilus-buildsize     "93 MB (med tester)">
+  <!ENTITY nautilus-time          "0.6 SBU (med tester, begge ved bruk av parallellitet=4)">
 ]>
 
 <sect1 id="nautilus" xreflabel="Nautilus-&nautilus-version;">
@@ -79,7 +79,7 @@
       <xref linkend="libnotify"/>,
       <xref linkend="libportal"/>,
       <xref linkend="libseccomp"/>, og
-      <xref linkend="tracker3"/>
+      <xref linkend="tinysparql"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -92,7 +92,7 @@
       <xref linkend="libexif"/>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (for å generere dokumentasjon)</bridgehead>
     <para role="optional">
       <xref linkend="gi-docgen"/>
     </para>
@@ -110,21 +110,6 @@
     <title>Installasjon av Nautilus</title>
 
     <para>
-      Fiks plasseringen for å installere API dokumentasjonen:
-    </para>
-
-<screen><userinput>sed "/docdir =/s@\$@ / 'nautilus-&nautilus-version;'@" -i meson.build</userinput></screen>
-
-<!--
-    <para>
-      Fix an inverted test that may lead to crashes, and also prevents
-      building with GCC-13:
-    </para>
-
-<screen><userinput>sed "/assert (basename ==/s/==/!=/" -i src/nautilus-file-operations.c</userinput></screen>
--->
-
-    <para>
       Installer <application>Nautilus</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -134,16 +119,22 @@ cd    build &amp;&amp;
 
 meson setup --prefix=/usr       \
             --buildtype=release \
-            -D selinux=false    \
-            -D packagekit=false \
             ..                  &amp;&amp;
 
 ninja</userinput></screen>
 
     <para>
+      Hvis du ønsker å generere og installere API dokumentasjonen, utsted
+      følgende kommandoer:
+    </para>
+
+<screen><userinput remap="doc">sed "/docdir =/s@\$@ / 'nautilus-&nautilus-version;'@" -i ../meson.build &amp;&amp;
+meson configure -D docs=true</userinput></screen>
+
+    <para>
       For å teste resultatene, kjør: <command>ninja test</command>. Testene
       må kjøres i et grafisk miljø. En test er kjent for å mislykkes
-      hvis <xref linkend='tracker3-miners'/> ikke er installert. En test er også
+      hvis <xref linkend="localsearch"/> ikke er installert. En test er også
       kjent for tidsavbrudd hvis brukeren som kjører testene har en stor hjemmemappe.
     </para>
 
@@ -163,16 +154,6 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-
-    <para>
-      <parameter>-D selinux=false</parameter>: Denne bryteren deaktiverer bruken
-      av selinux som ikke støttes av BLFS.
-    </para>
-
-    <para>
-      <parameter>-D packagekit=false</parameter>: Denne bryteren deaktiverer bruken
-      av PackageKit som ikke er egnet for BLFS.
-    </para>
 
     <para>
       <option>-D cloudproviders=false</option>: Bruk denne bryteren hvis du ikke
@@ -198,7 +179,7 @@ ninja</userinput></screen>
         </seg>
         <seg>
           /usr/{include,lib,share}/nautilus og
-          /usr/share/gtk-doc/html/libnautilus-extension (optional)
+          /usr/share/doc/nautilus-&nautilus-version; (optional)
         </seg>
       </seglistitem>
     </segmentedlist>

@@ -6,10 +6,10 @@
 
   <!ENTITY usbutils-download-http "https://kernel.org/pub/linux/utils/usb/usbutils/usbutils-&usbutils-version;.tar.xz">
   <!ENTITY usbutils-download-ftp  " ">
-  <!ENTITY usbutils-md5sum        "8ff21441faf2e8128e4810b3d6e49059">
-  <!ENTITY usbutils-size          "168 KB">
-  <!ENTITY usbutils-buildsize     "4.4 MB">
-  <!ENTITY usbutils-time          "0.1 SBU">
+  <!ENTITY usbutils-md5sum        "0a351e2241c50a1f026a455dccf24d73">
+  <!ENTITY usbutils-size          "120 KB">
+  <!ENTITY usbutils-buildsize     "1.9 MB">
+  <!ENTITY usbutils-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="usbutils" xreflabel="usbutils-&usbutils-version;">
@@ -66,17 +66,7 @@
         </para>
       </listitem>
     </itemizedlist>
-<!--
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/usbutils-&usbutils-version;-lsusb_bugfixes-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
--->
+
     <bridgehead renderas="sect3">USB Utils Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -99,8 +89,14 @@
       kjøre følgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --datadir=/usr/share/hwdata &amp;&amp;
- make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release &amp;&amp;
+
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -110,7 +106,7 @@
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
       For <filename>usb.ids</filename> datafiler, installer
@@ -125,17 +121,6 @@
     </para>
 
   </sect2>
-<!-- No longer needed
-  <sect2 role="commands">
-    <title>Parameterforklaringer</title>
-
-    <para>
-      <command>sed ... lsusb.py</command>: Instruerer lsusb.py hvor den skal søke
-      <filename>usb.ids</filename>.
-    </para>
-
-  </sect2>
--->
 
   <sect2 role="content">
     <title>Innhold</title>

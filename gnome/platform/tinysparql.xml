@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY tinysparql-download-http
+           "&gnome-download-http;/tinysparql/3.8/tinysparql-&tinysparql-version;.tar.xz">
+  <!ENTITY tinysparql-download-ftp  " ">
+  <!ENTITY tinysparql-md5sum        "b265db81d1292d405945dbeb168a361b">
+  <!ENTITY tinysparql-size          "2.0 MB">
+  <!ENTITY tinysparql-buildsize     "60 MB (med tester)">
+  <!ENTITY tinysparql-time          "0.5 SBU (med tester)">
+]>
+
+<sect1 id="tinysparql" xreflabel="tinysparql-&tinysparql-version;">
+  <?dbhtml filename="tinysparql.html"?>
+
+
+  <title>tinysparql-&tinysparql-version;</title>
+
+  <indexterm zone="tinysparql">
+    <primary sortas="a-tinysparql">tinysparql</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Tinysparql</title>
+
+    <para>
+      <application>Tinysparql</application> er en RDF trippellagring med lavt fotavtrykk
+      med et SPARQL 1.1-grensesnitt.
+    </para>
+
+    &lfs122_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&tinysparql-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&tinysparql-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &tinysparql-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &tinysparql-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &tinysparql-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &tinysparql-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Tinysparql Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="json-glib"/> og
+      <xref linkend="vala"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      &gobject-introspection;,
+      <xref linkend="icu"/>,
+      <xref linkend="libsoup3"/>,
+      <xref linkend="pygobject3"/>,
+      <xref linkend="sqlite"/>, og
+      <xref linkend="localsearch"/> (kjøretid)
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="asciidoc"/>,
+      <xref linkend="avahi"/>,
+<!--  It looks like not used even if docs=true,
+      the pre-built doc is shipped in tarball and will be installed
+      <xref linkend="gi-docgen"/>
+-->
+      <xref linkend="graphviz"/>, og
+      <ulink url="https://github.com/scop/bash-completion/">bash-completion</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Tinysparql</title>
+
+    <warning revision="systemd">
+      <para>
+        Hvis du oppgraderer denne pakken fra en versjon som var fra da
+ denne pakken var kjent som <application>Tracker</application>, fjerne
+ en fil som vil forårsake en konflikt som &root; bruker:
+      </para>
+    </warning>
+
+<screen revision="systemd"><userinput>rm -fv /usr/lib/systemd/user/tracker-xdg-portal-3.service</userinput></screen>
+
+    <para>
+      Fiks plasseringen hvor dokumentasjonen vil installeres i:
+    </para>
+
+<screen><userinput>mv docs/reference/libtracker-sparql/doc/{Tsparql-3.0,tinysparql-&tinysparql-version;} &amp;&amp;
+sed '/docs_name/s/Tsparql-3.0/tinysparql-&tinysparql-version;/' \
+    -i docs/reference/libtracker-sparql/meson.build</userinput></screen>
+
+    <para>
+      Installer <application>Tinysparql</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen revision="systemd"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -D man=false        \
+            ..                  &amp;&amp;
+ninja</userinput></screen>
+
+<screen revision="sysv"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr                  \
+            --buildtype=release            \
+            -D man=false                   \
+            -D systemd_user_services=false \
+            ..                            &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>meson configure -D debug=true
+      &amp;&amp; LC_ALL=C ninja test</command>.
+      Testpakken skal kjøres fra en grafisk sesjon. En test er kjent for å
+      mislykkes på grunn av at manualsidene ikke blir generert.
+    </para>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-D man=false</parameter>: Denne bryteren forhindrer byggeprosessen
+      fra å generere manualsider. Utelat denne bryteren hvis du har
+      <xref linkend="asciidoc" role="nodep"/> installert og ønsker å generere
+      og installer manualsidene.
+    </para>
+
+    <para revision="sysv">
+      <parameter>-D systemd_user_services=false</parameter>: Denne bryteren forhindrer
+      byggeprosessen fra å installere systemd brukertjenester siden de er
+      ubrukelig på SysV systemer.
+    </para>
+
+    <para>
+      <command>meson configure -D debug=true</command>: Denne kommandoen aktiverer
+      noen feilsøkingskontroller som er nødvendige for testpakken. Vi vil ikke
+      aktiver dem for de installerte tinysparql bibliotekene og programmene, så
+      vi kjører testpakken etter installasjonen.
+    </para>
+
+  </sect2>
+
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          tinysparql
+        </seg>
+        <seg>
+          libtinysparql-3.0.so og
+          libtracker-sparql-3.0.so
+        </seg>
+        <seg>
+          /usr/{include,lib}/tinysparql-3.0 og
+          /usr/share/doc/tinysparql-&tinysparql-version; (valgfri)
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="tinysparql-prog">
+        <term><command>tinysparql</command></term>
+        <listitem>
+          <para>
+            er et kontrollprogram for TinySPARQL databaser
+          </para>
+          <indexterm zone="tinysparql tinysparql-prog">
+            <primary sortas="b-tinysparql">tinysparql</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libtinysparql">
+        <term><filename class="libraryfile">libtinysparql-3.0.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner for å administrere TinySPARQL databaser
+          </para>
+          <indexterm zone="tinysparql libtinysparql">
+            <primary sortas="c-libtinysparql">libtinysparql-3.0.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libtracker3-sparql">
+        <term><filename class="libraryfile">libtracker-sparql-3.0.so</filename></term>
+        <listitem>
+          <para>
+            inneholder ressursstyring og databasefunksjoner
+          </para>
+          <indexterm zone="tinysparql libtracker3-sparql">
+            <primary sortas="c-libtracker3-sparql">libtracker-sparql-3.0.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY localsearch-download-http "&gnome-download-http;/localsearch/3.8/localsearch-&localsearch-version;.tar.xz">
+  <!ENTITY localsearch-download-ftp  " ">
+  <!ENTITY localsearch-md5sum        "b9aa37c729509b6abc94fc6dedc99058">
+  <!ENTITY localsearch-size          "4.3 MB">
+  <!ENTITY localsearch-buildsize     "43 MB (med tester)">
+  <!ENTITY localsearch-time          "0.4 SBU (med parallellitet=4; legg til så mye som 1.0 SBU for tester, avhengig av diskhastighet)">
+]>
+
+<sect1 id="localsearch" xreflabel="localsearch-&localsearch-version;">
+  <?dbhtml filename="localsearch.html"?>
+
+
+  <title>localsearch-&localsearch-version;</title>
+
+  <indexterm zone="localsearch">
+    <primary sortas="a-localsearch">localsearch</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til Localsearch</title>
+
+    <para>
+      <application>Localsearch</application> pakken inneholder et filsystem
+      indekserer samt en metadatauttrekker.
+    </para>
+
+    &lfs122_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&localsearch-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&localsearch-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &localsearch-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &localsearch-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &localsearch-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &localsearch-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Localsearch Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="gst10-plugins-base"/>,
+      <xref linkend="tinysparql"/>,
+      <xref linkend="exempi"/>, og
+      <xref linkend="gexiv2"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend="giflib"/>,
+      <xref role='runtime' linkend="gst10-plugins-good"/> (kjøretid),
+      <xref role='runtime' linkend="gst10-libav"/> (kjøretid),
+      <xref linkend="icu"/>,
+      <xref linkend="libexif"/>,
+      <xref linkend="libgxps"/>,
+      <xref linkend="libseccomp"/>,
+      <xref linkend="poppler"/>, og
+      <xref linkend="upower"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="asciidoc"/>,
+      <xref linkend="cmake"/>,
+      <xref linkend="dconf"/>,
+      <xref linkend="ffmpeg"/>,
+      <xref linkend="libgsf"/>,
+      <xref linkend="NetworkManager"/>,
+      <xref linkend="taglib"/>,
+      <xref linkend="totem-pl-parser"/>,
+      <ulink url="https://github.com/lipnitsk/libcue">libcue</ulink>,
+      <ulink url="https://gitlab.gnome.org/GNOME/libgrss">libgrss</ulink>,
+      <ulink url="https://libiptcdata.sourceforge.net/">libitpcdata</ulink>,
+      <ulink url="https://libosinfo.org">libosinfo</ulink>, og
+      <ulink url="https://gitlab.gnome.org/GNOME/gupnp">gupnp</ulink>
+    </para>
+
+  </sect2>
+
+  <sect2 role="kernel" id="localsearch-kernel">
+    <title>Kjernekonfigurasjon</title>
+
+    <para>
+      Aktiver følgende alternativer i kjernekonfigurasjonen, og kompiler deretter kjernen på nytt
+      og gjør en omstart om nødvendig:
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="localsearch-kernel.xml"/>
+
+    <indexterm zone="localsearch localsearch-kernel">
+      <primary sortas="d-localsearch">localsearch</primary>
+    </indexterm>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av Localsearch</title>
+
+    <warning>
+      <para>
+        Hvis du oppgraderer denne pakken fra en versjon der den var kjent som
+        <application>tracker-miners</application>, er det flere filer
+        som vil skape konflikter. Før du installerer denne pakken, fjern
+        disse filene som &root; bruker:
+      </para>
+    </warning>
+
+<screen role="root"><userinput remap="pre">rm -fv /etc/xdg/autostart/tracker-miner-fs-3.desktop                           &amp;&amp;
+rm -fv /usr/lib/systemd/user/tracker-miner-fs-3.service                        &amp;&amp;
+rm -fv /usr/lib/systemd/user/tracker-miner-fs-control-3.service                &amp;&amp;
+rm -fv /usr/share/dbus-1/services/org.freedesktop.Tracker3.Miner.Files.service &amp;&amp;
+rm -fv /usr/share/dbus-1/services/org.freedesktop.Tracker3.Writeback.service   &amp;&amp;
+rm -fv /usr/share/dbus-1/services/org.freedesktop.Tracker3.Miner.Files.Control.service</userinput></screen>
+
+    <note>
+      <para>
+        Hvis du planlegger å kjøre testene, er noen tidsavbrudd for korte på
+        spinnende disker. Det er to steder hvor tidsavbrudd er
+        brukt: for det første har individuelle tester i en gruppe tester en
+        standard tidsavbrudd på 10s. Dette kan endres ved å stille inn
+        miljøvariabelen <envar>TRACKER_TESTS_AWAIT_TIMEOUT</envar> til ønsket
+        verdi når du kjører testene (se nedenfor). For det andre, et globalt tidsavbrudd
+        for en gruppe tester er fast på konfigurasjonstidspunktet. Standardverdien
+        i <filename class="directory">functional-tests</filename>
+        mappen (andre mapper har bare kortvarige tester) kan bli
+        økt med følgende kommando (erstatt 200 med en verdi
+        egnet for din maskin):
+      </para>
+
+<screen remap="test"><userinput>sed -i s/120/<replaceable>200</replaceable>/ tests/functional-tests/meson.build</userinput></screen>
+    </note>
+
+    <para>
+      Installer <application>Localsearch</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+
+<screen revision="systemd"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -D man=false        \
+            -D miner_rss=false  \
+            ..                  &amp;&amp;
+ninja</userinput></screen>
+
+<screen revision="sysv"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr                  \
+            --buildtype=release            \
+            -D systemd_user_services=false \
+            -D man=false                   \
+            -D miner_rss=false             \
+            ..                             &amp;&amp;
+ninja</userinput></screen>
+
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+    <screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted (juster den individuelle testtidsavbruddet til en
+      verdi som passer for din maskin, se merknaden ovenfor):
+    </para>
+
+<screen remap="test"><userinput>meson configure -D debug=true &amp;&amp;
+dbus-run-session env LC_ALL=C.UTF-8 TRACKER_TESTS_AWAIT_TIMEOUT=<replaceable>20</replaceable> \
+                 ninja test &amp;&amp;
+rm -rf ~/tracker-tests</userinput></screen>
+
+    <note>
+      <para>
+        Testene lager filer i user mappen (opptil 24 MB), så
+        de må fjernes etterpå.
+      </para>
+    </note>
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-D man=false</parameter>: Denne bryteren forhindrer byggeprosessen
+      fra å generere manualsider. Utelat denne bryteren hvis du har
+      <xref linkend="asciidoc" role="nodep"/> installert og ønsker å generere og
+      installer manualsider.
+    </para>
+
+    <para>
+      <parameter>-D miner_rss=false</parameter>: Denne bryteren forhindrer bruk av
+      libgrss for å indeksere RSS feeder fordi libgrss er usikker og ikke lenger
+      i BLFS.
+    </para>
+
+    <para revision="sysv">
+      <parameter>-D systemd_user_services=false</parameter>: Denne bryteren forhindrer
+      byggeprosessen fra å installere systemd enheter siden de er ubrukelige
+      på SysV systemer.
+    </para>
+
+    <para>
+      <option>-D seccomp=false</option>: Dette alternativet deaktiverer seccomp systemet
+      anropsfilter. På noen arkitekturer, som i686 og ARM, funksjonene
+      som tracker-miners bruker ikke er bevoktet ordentlig, og tracker-miners
+      vil bli drept med en SIGSYS som resultat. Merk at deaktivering
+      secomp kan føre til at systemet blir kompromittert verre i tilfelle en
+      sikkerhetssårbarhet i lokalt søk eller dets avhengigheter er
+      utnyttet.
+    </para>
+
+    <para>
+      <option>-D landlock=disabled</option>: Denne bryteren deaktiverer
+      Sandkasse for filtilgang til landlås. Bruk den hvis du ikke vil bygge
+      kjerne med Landlock støtte. Merk at deaktivering av Landlock kan
+      føre til at systemet blir kompromittert verre i tilfelle en sikkerhetssårbarhet
+      i lokalt søk eller dets avhengigheter utnyttes.
+    </para>
+
+    <para>
+      <option>-D battery_detection=none</option>: Bruk dette alternativet hvis du ikke har
+      installert den anbefalte avhengigheten upower. Ikke bruk dette
+      alternativet hvis systemet ditt har et batteri (bærbar batteri eller UPS), ellers kan
+      localsearch kaste bort batteristrøm og levetid når nettstrøm
+      er utilgjengelig.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          localsearch
+        </seg>
+        <seg>
+          Flere moduler under /usr/lib/localsearch-3.0
+        </seg>
+        <seg>
+          /usr/lib/localsearch-3.0 og
+          /usr/share/localsearch
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presnetation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="localsearch-prog">
+        <term><command>localsearch</command></term>
+        <listitem>
+          <para>
+            starter, stopper, starter på nytt og viser nisser som er ansvarlige for indeksering
+            av innhold
+          </para>
+          <indexterm zone="localsearch localsearch-prog">
+            <primary sortas="b-localsearch">localsearch</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+  </sect2>
+
+</sect1>
