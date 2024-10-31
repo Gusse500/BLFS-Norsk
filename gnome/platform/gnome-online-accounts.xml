@@ -85,7 +85,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gtk-doc"/>,
+      <xref linkend="gi-docgen"/>,
       <xref linkend="mitkrb"/>, og
       <xref linkend="valgrind"/>
       <!-- <ulink url="https://gitlab.com/accounts-sso/libaccounts-glib">libaccounts-glib</ulink>, and
@@ -124,10 +124,21 @@ cd    build &amp;&amp;
 meson setup                                            \
       --prefix=/usr                                    \
       --buildtype=release                              \
+      -D documentation=false                           \
       -D kerberos=false                                \
       -D google_client_secret=5ntt6GbbkjnTVXx-MSxbmx5e \
       -D google_client_id=595013732528-llk8trb03f0ldpqq6nprjp1s79596646.apps.googleusercontent.com \
       .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Hvis du har installert <xref linkend='gi-docgen'/> og du ønsker å
+      bygge og installere API dokumentasjonen for denne pakken, utsted:
+    </para>
+
+<screen remap='doc'><userinput>meson configure -D documentation=true &amp;&amp;
+sed "s/project_name()/&amp; + '-' + meson.project_version()/" \
+    -i ../doc/meson.build &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -151,12 +162,6 @@ ninja</userinput></screen>
     <para>
       <parameter>-D google_*</parameter>: Disse bryterne setter
       BLFS OAuth ID og hemmelighet for Google tjenester.
-    </para>
-
-    <para>
-      <option>-D gtk_doc=true</option>: Bruk denne bryteren hvis du har
-      <xref linkend="gtk-doc" role="nodep"/> installert og du ønsker å generere
-      API dokumentasjonen.
     </para>
 
     <para>
