@@ -6,17 +6,14 @@
 
   <!ENTITY linux-pam-download-http "https://github.com/linux-pam/linux-pam/releases/download/v&linux-pam-version;/Linux-PAM-&linux-pam-version;.tar.xz">
   <!ENTITY linux-pam-download-ftp  " ">
-  <!ENTITY linux-pam-md5sum        "8ad1e72d1ff6480d8e0af658e2d7b768">
-  <!ENTITY linux-pam-size          "1.0 MB">
-  <!ENTITY linux-pam-buildsize     "39 MB (med tester)">
-  <!ENTITY linux-pam-time          "0.4 SBU (med tester)">
+  <!ENTITY linux-pam-md5sum        "c1e41d59d6852e45d0f953c8c8f869d6">
+  <!ENTITY linux-pam-size          "496 KB">
+  <!ENTITY linux-pam-buildsize     "16 MB (med tester)">
+  <!ENTITY linux-pam-time          "0.3 SBU (med tester)">
 
-  <!ENTITY linux-pam-docs-download "https://github.com/linux-pam/linux-pam/releases/download/v&linux-pam-version;/Linux-PAM-&linux-pam-docs-version;-docs.tar.xz">
-  <!ENTITY linux-pam-docs-md5sum   "46dc9f9a27ef73a2fbe3b667877e88da">
-  <!ENTITY linux-pam-docs-size     "455 KB">
-  <!--
-  <!ENTITY debian-pam-docs         "http://debian.securedservers.com/kernel/pub/linux/libs/pam">
-  -->
+  <!ENTITY linux-pam-docs-download "&sources-anduin-http;/Linux-PAM/Linux-PAM-&linux-pam-docs-version;-docs.tar.xz">
+  <!ENTITY linux-pam-docs-md5sum   "dba9e555df98004fe9cea233c927a551">
+  <!ENTITY linux-pam-docs-size     "495 KB">
 ]>
 
 <sect1 id="linux-pam" xreflabel="Linux-PAM-&linux-pam-version;">
@@ -103,20 +100,19 @@
       <xref linkend="libtirpc"/>,
       <xref linkend="rpcsvc-proto"/>,
       &berkeley-db;,
-      <ulink url="https://github.com/linux-audit/audit-userspace">libaudit</ulink>,
-      <ulink url="https://github.com/openSUSE/libeconf">libeconf</ulink>, og
-      <ulink url="https://www.prelude-siem.org">Prelude</ulink>
+      <ulink url="https://github.com/linux-audit/audit-userspace">libaudit</ulink>, og
+      <ulink url="https://github.com/openSUSE/libeconf">libeconf</ulink>
     </para>
-<!-- With 1.5.3, building the doc requires the namespaced version of
+<!-- With 1.70, building the doc requires the namespaced version of
      docbook-xsl, which is beyond BLFS.
 
-    <bridgehead renderas="sect4">Valgfri (For å Gjenoppbygge Dokumentasjonen)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (For å bygge Dokumentasjonen)</bridgehead>
     <para role="optional">
       <xref linkend="DocBook"/>,
       <xref linkend="docbook-xsl"/>,
       <xref linkend="fop"/>,
       <xref linkend="libxslt"/> og enten
-      <xref linkend="lynx"/> eller
+      <xref linkend="elinks"/> eller
       <ulink url="&w3m-url;">W3m</ulink>
     </para>
 -->
@@ -164,53 +160,20 @@
   <sect2 role="installation">
     <title>Installasjon av Linux PAM</title>
 
-    <para revision="sysv">
-      Først, forhindre installasjon av en unødvendig systemd fil:
-    </para>
-
-<screen revision="sysv"><userinput>sed -e /service_DATA/d \
-    -i modules/pam_namespace/Makefile.am</userinput></screen>
-
-    <!-- https://github.com/linux-pam/linux-pam/issues/809 -->
-    <para>
-      Den sendte <filename>libtool.m4</filename> filen har en konfigurasjon
-      inkonsistent med LFS <filename class='directory'>/usr</filename>
-      hierarkiet. Dette problemet ville forårsake
-      <filename class='libraryfile'>libpam_misc.so</filename> Knyttet til
-      et rpath flagg som noen ganger kan forårsake problemer eller til og med sikkerhetsproblemer.
-      Regenerer byggesystemet for å fikse inkonsekvensen:
-    </para>
-
-<screen><userinput>autoreconf -fi</userinput></screen>
-
-    <para>
-      Hvis du lastet ned dokumentasjonen, pakk ut tarballen ved å kjøre
-      følgende kommando.
-    </para>
-
-<screen><userinput>tar -xf ../Linux-PAM-&linux-pam-docs-version;-docs.tar.xz --strip-components=1</userinput></screen>
-<!--
-    <para>
-      Hvis du ønsker å regenerere dokumentasjonen selv, fiks
-      <command>configure</command> skriptet slik at det vil oppdage lynx:
-    </para>
-
-<screen><userinput>sed -e 's/dummy elinks/dummy lynx/'                                    \
-    -e 's/-no-numbering -no-references/-force-html -nonumbers -stdin/' \
-    -i configure</userinput></screen>
--->
     <para>
       Kompiler og link <application>Linux PAM</application> med å
       kjøre følgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr                        \
-            --sbindir=/usr/sbin                  \
-            --sysconfdir=/etc                    \
-            --libdir=/usr/lib                    \
-            --enable-securedir=/usr/lib/security \
-            --docdir=/usr/share/doc/Linux-PAM-&linux-pam-version; &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..        \
+  --prefix=/usr       \
+  --buildtype=release \
+  -D docs=disabled    &amp;&amp;
+
+ninja</userinput></screen>
 
     <para>
       For å teste resultatene, må en passende <filename>/etc/pam.d/other</filename>
@@ -253,10 +216,9 @@ session  required       pam_deny.so</literal>
 EOF</userinput></screen>
 
     <para>
-      Kjør nå testene ved å kjøre <command>make check</command>.
+      Kjør nå testene ved å kjøre <command>ninja test</command>.
       Pass på at testene ikke produserer noe feil før du fortsetter
-      installasjonen. Merk at testene er veldig lange.
-      Omdiriger utdataene til en loggfil, slik at du kan inspisere den grundig.
+      installasjonen.
     </para>
 
     <para>
@@ -268,44 +230,29 @@ EOF</userinput></screen>
 <screen role="root"><userinput>rm -fv /etc/pam.d/other</userinput></screen>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem>
-      bruker:
+      Nå, som &root; bruker:
     </para>
 
-<screen role="root"><userinput>make install &amp;&amp;
+<screen role="root"><userinput>ninja install &amp;&amp;
 chmod -v 4755 /usr/sbin/unix_chkpwd</userinput></screen>
 
+    <para revision="sysv">Fjern nå en unødvendig mappe som &root;:</para>
+
+<screen role="root" revision="sysv"><userinput>rm -rf /usr/lib/systemd</userinput></screen>    
+
+    <para>Hvis du lastet ned den valgfrie dokumentasjonen, igjen som 
+    &root; bruker:</para>
+
+<screen role="root"><userinput>tar -C / -xvf ../Linux-PAM-&linux-pam-docs-version;-docs.tar.xz</userinput></screen>
+
   </sect2>
+<!--
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <para>
-      <parameter>--enable-securedir=/usr/lib/security</parameter>:
-      Denne bryteren angir installasjonsstedet for
-      <application>PAM</application> moduler.
-    </para>
-<!--
-    <para>
-      <option>- -disable-regenerate-docu</option> : Hvis de nødvendige avhengighetene
-      (<xref linkend="DocBook"/>, <xref linkend="docbook-xsl"/>, <xref
-      linkend="libxslt"/>, og <xref linkend="lynx"/> eller <ulink
-      url="&w3m-url;">W3m</ulink>) er installert, manualsidene og
-      html- og tekstdokumentasjonsfiler, genereres og installeres.
-      Videre, hvis <xref linkend="fop"/> er installert, PDF
-      dokumentasjon genereres og installeres. Bruk denne bryteren hvis du ikke
-      ønsker å gjenoppbygge dokumentasjonen.
-    </para>
--->
-    <para>
-      <command>chmod -v 4755 /usr/sbin/unix_chkpwd</command>:
-      setuid biten for <command>unix_chkpwd</command> hjelpeprogram må være
-      slått på, slik at ikke-<systemitem class="username">root</systemitem>
-      prosesser kan få tilgang til shadow filen.
-    </para>
-
   </sect2>
-
+-->
   <sect2 role="configuration">
     <title>Konfigurere Linux-PAM</title>
 
@@ -419,13 +366,10 @@ EOF</userinput></screen>
       <para>
         <application>PAM</application> man side (<command>man
         pam</command>) gir et godt utgangspunkt for å lære
-        om de mange feltene og tillatte oppføringer.
-        <!-- not accessible 2022-09-08 -->
-        <!-- it's available at a different address 2022-10-23-->
-        
-        <ulink url="https://www.docs4dev.com/docs/en/linux-pam/1.1.2/reference/Linux-PAM_SAG.html">
-          Linux-PAM System Administrators' Guide
-        </ulink> anbefales for ytterligere informasjon.
+        om de flere feltene og tillatte oppføringer.
+        Linux-PAM System Administrators' Guide på
+        <filename>/usr/share/doc/Linux-PAM-1.7.0/Linux-PAM_SAG.txt</filename>
+        anbefales for ytterligere informasjon.
       </para>
 
       <important>
