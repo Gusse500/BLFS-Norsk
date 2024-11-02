@@ -71,7 +71,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+    <!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
     <title>Valgfri Dokumentasjon</title>
@@ -91,7 +91,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+    -->
     <bridgehead renderas="sect3">Linux PAM Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -103,19 +103,16 @@
       <ulink url="https://github.com/linux-audit/audit-userspace">libaudit</ulink>, og
       <ulink url="https://github.com/openSUSE/libeconf">libeconf</ulink>
     </para>
-<!-- With 1.70, building the doc requires the namespaced version of
-     docbook-xsl, which is beyond BLFS.
 
-    <bridgehead renderas="sect4">Valgfri (For å bygge Dokumentasjonen)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri (For å bygge Dokumentasjonen og Manualsider)</bridgehead>
     <para role="optional">
-      <xref linkend="DocBook"/>,
-      <xref linkend="docbook-xsl"/>,
-      <xref linkend="fop"/>,
-      <xref linkend="libxslt"/> og enten
-      <xref linkend="elinks"/> eller
-      <ulink url="&w3m-url;">W3m</ulink>
+      <xref linkend="docbook5"/>,
+      <xref linkend="docbook-xsl-ns"/>,
+      <xref linkend="fop"/> (for PDF format),
+      <xref linkend="libxslt"/>, og
+      <xref linkend='lynx'/> (for ren tekstformat)
     </para>
--->
+
     <note>
       <para role="required">
         <xref role="runtime" linkend="shadow"/>
@@ -161,6 +158,20 @@
     <title>Installasjon av Linux PAM</title>
 
     <para>
+      Hvis du har installert <xref linkend='docbook5'/>,
+      <xref linkend='docbook-xsl-ns'/>, <xref linkend='libxslt'/>, og
+      <xref linkend='lynx'/> og du ønsker å generere ren tekstformat
+      av dokumentasjonen, endre <filename>meson.build</filename> til å
+      bruke <xref linkend='lynx'/> i stedet for W3m eller Elinks som BLFS
+      ikke gir:
+    </para>
+
+    <screen><userinput>sed -e "s/'elinks'/'lynx'/"                       \
+    -e "s/'-no-numbering', '-no-references'/      \
+          '-force-html', '-nonumbers', '-stdin'/" \
+    -i meson.build</userinput></screen>
+
+    <para>
       Kompiler og link <application>Linux PAM</application> med å
       kjøre følgende kommandoer:
     </para>
@@ -171,7 +182,7 @@ cd    build &amp;&amp;
 meson setup ..        \
   --prefix=/usr       \
   --buildtype=release \
-  -D docs=disabled    &amp;&amp;
+  -D docdir=/usr/share/doc/Linux-PAM-&linux-pam-version; &amp;&amp;
 
 ninja</userinput></screen>
 
@@ -239,12 +250,12 @@ chmod -v 4755 /usr/sbin/unix_chkpwd</userinput></screen>
     <para revision="sysv">Fjern nå en unødvendig mappe som &root;:</para>
 
 <screen role="root" revision="sysv"><userinput>rm -rf /usr/lib/systemd</userinput></screen>    
-
+<!--
     <para>Hvis du lastet ned den valgfrie dokumentasjonen, igjen som 
     &root; bruker:</para>
 
 <screen role="root"><userinput>tar -C / -xvf ../../Linux-PAM-&linux-pam-docs-version;-docs.tar.xz</userinput></screen>
-
+-->
   </sect2>
 <!--
 
