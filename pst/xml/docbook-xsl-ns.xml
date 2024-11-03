@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY path "https://github.com/docbook/xslt10-stylesheets/releases/download/release">
+
+  <!ENTITY docbook-xsl-ns-download-http "&path;/&docbook-xsl-version;/docbook-xsl-&docbook-xsl-version;.tar.bz2">
+  <!ENTITY docbook-xsl-ns-download-ftp  " ">
+  <!ENTITY docbook-xsl-ns-md5sum        "4a400f0264a19329c7f95f69e098744a">
+  <!ENTITY docbook-xsl-ns-size          "23 MB">
+  <!ENTITY docbook-xsl-ns-buildsize     "49 MB">
+  <!ENTITY docbook-xsl-ns-time          "less than 0.1 SBU">
+]>
+
+<sect1 id="docbook-xsl-ns"
+xreflabel="docbook-xsl-ns-&docbook-xsl-version;">
+  <?dbhtml filename="docbook-xsl-ns.html"?>
+
+
+  <title>docbook-xsl-ns-&docbook-xsl-version;</title>
+
+  <indexterm zone="docbook-xsl-ns">
+    <primary sortas="a-DocBook-XSL-Stylesheets">DocBook XSL
+    Stylesheets (Namespaced)</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til DocBook XSL Stylesheets (Namespaced)</title>
+
+    <para>
+      <application>DocBook XSL Stylesheets (Namespaced)</application>
+      pakken inneholder XSL stilark. Disse er nyttige for å
+      utføre transformasjoner på XML DocBook 5.0 filer.
+    </para>
+
+    &lfs122_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&docbook-xsl-ns-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&docbook-xsl-ns-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &docbook-xsl-ns-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &docbook-xsl-ns-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &docbook-xsl-ns-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &docbook-xsl-ns-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing='compact'>
+      <listitem>
+        <para>
+          Nødvendig oppdatering: <ulink url=
+            "&patch-root;/docbook-xsl-&docbook-xsl-version;-stack_fix-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">DocBook XSL Stylesheets (Namespaced) Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Nødvendig (ved kjøretid)</bridgehead>
+    <para role="recommended">
+      <xref role="runtime" linkend="libxml2"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri (alle brukt ved kjøretid)</bridgehead>
+    <para role="optional">
+      <xref role="runtime" linkend="apache-ant"/>
+         (for å produsere <quote>webhelp</quote> dokumenter),
+      <xref role="runtime"  linkend="libxslt"/>
+         (eller en hvilken som helst annen XSLT prosessor), for å behandle
+         Docbook dokumenter,
+      <xref role="runtime" linkend="ruby"/>
+         (for å utnytte <quote>epub</quote> stilark),
+      <xref role="runtime" linkend="zip"/>
+         (for å produsere <quote>epub3</quote> dokumenter), og
+      <ulink url="https://sourceforge.net/projects/saxon/files/saxon6/">
+        Saxon6
+      </ulink> og
+      <ulink url="http://xerces.apache.org/xerces2-j/">Xerces2 Java</ulink>
+         (brukt med <xref role="runtime" linkend="apache-ant"/>
+          for å utnytte <quote>webhelp</quote> dokumenter)
+    </para>
+
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av DocBook XSL Stylesheets (Namespaced)</title>
+
+    <para>
+      Først, fiks et problem som forårsaker stabeloverflyt når du gjør rekursjon:
+    </para>
+
+<screen><userinput>patch -Np1 -i ../docbook-xsl-&docbook-xsl-version;-stack_fix-1.patch</userinput></screen>
+
+    <para>
+      BLFS installerer ikke de nødvendige pakkene for å kjøre testpakken
+      og gi meningsfulle resultater.
+    </para>
+
+    <para>
+      Installer <application>DocBook XSL Stylesheets</application>
+      ved å kjøre følgende kommandoer som
+      <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>install -v -m755 -d /usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version; &amp;&amp;
+
+cp -v -R VERSION assembly common eclipse epub epub3 extensions fo        \
+         highlighting html htmlhelp images javahelp lib manpages params  \
+         profiling roundtrip slides template tests tools webhelp website \
+         xhtml xhtml-1_1 xhtml5                                          \
+    /usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version; &amp;&amp;
+
+ln -s VERSION /usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;/VERSION.xsl</userinput></screen>
+
+    <para>
+      Dokumentasjonen for denne pakken er delt med dens ikke-namespaced
+      motpart, <xref linkend='docbook-xsl'/> pakken. Installer
+      sistnevnte hvis du ønsker dokumentasjonen.
+    </para>
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere DocBook XSL Stylesheets</title>
+
+    <sect3 id="docbook-xsl-ns-config">
+      <title>Konfigurasjonsfiler</title>
+
+      <para>
+        <filename>/etc/xml/catalog</filename>
+      </para>
+
+      <indexterm zone="docbook-xsl docbook-xsl-config">
+        <primary sortas="e-etc-xml-catalog">/etc/xml/catalog</primary>
+      </indexterm>
+
+    </sect3>
+
+    <sect3>
+      <title>Konfigurasjonsinformasjon</title>
+
+      <para>
+        Opprett (eller legg til) og fyll ut XML katalogfilen ved å bruke
+        følgende kommandoer som <systemitem
+        class="username">root</systemitem> bruker (både <emphasis>http</emphasis>
+        og <emphasis>https</emphasis> skjemaer brukes fordi oppstrøms
+        har hatt begge i sin dokumentasjon):
+      </para>
+
+<screen role="root"><userinput>if [ ! -d /etc/xml ]; then install -v -m755 -d /etc/xml; fi &amp;&amp;
+if [ ! -f /etc/xml/catalog ]; then
+    xmlcatalog --noout --create /etc/xml/catalog
+fi &amp;&amp;
+
+xmlcatalog --noout --add "rewriteSystem" \
+           "http://cdn.docbook.org/release/xsl/&docbook-xsl-version;" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteSystem" \
+           "https://cdn.docbook.org/release/xsl/&docbook-xsl-version;" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteURI" \
+           "http://cdn.docbook.org/release/xsl/&docbook-xsl-version;" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteURI" \
+           "https://cdn.docbook.org/release/xsl/&docbook-xsl-version;" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteSystem" \
+           "http://cdn.docbook.org/release/xsl/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteSystem" \
+           "https://cdn.docbook.org/release/xsl/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteURI" \
+           "http://cdn.docbook.org/release/xsl/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteURI" \
+           "https://cdn.docbook.org/release/xsl/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteSystem" \
+           "http://docbook.sourceforge.net/release/xsl-ns/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog &amp;&amp;
+
+xmlcatalog --noout --add "rewriteURI" \
+           "http://docbook.sourceforge.net/release/xsl-ns/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;" \
+    /etc/xml/catalog</userinput></screen>
+
+    </sect3>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Filer</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;/*/*.xsl</seg>
+        <seg>/usr/share/xml/docbook/xsl-stylesheets-&docbook-xsl-version;</seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="xsl-stylesheets-ns">
+        <term><filename>XSL Stylesheets (Namespaced)</filename></term>
+        <listitem>
+          <para>
+            brukes til å utføre transformasjoner på XML filer
+          </para>
+          <indexterm zone="docbook-xsl-ns xsl-stylesheets-ns">
+            <primary sortas="g-XSL-Stylesheets-Namespaced">XSL Stylesheets (Namespaced)</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>

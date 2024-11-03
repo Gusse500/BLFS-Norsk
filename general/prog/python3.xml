@@ -7,17 +7,17 @@
   <!ENTITY python3-download-http
            "https://www.python.org/ftp/python/&python3-version;/Python-&python3-version;.tar.xz">
   <!ENTITY python3-download-ftp  " ">
-  <!ENTITY python3-md5sum        "c6c933c1a0db52597cb45a7910490f93">
-  <!ENTITY python3-size          "19 MB">
-  <!ENTITY python3-buildsize     "337 MB (legg til 60 MB for tester)">
-  <!ENTITY python3-time          "1.5 SBU (legg til 0.7 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY python3-md5sum        "726e5b829fcf352326874c1ae599abaa">
+  <!ENTITY python3-size          "21 MB">
+  <!ENTITY python3-buildsize     "354 MB (legg til 58 MB for tester)">
+  <!ENTITY python3-time          "1.5 SBU (legg til 1.6 SBU for tester; begge bruker parallellisme=4)">
   <!--
   Note: Size does not reflect docs that were installed in LFS.
   Test time measured with 60 second timeout.
   -->
   <!ENTITY python3htmldoc-download-http
   "https://www.python.org/ftp/python/doc/&python3-version;/python-&python3-version;-docs-html.tar.bz2">
-  <!ENTITY python3-docs-md5sum "dc8310645d00143661062779196e551e" >
+  <!ENTITY python3-docs-md5sum "afbf0a2319b7ac7561c52969bd0f5148" >
 ]>
 
 <sect1 id="python3" xreflabel="Python-&python3-version;">
@@ -83,13 +83,6 @@
          <ulink url="&lfs-root;/chapter08/meson.html">meson</ulink>,
          <ulink url="&lfs-root;/chapter08/markupsafe.html">MarkupSafe</ulink>,
          og <ulink url="&lfs-root;/chapter08/jinja2.html">Jinja2</ulink>.
-      </para>
-
-      <para revision="systemd">
-        På systemd systemer er det også nødvendig å installere MarkupSafe
-        og Jinja2 moduler på nytt fra LFS:
-        <ulink url="https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/markupsafe.html"/> og
-        <ulink url="https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/jinja2.html"/>.
       </para>
     </important>
 
@@ -180,7 +173,6 @@
 ./configure --prefix=/usr        \
             --enable-shared      \
             --with-system-expat  \
-            --with-system-ffi    \
             --enable-optimizations &amp;&amp;
 make</userinput></screen>
 
@@ -197,10 +189,14 @@ make</userinput></screen>
          Total tests: run=41,778 skipped=1,155
          Total test files: run=485/488 skipped=24 resource_denied=3
 
-         For Python-3.13.4 
+         For Python-3.12.4 
          Total tests: run=42,152 failures=6 skipped=1,234
          Total test files: run=487/489 failed=4 skipped=17 resource_denied=6 rerun=4
-    -->
+ 
+         For Python-3.13.0
+         Total tests: run=44,153 skipped=1,640
+         Total test files: run=479/478 failed=3 skipped=20 resource_denied=2 rerun=3
+   -->
 
     <para>
       For et relativt tregt system må du kanskje øke tidsbegrensningen
@@ -211,8 +207,8 @@ make</userinput></screen>
     </para>
 
     <para>
-      Av over 42 000 tester er følgende kjent for å mislykkes: test__xxsubinterpreters,
-      test_import, test_interpreters, og test_threading.
+      Av over 44 000 tester er følgende kjent for å mislykkes:
+      test_idle, test_tkinter og test_ttk.
     </para>
 
     <para>
