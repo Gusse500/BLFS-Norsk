@@ -148,18 +148,14 @@ tar: Exiting with failure status due to previous errors
       </para>
 
     </note>
-<!--
+
     <para>
-      Byggesystemet sender flere interne kopier av Python 3
-      modulen <filename>six.py</filename>.  De sendte kopiene er for gamle
-      til å fungere godt med Python 3.12 eller nyere. Bytt dem ut med
-      symbolkoblinger til <xref linkend='six'/> allerede installert på systemet:
+      Hvis du bruker ICU-76.1 eller nyere, må du tilpasse byggesystemet til å bruke
+      riktig bibliotek:
     </para>
 
-<screen><userinput>for i in $(find -name six.py); do
-  ln -sfv /usr/lib/python&python3-majorver;/site-packages/six.py $i;
-done</userinput></screen>
--->
+<screen><userinput remap="pre">sed -i 's/icu-i18n/icu-uc &amp;/' js/moz.configure</userinput></screen>
+
     <para>
       Installer <application>SpiderMonkey</application> ved å kjøre følgende
       kommandoer:
@@ -188,7 +184,7 @@ cd    obj &amp;&amp;
 make</userinput></screen>
 
     <para>
-      Hvis du kjører testpakken, må du tilpasse den til å være kompatibel med Python
+      Hvis du ønsker å kjøre testpakken, må du tilpasse den til å være kompatibel med Python
       3.13.0 eller nyere:
     </para>
 
