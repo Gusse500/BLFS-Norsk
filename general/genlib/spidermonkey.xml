@@ -148,18 +148,14 @@ tar: Exiting with failure status due to previous errors
       </para>
 
     </note>
-<!--
+
     <para>
-      Byggesystemet sender flere interne kopier av Python 3
-      modulen <filename>six.py</filename>.  De sendte kopiene er for gamle
-      til å fungere godt med Python 3.12 eller nyere. Bytt dem ut med
-      symbolkoblinger til <xref linkend='six'/> allerede installert på systemet:
+      Hvis du bruker ICU-76.1 eller nyere, må du tilpasse byggesystemet til å bruke
+      riktig bibliotek:
     </para>
 
-<screen><userinput>for i in $(find -name six.py); do
-  ln -sfv /usr/lib/python&python3-majorver;/site-packages/six.py $i;
-done</userinput></screen>
--->
+<screen><userinput remap="pre">sed -i 's/icu-i18n/icu-uc &amp;/' js/moz.configure</userinput></screen>
+
     <para>
       Installer <application>SpiderMonkey</application> ved å kjøre følgende
       kommandoer:
@@ -188,22 +184,43 @@ cd    obj &amp;&amp;
 make</userinput></screen>
 
     <para>
+      Hvis du ønsker å kjøre testpakken, må du tilpasse den til å være kompatibel med Python
+      3.13.0 eller nyere:
+    </para>
+
+    <screen remap='test'><userinput>sed 's/pipes/shlex/' -i ../js/src/tests/lib/results.py</userinput></screen>
+
+    <para>
       For å kjøre SpiderMonkey testpakken, utsted:
-      <command>make -C js/src check-jstests
-      JSTESTS_EXTRA_ARGS="--timeout 300 --wpt=disabled"</command>.
-      Det anbefales å omdirigere utdataene til en logg.
-      <!-- recheck when ICU gets upgraded -->
+    </para>
+
+    <screen remap='test'><userinput>make -C js/src check-jstests \
+     JSTESTS_EXTRA_ARGS="--timeout 300 --wpt=disabled" | tee jstest.log</userinput></screen>
+
+    <para>
       Fordi vi bygger med systemets ICU, 45 tester
       (av totalt mer enn 50 000) er kjent for å mislykkes.
+      Listen over mislykkede tester kan hentes ut via
+      <command>grep 'UNEXPECTED-FAIL' jstest.log</command>.
+      Send <option>-c</option> alternativet til <command>grep</command> hvis
+      du vil bare ha det totale antallet mislykkede tester.
+    </para>
+
+    <para>
       Testpakken kjøres med alle CPU kjerner tilgjengelig: selv i en
       cgroup med færre kjerner tildelt, prøver den fortsatt å skape like mange
       testjobber som <emphasis>alle</emphasis> kjerner i
       systemet; Heldigvis vil kjernen fortsatt ikke kjøre disse jobbene på kjerner
       som ikke er tildelt cgroup, så CPU bruken er fortsatt kontrollert.
     </para>
+
     <para>
-      For å kjøre JIT testpakken, utsted: <command>make -C js/src
-      check-jit-test JITTEST_EXTRA_ARGS="--timeout 300"</command>.
+      For å kjøre JIT testpakken, utsted:
+    </para>
+
+    <screen remap='test'><userinput>make -C js/src check-jit-test JSTESTS_EXTRA_ARGS="--timeout 300"</userinput></screen>
+
+    <para>
       I likhet med SpiderMonkey testpakken er antallet testjobber det samme som
       antall CPU kjerner i systemet selv om en cgroup brukes. For å
       gjøre ting verre, det er seks tester som vil bruke 3 GB hver av
@@ -214,9 +231,8 @@ make</userinput></screen>
       <option>-jN</option> etter <option>--timeout 300</option> med N
       erstattet av antall parallelle testjobber du ønsker å starte.
       For eksempel, hvis du har 16 GB systemminne tilgjengelig og 8 CPU kjerner,
-      utsted <command>make -C js/src check-jit-test
-      JITTEST_EXTRA_ARGS="--timeout=300 -j5"</command> for å kjøre testen med
-      5 parallelle jobber slik at minnebruken ikke overskrider 15 GB.
+      bruk <option>JITTEST_EXTRA_ARGS="--timeout=300 -j5"</option> for å kjøre
+      testpakken med 5 parallelle jobber slik at minnebruken ikke overskrider 15 GB.
       <!-- TL;DR: DO NOT REMOVE MEMORY USAGE NOTE W/O MY CONFIRMATION!
 
            "six tests": bug1782468-ptrdiff-veclen.js, it's ran with 6

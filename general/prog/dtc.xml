@@ -130,10 +130,14 @@ popd</userinput></screen>
     <para>
       Hvis du har installert
       <xref linkend='swig'/> og du ønsker å installere Python 3 bindinger
-      av denne pakken, bygg Python 3 modulen:
+      av denne pakken, tilpasse koden til å være kompatibel med SWIG-4.3.0 eller
+      nyere, <!-- https://github.com/dgibson/dtc/pull/154 --> og bygg
+      Python 3 modulen:
     </para>
- 
-<screen role="nodump"><userinput>&build-wheel-cmd; ..</userinput></screen>
+
+    <screen role="nodump"><userinput>sed 's/SWIG_Python_AppendOutput/SWIG_AppendOutput/' \
+    -i ../pylibfdt/libfdt.i &amp;&amp;
+&build-wheel-cmd; ..</userinput></screen>
 
     <para>
       Som &root; bruker, installer Python 3 modulen:
