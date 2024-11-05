@@ -84,7 +84,9 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="docbook-utils"/> og
+      <xref linkend="docbook5"/>,
+      <xref linkend="docbook-xsl-ns"/>,
+      <xref linkend="libxslt"/> (for å bygge manualsider), og
       <xref linkend="gtk-doc"/>
     </para>
 
@@ -114,6 +116,18 @@ meson setup --prefix=/usr       \
             -D docs=false       \
             -D man=false        \
             ..                  &amp;&amp;
+ninja</userinput></screen>
+
+    <!-- See https://github.com/hughsie/colord-gtk/pull/31 for the sed -->
+    <para>
+      Hvis <xref linkend='docbook5'/>, <xref linkend='docbook-xsl-ns'/>,
+      og <xref linkend='libxslt'/> er installert, bygg manualsider:
+    </para>
+
+    <screen role='nodump'><userinput>sed '/class="manual"/i \
+     &lt;refmiscinfo class="source"&gt;colord-gtk&lt;/refmiscinfo&gt;' \
+    -i ../man/*.xml &amp;&amp;
+meson configure -D man=true &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -155,12 +169,6 @@ ninja</userinput></screen>
       <parameter>-D docs=false</parameter>: Denne bryteren deaktiverer bygging
       av gtk-doc basert dokumentasjon. Selv om gtk-doc er installert, vil du
       trenge namespaced versjonene av Docbook XSL stilarkene.
-    </para>
-
-    <para>
-      <parameter>-D man=false</parameter>: Denne bryteren deaktiverer generering
-      av manualsidene for denne pakken. Fjern denne bryteren hvis du har
-      namespaced versjoner av Docbook XSL stilarkene installert.
     </para>
 
 <!--

@@ -104,7 +104,9 @@
     <para role="optional">
       <xref linkend="gnome-desktop"/> og
       <xref linkend="colord-gtk"/> (for å bygge eksempelverktøyene),
-      <xref linkend="docbook-utils"/>,
+      <xref linkend="docbook5"/>,
+      <xref linkend="docbook-xsl-ns"/>, og
+      <xref linkend="libxslt"/> (for å bygge manualsidene),
       <xref linkend="gtk-doc"/>,
       <xref linkend="libxslt"/>,
       <xref linkend="sane"/>,
@@ -170,6 +172,17 @@ meson setup ..                  \
       -D bash_completion=false  \
       -D docs=false             \
       -D man=false              &amp;&amp;
+ninja</userinput></screen>
+
+    <!-- See https://github.com/hughsie/colord/pull/175 for the sed -->
+    <para>
+      Hvis <xref linkend='docbook5'/>, <xref linkend='docbook-xsl-ns'/>,
+      og <xref linkend='libxslt'/> er installert, bygg manualsidene:
+    </para>
+
+    <screen role='nodump'><userinput>sed -e '/class="manual"/i&lt;refmiscinfo class="source"&gt;colord&lt;/refmiscinfo&gt;' \
+    -i ../man/*.xml &amp;&amp;
+meson configure -D man=true &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -238,14 +251,6 @@ ninja</userinput></screen>
       <parameter>-D docs=false</parameter>: Denne bryteren deaktiverer byggingen
       av dokumentasjon. Utelat hvis du har <xref linkend="gtk-doc"/> tilgjengelig.
     </para>
-
-    <para>
-      <parameter>-D man=false</parameter>: Denne bryteren deaktiverer byggingen
-      av man sider. Utelat hvis du har <xref linkend="docbook-utils"/>
-      tilgjengelig. Namespaced versjoner av docbook-xsl stilarkene
-      kreves også.
-    </para>
-
   </sect2>
 
   <sect2 role="content">
