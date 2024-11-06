@@ -135,9 +135,16 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr    \
+<screen><userinput>autoreconf &amp;&amp;
+
+CPPFLAGS+=' -I /usr/include/python3.13' \
+./configure --prefix=/usr    \
             --disable-static \
             --with-default-dict=/usr/lib/cracklib/pw_dict &amp;&amp;
+
+sed -e 's/makeSuite/TestLoader().loadTestsFromTestCase/' \
+    -i ./python/test_cracklib.py                          &amp;&amp;
+
 make</userinput></screen>
 
     <para>
@@ -174,6 +181,12 @@ create-cracklib-dict     /usr/share/dict/cracklib-words \
 
 <screen remap="test"><userinput>make test</userinput></screen>
 
+    <para>
+      Om ønskelig, test Python modulen med:
+    </para>
+
+<screen remap="test"><userinput>python3 -c 'import cracklib; cracklib.test()'</userinput></screen>
+
     <important>
       <para>
         Hvis du installerer <application>CrackLib</application> etter at
@@ -193,6 +206,18 @@ create-cracklib-dict     /usr/share/dict/cracklib-words \
     <title>Parameterforklaringer</title>
 
     <para>
+      <command>autoreconf</command>: Denne kommandoen tilbakestiller konfigurasjonen
+      til å gjenkjenne <application>Python-3.13</application>.
+    </para>
+
+    <para>
+      <envar>CPPFLAGS+=' -I /usr/include/python3.13'</envar>: 
+      Denne miljøvariabelen er nødvendig for å
+      la pakken finne <application>Python-3.13</application> 
+      inkluderte filer.
+    </para>
+
+    <para>
       <parameter>--with-default-dict=/usr/lib/cracklib/pw_dict</parameter>:
       Denne parameteren tvinger installasjonen av
       <application>CrackLib</application> ordboken til
@@ -201,6 +226,12 @@ create-cracklib-dict     /usr/share/dict/cracklib-words \
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
+
+    <para>
+      <command>sed ... ./python/test_cracklib.py</command>: Denne kommandoen
+      oppdaterer byggeprosedyren for Python modulen for 
+      <application>Python-3.13</application> og senere..
+    </para>
 
     <para>
       <command>install -v -m644 -D ...</command>: Denne kommandoen oppretter
@@ -246,9 +277,9 @@ create-cracklib-dict     /usr/share/dict/cracklib-words \
         <seg>cracklib-check, cracklib-format, cracklib-packer,
         cracklib-unpacker, cracklib-update, og create-cracklib-dict</seg>
 
-        <seg>libcrack.so)</seg>
+        <seg>libcrack.so og _cracklib.so (Python modul)</seg>
 
-        <seg>/usr/lib/cracklib, /usr/share/dict og /usr/share/cracklib</seg>
+        <seg>/usr/lib/cracklib, /usr/share/dict, og /usr/share/cracklib</seg>
       </seglistitem>
     </segmentedlist>
 
