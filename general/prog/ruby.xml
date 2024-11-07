@@ -6,10 +6,10 @@
 
   <!ENTITY ruby-download-http "https://cache.ruby-lang.org/pub/ruby/&ruby-minor-version;/ruby-&ruby-version;.tar.xz">
   <!ENTITY ruby-download-ftp  " ">
-  <!ENTITY ruby-md5sum        "ff0db1cee91181a8dd6ce486da6eeeeb">
+  <!ENTITY ruby-md5sum        "f5eb601e5c8b37ee8169b82fb528b821">
   <!ENTITY ruby-size          "16 MB">
   <!ENTITY ruby-buildsize     "1.4 GB (med C API dokumenter og tester)">
-  <!ENTITY ruby-time          "2.4 SBU (bruker parallellisme=4; med C API dokumenter; legg til 0.4 SBU for tester)">
+  <!ENTITY ruby-time          "1.7 SBU (med C API dokumenter; legg til 1.0 SBU for tester; alt med bruk av parallellisme=4)">
 ]>
 
 <sect1 id="ruby" xreflabel="Ruby-&ruby-version;">
@@ -114,11 +114,8 @@ make</userinput></screen>
 <screen><userinput>make capi</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>make -j1 -k check</command>.
-      Merk at å kjøre testpakken med parallelle jobber kan føre til
-      at testfeil blir skrevet ut som kryptiske <computeroutput>unknown
-      object</computeroutput> meldinger, noe som resulterer i et sammendrag som feilaktig påstår
-      <quote>all tests passed.</quote>  Hvis miljøet har variabler
+      For å teste resultatene, utsted: <command>make -k check</command>.
+      Hvis miljøet har variabler
       relatert til proxy innstillinger (<envar>all_proxy</envar>,
       <envar>ALL_PROXY</envar>, <envar>http_proxy</envar>, og etc.) aktivert,
       testpakken vil avslutte tidlig med meldinger som
@@ -126,7 +123,8 @@ make</userinput></screen>
       deaktiver disse variablene for testpakken. Det er over 26 000 tester
       Noen tester relatert til ipv6 kan indikere feil. Hvis
       tester kjøres i en mappe som har en skrivbar komponent (f.eks.
-      /tmp) så kan flere ekstra tester mislykkes.
+      /tmp) så kan flere ekstra tester mislykkes.  Tre undertester av test_config.rb
+      er kjent for å mislykkes.
     </para>
 
     <para>
