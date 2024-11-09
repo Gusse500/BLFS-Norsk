@@ -28,11 +28,8 @@
     <para>
       <application>Shadow</application> ble faktisk installert i LFS og det er det
       ingen grunn til å installere den på nytt med mindre du har installert
-      <application>CrackLib</application> eller
       <application>Linux-PAM</application> etter at LFS systemet ditt ble fullført.
-      Hvis du har installert <application>CrackLib</application> etter LFS, så å
-      installere <application>Shadow</application> på nytt vil aktivere sterkt passord
-      brukerstøtte. Hvis du har installert <application>Linux-PAM</application>,
+      Med <application>Linux-PAM</application> installert,
       installere <application>Shadow</application> på nytt vil tillate programmer som f.eks
       <command>login</command> og <command>su</command> å bruke PAM.
     </para>
@@ -87,8 +84,7 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="linux-pam"/> eller
-      <xref role="nodep" linkend="cracklib"/>
+      <xref linkend="linux-pam"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -109,17 +105,6 @@
         <application>Shadow</application> blir reinstallert for å støtte
         <application>Linux-PAM</application> installasjon.
       </para>
-
-      <para>
-        Hvis du installerer <application>Shadow</application> på nytt for å gi
-        sterk passordstøtte ved å bruke <application>CrackLib</application>
-        biblioteket uten å bruke <application>Linux-PAM</application>, forsikre deg å
-        legge til <parameter>--with-libcrack</parameter> parameteren til
-        <command>configure</command> skriptet nedenfor og kjør også følgende
-        kommando:
-      </para>
-
-<screen role="nodump"><userinput>sed -i 's@DICTPATH.*@DICTPATH\t/lib/cracklib/pw_dict@' etc/login.defs</userinput></screen>
     </important>
 
     <warning>
@@ -137,7 +122,6 @@
     </para>
 <!--
 <screen><userinput>patch -Np1 -i ../shadow-4.10-useradd_segfault-1.patch &amp;&amp;
-sed -i "224s/rounds/min_rounds/" libmisc/salt.c        &amp;&amp;
 -->
 <screen><userinput>sed -i 's/groups$(EXEEXT) //' src/Makefile.in          &amp;&amp;
 
@@ -197,7 +181,6 @@ make</userinput></screen>
 
     <para>
       <command>sed -e 's@#ENCRYPT_METHOD DES@ENCRYPT_METHOD YESCRYPT@' -e
-        's@#\(SHA_CRYPT_..._ROUNDS 5000\)@\100@' -e
         's@/var/spool/mail@/var/mail@' -e '/PATH=/{s@/sbin:@@;s@/bin:@@}'
         -i etc/login.defs</command>: I stedet for å bruke standard 'DES'
        metoden, endrer denne kommandoen installasjonen til å bruke den mye mer
@@ -269,11 +252,7 @@ make</userinput></screen>
       <para>
         Resten av denne siden er viet til å konfigurere
         <application>Shadow</application> å virke skikkelig med
-        <application>Linux-PAM</application>. Hvis du ikke har
-        <application>Linux-PAM</application> installert, og du installerte
-        <application>Shadow</application> på nytt for å støtte sterke passord via
-        <application>CrackLib</application> biblioteket, ingen ytterligere konfigurasjon er
-        nødvendig.
+        <application>Linux-PAM</application>.
       </para>
     </note>
 
@@ -359,7 +338,6 @@ for FUNCTION in FAIL_DELAY               \
                 FTMP_FILE NOLOGINS_FILE  \
                 ENV_HZ PASS_MIN_LEN      \
                 SU_WHEEL_ONLY            \
-                CRACKLIB_DICTPATH        \
                 PASS_CHANGE_TRIES        \
                 PASS_ALWAYS_WARN         \
                 CHFN_AUTH ENCRYPT_METHOD \
