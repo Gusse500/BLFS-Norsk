@@ -136,13 +136,14 @@
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>LC_ALL=en_US.UTF-8 bin/ctest
-      -j<replaceable>&lt;N&gt;</replaceable> -O
-      cmake-&cmake-version;-test.log</command>, hvor
-      <replaceable>&lt;N&gt;</replaceable> er et heltall mellom 1 og
-      antall systemkjerner. Innstilling <envar>LC_ALL</envar> er nødvendig for å
+      For å teste resultatene, utsted: <command>bin/ctest
+      -j<replaceable>$(nproc)</replaceable></command>.  Erstatt
+      <replaceable>$(nproc)</replaceable> med et heltall mellom 1 og
+      antall logiske systemkjerner hvis du ikke vil bruke alle.
+      <!-- Setting <envar>LC_ALL</envar> is needed to
       forhindre noen testfeil når noen av lokalitetsvariablene er
-      satt til ikke-engelsk språk.
+      satt til ikke-engelsk språk. (I no longer see failures with zh_CN.UTF-8
+      locale with 3.30.x and 3.31.0.)  -->
       <!--
         En test, RunCMake.FindBoost, er kjent for å mislykkes.
         Nå cmake-3.27.0. Alle tester består.
