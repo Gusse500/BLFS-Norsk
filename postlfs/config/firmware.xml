@@ -42,6 +42,25 @@
     <literal>Tag</literal> tabellen.
   </para>
 
+  <important>
+    <para>
+      <anchor id='linux-firmware-symlink'
+              xreflabel='create the symlink and download its target'/>
+      Merk at noen nødvendige fastvarefiler (og mapper) faktisk er
+      symbolkoblinger til andre filer (eller mapper). Disse symbolkoblingene er ikke
+      lagret i Git depotet, i stedet blir de dokumentert i
+      <filename>WHENCE</filename> filen.  Hver linje som begynner med
+      <literal>Link:</literal> beskriver en symbolkobling. Hvis du laster ned
+      et element du trenger, og det er en slik symbolkobling (eller i en mappe som er
+      en slik symbolkobling), må du opprette symbolkoblingen manuelt og laste ned
+      målet. På den annen side, hvis du vil ha alle fastvarefilene,
+      bruk <command>./copy-firmware.sh /usr/lib/firmware</command>
+      kommandoen som kopierer fastvarefilene og oppretter alle
+      symbolkoblinger i <filename>WHENCE</filename> filen, i stedet for en rett frem
+      kopier kommando som <command>cp -r * /usr/lib/firmware/</command>.
+    </para>
+  </important>
+
   <para>
     For noen annen fastvare, spesielt for Intel mikrokode og visse
     wifi enheter, den nødvendige fastvaren er ikke tilgjengelig i depotet ovenfor.
@@ -580,6 +599,10 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
         <filename class="directory">nvidia/</filename> mappen over
         linux fastvare, kopier den til
         <filename class="directory">/lib/firmware/nouveau</filename>.
+        Merk at den nødvendige fastvarefilen kan være en symbolkobling
+        (for eksempel er GSP fastvaren for RTX 4060 bare en symbolkobling til
+        GSP fastvaremappen for RTX 4090), og du må
+        <xref linkend='linux-firmware-symlink'/>.
       </para>
       <para>
         Hvis fastvaren ikke er gjort tilgjengelig i linux fastvaren,
