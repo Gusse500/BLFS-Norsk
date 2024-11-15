@@ -13,14 +13,17 @@
   <title>Om Fastvare</title>
 
   <indexterm zone="postlfs-firmware">
-    <primary sortas="e-lib-firmware">/lib/firmware</primary>
+    <primary sortas="e-usr-lib-firmware">/usr/lib/firmware</primary>
   </indexterm>
 
   <para>
     På noen nyere PC-er kan det være nødvendig, eller ønskelig, å laste fastvare
-    for å få dem til å fungere på sitt beste. Det er en mappe, <filename
-    class="directory">/lib/firmware</filename>, hvor kjernen eller
-    kjernedrivere ser etter fastvarebilder.
+    for å få dem til å fungere på sitt beste. Kjernen eller kjernendrivere
+    ser etter fastvarebilder i <filename>/lib/firmware</filename>.
+    Men i LFS <filename>/lib</filename> er en symbolkobling til
+    <filename>usr/lib</filename>, så mappen som inneholder fastvarefilen
+    er faktisk
+    <filename class='directory'>/usr/lib/firmware</filename>.
   </para>
 
   <para>
@@ -41,6 +44,25 @@
     nettleser og last ned det siste øyeblikksbildet som er oppført i
     <literal>Tag</literal> tabellen.
   </para>
+
+  <important>
+    <para>
+      <anchor id='linux-firmware-symlink'
+              xreflabel='create the symlink and download its target'/>
+      Merk at noen nødvendige fastvarefiler (og mapper) faktisk er
+      symbolkoblinger til andre filer (eller mapper). Disse symbolkoblingene er ikke
+      lagret i Git depotet, i stedet blir de dokumentert i
+      <filename>WHENCE</filename> filen.  Hver linje som begynner med
+      <literal>Link:</literal> beskriver en symbolkobling. Hvis du laster ned
+      et element du trenger, og det er en slik symbolkobling (eller i en mappe som er
+      en slik symbolkobling), må du opprette symbolkoblingen manuelt og laste ned
+      målet. På den annen side, hvis du vil ha alle fastvarefilene,
+      bruk <command>./copy-firmware.sh /usr/lib/firmware</command>
+      kommandoen som kopierer fastvarefilene og oppretter alle
+      symbolkoblinger i <filename>WHENCE</filename> filen, i stedet for en rett frem
+      kopier kommando som <command>cp -r * /usr/lib/firmware/</command>.
+    </para>
+  </important>
 
   <para>
     For noen annen fastvare, spesielt for Intel mikrokode og visse
@@ -76,9 +98,7 @@
 
       <para>
         ATI Radeon- og AMDGPU-enheter krever alle fastvare for å kunne bruke KMS
-        (kjernemodusinnstilling - det foretrukne alternativet) så vel som for Xorg. Til
-        gamle radeon-brikker (før R600), er fastvaren fortsatt i
-         kjernekilden.
+        (kjernemodusinnstilling - det foretrukne alternativet) så vel som for Xorg.
       </para>
 
       <para>
@@ -98,9 +118,8 @@
       <para>
         Nvidia GPUer fra Kepler og utover krever signert fastvare, ellers er
         nouveau-driveren ikke i stand til å gi maskinvareakselerasjon. Nvidia har
-        nå utgitt firmware opp til Ampere (GeForce30-serien) til linux-firmware.
-        Merk at raskere klokker enn standard ikke er aktivert
-        av den utgitte fastvaren.
+        nå utgitt firmware opp til Ada Lovelace (GeForce 40 series) til
+        linux-firmware.
       </para>
     </listitem>
     <listitem>
@@ -395,11 +414,11 @@ cd initrd</userinput></screen>
         Hvis du allerede starter opp med en initrd (se <xref
         linkend="initramfs"/>), bør du bør kjøre <command>mkinitramfs</command>
         igjen etter å ha puttet den riktige bloben eller beholderen i <filename
-          class="directory">/lib/firmware</filename>. Mer presist, putt en
+          class="directory">/usr/lib/firmware</filename>. Mer presist, putt en
         intel blob i <filename
-          class="directory">/lib/firmware/intel-ucode</filename> mappen
+          class="directory">/usr/lib/firmware/intel-ucode</filename> mappen
         eller en AMD beholder i <filename
-          class="directory">/lib/firmware/amd-ucode</filename> mappen før
+          class="directory">/usr/lib/firmware/amd-ucode</filename> mappen før
         du kjører <command>mkinitramfs</command>.
         Alternativt kan du ha begge initrd på samme linje, som f.eks
         <userinput>initrd /microcode.img /other-initrd.img</userinput> (tilpass
@@ -450,15 +469,7 @@ cd initrd</userinput></screen>
     <title>Firmware for Skjermkort</title>
 
     <sect3 id="ati-video-firmware">
-      <title>Fastvare for ATI videobrikker (R600 og nyere)</title>
-
-      <para>
-        Disse instruksjonene gjelder IKKE gamle radeoner før R600
-        familien. For dem er fastvaren i kjernen sin <filename
-        class='directory'>/lib/firmware/</filename> mappen. Det gjør det heller ikke
-        hvis du har tenkt å unngå et grafisk oppsett som Xorg og er
-        komfortabel med å bruke standard 80x25-skjerm i stedet for en rammebuffer.
-      </para>
+      <title>Firmware for ATI Radeon videobrikker</title>
 
       <para>
         Tidlige radeon enheter trengte bare en enkelt 2K blob med fastvare. Nylige
@@ -494,8 +505,8 @@ cd initrd</userinput></screen>
         last ned de nødvendige blobene og installer dem:
       </para>
 
-<screen><userinput>mkdir -pv /lib/firmware/radeon
-cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/radeon</userinput></screen>
+<screen><userinput>mkdir -pv /usr/lib/firmware/radeon
+cp -v &lt;YOUR_BLOBS&gt; /usr/lib/firmware/radeon</userinput></screen>
 
     <para>
       Det anbefales å bygge kjerne amdgpu driveren som en modul fordi
@@ -540,8 +551,8 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/radeon</userinput></screen>
       raven_ta.bin).
     </para>
 
-<screen><userinput>mkdir -pv /lib/firmware/amdgpu
-cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
+<screen><userinput>mkdir -pv /usr/lib/firmware/amdgpu
+cp -v &lt;YOUR_BLOBS&gt; /usr/lib/firmware/amdgpu</userinput></screen>
 
     <para>
       Hvis diskplass ikke er et problem, kan du installere all gjeldende amdgpu
@@ -579,7 +590,11 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
         Hvis den nødvendige fastvaren er tilgjengelig i
         <filename class="directory">nvidia/</filename> mappen over
         linux fastvare, kopier den til
-        <filename class="directory">/lib/firmware/nouveau</filename>.
+        <filename class="directory">/usr/lib/firmware/nouveau</filename>.
+        Merk at den nødvendige fastvarefilen kan være en symbolkobling
+        (for eksempel er GSP fastvaren for RTX 4060 bare en symbolkobling til
+        GSP fastvaremappen for RTX 4090), og du må
+        <xref linkend='linux-firmware-symlink'/>.
       </para>
       <para>
         Hvis fastvaren ikke er gjort tilgjengelig i linux fastvaren,
@@ -591,8 +606,8 @@ cp -v &lt;YOUR_BLOBS&gt; /lib/firmware/amdgpu</userinput></screen>
 wget https://us.download.nvidia.com/XFree86/Linux-x86/340.32/NVIDIA-Linux-x86-340.32.run
 sh NVIDIA-Linux-x86-340.32.run --extract-only
 python3 extract_firmware.py
-mkdir -p /lib/firmware/nouveau
-cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
+mkdir -p /usr/lib/firmware/nouveau
+cp -d nv* vuc-* /usr/lib/firmware/nouveau/</userinput></screen>
 
     </sect3>
   </sect2>
@@ -602,11 +617,13 @@ cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
 
     <para>
       Kjernen liker å laste fastvare for noen nettverksdrivere, spesielt
-      de fra Realtek (/lib/linux-firmware/rtl_nic/) mappen, men
+      de fra Realtek (
+      <filename class='directory'>/usr/lib/linux-firmware/rtl_nic/</filename>
+      mappen), men
       de ser vanligvis ut til å fungere uten. Derfor kan du starte opp
       kjernen, sjekke dmesg for meldinger om denne manglende fastvaren, og hvis
       nødvendig last ned fastvaren og legg den i den angitte katalogen i
-      <filename class="directory">/lib/firmware</filename> slik at det vil
+      <filename class="directory">/usr/lib/firmware</filename> slik at det vil
       finnes på neste oppstart. Merk at med nåværende kjerne fungerer dette
       uansett om driveren er kompilert eller bygget som en modul,
       det er ikke nødvendig å bygge denne fastvaren inn i kjernen.
@@ -634,7 +651,7 @@ cp -d nv* vuc-* /lib/firmware/nouveau/</userinput></screen>
       <ulink url = 'https://kernel.org/pub/software/network/wireless-regdb/'/>.
       For å installere det, bare pakk ut <filename>regulatory.db</filename> og
       <filename>regulatory.db.p7s</filename> fra tarballen til
-      <filename class="directory">/lib/firmware</filename>. Merk at enten
+      <filename class="directory">/usr/lib/firmware</filename>. Merk at enten
       <option>cfg80211</option> driver må velges som en modul
       for <filename>regulatory.*</filename>
       filer som skal lastes, eller må disse filene inkluderes som fastvare i
@@ -718,7 +735,7 @@ cp -av -T --no-preserve=ownership sof-tplg \
       <xref linkend='initramfs'/> for detaljer), inkludert fastvarefilene.
       Hvis du ikke vil bruke noen av metodene, kan du inkludere fastvare
       filer i selve kjernebildet. Installer de nødvendige fastvarefilene
-      inn i <filename class='directory'>/lib/firmware</filename> først
+      inn i <filename class='directory'>/usr/lib/firmware</filename> først
       angi følgende kjernekonfigurasjon og gjenoppbygg kjernen:
     </para>
 
@@ -729,12 +746,12 @@ cp -av -T --no-preserve=ownership sof-tplg \
       Erstatt <replaceable>xx/aa.bin xx/bb.bin</replaceable>
       med en mellomromseparert liste over stier til de nødvendige fastvare
       filer, i forhold til
-      <filename class='directory'>/lib/firmware</filename>.  En metode
+      <filename class='directory'>/usr/lib/firmware</filename>.  En metode
       enklere enn å manuelt skrive inn listen (den kan være lang) kjør
       følgende kommando:
     </para>
 
-    <screen><userinput>echo CONFIG_EXTRA_FIRMWARE='"'$({ cd /lib/firmware; echo <replaceable>amdgpu/*</replaceable> })'"' &gt;&gt; .config
+    <screen><userinput>echo CONFIG_EXTRA_FIRMWARE='"'$({ cd /usr/lib/firmware; echo <replaceable>amdgpu/*</replaceable> })'"' &gt;&gt; .config
 make oldconfig</userinput></screen>
 
     <para>
