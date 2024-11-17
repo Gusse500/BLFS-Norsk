@@ -81,6 +81,13 @@
       <xref linkend="mesa"/> (for Vulkan drivere)
     </para>
 
+    <bridgehead renderas="sect4">Valgfri (for testing)</bridgehead>
+    <para role="optional">
+      <xref linkend="git"/>
+    </para>
+
+    &test-use-internet;
+
   </sect2>
 
   <sect2 role="installation">
@@ -109,10 +116,14 @@ cmake -D CMAKE_INSTALL_PREFIX=/usr   \
 ninja</userinput></screen>
 
     <para>
-      Denne pakken kommer ikke med en fungerende testpakke.
-      <!-- For å kjøre testene må vi følge en kompleks prosess for å laste ned en
-      tilpasset kopi av googletest.-->
+      For å kjøre testpakken, utsted (merk at kommandoen vil bruke
+      <xref linkend='git'/> for å laste ned en kopi av GoogleTest for å bygge
+      testpakken):
     </para>
+
+<screen remap='test'><userinput>cmake -D BUILD_TESTS=ON -D UPDATE_DEPS=ON .. &amp;&amp;
+ninja &amp;&amp;
+ninja test</userinput></screen>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
