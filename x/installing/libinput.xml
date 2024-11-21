@@ -4,16 +4,16 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libinput-version "1.26.2">
+  <!ENTITY libinput-version "1.27.0">
 
 <!--  <!ENTITY libinput-download-http "https://www.freedesktop.org/software/libinput/libinput-&libinput-version;.tar.xz">-->
   <!ENTITY libinput-download-http "https://gitlab.freedesktop.org/libinput/libinput/-/archive/&libinput-version;/libinput-&libinput-version;.tar.gz"
 >
   <!ENTITY libinput-download-ftp  " ">
-  <!ENTITY libinput-md5sum        "65bfce1b15c7b2375d4df4f390a9233f">
-  <!ENTITY libinput-size          "1.0 MB">
-  <!ENTITY libinput-buildsize     "11 MB (legg til 23 MB for dokumentasjon og 9,6 MB for tester)">
-  <!ENTITY libinput-time          "0.1 SBU (legg til 0,1 SBU for dokumentasjon og 4,9 SBU for tester)">
+  <!ENTITY libinput-md5sum        "aa0f5da110bf51715b8899548e7e43c2">
+  <!ENTITY libinput-size          "1.1 MB">
+  <!ENTITY libinput-buildsize     "14 MB (legg til 21 MB for dokumentasjon og 6 MB for tester)">
+  <!ENTITY libinput-time          "0.1 SBU (legg til 0,1 SBU for dokumentasjon og 0.2 SBU for tester)">
 ]>
 
   <sect2 id="libinput" xreflabel="libinput-&libinput-version;">
@@ -88,8 +88,12 @@
         <xref linkend="gtk3"/> (for å bygge GUI hendelsesvisningen),
         <xref linkend="libunwind"/> (nødvendig for tester),
         <xref linkend="libwacom"/>,
-        <xref linkend="sphinx"/> (kreves for å bygge dokumentasjon), og
-        <xref linkend="pyparsing"/> (for en ikke-root test)
+        <xref linkend="doxygen"/>,
+        <xref linkend="graphviz"/>,
+        <xref linkend="recommonmark"/>, og
+        <xref linkend="sphinx_rtd_theme"/> (kreves for å bygge dokumentasjon),
+        <xref linkend="pyparsing"/> (for en ikke-root test), og
+        <xref linkend="pytest"/> (for en annen ikke-root test)
       </para>
 
     </sect3>
@@ -99,14 +103,14 @@
 
       <para>
         Selv om libinput fungerer med den samme kjernekonfigurasjonen som brukes av <xref
-        linkend="libevdev"/>, dens omfattende testpakken krever tilstedeværelse av
+        linkend="libevdev"/>, testpakken krever tilstedeværelse av
         <filename>/dev/uinput</filename>  (samt både <xref linkend="valgrind"/>
         og <xref linkend="libunwind"/>).
       </para>
 
       <para>
-        Hvis du ønsker å kjøre alle testene, aktiver følgende alternativ i
-        kjernekonfigurasjon og kompiler kjernen på nytt om nødvendig:
+        Hvis du ønsker å kjøre standard testpakken, aktiver følgende alternativ
+        i kjernekonfigurasjonen og kompiler kjernen på nytt om nødvendig
       </para>
 
       <!-- Yes, "libevdev" is not a typo.  libinput test suite needs the
@@ -119,6 +123,9 @@
         kjører.
       </para>
 
+<!-- This part doesn't appear to be necessary as libinput overhauled their test
+     suite system in 1.27.0 and above. Commenting it out. - Zeckma -->
+<!--
       <para>
         På et Xorg system må du også forhindre genererte hendelser
         under testpakken fra å forstyrre skrivebordet ditt. Kopier
@@ -127,6 +134,7 @@
         og start X på nytt. For mer informasjon se
         <ulink url="https://wayland.freedesktop.org/libinput/doc/&libinput-version;/test-suite.html">libinput test suite</ulink>.
       </para>
+-->
 
       <indexterm zone="libinput libinput-kernel">
         <primary sortas="d-libinput">libinput</primary>
@@ -155,16 +163,16 @@ ninja</userinput></screen>
 
       <note>
         <para>
-          Hvis du vil kjøre de fullstendige testene, fjerner du -D tests fra
+          Hvis du vil kjøre standard testpakke, fjerner du -D tests fra
           <command>meson</command> kommandoen ovenfor. Vennligst les
           "Kjernekonfigurasjon for å kjøre libinput Testpakken" (over).
         </para>
 
         <para>
-          Hvis du har aktivert de fullstendige testene, kan du kjøre hovedtestene
+          Hvis du har aktivert standard testpakke, kan du kjøre hovedtestene
           <emphasis>som root bruker</emphasis> ved å utføre:
-          <command>ninja test</command>. Et svært stort antall tester vil
-          bli kjørt. En test mislykkes på wayland.
+          <command>ninja test</command>. Det er 6 tester og alle burde
+          bestå hvis du installerte de valgfrie avhengighetene.
         </para>
       </note>
 
@@ -204,8 +212,9 @@ cp -rv Documentation/* /usr/share/doc/libinput-&libinput-version;/html</userinpu
       <para>
         <parameter>-D tests=false</parameter>: Denne bryteren deaktiverer kompilering av
         hovedtestene. Selv med testene definert som false,, kan du fortsatt kjøre
-        de fire første mindre testene, som vanlig bruker, men en vil bli hoppet over hvis
-        <xref linkend="pyparsing"/> ikke er installert.
+        de seks første mindre testene, som vanlig bruker, men en vil bli hoppet over hvis
+        <xref linkend="pyparsing"/> ikke er installert, og en annen hvis
+        <xref linkend="pytest"/> ikke er installert.
       </para>
 
       <para>
