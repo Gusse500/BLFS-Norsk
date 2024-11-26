@@ -151,8 +151,8 @@ ninja</userinput></screen>
       For å kjøre testene, utsted:
     </para>
 
-    <screen remap='test'><userinput>LIBGL_ALWAYS_SOFTWARE=1 \
-dbus-run-session meson test --setup x11 --no-suite needs-udmabuf</userinput></screen>
+    <screen remap='test'><userinput>env -u{GALLIUM_DRIVER,MESA_LOADER_DRIVER_OVERRIDE} LIBGL_ALWAYS_SOFTWARE=1 \
+dbus-run-session meson test --setup x11 --no-suite={headless,needs-udmabuf}</userinput></screen>
 
     <para>
       Hvis du er i en Wayland økt, bytt ut den ene forekomsten av
@@ -171,9 +171,6 @@ dbus-run-session meson test --setup x11 --no-suite needs-udmabuf</userinput></sc
       referanseutdataen og forskjellene. Du kan ta en titt på
       disse bildene for å sikre at forskjellene er ubetydelige.
 
-      To <literal>headless</literal> tester er kjent for å mislykkes uten den
-      eksterne avhengigheten pydbus er installert.
-      
       Mange tester vil mislykkes hvis <filename>~/.config/gtk-4.0/settings.ini</filename> 
       eksisterer og gtk-modules linjen er ikke kommentert.
 
@@ -304,10 +301,19 @@ dbus-run-session meson test --setup x11 --no-suite needs-udmabuf</userinput></sc
     </para>
 
     <para>
-      <parameter>--no-suite needs-udmabuf</parameter>: Deaktiver testene som krever
-      <filename class='devicefile'>/dev/udmabuf</filename>.  Denne filen
-      eksisterer ikke hvis funksjonen ikke er aktivert i kjernekonfigurasjonen,
-      og selv om den eksisterer, kan den ikke nås som uprivilegerte brukere.
+      <parameter>-u{GALLIUM_DRIVER,MESA_LOADER_DRIVER_OVERRIDE}</parameter>:
+      Deaktiver variabler som <envar>LIBGL_ALWAYS_SOFTWARE=1</envar> kan
+      konflikte med.
+    </para>
+
+    <para>
+      <parameter>--no-suite={headless,needs-udmabuf}</parameter>: Deaktiver
+      testene som krever den eksterne avhengigheten pydbus, og testene som
+      krever enhetsnoden
+      <filename class='devicefile'>/dev/udmabuf</filename>.
+      Enhetsnoden eksisterer ikke hvis funksjonen ikke er aktivert i kjernekonfigurasjonen,
+      og selv om den eksisterer kan den ikke nås som
+      uprivilegerte brukere.
     </para>
   </sect2>
 
