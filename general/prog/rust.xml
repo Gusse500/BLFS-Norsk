@@ -6,8 +6,8 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "8d6a14f1c8d0ab03dffbc81f7a839aa7">
-  <!ENTITY rust-size          "210 MB">
+  <!ENTITY rust-md5sum        "cd5e72ac6b19f17788bb864aa0926761">
+  <!ENTITY rust-size          "338 MB">
   <!ENTITY rust-buildsize     "8.9 GB (298 MB installert); legg til 6,4 GB hvis du kjører testene">
   <!ENTITY rust-time          "6.7 SBU (inkludert nedlastingstid; legg til 6,2 SBU for tester, begge med parallellisme=8)">
 ]>
@@ -76,7 +76,7 @@
       Imidlertid kan det stort sett begrenses til et spesifisert antall prosessorer av
       en kombinasjon av å legge til bryteren <literal>--jobs &lt;N&gt;</literal>
       (f.eks. '--jobs 4' for å begrense til 4 prosessorer) på hver påkalling av
-      <command>python3 x.py</command> <emphasis>og</emphasis> ved hjelp av en
+      <command>./x.py</command> <emphasis>og</emphasis> ved hjelp av en
       miljøvariabel <envar>CARGO_BUILD_JOBS=&lt;N&gt;</envar>. For
       øyeblikket er dette ikke effektivt når noen av rustc testene kjøres.
     </para>
@@ -238,14 +238,19 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
 # Tell x.py the editors have reviewed the content of this file
 # and updated it to follow the major changes of the building system,
 # so x.py will not warn us to do such a review.
-change-id = 129295
+change-id = 131075
 
 [llvm]
-# by default, rust will build for a myriad of architectures
-targets = "X86"
-
 # When using system llvm prefer shared libraries
 link-shared = true
+
+# Do not download pre-built LLVM, instead either use the system
+# LLVM or build LLVM from the shipped source.
+download-ci-llvm = false
+
+# If building the shipped LLVM source, only enable the x86 target
+# instead of all the targets supported by LLVM.
+targets = "X86"
 
 [build]
 # omit docs to save time and space (default is to build them)
@@ -278,13 +283,9 @@ lto = "thin"
 codegen-units = 1
 
 [target.x86_64-unknown-linux-gnu]
-# NB the output of llvm-config (i.e. help options) may be
-# dumped to the screen when config.toml is parsed.
 llvm-config = "/usr/bin/llvm-config"
 
 [target.i686-unknown-linux-gnu]
-# NB the output of llvm-config (i.e. help options) may be
-# dumped to the screen when config.toml is parsed.
 lvm-config = "/usr/bin/llvm-config"</literal>
 EOF</userinput></screen>
 <!-- It seems gone in 1.81.0 but not confirmed upstream
@@ -302,26 +303,13 @@ EOF</userinput></screen>
       </para>
     </note>
 -->
-    <!-- https://github.com/rust-lang/rust/issues/128493
-         https://github.com/rust-lang/rust/issues/130018 will be fixed 1.83
-         https://github.com/rust-lang/rust/pull/130034   will be fixed 1.83 -->
+    <!-- https://github.com/rust-lang/rust/issues/128493 -->
     <para>
       Fjern nå noen tester som utløser en fullstendig gjenoppbygging av Rust standarden
-      bibliotek og kompilator, fjern en spesiell sak for å støtte
-      <command>cargo</command> testpakken (som vi ikke kjører fordi den
-      forventes å kjøre i et Rustc git depot), men utløse en gjenoppbygging
-      av <command>cargo</command> når
-      <command>python3 x.py install</command> kjøres, og hindre bygging av en
-      komponent ubrukelig for BLFS:
+      bibliotek og kompilator:
     </para>
 
-    <screen><userinput>sed '/MirOpt/d' -i src/bootstrap/src/core/builder.rs &amp;&amp;
-
-sed 's/!path.ends_with("cargo")/true/' \
-    -i src/bootstrap/src/core/build_steps/tool.rs &amp;&amp;
-
-sed 's/^.*build_wasm.*$/#[allow(unreachable_code)]&amp;return false;/' \
-    -i src/bootstrap/src/lib.rs</userinput></screen>
+    <screen><userinput>sed '/MirOpt/d' -i src/bootstrap/src/core/builder.rs</userinput></screen>
 
     <para>
       Kompiler <application>Rust</application> ved å kjøre følgende
@@ -335,7 +323,7 @@ sed 's/^.*build_wasm.*$/#[allow(unreachable_code)]&amp;return false;/' \
 
 <screen><userinput>[ ! -e /usr/include/libssh2.h ] || export LIBSSH2_SYS_USE_PKG_CONFIG=1
 [ ! -e /usr/include/sqlite3.h ] || export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
-python3 x.py build</userinput></screen>
+./x.py build</userinput></screen>
 
     <note>
       <para>
@@ -352,20 +340,12 @@ python3 x.py build</userinput></screen>
       Å kjøre testene (igjen ved å bruke alle tilgjengelige CPUer) utsted:
     </para>
 
-<screen remap="test"><userinput>python3 x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
+<screen remap="test"><userinput>./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
 
+    <!-- https://github.com/rust-lang/rust/pull/131461 -->
     <para>
-      Fire tester i
-      <filename class='directory'>tests/run-make</filename> mappen er
-      kjent for å mislykkes fordi de trenger mål som ikke er aktivert
-      i BLFS <xref linkend='llvm'/> konfigurasjonen (og heller ikke
-      <literal>llvm.targets</literal> i <filename>config.toml</filename>,
-      i tilfelle bygging med den sendte LLVM). En test som heter
-      <literal>core::config::tests::download_ci_llvm</literal> er kjent for
-      å mislykkes.  Og en test som heter <filename>121444.rs</filename> er kjent
-      for å mislykkes med LLVM 19.1 eller nyere fordi en krasj er fikset med den nye
-      LLVM men Rustc testselen har ikke konseptet
-      uventede pasninger.
+      En test navngitt <literal>ci_rustc_if_unchanged_logic</literal>
+      er kjent for å mislykkes.
     </para>
 
 <!-- Let's just comment this out.  Nobody has tested on a system w/o
@@ -428,8 +408,8 @@ python3 x.py build</userinput></screen>
       </para>
     </note>
 
-<screen role='root'><userinput>python3 x.py install rustc std &amp;&amp;
-python3 x.py install --stage=1 cargo clippy rustfmt</userinput></screen>
+<screen role='root'><userinput>./x.py install rustc std &amp;&amp;
+./x.py install --stage=1 cargo clippy rustfmt</userinput></screen>
 
     <para>
       Fortsatt som &root; bruker, fiks installasjonen av dokumentasjonen,
@@ -552,7 +532,7 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
     <para>
       <parameter>--stage=1</parameter>: denne bryteren løser et problem som
       forårsaker at noen Rustc komponenter gjenoppbygges unødvendig
-      <command>python3 x.py install</command>.
+      <command>./x.py install</command>.
     </para>
 
   </sect2>
