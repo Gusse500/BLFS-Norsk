@@ -6,8 +6,8 @@
 
   <!ENTITY gpgme-download-http "&gnupg-http;/gpgme/gpgme-&gpgme-version;.tar.bz2">
   <!ENTITY gpgme-download-ftp  " ">
-  <!ENTITY gpgme-md5sum        "b1089097da4cd0520e3fee850f5fcbff">
-  <!ENTITY gpgme-size          "1.8 MB">
+  <!ENTITY gpgme-md5sum        "ebba23b77af98c2f2a3565c9ee701b04">
+  <!ENTITY gpgme-size          "1.9 MB">
   <!ENTITY gpgme-buildsize     "334 MB (med tester)">
   <!ENTITY gpgme-time          "1.1 SBU (med alle bindinger og tester; med parallellitet=4)">
 ]>
@@ -104,6 +104,18 @@
     <title>Installasjon av GPGME</title>
 
     <para>
+      La først byggesystemet oppdage Python-&python3-majorver;.
+      Hindre også byggesystemet fra å feste
+      <literal>-unknown</literal> suffiks til versjonsstrengen når den er
+      regenerert fra en Git
+      depot. Regenerer deretter byggesystemet;
+    </para>
+
+    <screen><userinput>sed 's/\[3.12\]/&amp;,[&python3-majorver;]/' -i configure.ac &amp;&amp;
+sed 's/-unknown//' -i autogen.sh           &amp;&amp;
+autoconf</userinput></screen>
+
+    <para>
       Installer <application>GPGME</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -134,7 +146,16 @@ fi</userinput></screen>
       Utsted:
     </para>
 
-<screen remap='test'><userinput>make -k check PYTHONS= PYTHON=$PWD/testenv/bin/python3</userinput></screen>
+<screen remap='test'><userinput>if swig -version > /dev/null; then
+  python3 -m venv testenv                                              &amp;&amp;
+  testenv/bin/pip3 install --no-index --find-links=dist --no-cache-dir \
+                           gpg                                         &amp;&amp;
+  sed '/PYTHON/s#run-tests.py#&amp; --python-libdir=/dev/null#'            \
+      -i lang/python/tests/Makefile
+fi &amp;&amp;
+
+make -k check PYTHONS= PYTHON=$PWD/testenv/bin/python3</userinput></screen>
+
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
