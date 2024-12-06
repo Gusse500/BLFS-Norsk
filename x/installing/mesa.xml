@@ -6,10 +6,10 @@
 
   <!ENTITY mesa-download-http "https://mesa.freedesktop.org/archive/mesa-&mesa-version;.tar.xz">
   <!ENTITY mesa-download-ftp  " ">
-  <!ENTITY mesa-md5sum        "c245ce6fe6ef8db7b5e62eb754c54449">
-  <!ENTITY mesa-size          "29 MB">
-  <!ENTITY mesa-buildsize     "1.1 GB (med dokumenter, legg til 541 MB for tester)">
-  <!ENTITY mesa-time          "3.5 SBU (med dokumenter; legg til 1.2 SBU for tester; begge med parallellitet=4)">
+  <!ENTITY mesa-md5sum        "ab0c9a102e6713fca2b8c955b368fe57">
+  <!ENTITY mesa-size          "30 MB">
+  <!ENTITY mesa-buildsize     "1.3 GB (med dokumenter, legg til 569 MB for tester)">
+  <!ENTITY mesa-time          "4.7 SBU (med dokumenter; legg til 1.5 SBU for tester; begge med parallellitet=4)">
 ]>
 
 <sect1 id="mesa" xreflabel="Mesa-&mesa-version;">
@@ -78,12 +78,23 @@
       <listitem>
         <para>
           Anbefalt oppdatering:
-          <ulink url="&patch-root;/mesa-add_xdemos-3.patch"/>
+          <ulink url="&patch-root;/mesa-add_xdemos-4.patch"/>
           (installerer 2 demoprogrammer for testing av Mesa - ikke nødvendig hvis du
           installer <ulink url="https://archive.mesa3d.org/demos/">
           mesa-demos</ulink> pakken)
         </para>
       </listitem>
+<!--
+      <listitem>
+        <para>
+          Anbefalt oppdatering:
+          <ulink url="&patch-root;/mesa-&mesa-version;-seizure_prevention-1.patch"/>
+          (forhindrer kraftig blinking ved bruk av
+          <application>Firefox</application> og
+          <application>Thunderbird</application> med Zink gallium driveren)
+        </para>
+      </listitem>
+-->
     </itemizedlist>
 
     <bridgehead renderas="sect3">Mesa Avhengigheter</bridgehead>
@@ -314,8 +325,15 @@
     </para>
 
 <!--<screen><userinput>patch -Np1 -i ../mesa-&mesa-version;-add_xdemos-1.patch</userinput></screen>-->
-<screen><userinput>patch -Np1 -i ../mesa-add_xdemos-3.patch</userinput></screen>
+<screen><userinput>patch -Np1 -i ../mesa-add_xdemos-4.patch</userinput></screen>
+<!--
+    <para>
+      Hvis du har lastet ned anfallsforebyggende oppdatering, bruk den ved å kjøre
+      følgende kommando:
+    </para>
 
+<screen><userinput>patch -Np1 -i ../mesa-&mesa-version;-seizure_prevention-1.patch</userinput></screen>
+-->
    <!-- Note that freedreno, vc4, and virgl all need special support from
         libdrm - renodr
         For me, libdrm does not mention virgl, but mesa accepts it. AFAICS
@@ -415,6 +433,7 @@ ninja</userinput></screen>
      All 90 tests passed for me for 23.1.0 [bdubbs]
      89 Tests passed for me, 1 timeout on 23.1.8 [rahul]
      All 98 tests passed for me for 23.3.1 [bdubbs]
+     All 106 tests passed for me for 24.3.1 [zeckma]
 -->
 
     <para>
@@ -637,6 +656,12 @@ ninja</userinput></screen>
       linux alternativer er auto (standard), x11, wayland, surfaceless og drm.
     </para>
 
+    <para>
+      <option>-D legacy-x11="..."</option> Denne parameteren kontrollerer hvilke eldre
+      X11 funksjoner som får innebygd støtte. Tilgjengelige linux alternativer er none
+      (standard) og dri2. Disse funksjonene er sjelden nødvendig lenger.
+    </para>
+
   </sect2>
 
   <sect2 role="content">
@@ -647,6 +672,7 @@ ninja</userinput></screen>
       <segtitle>Installerte Biblioteker</segtitle><!-- in /usr/lib -->
       <segtitle>Installerte DRI Driver Stubs</segtitle><!-- in /usr/lib/dri -->
       <segtitle>Installerte VA-API Drivers</segtitle><!-- in /usr/lib/dri -->
+      <segtitle>Installert GBM Bakstykkr</segtitle><!-- in /usr/lib/gbm -->
       <segtitle>Installerte VDPAU Drivere</segtitle><!-- in /usr/lib/vdpau -->
       <segtitle>Installerte Vulkan Drivere</segtitle><!-- in /usr/lib -->
       <segtitle>Installerte Mapper</segtitle>
@@ -694,6 +720,11 @@ ninja</userinput></screen>
           <!-- End VA-API drivers -->
         </seg>
         <seg>
+          <!-- Begin GBM backends -->
+          dri_gbm.so
+          <!-- End GBM backends -->
+        </seg>
+        <seg>
           <!-- Begin VDPAU drivers -->
           libvdpau_nouveau.so,
           libvdpau_r600.so,
@@ -712,7 +743,7 @@ ninja</userinput></screen>
         <seg>
           <!-- $XORG_PREFIX/include/GL is installed by xorg-protos -->
           $XORG_PREFIX/{include/{EGL,GLES,GLES2,GLES3,KHR},
-          $XORG_PREFIX/lib/{dri,vdpau}},
+          $XORG_PREFIX/lib/{dri,gbm,vdpau}},
           $XORG_PREFIX/share/drirc.d (inneholder løsninger for ulike applikasjoner,
           spesielt nettlesere og spill),
           $XORG_PREFIX/share/vulkan,
@@ -749,6 +780,17 @@ ninja</userinput></screen>
           <indexterm zone="mesa glxinfo">
             <primary sortas="b-glxinfo">glxinfo</primary>
           </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="dri_gbm">
+        <term><filename class='libraryfile'>dri_gbm.so</filename></term>
+        <listitem>
+          <para>
+            implementerer Graphics Buffer Management funksjoner som trengs av
+            <systemitem class='library'>libgbm</systemitem> på toppen av
+            <systemitem class='library'>libdrm</systemitem>
+          </para>
         </listitem>
       </varlistentry>
 
