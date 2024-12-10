@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY sysmon3-download-http "https://github.com/lfs-book/sysmon3/releases/download/sysmon3-&sysmon3-version;/sysmon3-&sysmon3-version;.tar.xz">
+  <!ENTITY sysmon3-download-ftp  " ">
+  <!ENTITY sysmon3-md5sum        "e78f1715f180d609f44b1eeee4bbe899">
+  <!ENTITY sysmon3-size          "30 KB">
+  <!ENTITY sysmon3-buildsize     "1.2 MB">
+  <!ENTITY sysmon3-time          "0.2 SBU">
+]>
+
+<sect1 id="sysmon3" xreflabel="sysmon3-&sysmon3-version;">
+  <?dbhtml filename="sysmon3.html"?>
+
+
+  <title>sysmon3-&sysmon3-version;</title>
+
+  <indexterm zone="sysmon3">
+    <primary sortas="a-sysmon3">sysmon3</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til sysmon3</title>
+
+    <para>
+      <application>sysmon3</application> pakke (uttales sys-mon-3)
+      er klientdelen av sysmond/sysmon3 klient/serverapplikasjonen
+      som overvåker systemverdier inkludert CPU-bruk, minnebruk og
+      systemtemperaturer i et kompakt skjermvindu. 
+      Flere forekomster av <application>sysmon3</application> kan bli
+      kjørt på et system for å overvåke verdier på forskjellige systemer.
+    </para>
+
+    &lfs122_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&sysmon3-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&sysmon3-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &sysmon3-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &sysmon3-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &sysmon3-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &sysmon3-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">sysmon3 Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="qt6"/> (eller qt5)
+    </para>
+
+    <bridgehead renderas="sect4">Påkrevd ved kjøretid</bridgehead>
+    <para role="required">
+      <xref linkend="sysmond"/> (kjøretid på systemet som skal overvåkes) 
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av sysmon3</title>
+
+    <para>
+      Installer <application>sysmon3</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>qmake sysmon3.pro &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>install -vm755 sysmon3 /usr/bin</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere sysmon3</title>
+
+    <sect3 id="sysmon3-config">
+      <title>Konfigurasjonsfiler</title>
+
+      <para>
+        <filename>$HOME/.config/LinuxFromScratch/&lt;monitored system&gt;.conf</filename>
+      </para>
+
+      <para>
+        Konfigurasjonsfilene opprettes ved kjøretid for hvert system som
+        overvåkes. De oppdateres vanligvis ikke manuelt, men administreres
+        av programmets konfigurasjonswidgeter.
+      </para>
+
+      <para>
+        Ved første kjøring ber programmet om at systemet skal overvåkes. Etter
+        testing at kommunikasjonen til serveren er tilfredsstillende og servernavnet
+        er lagret, vil hovedvinduet starte. Etter første oppsett kan
+        oppsett-widgeten omgås ved å sende servernavnet som et argument
+        til programmet.
+      </para>
+
+      <para>
+        Programmet er designet for å ta opp minimal skjermplass, så som standard
+        har den ikke ramme. Rammen kan slås av og på med
+        Ctrl-F. Dette kan være nyttig for å plassere vinduet på ønsket sted.
+        Etter første plassering lagres plasseringen i konfigurasjonsfilen
+        for neste gang programmet startes.
+      </para>
+
+      <para>
+        En kort operasjonsmeny hentes frem med et høyreklikk på
+        hovedvinduet. Konfigurasjonswidgeter briges opp med F1.
+      </para>
+
+    </sect3>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          sysmon3
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          $HOME/.config/LinuxFromScratch/
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

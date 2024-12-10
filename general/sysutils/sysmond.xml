@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY sysmon-qt-download-http "https://github.com/lfs-book/sysmond/releases/download/sysmond-&sysmond-version;/sysmond-&sysmond-version;.tar.xz">
+  <!ENTITY sysmon-qt-download-ftp  " ">
+  <!ENTITY sysmon-qt-md5sum        "ef7bf090b835c3265e9b602b4a297fcd">
+  <!ENTITY sysmon-qt-size          "22 KB">
+  <!ENTITY sysmon-qt-buildsize     "196 KB">
+  <!ENTITY sysmon-qt-time          "less than 0.1 SBU">
+]>
+
+<sect1 id="sysmond" xreflabel="sysmond-&sysmond-version;">
+  <?dbhtml filename="sysmond.html"?>
+
+  <title>sysmond-&sysmond-version;</title>
+
+  <indexterm zone="sysmond">
+    <primary sortas="a-sysmond">sysmond</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til sysmond</title>
+
+    <para>
+      <application>sysmond</application> pakke (uttales
+      sys-mon-d) er daemondelen av sysmond/sysmon3
+      klient/server-applikasjon som overvåker systemverdier inkludert CPU
+      bruk, minnebruk og systemtemperaturer i et kompakt skjermvindu.
+    </para>
+
+    &lfs122_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&sysmon-qt-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&sysmon-qt-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &sysmon-qt-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &sysmon-qt-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &sysmon-qt-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &sysmon-qt-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect2>
+
+  <sect2 role="kernel" id='sysmond-kernel'>
+    <title>Kjernekonfigurasjon</title>
+
+     <para>
+        Det er mange forskjellige maskinvareenheter som registrerer temperaturer.
+        Temperaturavlesningene oppdateres av kjernedrivere som støtter
+        spesifikke enheter. For å finne ut hvilke enheter som finnes på et system
+        <xref linkend="lm_sensors"/> pakken har et Perl skript,
+        <command>sensors-detect</command> som kan se etter spesifikke enheter
+        som er i gjeldende system.
+     </para>
+
+     <para>
+        Etter at sensorenheter er kjent, må den aktuelle kjernedriveren
+        være aktivert. I mange saker, men ikke alle, de riktige driverene
+        er valgt som standard. Kjernens konfigurasjonsparametere
+        ligger på:
+     </para>
+
+<screen><emphasis role='blue'>D</emphasis>evice Drivers ---&gt;                                    
+  N<emphasis role='blue'>e</emphasis>tworking options ---&gt;
+    [*] H<emphasis role='blue'>a</emphasis>rdware Monitoring support ---&gt;        [CONFIG_HWMON]</screen>
+
+     <para>
+        I de fleste tilfeller minst Intel Core/Core2/Atom temperatursensor
+        (SENSORS_CORETEMP) bør være aktivert for Intel baserte systemer eller
+        CONFIG_SENSORS_K10TEMP (AMD) bør være aktivert for AMD baserte
+        systemer.
+     </para>
+        
+     <indexterm zone="sysmond sysmond-kernel">
+        <primary sortas="d-sysmond">sysmond</primary>
+     </indexterm>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av sysmond</title>
+
+    <para>
+      Installer <application>sysmond</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>make</userinput></screen>
+
+    <para>
+      Denne pakken kommer ikke med en testpakke.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="configuration">
+    <title>Konfigurere sysmond</title>
+
+    <sect3 id="sysmond-init">
+      <title><phrase revision="sysv">Oppstartsskript</phrase>
+             <phrase revision="systemd">Systemd Enhet</phrase></title>
+
+      <indexterm zone="sysmond sysmond-init">
+        <primary sortas="f-sysmond-init">sysmond</primary>
+      </indexterm>
+
+      <para revision="sysv">
+        Installer
+        <filename>/etc/rc.d/init.d/sysmond</filename> init skriptet inkludert i
+        <xref linkend="bootscripts"/> pakken.
+      </para>
+
+      <para revision="systemd">
+        For å starte <command>sysmond</command> daemon ved oppstart,
+        installer systemd enheten fra <xref linkend="systemd-units"/>
+        pakken ved å kjøre følgende kommando som
+        <systemitem class="username">root</systemitem> bruker:
+      </para>
+
+<screen role="root"><userinput>make install-sysmond</userinput></screen>
+
+    </sect3>
+
+    <sect3 id="sysmond-config">
+      <title>Konfigurasjonsfil</title>
+
+      <para>
+        Som standard er konfigurasjonsfilen 
+        <filename>/etc/sysmond.conf</filename> men det kan endres ved å skrive 
+        --config-file &lt;filnavn&gt; på kommandolinjen. I utgangspunktet er alle
+        konfigurasjonselementene kommentert og standardinnstillingene spesifisert
+        er brukt.
+      </para>
+    </sect3>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          sysmond
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
