@@ -88,16 +88,16 @@
   <sect2 role="installation">
     <title>Installasjon av ALSA Verktøy</title>
 
-<!-- Fixed in 1.2.10
+
     <para>
-      Denne pakken gir sin egen implementering av
-      <literal>strlcpy</literal> og <literal>strlcat</literal> funksjoner.
-      Men de leveres av Glibc-2.38 nå, så vi må fjerne
-      tilpasset implementering for å unngå konflikt med Glibc deklarasjonene:
+      Rett først et problem i de distribuerte udev reglene:
     </para>
 
-    <screen><userinput>echo '' > alsactl/init_sysdeps.c</userinput></screen>
--->
+<screen><userinput>sed -e 's/acp-pdm-dmic/acp-dmic-codec/'                   \
+    -e '/LABEL="alsa_restore_go"/s/go/std/'               \
+    -e '/^ENV.ALSA_CARD_NUMBER/i LABEL="alsa_restore_go"' \
+    -i alsactl/90-alsa-restore.rules.in</userinput></screen>
+
 
     <para>
       Installer <application>ALSA Verktøy</application> ved å
