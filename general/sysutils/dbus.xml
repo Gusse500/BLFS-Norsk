@@ -6,10 +6,10 @@
 
   <!ENTITY dbus-download-http "https://dbus.freedesktop.org/releases/dbus/dbus-&dbus-version;.tar.xz">
   <!ENTITY dbus-download-ftp  " ">
-  <!ENTITY dbus-md5sum        "46070a3487817ff690981f8cd2ba9376">
+  <!ENTITY dbus-md5sum        "66bfcf1f42d4ebc634ca558d14335e92">
   <!ENTITY dbus-size          "1.3 MB">
-  <!ENTITY dbus-buildsize     "23 MB (legg til 25 MB for tester)">
-  <!ENTITY dbus-time          "0.2 SBU (legg til 1.5 SBU for tester)">
+  <!ENTITY dbus-buildsize     "110 MB (legg til 6 MB for tester)">
+  <!ENTITY dbus-time          "0.2 SBU (legg til 0.4 SBU for tester)">
   <!-- The former value was 0.8 SBU, which was far more sensible. -->
   <!-- I got 'real  0m14.355s' for make check at -j1; bdubbs dbus-1.14.2 -->
   <!-- Now 'real 2m51.642ss' for make check at -j1; bdubbs dbus-1.14.6
@@ -128,93 +128,32 @@ not ok 2 test-autolaunch
 
   <sect2 role="installation">
     <title>Installasjon av D-Bus</title>
-    <!--
-    <para revision="sysv">
-      If they do not already exist,
-      as the <systemitem class="username">root</systemitem> user, create a
-      system user and group to handle the system message bus activity:
-    </para>
-
-<screen role="root" revision="sysv"><userinput>groupadd -g 18 messagebus &amp;&amp;
-useradd -c "D-Bus Message Daemon User" -d /var/run/dbus \
-        -u 18 -g messagebus -s /bin/false messagebus</userinput></screen>
-    -->
 
     <para>
       Installer <application>D-Bus</application> ved å kjøre følgende
-      kommandoer (det kan være lurt å se gjennom utdataene fra <command>./configure
-      --help</command> først og legg til ønskede parametere til
-      <command>configure</command> kommandoen vist nedenfor):
+      kommandoer (det kan være lurt å gå gjennom filen meson_options.txt først og legge til
+      eventuelle ekstra ønskede alternativer til meson oppsettlinjen nedenfor):
     </para>
 
-    <!-- Only useful for systemd: it installs the services files in the
-    systemd/user
-    - -enable-user-session                \ -->
-<screen revision="sysv"><userinput>./configure --prefix=/usr                        \
-            --sysconfdir=/etc                    \
-            --localstatedir=/var                 \
-            --runstatedir=/run                   \
-            --disable-doxygen-docs               \
-            --disable-xml-docs                   \
-            --disable-static                     \
-            --with-systemduserunitdir=no         \
-            --with-systemdsystemunitdir=no       \
-            --docdir=/usr/share/doc/dbus-&dbus-version;  \
-            --with-system-socket=/run/dbus/system_bus_socket &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
 
-<screen revision="systemd"><userinput>./configure --prefix=/usr                        \
-            --sysconfdir=/etc                    \
-            --localstatedir=/var                 \
-            --runstatedir=/run                   \
-            --enable-user-session                \
-            --disable-doxygen-docs               \
-            --disable-xml-docs                   \
-            --disable-static                     \
-            --docdir=/usr/share/doc/dbus-&dbus-version;  \
-            --with-system-socket=/run/dbus/system_bus_socket &amp;&amp;
-make</userinput></screen>
+meson setup --prefix=/usr          \
+            --buildtype=release    \
+            --wrap-mode=nofallback \</userinput><userinput revision='sysv'>
+            -D systemd=disabled    \</userinput><userinput>
+            .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Se nedenfor for testinstruksjoner.
     </para>
 
-<!--
-    <warning revision="systemd">
-      <para>
-        Installing the package will override all files installed by
-        <application>D-Bus</application> in LFS. It is critical that
-        nothing uses <application>D-Bus</application> libraries or
-        programs during the installation. The best way to ensure that these
-        libraries are not being used is to run the installation in rescue mode.
-        To switch to rescue mode, run the following command as the
-        <systemitem class="username">root</systemitem> user (from a TTY):
-      </para>
-
-<screen role="root"><userinput>systemctl start rescue.target</userinput></screen>
-
-    </warning>
--->
-
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
-
-<!-- FIXME: No longer needed with usr merge
-    <para>
-      The shared library needs to be moved to
-      <filename class="directory">/lib</filename>, and as a result the
-      <filename class="extension">.so</filename> file in
-      <filename class="directory">/usr/lib</filename> will need to be
-      recreated. Run the following command as the
-      <systemitem class="username">root</systemitem> user:
-    </para>
-
-<screen role="root"><userinput>mv -v /usr/lib/libdbus-1.so.* /lib &amp;&amp;
-ln -sfv ../../lib/$(readlink /usr/lib/libdbus-1.so) /usr/lib/libdbus-1.so</userinput></screen>
--->
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
       Hvis du bruker en DESTDIR installasjon,
@@ -244,16 +183,16 @@ chmod -v      4750       /usr/libexec/dbus-daemon-launch-helper</userinput></scr
 
 <screen role="root" revision="sysv"><userinput>ln -sfv /var/lib/dbus/machine-id /etc</userinput></screen>
 
-<!--
-    <para revision="systemd">
-      If not in chroot, at this point, you should reload the systemd daemon,
-      and reenter multi-user mode with the following commands (as the
-      <systemitem class="username">root</systemitem> user):
+    <para>
+      Til slutt, fortsatt som &root; bruker, gi nytt navn til dokumentasjonsmappen
+      (det eksisterer bare hvis de valgfrie avhengighetene er oppfylt for
+      minst ett dokumentasjonsformat) for å gjøre det versjonert:
     </para>
 
-<screen role="root" revision="systemd"><userinput>systemctl daemon-reload
-systemctl start multi-user.target</userinput></screen>
--->
+<screen role='root'><userinput>if [ -e /usr/share/doc/dbus ]; then
+  rm -rf /usr/share/doc/dbus-&dbus-version;    &amp;&amp;
+  mv -v  /usr/share/doc/dbus{,-&dbus-version;}
+fi</userinput></screen>
 
     <!-- Without dbus-python and pygobject3, only 39 tests are run and
          11 out of 39 are skipped.  With dbus-python and pygobject3
@@ -263,7 +202,7 @@ systemctl start multi-user.target</userinput></screen>
       Mange tester er deaktivert med mindre både <xref linkend="dbus-python"/>
       og <xref linkend="pygobject3"/> har blitt installert. Det må
       kjøres som en uprivilegert bruker fra en lokal økt med bussadresse.
-      For å kjøre standard tester utsted <command>make check</command>.
+      For å kjøre standard tester utsted <command>ninja test</command>.
     </para>
 
     <!-- With dbus-python and pygobject3 installed and these additional
@@ -271,7 +210,7 @@ systemctl start multi-user.target</userinput></screen>
          Additionally,  217 tests in the "name-test" directory are run
          and none is skipped.  -->
     <para>
-      Hvis du vil kjøre enhetsregresjonstestene, krever konfigureringen
+      Hvis du vil kjøre enhetsregresjonstestene, krever meson
       tilleggsparametere som viser tilleggsfunksjonalitet i
       binærfiler som ikke er ment å brukes i en produksjonsbygning av
       <application>D-Bus</application>.  Hvis du ønsker å kjøre testene,
@@ -279,80 +218,42 @@ systemctl start multi-user.target</userinput></screen>
       dokumenter):
     </para>
 
-<screen remap="test"><userinput>make distclean                                    &amp;&amp;
-PYTHON=python3 ./configure --enable-tests         \
-                           --enable-asserts       \
-                           --disable-doxygen-docs \
-                           --disable-xml-docs     &amp;&amp;
-make                                              &amp;&amp;
-make check</userinput></screen>
+<screen remap="test"><userinput>meson configure -D asserts=true -D intrusive_tests=true &amp;&amp;
+ninja test</userinput></screen>
 
+<!-- Doesn't seem to be the case anymore (on systemd, unknown on SysV)
     <para>
       En test, test-autolaunch, er kjent for å mislykkes.
       Det har vært rapporter om at testene kan mislykkes hvis de kjøres i et
       Midnight Commander skall. Du kan få feilmeldinger om at minnet er tomt når
       kjører testene. Disse er normale og kan trygt ignoreres.
     </para>
+-->
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <para>
-      <parameter>--disable-doxygen-docs</parameter>: Denne bryteren deaktiverer at
-      doxygen dokumentasjon bygges og installeres, hvis du har
-      <application>doxygen</application> installert. Hvis
-      <application>doxygen</application> er installert, og du ønsker å bygge
-      dem, fjern denne parameteren.
-    </para>
-
-    <para>
-      <parameter>--disable-xml-docs</parameter>: Denne bryteren deaktiverer at html
-      dokumentasjon bygges og installeres, hvis du har
-      <application>xmlto</application> installert. Hvis
-      <application>xmlto</application> er installert, og du ønsker å bygge
-      dem, fjern denne parameteren.
-    </para>
-
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/static-libraries.xml"/>
+      href="../../xincludes/meson-wrap-nofallback.xml"/>
 
-    <para revision="systemd">
-      <parameter>--enable-user-session</parameter>: Denne parameteren aktiverer
-      per bruker DBus-økter med
-      <application>systemd</application>.
-    </para>
-
-    <para revision="sysv">
-      <parameter>--with-systemd{user,system}unitdir=no</parameter>: Disse
-      brytere deaktiverer installasjon av systemenheter på elogind baserte systemer.
-    </para>
-<!-- not in instructions anymore
-    <para>
-      <parameter>- -with-system-pid-file=/run/dbus/pid</parameter>: Dette
-      parameter angir plasseringen av PID filen.
-    </para>
--->
-    <para>
-      <parameter>--with-system-socket=/run/dbus/system_bus_socket</parameter>:
-      Denne parameteren spesifiserer plasseringen av systembuss socket.
+    <para revision='sysv'>
+      <parameter>-D systemd=disabled</parameter>: Ikke installer systemd
+      støttefiler selv om
+      <systemitem class='library'>libsystemd</systemitem> eksisterer (dvs.
+      <xref linkend='elogind'/> pakken er installert).
     </para>
 
     <para>
-      <parameter>--enable-tests</parameter>: Bygger ekstra deler av koden for å
+      <parameter>-D intrusive_tests=true</parameter>: Bygger ekstra deler av koden for å
       støtte alle tester. Ikke bruk på en produksjonsbygning.
     </para>
 
     <para>
-      <option>--enable-embedded-tests</option>: Bygger ekstra deler av
-      koden for kun å støtte enhetstester. Ikke bruk på en produksjonsbygning.
-    </para>
-
-    <para>
-      <parameter>--enable-asserts</parameter>: Gjør det mulig å kjøre feilsøkingskode
+      <parameter>-D asserts=true</parameter>: Gjør det mulig å kjøre feilsøkingskode
       påstander for utsagn som normalt antas å være sanne. Dette forhindrer
-      advarsel om det '<parameter>--enable-tests</parameter>' på egen hånd er bare
+      advarsel om det '<parameter>-D asserts=true</parameter>' på egen hånd er bare
       nyttig for profilering og gir kanskje ikke sanne resultater for alle tester, men
       legger til sin egen MERK at dette ikke skal brukes i et produksjonsbygg.
     </para>
@@ -510,18 +411,6 @@ export DBUS_SESSION_BUS_ADDRESS</literal></userinput></screen>
 <screen role="nodump"><userinput><literal># Kill the D-Bus session daemon
 kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         </listitem>
-
-        <!-- KDM is no longer usable, SDDM is it's replacement
-        <listitem>
-          <para>
-            A hint has been written that provides ways to start scripts
-            using the KDM session manager of KDE. The concepts in this hint could
-            possibly be used with other session managers as well. The hint is
-            located at <ulink
-            url="&hints-root;/downloads/files/execute-session-scripts-using-kdm.txt"/>.
-          </para>
-        </listitem>
-        -->
 
       </itemizedlist>
 
