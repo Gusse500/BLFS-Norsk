@@ -6,10 +6,10 @@
 
   <!ENTITY curl-download-http "https://curl.se/download/curl-&curl-version;.tar.xz">
   <!ENTITY curl-download-ftp  " ">
-  <!ENTITY curl-md5sum        "49dd886ac84ed3de693464f78f1ee926">
+  <!ENTITY curl-md5sum        "25e65a5156ca4928060b61cb051813db">
   <!ENTITY curl-size          "2.6 MB">
-  <!ENTITY curl-buildsize     "46 MB (legg til 18 MB for tester)">
-  <!ENTITY curl-time          "0.2 SBU (med parallellitet=4; legg til 4.9 SBU for tester (uten valgrind, legg til 17 SBU med valgrind))">
+  <!ENTITY curl-buildsize     "52 MB (legg til 15 MB for tester)">
+  <!ENTITY curl-time          "0.2 SBU (med parallellitet=4; legg til 4.9 SBU for tester (uten valgrind, legg til 14 SBU med valgrind))">
 ]>
 
 <sect1 id="curl" xreflabel="cURL-&curl-version;">
@@ -144,6 +144,14 @@
 
   <sect2 role="installation">
     <title>Installasjon av cURL</title>
+
+    <para>
+      Først må du fikse en regresjon som forårsaker krasj i enkelte applikasjoner pga
+      problemer med eventfd:
+      <!-- https://github.com/curl/curl/issues/15725 -->
+    </para>
+
+<screen><userinput remap="pre">sed -i '198,200d' lib/asyn-thread.c</userinput></screen>
 
     <para>
       Installer <application>cURL</application> ved å kjøre følgende
