@@ -101,15 +101,6 @@
       </listitem>
     </itemizedlist>
 
-    <itemizedlist spacing="compact">
-      <title>GCC (bare nødvendig hvis du bygger på 32-bits LFS)</title>
-      <listitem>
-        <para>
-          Referer til <xref linkend='gcc'/> siden for nedlastingsinformasjon.
-        </para>
-      </listitem>
-    </itemizedlist>
-
     <bridgehead renderas="sect3">GRUB Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -122,6 +113,13 @@
     <para role="optional">
       <xref linkend="lvm2"/> og
       <xref linkend="fuse3"/>
+    </para>
+
+    <para role="nodep">
+      Hvis du bygger GRUB for et 32-biters LFS system for å starte det på en
+      64-biters UEFI fastvare, gjenoppbygg <xref linkend="gcc"/> med
+      <parameter>--enable-targets=all</parameter> bryteren lagt til
+      <command>../configure</command> kommandoen.
     </para>
   </sect2>
 
@@ -153,24 +151,6 @@ gunzip -c ../unifont-&unifont-version;.pcf.gz > /usr/share/fonts/unifont/unifont
 
 <screen><userinput>echo <literal>depends bli part_gpt</literal> > grub-core/extra_deps.lst</userinput></screen>
 
-    <para>Hvis du kjører en 32-bits LFS, klargjør en 64-bits kompilator:</para>
-
-<!-- 'literal' is used deliberately to show this is only for 32-bit LFS -->
-<screen><userinput>case $(uname -m) in i?86 )
-    <literal>tar xf ../gcc-&gcc-version;.tar.xz
-    mkdir gcc-&gcc-version;/build
-    pushd gcc-&gcc-version;/build
-        ../configure --prefix=$PWD/../../x86_64-gcc \
-                     --target=x86_64-linux-gnu      \
-                     --with-system-zlib             \
-                     --enable-languages=c,c++       \
-                     --with-ld=/usr/bin/ld
-        make all-gcc
-        make install-gcc
-    popd
-    export TARGET_CC=$PWD/x86_64-gcc/bin/x86_64-linux-gnu-gcc</literal>
-esac</userinput></screen>
-
     <para>
       Bygg <application>GRUB</application> med følgende kommandoer:
     </para>
@@ -182,7 +162,6 @@ esac</userinput></screen>
             --with-platform=efi  \
             --target=x86_64      \
             --disable-werror     &amp;&amp;
-unset TARGET_CC &amp;&amp;
 make</userinput></screen>
 
     <para>
