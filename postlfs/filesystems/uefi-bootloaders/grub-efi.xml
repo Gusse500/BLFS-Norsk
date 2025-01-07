@@ -83,7 +83,7 @@
     </itemizedlist>
 -->
     <itemizedlist spacing="compact">
-      <title>Unicode skriftdata som brukes til å vise GRUB menyen</title>
+      <title>Valgfri Unicode skriftdata for GRUB menyen</title>
       <listitem>
         <para>
           Nedlasting (HTTP): <ulink url="&unifont-download-http;"/>
@@ -105,14 +105,14 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref role="runtime" linkend="efibootmgr"/> (kjøretid) og
-      <xref linkend="freetype2"/>
+      <xref role="runtime" linkend="efibootmgr"/> (kjøretid)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="lvm2"/> og
-      <xref linkend="fuse3"/>
+      <xref linkend="freetype2"/>,
+      <xref linkend="fuse3"/>, og
+      <xref linkend="lvm2"/>
     </para>
 
     <para role="nodep">
@@ -128,7 +128,9 @@
 
     <para>
       Installer først skriftdata som
-      <systemitem class="username">root</systemitem> bruker:
+      <systemitem class="username">root</systemitem> bruker
+      hvis du har lastet det ned og du har installert den valgfrie
+      avhengigheten <xref linkend='freetype2'/>:
     </para>
 
 <screen role="root"><userinput>mkdir -pv /usr/share/fonts/unifont &amp;&amp;
@@ -158,7 +160,6 @@ gunzip -c ../unifont-&unifont-version;.pcf.gz > /usr/share/fonts/unifont/unifont
 <screen><userinput>./configure --prefix=/usr        \
             --sysconfdir=/etc    \
             --disable-efiemu     \
-            --enable-grub-mkfont \
             --with-platform=efi  \
             --target=x86_64      \
             --disable-werror     &amp;&amp;
@@ -170,7 +171,8 @@ make</userinput></screen>
 
     <para>
       Nå, hvis du har hoppet over LFS GRUB pakken, som
-      <systemitem class="username">root</systemitem> user:
+      <systemitem class="username">root</systemitem> bruker, installer GRUB
+      og hopp over de resterende instruksjonene i denne delen:
     </para>
 
 <screen role="nodump"><userinput>make install &amp;&amp;
@@ -181,25 +183,34 @@ mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions</userin
       komponentene som ikke er installert fra LFS GRUB pakken i stedet:
     </para>
 
-<screen role="root"><userinput>make DESTDIR=$PWD/dest install
-cp -av dest/usr/lib/grub/x86_64-efi -T /usr/lib/grub/x86_64-efi
-cp -av dest/usr/share/grub/*.{pf2,h}   /usr/share/grub
-cp -av dest/usr/bin/grub-mkfont        /usr/bin</userinput></screen>
+    <screen role="root"><userinput>make -C grub-core install</userinput></screen>
 
     <para>
-      Hvis de valgfrie avhengighetene er installert, installer også
-      <command>grub-mount</command> programmet:
+      Hvis du har installert de valgfrie skriftdataene og
+      <xref linkend='freetype2'/>, installer
+      <command>grub-mkfont</command> programmet og skriftdatafilene
+      (uten skriftdatafilene kan GRUB fortsatt fungere normalt,
+      men oppstartsmenyen vil vises med en grov skrift eller i en
+      mindre område på skjermen).
     </para>
 
-<screen role="nodump"><userinput>cp -av dest/usr/bin/grub-mount /usr/bin</userinput></screen>
+<screen role="nodump"><userinput>install -vm755 grub-mkfont /usr/bin/ &amp;&amp;
+install -vm644 ascii.h widthspec.h *.pf2 /usr/share/grub/</userinput></screen>
+
+    <para>
+      Hvis både <xref linkend='fuse3'/> og <xref linkend='lvm2'/> er
+      installert, installer også <command>grub-mount</command> programmet:
+    </para>
+
+<screen role="nodump"><userinput>install -vm755 grub-mount /usr/bin/</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
-
+<!--
     <para>
-      <parameter>--enable-grub-mkfont</parameter>: Bygg verktøyet som heter
+      <parameter>- -enable-grub-mkfont</parameter>: Bygg verktøyet som heter
       <command>grub-mkfont</command> for å generere fontfilen for oppstartslasteren
       fra fontdataene vi har installert.
     </para>
@@ -212,7 +223,7 @@ cp -av dest/usr/bin/grub-mkfont        /usr/bin</userinput></screen>
       hvilken som helst font for oppstartslasteren. GRUB oppstartsmenyen vil vises
       ved hjelp av en grov skrift eller i et mindre område på skjermen.</para>
     </warning>
-
+-->
     <para>
       <parameter>--with-platform=efi</parameter>: Sikrer å bygge GRUB med
       EFI aktivert.
