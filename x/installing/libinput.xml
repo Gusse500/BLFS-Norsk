@@ -4,16 +4,16 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libinput-version "1.27.0">
+  <!ENTITY libinput-version "1.27.1">
 
 <!--  <!ENTITY libinput-download-http "https://www.freedesktop.org/software/libinput/libinput-&libinput-version;.tar.xz">-->
   <!ENTITY libinput-download-http "https://gitlab.freedesktop.org/libinput/libinput/-/archive/&libinput-version;/libinput-&libinput-version;.tar.gz"
 >
   <!ENTITY libinput-download-ftp  " ">
-  <!ENTITY libinput-md5sum        "aa0f5da110bf51715b8899548e7e43c2">
+  <!ENTITY libinput-md5sum        "3b311d8953f8717f711a78b60087997e">
   <!ENTITY libinput-size          "1.1 MB">
-  <!ENTITY libinput-buildsize     "14 MB (legg til 21 MB for dokumentasjon og 6 MB for tester)">
-  <!ENTITY libinput-time          "0.1 SBU (legg til 0,1 SBU for dokumentasjon og 0.2 SBU for tester)">
+  <!ENTITY libinput-buildsize     "14 MB (legg til 35 MB for dokumentasjon)">
+  <!ENTITY libinput-time          "0.1 SBU (legg til 0,1 SBU for dokumentasjon og 0.1 SBU for minor tester)">
 ]>
 
   <sect2 id="libinput" xreflabel="libinput-&libinput-version;">
@@ -103,9 +103,9 @@
 
       <para>
         Selv om libinput fungerer med den samme kjernekonfigurasjonen som brukes av <xref
-        linkend="libevdev"/>, testpakken krever tilstedeværelse av
-        <filename>/dev/uinput</filename>  (samt både <xref linkend="valgrind"/>
-        og <xref linkend="libunwind"/>).
+        linkend="libevdev"/>, er det standard og mer ekspansive testpakke
+        krever tilstedeværelse av <filename>/dev/uinput</filename>  (samt
+        både <xref linkend="valgrind"/> og <xref linkend="libunwind"/>).
       </para>
 
       <para>
@@ -164,15 +164,18 @@ ninja</userinput></screen>
       <note>
         <para>
           Hvis du vil kjøre standard testpakke, fjerner du -D tests fra
-          <command>meson</command> kommandoen ovenfor. Vennligst les
-          "Kjernekonfigurasjon for å kjøre libinput Testpakken" (over).
+          <command>meson</command> kommandoen ovenfor. Vennligst les <quote>Kjernekonfigurasjon
+          for å kjøre Libinput Testpakken</quote> (overfor).
         </para>
 
         <para>
-          Hvis du har aktivert standard testpakke, kan du kjøre hovedtestene
-          <emphasis>som root bruker</emphasis> ved å utføre:
-          <command>ninja test</command>. Det er 6 tester og alle burde
-          bestå hvis du installerte de valgfrie avhengighetene.
+          Hvis du har bestemt deg for å kjøre standard testpakke, kan du kjøre
+          testene <emphasis>som root bruker</emphasis> ved å kjøre:
+          <command>ninja test</command>. Det er over 30 tester og alle burde
+          bestå hvis du installerte de valgfrie avhengighetene. Du kan imidlertid kjøre
+          6 mindre tester som vanlig bruker ved å kjøre samme kommando,
+          selv om du ikke trenger å fjerne parameteren -D tests. De
+          testmålinger er basert på disse testene alene.
         </para>
       </note>
 
@@ -210,11 +213,11 @@ cp -rv Documentation/* /usr/share/doc/libinput-&libinput-version;/html</userinpu
       </para>
 
       <para>
-        <parameter>-D tests=false</parameter>: Denne bryteren deaktiverer kompilering av
-        hovedtestene. Selv med testene definert som false,, kan du fortsatt kjøre
-        de seks første mindre testene, som vanlig bruker, men en vil bli hoppet over hvis
-        <xref linkend="pyparsing"/> ikke er installert, og en annen hvis
-        <xref linkend="pytest"/> ikke er installert.
+        <parameter>-D tests=false</parameter>: Denne bryteren deaktiverer kompilering
+        av standard testpakke. Selv med testene definert som false, kan
+        du fortsatt kjøre de seks første minor testene som vanlig bruker, men en vil
+        bli hoppet over hvis <xref linkend="pyparsing"/> ikke er installert, og en annen
+        hvis <xref linkend="pytest"/> ikke er installert.
       </para>
 
       <para>

@@ -96,7 +96,8 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gnome-bluetooth"/> og
+      <xref linkend="gnome-bluetooth"/>,
+      <xref linkend='jansson'/>, og
       <ulink url="https://launchpad.net/libappindicator">libindicator</ulink>
     </para>
 
@@ -118,7 +119,8 @@ meson setup ..            \
       --prefix=/usr       \
       --buildtype=release \
       -D appindicator=no  \
-      -D selinux=false    &amp;&amp;
+      -D selinux=false    \
+      -D team=false       &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -143,18 +145,17 @@ ninja</userinput></screen>
       uten dette alternativet.
     </para>
 
-    <!-- Jansson is now included in NM as Required
-    <para>
-      <parameter>-D team=false</parameter>: Denne bryteren deaktiverer team
-      konfigurasjonsredigering siden det krever <xref linkend="jansson"/>. Hvis
-      du har Jansson installert, fjern dette alternativet eller sett det til "true".
-    </para>
-    -->
-
     <para>
       <parameter>-D selinux=false</parameter>: Denne bryteren
       deaktiverer <application>SELinux</application> støtte siden det ikke
       for øyeblikket er i BLFS og byggingen vil mislykkes uten den.
+    </para>
+
+    <para>
+      <parameter>-D team=false</parameter>: Denne bryteren deaktiverer team
+      konfigurasjonsredigering siden det krever <xref linkend="jansson"/>. Hvis
+      du har Jansson installert, fjern dette alternativet eller sett det til
+      <literal>true</literal>.
     </para>
 
     <!-- no longer needed as of 1.16.0
