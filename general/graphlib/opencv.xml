@@ -6,13 +6,13 @@
 
   <!ENTITY opencv-download-http     "https://github.com/opencv/opencv/archive/&opencv-version;/opencv-&opencv-version;.tar.gz">
   <!ENTITY opencv-download-ftp      " ">
-  <!ENTITY opencv-md5sum            "adaf23e87339e6df6d50d68001138ccc">
+  <!ENTITY opencv-md5sum            "f35fbd46350cc677af13e198805b58f7">
   <!ENTITY opencv-size              "91 MB">
-  <!ENTITY opencv-buildsize         "698 MB (med opencv-contrib)">
-  <!ENTITY opencv-time              "3.0 SBU (bruke parallellisme=8)">
+  <!ENTITY opencv-buildsize         "832 MB (med opencv-contrib)">
+  <!ENTITY opencv-time              "3.6 SBU (bruke parallellisme=8)">
 
   <!ENTITY opencv-contrib-download "https://github.com/opencv/opencv_contrib/archive/&opencv-version;/opencv_contrib-&opencv-contrib-version;.tar.gz">
-  <!ENTITY opencv-contrib-md5sum   "5a4bc09177b74813c72648c117783dba">
+  <!ENTITY opencv-contrib-md5sum   "7dd4bc67eb67faff96ce71745a5e3abe">
   <!ENTITY opencv-contrib-size     "53 MB">
 ]>
 
@@ -169,6 +169,7 @@ cmake -D CMAKE_INSTALL_PREFIX=/usr      \
       -D ENABLE_PRECOMPILED_HEADERS=OFF \
       -D CMAKE_SKIP_INSTALL_RPATH=ON    \
       -D BUILD_WITH_DEBUG_INFO=OFF      \
+      -D OPENCV_GENERATE_PKGCONFIG=ON   \
       -W no-dev  ..                     &amp;&amp;
 make</userinput></screen>
 
@@ -191,18 +192,26 @@ make</userinput></screen>
       href="../../xincludes/cmake-skip-install-rpath.xml"/>
 
     <para>
-      <parameter>-D WITH_XINE=ON</parameter>: Dette alternativet instruerer make
+      <parameter>-D WITH_XINE=ON</parameter>: Denne bryteren instruerer make
       prosedyren å bruke <xref linkend="xine-lib"/>.
     </para>
 
     <para>
-      <parameter>-D ENABLE_PRECOMPILED_HEADERS=OFF</parameter>: Dette alternativet
+      <parameter>-D ENABLE_PRECOMPILED_HEADERS=OFF</parameter>: Denne bryteren
       er nødvendig for kompatibilitet med gcc-6.1 og nyere.
     </para>
 
     <para>
+      <parameter>-D OPENCV_GENERATE_PKGCONFIG=ON</parameter>: Denne bryteren forteller
+      byggesystemet å generere en pkg-config-fil for andre pakker for å
+      oppdage og koble til bibliotekene som er installert av denne pakken.
+    </para>
+
+    <para>
       <option>-D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-&opencv-version;/modules</option>:
-      instruerer byggesystemet til å bygge tilleggsmoduler.
+      instruerer byggesystemet til å bygge tilleggsmoduler. Noen pakker i
+      BLFS (som <xref linkend="gst10-plugins-bad" role="nodep"/> trenger disse
+      modulene for å bygge komponenter som bruker OpenCV.
     </para>
 
   </sect2>
