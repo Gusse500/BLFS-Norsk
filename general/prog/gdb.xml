@@ -6,10 +6,10 @@
 
   <!ENTITY gdb-download-http "&gnu-http;/gdb/gdb-&gdb-version;.tar.xz">
   <!ENTITY gdb-download-ftp  " ">
-  <!ENTITY gdb-md5sum        "85c722e2f2baea2b7820a6a7eaea2ce8">
+  <!ENTITY gdb-md5sum        "87c47779841e183907ec65db9428aa95">
   <!ENTITY gdb-size          "23 MB">
-  <!ENTITY gdb-buildsize     "823 MB (legg til 788 MB for dokumenter; legg til 738 MB for tester)">
-  <!ENTITY gdb-time          "0.9 SBU (legg til 0.4 SBU for dokumenter; legg til 6.3 SBU tester; alle bruker parallellisme=8)">
+  <!ENTITY gdb-buildsize     "1.0 GB (legg til 943 MB for dokumenter; legg til 960 MB for tester)">
+  <!ENTITY gdb-time          "1.5 SBU (legg til 0.3 SBU for dokumenter; legg til 3.0 SBU tester; alle bruker parallellisme=8)">
 ]>
 
 <sect1 id="gdb" xreflabel="GDB-&gdb-version;">
@@ -137,9 +137,9 @@ make</userinput></screen>
       systemarkitekturen og hvilke valgfrie avhengigheter som er installert
       og hvilken versjon av gcc som brukes. På ett testet system var det
       140 uventede feil (av over 108 000 tester) og på et annet system
-      var det "bare" 32 uventede feil. Tiden for å kjøre testene
-      varierer fra ca. 6 SBU til over 15 SBU ved bruk av -j8. Dette avhenger
-      på antall tester som får tidsavbrudd og andre faktorer.  
+      var det "bare" 14 uventede feil. Tiden for å kjøre testene
+      varierer fra ca. 3 SBU til over 15 SBU ved bruk av -j8. Dette avhenger
+      av antall tester som får tidsavbrudd og andre faktorer.
     </para>
 
     <tip>
@@ -181,47 +181,10 @@ popd</userinput></screen>
 
       <listitem>
         <para>
-          Resultatene avhenger av installerte kompilatorer.
+          Resultatene kan også avhenge av installert kompilatorer.
         </para>
       </listitem>
-<!-- I did not see this
-      <listitem>
-        <para>
-          Det er et stort antall tidsavbrudd (det er en variabel
-          som kan settes til å øke tiden for timeout, men
-          å endre det vil resultere i et annet antall tester
-          kjøres).
-        </para>
-      </listitem>
-or this
-      <listitem>
-        <para>
-          Det er feil knyttet til systemets readline 6.x.
-        </para>
-      </listitem>
--->
-<!--
-      <listitem>
-        <para>
-          Noen få tester antar at deklarasjonsfilen
-          <filename>&lt;sys/sdt.h&gt;</filename>, del av <ulink
-          url="https://sourceware.org/systemtap/">SystemTap</ulink>, er
-          tilstede.
-        </para>
-      </listitem>
--->
-<!-- I don't know if this is true or not.  I tested on a Haswell.
-      <listitem>
-        <para>
-          Hvis testpakken kjøres på en Skylake basert Intel CPU eller nyere,
-          mange tester vil mislykkes på grunn av fjerning av det foreldede/problematiske
-          libmpx biblioteket i GCC.
-        </para>
-      </listitem>
--->
-<!--      <listitem>
-        <para>
-		-->
+
 <!-- for gdb-11.1, gcc-11.2 - pierre
           A test run of the test suite had about 1700 unexpected failures
           (out of over 80000 tests). Over 1370 of the failures were related
@@ -236,18 +199,12 @@ or this
           A test run of the test suite had 183 unexpected failures
           out of over 105000 tests. -->
 <!-- for gdb-14.1, gcc 13.2.0 - rahul -->
-<!--          En testkjøring av testpakken hadde 51 uventede feil
-          av de over 106 000 testene.
-        </para>
-      </listitem>
+<!--      A test run of the test suite had 51 unexpected failures
+          out of the over 106000 tests.-->
+<!-- for gdb-16.1, gcc-14.2.0 - renodr -->
+<!--      A test run of the test suite had 14 unexpected failures out of over
+          120,000 tests.-->
 
-      <listitem>
-        <para>
-          På noen systemer vil gdb.tui testpakken mislykkes hvis den kjører over
-          SSH.
-        </para>
-      </listitem>
--->
       <listitem>
         <para>
           På noen AMD baserte systemer, over 200 ekstra tester
@@ -258,8 +215,8 @@ or this
 
       <listitem>
         <para>
-          For gdb-15.2, ved bruk av en Intel i7-14700K, var det 118 uventede feil
-          av over 116 000 tester.
+          For gdb-16.1, ved bruk av en Xeon E5-1650 v3, var det 14 uventede feil
+          av over 120000  tester.
         </para>
       </listitem>
 
@@ -311,7 +268,7 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
 
       <seglistitem>
         <seg>
-          gcore, gdb, gdbserver, and gdb-add-index
+          gcore, gdb, gdbserver, gdb-add-index, og gstack
         </seg>
         <seg>
           libinproctrace.so
@@ -373,6 +330,18 @@ cp -Rv gdb/doc/doxy /usr/share/doc/gdb-&gdb-version;</userinput></screen>
           </para>
           <indexterm zone="gdb gdb-add-index">
             <primary sortas="b-gdb-add-index">gdb-add-index</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gstack">
+        <term><command>gstack</command></term>
+        <listitem>
+          <para>
+            skriver ut en stabelsporing fra et program som kjører for øyeblikket
+          </para>
+          <indexterm zone="gdb gstack">
+            <primary sortas="b-gstack">gstack</primary>
           </indexterm>
         </listitem>
       </varlistentry>
