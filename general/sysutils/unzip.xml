@@ -36,18 +36,6 @@
 
     &lfs122_checked;
 
-    <caution>
-      <para>
-        Den forrige versjonen av <application>UnZip</application>
-        pakken hadde noen lokalitetsproblemene. For øyeblikket er det ingen BLFS
-        redaktører som er i stand til å teste disse lokalitetsproblemene. derfor
-        lokalitetsrelatert informasjon er igjen på denne siden, men har ikke vært blitt
-        testet. En mer generell diskusjon om disse problemene finnes i
-        <xref linkend="locale-assumed-encoding"/> delen av <xref
-        linkend="locale-issues"/> siden.
-      </para>
-    </caution>
-
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -115,9 +103,9 @@
     </note>
 
     <para>
-      Disse problemene antas å være løst i oppdateringen. Men siden ingen
-      av redaktørene har data for å teste dette, er følgende løsninger
-      beholdt i tilfelle de fortsatt kan være nødvendige.
+      Disse problemene ble antatt å være løst i den konsoliderte oppdateringen, men
+      det fungerer i det minste ikke med noen ZIP arkiver som inneholder kinesisk
+      filnavn. Så den følgende løsningen beholdes.
     </para>
 
     <para>
@@ -138,56 +126,27 @@
       Når det brukes <command>unzip</command> for å pakke ut et ZIP arkiv
       som inneholder ikke-ASCII filnavn, er filnavnene skadet fordi
       <command>unzip</command> bruker feil konvertering når noen av disse
-      kodingsforutsetninger er feil. For eksempel i ru_RU.KOI8-R
-      locale, kreves konvertering av filnavn fra CP866 til KOI8-R, men
-      konvertering fra CP850 til ISO-8859-1 er utført, noe som produserer filnavn
+      kodingsforutsetninger er feil. For eksempel hvis ZIP arkivet
+      ble opprettet på et Windows system og inneholder forenklet kinesisk
+      filnavn, og gjeldende lokalitet er zh_CN.UTF-8 (eller hvilken som helst UTF-8
+      lokalitet), kreves konvertering av filnavn fra CP936 til UTF-8, men
+      konvertering fra CP850 til UTF-8 er utført, noe som produserer filnavn
       som består av utydelige tegn i stedet for ord (den nærmeste
-      tilsvarende forståelig eksempel for brukere som bare bruker engelsk er rot13). Det
-      er flere måter rundt denne begrensningen:
+      tilsvarende forståelig eksempel for brukere som bare bruker engelsk er rot13).
     </para>
 
     <para>
-      1) For utpakking av ZIP arkiver med filnavn som inneholder ikke-ASCII
-      tegn, bruk <ulink url="https://www.winzip.com/">WinZip</ulink> mens
-      det kjøres <ulink url="https://www.winehq.org/">Wine</ulink> Windows
-      emulator.
+      Den enkleste måten å omgå dette problemet på er å bruke
+      <command>bsdunzip</command> verktøyet fra
+      <xref role="nodep" linkend="libarchive"/> for å pakke ut arkivet,
+      og spesifisere filnavnkodingen i ZIP arkivet med en
+      <parameter>-I</parameter> alternativet.
+      For eksempel å anta <filename>archive.zip</filename> var
+      opprettet på Windows og den inneholder forenklede kinesiske filnavn,
+      pakk det ut med:
     </para>
 
-    <para>
-      2) Bruk <command>bsdtar -xf</command> fra
-      <xref role="nodep" linkend="libarchive"/> to unpack the ZIP archive.
-      Deretter fiks skaden på
-      filnavnene ved hjelp av <command>convmv</command> verktøyet
-      (<ulink url="https://j3e.de/linux/convmv/"/>). Følgende er et eksempel
-      for lokaliteten zh_CN.UTF-8:
-    </para>
-
-<screen><userinput>convmv -f cp936 -t utf-8 -r --nosmart --notest \
-    <replaceable>&lt;/path/to/unzipped/files&gt;</replaceable></userinput></screen>
-<!--
-    <para>
-      3) Bruk den valgfrie
-      <filename>unzip-5.50-alt-iconv-v1.1.patch</filename> oppdateringen til
-      <application>UnZip</application>. Det vil gjelde med noen forskyvninger.
-    </para>
-
-    <para>
-      Den lar deg spesifisere antatt filnavnkoding i ZIP
-      arkiv ved hjelp av <option>-O charset_name</option> alternativet og
-      på disk filnavnkoding ved hjelp av <option>-I charset_name</option>
-      alternativ. Standarder: filnavnkodingen på disken er lokalkodingen,
-      kodingen inne i ZIP-arkivet er gjettet i henhold til den innebygde
-      tabell basert på lokalkodingen. For brukere av amerikansk engelsk, dette fortsatt
-      betyr at unzip konverterer fra CP850 til ISO-8859-1 som standard.
-    </para>
-
-    <para>
-      Caveat: denne metoden fungerer bare med 8-biters lokalkoding, ikke
-      med UTF-8. Forsøker å bruke en oppdatering <command>unzip</command> i UTF-8
-      lokaliteter kan resultere i en segmenteringsfeil og er sannsynligvis en
-      sikkerhetsrisiko.
-    </para>
--->
+    <screen><userinput>bsdunzip archive.zip -I cp936</userinput></screen>
   </sect2>
 
   <sect2 role="installation">
