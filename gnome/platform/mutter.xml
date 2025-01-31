@@ -108,8 +108,13 @@
       <!-- sorted as "d" instead of "p" -->
       <xref linkend="python-dbusmock"/> (påkrevd for tester),
 	  <!--<xref linkend="sysprof"/>,-->
-      <xref linkend="xorg-server"/> (for X11 økter), og
-      <ulink url="&sysprof-url;">sysprof</ulink>
+      <xref linkend="xorg-server"/> (for X11 økter),
+      <ulink url="&sysprof-url;">sysprof</ulink>,
+      <command>Xvfb</command> (fra <xref linkend='xorg-server'/> eller
+      <xref linkend='xwayland'/>),
+      <ulink url="&sources-anduin-http;/mutter/xvfb-run">xvfb-run</ulink>,
+      og <ulink url='https://gitlab.gnome.org/GNOME/zenity'>zenity</ulink>
+      (X11 testene ville bare kjøre med alle de tre siste)
     </para>
 
     <!-- NOTE: Mutter compiles shipped Cogl and Clutter for it's own
@@ -132,11 +137,11 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr       \
-            --buildtype=release \
-            -D tests=disabled   \
-            -D profiler=false   \
-            ..                  &amp;&amp;
+meson setup --prefix=/usr          \
+            --buildtype=release    \
+            -D clutter_tests=false \
+            -D profiler=false      \
+            ..                     &amp;&amp;
 ninja</userinput></screen>
 
 <!--
@@ -159,27 +164,9 @@ ninja</userinput></screen>
     -->
 
     <para>
-      Testpakken krever et
-      eksternt program kalt <command>xvfb-run</command>.  Hvis du ønsker å kjøre
-      testene, bør du laste ned og installere den før du kjører
-      <command>meson</command>.
-
-      Du kan få det fra <ulink
-      url="&sources-anduin-http;/mutter/xvfb-run">xvfb-run</ulink>, og installere
-      det med kjørbare tillatelser i <filename
-      class="directory">/usr/bin</filename>.  <command>xvfb-run</command> trenger
-      <command>Xvfb</command> ved kjøretid, og <command>Xvfb</command> kan bli
-      installert fra <xref linkend='xorg-server'/> eller <xref
-      linkend='xwayland'/>.
-
-      Du bør også bytte ut <parameter>-D tests=disabled</parameter> i
-      <command>meson</command> kommandoen, med
-      <parameter>-D tests=enabled -D clutter_tests=false</parameter>.  Testpakken
+      Testpakken
       krever at mutter skjemaet er installert på systemet, så det er
       bedre å kjøre testene etter installasjon av pakken.
-    </para>
-
-    <para>
       Du kan også teste grunnleggende funksjoner til <application>Mutter</application>
       ved å følge <xref linkend='mutter-starting' role=','/> etter å ha installert den.
     </para>
@@ -189,14 +176,6 @@ ninja</userinput></screen>
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
-
-    <para>
-      Hvis du ønsker å kjøre testene, fjern referansen til
-      <application>Zenity</application> som ikke er en del av BLFS
-      fra en test:
-    </para>
-
-<screen role='test'><userinput>sed 's/zenity --[a-z]*/gtk4-demo/' -i ../src/tests/x11-test.sh</userinput></screen>
 
     <para>
       Kjør nå testpakken:
@@ -224,8 +203,11 @@ ninja</userinput></screen>
       href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <parameter>-D tests=disabled</parameter>: Hindrer å bygge testene,
-      og fjerner et hardt krav på <command>xvfb-run</command>.
+      <parameter>-D clutter_tests=false</parameter>: Deaktiver
+      testene for den sendte
+      <application>Clutter</application> biblioteket.
+      <application>Clutter</application> test er kjent for å
+      feile med <parameter>--buildtype=release</parameter>.
     </para>
 
     <para>
@@ -233,14 +215,6 @@ ninja</userinput></screen>
       uten <application>Sysprof</application>.  Fjern dette alternativet hvis
       du har installert <application>Sysprof</application> og vil
       analysere gjengivelsesytelsen til <application>Mutter</application>.
-    </para>
-
-    <para>
-      <option>-D tests=enabled -D clutter_tests=false</option>: Dette bygger alle
-      testene bortsett fra testene for det sendte
-      <application>Clutter</application> biblioteket. 
-      <application>Clutter</application> tester er kjent for
-      mislykkes med <parameter>--buildtype=release</parameter>.
     </para>
 
     <para>
@@ -301,7 +275,7 @@ ninja</userinput></screen>
           mutter
         </seg>
         <seg>
-           libmutter-15.so og libmutter-test-15.so (valgfri)
+           libmutter-15.so og libmutter-test-15.so
         </seg>
         <seg>
           /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-15
