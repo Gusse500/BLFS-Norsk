@@ -70,6 +70,7 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -85,27 +86,29 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <bridgehead renderas="sect3">Dovecot Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="libtirpc"/>
+      <xref linkend="libtirpc"/> og
+      <xref linkend="linux-pam"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="clucene"/>,
+      <xref linkend="cyrus-sasl"/>,
       <xref linkend="icu"/>,
       <xref linkend="libcap-pam"/>,
       <xref linkend="libunwind"/>,
-      <xref linkend="linux-pam"/>,
       <xref linkend="lua"/>,
       <xref linkend="mariadb"/> eller <ulink url="https://www.mysql.com/">MySQL</ulink>,
       <xref linkend="openldap"/>,
       <xref linkend="postgresql"/>,
       <xref linkend="sqlite"/>,
       <xref linkend="valgrind"/>,
+      <xref linkend="xapian"/>,
       <xref linkend="xfsprogs"/>,
       <ulink url="https://cassandra.apache.org/">Cassandra</ulink>,
       <ulink url="https://github.com/shibukawa/snowball_py">stemmer</ulink> og
@@ -116,6 +119,17 @@
 
   <sect2 role="installation">
     <title>Installasjon av Dovecot</title>
+
+    <warning>
+      <para>
+        Det er betydelige endringer i konfigurasjonen av denne pakken
+        som kreves ved oppdatering til Dovecot 2.4.0. Vennligst se gjennom
+        dokumentasjon kl
+        <ulink url="https://doc.dovecot.org/2.4.0/installation/upgrade/2.3-to-2.4.html">Dovecot Upgrade Guide</ulink>
+        før du fortsetter hvis du oppgraderer denne pakken fra en tidligere
+        versjon.
+      </para>
+    </warning>
 
     <para>
       Det bør være dedikerte brukere og grupper for uprivilegerte Dovecot
@@ -131,51 +145,29 @@ useradd -c "Dovecot login user" -d /dev/null -u 43 \
         -g dovenull -s /bin/false dovenull</userinput></screen>
 
     <para>
-      Først, bruk en oppdatering for å fikse problemer med OpenSSL-3:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../dovecot-&dovecot-version;-openssl3_fixes-1.patch</userinput></screen>
-
-    <para>
-      Nå, fiks pakken for å bygge med icu-76.1 eller nyere:
-    </para>
-
-<screen><userinput remap="pre">sed -i 's/\bPKG_CONFIG --libs "icu-i18n\b/&amp; icu-uc/' configure </userinput></screen>
-
-    <para>
-      Deretter bruker du en oppdatering for å fikse et sikkerhetsproblem:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../dovecot-&dovecot-version;-security_fix-1.patch</userinput></screen>
-
-    <para>
       Installer <application>Dovecot</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen revision="sysv"><userinput>CPPFLAGS="-I/usr/include/tirpc" \
-LDFLAGS+=" -ltirpc" \
-./configure --prefix=/usr                          \
+<screen revision="sysv"><userinput>./configure --prefix=/usr                          \
             --sysconfdir=/etc                      \
             --localstatedir=/var                   \
             --with-systemd=no                      \
+            --with-lua=no                          \
             --docdir=/usr/share/doc/dovecot-&dovecot-version; \
             --disable-static &amp;&amp;
 make</userinput></screen>
 
-<screen revision="systemd"><userinput>CPPFLAGS="-I/usr/include/tirpc" \
-LDFLAGS+=" -ltirpc" \
-./configure --prefix=/usr                          \
+<screen revision="systemd"><userinput>./configure --prefix=/usr                          \
             --sysconfdir=/etc                      \
             --localstatedir=/var                   \
+            --with-lua=no                          \
             --docdir=/usr/share/doc/dovecot-&dovecot-version; \
             --disable-static                       &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør <command>make -k check</command>. <!-- An error
-      may be reported if <xref linkend="valgrind"/> is present when running
-      the test.-->
+      For å teste resultatene, kjør <command>make -k check</command>.
     </para>
 
     <para>
@@ -189,21 +181,8 @@ make</userinput></screen>
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <para>
-      <command>CPPFLAGS=... LDFLAGS+=...</command>: bygg med libtirpc
-      i stedet for den nylig fjernede RPC koden levert av GlibC.
-    </para>
-
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
-
-    <!-- With merged-/usr, /usr/lib/systemd/system is set by default.
-    <para revision="systemd">
-      <parameter>- -with-systemdsystemunitdir=/lib/systemd/system</parameter>:
-      Denne bryteren brukes til å angi riktig installasjonsmappe for
-      systemd enheter.
-    </para>
-    -->
 
     <para>
       <option>--with-ldap</option>: Denne bryteren aktiverer
@@ -226,22 +205,12 @@ make</userinput></screen>
     </para>
 
     <para>
-      <option>--with-lucene</option>: Denne bryteren aktiverer
-      <application>CLucene</application> støtte for fulltekstsøk.
-    </para>
-
-    <para>
-      <option>--with-lua</option>: Denne bryteren aktiverer
+      <option>--with-lua=no</option>:: Denne bryteren aktiverer
       <application>Lua</application> programtilleggstøtte. Dette inkluderer
-      et programtillegg for e-post og push varsling.
+      et programtillegg for e-post og push varsling. Støtten er for øyeblikket brutt med
+      Lua 5.4.
     </para>
 
-<!--
-    <para>
-      <option>- -with-krb5</option>: Denne bryteren aktiverer
-      GSSAPI støtte for autentisering.
-    </para>
--->
   </sect2>
 
   <sect2 role="configuration">
@@ -251,60 +220,92 @@ make</userinput></screen>
       <title>Konfigurasjonsfiler</title>
 
       <para>
-        <filename>/etc/dovecot/dovecot.conf</filename>,
-        <filename>/etc/dovecot/conf.d/*</filename>, og
-        <filename>/etc/dovecot/local.conf</filename>
+        <filename>/etc/dovecot/dovecot.conf</filename>
+        <!--<filename>/etc/dovecot/conf.d/*</filename>, and
+        <filename>/etc/dovecot/local.conf</filename>-->
       </para>
 
       <indexterm zone="dovecot dovecot-config">
         <primary sortas="e-etc-dovecot-dovecot.conf">/etc/dovecot/dovecot.conf</primary>
       </indexterm>
+<!--
       <indexterm zone="dovecot dovecot-config">
         <primary sortas="e-etc-dovecot-conf.d">/etc/dovecot/conf.d/*</primary>
       </indexterm>
       <indexterm zone="dovecot dovecot-config">
         <primary sortas="e-etc-dovecot-local.conf">/etc/dovecot/local.conf</primary>
       </indexterm>
+-->
 
     </sect3>
 
     <sect3>
       <title>Konfigurasjonsinformasjon</title>
 
+<!-- The example configuration is installed to /etc/dovecot now by default.
       <para>
         Kopier en eksempelkonfigurasjon, som du kan bruke som utgangspunkt:
       </para>
 
 <screen role="root"><userinput>cp -rv /usr/share/doc/dovecot-&dovecot-version;/example-config/* /etc/dovecot</userinput></screen>
+-->
 
       <para>
         Følgende konfigurasjon er et enkelt proof of concept med IMAP
         tjenesten som bruker lokale brukere for autentisering og postboksplassering.
-        Leser filer fra <filename class="directory">conf.d</filename>
-        mappen er kommentert ut siden den inkluderte eksempelkonfigurasjonen
-        krever <application>OpenSSL</application> og
-        <application>Linux PAM</application>.
       </para>
 
-<screen role="root"><userinput>sed -i '/^\!include / s/^/#/' /etc/dovecot/dovecot.conf &amp;&amp;
+<screen role="root"><userinput>mv -v /etc/dovecot/dovecot.conf{,.orig} &amp;&amp;
 chmod -v 1777 /var/mail &amp;&amp;
-cat &gt; /etc/dovecot/local.conf &lt;&lt; "EOF"
-<literal>protocols = imap
+cat &gt; /etc/dovecot/dovecot.conf &lt;&lt; "EOF"
+<literal>
+# The dovecot configuration requires a minimum version to be set. The server
+# will refuse to start if the version set here is older than the version of
+# Dovecot installed. This option allows the Dovecot server to set reasonable
+# default values based on what version is set here.
+dovecot_config_version = &dovecot-version;
+
+# This option sets the minimum version that is able to read data files from
+# the Dovecot server. This is primarily for a cluster which may have several
+# different versions of Dovecot installed, but is required for the server to
+# run.
+dovecot_storage_version = &dovecot-version;
+
+protocols = imap
 ssl = no
 # The next line is only needed if you have no IPv6 network interfaces
 listen = *
-mail_location = mbox:~/Mail:INBOX=/var/mail/%u
-userdb {
+mail_inbox_path = /var/mail/%{user}
+mail_driver = mbox
+mail_path = ~/Mail
+userdb users {
   driver = passwd
 }
-passdb {
-  driver = shadow
+passdb passwords {
+  driver = pam
 }</literal>
 EOF</userinput></screen>
 
       <para>
+        Konfigurasjonen ovenfor krever også en konfigurasjonsfil
+        installert for Linux-PAM slik at dovecot kan autentisere brukere. Utsted
+        følgende kommando som &root; bruker for å opprette konfigurasjonsfilen
+        for Linux-PAM:
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/pam.d/dovecot &lt;&lt; "EOF"
+<literal># Begin /etc/pam.d/dovecot
+
+auth     include system-auth
+account  include system-account
+password include system-password
+
+# End /etc/pam.d/dovecot</literal>
+EOF</userinput></screen>
+
+      <para>
         Du vil definitivt lese den offisielle dokumentasjonen på <ulink
-        url="https://wiki2.dovecot.org/"/> hvis du planlegger å bruke
+        url="https://doc.dovecot.org/2.4.0/"/> hvis du planlegger å bruke
         <application>Dovecot</application> i et produksjonsmiljø.
       </para>
 
@@ -349,7 +350,11 @@ EOF</userinput></screen>
 
       <seglistitem>
         <seg>
-          doveadm, doveconf, dovecot, dovecot-sysreport, og dsync (symbolkobling)
+          doveadm,
+          doveconf,
+          dovecot,
+          og dovecot-sysreport
+          <!--, og dsync (symbolic link)-->
         </seg>
         <seg>
           diverse interne programtillegg i
@@ -418,6 +423,7 @@ EOF</userinput></screen>
         </listitem>
       </varlistentry>
 
+<!--
       <varlistentry id="dsync">
         <term><command>dsync</command></term>
         <listitem>
@@ -430,8 +436,7 @@ EOF</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-
-
+ex-->
     </variablelist>
 
   </sect2>
