@@ -78,9 +78,10 @@
 -->
     <bridgehead renderas="sect3">efivar Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Anbefalt</bridgehead>
-    <para role="recommended">
-      <xref linkend="mandoc"/>
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="mandoc"/> (for manualsidene til
+      <command>efisecdb</command>)
     </para>
 
   </sect2>
@@ -101,7 +102,7 @@
       Bygg <application>efivar</application> med følgende kommandoer:
     </para>
 
-<screen><userinput>make</userinput></screen>
+<screen><userinput>make ENABLE_DOCS=0</userinput></screen>
 
     <para>
       Testpakken til denne pakken er farlig. Å kjøre den kan utløse
@@ -113,7 +114,18 @@
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install LIBDIR=/usr/lib</userinput></screen>
+<screen role="root"><userinput>make install ENABLE_DOCS=0 LIBDIR=/usr/lib</userinput></screen>
+
+    <para>
+      For å unngå en hard avhengighet av <xref linkend='mandoc'/> bruker vi
+      <parameter>ENABLE_DOCS=0</parameter>, men det forårsaker alle manualsidene
+      blir hoppet over av installasjonen selv om de fleste faktisk
+      ikke trenger <xref linkend='mandoc'/>.  Fortsatt som &root; bruker,
+      installer disse manualsidene:
+    </para>
+
+<screen role="root"><userinput>install -vm644 docs/efivar.1 /usr/share/man/man1 &amp;&amp;
+install -vm644 docs/*.3      /usr/share/man/man3</userinput></screen>
 
   </sect2>
 
@@ -121,18 +133,16 @@
     <title>Parameterforklaringer</title>
 
     <para>
+      <parameter>ENABLE_DOCS=0</parameter>: Deaktiver generering av manualsider,
+      for å tillate å bygge denne pakken uten
+      <xref linkend='mandoc'/> installert.
+    </para>
+
+    <para>
       <parameter>LIBDIR=/usr/lib</parameter>:
       Dette alternativet overstyrer standard bibliotekmappe for pakken
       (<filename class="directory">/usr/lib64</filename>, som ikke brukes
       av LFS).
-    </para>
-
-    <para>
-      <option>ENABLE_DOCS=0</option>: Deaktiver generering av manualsider.
-      Legg til dette alternativet etter <command>make</command> og
-      <command>make install</command> kommandoer hvis du ikke trenger manualsider
-      for å tillate å bygge denne pakken uten <xref linkend='mandoc'/>
-      installert.
     </para>
 
   </sect2>
