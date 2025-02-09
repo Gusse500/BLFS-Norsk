@@ -90,7 +90,8 @@ meson setup --prefix=/usr         \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>meson test -v</command>.
+      For å teste resultatene, utsted: <command>CC='gcc -Wl,-z,noexecstack'
+      meson test -v</command>.
     </para>
 
     <para>
@@ -125,9 +126,7 @@ popd</userinput></screen>
     <para>
       Hvis du har installert
       <xref linkend='swig'/> og du ønsker å installere Python 3 bindinger
-      av denne pakken, tilpasse koden til å være kompatibel med SWIG-4.3.0 eller
-      nyere, <!-- https://github.com/dgibson/dtc/pull/154 --> og bygg
-      Python 3 modulen:
+      av denne pakken, bygg Python 3 modulen:
     </para>
 
     <screen role="nodump"><userinput>&build-wheel-cmd; ..</userinput></screen>
@@ -151,6 +150,23 @@ popd</userinput></screen>
       (kjøre <command>setup.py</command> direkte). Vi vil bygge
       Python 3 binding med <command>pip3 wheel</command> kommandoen
       separat om ønskelig.
+    </para>
+
+    <!-- https://github.com/dgibson/dtc/issues/163 -->
+    <para>
+      <envar>CC='gcc -Wl,-z,noexecstack'</envar>: Denne variabelen forhindrer
+      å merke de delte bibliotekene i testpakken som å kreve kjørbar
+      stabel. Glibc 2.41 eller nyere har sluttet å tillate
+      <function>dlopen</function> et slikt delt bibliotek så testpakken
+      vil mislykkes. Men de delte bibliotekene trenger egentlig ikke en
+      kjørbar stabel, slik at vi kan bruke
+      <parameter>-Wl,-z,noexecstack</parameter> for å fikse testpakken.
+      Det trengs i <envar>CC</envar> miljøet for
+      <command>meson test</command> fordi de delte bibliotekene er bygget
+      av et testskript i stedet for
+      <command>meson</command>/<command>ninja</command> byggesystem,
+      og testskriptet gjenkjenner ikke andre <quote>vanlige</quote>
+      miljøvariabler som <envar>LDFLAGS</envar>.
     </para>
 
   </sect2>
