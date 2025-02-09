@@ -136,6 +136,7 @@ cd    build &amp;&amp;
 meson setup --prefix=/usr       \
             --buildtype=release \
             -D systemd=false    \
+            -D tests=false      \
             ..                  &amp;&amp;
 ninja</userinput></screen>
 
@@ -144,11 +145,14 @@ cd    build &amp;&amp;
 
 meson setup --prefix=/usr       \
             --buildtype=release \
+            -D tests=false      \
             ..                  &amp;&amp;
 ninja</userinput></screen>
 
     <para revision='systemd'>
-      For å kjøre testene, utsted: <command>ninja test</command>. Du må
+      For å kjøre testene, sørge for at <application>Mutter</application> er installert
+      etter å ha kjørt testpakken til den og utsted: <command>meson configure -D
+      tests=true &amp;&amp; ninja test</command>.. Du må
       kjører en X økt for å kjøre testene. Noen vil mislykkes hvis <xref
       linkend="gdm"/> ikke er installert. <phrase revision="sysv">Flere
       tester kan mislykkes i Sysv-miljøet.</phrase>

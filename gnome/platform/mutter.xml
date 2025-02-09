@@ -137,11 +137,11 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr          \
-            --buildtype=release    \
-            -D clutter_tests=false \
-            -D profiler=false      \
-            ..                     &amp;&amp;
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -D tests=disabled   \
+            -D profiler=false   \
+            ..                  &amp;&amp;
 ninja</userinput></screen>
 
 <!--
@@ -164,24 +164,12 @@ ninja</userinput></screen>
     -->
 
     <para>
-      Testpakken
-      krever at mutter skjemaet er installert på systemet, så det er
-      bedre å kjøre testene etter installasjon av pakken.
-      Du kan også teste grunnleggende funksjoner til <application>Mutter</application>
-      ved å følge <xref linkend='mutter-starting' role=','/> etter å ha installert den.
+      Hvis du vil kjøre testpakken, sørg for at
+      <xref linkend='python-dbusmock'/> er installert og utsted:
     </para>
 
-    <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>ninja install</userinput></screen>
-
-    <para>
-      Kjør nå testpakken:
-    </para>
-
-<screen role='test'><userinput>ninja test</userinput></screen>
+<screen role='test'><userinput>meson configure -D tests=enabled -D clutter_tests=false &amp;&amp;
+ninja test</userinput></screen>
 
     <para>
       Testene krever en aktiv X eller wayland økt.
@@ -192,7 +180,16 @@ ninja</userinput></screen>
       Noen få tester kan mislykkes avhengig av noen systemkonfigurasjoner.
       Ikke gjør noen mus eller tastatur inndata mens testpakken
       kjører ellers kan noen tester mislykkes.
+      Du kan også teste grunnleggende funksjoner til <application>Mutter</application>
+      med å følge <xref linkend='mutter-starting' role=','/> etter installering
+      av den.
     </para>
+
+    <para>
+      Nå, som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
@@ -201,6 +198,13 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-D tests=disabled</parameter>: Tillat å bygge pakken
+      uten <xref linkend='python-dbusmock'/> installert.  Det blir
+      overstyrt av <command>meson configure</command> hvis testpakken
+      kjøres.
+    </para>
 
     <para>
       <parameter>-D clutter_tests=false</parameter>: Deaktiver
@@ -275,7 +279,7 @@ ninja</userinput></screen>
           mutter
         </seg>
         <seg>
-           libmutter-15.so og libmutter-test-15.so
+           libmutter-15.so og libmutter-test-15.so (valgfri)
         </seg>
         <seg>
           /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-15
@@ -319,7 +323,7 @@ ninja</userinput></screen>
           <para>
             inneholder <application>Mutter</application> testpakke API
             funksjoner; dette biblioteket er bare installert hvis testpakken til
-            denne pakken er aktivert og den er nødvendig av
+            denne pakken kjøres og den trenges for
             <application>gnome-shell</application> testpakken
           </para>
           <indexterm zone="mutter libmutter-test">
