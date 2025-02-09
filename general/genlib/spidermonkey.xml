@@ -224,20 +224,20 @@ make</userinput></screen>
     <para>
       I likhet med SpiderMonkey testpakken er antallet testjobber det samme som
       antall CPU kjerner i systemet selv om en cgroup brukes. For å
-      gjøre ting verre, det er seks tester som vil bruke 3 GB hver av
-      systemminne, slik at maksimal minnebruk kan være opptil 18 GB hvis
+      gjøre ting verre, det er seks tester som vil bruke 4 GB hver av
+      systemminne, slik at maksimal minnebruk kan være opptil 24 GB hvis
       antall kjerner er seks eller flere. Å kjører JIT testpakken uten
       nok minne kan påkalle kjernens OOM-killer og forårsake stabilitets
       problemer. Hvis du ikke har nok systemminne tilgjengelig, legg til
       <option>-jN</option> etter <option>--timeout 300</option> med N
       erstattet av antall parallelle testjobber du ønsker å starte.
-      For eksempel, hvis du har 16 GB systemminne tilgjengelig og 8 CPU kjerner,
-      bruk <option>JITTEST_EXTRA_ARGS="--timeout=300 -j5"</option> for å kjøre
-      testpakken med 5 parallelle jobber slik at minnebruken ikke overskrider 15 GB.
+      For eksempel, hvis du har 15 GB systemminne tilgjengelig og 8 CPU kjerner,
+      bruk <option>JITTEST_EXTRA_ARGS="--timeout=300 -j3"</option> for å kjøre
+      testpakken med 3 parallelle jobber slik at minnebruken ikke overskrider 12 GB.
       <!-- TL;DR: DO NOT REMOVE MEMORY USAGE NOTE W/O MY CONFIRMATION!
 
-           "six tests": bug1782468-ptrdiff-veclen.js, it's ran with 6
-           different configurations.
+           "six tests": large-arraybuffers/arraybuffer-transfer.js, it's ran
+           with 6 different configurations.
 
            "may": this is stochasitic (like all parallelization issue),
            don't remove the note about memory usage simply because "I cannot
