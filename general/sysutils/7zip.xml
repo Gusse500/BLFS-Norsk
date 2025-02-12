@@ -4,29 +4,29 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY p7zip-download-http "https://github.com/p7zip-project/p7zip/archive/v&p7zip-version;/p7zip-&p7zip-version;.tar.gz">
-  <!ENTITY p7zip-download-ftp  " ">
-  <!ENTITY p7zip-md5sum        "00acfd6be87848231722d2d53f89e4a5">
-  <!ENTITY p7zip-size          "6.5 MB">
-  <!ENTITY p7zip-buildsize     "55 MB">
-  <!ENTITY p7zip-time          "2.3 SBU (med tester)">
+  <!ENTITY seven-zip-download-http "https://github.com/ip7z/7zip/archive/v&seven-zip-version;/7zip-&seven-zip-version;.tar.gz">
+  <!ENTITY seven-zip-download-ftp  " ">
+  <!ENTITY seven-zip-md5sum        "00acfd6be87848231722d2d53f89e4a5">
+  <!ENTITY seven-zip-size          "6.5 MB">
+  <!ENTITY seven-zip-buildsize     "55 MB">
+  <!ENTITY seven-zip-time          "2.3 SBU (med tester)">
 ]>
 
-<sect1 id="p7zip" xreflabel="p7zip-&p7zip-version;">
-  <?dbhtml filename="p7zip.html"?>
+<sect1 id="seven-zip" xreflabel="7zip-&seven-zip-version;">
+  <?dbhtml filename="7zip.html"?>
 
 
-  <title>p7zip-&p7zip-version;</title>
+  <title>7zip-&seven-zip-version;</title>
 
-  <indexterm zone="p7zip">
-    <primary sortas="a-p7zip">p7zip</primary>
+  <indexterm zone="seven-zip">
+    <primary sortas="a-7zip">7zip</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduksjon til p7zip</title>
+    <title>Introduction to 7zip</title>
 
     <para>
-      <application>p7zip</application> er Unix kommandolinjeporten til 7-Zip, en
+      <application>7zip</application> er en
       filarkiver som arkiverer med høyt komprimeringsforhold. Den håndterer 7z,
       ZIP, GZIP, Brotli,  BZIP2, XZ, TAR, APM, ARJ, CAB, CHM, CPIO, CramFS, DEB,
       DMG, FAT, HFS, ISO, Lizard, LZ5, LZFSE, LZH, LZMA, LZMA2, MBR, MSI, MSLZ,
@@ -39,98 +39,83 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nedlasting (HTTP): <ulink url="&p7zip-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&seven-zip-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting (FTP): <ulink url="&p7zip-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&seven-zip-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting MD5 sum: &p7zip-md5sum;
+          Nedlasting MD5 sum: &seven-zip-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlastingsstørrelse: &p7zip-size;
+          Nedlastingsstørrelse: &seven-zip-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert diskplass som kreves: &p7zip-buildsize;
+          Estimert diskplass som kreves: &seven-zip-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert byggetid: &p7zip-time;
+          Estimert byggetid: &seven-zip-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing='compact'>
-      <listitem>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/p7zip-&p7zip-version;-consolidated_fixes-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
-
-    <bridgehead renderas="sect3">p7zip Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">7zip Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <ulink url="https://www.wxwidgets.org/">wxWidgets</ulink>
+      <ulink url="https://github.com/Terraspace/UASM">UASM</ulink>
     </para>
 
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av p7zip</title>
+    <title>Installasjon av 7zip</title>
 
     <para>
-      Først fikse flere sikkerhetssårbarheter::
-    </para>
-
-<screen><userinput>patch -Np1 -i ../p7zip-&p7zip-version;-consolidated_fixes-1.patch</userinput></screen>
-
-    <para>
-      Deretter, forhindre <application>p7zip</application> fra å installere
-      komprimerte manualsider:
-    </para>
-
-<screen><userinput remap="pre">sed '/^gzip/d' -i install.sh</userinput></screen>
-
-    <para>
-      Installer <application>p7zip</application> ved å kjøre følgende
+      Installer <application>7zip</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>make all3</userinput></screen>
+<screen><userinput>for i in Bundles/{Alone,Alone7z,Format7zF,SFXCon} UI/Console; do
+    make -C CPP/7zip/$i -f ../../cmpl_gcc.mak
+done</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make test</command>.
+      Denne pakken har ikke en testpakke.
     </para>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<!-- dev note: make DEST_DIR=<DESTDIR> install -->
+<screen role="root"><userinput>install -vDm755 CPP/7zip/Bundles/Alone{/b/g/7za,7z/b/g/7zr} \
+                CPP/7zip/Bundles/Format7zF/b/g/7z.so        \
+                CPP/7zip/UI/Console/b/g/7z                  \
+                -t /usr/lib/7zip/                              &amp;&amp;
 
-<screen role="root"><userinput>make DEST_HOME=/usr \
-     DEST_MAN=/usr/share/man \
-     DEST_SHARE_DOC=/usr/share/doc/p7zip-&p7zip-version; install</userinput></screen>
+install -vm755 CPP/7zip/Bundles/SFXCon/b/g/7zCon \
+               /usr/lib/7zip/7zCon.sfx           &amp;&amp;
 
-    <note>
-      <para>
-        Hvis du bruker DESTDIR teknikker, bruk DEST_DIR i stedet.
-      </para>
-    </note>
+(for i in 7z 7za 7zr; do
+    cat &gt; /usr/bin/$i &lt;&lt; EOF || exit
+<literal>#!/bin/sh
+exec /usr/lib/7zip/$i "\$@"</literal>
+EOF
+    chmod 755 /usr/bin/$i || exit
+done) &amp;&amp;
+
+cp -rv DOC -T /usr/share/doc/7zip-&seven-zip-version;</userinput></screen>
 
   </sect2>
 
@@ -150,7 +135,7 @@
           Ingen
         </seg>
         <seg>
-          /usr/lib/p7zip and /usr/share/doc/p7zip-&p7zip-version;
+          /usr/lib/7zip og /usr/share/doc/7zip-&seven-zip-version;
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -166,7 +151,7 @@
           <para>
             er et filarkiveringsverktøy
           </para>
-          <indexterm zone="p7zip Sevenz">
+           <indexterm zone="seven-zip Sevenz">
             <primary sortas="b-7z">7z</primary>
           </indexterm>
         </listitem>
@@ -179,7 +164,7 @@
             er en frittstående kjørbar som håndterer færre arkivformater enn
             <command>7z</command>
           </para>
-          <indexterm zone="p7zip Sevenza">
+          <indexterm zone="seven-zip Sevenza">
             <primary sortas="b-7za">7za</primary>
           </indexterm>
         </listitem>
@@ -192,7 +177,7 @@
             er en minimal versjon av <command>7za</command> som kun håndterer
             7z arkiver
           </para>
-          <indexterm zone="p7zip Sevenzr">
+          <indexterm zone="seven-zip Sevenzr">
             <primary sortas="b-7zr">7zr</primary>
           </indexterm>
         </listitem>
