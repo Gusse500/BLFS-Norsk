@@ -109,6 +109,29 @@ make</userinput></screen>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
+    <para>
+      Fortsatt som &root; bruker, opprett en symbolkobling slik at vi kan bruke
+      <command>bsdunzip</command> som <command>unzip</command>, i stedet for
+      å stole på den uvedlikeholdte Unzip pakken:
+    </para>
+
+<screen role="root"><userinput>ln -sfv bsdunzip /usr/bin/unzip</userinput></screen>
+
+    <note>
+      <para>
+        Som diskutert i <xref linkend='locale-wrong-filename-encoding'/>,
+        hvis Zip arkivet som skal pakkes ut inneholder en fil med et navn
+        som inneholder ikke-latinske tegn, må du manuelt spesifisere
+        kodingen av disse tegnene, ellers vil de bli omgjort til
+        uleselige sekvenser i det utpakkede filnavnet. For eksempel, hvis et
+        Zip arkiv opprettet med WinZip, <filename>archive.zip</filename>,
+        inneholder en fil navngitt med forenklede kinesiske tegn, dens
+        koding skal være CP936 og <parameter>-I cp936</parameter>
+        alternativet skal brukes. dvs. kommandoen for å trekke ut arkivet
+        bør være <command>unzip -I cp936 archive.zip</command>.
+      </para>
+    </note>
+
   </sect2>
 
   <sect2 role="commands">

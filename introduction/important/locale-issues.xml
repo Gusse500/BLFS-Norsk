@@ -132,14 +132,16 @@
     "@locale" verdien. <application>Glib2</application> baserte programmer som
     ikke respekter den miljøvariabelen er buggy.</para>
 
-    <para><xref linkend="zip"/> og <xref linkend="unzip"/> har dette
-    problemet fordi de hardkoder den forventede filnavnkodingen.
-    <application>UnZip</application> inneholder en hardkodet konverteringstabell
-    mellom kodingene CP850 (DOS) og ISO-8859-1 (UNIX) og bruker denne tabellen
-    når du trekker ut arkiver opprettet under DOS eller Microsoft Windows. Men,
-    denne antagelsen fungerer bare for de i USA og ikke for alle som bruker en
-    UTF-8 lokalitet. Ikke-ASCII tegn vil bli ødelagt i de utpakkede
-    filnavn.</para>
+    <para><filename class='extension'>.zip</filename> formatet har dette
+    problemet fordi den ikke lagrer kodingen for navnene på
+    arkiverte filer. Når <command>unzip</command> (faktisk en symbolkobling til
+    <command>bsdunzip</command> fra <xref linkend='libarchive'/>) pakker
+    det ut, som standard antas navnene å være kodet som CP850, Windows
+    kode for vesteuropeiske språk. Men navnene kan faktisk være
+    kodet på en annen måte hvis den inneholder ikke-latinske tegn (for
+    eksempel CP936 for forenklet kinesisk). Deretter uten manuelt å
+    spesifiserer kodingen, vil disse ikke-latinske tegnene bli omgjort til
+    uleselige sekvenser av <command>bsdunzip</command>.</para>
 
     <!--<para>På den andre siden,
     <application>Nautilus CD Burner</application> sjekker navn på
@@ -234,59 +236,6 @@
 
     <para>Blant BLFS pakker gjelder dette problemet
     <xref linkend="xine-ui"/> og alle skallene.</para>
-
-  </sect2>
-
-  <sect2 id="locale-wrong-manpage-encoding"
-         xreflabel="Feil Manualside Koding">
-
-    <title>Pakken Installerer Manualsider i Feil eller
-     Ikke-visbar Koding</title>
-
-    <para>Alvorlighet: Lav</para>
-
-    <para>LFS forventer at manuelle sider er på det språkspesifikke (vanligvis
-    8-bit) koding, som spesifisert på <ulink
-    url="&lfs-root;/chapter08/man-db.html">LFS Man DB side</ulink>. Men,
-    noen pakker installerer oversatte manualsider i UTF-8 koding (f.eks.
-    Shadow, allerede behandlet), eller manualsider på språk som ikke er i tabellen.
-    Ikke alle BLFS pakker har blitt revidert for samsvar med
-    krav satt i LFS (de aller fleste er sjekket, og fikser
-    plassert i boken for pakker som er kjent for å installere ikke-konform
-    manualsider). Hvis du finner en manualside installert av noen av BLFS pakkene, dvs
-    åpenbart i feil koding, vennligst fjern eller konverter den etter behov, og
-    rapporter dette til BLFS teamet som en feil.</para>
-
-    <para>Du kan enkelt sjekke systemet for eventuelle ikke-konforme manualsider
-    ved å kopiere følgende korte shell skript til et tilgjengelig sted,
-
-<screen><literal>#!/bin/sh
-# Begin checkman.sh
-# Usage: find /usr/share/man -type f | xargs checkman.sh
-for a in "$@"
-do
-    # echo "Checking $a..."
-    # Pure-ASCII manual page (possibly except comments) is OK
-    grep -v '.\\"' "$a" | iconv -f US-ASCII -t US-ASCII >/dev/null 2>&amp;1 \
-        &amp;&amp; continue
-    # Non-UTF-8 manual page is OK
-    iconv -f UTF-8 -t UTF-8 "$a" >/dev/null 2>&amp;1 || continue
-    # Found a UTF-8 manual page, bad.
-    echo "UTF-8 manual page: $a" >&amp;2
-done
-# End checkman.sh
-</literal></screen>
-
-    og deretter utstede følgende kommando (endre kommandoen nedenfor hvis
-    <command>checkman.sh</command> skriptet ikke er i din <envar>PATH</envar>
-    miljøvariabel):</para>
-
-<screen><userinput>find /usr/share/man -type f | xargs checkman.sh</userinput></screen>
-
-    <para>Merk at hvis du har manualsider installert på et annet sted
-    enn <filename class='directory'>/usr/share/man</filename> (f.eks.,
-    <filename class='directory'>/usr/local/share/man</filename>), må du
-    endre kommandoen ovenfor for å inkludere denne ekstra plasseringen.</para>
 
   </sect2>
 
