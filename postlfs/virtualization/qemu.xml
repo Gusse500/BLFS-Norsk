@@ -6,10 +6,10 @@
 
   <!ENTITY qemu-download-http "https://download.qemu.org/qemu-&qemu-version;.tar.xz">
   <!ENTITY qemu-download-ftp  " ">
-  <!ENTITY qemu-md5sum        "ece615b98642720430236e20237dd936">
+  <!ENTITY qemu-md5sum        "c33f4ef002f3d8d73f07079c9b4a157b">
   <!ENTITY qemu-size          "129 MB">
-  <!ENTITY qemu-buildsize     "2.2 GB (460 MB installert)">
-  <!ENTITY qemu-time          "1.2 SBU (add 0.6 SBU for tester, begge med parallellisme=4)">
+  <!ENTITY qemu-buildsize     "2.8 GB (488 MB installert)">
+  <!ENTITY qemu-time          "1.8 SBU (add 0.5 SBU for tester, begge med parallellisme=4)">
 ]>
 
 <sect1 id="qemu" xreflabel="qemu-&qemu-version;">
@@ -215,16 +215,7 @@
 
   <sect2 role="installation">
     <title>Installasjon av qemu</title>
-<!-- group kvm is created in lfs chapter 7 even for sysv
-    <para revision="sysv">
-      Du trenger en dedikert gruppe som vil inneholde brukere (annet enn root)
-      tillatelse til å få tilgang til KVM enheten. Opprett denne gruppen ved å kjøre
-      følgende kommando som
-      <systemitem class="username">root</systemitem> bruker:
-    </para>
 
-<screen role="root" revision="sysv"><userinput>groupadd -g 61 kvm</userinput></screen>
--->
     <para>
       Udev regelen til LFS tillater bare &root; bruker, brukerne som eier
       en lokal påloggingsøkt støttet av den valgfrie kjøretidsavhengigheten
@@ -356,12 +347,12 @@ chmod 4750 /usr/libexec/qemu-bridge-helper</userinput></screen>
     <para>
       Siden bruk av qemu betyr å bruke en virtuell datamaskin, trinnene for å sette opp
       den virtuelle maskinen er i nær analogi med de for å sette opp en ekte
-      datamaskin. Du må bestemme deg for CPU, minne, disk, USB enheter,
-      nettverkskort(er), skjermstørrelse osv. Når <quote>maskinvaren</quote> er
+      datamaskin. Du må ta avgjørelser om CPU, minne, disk, USB
+      enheter, nettverkskort(er), skjermstørrelse osv. Når <quote>maskinvaren</quote> er
       bestemt, må du for eksempel velge hvordan du kobler til maskinenen
-      til internett og/eller for å installere et OS. I det følgende viser vi grunnleggende
-      måter å utføre disse trinnene på. Men qemu er mye mer enn dette, og det
-      anbefales på det sterkeste å lese qemu dokumentasjonen i
+      til internett og/eller for å installere et OS. I den følgende delen viser vi
+      grunnleggende måter å utføre disse trinnene på. Imidlertid er qemu mye kraftigere
+      enn dette, og det anbefales på det sterkeste å lese qemu dokumentasjonen i
       <filename>/usr/share/doc/qemu-&qemu-version;/qemu-doc.html</filename>.
     </para>
 
@@ -369,7 +360,7 @@ chmod 4750 /usr/libexec/qemu-bridge-helper</userinput></screen>
       <para>
         Det er standard praksis å navngi datamaskinen som kjører qemu
         <quote>host</quote> og den emulerte maskinen som kjører under qemu
-        <quote>guest.</quote> Vi bruker disse notasjonene nedenfor.
+        <quote>guest.</quote> Vi bruker disse notasjonene i teksten nedenfor.
       </para>
     </note>
 
@@ -378,7 +369,7 @@ chmod 4750 /usr/libexec/qemu-bridge-helper</userinput></screen>
         Følgende instruksjoner forutsetter at den valgfrie symbolske lenken,
         <filename>qemu</filename>, har blitt opprettet. I tillegg,
         <command>qemu</command> skal kjøres i et grafisk miljø.
-        Men det er mulig å bruke qemu <quote>headless</quote> eller gjennom
+        Det er også mulig å bruke qemu <quote>headless</quote> eller gjennom
         SSH. Se dokumentasjonen for de ulike mulighetene.
       </para>
     </note>
@@ -416,10 +407,10 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
       Følg de vanlige installasjonsprosedyrene for den valgte distribusjonen.
       <parameter>-boot</parameter> alternativet spesifiserer oppstartsrekkefølgen til
       stasjoner som en streng med stasjonsbokstaver. Gyldige stasjonsbokstaver er: a, b
-      (diskett 1 og 2), c (første harddisk), d (første CD-ROM).
+      (diskett 1 og 2), c (første harddisk), og d (første CD-ROM).
       <parameter>-m</parameter> alternativet er mengden minne som skal brukes til
       den virtuelle maskinen. Valget avhenger av belastningen til verten. Moderne
-      distribusjoner bør være komfortable med 1 GB.
+      distribusjoner bør være komfortable med 4 GB.
       <parameter>-enable-kvm</parameter> alternativet tillater maskinvare
       akselerasjon. Uten denne bryteren er emuleringen mye tregere.
     </para>
@@ -468,9 +459,9 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
     </para>
 
     <para>
-      <parameter>-cdrom grub-img.iso</parameter>: definerer en iso formatert fil
-      for å bruke som en cdrom. Her bruker vi en grub redningsskive, som kan være nyttig
-      når noe går galt ved oppstart.
+      <parameter>-cdrom grub-img.iso</parameter>: definerer en ISO formatert fil
+      for å bruke som en cdrom. Her bruker vi en grub redningsskive, som kan bli nyttig
+      hvis noe går galt ved oppstart.
     </para>
 
     <para>
@@ -528,7 +519,7 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
     </para>
 
     <para>
-      <option>-drive file=&lt;filename&gt;,if=virtio</option>: Gir
+      <option>-drive file=&lt;filename&gt;,if=virtio</option>: Gir et
       Virtio grensesnittet til gjestekjernen for tilgang til diskbildet,
       i stedet for å simulere en ekte diskmaskinvare. Dette kan forbedre disk I/O
       ytelse, men det krever en Virtio driver i gjestekjernen. Bruk
@@ -544,7 +535,7 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
     </para>
 
     <para>
-      <option>-net nic,netdev=net0,model=virtio-net-pci</option>: Gir
+      <option>-net nic,netdev=net0,model=virtio-net-pci</option>: Gir et
       Virtio grensesnittet til gjestekjernen for tilgang til nettverkets
       grensesnitt, i stedet for å simulere et ekte nettverkskort. Dette
       kan forbedre nettverkets I/O ytelse, men det krever en Virtio driver
@@ -567,11 +558,10 @@ qemu-img create -f qcow2 $VDISK_FILENAME $VDISK_SIZE</userinput></screen>
       flere gjester kjører, kan de ikke kommunisere med hverandre.
       Andre nettverksenheter kan brukes til dette formålet. For eksempel det
       er <quote>socket</quote> enheten, som lar flere gjester
-      dele et felles virtuelt nettverk. I det følgende beskriver vi i mer
-      detaljer hvordan du setter opp <quote>bridge</quote> enheten, som tillater
+      dele et felles virtuelt nettverk. I det følgende avsnittet beskriver vi i
+	  mer detaljer hvordan du setter opp <quote>bridge</quote> enheten, som tillater
       gjestene til å se ut som om de er koblet til det lokale nettverket. Alle
-      kommandoene nedenfor skal kjøres som <systemitem
-      class="username">root</systemitem> bruker.
+      kommandoene nedenfor skal kjøres som &root; bruker.
     </para>
 
     <para revision="sysv">
@@ -633,8 +623,9 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
           qemu-keymap,
           qemu-nbd,
           qemu-pr-helper,
-          qemu-storage-daemon, og
-          qemu-system-&lt;arch&gt;
+          qemu-storage-daemon,
+          qemu-system-&lt;arch&gt;, og
+          qemu-vmsr-helper
         </seg>
         <seg>Ingen</seg>
         <seg>
@@ -653,7 +644,7 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
         <term><command>elf2dmp</command></term>
         <listitem>
           <para>
-            Konverterer filer fra elf til dmp format
+            konverterer filer fra elf til dmp format
           </para>
           <indexterm zone="qemu elf2dmp">
             <primary sortas="b-elf2dmp">elf2dmp</primary>
@@ -755,8 +746,8 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
         <term><command>qemu-storage-daemon</command></term>
         <listitem>
           <para>
-            lar deg endre diskbilder ved hjelp av QEMU Monitor Protocol (QMP)
-            uten å kjøre en VM
+            lar en bruker endre diskbilder ved hjelp av QEMU Monitor Protocol
+			(QMP) uten å kjøre en VM
           </para>
           <indexterm zone="qemu qemu-storage-daemon">
             <primary sortas="b-qemu-storage-daemon">qemu-storage-daemon</primary>
@@ -776,6 +767,17 @@ echo allow br0 &gt; /etc/qemu/bridge.conf</userinput></screen>
         </listitem>
       </varlistentry>
 
+      <varlistentry id="qemu-vmsr-helper">
+         <term><command>qemu-vmsr-helper</command></term>
+         <listitem>
+           <para>
+             er en virtuell RAPL MSR hjelper for qemu
+           </para>
+           <indexterm zone="qemu qemu-vmsr-helper">
+             <primary sortas="b-qemu-vmsr-helper">qemu-vmsr-helper</primary>
+           </indexterm>
+         </listitem>
+       </varlistentry>
     </variablelist>
 
   </sect2>
