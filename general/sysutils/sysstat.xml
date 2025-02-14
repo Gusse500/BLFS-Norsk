@@ -33,7 +33,7 @@
       cron for å samle inn og lage historikk for ytelses- og aktivitetsdata.
     </para>
 
-    &lfs122_checked;
+    &lfs123_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -69,9 +69,9 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Sysstat Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3" revision="sysv">Sysstat Avhengigheter</bridgehead>
 
-    <para role="recommended">
+    <para role="recommended" revision="sysv">
       Det er ingen byggetidskrav for denne pakken; derimot,
       den er designet for å bli kontrollert av en cron nisse som f.eks
       <xref linkend="fcron" role="runtime"/>.
@@ -105,7 +105,7 @@ make</userinput></screen>
 <screen role="root"><userinput>make install</userinput></screen>
 
     <para revision="systemd">
-      Installer systemd enheten ved å kjøre følgende kommandoer som
+      Installer systemd enheter og tidtakere ved å kjøre følgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -118,7 +118,7 @@ install -v -m644 cron/sysstat-summary.service /usr/lib/systemd/system/sysstat-su
 install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summary.timer</userinput></screen>
 
     <para revision="systemd">
-      Fiks systemd enheten ved å kjøre følgende kommando som
+      Fiks en av systemd enhetene ved å kjøre følgende kommando som
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -184,7 +184,7 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
 
     </sect3>
 
-    <sect3>
+    <sect3 revision="sysv">
      <title>Cron Informasjon</title>
 
       <para>
@@ -228,9 +228,9 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
       </indexterm>
 
       <para revision="sysv">
-        Ved systemoppstart må en LINUX RESTART melding bli
-        satt inn i den daglige datafilen for å reinitialisere kjernetellerne.
-        Dette kan automatiseres ved å installere
+        Ved systemoppstart må en LINUX RESTART melding settes inn i
+        daglig datafil for å reinitialisere kjernetellerne. Dette kan
+        automatiseres ved å installere
         <filename>/etc/rc.d/init.d/sysstat</filename> initskript inkludert i
         <xref linkend="bootscripts"/> pakken ved å bruke følgende kommando
         som <systemitem class="username">root</systemitem> bruker:
@@ -239,15 +239,21 @@ install -v -m644 cron/sysstat-summary.timer /usr/lib/systemd/system/sysstat-summ
 <screen role="root" revision="sysv"><userinput>make install-sysstat</userinput></screen>
 
       <para revision="systemd">
-        Ved systemoppstart, en LINUX RESTART melding må
-        bli satt inn i den daglige datafilen for å reinitialisere kjernetellerne.
-        Dette kan automatiseres ved å aktivere den tidligere installerte systemd enheten
+        Ved systemoppstart må en LINUX RESTART melding settes inn i
+        daglig datafil for å reinitialisere kjernetellerne. Dette kan
+        automatiseres ved å aktivere den tidligere installerte systemd enheten
         ved å kjøre følgende kommando som
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable sysstat</userinput></screen>
 
+      <para revision="systemd">
+        I tillegg til å plassere LINUX RESTART meldingen i den daglige datafilen,
+        er det installert systemd tidtakere som vil automatisk
+        fange opp nødvendig historieinformasjon for <command>sar</command>
+        kommandoen.
+      </para>
     </sect3>
 
   </sect2>
