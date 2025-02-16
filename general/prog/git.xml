@@ -47,7 +47,7 @@
       <application>Team Foundation Server</application>.
     </para>
 
-    &lfs122_checked;
+    &lfs123_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -191,8 +191,12 @@ make</userinput></screen>
 
     <para>
       Testpakken kan kjøres i parallell modus. For å kjøre testpakken, kjør:
-      <command>make test -k |&amp; tee test.log</command>.  Hvis noen tester
-      mislykkes, kan listen over mislykkede tester vises via
+      <command>GIT_UNZIP=nonexist make test -k |&amp; tee test.log</command>.
+      <envar>GIT_UNZIP</envar> innstillingen forhindrer testpakken fra å
+      bruke <command>unzip</command>, vi trenger det fordi i BLFS
+      <command>unzip</command> er en symbolkobling til <command>bsdunzip</command>
+      som ikke tilfredsstiller forutsetningen i enkelte testtilfeller. Hvis noen
+      testtilfeller mislykkes, kan listen over mislykkede tester vises via
       <command>grep '^not ok' test.log | grep -v TODO</command>.
       <!-- It looks like I'd misdiagnosed the issue.  -->
       <!--phrase revision='systemd'>En test navngitt <literal>start and stop
