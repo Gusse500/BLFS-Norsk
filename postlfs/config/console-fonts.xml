@@ -25,7 +25,7 @@
   </para>
 
   <sect2 id="grub-video">
-    <title>Angi en mindre skjermstørrelse i grub</title>
+    <title>Angi en mindre oppløsning i grub</title>
 
     <indexterm zone="postlfs-console-fonts grub-video">
       <primary sortas="e-boot-grub-grub-cfg">/boot/grub/grub.cfg</primary>
@@ -35,17 +35,52 @@
       Moderne skjermer har ofte mye flere piksler enn skjermene som ble brukt
       før. Hvis skjermen din er 1600 piksler bred, vil en font på 8x16 gi deg 200
       kolonner med tekst - med mindre skjermen din er enorm, vil teksten være liten.
-      En av måtene å omgå dette på er å fortelle grub å bruke en mindre størrelse,
-      for eksempel 1024x768 eller 800x600 eller til og med 640x480. Selv om skjermen ikke
-      har et sideforhold på 4:3, bør dette fungere.
+      En av måtene å omgå dette på er å fortelle GRUB og kjernen om å
+      bruke en mindre oppløsning, for eksempel 1024x768 eller 800x600 eller til og med 640x480.
+      Selv om skjermen ikke har et sideforhold på 4:3, bør dette fungere.
     </para>
 
     <para>
-      For å prøve dette kan du starte på nytt og redigere grubs kommandolinje for å sette inn en
-      'video='-parameter mellom 'root=/dev/sdXn' og 'ro', for eksempel
-      <literal>root=/dev/sda2 video=1024x768 ro</literal> basert på
-      eksempelet i LFS avsnitt 10.4.4:
-      <ulink url="&lfs-root;/chapter10/grub.html"/>.
+      If you've followed the LFS book to configure your kernel with
+      SimpleDRM enabled and the kernel driver dedicated for your GPU
+      (for example i915 or AMDGPU) is built as a kernel module, before the
+      dedicated driver is loaded, the SimpleDRM driver will be used for
+      displaying.  The SimpleDRM driver itself cannot change the resolution,
+      so you need to tell GRUB to set the suitable resolution before loading
+      the kernel by modifying the
+      <literal>set gfxpayload=1024x768x32</literal> line in
+      <ulink url="&lfs-root;/chapter10/grub.html">the
+      <filename>grub.cfg</filename> file</ulink>.
+    </para>
+
+    <para>
+      Når den dedikerte GPU driveren begynner å fungere (når kjernen eller
+      modulen lastes avhengig av om du har bygget den som en del av
+      kjernebildet eller en modul), tar den skjermkontrollen bort fra
+      SimpleDRM driveren og endrer skjermoppløsningen. For å få den til å bruke
+      oppløsningen du ønsker, rediger igjen <filename>grub.cfg</filename>
+      filen for å sette inn en <literal>video=</literal> parameter inn i kjernen sin
+      kommandolinje, for eksempel
+      <literal>root=/dev/sda2 video=DP-1:800x600 ro</literal>.
+      Merk at det er nødvendig å spesifisere utdatanavnet
+      <literal>DP-1</literal> eksplisitt her: en <literal>video=</literal> parameter
+      uten et utdatanavn gjenkjennes bare av GRUB (som en utdatert
+      alias av <literal>set gfxpayload=</literal>) og fullstendig ignorert
+      av kjernen. Innholdet i
+      <filename class='directory'>/sys/class/drm/</filename> kan være nyttig
+      for å finne ut utdatanavnet, for eksempel
+      <filename class='directory'>card1-DP-1</filename> undermappe
+      indikerer en utgang med navn <literal>DP-1</literal>.  For å justere
+      utgangsnavn med skjermen, installer
+      <ulink url='&sources-anduin-http;/edid-decode.tar.gz'>edid-decode</ulink>
+      <!-- TODO: it'll be a part of v4l-utils-1.30,
+           update the text when upgrading v4l-utils -->
+      verktøyet og kjør <command>edid-decode
+      /sys/class/drm/card<replaceable>&lt;card
+      ID&gt;</replaceable>-<replaceable>&lt;output
+      name&gt;</replaceable>/edid</command> kommandoen for å vise informasjonen
+      (inkludert modellnavnet og støttede oppløsninger) om
+      skjermen koblet til utgangen.
     </para>
 
     <para>
