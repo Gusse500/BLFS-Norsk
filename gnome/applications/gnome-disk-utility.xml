@@ -95,7 +95,13 @@
       følgende kommandoer:
     </para>
 
-<screen><userinput>mkdir build &amp;&amp;
+<screen revision="sysv"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release -Dlogind=libelogind .. &amp;&amp;
+ninja</userinput></screen>
+
+<screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
 meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
@@ -110,6 +116,18 @@ ninja</userinput></screen>
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+   <sect2 role="commands" revision="sysv">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-Dlogind=libelogind</parameter>: Forteller byggesystemet at
+      biblioteket som brukes til <application>login</application> service er
+      <filename class="libraryfile">libelogind.so</filename> i stedet for
+      <filename class="libraryfile">libsystemd.so</filename>.
+    </para>
 
   </sect2>
 
