@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libqmi-download-http "https://www.freedesktop.org/software/libqmi/libqmi-&libqmi-version;.tar.xz">
+  <!ENTITY libqmi-download-http "https://gitlab.freedesktop.org/mobile-broadband/libqmi/-/archive/&libqmi-version;/libqmi-1.34.0.tar.gz">
   <!ENTITY libqmi-download-ftp  " ">
-  <!ENTITY libqmi-md5sum        "5ec8838914f80e1dfa4d2fa8cc2f186d">
-  <!ENTITY libqmi-size          "1.2 MB">
-  <!ENTITY libqmi-buildsize     "151 MB (med tester)">
-  <!ENTITY libqmi-time          "0.3 SBU (Bruker parallellisme=4; med tester)">
+  <!ENTITY libqmi-md5sum        "34d4b54b0b8819d8f0844ceac47635df">
+  <!ENTITY libqmi-size          "4.2 MB">
+  <!ENTITY libqmi-buildsize     "76 MB (med tester)">
+  <!ENTITY libqmi-time          "0.2 SBU (Bruker parallellisme=4; med tester)">
 ]>
 
 <sect1 id="libqmi" xreflabel="libqmi-&libqmi-version;">
@@ -97,18 +97,27 @@
       kommandoer:
     </para>
 
-<screen><userinput>PYTHON=python3 ./configure --prefix=/usr --disable-static &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..                 \
+      --prefix=/usr            \
+      --buildtype=release      \
+      -D bash_completion=false \
+      -D qrtr=false            \
+      -D man=false             &amp;&amp;
+
+ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>make check</command>.
+      For å teste resultatene, utsted: <command>ninja test</command>.
     </para>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
@@ -117,15 +126,26 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/static-libraries.xml"/>
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/gtk-doc-rebuild.xml"/>
+      href="../../xincludes/meson-buildtype-release.xml"/>
 
     <para>
-      <option>--disable-mbim-qmux</option>: Denne bryteren deaktiverer støtte for
-      å bruke en MBIM kontrollenhet for QMI meldinger. Bruk denne bryteren hvis du
-      ikke har installert <application>libmbim</application>.
+      <parameter>-D bash_completion=false</parameter>: Bruk dette alternativet
+      hvis den eksterne
+      <ulink url="https://github.com/scop/bash-completion">bash-completion</ulink>
+      pakken ikke er installert.
+    </para>
+
+    <para>
+      <parameter>-D man=false</parameter>: Bruk dette alternativet
+      hvis den eksterne
+      <ulink url="https://ftpmirror.gnu.org/gnu/help2man/">help2man</ulink>
+      pakken ikke er installert.
+    </para>
+
+    <para>
+      <parameter>-D qrtr=false</parameter>: Denne bryteren deaktiverer støtte for
+      QRTR protokollen som trenger den eksterne
+      <ulink url="https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib">libqrtr-glib</ulink> pakken.
     </para>
 
   </sect2>
@@ -148,8 +168,7 @@ make</userinput></screen>
           libqmi-glib.so
         </seg>
         <seg>
-          /usr/include/libqmi-glib og
-          /usr/share/gtk-doc/html/libqmi-glib
+          /usr/include/libqmi-glib 
         </seg>
       </seglistitem>
     </segmentedlist>
