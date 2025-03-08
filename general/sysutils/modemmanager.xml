@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY ModemManager-download-http "https://www.freedesktop.org/software/ModemManager/ModemManager-&ModemManager-version;.tar.xz">
+  <!ENTITY ModemManager-download-http "https://gitlab.freedesktop.org/mobile-broadband/ModemManager/-/archive/&ModemManager-version;/ModemManager-&ModemManager-version;.tar.gz">
   <!ENTITY ModemManager-download-ftp  " ">
-  <!ENTITY ModemManager-md5sum        "9f014dfc59f1bd8bc230bb2c2974d104">
-  <!ENTITY ModemManager-size          "2.5 MB">
-  <!ENTITY ModemManager-buildsize     "155 MB (med tester)">
-  <!ENTITY ModemManager-time          "0.7 SBU (Bruke parallellisme=4; med tester)">
+  <!ENTITY ModemManager-md5sum        "8fb368594cd41fc43ddb42b694db90d4">
+  <!ENTITY ModemManager-size          "1.9 MB">
+  <!ENTITY ModemManager-buildsize     "62 MB (med tester)">
+  <!ENTITY ModemManager-time          "0.3 SBU (Bruke parallellisme=4; med tester)">
 ]>
 
 <sect1 id="ModemManager" xreflabel="ModemManager-&ModemManager-version;">
@@ -102,26 +102,29 @@
       kommandoer:
     </para>
 
-<screen revision="sysv"><userinput>./configure --prefix=/usr                 \
-            --sysconfdir=/etc             \
-            --localstatedir=/var          \
-            --disable-static              \
-            --disable-maintainer-mode     \
-            --with-systemd-journal=no     \
-            --with-systemd-suspend-resume &amp;&amp;
-make</userinput></screen>
+<screen revision="sysv"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
 
-<screen revision="systemd"><userinput>./configure --prefix=/usr                 \
-            --sysconfdir=/etc             \
-            --localstatedir=/var          \
-            --disable-static              \
-            --disable-maintainer-mode     \
-            --with-systemd-journal        \
-            --with-systemd-suspend-resume &amp;&amp;
-make</userinput></screen>
+meson setup .. --prefix=/usr           \
+               --buildtype=release     \
+               -D bash_completion=false \
+               -D man=false             \
+               -D qrtr=false            \
+               -D systemd_journal=false &amp;&amp;
+ninja</userinput></screen>
+
+<screen revision="systemd"><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup .. --prefix=/usr           \
+               --buildtype=release     \
+               -D bash_completion=false \
+               -D man=false             \
+               -D qrtr=false            &amp;&amp;
+ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For å teste resultatene, utsted: <command>ninja test</command>.
     </para>
 
     <para>
@@ -136,29 +139,37 @@ make</userinput></screen>
 
     <title>Parameterforklaringer</title>
 
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/meson-buildtype-release.xml"/>
+
     <para>
-      <parameter>--with-systemd-suspend-resume</parameter>: Denne
-      bryteren tvinger <application>ModemManager</application> å bruke
-      <phrase revision="sysv"><application>elogind</application></phrase>
-      <phrase revision="systemd"><application>systemd</application></phrase>
-      strømstyringsfasiliteter.
+      <parameter>-D bash_completion=false</parameter>: Bruk dette alternativet
+      hvis den eksterne
+      <ulink url="https://github.com/scop/bash-completion">bash-completion</ulink>
+      pakken ikke er installert.
     </para>
 
     <para>
-      <phrase revision="systemd"><parameter>--with-systemd-journal</parameter></phrase>
-      <phrase revision="sysv"><parameter>--with-systemd-journal=no</parameter></phrase>
-      : Denne bryteren tvinger <application>ModemManager</application>
-      å <phrase revision="sysv">ikke</phrase> bruke systemd journalen til
-      logging.
+      <parameter>-D man=false</parameter>: Bruk dette alternativet
+      hvis den eksterne
+      <ulink url="https://ftpmirror.gnu.org/gnu/help2man/">help2man</ulink>
+      pakken ikke er installert.
     </para>
 
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/static-libraries.xml"/>
+    <para>
+      <parameter>-D qrtr=false</parameter>: Denne bryteren deaktiverer støtte for
+      QRTR protokollen som trenger den eksterne
+      <ulink url="https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib">libqrtr-glib</ulink> pakken.
+    </para>
 
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/gtk-doc-rebuild.xml"/>
+    <para revision="sysv">
+      <parameter>-D systemd_journal=false</parameter>: Denne bryteren tvinger
+      <application>ModemManager</application> å ikke bruke systemd journalen
+      for logging, da systemd journalen ikke er tilgjengelig på SysV systemer.
+    </para>
 
   </sect2>
+
   <sect2 role="configuration" revision="systemd">
     <title>Konfigurere ModemManager</title>
 
