@@ -90,8 +90,10 @@
     <para role="recommended">
       <xref linkend="gspell"/>,
       <xref role="runtime" linkend="gvfs"/> (runtime),
-      <xref linkend="iso-codes"/>, og
-      <xref linkend="pygobject3"/> (<application>Python3</application> modul)
+      <xref linkend="iso-codes"/>,
+      <xref linkend="pygobject3"/> (<application>Python3</application> modul), og
+      <xref linkend="wget"/> (nødvendig hvis du bruker bokinstruksjonene til å
+      laste ned pakkene)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -128,15 +130,17 @@ EOF</userinput></screen>
       bruk følgende kommandoer:
     </para>
 
-<screen><userinput>mkdir -p gedit-pkgs 
-cd       gedit-pkgs 
+<screen><userinput>mkdir -p gedit-pkgs &amp;&amp;
+cd       gedit-pkgs &amp;&amp;
 
 rm -rf *
 
 while read -r line; do
 
+  # Skip blank lines or lines beginning with a hash (#) character.
   if $(echo $line | grep -E -q '^ *$|^#' ); then continue; fi
 
+  # Parse the input line into local variables.
   IFS=" " read -r md5 name ver &lt;&lt;&lt; "$line"
 
   if [ $name = "gedit" ]; then
@@ -150,13 +154,7 @@ while read -r line; do
 
   wget $url 2&gt;/dev/null
 
-  calc_md5=$(md5sum $filename | cut -d" " -f1) 
-
-  if [ "$calc_md5" = "$md5" ]; then
-    echo "$filename md5sum OK"
-  else
-    echo "$filename md5sum incorrect"
-  fi
+  echo "$md5 $filename" | md5sum -c
 
 done &lt; ../gedit-data.md5</userinput></screen>
 
@@ -191,6 +189,7 @@ done &lt; ../gedit-data.md5</userinput></screen>
 <screen><userinput>bash -e</userinput></screen>
 
     <para>
+      Rekkefølgen på byggingen er viktig.
       Installer <application>Gedit</application> og dens avhengigheter ved å kjøre
       følgende kommandoer:
     </para>
@@ -217,7 +216,6 @@ do
     popd
 
   rm -rf $packagedir
-  as_root /sbin/ldconfig
 done</userinput></screen>
 
     <para>
