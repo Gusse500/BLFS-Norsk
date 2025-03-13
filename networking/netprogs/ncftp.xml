@@ -4,11 +4,11 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY ncftp-download-http "https://www.ncftp.com/downloads/ncftp/ncftp-&ncftp-version;-src.tar.xz">
+  <!ENTITY ncftp-download-http "https://www.ncftp.com/public_ftp/ncftp/ncftp-&ncftp-version;-src.tar.gz">
   <!ENTITY ncftp-download-ftp  " ">
-  <!ENTITY ncftp-md5sum        "bbcb048d2412f4d62bc798818e703680">
-  <!ENTITY ncftp-size          "416 KB">
-  <!ENTITY ncftp-buildsize     "6.9 MB">
+  <!ENTITY ncftp-md5sum        "0a97a925d55efe44509a7bd4f14761fe">
+  <!ENTITY ncftp-size          "676 KB">
+  <!ENTITY ncftp-buildsize     "7.0 MB">
   <!ENTITY ncftp-time          "0.2 SBU">
 ]>
 
@@ -89,7 +89,7 @@
 
   <sect2 role="installation">
     <title>Installation of NcFTP</title>
-
+<!--
     <para>
       Det er to måter å bygge <application>NcFTP</application> på.  Den første
       (og optimal) måten bygger mesteparten av funksjonaliteten som et delt bibliotek
@@ -111,10 +111,9 @@
     </para>
 
 <screen><userinput remap="pre">sed -i 's/def HAVE_STDLIB_H/ 1/;s/extern select/extern int select/' configure</userinput></screen>
-
+-->
     <para>
-      For å installere <application>NcFTP</application> ved å bruke
-      den første (og optimale) metoden, kjør følgende kommandoer:
+      For å installere <application>NcFTP</application>, kjør følgende kommandoer:
     </para>
 
 <screen><userinput>CC=/usr/bin/gcc \
@@ -132,14 +131,14 @@ make</userinput></screen>
 
 <screen role='root'><userinput>make -C libncftp soinstall &amp;&amp;
 make install</userinput></screen>
-
+<!--
     <para>
       For å installere <application>NcFTP</application> ved å bruke
       den andre metoden (med <filename class="libraryfile">libncftp</filename>
       funksjonalitet koblet inn statisk) kjør følgende kommandoer:
     </para>
 
-<screen role="nodump"><userinput>./configure --prefix=/usr --sysconfdir=/etc &amp;&amp;
+<screen role="nodump"><userinput>./configure - -prefix=/usr --sysconfdir=/etc &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -151,7 +150,7 @@ make</userinput></screen>
     </para>
 
 <screen role="nodump"><userinput>make install</userinput></screen>
-
+-->
   </sect2>
 
   <sect2 role="commands">
@@ -160,12 +159,12 @@ make</userinput></screen>
     <para>
       <envar>CC=/usr/bin/gcc</envar>. Denne miljøvariabelen sikrer
       at <command>gcc</command> blir brukt hvis <xref linkend="llvm"/> er
-      installert.  Byggeprosedyren er brutt hvis <command>gcc</command>
-      ikke blir brukt.
+      installert.  <!--Byggeprosedyren er brutt hvis <command>gcc</command>
+      ikke blir brukt.-->
     </para>
 
     <para>
-      <command>make -C ... &amp;&amp; make -C ...</command>:
+      <command>make -C ... &amp;&amp; make ...</command>:
       Disse kommandoene lager og installerer det dynamiske biblioteket <filename
       class="libraryfile">libncftp</filename> som deretter brukes til å linke
       mot ved kompilering av hovedprogrammet.
@@ -234,7 +233,7 @@ make</userinput></screen>
       <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>ncftp, ncftpbatch, ncftpbookmarks, ncftpget,
+        <seg>ncftp, ncftpbatch, ncftpget,
         ncftpls, ncftpput, og ncftpspooler</seg>
         <seg>libncftp.so</seg>
         <seg>Ingen</seg>
@@ -269,7 +268,7 @@ make</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-
+<!--
       <varlistentry id="ncftpbookmarks">
         <term><command>ncftpbookmarks</command></term>
         <listitem>
@@ -282,7 +281,7 @@ make</userinput></screen>
           </indexterm>
         </listitem>
       </varlistentry>
-
+-->
       <varlistentry id="ncftpget">
         <term><command>ncftpget</command></term>
         <listitem>
