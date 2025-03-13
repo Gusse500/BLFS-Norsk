@@ -8,9 +8,9 @@
 
   <!ENTITY tl-installer-download-ftp    " ">
   <!ENTITY tl-installer-md5sum          "cec36f23d7d4e1a4a2a90f77bad8e667">
-  <!ENTITY tl-installer-date             "20230313"> <!-- in the directory name -->
+  <!ENTITY tl-installer-date             "20250312"> <!-- in the directory name -->
   <!ENTITY tl-installer-size            "5.5 MB">
-  <!ENTITY tl-installer-buildsize        "85 MB for vanlig TeX, typisk 320 MB for latex og senere motorer, 8,6 GB hvis alt er inkludert">
+  <!ENTITY tl-installer-buildsize        "90 MB for vanlig TeX, typisk 323 MB for latex og senere motorer, 9.0 GB hvis alt er inkludert">
   <!ENTITY tl-installer-time            "varierer, avhengig av nettverkshastighet og trafikk">
 <!-- The following commit will change future installs so that the scripts in
 texmf-dist linked from bin/ are copied instead of symlinks.
@@ -85,7 +85,7 @@ and it might have been removed by next year. -->
       </para>
     </note>
 
-    <!-- editors: latex-test-20240320.tar.xz at ~/ken/tex-testfiles and the
+    <!-- editors: latex-test-20250109.tar.xz at ~/ken/tex-testfiles and the
     ABOUT.pdf now deal with specifying which collections are needed when using
     binary texlive. Please do not sign off this package without at least
     testing asy to ensure that the symlinks are as needed. Please also be aware
@@ -157,18 +157,12 @@ and it might have been removed by next year. -->
       dette er for å støtte en PDF leser etter eget valg
        <xref role="nodep" linkend="epdfview"/>).
     </para>
-<!-- seems to not be needed in 2021
-    <para role="recommended">
-      det valgfrie ncurses-biblioteket med ikke-bredt tegn (for "noen bare binære
-      søknad") fra bunnen av <application>Ncurses</application>
-      side i LFS er nødvendig
-      for xindy.run som brukes av <application>xindy</application>
-    </para> -->
     <para role="recommended">
       Den binære versjonen av <application>asy</application> trenger
       <xref linkend="freeglut"/>.
     </para>
-    <para> <!-- needed, but cannot recommend :-) -->
+<!-- Not needed in TL2025
+    <para>
       Den binære versjonen av asy er koblet til libGLX.so.0 fra
       <ulink url="https://gitlab.freedesktop.org/glvnd/libglvnd/">libglvnd</ulink>,
       men installasjon som vil bryte fremtidige oppdateringer av BLFS pakker som f.eks
@@ -176,10 +170,13 @@ and it might have been removed by next year. -->
       <systemitem class="username">root</systemitem> bruker:
     </para>
     <screen role="nodump"><userinput>ln -sv libGL.so.1 /usr/lib/libGLX.so.0</userinput></screen>
+-->
+
+<!-- This was rechecked in TL2025. Running 'readelf -a biber | grep NEEDED'
+     does *not* report needing libcrypt.so.1, but xindy does. -renodr -->
     <para role="recommended">
-    De binære versjonene av <application>biber</application> og
-    <application>xindy</application> er knyttet til <filename
-    class='libraryfile'>libcrypt.so.1</filename> fra gamle versjoner
+    De binære versjonene av <application>xindy</application> er lenket til
+    <filename class='libraryfile'>libcrypt.so.1</filename> fra gamle versjoner
     av <application>glibc</application>. For å bruke disse to programmene, følg
     Merknad om bare binære applikasjoner i <application>libxcrypt</application> i
     LFS for å installere ABI versjonen av 1 kryptbiblioteket.
@@ -204,21 +201,17 @@ and it might have been removed by next year. -->
       <application>TeX Live</application> sett av programmer med sine
       støttedokumenter, fonter og verktøy er veldig store. Oppstrøms
       vedlikeholdere anbefaler å plassere alle filer i en enkelt mappestruktur.
-      BLFS anbefaler <filename class='directory'>/opt/texlive</filename>.
+      BLFS teamet anbefaler <filename class='directory'>/opt/texlive</filename>.
     </para>
 
     <note>
      <para>
        Hvis du har valgt å installere binæren som en vanlig bruker, vil mappen
-       for prefikset må kunne skrives av den brukeren.  
-       <systemitem class="username">root</systemitem> bruker kan chown
-       <filename class="directory">/opt/texlive/2024</filename> til den
-       brukeren før brukeren starter installasjonen.<!-- Problem was reported on
-       texlive list, at least ls-R was involved and maybe other files,
-       suggestion was to remove, chown prefix, reinstall. --> Hvis noen senere
-       endring i den mapen gjøres av <systemitem
-       class="username">root</systemitem> bruker, <emphasis>det vil endre
-       eieskapet</emphasis>, som bryter bruken av vanlige brukere.
+       for prefikset må kunne skrives av den brukeren. &root; brukeren kan chown
+       <filename class="directory">/opt/texlive/&texlive-year;</filename> til den
+       brukeren før brukeren starter installasjonen. Hvis senere endring i den
+       mappen er laget av &root; bruker, <emphasis>vil det endre
+       eieskapet</emphasis>, som bryter bruken av vanlig bruker.
      </para>
     </note>
 
@@ -270,59 +263,24 @@ and it might have been removed by next year. -->
       For en minimal installasjon som vil bygge dokumentasjon som er referert til i
       BLFS, de eneste installasjonssamlingene som trengs er '[a] Essential
       programs and files' og '[D] LaTeX fundamental packages'. Dette vil
-      last ned ca 130 filer og bruk ca 320 MB. Brukere kan velge andre
+      last ned ca 132 filer og bruk ca 323 MB. Brukere kan velge andre
       samlinger etter behov, men en full installasjon vil laste ned flere
       tusen filer og bruker over 8 GB.
     </para>
 
-<!--  This is no longer needed
-    <para>
-      Det har blitt fastslått av Debian at <command>python</command>
-      skriptet i <filename class="directory">latex-make</filename> vil virke
-      med <command>python3</command>, så oppdater dem for å påkalle det ved å kjøre
-      følgende kommando som <systemitem class="username">root</systemitem>
-      bruker:
-    </para>
-
-<screen role="root"><userinput>for F in /opt/texlive/&texlive-year;/texmf-dist/scripts/latex-make/*.py ; do
-  test -f $F &amp;&amp; sed -i 's%/usr/bin/env python%/usr/bin/python3%' $F || true
-done
-</userinput></screen>
--->
     <note>
       <para>
         Etter installasjonen må PATH miljøvariabelen bli
-        oppdatert. Hvis stien er angitt ovenfor, kjør som 
-        &root; bruker:
+        oppdatert, og andre variabler må angis. Vennligst referer til
+        <xref linkend="tex-path"/> for å angi disse miljøvariablene.
       </para>
-<screen role="root"><userinput>cat > /etc/profile.d/texlive.sh &lt;&lt; EOF
-# Begin texlive setup
-TEXLIVE_PREFIX=/opt/texlive/2024
-export TEXLIVE_PREFIX
-
-pathappend $TEXLIVE_PREFIX/bin/x86_64-linux
-# End texlive setup
-EOF</userinput></screen>
-
-      <para>
-        Umiddelbart etter installasjonen, oppdater gjeldende PATH for ditt
-        nåværende skall som en vanlig bruker:
-      </para>
-
-<screen><userinput>source /etc/profile.d/texlive.sh</userinput></screen>
     </note>
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
-<!--
-    <para>
-      <command>test -f $F &amp;&amp; sed ...</command>: i en liten installer disse
-      filene er kanskje ikke tilstede, så test om de eksisterer og hvis ikke returner "true"
-      for å unngå feil hvis denne kommandoen har blitt kopiert inn i et av dine egne installasjonsskript.
-    </para>
--->
+
     <para>
       <option>./install-tl --location
       http://mirror.aut.ac.nz/CTAN/systems/texlive/tlnet/</option>: bruk en
