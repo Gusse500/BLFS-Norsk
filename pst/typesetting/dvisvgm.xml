@@ -112,6 +112,7 @@
  https://www.linuxfromscratch.org/~ken/tex-testfiles/ https://www.linuxfromscratch.org/~ken/
  Or, use use it to convert first or specified page(s) of a PDF to SVG - see the man page
 -->
+
    <!-- symlink for kpathsea moved to texlive so that if it already exists for
    evince from a previous year it will be recreated -->
 
@@ -127,7 +128,9 @@
       kommandoer:
     </para>
 
-<screen><userinput>sed -i 's/python/&amp;3/' tests/Makefile.in         &amp;&amp;
+<screen><userinput>TEXARCH=$(uname -m | sed -e 's/i.86/i386/' -e 's/$/-linux/') &amp;&amp;
+
+sed -i 's/python/&amp;3/' tests/Makefile.in         &amp;&amp;
 ./configure                                     \
     --bindir=$TEXLIVE_PREFIX/bin/${TEXARCH}     \
     --mandir=$TEXLIVE_PREFIX/texmf-dist/doc/man \
