@@ -6,7 +6,7 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "a0193e0a4925f772bd50f8d12e47860c">
+  <!ENTITY rust-md5sum        "65f03e9d2da6b480c43ee1fe390d28ed">
   <!ENTITY rust-size          "261 MB">
   <!ENTITY rust-buildsize     "9.4 GB (252 MB installert); legg til 7.4 GB hvis du kjører testene">
   <!ENTITY rust-time          "9.0 SBU (inkludert nedlastingstid; legg til 15 SBU for tester, begge med parallellisme=8)">
@@ -144,17 +144,18 @@
         </para>
       </listitem>
     </itemizedlist>
-    <!-- only keep this here for reuse in case we need a patch
+
+    <!--  keep this here for reuse in case we need a patch -->
 <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Valgfri oppdatering (anbefales hvis du kjører testpakken):
-          <ulink url="&patch-root;/rustc-&rust-version;-testsuite_fix-1.patch"/>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/rustc-&rust-version;-llvm_20-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
-    -->
+
     <bridgehead renderas="sect3">Rust Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -304,7 +305,13 @@ EOF</userinput></screen>
       bibliotek og kompilator:
     </para>
 
-    <screen><userinput>sed '/MirOpt/d' -i src/bootstrap/src/core/builder/mod.rs</userinput></screen>
+<screen><userinput>sed '/MirOpt/d' -i src/bootstrap/src/core/builder/mod.rs</userinput></screen>
+
+    <para>
+      Reparer nå byggefeil med LLVM 20:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../rustc-&rust-version;-llvm_20-1.patch</userinput></screen>
 
     <para>
       Kompiler <application>Rust</application> ved å kjøre følgende

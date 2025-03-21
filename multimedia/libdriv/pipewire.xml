@@ -133,15 +133,15 @@
   <sect2 role="installation">
     <title>Installasjon av Pipewire</title>
 
-<!--
-    <para>
-      Hvis du bygger <xref linkend='snapshot'/>, bruk en oppdatering for å fikse et problem som
-      forårsaker at <xref linkend='snapshot'/> ikke klarer å spille stream fra noen
-      kameraer:
+    <!-- Upstream MR #2308 -->
+    <para revision='systemd'>
+      Hvis du bygger <xref linkend='snapshot'/>, fikse et problem som
+      forårsaker at <xref linkend='snapshot'/> feiler å oppdage kamera etter at
+      en bruker har logget ut og deretter logget inn igjen:
     </para>
 
-    <screen><userinput>patch -Np1 -i ../pipewire-&pipewire-version;-upstream_fix-1.patch</userinput></screen>
--->
+    <screen revision='systemd'><userinput>sed '/^Requires=pipewire.socket$/s/$/ dbus.service/' \
+    -i src/daemon/systemd/system/pipewire.service.in</userinput></screen>
 
     <para>
       Installer <application>pipewire</application> ved å kjøre følgende
