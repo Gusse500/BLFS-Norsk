@@ -5,11 +5,11 @@
   %general-entities;
 
   <!ENTITY gnome-keyring-download-http
-           "&gnome-download-http;/gnome-keyring/&gnome-46;/gnome-keyring-&gnome-keyring-version;.tar.xz">
+           "&gnome-download-http;/gnome-keyring/&gnome-48;/gnome-keyring-&gnome-keyring-version;.tar.xz">
   <!ENTITY gnome-keyring-download-ftp  " ">
-  <!ENTITY gnome-keyring-md5sum        "7a8ab16a87f03ca05fc176925fcce649">
-  <!ENTITY gnome-keyring-size          "1.3 MB">
-  <!ENTITY gnome-keyring-buildsize     "129 MB">
+  <!ENTITY gnome-keyring-md5sum        "d19a99eadeb5d92774b7960c51d1c5dc">
+  <!ENTITY gnome-keyring-size          "752 KB">
+  <!ENTITY gnome-keyring-buildsize     "44 MB">
   <!ENTITY gnome-keyring-time          "0.2 SBU (Bruker parallellisme=4; legg til 0.2 SBU for tester)">
 ]>
 
@@ -82,6 +82,7 @@
       <xref linkend="openssh"/>
     </para>
 
+<!-- Meson doesn't mention any of these
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gnupg2"/>,
@@ -89,20 +90,12 @@
       <ulink url="https://github.com/linux-test-project/lcov">LCOV</ulink>, og
       <ulink url="https://people.redhat.com/sgrubb/libcap-ng/">libcap-ng</ulink>
     </para>
+-->
 
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av GNOME Nøkkelring</title>
-
-<!--
-    <para>
-      Regenerere <command>configure</command> skriptet for å få det til å fungere
-      med libgcrypt-1.11 eller nyere:
-    </para>
-
-<screen><userinput>autoreconf</userinput></screen>
--->
 
     <para>
       Installer <application>GNOME Nøkkelring</application> ved å kjøre
@@ -111,21 +104,22 @@
 
 <screen><userinput>sed -i 's:"/desktop:"/org:' schema/*.xml &amp;&amp;
 
-./configure --prefix=/usr      \
-            --sysconfdir=/etc  \
-            --enable-ssh-agent &amp;&amp;
-make</userinput></screen>
+mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release -D ssh-agent=true .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       En sesjonsbussadresse er nødvendig for å kjøre testene. For å teste resultatene,
-      kjør: <command>make check</command>.
+      kjør: <command>ninja test</command>.
     </para>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
@@ -138,7 +132,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      <parameter>--enable-ssh-agent</parameter>: Denne bryteren aktiverer SSH
+      <parameter>-D ssh-agent=true</parameter>: Denne bryteren aktiverer SSH
       agenten innebygd i gnome nøkkelringen i stedet for den i GCR. Dette har blitt gjort
       på grunn av feil i gcr som gjør at agenten ikke fungerer som den skal.
       <!--https://bugzilla.redhat.com/show_bug.cgi?id=2250704-->
