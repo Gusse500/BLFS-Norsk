@@ -6,10 +6,10 @@
 
   <!ENTITY localsearch-download-http "&gnome-download-http;/localsearch/3.8/localsearch-&localsearch-version;.tar.xz">
   <!ENTITY localsearch-download-ftp  " ">
-  <!ENTITY localsearch-md5sum        "56dfb5a30b3ab5ba33939d9f6bc21016">
+  <!ENTITY localsearch-md5sum        "6d29c941a4e10eb7fcc6e84d0d90053a">
   <!ENTITY localsearch-size          "4.3 MB">
-  <!ENTITY localsearch-buildsize     "31 MB (med tester)">
-  <!ENTITY localsearch-time          "0.4 SBU (med parallellitet=4; legg til så mye som 1.0 SBU for tester, avhengig av diskhastighet)">
+  <!ENTITY localsearch-buildsize     "35 MB (med tester)">
+  <!ENTITY localsearch-time          "0.2 SBU (med parallellitet=4; legg til så mye som 1.0 SBU for tester, avhengig av diskhastighet)">
 ]>
 
 <sect1 id="localsearch" xreflabel="localsearch-&localsearch-version;">
@@ -79,8 +79,7 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
       <xref linkend="giflib"/>,
-      <xref role='runtime' linkend="gst10-plugins-good"/> (kjøretid),
-      <xref role='runtime' linkend="gst10-libav"/> (kjøretid),
+      <xref linkend="ffmpeg"/>,
       <xref linkend="icu"/>,
       <xref linkend="libexif"/>,
       <xref linkend="libgxps"/>,
@@ -94,13 +93,11 @@
       <xref linkend="asciidoc"/>,
       <xref linkend="cmake"/>,
       <xref linkend="dconf"/>,
-      <xref linkend="ffmpeg"/>,
       <xref linkend="libgsf"/>,
       <xref linkend="NetworkManager"/>,
       <xref linkend="taglib"/>,
       <xref linkend="totem-pl-parser"/>,
       <ulink url="https://github.com/lipnitsk/libcue">libcue</ulink>,
-      <ulink url="https://gitlab.gnome.org/GNOME/libgrss">libgrss</ulink>,
       <ulink url="https://libiptcdata.sourceforge.net/">libitpcdata</ulink>,
       <ulink url="https://libosinfo.org">libosinfo</ulink>, og
       <ulink url="https://gitlab.gnome.org/GNOME/gupnp">gupnp</ulink>
@@ -173,7 +170,6 @@ cd    build &amp;&amp;
 meson setup --prefix=/usr       \
             --buildtype=release \
             -D man=false        \
-            -D miner_rss=false  \
             ..                  &amp;&amp;
 ninja</userinput></screen>
 
@@ -184,7 +180,6 @@ meson setup --prefix=/usr                  \
             --buildtype=release            \
             -D systemd_user_services=false \
             -D man=false                   \
-            -D miner_rss=false             \
             ..                             &amp;&amp;
 ninja</userinput></screen>
 
@@ -224,12 +219,6 @@ rm -rf ~/tracker-tests</userinput></screen>
       installer manualsider.
     </para>
 
-    <para>
-      <parameter>-D miner_rss=false</parameter>: Denne bryteren forhindrer bruk av
-      libgrss for å indeksere RSS feeder fordi libgrss er usikker og ikke lenger
-      i BLFS.
-    </para>
-
     <para revision="sysv">
       <parameter>-D systemd_user_services=false</parameter>: Denne bryteren forhindrer
       byggeprosessen fra å installere systemd enheter siden de er ubrukelige
@@ -261,6 +250,12 @@ rm -rf ~/tracker-tests</userinput></screen>
       localsearch kaste bort batterilevetiden når strøm ikke er koblet til.
     </para>
 
+    <para>
+      <option>-D libav=disabled</option>: Bruk dette alternativet hvis du ikke har
+      installert den anbefalte avhengigheten ffmpeg. Merk at bruk av denne vil
+      forårsake 7 testfeil, og vil også betydelig hemme
+      funksjonaliteten til denne pakken.
+    </para>
   </sect2>
 
   <sect2 role="content">
@@ -280,7 +275,7 @@ rm -rf ~/tracker-tests</userinput></screen>
         </seg>
         <seg>
           /usr/lib/localsearch-3.0 og
-          /usr/share/localsearch
+          /usr/share/localsearch3
         </seg>
       </seglistitem>
     </segmentedlist>
