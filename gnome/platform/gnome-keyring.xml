@@ -82,15 +82,15 @@
       <xref linkend="openssh"/>
     </para>
 
-<!-- Meson doesn't mention any of these
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <ulink url="https://people.redhat.com/sgrubb/libcap-ng/">libcap-ng</ulink>
+<!-- Meson doesn't mention any of these
       <xref linkend="gnupg2"/>,
       <xref linkend="valgrind"/>,
       <ulink url="https://github.com/linux-test-project/lcov">LCOV</ulink>, og
-      <ulink url="https://people.redhat.com/sgrubb/libcap-ng/">libcap-ng</ulink>
-    </para>
 -->
+    </para>
 
   </sect2>
 
@@ -102,7 +102,19 @@
       følgende kommandoer:
     </para>
 
-<screen><userinput>sed -i 's:"/desktop:"/org:' schema/*.xml &amp;&amp;
+<screen revision='sysv'><userinput>sed -i 's:"/desktop:"/org:' schema/*.xml &amp;&amp;
+
+mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release \
+      -D systemd=disabled \
+      -D ssh-agent=true   &amp;&amp;
+ninja</userinput></screen>
+
+<screen revision='systemd'><userinput>sed -i 's:"/desktop:"/org:' schema/*.xml &amp;&amp;
 
 mkdir build &amp;&amp;
 cd    build &amp;&amp;
@@ -129,6 +141,12 @@ ninja</userinput></screen>
     <para>
       <command>sed ... schema/*.xml</command>:  Denne kommandoen fikser en
       utdatert oppføring i skjemamalen.
+    </para>
+
+    <para revision="sysv">
+      <parameter>-D systemd=disabled</parameter>: Denne bryteren forhindrer
+      en feil på grunn av at byggesystemet krever
+      <application>systemd</application> som standard.
     </para>
 
     <para>
