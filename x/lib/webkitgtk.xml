@@ -6,10 +6,10 @@
 
   <!ENTITY webkitgtk-download-http "https://webkitgtk.org/releases/webkitgtk-&webkitgtk-version;.tar.xz">
   <!ENTITY webkitgtk-download-ftp  " ">
-  <!ENTITY webkitgtk-md5sum        "10b5b88ffe8611202c45cfdc10a2bd72">
-  <!ENTITY webkitgtk-size          "41 MB">
-  <!ENTITY webkitgtk-buildsize     "1.4 GB (163 MB installert, legg til 157 MB for GTK-4)">
-  <!ENTITY webkitgtk-time          "32 SBU (for GTK-3, bruk parallellisme=8, legg til 32 SBU for GTK-4)">
+  <!ENTITY webkitgtk-md5sum        "a140f819d85111dd67e103850532187f">
+  <!ENTITY webkitgtk-size          "42 MB">
+  <!ENTITY webkitgtk-buildsize     "1.5 GB (182 MB installert, legg til 177 MB for GTK-4)">
+  <!ENTITY webkitgtk-time          "23 SBU (for GTK-3, bruk parallellisme=8, legg til 23 SBU for GTK-4)">
 
   <!ENTITY libbacktrace
     "<ulink url='https://github.com/ianlancetaylor/libbacktrace'>libbacktrace</ulink>">
@@ -71,18 +71,15 @@
       </listitem>
     </itemizedlist>
 
-<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          <phrase revision='sysv'>Påkrevd</phrase>
-          <phrase revision='systemd'>Valgfri</phrase> oppdatering:
-          <ulink url="&patch-root;/webkitgtk-&webkitgtk-version;-upstream_fixes-2.patch"/>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/webkitgtk-&webkitgtk-version;-build_fix-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
--->
 
     <bridgehead renderas="sect3">WebKitGTK Avhengigheter</bridgehead>
 
@@ -129,9 +126,11 @@
       <xref linkend="wayland"/>,
       <xref linkend="woff2"/>,
       <ulink url="https://ccache.dev/">ccache</ulink>,
+      <ulink url="http://www.festvox.org/flite/">flite</ulink>,
       <ulink url="https://sourceforge.net/projects/hunspell/files/Hyphen/">Hyphen</ulink>,
       &libbacktrace;,
-      <ulink url="https://gnome.pages.gitlab.gnome.org/libmanette/">libmanette</ulink>, og
+      <ulink url="https://gnome.pages.gitlab.gnome.org/libmanette/">libmanette</ulink>,
+      <ulink url="https://github.com/project-spiel/libspiel">libspiel</ulink>, og
       <ulink url="&sysprof-url;">sysprof</ulink>
     </para>
 
@@ -154,6 +153,14 @@
         den eneste forskjellen er innstillingen av <command>-DUSE_GTK4</command>
       </para>
     </important>
+
+    <!-- already merged upstream -->
+    <para>
+      Først må du fikse en byggefeil som oppstår på grunn av at gstreamer ikke bygges
+      med feilsøkingsstøtte aktivert:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../webkitgtk-&webkitgtk-version;-build_fix-1.patch</userinput></screen>
 
     <para>
       Hvis du vil installere GTK+-3-versjonen av
@@ -178,6 +185,7 @@ cmake -D CMAKE_BUILD_TYPE=Release      \
       -D USE_GTK4=OFF                  \
       -D ENABLE_BUBBLEWRAP_SANDBOX=ON  \
       -D USE_SYSPROF_CAPTURE=NO        \
+      -D ENABLE_SPEECH_SYNTHESIS=OFF   \
       -W no-dev -G Ninja ..            &amp;&amp;
 ninja</userinput></screen>
 
@@ -200,6 +208,7 @@ cmake -D CMAKE_BUILD_TYPE=Release      \
       -D ENABLE_JOURNALD_LOG=OFF       \
       -D ENABLE_BUBBLEWRAP_SANDBOX=ON  \
       -D USE_SYSPROF_CAPTURE=NO        \
+      -D ENABLE_SPEECH_SYNTHESIS=OFF   \
       -W no-dev -G Ninja ..            &amp;&amp;
 ninja</userinput></screen>
 
@@ -237,6 +246,7 @@ cmake -D CMAKE_BUILD_TYPE=Release         \
       -D USE_GTK4=ON                      \
       -D ENABLE_BUBBLEWRAP_SANDBOX=ON     \
       -D USE_SYSPROF_CAPTURE=NO           \
+      -D ENABLE_SPEECH_SYNTHESIS=OFF      \
       -W no-dev -G Ninja ..               &amp;&amp;
 ninja</userinput></screen>
 
@@ -257,6 +267,7 @@ cmake -D CMAKE_BUILD_TYPE=Release      \
       -D ENABLE_JOURNALD_LOG=OFF       \
       -D ENABLE_BUBBLEWRAP_SANDBOX=ON  \
       -D USE_SYSPROF_CAPTURE=NO        \
+      -D ENABLE_SPEECH_SYNTHESIS=OFF   \
       -W no-dev -G Ninja ..            &amp;&amp;
 ninja</userinput></screen>
 
@@ -282,11 +293,6 @@ cp -rv ../Documentation/* /usr/share/gtk-doc/html</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
-
-<!--    <para>
-      <command>sed ... TextCheckerEnchant.cpp</command>: Denne kommandoen
-      er nødvendig for å la bygget fullføres med enchant-2.x.
-    </para> -->
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/cmake-skip-install-rpath.xml"/>
@@ -335,13 +341,6 @@ cp -rv ../Documentation/* /usr/share/gtk-doc/html</userinput></screen>
       GTK-4.
     </para>
 
-<!--
-    <para>
-      <parameter>-D USE_JPEGXL=OFF</parameter>: Denne bryteren slår av støtten
-      for JPEG-XL bilder. Fjern den hvis du har den valgfrie pakken
-      <ulink url="https://github.com/libjxl/libjxl">libjxl</ulink> installert.
-    </para>
--->
     <para>
       <parameter>-D ENABLE_BUBBLEWRAP_SANDBOX=ON</parameter>: Denne bryteren
       aktiverer Bubblewrap sandkassen, som bidrar til å dempe virkningen av de fleste
@@ -362,6 +361,15 @@ cp -rv ../Documentation/* /usr/share/gtk-doc/html</userinput></screen>
     <para>
       <parameter>-D USE_SYSPROF_CAPTURE=NO</parameter>: Denne bryteren
       deaktiverer en hard avhengighet av <ulink url="&sysprof-url;">sysprof</ulink>.
+    </para>
+
+    <para>
+      <parameter>-D ENABLE_SPEECH_SYNTHESIS=OFF</parameter>: Denne bryteren
+      deaktiverer byggestøtte for talesyntese i WebKitGTK fordi det
+      krever ytterligere eksterne avhengigheter. Du vil trenge både
+      <ulink url="http://www.festvox.org/flite/">flite</ulink> og
+      <ulink url="https://github.com/project-spiel/libspiel">libspiel</ulink>
+      hvis du ønsker å aktivere dette.
     </para>
 
     <para>
