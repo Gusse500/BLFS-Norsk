@@ -466,6 +466,20 @@ EOF</userinput></screen>
           fjernet, og grensesnittet tatt ned før
           <application>Network Manager</application> startes.
         </para>
+       
+        <para revision="sysv">
+          Den enkleste måten å gjøre dette på er å fjerne S20network fra
+          <filename>/etc/rc.d/rc3.d/</filename> og <filename>/etc/rc.d/rc5.d/</filename>.
+        </para>
+
+        <para revision="sysv">
+          Også hvis du bruker <xref linkend="dhcpcd"/>, vær forsiktig med timing problemer hvis du
+          setter opp nettverksapplikasjoner som ntpd, nfs eller sshd. Det tar
+          flere sekunder for dhcpcd å initialisere nettverksgrensesnittet og hvis
+          disse programmene starter før nettverksgrensesnittet er fullstendig
+          initialisert, kan det hende at disse programmene må startes manuelt.
+        </para>
+
       </note>
 
       <indexterm zone="NetworkManager NetworkManager-init">
@@ -475,22 +489,7 @@ EOF</userinput></screen>
 <screen role="root" revision="sysv"><userinput>make install-networkmanager</userinput></screen>
 
 <screen role="root" revision="systemd"><userinput>systemctl enable NetworkManager</userinput></screen>
-<!-- The below instruction is obsolete. NetworkManager-wait-online is now
-     enabled by default when enabling NetworkManager. -->
-<!--
-      <para revision="systemd">
-        <application>NetworkManager</application> sender også en systemd enhet
-        kalt <filename>NetworkManager-wait-online.service</filename> som
-        kan brukes til å forhindre tjenester som krever nettverkstilkobling
-        fra å starte til <application>NetworkManager</application> har
-        opprettet forbindelsen. For å aktivere det, kjør følgende kommando
-        som <systemitem class="username">root</systemitem> bruker:
-      </para>
 
-<screen role="root" revision="systemd"><userinput>systemctl enable NetworkManager-wait-online</userinput></screen>
-   -->
-      <!-- As such, let's now provide instructions on how to disable that
-           behavior, for those who wish to do so. -->
       <para revision="systemd">
         Fra og med versjon 1.11.2 av <application>NetworkManager</application>,
         en systemd enhet kalt <filename>NetworkManager-wait-online.service</filename>
