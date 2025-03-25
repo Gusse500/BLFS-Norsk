@@ -176,6 +176,33 @@ ninja</userinput></screen>
 <userinput>install -vdm755 /var/lib/power-profiles-daemon</userinput>
 </screen>
 
+    <caution>
+      <para>
+        På noen eldre systemer ser det ut til at power-profiles-daemon installeres
+        og angir riktige verdier, men vil faktisk ikke fungere. For å sjekke dette
+        kjør <userinput>cat /sys/devices/system/cpu/cpufreq/policy0/scaling_driver</userinput>.
+        Hvis resultatet ikke er "intel_pstate", men i stedet "intel_cpufreq" (eller
+        lignende på AMD systemer), må strømprofil gjøres manuelt.
+      </para>
+
+      <para>
+        For å endre strømprofil manuelt, sjekk først for å se hvilke profiler som er
+        tilgjengelig med: 
+        <userinput>cat /sys/devices/system/cpu/cpufreq/policy0/scaling_driver</userinput>.
+        Sett deretter ønsket profil som &root; bruker med:
+      </para>
+
+<screen><userinput>for CPUFREQ in /sys/devices/system/cpu/cpufreq/policy*/scaling_governor
+  echo -n ${gov} > ${CPUFREQ}"
+done</userinput></screen>
+
+      <para>
+        Hvis du setter til scaling_governor til "performance", vær forsiktig med
+        varme- og batteriproblemer ved langvarig bruk.
+      </para>
+
+    </caution>
+
   </sect2>
 
 
