@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-47;/mutter-&mutter-version;.tar.xz">
+  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-48;/mutter-&mutter-version;.tar.xz">
   <!ENTITY mutter-download-ftp  " ">
-  <!ENTITY mutter-md5sum        "b2d771f303214a5e7611a217ba42d9d1">
-  <!ENTITY mutter-size          "6.5 MB">
-  <!ENTITY mutter-buildsize     "72 MB (med tester)">
-  <!ENTITY mutter-time          "0.5 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
+  <!ENTITY mutter-md5sum        "82ee44890fe297312f350bf80a6a2cae">
+  <!ENTITY mutter-size          "8.0 MB">
+  <!ENTITY mutter-buildsize     "103 MB (med tester)">
+  <!ENTITY mutter-time          "0.4 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
 ]>
 
 <sect1 id="mutter" xreflabel="Mutter-&mutter-version;">
@@ -68,6 +68,16 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nødvendig oppdatering:
+          <ulink url="&patch-root;/mutter-&mutter-version;-upstream_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">Mutter Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -109,6 +119,7 @@
       <xref linkend="python-dbusmock"/> (påkrevd for tester),
 	  <!--<xref linkend="sysprof"/>,-->
       <xref linkend="xorg-server"/> (for X11 økter),
+      <ulink url="https://github.com/scop/bash-completion/">bash-completion</ulink>,
       <ulink url="&sysprof-url;">sysprof</ulink>,
       <command>Xvfb</command> (fra <xref linkend='xorg-server'/> eller
       <xref linkend='xwayland'/>),
@@ -130,6 +141,20 @@
     <title>Installasjon av Mutter</title>
 
     <para>
+      Først bruker du en oppdatering for å fikse krasjer og frysinger under kjøring:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../mutter-&mutter-version;-upstream_fixes-1.patch</userinput></screen>
+
+    <para>
+      Deretter løser du et problem med testene som ellers ville kreve at
+      pakken må bygges med feilsøkingsinformasjon:
+    </para>
+
+<screen><userinput remap="pre">sed "/tests_c_args =/s/$/ + ['-U', 'G_DISABLE_ASSERT']/" -i src/tests/meson.build &amp;&amp;
+sed "/c_args:/a '-U', 'G_DISABLE_ASSERT'," -i src/tests/cogl/unit/meson.build</userinput></screen>
+
+    <para>
       Installer <application>Mutter</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -137,11 +162,12 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr       \
-            --buildtype=release \
-            -D tests=disabled   \
-            -D profiler=false   \
-            ..                  &amp;&amp;
+meson setup --prefix=/usr            \
+            --buildtype=release      \
+            -D tests=disabled        \
+            -D profiler=false        \
+            -D bash_completion=false \
+            ..                       &amp;&amp;
 ninja</userinput></screen>
 
 <!--
@@ -198,6 +224,13 @@ ninja test</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
+
+    <para>
+      <parameter>-D bash_completion=false</parameter>: Gjør det mulig å bygge
+      pakken uten
+      <ulink url="https://github.com/scop/bash-completion/">bash-completion</ulink>
+      pakken installert.
+    </para>
 
     <para>
       <parameter>-D tests=disabled</parameter>: Tillat å bygge pakken
@@ -276,13 +309,13 @@ ninja test</userinput></screen>
 
       <seglistitem>
         <seg>
-          mutter
+          gdctl og mutter
         </seg>
         <seg>
-           libmutter-15.so og libmutter-test-15.so (valgfri)
+          libmutter-16.so og libmutter-test-16.so (valgfri)
         </seg>
         <seg>
-          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-15
+          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-16
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -291,6 +324,19 @@ ninja test</userinput></screen>
       <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
       <?dbfo list-presentation="list"?>
       <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="gdctl">
+        <term><command>gdctl</command></term>
+        <listitem>
+          <para>
+            kontrollerer gjeldende monitorkonfigurasjon på økter som bruker
+            Mutter som vindusbehandler
+          </para>
+          <indexterm zone="mutter gdctl">
+            <primary sortas="b-gdctl">gdctl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
 
       <varlistentry id="mutter-prog">
         <term><command>mutter</command></term>
@@ -306,19 +352,19 @@ ninja test</userinput></screen>
       </varlistentry>
 
       <varlistentry id="libmutter">
-        <term><filename class="libraryfile">libmutter-15.so</filename></term>
+        <term><filename class="libraryfile">libmutter-16.so</filename></term>
         <listitem>
           <para>
             inneholder <application>Mutter</application> API funksjoner
           </para>
           <indexterm zone="mutter libmutter">
-            <primary sortas="c-libmutter">libmutter-15.so</primary>
+            <primary sortas="c-libmutter">libmutter-16.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>
 
       <varlistentry id="libmutter-test">
-        <term><filename class="libraryfile">libmutter-test-15.so</filename></term>
+        <term><filename class="libraryfile">libmutter-test-16.so</filename></term>
         <listitem>
           <para>
             inneholder <application>Mutter</application> testpakke API
@@ -327,7 +373,7 @@ ninja test</userinput></screen>
             <application>gnome-shell</application> testpakken
           </para>
           <indexterm zone="mutter libmutter-test">
-            <primary sortas="c-libmutter-test">libmutter-test-15.so</primary>
+            <primary sortas="c-libmutter-test">libmutter-test-16.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>
