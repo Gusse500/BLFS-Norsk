@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+   <!ENTITY % general-entities SYSTEM "../../../general.ent">
+  %general-entities;
+
+  <!ENTITY pypa-build-download-http "https://files.pythonhosted.org/packages/source/b/build/build-&pypa-build-version;.tar.gz">
+  <!ENTITY pypa-build-download-ftp  " ">
+  <!ENTITY pypa-build-md5sum        "5492ba887b363f483d64a11bbec0c34a">
+  <!ENTITY pypa-build-size          "47 KB">
+  <!ENTITY pypa-build-buildsize     "772 KB (63 MB for tester)">
+  <!ENTITY pypa-build-time          "mindre enn 0.1 SBU (0.5 SBU for tester)">
+]>
+
+  <!-- Begin pypa-build -->
+  <sect2 id="pypa-build" xreflabel="build-&pypa-build-version;">
+
+    <title>build-&pypa-build-version;</title>
+
+    <indexterm zone="pypa-build">
+      <primary sortas="a-build">build</primary>
+    </indexterm>
+
+    <sect3 role="package">
+      <title>Introduksjon til build</title>
+
+      <para>
+        <application>build</application> er et Python byggegrensesnitt
+        implementering av PEP-517-resolusjonen.
+      </para>
+
+      &lfs123_checked;
+
+      <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>
+            Nedlasting (HTTP): <ulink url="&pypa-build-download-http;"/>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Nedlasting (FTP): <ulink url="&pypa-build-download-ftp;"/>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Nedlasting MD5 sum: &pypa-build-md5sum;
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Nedlastingsstørrelse: &pypa-build-size;
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Estimert diskplass som kreves: &pypa-build-buildsize;
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Estimert byggetid: &pypa-build-time;
+          </para>
+        </listitem>
+      </itemizedlist>
+
+      <bridgehead renderas="sect4">build Avhengigheter</bridgehead>
+
+      <bridgehead renderas="sect5">Påkrevd</bridgehead>
+      <para role="required">
+        <xref linkend="packaging"/> og
+        <xref linkend="pyproject-hooks"/>
+      </para>
+
+      <bridgehead renderas="sect5">Valgfri (for tester)</bridgehead>
+      <para role="optional">
+        <xref linkend="pytest"/>,
+        <ulink url="https://pypi.org/project/filelock/">filelock</ulink>,
+        <ulink url="https://pypi.org/project/pytest-cov/">pytest-cov</ulink>,
+        <ulink url="https://pypi.org/project/pytest-mock/">pytest-mock</ulink>,
+        <ulink url="https://pypi.org/project/pytest-rerunfailures/">pytest-rerunfailures</ulink>,
+        <ulink url="https://pypi.org/project/pytest-xdist/">pytest-xdist</ulink>, og
+        <ulink url="https://pypi.org/project/uv/">uv</ulink>
+      </para>
+
+    </sect3>
+
+    <sect3 role="installation">
+      <title>Installasjon av build</title>
+
+      <para>
+        Bygg pakken med:
+      </para>
+
+&build-wheel;
+
+      <para>
+        For å installere pakken, kjør følgende som &root; bruker:
+      </para>
+
+<screen role="root"><userinput>&install-wheel; build</userinput></screen>
+
+      <para>
+        Forutsatt <xref linkend="pytest"/> er installert, men de andre valgfrie
+	avhengigheter ikke er det, kan installasjonen testes med følgende
+	kommandoer:
+      </para>
+
+<screen remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
+source testenv/bin/activate                    &amp;&amp;
+pip3 install build[test]                       &amp;&amp;
+python3 -m pytest<!-- no && because of a possible error -->
+deactivate</userinput></screen>
+
+      <para>
+        Two tests in <filename>test_self_packaging.py</filename> er kjent for
+        å mislykkes.
+      </para>
+
+    </sect3>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../../xincludes/pip3-cmd-explain.xml"/>
+
+    <sect3 role="content">
+      <title>Innhold</title>
+
+      <segmentedlist>
+        <segtitle>Installerte Programmer</segtitle>
+        <segtitle>Installerte Biblioteker</segtitle>
+        <segtitle>Installerte Mapper</segtitle>
+
+        <seglistitem>
+          <seg>
+            pyproject-build
+          </seg>
+          <seg>
+            Ingen
+          </seg>
+          <seg>
+            /usr/lib/python&python3-majorver;/site-packages/build og
+            /usr/lib/python&python3-majorver;/site-packages/build-&pypa-build-version;.dist-info
+          </seg>
+        </seglistitem>
+      </segmentedlist>
+
+      <variablelist>
+        <bridgehead renderas="sect5">Korte Beskrivelser</bridgehead>
+        <?dbfo list-presentation="list"?>
+        <?dbhtml list-presentation="table"?>
+
+        <varlistentry id="pyproject-build">
+          <term><command>pyproject-build</command></term>
+          <listitem>
+            <para>
+              er en enkel <application>Python</application> bygge grensesnitt
+            </para>
+            <indexterm zone="pypa-build pyproject-build">
+              <primary sortas="b-pyproject-build">pyproject-build</primary>
+            </indexterm>
+          </listitem>
+        </varlistentry>
+
+      </variablelist>
+
+    </sect3>
+
+  </sect2>
