@@ -6,10 +6,10 @@
 
   <!ENTITY mercurial-download-http "https://www.mercurial-scm.org/release/mercurial-&mercurial-version;.tar.gz">
   <!ENTITY mercurial-download-ftp  " ">
-  <!ENTITY mercurial-md5sum        "05cb7a265bf503c0b934e3591f3c66ac">
+  <!ENTITY mercurial-md5sum        "2e65ffe3d37b7ca716de63c01d93d4e4">
   <!ENTITY mercurial-size          "8.3 MB">
-  <!ENTITY mercurial-buildsize     "83 MB (med dokumenter, legg til 1.6 GB for tester)">
-  <!ENTITY mercurial-time          "0.3 SBU (med dokumenter, legg til 15 SBU for tester; begge bruker parallellisme=8)">
+  <!ENTITY mercurial-buildsize     "118 MB (med dokumenter, legg til 58 MB for tester)">
+  <!ENTITY mercurial-time          "0.3 SBU (med dokumenter, legg til 25 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="mercurial" xreflabel="Mercurial-&mercurial-version;">
@@ -73,6 +73,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <xref linkend="pypa-build"/>,
       <xref linkend="docutils"/>
         (nødvendig for å bygge dokumentasjonen),
       <xref linkend="git"/>,
@@ -93,50 +94,45 @@
 
   <sect2 role="installation">
     <title>Installasjon av Mercurial</title>
-    <!-- Rust port is now part of the standard tests -->
 
     <para>
-      Bygg <application>Mercurial</application> ved å kjøre følgende
-      kommandoer:
+      <application>Mercurial</application> bygges og installeres på én gang
+      ved å gi følgende kommando som &root; bruker:
     </para>
 
-<screen><userinput>make build</userinput></screen>
+<screen role="root"><userinput>make PREFIX=/usr install</userinput></screen>
 
     <para>
-      For å bygge dokumentasjonen (krever <xref linkend="docutils"/>), utsted:
+      Dokumentasjonen er bygget av kommandoen ovenfor (i man- og html-formater),
+      men bare man sidene er installert. Hvis du ønsker å installere
+      html dokumentasjon, utsted som &root; bruker:
     </para>
 
-<screen remap="doc"><userinput>make doc</userinput></screen>
-<!--
-    The tests do not hang.  Better to just report what failed.
-
-    [renodr]: The tests do crash due to syntax errors and crash before they get
-    to the Python portion (which is where most of Mercurial is)
--->
+<screen role="root"
+        remap="doc"><userinput>mkdir /usr/share/doc/mercurial-&mercurial-version; &amp;&amp;
+cp -R doc/html /usr/share/doc/mercurial-&mercurial-version;</userinput></screen>
 
     <para>
       Hvis du ønsker å kjøre testene, må rusttestene fjernes siden de
       for øyeblikket er ødelagt på grunn av syntaksfeil. For å gjøre dette, utsted:
     </para>
 
-<screen><userinput>sed -i '138,142d' Makefile</userinput></screen>
+<screen><userinput>sed -i '152,155d' Makefile</userinput></screen>
 
     <para>
       For å kjøre testpakken, utsted:
     </para>
-<screen remap="test"><userinput>TESTFLAGS="-j<replaceable>&lt;N&gt;</replaceable> --tmpdir tmp" make check</userinput></screen>
-<!-- The blacklists have to be checked every release of Mercurial, do a listing
-     of tests/blacklists, but do not include the README.
-     For 6.4.1 removing the -blacklist entries did not affect the test results
-     although blacklists/fsmonitor and blacklists/linux-vfat still exist. -->
+
+<screen remap="test"><userinput>TESTFLAGS="-j<replaceable>&lt;N&gt;</replaceable> --with-hg /usr/bin/hg" make check</userinput></screen>
 
     <para>
       hvor <replaceable>&lt;N&gt;</replaceable> er et heltall mellom én
-      og antall ( prosessor X tråder ), inkludert. Tester kan
+      og antall ( prosessor X tråder ), inkludert (standard er
+      totalt antall prosessorer som returnert av <command>nproc</command>).
+      Tester kan
       mislykkes fordi noen feilmeldinger har endret seg i Python eller
       noen avskrivningsadvarsler skrives ut som ikke var til stede da
-      testen ble designet. To tester er kjent for å mislykkes: test-duplicateoptions.py
-      og test-highlight.t.
+      testen ble designet.
     </para>
       <!--
       # Ran 908 tests, 65 skipped, 4 failed.  real  10m37.422s -bdubbs  6 Sep 22.
@@ -154,11 +150,14 @@
       # Ran 955 tests, 69 skipped, 2 failed. -zeckma 24 Nov 24 (mercurial-6.9).
       # Ran 929 tests, 95 skipped, 3 failed. -renodr 18 Jan 25 (mercurial-6.9.1).
       # Ran 954 tests, 70 skipped, 2 failed. -bdubbs 28 Feb 25 (mercurial-6.9.2).
+      # Ran 970 tests, 57 skipped, 1 failed. -pierre 28 Mar 25 (mercurial-7.0).
       -->
     <para>
       For å
       undersøke eventuelle tilsynelatende mislykkede tester, kan du bruke
-      <command>run-tests.py</command> skriptet. For å se de nesten førti bryterne,
+      <command>run-tests.py</command> skriptet i
+      <filename class="directory">tests</filename> mappen. For å se
+      nesten førti brytere,
       noen av dem veldig nyttige, kjør <command>tests/run-tests.py
       --help</command>.  Når du kjører følgende kommandoer, vil du bare kjøre
       testene som mislyktes før:
@@ -166,18 +165,18 @@
 
 <screen remap="test"><userinput>pushd tests  &amp;&amp;
   rm -rf tmp &amp;&amp;
-  ./run-tests.py --tmpdir tmp test-gpg.t
+  ./run-tests.py --with-hg /usr/bin/hg <replaceable>test-gpg.t</replaceable>
 popd</userinput></screen>
-
+<!-- not tested for a very long time
     <para>
       Normalt vil de tidligere feilene være reproduserbare. Imidlertid, hvis
-      du legger til bryteren <option>--debug</option> før
-      <option>--tmpdir</option>, og kjør testene på nytt, kan det kan at noen feil
+      du legger til bryteren <option>- -debug</option> før
+      <option>- -tmpdir</option>, og kjør testene på nytt, kan det kan at noen feil
       forsvinner, noe som er et problem med testpakken. Hvis dette skjer,
       vil det ikke være flere av disse feilene selv om du ikke bruker
-      --debug bryteren igjen.
+      - -debug bryteren igjen.
     </para>
-
+    -->
     <para>
       En interessant bryter er <option>--time</option>, som vil generere en
       tabell over alle utførte tester og deres respektive start, slutt, bruker,
@@ -185,21 +184,6 @@ popd</userinput></screen>
       brytere kan brukes med <command>make check</command> ved å inkludere
       dem i <envar>TESTFLAGS</envar> miljøvariabelen.
     </para>
-
-    <para>
-      Installer <application>Mercurial</application> ved å kjøre følgende
-      kommando (som <systemitem class="username">root</systemitem>):
-    </para>
-
-<screen role="root"><userinput>make PREFIX=/usr install-bin</userinput></screen>
-
-    <para>
-      Hvis du har laget dokumentasjonen, installer den ved å kjøre følgende
-      kommando (som <systemitem class="username">root</systemitem>):
-    </para>
-
-<screen role="root"
-        remap="doc"><userinput>make PREFIX=/usr install-doc</userinput></screen>
 
     <para>
       Etter installasjonen to veldig raske og enkle tester

@@ -5,15 +5,15 @@
   %general-entities;
 
   <!ENTITY mousepad-download-http
-           "https://archive.xfce.org/src/apps/mousepad/0.6/mousepad-&mousepad-version;.tar.bz2">
+           "https://archive.xfce.org/src/apps/mousepad/0.6/mousepad-&mousepad-version;.tar.xz">
   <!ENTITY mousepad-download-ftp  " ">
-  <!ENTITY mousepad-md5sum        "6e46d6a22e0656fbddf2655d1e9dfc1f">
-  <!ENTITY mousepad-size          "1.4 MB">
-  <!ENTITY mousepad-buildsize     "16 MB">
-  <!ENTITY mousepad-time          "0.1 SBU">
+  <!ENTITY mousepad-md5sum        "70ce391423991d5141f567140debdc1b">
+  <!ENTITY mousepad-size          "452 MB">
+  <!ENTITY mousepad-buildsize     "9.1 MB">
+  <!ENTITY mousepad-time          "mindre enn 0.1 SBU">
 ]>
 
-<sect1 id="mousepad" xreflabel="Mousepad-&mousepad-version;">
+<sect1 id="mousepad" xreflabel="mousepad-&mousepad-version;">
   <?dbhtml filename="mousepad.html"?>
 
 
@@ -27,8 +27,7 @@
     <title>Introduksjon til Mousepad</title>
 
     <para>
-      <application>Mousepad</application> er en enkel
-      <application>GTK+ 3</application> tekstredigerer for
+      <application>Mousepad</application> er en enkel GTK tekstredigerer for
       <application>Xfce</application> skrivebordsmiljøet.
     </para>
 
@@ -81,12 +80,13 @@
       <xref linkend="gspell"/>
     </para>
 
+<!-- I can find no mention of these in version 0.8.4
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref role="runtime" linkend='dconf'/> (kjøretid) og
       <xref linkend="dbus-glib"/>
     </para>
-
+-->
   </sect2>
 
   <sect2 role="installation">
@@ -97,10 +97,14 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr           \
-            --enable-gtksourceview4 \
-            --enable-keyfile-settings &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release &amp;&amp;
+
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -110,7 +114,7 @@ make</userinput></screen>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
@@ -118,12 +122,7 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--enable-keyfile-settings</parameter>: Bruk GSettings
-     nøkkelfil bakstykke i stedet for standard <xref linkend='dconf'/>.
-    </para>
-
-    <para>
-      <option>--disable-plugin-gspell</option>: Bruk dette alternativet for å deaktivere
+      <option>-D gspell-plugin=no</option>: Bruk dette alternativet for å deaktivere
       bygging av <xref linkend="gspell"/> programtillegget hvis du ikke har
       installert <application>gspell</application>.
     </para>
@@ -143,7 +142,7 @@ make</userinput></screen>
           mousepad
         </seg>
         <seg>
-          Ingen
+          libmousepad.so
         </seg>
         <seg>
           Ingen
@@ -160,7 +159,7 @@ make</userinput></screen>
         <term><command>mousepad</command></term>
         <listitem>
           <para>
-            er en enkel <application>GTK+ 3</application> tekstredigerer
+            er en enkel GTK tekstredigerer
           </para>
           <indexterm zone="mousepad mousepad-prog">
             <primary sortas="b-mousepad">mousepad</primary>
