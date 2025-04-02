@@ -92,8 +92,10 @@
         <xref linkend="graphviz"/>,
         <xref linkend="recommonmark"/>, og
         <xref linkend="sphinx_rtd_theme"/> (kreves for å bygge dokumentasjon),
-        <xref linkend="pyparsing"/> (for en ikke-root test), og
-        <xref linkend="pytest"/> (for en annen ikke-root test)
+        <xref linkend="pyparsing"/> (for en ikke-root test),
+        <xref linkend="pytest"/> (for en annen ikke-root test), o
+        <ulink url='https://libcheck.github.io/check/'>check</ulink>
+        (for en annen ikke-root test)
       </para>
 
     </sect3>
@@ -161,23 +163,13 @@ meson setup ..                  \
       -D udev-dir=/usr/lib/udev &amp;&amp;
 ninja</userinput></screen>
 
-      <note>
-        <para>
-          Hvis du vil kjøre standard testpakke, fjerner du -D tests fra
-          <command>meson</command> kommandoen ovenfor. Vennligst les <quote>Kjernekonfigurasjon
-          for å kjøre Libinput Testpakken</quote> (overfor).
-        </para>
-
-        <para>
-          Hvis du har bestemt deg for å kjøre standard testpakke, kan du kjøre
-          testene <emphasis>som root bruker</emphasis> ved å kjøre:
-          <command>ninja test</command>. Det er over 30 tester og alle burde
-          bestå hvis du installerte de valgfrie avhengighetene. Du kan imidlertid kjøre
-          6 mindre tester som vanlig bruker ved å kjøre samme kommando,
-          selv om du ikke trenger å fjerne parameteren -D tests. De
-          testmålinger er basert på disse testene alene.
-        </para>
-      </note>
+      <para>
+        For å teste pakken, utsted: <command>meson configure -D tests=true
+        &amp;&amp; ninja test</command>.
+        Mange tester hoppes over med mindre du kjører testpakken som
+        &root; bruker.  For å kjøre disse testene, som &root; bruker utsted:
+        <command>meson test --suite=root</command>.
+      </para>
 
       <para>
         Nå, som <systemitem class="username">root</systemitem> bruker:

@@ -100,6 +100,8 @@
       <xref linkend="libsamplerate"/>,
       <xref linkend="sbc"/> (Bluetooth støtte),
       <xref linkend="valgrind"/>,
+      <ulink url="https://libcheck.github.io/check/">check</ulink>
+      (for testing),
       <ulink url="https://jackaudio.org/">JACK</ulink>,
       <ulink url="https://0pointer.de/lennart/projects/libasyncns/">libasyncns</ulink>,
       <ulink url="https://www.lirc.org/">LIRC</ulink>,
@@ -136,12 +138,14 @@ meson setup --prefix=/usr       \
             -D database=gdbm    \
             -D doxygen=false    \
             -D bluez5=disabled  \
+            -D tests=false      \
             ..                  &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>ninja test</command>. En test
-      mislykkes hvis testene ikke kjøres som root bruker, men dette kan ignoreres.
+      For å teste resultatene, kjør: <command>ninja test</command>.
+      Bare de sendte XML filene blir validert fordi andre tester trenger
+      <application>Check</application> som er fjernet fra LFS.
     </para>
 
     <para>
@@ -190,6 +194,13 @@ ninja</userinput></screen>
       kompilere hvis <xref linkend="doxygen"/> ikke er installert. Fjern dette
       hvis du har installert dette og ønsker å bygge dokumentasjonen.
     </para>
+
+    <para>
+      <parameter>-D tests=false</parameter>: Dette gjør at pakken kan
+      kompilere hvis <application>Check</application> ikke er installert.
+      <application>Check</application> er fjernet fra LFS.
+    </para>
+
 <!--
     <para>
       <parameter>- -disable-rpath</parameter>: Denne bryteren forhindrer
