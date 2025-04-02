@@ -75,8 +75,10 @@
 
       <bridgehead renderas="sect5">Valgfri</bridgehead>
       <para role="optional">
-        <xref linkend="doxygen"/> og
-        <xref linkend="valgrind"/> (valgfri for tester)
+        <xref linkend="doxygen"/>,
+        <xref linkend="valgrind"/> (valgfri for testing),
+        og <ulink url='https://libcheck.github.io/check/'>check</ulink>
+        (påkrevd for testing)
       </para>
 
     </sect3>
@@ -124,9 +126,10 @@ cd    build &amp;&amp;
 meson setup ..                  \
       --prefix=$XORG_PREFIX     \
       --buildtype=release       \
-      -D documentation=disabled &amp;&amp;
+      -D documentation=disabled \
+      -D tests=disabled         &amp;&amp;
 ninja</userinput></screen>
-
+<!--
       <para>
         Regresjonstestene kan kjøres som <systemitem
         class="username">root</systemitem> bruker med <command>ninja
@@ -139,12 +142,27 @@ ninja</userinput></screen>
         vil systemet gå i dvale og må vekkes for å fullføre
         testpakken.
       </para>
+-->
+      <para>
+        Testpakken krever <application>Check</application> som er
+        fjernet fra LFS.
+      </para>
 
       <para>
         Nå, som <systemitem class="username">root</systemitem> bruker:
       </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
+    </sect3>
+
+    <sect3 role="commands">
+      <title>Parameterforklaringer</title>
+
+      <para>
+        <parameter>-D tests=disabled</parameter>: Dette gjør at pakken kan
+        kompilere hvis <application>Check</application> ikke er installert.
+        <application>Check</application> er fjernet fra LFS.
+      </para>
     </sect3>
 
     <sect3 role="content">
