@@ -89,6 +89,13 @@
     <title>Installasjon av x265</title>
 
     <para>
+      Først fjerner du noen CMake policyinnstillinger som ikke lenger
+      er kompatibel med CMake-4.0 eller nyere:
+    </para>
+
+<screen><userinput>sed -r '/cmake_policy.*(0025|0054)/d' -i source/CMakeLists.txt</userinput></screen>
+
+    <para>
       Installer <application>x265</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -97,10 +104,11 @@
 <screen><userinput>mkdir bld &amp;&amp;
 cd    bld &amp;&amp;
 
-cmake -D CMAKE_INSTALL_PREFIX=/usr \
-      -D GIT_ARCHETYPE=1           \
-      -W no-dev                    \
-      ../source                    &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr        \
+      -D GIT_ARCHETYPE=1                  \
+      -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
+      -W no-dev                           \
+      ../source                           &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -146,17 +154,20 @@ rm -vf /usr/lib/libx265.a</userinput></screen>
       <title>Parameterforklaringer</title>
 
       <para>
-        <parameter>-W no-dev</parameter>: Denne bryteren brukes til å undertrykke advarsler
-        beregnet på pakkens utviklere.
-      </para>
-
-      <para>
         <parameter>-D GIT_ARCHETYPE=1</parameter>: Denne bryteren er nødvendig
         fordi byggesystemet ikke vil generere en pkg-config fil eller installere
         et delt bibliotek med mindre <xref linkend="git"/> er installert. Git kreves
         ikke for noe annet i denne pakken, så denne bryteren er brukes for å
         omgå det for brukere som ikke ønsker å installere Git som en
         byggeavhengighet.
+      </para>
+
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+        href="../../xincludes/cmake-policy-version.xml"/>
+
+      <para>
+        <parameter>-W no-dev</parameter>: Denne bryteren brukes til å undertrykke advarsler
+        beregnet på pakkens utviklere.
       </para>
 
       <para>
