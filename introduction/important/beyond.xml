@@ -153,8 +153,8 @@
           kan du prøve å legge inn et pakkenavn i søkeboksen. Hvis pakken er
           funnet kan du se på filene (spesifikasjonsfil for å kontrollere bygget, diverse
           oppdateringer) eller commits. Hvis det mislykkes, kan du laste ned
-          en srpm (kilde rpm) og bruke <application>rpmextract</application>
-          (se tipset nederst på siden). For rpms gå til <ulink
+          en srpm (kilde rpm) og bruke <application>rpm2cpio</application> (se
+          tipset nederst på siden). For rpms gå til <ulink
           url="https://dl.fedoraproject.org/pub/fedora/linux/"/> og velg deretter
           hvilken repo du ønsker å se på - development/rawhide er den siste
           utvikling, eller velg utgivelser for det som ble sendt i en utgivelse,
@@ -212,23 +212,18 @@
     <para>Hvis du har funnet en pakke som kun er tilgjengelig i
     <filename class='extension'>.deb</filename> eller
     <filename class='extension'>.rpm</filename>
-    formatet, er det forskjellige metoder for å pakke dem ut.</para>
-    <para><filename class='extension'>.deb</filename> filer er bare
-    arkiver som er pakket og pakket ut av
-    <application>ar</application>. De kan pakkes ut ved å kjøre:
-    <command>ar x $PACKAGE.deb</command>. Det vil pakke ut mange filer; imidlertid
-    er den viktige <filename>data.tar.gz</filename>. Den inneholder alle
-    filer som vanligvis vil bli installert.</para>
-    <para>For <filename class='extension'>.rpm</filename> filer, kan du
-    installere <ulink
-    url="https://archlinux.org/packages/extra/any/rpmextract/">rpmextract</ulink>
-    (se <ulink
-    url="https://gitlab.archlinux.org/archlinux/packaging/packages/rpmextract/-/blob/main/PKGBUILD?ref_type=heads">PKGBUILD</ulink>
-    for hvordan du installerer pakken) og bruke <command>rpmextract.sh</command>
-    fra pakken for å pakke ut filen. Det vil pakke ut til flere
-    mapper, for eksempel <filename class="directory">app</filename> og
-    <filename class="directory">usr</filename>. Du kan også bruke <xref
-    linkend="file-roller"/> eller <xref linkend="ark"/> for utpakkingen.</para>
+    format, det er to små skript, <command>rpm2targz</command> og
+    <command>deb2targz</command> som er tilgjengelig på
+    <ulink url="&sources-anduin-http;/extras/deb2targz.tar.bz2"/> og
+    <ulink url="&sources-anduin-http;/extras/rpm2targz.tar.bz2"/> å konvertere arkivene
+    til en enkel <filename>tar.gz</filename> format.</para>
+    <para>Du kan også finne et rpm2cpio skript nyttig. Perl versjonen i
+    linux kjernearkiver på <ulink
+    url="https://lore.kernel.org/all/20021016121842.GA2292@ncsu.edu/2-rpm2cpio"/>
+    fungerer for de fleste kilderpm. rpm2targz skriptet vil bruke et rpm2cpio skript
+    eller binær hvis en er på vei. Merk at rpm2cpio vil pakke ut en kilde
+    rpm i gjeldende mappe, og gir en tarball, en spesifikasjonsfil og kanskje oppdateringer
+    eller andre filer.</para>
   </tip>
 
 </sect1>
