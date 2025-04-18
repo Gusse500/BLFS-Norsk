@@ -163,7 +163,10 @@
     <note>
       <para>
         En Internett tilkobling er nødvendig for å bygge Nouveau Vulkan
-        driveren.
+        driveren.  Systemsertifikatlageret må kanskje konfigureres med
+        <xref role='recommended' linkend='make-ca'/> før du bygger denne
+        pakken.
+
       </para>
     </note>
 
@@ -272,10 +275,28 @@
       </para>
 
       <para>
+        For GPU-ene som støttes av Iris Gallium3D driveren, med
+        <option>CONFIG_DRM_I915</option> aktivert og
+        <option>CONFIG_DRM_XE_FORCE_PROBE</option> satt til
+        strengen <literal>*</literal>, i915-driveren vil bli brukt
+        hvis den støtter GPU, og Xe-driveren vil bli brukt hvis den
+        støtter GPU, men i915-driveren gjør det ikke. Hvis du er sikker på at
+        GPUen din støttes av i915-driveren, kan du deaktivere
+        Xe-driver for å spare litt byggetid. Hvis GPUen din støttes
+        av begge driverne og du vil bruke Xe-driveren, kan du deaktivere
+        i915-driveren, eller få i915-driveren til å nekte din GPU via
+        <option>CONFIG_DRM_I915_FORCE_PROBE</option> alternativet, for eksempel
+        sette den til <literal>!7d55</literal> ville få i915 til å nekte
+        Meteor Lake integrert GPU (hvorav PCI ID er
+        <literal>8086:7d55</literal>), overlater det til Xe-driveren.
+      </para>
+
+      <para>
         <option>CONFIG_DRM_RADEON</option>,
         <option>CONFIG_DRM_AMDGPU</option>,
-        <option>CONFIG_DRM_NOUVEAU</option>, og
-        <option>CONFIG_DRM_I915</option> kan kreve fastvare.
+        <option>CONFIG_DRM_NOUVEAU</option>,
+        <option>CONFIG_DRM_I915</option>,
+        og <option>CONFIG_DRM_XE</option> kan kreve fastvare.
         Se <xref linkend='postlfs-firmware'/> for detaljer.
       </para>
 
