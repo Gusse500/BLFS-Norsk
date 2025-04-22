@@ -77,8 +77,8 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="libxml2"/> og
-      <xref linkend="pygobject3"/>
+      <xref linkend="libxml2"/> <!--og
+      <xref linkend="pygobject3"/>-->
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -108,6 +108,7 @@ cd    build &amp;&amp;
 meson setup --prefix=/usr          \
             --buildtype=release    \
             --wrap-mode=nofallback \
+            -D python3=false       \
             ..                     &amp;&amp;
 ninja</userinput></screen>
 
@@ -126,8 +127,8 @@ ninja</userinput></screen>
       En aktiv grafisk økt med bussadresse er nødvendig for å
       kjøre testene.
       <!-- https://gitlab.gnome.org/GNOME/libpeas/-/merge_requests/55 -->
-      En test navngitt <literal>test-extension-py</literal> er kjent for å
-      feile med PyGObject-3.52 eller nyere.
+      <!--En test navngitt <literal>test-extension-py</literal> er kjent for å
+      feile med PyGObject-3.52 eller nyere.-->
     </para>
 
     <para>
@@ -147,6 +148,14 @@ ninja</userinput></screen>
     <!-- gi-docgen can get installed without this, if deps exist -->
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-wrap-nofallback.xml"/>
+
+    <!-- https://gitlab.gnome.org/GNOME/libpeas/-/issues/58 and
+         https://gitlab.archlinux.org/archlinux/packaging/packages/pygobject/-/issues/3 -->
+    <para>
+      <parameter>-D python3=false</parameter>: Denne bryteren deaktiverer Python 
+      programtillegglaster fordi den er inkompatibel med pygobject-3.52.x, og den 
+      vil føre til at programmer som laster inn Python-plugins henger på ubestemt tid.
+    </para>
 
     <para>
       <option>-D vapi=true</option>: Legg til denne bryteren hvis du ønsker å
