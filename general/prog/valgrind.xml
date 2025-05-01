@@ -6,10 +6,10 @@
 
   <!ENTITY valgrind-download-http "https://sourceware.org/pub/valgrind/valgrind-&valgrind-version;.tar.bz2">
   <!ENTITY valgrind-download-ftp  " ">
-  <!ENTITY valgrind-md5sum        "7ae7ffc6b3cff48fe35076266c128226">
-  <!ENTITY valgrind-size          "16 MB">
-  <!ENTITY valgrind-buildsize     "396 MB (legg til 85 MB for tester)">
-  <!ENTITY valgrind-time          "0.4 SBU (legg til 6.5 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY valgrind-md5sum        "c3da1f96462bc885ceaa528b171dc300">
+  <!ENTITY valgrind-size          "17 MB">
+  <!ENTITY valgrind-buildsize     "618 MB (legg til 86 MB for tester)">
+  <!ENTITY valgrind-time          "0.4 SBU (legg til 5.7 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="valgrind" xreflabel="Valgrind-&valgrind-version;">
@@ -81,10 +81,13 @@
 -->
     <bridgehead renderas="sect3">Valgrind Avhengigheter</bridgehead>
 
+    <!-- Boost appears in the configure script, but it's looking for an
+         extremely old version and is only used optionally in the tests.-->
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="DocBook"/> (for tester),
       <xref linkend="gdb"/> (for tester),
+      <xref linkend="libaio"/>,
       <xref linkend="llvm"/> (med Clang), og
       <xref linkend="which"/> (for tester)
     </para>
@@ -158,7 +161,32 @@ make</userinput></screen>
          valgrind-3.24.0 [bdubbs] valgrind-3.24.0
          837 tests, 1 stderr failure, 0 stdout failures, 0 stderrB failures, 
          0 stdoutB failures, 0 post failures
+
+         valgrind-3.25.0 [renodr]
+         845 tests, 5 stderr failures, 0 stdout failures, 1 stderrB failure,
+         2 stdoutB failures, 0 post failures
+           gdbserver_tests/mcinfcallWSRU            (stderrB)
+           gdbserver_tests/nlcontrolc               (stdoutB)
+           gdbserver_tests/nlvgdbsigqueue           (stdoutB)
+           helgrind/tests/getaddrinfo               (stderr)
+           drd/tests/fork-parallel                  (stderr)
+           drd/tests/fork-serial                    (stderr)
+           drd/tests/threaded-fork-vcs              (stderr)
+           drd/tests/threaded-fork                  (stderr)
      -->
+
+    <para>
+      En ekstra testpakke er nå tilgjengelig som tester Valgrind med hver
+      systemanrop levert av kjernen.Testsettet er utformet for å teste
+      ikke bare glibc og kjernens overholdelse av standarder, men også
+      Valgrinds evne til å håndtere forskjellige systemanrop.Testsettet gjør
+      krever en internettforbindelse for å laste ned testene, og det tar lang tid
+      tid å kjøre (en ekstra 20 SBUs og 1,3 GB diskplass.)
+      <command>make ltpchecks</command>. Merk at utdataene vil vise flere
+      feil der Valgrind for øyeblikket ikke støtter visse systemanrop,
+      men loggene for testspakken kan finnes i
+      <filename class="directory">auxprogs/auxchecks/ltp-full-20250130/valgrind-ltp-logs</filename> mappen.
+    </para>
 
     <note>
       <para>
