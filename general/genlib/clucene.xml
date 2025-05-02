@@ -105,8 +105,10 @@ sed -i '/Misc.h/a #include &lt;ctime&gt;' src/core/CLucene/document/DateTools.cp
 mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -D CMAKE_INSTALL_PREFIX=/usr \
-      -D BUILD_CONTRIBS_LIB=ON .. &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr        \
+      -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
+      -D BUILD_CONTRIBS_LIB=ON            \
+      -W no-dev ..                        &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -120,11 +122,19 @@ make</userinput></screen>
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+     href="../../xincludes/cmake-policy-version.xml"/>
+
     <para>
       <parameter>-D BUILD_CONTRIBS_LIB=ON</parameter>: Denne cmake variabelen
       gjør det mulig å bygge CLucene bidragsbiblioteket som er nødvendig for å kjøre
       applikasjoner som bruker språkspesifikke tekstanalysatorer som for eksempel
       LibreOffice.
+    </para>
+
+    <para>
+      <parameter>-W no-dev</parameter>: Denne parameteren deaktiverer flere advarsler 
+	  kun beregnet på prosjektutviklere.
     </para>
 
   </sect2>
