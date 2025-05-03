@@ -178,9 +178,11 @@
 <screen><userinput>mkdir build                       &amp;&amp;
 cd    build                       &amp;&amp;
 
-cmake -D CMAKE_INSTALL_PREFIX=/usr  \
-      -D CMAKE_BUILD_TYPE=Release   \
-      ..                          &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr        \
+      -D CMAKE_BUILD_TYPE=Release         \
+      -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
+      -W no-dev                           \
+      ..                                  &amp;&amp;
 make</userinput></screen>
 
 <!--
@@ -214,9 +216,17 @@ make</userinput></screen>
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/cmake-policy-version.xml"/>
+
     <para>
       <parameter>-D CMAKE_BUILD_TYPE=Release</parameter>: Denne bryteren er brukt til
       å bygge utgivelsesbiblioteket uten noen feilsøkings 'assert' i koden.
+    </para>
+
+    <para>
+      <parameter>-W no-dev</parameter>: Denne parameteren deaktiverer flere advarsler 
+	  kun beregnet på prosjektutviklere.
     </para>
 
     <para>
