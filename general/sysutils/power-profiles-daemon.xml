@@ -176,33 +176,6 @@ ninja</userinput></screen>
 <userinput>install -vdm755 /var/lib/power-profiles-daemon</userinput>
 </screen>
 
-    <caution>
-      <para>
-        På noen eldre systemer ser det ut til at power-profiles-daemon installeres
-        og angir riktige verdier, men vil faktisk ikke fungere. For å sjekke dette
-        kjør <userinput>cat /sys/devices/system/cpu/cpufreq/policy0/scaling_driver</userinput>.
-        Hvis resultatet ikke er "intel_pstate", men i stedet "intel_cpufreq" (eller
-        lignende på AMD systemer), må strømprofil gjøres manuelt.
-      </para>
-
-      <para>
-        For å endre strømprofil manuelt, sjekk først for å se hvilke profiler som er
-        tilgjengelig med: 
-        <userinput>cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_governors</userinput>.
-        Sett deretter ønsket profil som &root; bruker med:
-      </para>
-
-<screen><userinput>for CPUFREQ in /sys/devices/system/cpu/cpufreq/policy*/scaling_governor
-  echo -n ${gov} > ${CPUFREQ}"
-done</userinput></screen>
-
-      <para>
-        Hvis du setter til scaling_governor til "performance", vær forsiktig
-        med varme- og batteriproblemer ved langvarig bruk.
-      </para>
-
-    </caution>
-
   </sect2>
 
 
@@ -295,6 +268,35 @@ done</userinput></screen>
         installert</phrase><phrase revision='systemd'>Systemd
         enheten er aktivert</phrase> som ovenfor.
       </para>
+
+      <caution>
+        <para>
+          På noen eldre systemer vil det se ut som om power-profiles-daemon installerer 
+		  og indikerer riktige verdier, men det vil ikke fungere. For å sjekke dette 
+		  kjør <userinput>cat /sys/devices/system/cpu/cpufreq/policy0/scaling_driver</userinput>.
+          Hvis resultatet ikke er «intel_pstate», men i stedet «intel_cpufreq» (eller 
+		  lignende på AMD-systemer), må endringer i strømforbruket gjøres manuelt..
+        </para>
+
+        <para>
+          For å endre strømtilstander manuelt, sjekk først hvilke regulatorer 
+		  som er tilgjengelige med: 
+          <userinput>cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_governors</userinput>.
+          Sett deretter ønsket regulator som &root; bruker med:
+        </para>
+
+<screen role="nodump"><userinput>gov=<replaceable>performance</replaceable>
+for CPUFREQ in /sys/devices/system/cpu/cpufreq/policy*/scaling_governor; do
+  echo -n ${gov} > ${CPUFREQ}"
+done</userinput></screen>
+
+        <para>
+          Hvis du setter scaling_governor til «ytelse», må du være forsiktig 
+		  med problemer med varme og batteri ved langvarig bruk..
+        </para>
+
+    </caution>
+
     </sect3>
 
   </sect2>
