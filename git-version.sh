@@ -36,13 +36,13 @@ day_digit=$(date --date "$commit_date" "+%d")
 day=$(echo $day_digit | sed 's/^0//')
 
 case $day in
-    "1" | "21" | "31" ) suffix="";;
-    "2" | "22" ) suffix="";;
-    "3" | "23" ) suffix="";;
+    "1" | "21" | "31" ) suffix="st";;
+    "2" | "22" ) suffix="nd";;
+    "3" | "23" ) suffix="rd";;
     * ) suffix="th";;
 esac
 
-full_date="$day. $month. $year"
+full_date="$day. $month $year"
 
 sha="$(git describe --abbrev=1)"
 version=$(echo "$sha" | sed 's/-g[^-]*$//')

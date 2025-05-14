@@ -6,9 +6,9 @@
 
   <!ENTITY nmap-download-http "https://nmap.org/dist/nmap-&nmap-version;.tar.bz2">
   <!ENTITY nmap-download-ftp  " ">
-  <!ENTITY nmap-md5sum        "faef7f359731ab2fa0321939ff0fbbab">
+  <!ENTITY nmap-md5sum        "e4ac67fa85b4c2a93b49c811b1f0d163">
   <!ENTITY nmap-size          "12 MB">
-  <!ENTITY nmap-buildsize     "108 MB (legg til 38 MB for tester)">
+  <!ENTITY nmap-buildsize     "109 MB (legg til 38 MB for tester)">
   <!ENTITY nmap-time          "0.4 SBU (Bruker parallellisme=4; legg til 0.1 SBU for tester)">
 ]>
 
@@ -88,7 +88,11 @@
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <note>
       <para>
-        Disse pakkene anbefales fordi hvis de ikke er installert, vil
+        Hvis <application>PyGObject3</application> modulen ikke er
+        installert, må du hoppe over kommandoen som gjør at byggesystemet 
+		bruker LFS <application>Setuptools</application> installasjonen og da 
+		vil en internettforbindelse være nødvendig. De andre 
+		pakkene anbefales fordi hvis de ikke er installert, vil
         byggeprosessen kompilere og koble mot sin egen (ofte eldre)
         versjon.
       </para>
@@ -115,6 +119,14 @@
 
   <sect2 role="installation">
     <title>Installasjon av Nmap</title>
+
+    <para>
+      Få byggesystemet til å bruke <application>Setuptools</application>
+      Python modulen fra LFS i stedet for å laste ned en kopi fra
+      internett:
+    </para>
+
+<screen><userinput>sed 's/-m build/&amp; --no-isolation/' -i Makefile.in</userinput></screen>
 
     <para>
       Installer <application>Nmap</application> ved å kjøre følgende
