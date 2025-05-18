@@ -5,11 +5,10 @@
   %general-entities;
 
   <!ENTITY dhcpcd-download-http "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v&dhcpcd-version;/dhcpcd-&dhcpcd-version;.tar.xz">
-<!--  <!ENTITY dhcpcd-download-ftp  "ftp://roy.marples.name/pub/dhcpcd/dhcpcd-&dhcpcd-version;.tar.xz">-->
   <!ENTITY dhcpcd-download-ftp  " ">
-  <!ENTITY dhcpcd-md5sum        "417ccbdef28a633e212b4fb59ba06fbf">
+  <!ENTITY dhcpcd-md5sum        "c33d9410f7b77572a68415b47e6762f8">
   <!ENTITY dhcpcd-size          "272 KB">
-  <!ENTITY dhcpcd-buildsize     "3.8 MB (med tester)">
+  <!ENTITY dhcpcd-buildsize     "3.6 MB (med tester)">
   <!ENTITY dhcpcd-time          "mindre enn 0.1 SBU (med tester)">
 ]>
 
@@ -69,7 +68,6 @@
         </para>
       </listitem>
     </itemizedlist>
-
 <!--
 
 
@@ -83,6 +81,7 @@
       </listitem>
     </itemizedlist>
 -->
+
     <bridgehead renderas="sect3">dhcpcd Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -107,8 +106,7 @@
     <para>
       Hvis du imidlertid ønsker å bruke rettighetsseparasjon, tilleggs
        installasjonstrinn er nødvendig for å sette opp det riktige miljøet. Kjør
-       følgende kommandoer som
-      <systemitem class="username">root</systemitem> bruker:
+       følgende kommandoer som &root; bruker:
     </para>
 
 <screen role="root"><userinput>install  -v -m700 -d /var/lib/dhcpcd &amp;&amp;
@@ -126,12 +124,20 @@ chown    -v dhcpcd:dhcpcd /var/lib/dhcpcd </userinput></screen>
   <sect2 role="installation">
     <title>Installasjon av dhcpcd</title>
 
+<!--
     <para>
-      Alternativt, bygg <application>dhcpcd</application> med privilegium
-      separasjon ved å kjøre følgende kommandoer:
+      Først, fiks et problem som oppstår når du kjører dhcpcd med bryteren '-b':
     </para>
 
-<screen role="nodump"><userinput>./configure --prefix=/usr                \
+<screen><userinput remap="pre">patch -Np1 -i ../dhcpcd-&dhcpcd-version;-upstream_fixes-1.patch</userinput></screen>
+
+-->
+    <para>
+      Bygg <application>dhcpcd</application> med rettighetsseparasjon
+      ved å kjøre følgende kommandoer:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr                \
             --sysconfdir=/etc            \
             --libexecdir=/usr/lib/dhcpcd \
             --dbdir=/var/lib/dhcpcd      \
@@ -140,11 +146,11 @@ chown    -v dhcpcd:dhcpcd /var/lib/dhcpcd </userinput></screen>
 make</userinput></screen>
 
     <para>
-      Bygg <application>dhcpcd</application> med rettighetsseparasjon
-      ved å kjøre følgende kommandoer:
+      Alternativt, bygg <application>dhcpcd</application> med privilegium 
+	  separasjon ved å kjøre følgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr                \
+<screen role="nodump"><userinput>./configure --prefix=/usr                \
             --sysconfdir=/etc            \
             --libexecdir=/usr/lib/dhcpcd \
             --dbdir=/var/lib/dhcpcd      \
@@ -157,7 +163,7 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
 <screen role='root'><userinput>make install</userinput></screen>
@@ -268,10 +274,10 @@ install -v -m 644 dhcpcd-hooks/50-dhcpcd-compat /lib/dhcpcd/dhcpcd-hooks/</useri
       </note>
 
       <para id="dhcpcd-config2">
-        Til slutt, som <systemitem class="username">root</systemitem> bruker
-        opprett <filename>/etc/sysconfig/ifconfig.eth0</filename>
-        konfigurasjonsfil ved hjelp av følgende kommandoer. Juster riktig
-        for ekstra grensesnitt:
+        Til slutt, som the &root; user, opprett
+        <filename>/etc/sysconfig/ifconfig.eth0</filename> konfigurasjonsfilen 
+		ved hjelp av følgende kommandoer. Juster deretter for ytterligere
+        grensesnitt:
       </para>
 
       <indexterm zone="dhcpcd dhcpcd-config2">
@@ -303,8 +309,7 @@ EOF</userinput></screen>
       <para id="dhcpcd-config4">
         Selv om det ikke er vanlig, er det mulig at du trenger
         å konfigurere <application>dhcpcd</application> til å bruke en fast ip. Her,
-        gir vi et eksempel. Som
-        <systemitem class="username">root</systemitem> bruker opprett
+        gir vi et eksempel. Som &root; bruker, opprett
         <filename>/etc/sysconfig/ifconfig.eth0</filename> konfigurasjonsfilen
         ved å bruke følgende kommandoer. Juster passende for ytterligere
         grensesnitt og for den faktiske ip og ruteren du trenger:
@@ -344,8 +349,7 @@ EOF</userinput></screen>
         Hvis du vil konfigurere nettverksgrensesnitt ved oppstart ved hjelp av
         <command>dhcpcd</command>, må du installere
         systemd enheten inkludert i <xref linkend="systemd-units"/>
-        pakken ved å kjøre følgende kommando som
-        <systemitem class="username">root</systemitem> bruker:
+        pakken ved å kjøre følgende kommando som &root; bruker:
       </para>
 
 <screen role="root"><userinput>make install-dhcpcd</userinput></screen>
@@ -385,7 +389,7 @@ EOF</userinput></screen>
       <para>
         På dette tidspunktet kan du teste om <command>dhcpcd</command> 
         oppfører seg som forventet ved å kjøre følgende kommando som
-        <systemitem class="username">root</systemitem> bruker:
+        &root; bruker:
       </para>
 
 <screen role="root"><userinput>systemctl start dhcpcd@<replaceable>eth0</replaceable></userinput></screen>
@@ -393,8 +397,7 @@ EOF</userinput></screen>
       <para>
         For å starte <command>dhcpcd</command> på et spesifikt grensesnitt
         ved oppstart, aktiver den tidligere installerte systemd enheten ved å
-        kjøre følgende kommando som
-        <systemitem class="username">root</systemitem> bruker:
+        kjøre følgende kommando som &root; bruker:
       </para>
 
 <screen role="root"><userinput>systemctl enable dhcpcd@<replaceable>eth0</replaceable></userinput></screen>
