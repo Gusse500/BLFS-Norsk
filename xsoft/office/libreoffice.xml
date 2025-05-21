@@ -7,24 +7,24 @@
   <!ENTITY libreoffice-dl "https://download.documentfoundation.org/libreoffice/src/&libreoffice-version;">
 
   <!ENTITY libreoffice-core-download-http "&libreoffice-dl;/libreoffice-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-core-md5sum        "d530492e8cc571a7c856971df791e1f0">
-  <!ENTITY libreoffice-core-size          "268 MB">
+  <!ENTITY libreoffice-core-md5sum        "19c450d4777bf169761ed190eac7c841">
+  <!ENTITY libreoffice-core-size          "269 MB">
 
   <!ENTITY libreoffice-dict-download-http "&libreoffice-dl;/libreoffice-dictionaries-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-dict-md5sum        "be9a17e29684277d6bf3643b62786abe">
+  <!ENTITY libreoffice-dict-md5sum        "770a3ad86a4c68754a611056c55cb83c">
   <!ENTITY libreoffice-dict-size          "56 MB">
 
   <!ENTITY libreoffice-help-download-http "&libreoffice-dl;/libreoffice-help-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-help-md5sum        "4acffd67d6c62bef7d97ce02dce3651f">
+  <!ENTITY libreoffice-help-md5sum        "43b27eae3d79f98f73c7a207bb4e0cb0">
   <!ENTITY libreoffice-help-size          "58 MB">
 
   <!ENTITY libreoffice-translations-download-http "&libreoffice-dl;/libreoffice-translations-&libreoffice-dlversion;.tar.xz">
-  <!ENTITY libreoffice-translations-md5sum        "3d7c908e95f9ae7d7c5c73f668a8321b">
+  <!ENTITY libreoffice-translations-md5sum        "8255a08a0cbbf133724a0da1d6f0d95c">
   <!ENTITY libreoffice-translations-size          "219 MB">
 
   <!-- full size remeasured for 7.0.0.3 -->
 
-  <!ENTITY libreoffice-buildsize  "7.5 GB inkludert tilleggsfilene hvis de blir lastet ned under byggingen (737 MB installert). Å installere hele settet med språk krever mer enn 25 GB (rundt 3 GB installert)">
+  <!ENTITY libreoffice-buildsize  "10.7 GB inkludert tilleggsfilene hvis de blir lastet ned under byggingen (776 MB installert). Å installere hele settet med språk krever mer enn 25 GB (rundt 3 GB installert)">
 
  <!-- Editors: many updates to poppler will break LO using system poppler until
       somebody is able to provide a patch or sed.  In these cases, please mark
@@ -167,6 +167,10 @@
         <para>
           Nødvendig oppdatering for å fikse bygging med <xref linkend="icu"/>:
           <ulink url="&patch-root;/libreoffice-&libreoffice-dlversion;-icu76_fixes-1.patch"/>
+        </para>
+        <para>
+          Nødvendig oppdatering for å fikse bygging med <xref linkend="poppler"/>:
+          <ulink url="&patch-root;/libreoffice-&libreoffice-dlversion;-poppler_fixes-1.patch"/>
         </para>
       </listitem>
 
@@ -338,6 +342,19 @@ cd libreoffice-&libreoffice-dlversion;</userinput></screen>
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../libreoffice-&libreoffice-dlversion;-icu76_fixes-1.patch</userinput></screen>
+
+    <para>
+      Deretter, fiks en byggefeil introdusert av den nyeste versjonen av poppler:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../libreoffice-&libreoffice-dlversion;-poppler_fixes-1.patch</userinput></screen>
+
+    <para>
+      Deretter, reparer et problem med OpenJDK-24 og senere som oppstår på grunn av 
+	  fjerning av utdatert API i Java:
+    </para>
+
+<screen><userinput remap="pre">sed -i 's/-Djava.security.manager=allow//' external/hsqldb/ExternalProject_hsqldb.mk</userinput></screen>
 
     <para>
       Deretter fikser du en feil med kobling til zlib,
