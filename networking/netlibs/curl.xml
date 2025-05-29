@@ -6,10 +6,10 @@
 
   <!ENTITY curl-download-http "https://curl.se/download/curl-&curl-version;.tar.xz">
   <!ENTITY curl-download-ftp  " ">
-  <!ENTITY curl-md5sum        "b94f85cf7c03fcc31b3750e45a424f26">
+  <!ENTITY curl-md5sum        "34a7f339efbb60bf872022ac8bdfe2b1">
   <!ENTITY curl-size          "2.7 MB">
-  <!ENTITY curl-buildsize     "61 MB (legg til 15 MB for tester)">
-  <!ENTITY curl-time          "0.2 SBU (med parallellitet=4; legg til 4.9 SBU for tester (uten valgrind, legg til 14 SBU med valgrind))">
+  <!ENTITY curl-buildsize     "52 MB (legg til 68 MB for tester)">
+  <!ENTITY curl-time          "0.2 SBU (legg til 4.9 SBU for tester (uten valgrind, legg til 19 SBU med valgrind) alle bruker parallellisme=4)">
 ]>
 
 <sect1 id="curl" xreflabel="cURL-&curl-version;">
@@ -70,17 +70,17 @@
         </para>
       </listitem>
     </itemizedlist>
-<!--
+
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
           Nødvendig oppdatering:
-          <ulink url="&patch-root;/curl-&curl-version;-function_naming-1.patch"/>
+          <ulink url="&patch-root;/curl-&curl-version;-upstream_fix-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
--->
+
 
     <bridgehead renderas="sect3">cURL Avhengigheter</bridgehead>
 
@@ -141,6 +141,12 @@
 
   <sect2 role="installation">
     <title>Installasjon av cURL</title>
+
+    <para>
+      Først, bruk en oppdatering fra oppstrøms:
+    </para>
+
+<screen><userinput>patch -Np1 -i ../curl-&curl-version;-upstream_fix-1.patch</userinput></screen>
 
     <para>
       Installer <application>cURL</application> ved å kjøre følgende
