@@ -110,13 +110,13 @@
 
   <sect2 role="installation">
     <title>Installasjon av parted</title>
-    <!--
+
     <para>
-      Hvis du vil bygge uten støtte for enhetskartlegging, er en fiks nødvendig:
+      Først må du gjøre pakken kompatibel med gcc-15:
     </para>
 
-<screen><userinput>patch -Np1 -i ../parted-&parted-version;-devmapper-1.patch</userinput></screen>
-    -->
+<screen><userinput>sed -i 's/do_version ()/do_version (PedDevice** dev, PedDisk** diskp)/' parted/parted.c</userinput></screen>
+
     <para>
       Installer <application>Parted</application> ved å kjøre følgende
       kommandoer:

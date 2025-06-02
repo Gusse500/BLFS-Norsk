@@ -71,6 +71,18 @@
     <title>Installasjon av unifdef</title>
 
     <para>
+      Først, fiks et problem når det bygges med gcc-15:
+    </para>
+
+<screen><userinput remap="pre">sed -i 's/constexpr/unifdef_&amp;/g' unifdef.c</userinput></screen>
+
+    <para>
+      Løs nå et problem hvis du installerer pakken på nytt:
+    </para>
+
+<screen><userinput remap="pre">sed -i 's/ln -s/ln -sf/' Makefile</userinput></screen>
+
+    <para>
       Installer <application>unifdef</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -82,7 +94,7 @@
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Til slutt, fullfør installasjonen som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make prefix=/usr install</userinput></screen>
