@@ -252,15 +252,8 @@ link-shared = true
 # instead of all the targets supported by LLVM.
 targets = "X86"
 
-description = "for BLFS &version;"
-
 [build]
-# Do a 2-stage bootstrap instead of a 3-stage one to save time and space.
-# Note that the numbers "1" below mean to *run* the stage-*1* compiler and
-# build the stage-2 compiler.
-build-stage = 1
-test-stage = 1
-doc-stage = 1
+description = "for BLFS &version;"
 
 # Omit docs to save time and space (default is to build them).
 docs = false
@@ -432,8 +425,7 @@ EOF</userinput></screen>
       </para>
     </note>
 
-<screen role='root'><userinput>./x.py install rustc std &amp;&amp;
-./x.py install --stage=1 cargo clippy rustfmt</userinput></screen>
+<screen role='root'><userinput>./x.py install</userinput></screen>
 
     <para>
       Fortsatt som &root; bruker, fiks installasjonen av dokumentasjonen,
@@ -473,13 +465,6 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
     </para>
 
     <para>
-      <literal>targets = "X86"</literal>: dette unngår å bygge alt tilgjengelig
-      linux krysskompilatorer (AArch64, MIPS, PowerPC, SystemZ, etc). Dessverre,
-      rust insisterer på å installere kildefiler for disse nedenfor
-      <filename class="directory">/opt/rustc/lib/src</filename>.
-    </para>
-
-    <para>
       <literal>tools = ["cargo", "clippy", "rustdoc", "rustfmt"]</literal>:
       bygg bare verktøyene fra 'standard' profilen i binær kommando
       <command>rustup</command> som anbefales for de fleste brukere.
@@ -499,8 +484,8 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
       <filename>bootstrap.toml</filename> krever en <literal>llvm-config</literal>
       oppføring for hvert mål som system-llvm skal brukes for. Endre målet
       til <literal>[target.i686-unknown-linux-gnu]</literal> hvis du bygger
-      på 32-bit x86. Hele denne delen kan utelates hvis du ønsker å bygge
-      mot den sendte llvm, eller ikke har clang, men den resulterende bygget vil
+      på 32-bit x86. Hele denne delen bør utelates hvis du ønsker å bygge
+      mot den sendte llvm, men det resulterende bygget vil
       være større og ta lengre tid.
     </para>
 
@@ -544,13 +529,6 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
     <para>
       <parameter>--no-fail-fast</parameter>: denne bryteren sikrer at testpakken
       ikke vil stoppe ved den første feilen.
-    </para>
-
-    <!-- https://github.com/rust-lang/rust/issues/94147 -->
-    <para>
-      <parameter>--stage=1</parameter>: denne bryteren løser et problem som
-      forårsaker at noen Rustc komponenter gjenoppbygges unødvendig
-      <command>./x.py install</command>.
     </para>
 
   </sect2>
