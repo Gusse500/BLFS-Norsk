@@ -103,9 +103,9 @@
       kommandoer som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role='root'><userinput>patch -Np1 -i ../procmail-&procmail-version;-consolidated_fixes-1.patch &amp;&amp;
+<screen role='root'><userinput>patch -Np1 -i ../procmail-&procmail-version;-consolidated_fixes-1.patch               &amp;&amp;
 
-make LOCKINGTEST=/tmp MANDIR=/usr/share/man install       &amp;&amp;
+make CC="gcc -std=gnu17" LOCKINGTEST=/tmp MANDIR=/usr/share/man install &amp;&amp;
 make install-suid</userinput></screen>
 
   </sect2>
@@ -125,6 +125,12 @@ make install-suid</userinput></screen>
       <command>make LOCKINGTEST=/tmp install</command>: Dette forhindrer
       <command>make</command> fra å spørre deg hvor du skal teste
       fillåsingsmønstre.
+    </para>
+
+    <para>
+      <command>CC="gcc -std=gnu17"</command>: Dette setter C standarden til C17
+      fordi denne pakken ikke er kompatibel med C23, og ingen rettelser er lett
+      tilgjengelige.
     </para>
 
     <para>
