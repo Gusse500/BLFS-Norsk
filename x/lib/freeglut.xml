@@ -97,13 +97,14 @@
 
   <sect2 role="installation">
     <title>Installasjon av Freeglut</title>
-<!--
+
     <para>
-      Først, fiks et problem med flere definerte symboler eksponert av GCC-10:
+      Først, fiks et problem når man bygger med gcc-15:
     </para>
 
-<screen><userinput>patch -Np1 -i ../freeglut-&freeglut-version;-gcc10_fix-1.patch</userinput></screen>
--->
+<screen><userinput remap="pre">sed -e '/Context/s/()/(SFG_PlatformDisplay, SFG_WindowContextType)/' \
+    -i src/egl/fg_init_egl.h</userinput></screen>
+
     <para>
       Installer <application>Freeglut</application> ved å kjøre
       følgende kommandoer:
