@@ -73,7 +73,7 @@
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="glib2"/> (GObject Introspection anbefalt),
-      <xref linkend="libgcrypt"/>, og
+      <xref linkend="libgcrypt"/>,
       <xref linkend="p11-kit"/>
     </para>
 
@@ -82,15 +82,15 @@
       <xref linkend="gnupg2"/>,
       <xref linkend="gtk4"/>,
       <xref linkend="libsecret"/>,
-      <xref linkend="libxslt"/>,
-      <xref linkend="openssh"/>, og
+      <xref linkend="libxslt"/>, og
       <xref linkend="vala"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gi-docgen"/>,
-      <xref linkend="gnutls"/>, og
+      <xref linkend="gnutls"/>,
+      <xref linkend="openssh"/>, og
       <xref linkend="valgrind"/>
     </para>
 
@@ -117,6 +117,7 @@ cd    build &amp;&amp;
 meson setup --prefix=/usr       \
             --buildtype=release \
             -D gtk_doc=false    \
+            -D ssh_agent=false  \
             ..                  &amp;&amp;
 ninja</userinput></screen>
 
@@ -156,13 +157,15 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <option>-D ssh_agent=false</option>: Bruk denne bryteren hvis du
-      ikke har installert <xref linkend="openssh"/>, og ønsker å deaktivere
-      ssh kapasiteter.
+      <parameter>-D gtk_doc=false</parameter>: &gi-doc-disable;
     </para>
 
     <para>
-      <option>-D gtk_doc=false</option>: &gi-doc-disable;
+      <parameter>-D ssh_agent=false</parameter>: Deaktiver ssh-agent 
+      implementeringen av denne pakken. Denne implementeringen er ment å 
+      erstatte ssh-agent implementeringen av
+      <xref linkend='gnome-keyring'/>, men det viser seg at erstatningen 
+      fortsatt har et uløst problem.
     </para>
 
     <para>
