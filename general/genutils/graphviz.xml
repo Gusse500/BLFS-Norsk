@@ -6,10 +6,10 @@
 
   <!ENTITY graphviz-download-http "https://gitlab.com/graphviz/graphviz/-/archive/&graphviz-version;/graphviz-&graphviz-version;.tar.bz2">
   <!ENTITY graphviz-download-ftp  " ">
-  <!ENTITY graphviz-md5sum        "4a4dbe47b00b07cd6ba01c75f7d02e6a">
-  <!ENTITY graphviz-size          "25 MB">
-  <!ENTITY graphviz-buildsize     "216 MB">
-  <!ENTITY graphviz-time          "0.6 SBU (bruke parallellisme=4)">
+  <!ENTITY graphviz-md5sum        "3f556337f64833cd1a26398ea76d53a6">
+  <!ENTITY graphviz-size          "32 MB">
+  <!ENTITY graphviz-buildsize     "154 MB">
+  <!ENTITY graphviz-time          "0.3 SBU (bruke parallellisme=4)">
 ]>
 
 <sect1 id="graphviz" xreflabel="Graphviz-&graphviz-version;">
@@ -93,12 +93,19 @@
     <bridgehead renderas="sect4">Valgfri, for ulike punktgrafikk utdata</bridgehead>
     <para role="optional">
       <xref linkend="pango"/>, med
-      <xref linkend="cairo"/>,
-      <xref linkend="xorg7-lib"/>,
-      <xref linkend="fontconfig"/>, og
-      <xref linkend="libpng"/>, å generere bilder i punktgrafikk SVG, postscript,
+        <xref linkend="cairo"/>,
+        <xref linkend="xorg7-lib"/>,
+        <xref linkend="fontconfig"/>,
+        <xref linkend="libpng"/>, for å generere bilder i punktgrafikk SVG, postscript,
       PNG og PDF formater, eller for å vise bildet på skjermen. PNG
-      utdataen er nødvendig for byggingen av <xref role="nodep" linkend="gegl"/>
+      utdataen er nødvendig for byggingen av <xref role="nodep" linkend="gegl"/>.
+    </para>
+
+    <para role="optional">
+      <xref linkend="aalib"/> (for å vise bilder i ASCII grafikk),
+      <xref linkend="cups"/> (for formatering av grafer for utskrift),
+      <xref linkend="qt6"/>, og
+      <xref linkend="webkitgtk"/>
     </para>
 
     <para role="optional">
@@ -116,7 +123,7 @@
 
     <para role="optional">
       Andre formater kan legges til med
-      <xref linkend="libwebp"/> (WebP støtte anses som eksperimentell),
+      <xref linkend="libwebp"/>,
       <ulink url="https://openil.sourceforge.net/projects.php">DevIL</ulink>,
       <ulink url="https://sourceforge.net/projects/lasi/">libLASi</ulink>, og
       <ulink url="https://www.freedesktop.org/wiki/Software/glitz">glitz</ulink>
@@ -135,6 +142,7 @@
     <bridgehead renderas="sect4">Valgfritt (for å bygge flere verktøy)</bridgehead>
 
     <para role="optional">
+      <ulink url="http://www.cs.umd.edu/~mount/ANN/">libANN</ulink> og
       <xref linkend="freeglut"/> (med 
       <ulink url="https://sourceforge.net/projects/gtkglext/">GtkGLExt</ulink> og
       <ulink url="https://gts.sourceforge.net/">libGTS</ulink> for bygging av
@@ -152,10 +160,7 @@
       <xref linkend="lua"/>,
       <xref linkend="php"/>,
       <xref linkend="ruby"/>,
-      <xref linkend="tk"/>,
-      <ulink url="https://iolanguage.org/">Io</ulink>,
-      <ulink url="https://www.mono-project.com/Main_Page">Mono</ulink>,
-      <ulink url="https://ocaml.org/">OCaml</ulink>, og
+      <xref linkend="tk"/>, og
       <ulink url="https://www.r-project.org/">R</ulink>
     </para>
 
@@ -176,43 +181,21 @@
   <sect2 role="installation">
     <title>Installasjon av Graphviz</title>
 
-    <!-- https://gitlab.com/graphviz/graphviz/-/merge_requests/3739 -->
-    
-    <!-- Removed in #20047 update to 12.0.0
-    <para>
-      Fjern en duplisert deklarasjon som forårsaker noen <xref linkend='vala'/>
-      tester å feile:
-    </para>
-
-    <screen><userinput>awk -i inplace '/aghtmlstr/ &amp;&amp; ++f == 2 {getline} 1' \
-    lib/cgraph/cgraph.h</userinput></screen>
-    -->
     <para>
       Installer <application>Graphviz</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>sed -i '/LIBPOSTFIX="64"/s/64//' configure.ac &amp;&amp;
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
 
-./autogen.sh              &amp;&amp;
-./configure --prefix=/usr \
-            --docdir=/usr/share/doc/graphviz-&graphviz-version;</userinput></screen>
+cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D CMAKE_BUILD_TYPE=Release  \
+      ..                           &amp;&amp;
 
-    <note>
-      <para>
-        En advarsel genereres av <command>autogen.sh</command> fordi
-        byggetreet ikke er et git depot. Som et resultat er byggedatoen satt
-        til 0. For å få en meningsfull dato i versjonsstrengen kan du kjøre:
-      </para>
+sed -i '/GZIP/s/:.*$/=/' CMakeCache.txt &amp;&amp;
 
-<screen><userinput>sed -i "s/0/$(date +%Y%m%d)/" builddate.h</userinput></screen>
-    </note>
-
-    <para>
-      Enten du fikser datoen eller ikke, fortsett å kompilere pakken:
-    </para>
-
-<screen><userinput>make</userinput></screen>
+make</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke som gir
@@ -220,7 +203,7 @@
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
@@ -231,48 +214,14 @@
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed ... configure.ac</command>: Denne kommandoen er nødvendig for å
-      unngå å installere filer i /usr/lib64.
-    </para>
-
-    <para>
-      <option>--with-javaincludedir="$JAVA_HOME/include
-                                   -I$JAVA_HOME/include/linux"</option>:
-      Hvis du har bygget <xref linkend="openjdk"/> i /opt, og du vil
-      bygge JAVA bindingene, er det nødvendig å spesifisere plasseringen av
-      JAVA deklarasjonsfiler for å konfigurere. Konfigurasjonsbryteren er designet for
-      bare en katalog, men to kataloger må inkluderes.
-      Dette er likevel mulig ved å bruke -I bryteren inne i variabelen.
-    </para>
-
-    <para>
-      <option>--with-webp</option>: Selv om <xref linkend="libwebp"/> er
-      installert, er det ikke inkludert i bygget uten dette alternativet.
-    </para>
-
-    <para>
-      <option>--with-smyrna</option>: Selv om de nødvendige avhengighetene er
-      installert, den interaktive grafviseren <command>smyrna</command> er ikke
-      bygget uten dette alternativet.
+      <command>sed ... CMakeCache.txt</command>: Denne kommandoen er nødvendig 
+      for å forhindre komprimering av pakkenes manualsider.
     </para>
 
   </sect2>
 
   <sect2 role="configuration">
     <title>Konfigurere Graphviz</title>
-
-    <sect3 id="graphviz-config">
-      <title>Konfigurasjonsfiler</title>
-
-      <para>
-        <filename>/usr/lib/graphviz/config</filename>
-      </para>
-
-      <indexterm zone="graphviz graphviz-config">
-        <primary sortas="e-usr-share-graphviz-config">/usr/share/graphviz/config</primary>
-      </indexterm>
-
-    </sect3>
 
     <sect3>
       <title>Konfigurasjonsinformasjon</title>
@@ -304,24 +253,25 @@
       <seglistitem>
         <seg>
           acyclic, bcomps, ccomps, circo, cluster, dijkstra,
-          dot, dot2gxl, dot_builtins, edgepaint, fdp, gc, gml2gv,
+          dot, dot2gxl, dot_builtins, dot_sandbox, edgepaint, fdp, gc, gml2gv,
           graphml2gv, gv2gml, gv2gxl, gvcolor, gvedit, gvgen, gvmap, gvmap.sh,
           gvpack, gvpr, gxl2dot, gxl2gv, mm2gv, neato, nop,
           osage, patchwork, prune, sccmap, sfdp, tred, twopi,
           unflatten, og vimdot
         </seg>
         <seg>
-          libcdt.so, libcgraph.so, libgvc.so, libgvpr.so, liblab_gamut.so,
-          libpathplan.so, libxdot.so, og flere programtillegg i /usr/lib/graphviz.
-          Det er også flere i undermapper til
-          /usr/lib/{lua,perl5,php,python&python3-majorver;,tcl8.6}.
-          Dessverre er noen biblioteker duplisert.
+          libcdt.so, 
+          libcgraph.so, 
+          libgvc.so, 
+          libgvpr.so, 
+          libpathplan.so, 
+          libxdot.so, and 
+          flere programtillegg i /usr/lib/graphviz/.
         </seg>
         <seg>
           /usr/include/graphviz,
           /usr/lib/graphviz,
-          /usr/lib/tcl8.6/graphviz,
-          /usr/share/doc/graphviz-&graphviz-version;, og
+          /usr/lib/tcl8.6/graphviz, og
           /usr/share/graphviz
         </seg>
       </seglistitem>
@@ -397,6 +347,7 @@
         </listitem>
       </varlistentry>
 
+<!--
       <varlistentry id="diffimg">
         <term><command>diffimg</command></term>
         <listitem>
@@ -411,6 +362,7 @@
           </indexterm>
         </listitem>
       </varlistentry>
+-->
 
       <varlistentry id="dijkstra">
         <term><command>dijkstra</command></term>
@@ -458,21 +410,21 @@
           </indexterm>
         </listitem>
       </varlistentry>
-      <!--
-      <varlistentry id="dotty">
-        <term><command>dotty</command></term>
+
+      <varlistentry id="dot_sandbox">
+        <term><command>dot_sandbox</command></term>
         <listitem>
           <para>
-            er en grafredigerer for X Window System. Den kan kjøres som en
-            frittstående editor, eller som en grensesnitt for applikasjoner som bruker
-            grafer. Den kan kontrollere flere vinduer som viser forskjellige grafer
+            er en innpakning rundt graphviz. Den har som mål å tilby et trygt 
+			miljø for behandling av upålitelige inndatagrafer og 
+			kommandolinjealternativer.
           </para>
-          <indexterm zone="graphviz dotty">
-            <primary sortas="b-dotty">dotty</primary>
+          <indexterm zone="graphviz dot_sandbox">
+            <primary sortas="b-dot_sandbox">dot_sandbox</primary>
           </indexterm>
         </listitem>
       </varlistentry>
-      -->
+
       <varlistentry id="edgepaint">
         <term><command>edgepaint</command></term>
         <listitem>
@@ -499,6 +451,7 @@
         </listitem>
       </varlistentry>
 
+<!--
       <varlistentry id="gc-graphviz">
         <term><command>gc</command></term>
         <listitem>
@@ -513,6 +466,7 @@
           </indexterm>
         </listitem>
       </varlistentry>
+-->
 
       <varlistentry id="gml2gv">
         <term><command>gml2gv</command></term>
@@ -691,7 +645,7 @@
           </indexterm>
         </listitem>
       </varlistentry>
-      <!--
+
       <varlistentry id="lefty">
         <term><command>lefty</command></term>
         <listitem>
@@ -717,7 +671,7 @@
           </indexterm>
         </listitem>
       </varlistentry>
-      -->
+
       <varlistentry id="mm2gv">
         <term><command>mm2gv</command></term>
         <listitem>
