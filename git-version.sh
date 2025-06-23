@@ -7,7 +7,7 @@ elif [ "$1" = systemd ]; then
     SYSV="IGNORE "
     SYSTEMD="INCLUDE"
 else
-    echo You must provide either \"sysv\" or \"systemd\" as argument
+    echo Du må oppgi enten \"sysv\" eller \"systemd\" som argument
     exit 1
 fi
 
