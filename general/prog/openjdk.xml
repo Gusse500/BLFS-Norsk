@@ -250,9 +250,10 @@
       Konfigurer og bygg pakken med følgende kommandoer:
     </para>
 
-<screen><userinput>unset JAVA_HOME                             &amp;&amp;
-unset CLASSPATH                             &amp;&amp;
-unset MAKEFLAGS                             &amp;&amp;
+<screen><userinput>export MAKEFLAGS_HOLD=$MAKEFLAGS           &amp;&amp;
+unset  JAVA_HOME                           &amp;&amp;
+unset  CLASSPATH                           &amp;&amp;
+unset  MAKEFLAGS                           &amp;&amp;
 bash configure --enable-unlimited-crypto    \
                --disable-warnings-as-errors \
                --with-stdc++lib=dynamic     \
@@ -363,6 +364,21 @@ done</userinput></screen>
         <command>cp</command> kommandoen.
       </para>
     </note>
+
+    <para>
+      Det vil være mange binærfiler med feilsøkingsinformasjon som tar opp over 
+      halvparten av den installerte størrelsen. Hvis du ikke bryr deg om feilsøking, 
+      kan du fjerne informasjonen:
+    </para>
+
+<screen><userinput>find /opt/jdk-&openjdk-version;+&openjdk-build; -name *.debuginfo -delete</userinput></screen>
+
+    <para>
+      Restore the <envar>MAKEFLAGS</envar> variable:
+    </para>
+
+<screen><userinput>export MAKEFLAGS=$MAKEFLAGS_HOLD &amp;&amp;
+unset  MAKEFLAGS_HOLD</userinput></screen>
 
     <para>
       Det er nå to <application>OpenJDK</application> SDKs installert

@@ -326,7 +326,7 @@ fi</userinput></screen>
         kjøre følgende kommandoer:
       </para>
 
-<screen><userinput>make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" makefiles &amp;&amp;
+<screen><userinput>make CC="gcc -std=gnu17" CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" makefiles &amp;&amp;
 make</userinput></screen>
 
     <!-- There is a test suite, but it fails a lot. It seems to need
@@ -367,6 +367,16 @@ make</userinput></screen>
       destinasjonsmapper i alle unntatt noen få tilfeller. Hvis
       <option>html_directory</option> og <option>readme_directory</option>
       alternativer ikke er angitt, vil ikke dokumentasjonen bli installert.
+    </para>
+
+    <!--
+      Next version of postfix still has gcc15 issues
+      Tested at 22 July 25 with RC postfix-3.11-20250621.tar.gz
+    -->
+    <para>
+      <option>CC="gcc -std=gnu17"</option>: Dette brukes til å løse et problem 
+      med gcc-15. Denne versjonen av gcc bruker <literal>-std=gnu23</literal> som
+      standard som avslører flere problemer i kildekoden.
     </para>
 
     <para>

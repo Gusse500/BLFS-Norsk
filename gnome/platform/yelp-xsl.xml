@@ -6,9 +6,9 @@
 
   <!ENTITY yelp-xsl-download-http "&gnome-download-http;/yelp-xsl/&gnome-42;/yelp-xsl-&yelp-xsl-version;.tar.xz">
   <!ENTITY yelp-xsl-download-ftp  " ">
-  <!ENTITY yelp-xsl-md5sum        "c41858c78e34bb8b68a535657a3e15d9">
-  <!ENTITY yelp-xsl-size          "652 KB">
-  <!ENTITY yelp-xsl-buildsize     "10 MB">
+  <!ENTITY yelp-xsl-md5sum        "e0f6ed43c206bb205057d0adf76e83bd">
+  <!ENTITY yelp-xsl-size          "388 KB">
+  <!ENTITY yelp-xsl-buildsize     "8.1 MB">
   <!ENTITY yelp-xsl-time          "mindre enn 0.1 SBU">
 ]>
 
@@ -67,6 +67,7 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -76,6 +77,7 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <bridgehead renderas="sect3">Yelp XSL Avhengigheter</bridgehead>
 
@@ -90,18 +92,24 @@
   <sect2 role="installation">
     <title>Installasjon av Yelp XSL</title>
 
+<!--
     <para>
       Først, fiks en sikkerhetssårbarhet som tillater vilkårlig fillesing:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../yelp-xsl-&yelp-xsl-version;-security_fix-1.patch</userinput></screen>
+-->
 
     <para>
       Installer <application>Yelp XSL</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release.. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -111,7 +119,7 @@
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
