@@ -6,9 +6,9 @@
 
   <!ENTITY yelp-download-http "&gnome-download-http;/yelp/&gnome-42;/yelp-&yelp-version;.tar.xz">
   <!ENTITY yelp-download-ftp  " ">
-  <!ENTITY yelp-md5sum        "3792122c4ab90725716cd88e9274f0f6">
-  <!ENTITY yelp-size          "1.4 MB">
-  <!ENTITY yelp-buildsize     "21 MB">
+  <!ENTITY yelp-md5sum        "55f5edc7e1d52797a8fba23540fa72c1">
+  <!ENTITY yelp-size          "1.2 MB">
+  <!ENTITY yelp-buildsize     "13 MB">
   <!ENTITY yelp-time          "0.1 SBU">
 ]>
 
@@ -66,6 +66,7 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -75,6 +76,7 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <bridgehead renderas="sect3">Yelp Avhengigheter</bridgehead>
 
@@ -91,10 +93,12 @@
       <xref linkend="desktop-file-utils"/>
     </para>
 
+<!--
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gtk-doc"/>
     </para>
+-->
 
     <note>
       <para>
@@ -111,19 +115,24 @@
   <sect2 role="installation">
     <title>Installasjon av Yelp</title>
 
+<!--
     <para>
       Først, fiks en sikkerhetssårbarhet som tillater vilkårlig fillesing:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../yelp-&yelp-version;-security_fix-1.patch</userinput></screen>
+-->
 
     <para>
       Installer <application>Yelp</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -133,7 +142,7 @@ make</userinput></screen>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
       Fortsatt som <systemitem class="username">root</systemitem> bruker, sikre
@@ -146,6 +155,7 @@ make</userinput></screen>
 
   </sect2>
 
+<!--
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
@@ -156,6 +166,7 @@ make</userinput></screen>
       href="../../xincludes/gtk-doc-rebuild.xml"/>
 
   </sect2>
+-->
 
   <sect2 role="content">
     <title>Innhold</title>
