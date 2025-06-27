@@ -10,20 +10,19 @@
 
   <!-- NB with stylo, much of the build uses rust, and therefore cargo files.
     But the extra cached cargo files, if any, seem to be minimal -->
-  <!ENTITY firefox-buildsize     "6.9 GB (218 MB installert) uten tester">
+  <!ENTITY firefox-buildsize     "7.7 GB (241 MB installert) uten tester">
   <!-- editors: with ff63 and rust-1.29, ./mach build -j4 is probably the
    most practical way to get a timing on a machine with more cores, if taking
    cores offline is not practical. If in doubt, round up -->
-  <!ENTITY firefox-time          "11 SBU bruker -j8, uten tester">
+  <!ENTITY firefox-time          "14 SBU bruker -j8, uten tester">
 ]>
 
 <sect1 id="firefox" xreflabel="Firefox-&firefox-version;">
   <?dbhtml filename="firefox.html" ?>
 
 
-<!-- indicate this is the ESR variant,
-  The point is that the stable release differs slightly.
-  <title>Firefox-&firefox-version;</title>-->
+<!-- Indicate this is the ESR variant.
+     The point is that the stable release differs slightly. -->
   <title>Firefox-&firefox-version;esr</title>
 
   <indexterm zone="firefox">
@@ -292,19 +291,10 @@ mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/firefox-build-dir
 MOZ_APP_REMOTINGNAME=firefox</literal>
 EOF</userinput></screen>
 
-    <!-- https://phabricator.services.mozilla.com/D219025 -->
-    <!--
-    <para>
-      Tilpass to filer for kompatibilitet med cbindgen-0.27.0 eller nyere:
-    </para>
-
-    <screen><userinput>sed 's/input.try/&amp;_parse/' \
-    -i servo/components/style_traits/values.rs &amp;&amp;
-sed '0,/"Keyframe"/{//d}' -i servo/ports/geckolib/cbindgen.toml</userinput></screen>
-    -->
-
+<!-- The following sections were fixed in 140.0ESR. ICU >= 76.1 is required -->
     <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=1859752
          https://hg.mozilla.org/try/rev/d5f3b0c4f08a -->
+<!--
     <para>
       Hvis du bygger med systemets ICU, tilpasser du linjeskiftkartleggingen for ICU
       74 eller senere. Denne konstruksjonen legger til fem oppføringer til en c++ matrise.
@@ -320,25 +310,13 @@ done</userinput></screen>
     </para>
 
 <screen><userinput remap="pre">sed -i 's/icu-i18n/icu-uc &amp;/' js/moz.configure</userinput></screen>
+-->
 
     <para>
       Kompiler <application>Firefox</application> ved å kjøre følgende
       kommandoer:
     </para>
-<!-- Not needed with clang. Upstream bug at
-     https://bugzilla.mozilla.org/show_bug.cgi?id=1729459
 
-    <para>
-      Hvis du bygger på en 32-bits maskin, fungerer følgende sed rundt
-      et problem med en inkompatibel <quote>double</quote> type i en
-      deklarasjonsfil:
-    </para>
-
-<screen><userinput>case "$(uname -m)" in
-    i?86) sed -e '/typedef[ ]*double/s/double/long double/' \
-              -i modules/fdlibm/src/math_private.h ;;
-esac</userinput></screen>
--->
     <para>
       Hvis geolokaliserings APIene er nødvendige:
     </para>
@@ -365,68 +343,8 @@ esac</userinput></screen>
        href="../../xincludes/mozshm.xml"/>
     </note>
 
-<!--<para>
-      Fiks å bygge Firefox med Clang 16 eller C++ deklarasjoner fra GCC 13.
-      Og, omgå en byggefeil med Rustc-1.70.0:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;-consolidated-1.patch</userinput></screen>
-
     <para>
-      Bruk følgende oppdatering slik at firefox kan spille av H.264-videoer:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;-ffmpeg_6-1.patch</userinput></screen>-->
-
-    <!-- https://github.com/rust-lang/rust-bindgen/pull/2689 -->
-<!--
-    <para>
-      Tilpass det leverte <application>rust-bindgen</application> kopi for
- LLVM-18 og senere, og fortell <command>cargo</command> vi har modifisert
- koden til <application>rust-bindgen</application> så sjekksum
- verifisering av denne crate skal hoppes over:
-    </para>
-
-    <screen><userinput>sed -e "/match cursor.kind()/a                                    \
-        CXCursor_LinkageSpec => return Err(ParseError::Recurse)," \
-    -i third_party/rust/bindgen/ir/item.rs                        &amp;&amp;
-
-cat &gt;&gt; Cargo.toml &lt;&lt; EOF &amp;&amp;
-<literal>[patch.crates-io.bindgen_0_64_0]
-package = "bindgen"
-version = "0.64.0"
-path = "third_party/rust/bindgen"</literal>
-EOF
-
-sed -r '/name = "bindgen"/,+5 s/^source|^checksum/#&amp;/' \
-    -i Cargo.lock</userinput></screen>
--->
-
-    <!-- https://hg.mozilla.org/mozilla-central/rev/ba6abbd36b49 -->
-<!--
-    <para>
-      Tilpass WebRTC koden til å bruke 64-biters tidsstempel for å fikse en byggefeil
-      med Clang-18 og senere:
-    </para>
-
-    <screen><userinput>sed 's/uint32_t timestamp/uint64_t timestamp/'                \
-    -i dom/media/gmp-plugin-openh264/gmp-fake-openh264.cpp    \
-       dom/media/gtest/TestGMPRemoveAndDelete.cpp             \
-       dom/media/webrtc/libwebrtcglue/WebrtcGmpVideoCodec.cpp &amp;&amp;
-
-sed '/mInputImageMap/s/uint32_t/uint64_t/' \
-    -i dom/media/webrtc/libwebrtcglue/WebrtcGmpVideoCodec.h</userinput></screen>
-
-    <para>
-      Fjern flere linjer med Rust kode som bare er nyttig for ARM og ikke
-      kompiler med Rustc-1.78.0 eller nyere:
-    </para>
-
-    <screen><userinput>sed '/cfg_attr/,/)]/d' -i gfx/qcms/src/lib.rs</userinput></screen>
--->
-
-    <para>
-      Påkall nå Python <command>mach</command> skript for å kompilere pakken.
+      Påkall nå Python <command>mach</command> skriptet for å kompilere pakken.
     </para>
 
 <screen><userinput>export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none &amp;&amp;
