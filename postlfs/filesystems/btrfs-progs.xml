@@ -6,9 +6,9 @@
 
   <!ENTITY btrfs-progs-download-http "&kernel-dl;/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v&btrfs-progs-version;.tar.xz">
   <!ENTITY btrfs-progs-download-ftp  " ">
-  <!ENTITY btrfs-progs-md5sum        "4c6c08300f7c4da4639d93fa3541d156">
-  <!ENTITY btrfs-progs-size          "2.6 MB">
-  <!ENTITY btrfs-progs-buildsize     "66 MB (midlertidige filer opprettet under tester trenger opptil 10 GB)">
+  <!ENTITY btrfs-progs-md5sum        "5dafd751d7907f2fe0c448daf2eeb6a9">
+  <!ENTITY btrfs-progs-size          "4.7 MB">
+  <!ENTITY btrfs-progs-buildsize     "68 MB (midlertidige filer opprettet under tester trenger opptil 10 GB)">
   <!ENTITY btrfs-progs-time          "0.3 SBU (med parallellitet=4; legg til 4.1 SBU for tester, opptil 14 SBU på trege disker)">
 ]>
 
@@ -139,12 +139,14 @@ make</userinput></screen>
     </para>
 
 <screen remap="test"><userinput>make fssum</userinput></screen>
-<!-- Different failure(s) in  6.14 -->
+<!-- 041-subvolume-delete-during-send test still fails in version 5.15.
+     but the entire directory now needs to be removed to skip it.
+-->
     <para>
       Fjern nå en test som er kjent for å mislykkes. Som &root;:
     </para>
 
-<screen remap="test"><userinput>mv tests/misc-tests/041-subvolume-delete-during-send/test.sh{,.broken}</userinput></screen>
+<screen remap="test"><userinput>rm -rf tests/misc-tests/041-subvolume-delete-during-send</userinput></screen>
 
     <para>
       For å teste resultatene, kjør (som &root; bruker):

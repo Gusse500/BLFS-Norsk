@@ -53,7 +53,7 @@ help:
 	@echo ""
 	@echo "make <parametere> <mål>"
 	@echo ""
-	@echo "parametere:"
+	@echo "Parametere:"
 	@echo "  REV=<rev>            Bygg variant av boken"
 	@echo "                       Gyldige verdier for REV er:"
 	@echo "                       * sysv    - Bygg boken for SysV"
@@ -70,7 +70,7 @@ help:
 	@echo "                       trinnene for å produsere resultatet vises."
 	@echo "                       Standard er ikke-satt."
 	@echo ""
-	@echo "mål:"
+	@echo "Mål:"
 	@echo "  help                 Vis denne hjelpeteksten."
 	@echo ""
 	@echo "  blfs                 Bygger målene 'html' og 'wget-list'."
@@ -100,7 +100,7 @@ world: all blfs-patch-list dump-commands test-links
 
 html: $(BASEDIR)/index.html
 $(BASEDIR)/index.html: $(RENDERTMP)/$(BLFSHTML) version
-	@echo "Generering av delte XHTML-filer..."
+	@echo "Generering av delte XHTML filer..."
 	$(Q)xsltproc --nonet                                    \
                 --stringparam chunk.quietly $(CHUNK_QUIET) \
                 --stringparam rootid "$(ROOT_ID)"          \
