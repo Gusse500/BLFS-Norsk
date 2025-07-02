@@ -6,10 +6,10 @@
 
   <!ENTITY thunderbird-download-http "&mozilla-http;/thunderbird/releases/&thunderbird-version;esr/source/thunderbird-&thunderbird-version;esr.source.tar.xz">
   <!ENTITY thunderbird-download-ftp  " ">
-  <!ENTITY thunderbird-md5sum        "d143d43392ae5659a6c276278d6a4779">
-  <!ENTITY thunderbird-size          "645 MB">
-  <!ENTITY thunderbird-buildsize     "8.2 GB (253 MB installert)">
-  <!ENTITY thunderbird-time          "13 SBU (på en 8 kjernes maskin)">
+  <!ENTITY thunderbird-md5sum        "0d5a0ce15e63bc5afd59bb8edfdec4d3">
+  <!ENTITY thunderbird-size          "724 MB">
+  <!ENTITY thunderbird-buildsize     "8.9 GB (276 MB installert)">
+  <!ENTITY thunderbird-time          "15 SBU (på en 8 kjernes maskin)">
   <!-- Removed the -j1 time because python and rust do not obey it, although
        the C/C++ code appears to obey it.
 
@@ -94,6 +94,8 @@
            functions do not render correctly and it causes other strange
            behavior to occur. See Ticket #18323 for more details, as well as
            https://lore.kernel.org/distributions/075a20b1-869b-78f3-9ace-e106a4d43ac4@linuxlounge.net/T/#u -->
+      <!-- As of 140.0esr, this is still an issue due to a patch for ICU not
+           being upstreamed yet. Do not enable system ICU yet. -->
       <!--<xref linkend="icu"/>,-->
       <xref linkend="libevent"/>,
       <xref linkend="libvpx"/>,
@@ -218,7 +220,7 @@ export MOZBUILD_STATE_PATH=$(pwd)/mozbuild          &amp;&amp;
 
     <para>
       Installer <application>Thunderbird</application> ved å kjøre følgende
-      kommandoer som <systemitem class="username">root</systemitem> bruker:
+      kommandoer som &root; bruker:
     </para>
 
 <screen role="root"><userinput>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none ./mach install</userinput></screen>
@@ -326,7 +328,6 @@ unset MOZBUILD_STATE_PATH</userinput></screen>
       </tip>
 -->
     <para>
-
       Hvis du bruker et skrivebordsmiljø som f.eks <application>GNOME</application>
       eller <application>KDE</application>, en skrivebordsfil
       <filename>thunderbird.desktop</filename> kan opprettes for å
@@ -334,8 +335,7 @@ unset MOZBUILD_STATE_PATH</userinput></screen>
       menyen. <!--If you didn't enable
       <application>startup-notification</application> in your mozconfig, then
       change the StartupNotify line to false.--> Kjør følgende kommandoer som
-      <systemitem class="username">root</systemitem> bruker:
-
+      &root; bruker:
     </para>
 
 <screen role="root"><userinput>mkdir -pv /usr/share/{applications,pixmaps} &amp;&amp;
