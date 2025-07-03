@@ -6,7 +6,7 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "dace019fa53452f321b93d34a37f995d">
+  <!ENTITY rust-md5sum        "9591d6806ab23c04b862ce934b1e86eb">
   <!ENTITY rust-size          "271 MB">
   <!ENTITY rust-buildsize     "9.4 GB (252 MB installert); legg til 7.4 GB hvis du kjører testene">
   <!ENTITY rust-time          "9.0 SBU (inkludert nedlastingstid; legg til 15 SBU for tester, begge med parallellisme=8)">
@@ -48,19 +48,19 @@
     <note>
       <para>
         Selv om BLFS vanligvis installeres i <filename
-        class="directory">/usr</filename>, når du senere oppgraderer til en nyere
-        versjon av <application>rust</application> de gamle bibliotekene i <filename
-        class="directory">/usr/lib/rustlib</filename> vil forbli, med div
-        hasher i navnene deres, men vil ikke være brukbare og vil kaste bort plass.
-        Redaktører anbefaler å plassere filene i <filename
-        class="directory">/opt</filename> mappen.  Spesielt hvis du
-        har grunn til å gjenoppbygge med en modifisert konfigurasjon (f.eks. ved å bruke
-        sendt LLVM etter å ha bygget med delt LLVM, kanskje for å kompilere crates
-        for arkitekturer som BLFS LLVM bygget ikke støtter)
+        class="directory">/usr</filename>, når du senere oppgraderer til en 
+        nyere versjon av <application>rust</application> de gamle bibliotekene i 
+        <filename class="directory">/usr/lib/rustlib</filename> vil forbli, med 
+        diverse hasher i navnene deres, men vil ikke være brukbare og vil kaste 
+        bort plass. Redaktører anbefaler å plassere filene i <filename
+        class="directory">/opt</filename> mappen.  Spesielt hvis du har grunn 
+        til å gjenoppbygge med en modifisert konfigurasjon (f.eks. ved å bruke
+        sendt LLVM etter å ha bygget med delt LLVM, kanskje for å kompilere 
+        crates for arkitekturer som BLFS LLVM bygget ikke støtter)
         det er mulig for installasjonen å etterlate et ødelagt
         <command>cargo</command> program. I en slik situasjon, fjern enten
-        den eksisterende installasjonen først, eller bruk et annet prefiks som f.eks
-        /opt/rustc-&rust-version;-build2.
+        den eksisterende installasjonen først, eller bruk et annet prefiks som 
+        f.eks /opt/rustc-&rust-version;-build2.
       </para>
 
       <para>
@@ -71,21 +71,21 @@
 
     <para>
       Det nåværende <application>rustbuild</application> byggesystemet vil bruke
-      alle prosessorer, selv om den ikke skalerer godt og ofte faller
-      tilbake til bare å bruke én kjerne mens du venter på at et bibliotek skal kompileres.
-      Imidlertid kan det stort sett begrenses til et spesifisert antall prosessorer av
-      en kombinasjon av å legge til bryteren <literal>--jobs &lt;N&gt;</literal>
-      (f.eks. '--jobs 4' for å begrense til 4 prosessorer) på hver påkalling av
-      <command>./x.py</command> <emphasis>og</emphasis> ved hjelp av en
-      miljøvariabel <envar>CARGO_BUILD_JOBS=&lt;N&gt;</envar>. For
-      øyeblikket er dette ikke effektivt når noen av rustc testene kjøres.
+      alle prosessorer, selv om den ikke skalerer godt og ofte faller tilbake 
+      til bare å bruke én kjerne mens du venter på at et bibliotek skal 
+      kompileres. Imidlertid kan det stort sett begrenses til et spesifisert 
+      antall prosessorer av en kombinasjon av å legge til bryteren 
+      <literal>--jobs &lt;N&gt;</literal> (f.eks. '--jobs 4' for å begrense til 
+      4 prosessorer) på hver påkalling av <command>./x.py</command> <emphasis>og</emphasis> 
+      ved hjelp av en miljøvariabel <envar>CARGO_BUILD_JOBS=&lt;N&gt;</envar>. 
+      For øyeblikket er dette ikke effektivt når noen av rustc testene kjøres.
     </para>
 
     <para>
       Den nåværende versjonen av rusts num_cpus crate gjenkjenner nå at cgroups
-      kan brukes til å begrense hvilke prosessorer det er tillatt å bruke. Så hvis din
-      maskin mangler DRAM (vanligvis mindre enn 2 GB DRAM per kjerne) som kan være
-      et alternativ til å ta CPUer offline.
+      kan brukes til å begrense hvilke prosessorer det er tillatt å bruke. Så 
+      hvis din maskin mangler DRAM (vanligvis mindre enn 2 GB DRAM per kjerne) 
+      som kan være et alternativ til å ta CPUer offline.
       Les <xref linkend='build-in-cgroup'/> for hvordan du bruker en cgroup.
     </para>
 
@@ -99,8 +99,8 @@
         Rustc bygger som standard for ALLE støttede arkitekturer, ved å bruke en
         sendt kopi av LLVM. I BLFS er bygget bare for X86
         arkitektur.
-        Hvis du har tenkt å utvikle rust crates, kan det hende at denne konstruksjonen ikke er bra
-        nok til dine formål.
+        Hvis du har tenkt å utvikle rust crates, kan det hende at denne 
+        konstruksjonen ikke er bra nok til dine formål.
       </para>
       <para>
         Byggetidene for denne versjonen når den gjentas på samme maskin er
@@ -146,17 +146,15 @@
     </itemizedlist>
 
     <!--  keep this here for reuse in case we need a patch -->
-<!--
 <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/rustc-&rust-version;-llvm_20-1.patch"/>
+          Valgfri oppdatering (nødvendig for testing av pakken):
+          <ulink url="&patch-root;/rustc-&rust-version;-testsuite_fix-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
--->
 
     <bridgehead renderas="sect3">Rust Avhengigheter</bridgehead>
 
@@ -242,7 +240,7 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
 # Tell x.py the editors have reviewed the content of this file
 # and updated it to follow the major changes of the building system,
 # so x.py will not warn us to do such a review.
-change-id = 138986
+change-id = 140732
 
 [llvm]
 # When using system llvm prefer shared libraries
@@ -306,13 +304,14 @@ EOF</userinput></screen>
       </para>
     </note>
 -->
-<!-- retain here in case we need a patch
+<!-- retain here in case we need a patch -->
     <para>
-      Reparer nå byggefeil med LLVM 20:
+      Hvis du kjører testpakken, installer en oppdatering for å gjøre den 
+      kompatibel med GCC-15 eller nyere:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../rustc-&rust-version;-llvm_20-1.patch</userinput></screen>
--->
+<screen><userinput remap="pre">patch -Np1 -i ../rustc-&rust-version;-testsuite_fix-1.patch</userinput></screen>
+
     <para>
       Kompiler <application>Rust</application> ved å kjøre følgende
       kommandoer:
@@ -343,6 +342,16 @@ EOF</userinput></screen>
 
 <screen remap="test"><userinput>./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
 
+    <para>
+      Fire tester i bootstrap testpakken er kjent for å mislykkes fordi de 
+      forventer å kjøre i Rust Git repositoriet. Testen med navnet 
+      <filename>tests/run-make/musl-default-linking</filename>
+      er kjent for å mislykkes fordi vi ikke har aktivert AArch64 målet i
+      <xref linkend='llvm'/>.  Testen med navnet
+      <filename>tests/run-make/linker-warning</filename> er kjent for å 
+      mislykkes av en eller annen ukjent årsak.
+    </para>
+
 <!-- Let's just comment this out.  Nobody has tested on a system w/o
      FileCheck for a long time.
     <para>
@@ -364,8 +373,8 @@ EOF</userinput></screen>
         Hvis du har strippet
         <filename class='libraryfile'>/usr/lib/libc.a</filename> med
         <command>strip --strip-unneeded</command>, alt statiske koblete
-        Rustprogrammer vil krasje med SIGSEGV ved oppstart, noe som forårsaker flere
-        tester (for eksempel
+        Rustprogrammer vil krasje med SIGSEGV ved oppstart, noe som forårsaker 
+        flere tester (for eksempel
         <filename>tests/ui/process/nofile-limit.rs</filename>) å mislykkes med
         SIGSEGV.
       </para>
@@ -382,10 +391,10 @@ EOF</userinput></screen>
     </note>
 
     <para>
-      Hvis du får noen <emphasis>andre</emphasis> sviktende tester som rapporterer et
-      utgavenummer, så bør du søke etter det problemet. For eksempel når
-      rustc &gt;= 1.41.1 ble bygget med en versjon av sysllvm før 10.0 testen
-      for problem 69225 mislyktes <ulink
+      Hvis du får noen <emphasis>andre</emphasis> sviktende tester som 
+      rapporterer et utgavenummer, så bør du søke etter det problemet. For 
+      eksempel når rustc &gt;= 1.41.1 ble bygget med en versjon av sysllvm før 
+      10.0 testen for problem 69225 mislyktes <ulink
       url="https://github.com/rust-lang/rust/issues/69225"/> og det burde være
       betraktet som en kritisk feil (de ga ut 1.41.1 på grunn av det).
       De fleste andre feil vil ikke være kritiske.
@@ -458,10 +467,10 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>ln -svfn rustc-&rust-version; /opt/rustc</command>: hvis dette ikke
-      er den første bruken av <filename class="directory">/opt/rustc</filename>
-      symbolkobling, overskriv den ved å tvinge, og bruk '-n'-flagget for å unngå å få
-      forvirrende resultater fra f.eks. <command>ls -l</command>.
+      <command>ln -svfn rustc-&rust-version; /opt/rustc</command>: hvis dette 
+      ikke er den første bruken av <filename class="directory">/opt/rustc</filename>
+      symbolkobling, overskriv den ved å tvinge, og bruk '-n'-flagget for å 
+      unngå å få forvirrende resultater fra f.eks. <command>ls -l</command>.
     </para>
 
     <para>
@@ -473,9 +482,9 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
     </para>
 
     <para>
-      <literal>channel = "stable"</literal>: dette sikrer at kun stabile funksjoner
-      kan brukes, standard i <filename>bootstrap.toml</filename> er å bruke
-      utviklingsfunksjoner, som ikke passer for en utgitt versjon.
+      <literal>channel = "stable"</literal>: dette sikrer at kun stabile 
+      funksjoner kan brukes, standard i <filename>bootstrap.toml</filename> er 
+      å bruke utviklingsfunksjoner, som ikke passer for en utgitt versjon.
     </para>
 
     <!-- comment while using shipped LLVM -->
@@ -734,8 +743,8 @@ EOF</userinput></screen>
         <term><command>rust-gdbgui</command></term>
         <listitem>
           <para>
-            er et innpakningsskript for et grafisk grensesnitt til gdb som kjører i en
-             nettleser
+            er et innpakningsskript for et grafisk grensesnitt til gdb som 
+            kjører i en nettleser
           </para>
           <indexterm zone="rust rust-gdbgui">
             <primary sortas="b-rust-gdbgui">rust-gdbgui</primary>
