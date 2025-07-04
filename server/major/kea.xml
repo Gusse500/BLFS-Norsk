@@ -4,10 +4,10 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY kea-download-http "https://downloads.isc.org/isc/kea/&kea-dhcp-version;/kea-&kea-dhcp-version;.tar.gz">
+  <!ENTITY kea-download-http "https://downloads.isc.org/isc/kea/&kea-dhcp-version;/kea-&kea-dhcp-version;.tar.xz">
   <!ENTITY kea-download-ftp  " ">
-  <!ENTITY kea-md5sum        "abf8cb8bbc74fd7691883b837e9deec8">
-  <!ENTITY kea-size          "10 MB">
+  <!ENTITY kea-md5sum        "dbc2b44d9001265083a1452efacf2cd6">
+  <!ENTITY kea-size          "6.3 MB">
   <!ENTITY kea-buildsize     "1.5 GB (332 MB installert; legg til 4 GB for tester)">
   <!ENTITY kea-time          "4.1 SBU (med parallellitet=4; legge til 12 SBU for tester)">
   <!ENTITY kea-arm-vers      "&kea-dhcp-version;">
@@ -67,18 +67,6 @@
       </listitem>
     </itemizedlist>
 
-<!--
-    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Påkrevd oppdatering:
-          <ulink url="&patch-root;/kea-&kea-dhcp-version;-fix_boost_1_87-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
--->
-
     <bridgehead renderas="sect3">Kea Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -89,12 +77,12 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <ulink url="https://botan.randombit.net/">botan</ulink>,
       <xref linkend="mitkrb"/>,
       <xref linkend="valgrind"/>;for dokumentasjon
       <xref linkend="doxygen"/>,
       <xref linkend="graphviz"/>, og
-      <xref linkend="sphinx_rtd_theme"/>; for tester:
-      <ulink url="https://google.github.io/googletest/">GoogleTest</ulink>
+      <xref linkend="sphinx_rtd_theme"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfrie database bakstykker</bridgehead>
@@ -128,34 +116,28 @@
   <sect2 role="installation">
     <title>Installasjon av ISC Kea DHCP Server</title>
 
-<!-- not longer needed since 2.6.3
-    <para>
-      Først bruker du en oppdatering som løser et problem med den nyeste
-      versjon av <application>boost</application>:
-    </para>
-<screen><userinput>patch -Np1 -i ../kea-&kea-dhcp-version;-fix_boost_1_87-1.patch</userinput></screen>
--->
     <para>
       Installer <application>ISC Kea DHCP Server</application> ved å kjøre
       følgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr        \
-            --sysconfdir=/etc    \
-            --localstatedir=/var \
-            --enable-shell       \
-            --with-openssl       \
-            --disable-static     \
-            --docdir=/usr/share/doc/kea-&kea-dhcp-version; &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..             \
+      --prefix=/usr        \
+      --sysconfdir=/etc    \
+      --localstatedir=/var \
+      --buildtype=release  \
+      -D crypto=openssl    \
+      -D runstatedir=/run  &amp;&amp;
+
+ninja</userinput></screen>
 
     <para>
-      For å teste resultatene må du ha installert GoogleTest og beholdt
-      dens kilde. Du burde også ha sendt
-      <option>--with-gtest-source=/path/to/googletest/sourcedir</option> til
-      <command>configure</command> ovenfor. Kjør testene med
-      <command>make check</command>. Tre tester i TLSTest pakken er
-      kjent for å mislykkes.
+      Hvis tester var aktivert, kjør <command>ninja check</command> for å teste 
+      resultatene. Det finnes tester som krever en aktiv database når noen av 
+      databasehakene er bygget.
     </para>
 
     <para>
@@ -164,7 +146,7 @@ make</userinput></screen>
       <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make -j1 install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
       Opprett noen mapper og fiks tillatelsesinnstillingene deres som
@@ -180,21 +162,14 @@ install -dm0750 /var/log/kea</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--enable-shell</parameter>: Tillater bygging av
-      <command>kea-shell</command>, et kommandolinjegrensesnitt for
-      kontrollagenten.
+      <option>-D crypto=openssl</option>: Tillater bruk av OpenSSL for 
+      kommunikasjon med kontrollagenten og for DNS oppdateringer. Bruk 
+      <option>-D crypto=botan</option> hvis du vil bruke botan. 
+      Standard er openssl.
     </para>
 
     <para>
-      <parameter>--with-openssl</parameter>: Tillater bruk av OpenSSL for å
-      kommunisere med kontrollagenten og for DNS-oppdateringer.
-    </para>
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/static-libraries.xml"/>
-
-    <para>
-      <option>--with-pgsql</option> or <option>--with-mysql</option>:
+      <option>-D postgresql=enabled</option> eller <option>-D mysql=enabled</option>:
       <application>ISC Kea</application> kan lagre leiekontraktene på en
       database. Dette kan være nyttig i store miljøer som kjører
       en klynge med DHCP servere. Å bruke <emphasis>memfile</emphasis>
@@ -202,14 +177,9 @@ install -dm0750 /var/log/kea</userinput></screen>
     </para>
 
     <para>
-      <option>--enable-generate-docs</option>:
-      Hvis dokumentasjonen skal gjenoppbygges, legg til dette alternativet. Flere
-      avhengigheter må installeres for å generere dokumentasjonen.
-    </para>
-
-    <para>
-      <command>make -j1 install</command>:: ISC anbefaler ikke
-      noen form for parallell eller jobbserver alternativer når du utfører installasjonen.
+      <option>-D tests=enabled</option>:
+      Dette alternativet er nødvendig for å bygge testpakken. 
+      Dropp det hvis du ikke skal kjøre testene.
     </para>
 
   </sect2>
@@ -223,6 +193,11 @@ install -dm0750 /var/log/kea</userinput></screen>
       av dem har sin egen konfigurasjonsfil.<phrase revision="sysv">
       Ytterligere konfigurasjonsfiler kommer fra keactrl agenten som
       brukes til å kontrollere serverne på en enkel måte.</phrase>
+    </para>
+    <para>
+      Merk at Kea Control Agent er utdatert siden versjon 3.0.0. 
+      Ikke forveksle <application>kea-ctrl-agent</application>
+      med <application>keactrl</application>.
     </para>
 
     <para>
