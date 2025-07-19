@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY balsa-download-http "https://pawsa.fedorapeople.org/balsa/balsa-&balsa-version;.tar.xz">
+  <!ENTITY balsa-download-http "https://gitlab.gnome.org/GNOME/balsa/-/archive/&balsa-version;/balsa-&balsa-version;.tar.gz">
   <!ENTITY balsa-download-ftp  " ">
-  <!ENTITY balsa-md5sum        "bebd22cb6bac87ee05255c48ee1d28dd">
-  <!ENTITY balsa-size          "3.5 MB">
-  <!ENTITY balsa-buildsize     "66 MB">
-  <!ENTITY balsa-time          "0.2 SBU (Bruke parallellisme=4)">
+  <!ENTITY balsa-md5sum        "c1039c22e8c2544c6a357626d71b6220">
+  <!ENTITY balsa-size          "6.0 MB">
+  <!ENTITY balsa-buildsize     "44 MB">
+  <!ENTITY balsa-time          "0.1 SBU (Bruke parallellisme=4)">
 ]>
 
 <sect1 id="balsa" xreflabel="Balsa-&balsa-version;">
@@ -27,7 +27,7 @@
 
     <para>
       <application>Balsa</application> pakken inneholder en
-      <application>GNOME</application>-2 basert e-postklient.
+      lettvekst <application>GTK+</application> basert e-postklient.
     </para>
 
     &lfs123_checked;
@@ -66,6 +66,7 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
 
     <itemizedlist spacing="compact">
@@ -76,18 +77,19 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <bridgehead renderas="sect3">Balsa Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="aspell"/>,
       <xref linkend="enchant"/>,
       <xref linkend="gmime3"/>,
       <xref linkend="gpgme"/>,
-      <xref linkend="gtk3"/>, og
-      <xref linkend="libnotify"/>
-      <!--<xref linkend="rarian"/>-->
+      <xref linkend="gtk3"/>,
+      <xref linkend="libical"/>,
+      <xref linkend="libnotify"/>, og
+      <xref linkend="libsecret"/>
     </para>
 
     <bridgehead renderas="sect4">Påkrevd (Kjøretid)</bridgehead>
@@ -99,18 +101,17 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="compface"/>,
-      <xref linkend="gcr"/>,
+      <xref linkend="gspell"/>,
       <xref linkend="gtksourceview"/>,
       <xref linkend="libcanberra"/>,
-      <xref linkend="libsecret"/>,
       <xref linkend="mitkrb"/>,
       <xref linkend="openldap"/>,
       <xref linkend="procmail"/>,
       <xref linkend="sqlite"/>,
       <xref linkend="webkitgtk"/>,
       <ulink url="https://pypi.python.org/pypi/html2text/">html2text</ulink>,
-      <ulink url="https://osmo-pim.sourceforge.net/">osmo</ulink>,
-      <ulink url="https://sourceforge.net/projects/rubrica.berlios/">rubrica</ulink>,
+      <ulink url="https://github.com/linuxmint/xapp">libxapp</ulink>,
+      <ulink url="https://osmo-pim.sourceforge.net/">osmo</ulink>, og
       <ulink url="&gnome-download-http;/yelp-tools/">yelp-tools</ulink>
     </para>
 
@@ -119,23 +120,27 @@
   <sect2 role="installation">
     <title>Installasjon av Balsa</title>
 
+<!-- Not needed with 2.6.5.
     <para>
       Først, fiks byggeproblemer når du konfigurerer uten WebKitGTK, eller når
       det brukes WebKitGTK-2.38 eller nyere.
     </para>
 
 <screen><userinput>patch -Np1 -i ../balsa-&balsa-version;-upstream_fixes-2.patch</userinput></screen>
+-->
 
     <para>
       Installer <application>Balsa</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr            \
-            --sysconfdir=/etc        \
-            --localstatedir=/var/lib \
-            --without-html-widget    &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup .. --prefix=/usr       \
+               --buildtype=release \
+               -D html-widget=no   &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -145,105 +150,50 @@ make</userinput></screen>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role='root'><userinput>make install</userinput></screen>
+<screen role='root'><userinput>ninja install</userinput></screen>
 
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <!-- Support has been added for this, but the option is still unrecognized.
     <para>
-      <parameter>- -with-rubrica</parameter>: Denne parameteren brukes
-      for å gi Rubrica2 adressebokstøtte.
-    </para>
-    -->
-
-    <!-- configure says this is an invalid option with 2.5.11
-    <para>
-      <option>- -enable-smime</option>: Bruk dette alternativet for å aktivere S/MIME
-      støtte hvis <application>GnuPG-2.x.x</application> er installert.
-    </para>
-    -->
-
-    <para>
-      <parameter>--without-html-widget</parameter>: Dette alternativet deaktiverer
+      <parameter>-D html-widget=no</parameter>: Dette alternativet deaktiverer
       bygging av HTML gjengiveren. Hvis du vil at HTML gjengiveren skal bygges,
       bekreft at du har <xref linkend="webkitgtk"/> installert, og fjern
       så dette alternativet.
     </para>
 
     <para>
-      <option>--with-canberra</option>: Aktiver libcanberra støtte.
+      <option>-D canberra=true</option>: Denne bryteren aktiverer støtte for 
+      hendelseslyder via <xref linkend="libcanberra" role="nodep"/>.
     </para>
 
     <para>
-      <option>--with-compface</option>: Aktiver compface støtte.
+      <option>-D compface=true</option>: Denne bryteren aktiverer støtte for 
+      <xref linkend="compface" role="nodep"/> for å komprimere miniatyrbilder for kontakter.
     </para>
 
     <para>
-      <option>--with-gcr</option>: Bruk libgcr for TLS støtte.
+      <option>-D gcr=true</option>: Denne bryteren aktiverer støtte for bruk av 
+      libgcr for håndtering av TLS sertifikater. Dette krever at
+      <xref linkend="gcr" role="nodep"/> pakken er installert, som er en del av 
+      en kjøretidsavhengighet for libsecret.
     </para>
 
     <para>
-      <option>--with-gss</option>: Aktiver GSSAPI støtte.
+      <option>-D gss=true</option>: Denne bryteren aktiverer støtte for 
+      Kerberos autentisering. Dette krever at
+      <xref linkend="mitkrb" role="nodep"/> pakken er installert.
     </para>
 
     <para>
-      <option>--with-ldap</option>: Bruk dette alternativet for å aktivere LDAP 
-      adressebokstøtte hvis <application>OpenLDAP</application> er installert.
-    </para>
-
-    <para>
-      <option>--with-libsecret</option>: Aktiver sterkt passord
-      støtte og støtte for gnome-keyring til å lagre passord.
-    </para>
-
-    <!-- configure says this is an invalid option with 2.5.11
-    <para>
-      <option>- -with-gpgme</option>: Bruk dette alternativet for å aktivere GPG støtte
-      hvis <quote><application>GnuPG</application> Made Easy</quote>
-      (<application>GPGME</application>) er installert.
-    </para>
-    -->
-
-    <para>
-      <option>--with-sqlite</option>: Bruk dette alternativet for å aktivere SQLite
-      adressebokstøtte hvis <application>SQLite</application> er
-      installert.
+      <option>-D ldap=true</option>:Denne bryteren aktiverer støtte for LDAP 
+      adresseboken. Dette krever at <xref linkend="openldap" role="nodep"/>
+      pakken er installert.
     </para>
 
   </sect2>
-
-<!-- All of this information is invalid. These options no longer exist since
-     Balsa was ported to GTK3.
-  <sect2 role="configuration">
-    <title>Configuring Balsa</title>
-
-    <sect3>
-      <title>Konfigurasjonsinformasjon</title>
-
-      <para>
-        All konfigurasjon av <application>Balsa</application> er gjort
-        gjennom <application>Balsa</application> menysystem, med postkasse
-        konfigurasjon gjort med Settings&mdash;&gt;Preferences menyen.
-      </para>
-
-      <para>
-        Hvis du ikke kan koble til Internett-leverandøren din, er det sannsynligvis at Internett-leverandøren ikke
-        støtter APOP. Deaktiver den i Settings/Preferences/POP3/advanced.
-      </para>
-
-      <para>
-        Hvis du aktiverer filtre for din innkommende POP3 post, må du ha
-        <xref linkend="procmail"/> installert, slik den innkommende posten blir
-        overlevert til <command>procmail</command> for behandling.
-      </para>
-
-    </sect3>
-
-  </sect2>
--->
 
   <sect2 role="content">
     <title>Innhold</title>
@@ -271,7 +221,7 @@ make</userinput></screen>
         <term><command>balsa</command></term>
         <listitem>
           <para>
-            er en glib-basert e-postklient
+            er en GTK+ basert e-postklient
           </para>
           <indexterm zone="balsa balsa-prog">
             <primary sortas="b-balsa">balsa</primary>
