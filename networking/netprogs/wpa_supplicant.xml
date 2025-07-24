@@ -162,7 +162,7 @@ EOF</userinput></screen>
     <para>
       Hvis du ønsker å bruke <application>WPA Supplicant</application> med
       <xref linkend="NetworkManager"/>, <phrase revision='sysv'>sørge for at
-      du har installert <xref linkend="dbus"/>, </phrase>legg deretter til
+      du har installert <xref linkend="dbus"/>, deretter </phrase>legg til
       følgende alternativer til <application>WPA Supplicant</application>
       byggekonfigurasjonsfilen ved å kjøre følgende kommando:
     </para>
@@ -293,10 +293,15 @@ install -v -m644 dbus/dbus-wpa_supplicant.conf \
         <systemitem class="username">root</systemitem> bruker:
       </para>
 
-<screen role="nodump" revision="sysv"><userinput>wpa_passphrase <replaceable>SSID</replaceable> <replaceable>SECRET_PASSWORD</replaceable> &gt; /etc/sysconfig/wpa_supplicant-<replaceable>wifi0</replaceable>.conf</userinput></screen>
+<screen role="nodump" revision="sysv"><userinput>wpa_passphrase <replaceable>SSID</replaceable> | sed '/^\t#/d' &gt; /etc/sysconfig/wpa_supplicant-<replaceable>wifi0</replaceable>.conf</userinput></screen>
 
 <screen role="nodump" revision="systemd"><userinput>install -v -dm755 /etc/wpa_supplicant &amp;&amp;
-wpa_passphrase <replaceable>SSID</replaceable> <replaceable>SECRET_PASSWORD</replaceable> &gt; /etc/wpa_supplicant/wpa_supplicant-<replaceable>wifi0</replaceable>.conf</userinput></screen>
+wpa_passphrase <replaceable>SSID</replaceable> | sed '/^\t#/d' &gt; /etc/wpa_supplicant/wpa_supplicant-<replaceable>wifi0</replaceable>.conf</userinput></screen>
+
+      <para>
+        <command>wpa_supplicant</command> kommandoen vil be deg om å skrive 
+        inn passordet til tilgangspunktet.
+      </para>
 
       <para>
         <phrase revision="sysv">
