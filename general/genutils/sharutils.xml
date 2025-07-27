@@ -72,21 +72,17 @@
     <title>Installasjon av Sharutils</title>
 
     <para>
-      Løs et heapbufferoverløp og et problem avdekket av GCC-10:
+      Først, fiks problemer som er eksponert av nåværende GCC versjoner:
     </para>
 
-<screen><userinput>sed -i 's/BUFSIZ/rw_base_size/' src/unshar.c &amp;&amp;
-sed -i '/program_name/s/^/extern /' src/*opts.h</userinput></screen>
+<screen><userinput>patch -Np1 -i ../sharutils-&sharutils-version;-consolidated-1.patch</userinput></screen>
 
     <para>
       Installer <application>Sharutils</application> ved å kjøre
       følgende kommandoer:
     </para>
 
-<screen><userinput>sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c        &amp;&amp;
-echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h &amp;&amp;
-
-./configure --prefix=/usr &amp;&amp;
+<screen><userinput>./configure --prefix=/usr --prefix=/usr --disable-dependency-tracking &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -101,6 +97,21 @@ make</userinput></screen>
 
   </sect2>
 
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>--disable-dependency-tracking</parameter>: Denne bryteren 
+      brukes til å deaktivere unødvendig kode i byggesystemet.
+    </para>
+
+    <para>
+      <parameter>--with-openssl</parameter>: Denne valgfrie bryteren brukes til å 
+      aktivere integrering av integritetskontroller i pakkens kjørbare programmer.
+    </para>
+
+  </sect2>
+
   <sect2 role="content">
     <title>Innhold</title>
 
@@ -111,7 +122,7 @@ make</userinput></screen>
 
       <seglistitem>
         <seg>
-          shar, unshar, uudecode og uuencode
+          shar, unshar, uudecode, and uuencode
         </seg>
         <seg>
           Ingen
