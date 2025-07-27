@@ -77,7 +77,8 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gtk-doc"/>
+      <xref linkend="docutils"/> og
+      <xref linkend="gi-docgen"/>
     </para>
 
   </sect2>
@@ -94,6 +95,24 @@
 cd    build &amp;&amp;
 
 meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Hvis <xref linkend='docutils'/> er installert, bygg 
+      manualsidene:
+    </para>
+
+    <screen><userinput remap='doc'>meson configure -D man=true &amp;&amp;
+ninja</userinput></screen>
+
+
+    <para>
+      Hvis <xref linkend='gi-docgen'/> er installert, bygg API
+      dokumentasjonen:
+    </para>
+
+    <screen><userinput remap='doc'>sed "/json_docdir =/s|$| / 'json-glib-&json-glib-version;'|" -i ../doc/meson.build &amp;&amp;
+meson configure -D documentation=enabled &amp;&amp;
 ninja</userinput></screen>
 
     <para>
