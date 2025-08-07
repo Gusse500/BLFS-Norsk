@@ -26,13 +26,13 @@
     <title>Introduksjon til dvd+rw-tools</title>
 
     <para>
-        <application>dvd+rw-tools</application>pakken inneholder
-    flere verktøy for å mestre DVD mediet, både +RW/+R og -R[W].
-    hovedverktøyet er <command>growisofs</command> som gir en vei til både å
-    legge ned <emphasis role='strong'>og</emphasis> utvikle et ISO9660 filsystem
-    på (i tillegg til å brenne et vilkårlig forhåndsmastret bilde til) alle støttede
-    DVD medier. Dette er nyttig for å lage en ny DVD eller legge til en eksisterende
-    bilde på en delvis brent DVD.
+      <application>dvd+rw-tools</application>pakken inneholder
+      flere verktøy for å mestre DVD mediet, både +RW/+R og -R[W].
+      hovedverktøyet er <command>growisofs</command> som gir en vei til både å
+      legge ned <emphasis role='strong'>og</emphasis> utvikle et ISO9660 
+      filsystem på (i tillegg til å brenne et vilkårlig forhåndsmastret bilde 
+      til) alle støttede DVD medier. Dette er nyttig for å lage en ny DVD eller 
+      legge til en eksisterende bilde på en delvis brent DVD.
     </para>
 
     &lfs123_checked;
@@ -71,6 +71,16 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Påkrevd oppdatering:
+          <ulink url="&patch-root;/dvd+rw-tools-&dvd-rw-tools-version;-consolidated_fixes-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">dvd+rw-tools Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -84,13 +94,18 @@
     <title>Installasjon av dvd+rw-tools</title>
 
     <para>
+      Først, installer en oppdatering som fikser flere feil og retter 
+      kompilering med nyere versjoner av glibc og kjernedeklarasjonene:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../dvd+rw-tools-&dvd-rw-tools-version;-consolidated_fixes-1.patch</userinput></screen>
+
+    <para>
       Installer <application>dvd+rw-tools</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>sed -i '/stat.h/a #include &lt;sys/sysmacros.h&gt;' growisofs.c &amp;&amp;
-sed -i '/stdlib/a #include &lt;limits.h&gt;' transport.hxx &amp;&amp;
-make all rpl8 btcflash</userinput></screen>
+<screen><userinput>make all rpl8 btcflash</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -109,32 +124,10 @@ install -v -m644 -D index.html \
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -i '/stdlib/a #include &lt;limits.h&gt;' ...</command>: Denne
-      sed inkluderer <filename>limits.h</filename>, en av kjernedeklarasjonene.
-      Dette er nødvendig på grunn av en endring i 2.6.23 kjernedeklarasjonene.
-    </para>
-
-<!-- left these here in the event that libisoburn gets fixed and can be a
-     substitution again
-
-    <para>
-      <command>sed -i 's#mkisofs"#xorrisofs"#' growisofs.c</command>: Denne sed
-      endrer koden som skal brukes <command>xorrisofs</command> fra
-      <xref linkend="xorriso"/>. Standard var at den skulle bruke
-      <command>mkisofs</command> fra
-      <ulink url="https://sourceforge.net/projects/cdrtools/files/alpha/">Cdrtools</ulink>.
-    </para>
-
-    <para>
-      <command>sed -i 's#mkisofs#xorrisofs#;s#MKISOFS#XORRISOFS#'
-      growisofs.1</command>: Denne sed fikser mansiden for å ta hensyn til
-      ovenfor endring.
-    </para>
--->
-    <para>
       <command>make all rpl8 btcflash</command>: Denne kommandoen bruker tilleggsmål
       slik at alle verktøyene bygges.
     </para>
+
   </sect2>
 
   <sect2 role="content">
