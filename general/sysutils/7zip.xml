@@ -83,12 +83,19 @@
     <title>Installasjon av 7zip</title>
 
     <para>
+      Slå av <literal>-Werror</literal> for å unngå at advarsler blir behandlet 
+      som feil:
+    </para>
+
+<screen><userinput>sed 's/-Werror //g' -i CPP/7zip/7zip_gcc.mak</userinput></screen>
+
+    <para>
       Installer <application>7zip</application> ved å kjøre følgende
       kommandoer:
     </para>
 
 <screen><userinput>(for i in Bundles/{Alone,Alone7z,Format7zF,SFXCon} UI/Console; do
-    make -C CPP/7zip/$i -f ../../cmpl_gcc.mak CFLAGS_WARN_ALL=-Wall || exit
+    make -C CPP/7zip/$i -f ../../cmpl_gcc.mak || exit
 done)</userinput></screen>
 
     <para>
@@ -96,7 +103,7 @@ done)</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>install -vDm755 CPP/7zip/Bundles/Alone{/b/g/7za,7z/b/g/7zr} \
@@ -114,16 +121,6 @@ done) &amp;&amp;
 
 cp -rv DOC -T /usr/share/doc/7zip-&seven-zip-version;</userinput></screen>
 
-  </sect2>
-
-  <sect2 role="commands">
-    <title>Parameterforklaringer</title>
-
-    <para>
-      <parameter>CFLAGS_WARN_WALL=-Wall</parameter>: Denne bryteren overstyrer
-      <literal>CFLAGS_WARN_WALL</literal>. Standardinnstillingen inneholder
-      <parameter>-Wall</parameter> som kan føre til byggefeil.
-    </para>
   </sect2>
 
   <sect2 role="content">
