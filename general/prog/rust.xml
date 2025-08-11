@@ -6,8 +6,8 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "9591d6806ab23c04b862ce934b1e86eb">
-  <!ENTITY rust-size          "271 MB">
+  <!ENTITY rust-md5sum        "982f087479302e6d91432efc81852b00">
+  <!ENTITY rust-size          "256 MB">
   <!ENTITY rust-buildsize     "9.4 GB (252 MB installert); legg til 7.4 GB hvis du kjører testene">
   <!ENTITY rust-time          "9.0 SBU (inkludert nedlastingstid; legg til 15 SBU for tester, begge med parallellisme=8)">
 ]>
@@ -145,7 +145,7 @@
       </listitem>
     </itemizedlist>
 
-    <!--  keep this here for reuse in case we need a patch -->
+    <!--  keep this here for reuse in case we need a patch
 <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -155,6 +155,7 @@
         </para>
       </listitem>
     </itemizedlist>
+    -->
 
     <bridgehead renderas="sect3">Rust Avhengigheter</bridgehead>
 
@@ -240,7 +241,7 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
 # Tell x.py the editors have reviewed the content of this file
 # and updated it to follow the major changes of the building system,
 # so x.py will not warn us to do such a review.
-change-id = 140732
+change-id = 142379
 
 [llvm]
 # When using system llvm prefer shared libraries
@@ -304,14 +305,14 @@ EOF</userinput></screen>
       </para>
     </note>
 -->
-<!-- retain here in case we need a patch -->
+<!-- retain here in case we need a patch
     <para>
       Hvis du kjører testpakken, installer en oppdatering for å gjøre den 
       kompatibel med GCC-15 eller nyere:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../rustc-&rust-version;-testsuite_fix-1.patch</userinput></screen>
-
+-->
     <para>
       Kompiler <application>Rust</application> ved å kjøre følgende
       kommandoer:
@@ -343,6 +344,10 @@ EOF</userinput></screen>
 <screen remap="test"><userinput>./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
 
     <para>
+      <!-- https://github.com/rust-lang/rust/issues/145079 -->
+      Åtte tester i UI testpakken er kjent for å mislykkes med
+      <literal>description</literal> satt i <literal>build</literal>
+      seksjonen av <filename>bootstrap.toml</filename> filen.
       Fire tester i bootstrap testpakken er kjent for å mislykkes fordi de 
       forventer å kjøre i Rust Git repositoriet. Testen med navnet 
       <filename>tests/run-make/musl-default-linking</filename>
