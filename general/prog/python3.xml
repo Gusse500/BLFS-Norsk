@@ -7,10 +7,10 @@
   <!ENTITY python3-download-http
            "https://www.python.org/ftp/python/&python3-version;/Python-&python3-version;.tar.xz">
   <!ENTITY python3-download-ftp  " ">
-  <!ENTITY python3-md5sum        "dbaa8833aa736eddbb18a6a6ae0c10fa">
+  <!ENTITY python3-md5sum        "4170b57e642c15a1dfed17313ec57cc2">
   <!ENTITY python3-size          "22 MB">
-  <!ENTITY python3-buildsize     "308 MB (legg til 59 MB for tester)">
-  <!ENTITY python3-time          "1.5 SBU (legg til 1.5 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY python3-buildsize     "309 MB (legg til 59 MB for tester)">
+  <!ENTITY python3-time          "1.5 SBU (legg til 2.8 SBU for tester; begge bruker parallellisme=4)">
   <!--
   Note: Size does not reflect docs that were installed in LFS.
   Test time measured with 60 second timeout.
@@ -176,18 +176,6 @@
   <sect2 role="installation">
     <title>Installasjon av Python 3</title>
 
-    <!-- CVE-2025-8194/BLFS Ticket #21895. The sed adds three lines, thank you
-         Bruce for the sed! Please do not modify the spacing. -renodr -->
-    <para>
-      Først, fiks et sikkerhetsproblem i tarfil modulen:
-    </para>
-
-<screen><userinput remap="pre">sed -e '/Round/{n;n;a\
-        # Only non-negative offsets are allowed\
-        if count &lt; 0:\
-            raise InvalidHeaderError("invalid offset")
-}' -i Lib/tarfile.py</userinput></screen>
-
     <para>
       Installer <application>Python 3</application> ved å kjøre følgende
       kommandoer:
@@ -236,6 +224,10 @@ make</userinput></screen>
          For Python-3.13.4
          Total tests: run=45,204 failures=2 skipped=1,745
          Total test files: run=481/480 failed=3 skipped=20 resource_denied=2 rerun=3
+
+         For Python-3.13.6
+         Total tests: run=45,289 failures=2 skipped=1,966
+         Total test files: run=482/480 failed=4 skipped=20 resource_denied=2 rerun=4
    -->
 
     <para>
@@ -248,7 +240,7 @@ make</userinput></screen>
 
     <para>
       Av over 44 000 tester er følgende tester kjent for å feile:
-      test_importlib og test_peg_generator.
+      test_idle, test_importlib, test_tkinter, og test_zipfile.
     </para>
 
     <para>
