@@ -93,6 +93,16 @@
   <sect2 role="installation">
     <title>Installasjon av libplacebo</title>
 
+    <!-- Editors, please be careful of the spacing here if this is modified
+         later, as this is Python code and spacing is important. -->
+    <para>
+      Først, fiks en inkompatibilitet med Python-3.13.6 og nyere:
+    </para>
+
+<screen><userinput remap="pre">sed -e '204a\    tree = ET.parse(xmlfile)'                 \
+    -e 's/VkXML(ET.parse(xmlfile))/VkXML(tree.getroot())/' \
+    -i src/vulkan/utils_gen.py</userinput></screen>
+
     <para>
       Installer <application>libplacebo</application> ved å kjøre følgende
       kommandoer:
