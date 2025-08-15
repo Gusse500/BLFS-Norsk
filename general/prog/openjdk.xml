@@ -193,9 +193,6 @@
       <xref linkend="git"/>,
       <xref linkend="graphviz"/>,
       <xref linkend="mercurial"/>,
-<!-- not needed now, it seems
-      en X Window behandler som <xref linkend="twm"/> (for testene), og
--->
       <ulink url="https://ccache.dev/">ccache</ulink>,
       <ulink url="https://pandoc.org/">pandoc</ulink>, og
       <ulink url="https://zlib.net/pigz">pigz</ulink>
@@ -212,20 +209,13 @@
     </para>
 
 <screen><userinput>tar -xf ../jtreg-&jtreg-version;.tar.gz</userinput></screen>
-<!--
-    <para>
-      Anvend en oppdatering for å tillate bygging med make-4.3:
-    </para>
-
-<screen><userinput>patch -p1 -i ../openjdk-&openjdk-version;-make_4.3_fix-1.patch</userinput></screen>
 
     <para>
-      Løs et problem som kommer fra en fjernet deklarasjon i glibc-2.32:
+      Rett en byggefeil forårsaket av glibc-2.42:
     </para>
 
-<screen><userinput>sed -i /sysctl/d \
-    src/jdk.incubator.jpackage/unix/native/libapplauncher/PosixPlatform.cpp</userinput></screen>
--->
+<screen><userinput>find src -name *.*pp -exec sed -i 's/uabs(/g_uabs(/' {} \;</userinput></screen>
+
     <note>
       <para>
         Før du fortsetter, bør du sørge for at miljøet ditt
