@@ -133,7 +133,9 @@ passwd -ql gdm</userinput></screen>
     </para>
 
 <screen revision="sysv"><userinput>sed -e 's@systemd@elogind@'                                \
+    -e 's/-session optional/-session required/'            \
     -e '/elogind/isession  required       pam_loginuid.so' \
+
     -i data/pam-lfs/gdm-launch-environment.pam &amp;&amp;
 
 mkdir build &amp;&amp;
@@ -143,6 +145,7 @@ meson setup ..                   \
       --prefix=/usr              \
       --buildtype=release        \
       -D gdm-xsession=true       \
+      -D initial-vt=7            \
       -D run-dir=/run/gdm        \
       -D logind-provider=elogind \
       -D systemd-journal=false   \
@@ -179,10 +182,15 @@ ninja</userinput></screen>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
-    <para>
-      <option>-D initial-vt=7</option>: Bruk denne bryteren
-      for at <application>GDM</application> skal starte på VT7
-      i stedet for den første ledige VT.
+    <!-- This is needed due to elogind not being started by a bootscript and
+         not being available until too late. -->
+    <para revision="sysv">
+      <parameter>-D initial-vt=7</parameter>: Denne bryteren starter GDM på 
+      VT7 som standard, siden elogind ikke er tilgjengelig på SysV systemer 
+      før den aktiveres av PAM under en påloggingsøkt. Standardoppførselen 
+      er å starte på den aktive TTY-en, men denne oppførselen fører til at 
+      GDM ikke starter i virtuelle miljøer og andre situasjoner der Wayland 
+      ikke støttes.
     </para>
 
     <para>
@@ -234,14 +242,10 @@ ninja</userinput></screen>
 		qemu), vil GDM skjule Wayland økter 
         som standard. Dette gjøres ofte for å hindre brukere i å støte på problemer
         med buggy drivere, som kan føre til systemlåsing, applikasjonskrasjer,
-        strømstyringsproblemer og grafiske nedbremsinger.
-        <phrase revision="sysv">Men på sysv hindrer et tilgangsproblem 
-		kjøring av X11 for brukeren <systemitem role="username">gdm
-        </systemitem>, så det er obligatorisk å kjøre på Wayland. Hvis systemet 
-		ditt er sysv på en virtuell maskin eller</phrase><phrase revision="systemd">
-        Hvis systemet ditt er en virtuell maskin eller</phrase> du har
-        en NVIDIA GPU og vil fortsatt prøve å kjøre Wayland økter uansett,
-        utfør følgende kommando som &root; bruker:
+        strømstyringsproblemer og grafiske nedbremsinger. Hvis systemet ditt 
+        er en virtuell maskin eller</phrase> du har et NVIDIA GPU og fortsatt 
+        vil prøve å kjøre Wayland økter, kjør følgende kommando 
+        som &root; user:
       </para>
 
  <screen role="nodump"><userinput>ln -s /dev/null /etc/udev/rules.d/61-gdm.rules</userinput></screen>
