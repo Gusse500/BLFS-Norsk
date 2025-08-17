@@ -202,26 +202,13 @@ EOF</userinput></screen>
 
 
     <para>
-      Endre en Rust-fil for å tillate implisitt autoreferanse fra å forhindre en 
-      byggefeil og erstatte CRLF med LF endelser
-      <footnote><para>
-        CRLF, eller Carriage Return Line Feed, brukes oftest på Windows, og
-        er satt sammen med LF, eller regular Line Feed, som sees på Unix og
-        Unix-lignende systemer. CRLF er representert av <literal>\r\n</literal>,
-        mens LF er representert av <literal>\n</literal>. 
-        <command>sed</command> operasjonen som redigerer Rust filen setter inn 
-        en linje i begynnelsen av filen, som slutter med LF, men ettersom resten 
-        av linjene i filen slutter med CRLF, vil redigeringsprogrammer som Vim 
-        representere CRLF med <computeroutput>^M</computeroutput>. Dermed 
-        konverterer det andre uttrykket alle CRLF sluttlinjer med LF. Hvis det 
-        andre uttrykket ikke var der, burde det ikke forårsake et problem med 
-        kompilering, men redigering av filen med en teksteditor kan bli 
-        frustrerende som følge av denne forskjellen.
-      </para></footnote>:
+      Endre en Rust fil for å tillate implisitt autoreferanse for å forhindre en 
+      byggefeil. Den etterfølgende <literal>\r</literal> sørger for at MS-DOS 
+      formatet brukes for den innsatte linjen, sånn at den blir konsistent med 
+      alle andre linjer i filen:
     </para>
 
-<screen><userinput>sed -e '1i\#![warn(dangerous_implicit_autorefs)]' \
-    -e $'s/\r$//'                                 \
+<screen><userinput>sed -e '1i\#![warn(dangerous_implicit_autorefs)]\r' \
     -i third_party/rust/allocator-api2/src/stable/vec/mod.rs</userinput></screen>
 
     <para>
