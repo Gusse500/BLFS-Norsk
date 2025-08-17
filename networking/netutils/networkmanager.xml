@@ -111,6 +111,7 @@
       <xref linkend="gnutls"/> (kan brukes i stedet for <xref linkend="nss"/>),
       <xref linkend="gtk-doc"/>,
       <xref linkend="jansson"/>,
+      <xref linkend="libnvme"/>,
       <xref linkend="ModemManager"/>,
 	  <xref linkend="upower"/>,
       <xref linkend="valgrind"/>,
@@ -181,6 +182,7 @@ meson setup ..                    \
       -D nmtui=true               \
       -D ovs=false                \
       -D ppp=false                \
+      -D nbft=false               \
       -D selinux=false            \
       -D session_tracking=elogind \
       -D modem_manager=false      \
@@ -200,6 +202,7 @@ meson setup ..                    \
       -D nmtui=true               \
       -D ovs=false                \
       -D ppp=false                \
+      -D nbft=false               \
       -D selinux=false            \
       -D qt=false                 \
       -D session_tracking=systemd \
@@ -285,6 +288,13 @@ done</userinput></screen>
       <application>mobile-broadband-provider-info</application>.
     </para>
 
+    <para>
+      <parameter>-D nbft=false</parameter>: Denne bryteren er nødvendig hvis
+      <xref linkend="libnvme"/> ikke er installert, og deaktiverte NBFT støtte i 
+      initrd generatoren. Merk at BLFS ikke bruker initrd generatoren som 
+      leveres av NetworkManager som standard.
+    </para>
+
     <para revision="sysv">
       <parameter>-D session_tracking=elogind</parameter>: Denne bryteren
       brukes til å sette <command>elogind</command> som
@@ -317,6 +327,13 @@ done</userinput></screen>
     </para>
 
     <para>
+      <parameter>-D nm_cloud_setup=false</parameter>: Bruk denne bryteren hvis 
+	  du ikke har installert <xref linkend='jansson'/>. Dette deaktiverer 
+	  nm-cloud-setup, som brukes til å automatisk konfigurere nettverket i et 
+	  offentlig skymiljø i en virtuell maskin.
+    </para>
+
+    <para>
       <option>-D crypto=gnutls</option>: Bruk denne bryteren hvis du har GnuTLS
       installert og ønsker å bruke den til sertifikat og nøkkel operasjoner i
       NetworkManager, i stedet for å bruke NSS (standard).
@@ -340,12 +357,7 @@ done</userinput></screen>
       (i stedet for &logind;) for å suspendere og gjenoppta støtte.
     </para>
 -->
-    <para>
-      <option>-D nm_cloud_setup=false</option>: Bruk denne bryteren hvis
-      du ikke har installert <xref linkend='jansson'/>. Dette deaktiverer
-      nm-cloud-setup som brukes til å automatisk konfigurere
-      nettverk i et offentlig skymiljø i en VM.
-    </para>
+
   </sect2>
 
   <sect2 role="configuration">
