@@ -156,12 +156,29 @@
       </para>
 
       <para>
-        Hvis du bygger denne pakken på et 32-bitssystem, eller et 64-bitssystem
-        med mindre enn 16 GB minne, må du legge til
-        <command>-D CMAKE_CXX_FLAGS_RELEASE="-O2 -DNDEBUG"</command> alternativet til
-        CMake linjen for å forhindre byggefeil knyttet til å gå tom for
-        minne. Ytelsen vil bli påvirket litt, men ikke på et nivå der
-        det merkes ved normal bruk.
+        Med standard <quote>release</quote> byggekonfigurasjon, noen kildefiler 
+        i denne pakken krever mer enn 4 GiB RAM for å bli bygget. Som et 
+        resultat bør du sende
+        <parameter>-j<replaceable>&lt;N&gt;</replaceable></parameter>
+        til <command>ninja</command> (erstatte
+        <replaceable>&lt;N&gt;</replaceable> med kvotienten av mengden 
+        tilgjengelig RAM og 4 GiB) for å begrense antallet parallelle jobber og 
+        unngå at jobben blir drept av kjernens OOM killer.
+      </para>
+
+      <!-- Maybe we should report this to WebKitGTK team and suggest them
+           to seperate the problematic source files.  But anyway BLFS does
+           not really support a 32-bit configuration so this is just
+           informative.  -->
+      <para>
+        På et 32-bits system kan ikke summen av RAM og vekslingsplass som brukes 
+        av en byggejobb (faktisk en hvilken som helst enkeltprosess) overstige 4 
+        GiB. Så hvis du bygger denne pakken på et 32-bits system, må du legge til
+        <command>-D CMAKE_CXX_FLAGS_RELEASE="-O2 -DNDEBUG"</command>
+        alternativet til <command>cmake</command> for å deaktivere noen 
+        optimaliseringer som krever mye minne for å begrense minnebruken til 
+        individuelle byggejobber. Ytelsen vil bli noe påvirket, men ikke på et 
+        nivå der det er merkbart under normal bruk.
       </para>
     </important>
 
