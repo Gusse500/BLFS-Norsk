@@ -4,17 +4,16 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY clisp-download-http "&gnu-http;/clisp/latest/clisp-&clisp-version;.tar.bz2">
+  <!ENTITY clisp-download-http "&sources-anduin-http;/clisp/clisp-&clisp-version;.tar.xz">
   <!ENTITY clisp-download-ftp  " ">
-  <!ENTITY clisp-md5sum        "1962b99d5e530390ec3829236d168649">
-  <!ENTITY clisp-size          "7.8 MB">
-  <!ENTITY clisp-buildsize     "163 MB (legg til 8 MB for tester)">
-  <!ENTITY clisp-time          "0.9 SBU (1.2 SBU med tester)">
+  <!ENTITY clisp-md5sum        "e3b3ba6b3432280e4d4a766404f02d6f">
+  <!ENTITY clisp-size          "7.1 MB">
+  <!ENTITY clisp-buildsize     "146 MB (med tester; 34 MB installert)">
+  <!ENTITY clisp-time          "0.6 SBU (Bruker parallellisme=4; legg til 0.3 SBU for tester)">
 ]>
 
 <sect1 id="clisp" xreflabel="Clisp-&clisp-version;">
   <?dbhtml filename="clisp.html"?>
-
 
   <title>Clisp-&clisp-version;</title>
 
@@ -30,7 +29,17 @@
       som inkluderer en tolk, kompilator, debugger og mange utvidelser.
     </para>
 
-    &lfs123_checked;
+    <note>
+      <para>
+        Denne pakken har ikke hatt en «stable» utgivelse siden 2010. Pakken her 
+        ble opprettet fra <ulink
+        url='https://gitlab.com/gnu-clisp/clisp'>upstream git
+        repository</ulink> for å gjøre det mulig å bygge den med gcc-15. Den 
+        siste commiten var mai 2025.
+      </para>
+    </note>
+
+    &lfs124_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -65,7 +74,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
@@ -76,7 +85,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <bridgehead renderas="sect3">Clisp Avhengigheter</bridgehead>
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
@@ -93,13 +102,13 @@
 
   <sect2 role="installation">
     <title>Installasjon av Clisp</title>
-
+<!--
     <note>
       <para>
         Denne pakken støtter ikke parallellbygging.
       </para>
     </note>
-
+-->
     <para>
       Hvis du bygger på et 32-bits system, omgå en feil i GCC forårsaket
       av den nyeste versjonen av binutils:
@@ -109,6 +118,7 @@
     i?86) export CFLAGS="${CFLAGS:--O2 -g} -falign-functions=4" ;;
 esac</userinput></screen>
 
+<!--
     <para>
       Fjern to tester, som mislykkes av ukjente årsaker:
     </para>
@@ -127,7 +137,7 @@ esac</userinput></screen>
     </para>
 
 <screen><userinput>patch -Np1 -i ../clisp-&clisp-version;-readline7_fixes-1.patch</userinput></screen>
-
+-->
     <para>
       Installer <application>Clisp</application> ved å kjøre følgende
       kommandoer:
@@ -136,13 +146,10 @@ esac</userinput></screen>
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-../configure --srcdir=../                       \
-             --prefix=/usr                      \
-             --docdir=/usr/share/doc/clisp-&clisp-version; \
-             --with-libsigsegv-prefix=/usr &amp;&amp;
-
-ulimit -S -s 16384 &amp;&amp;
-make -j1</userinput></screen>
+../configure --srcdir=../  \
+             --prefix=/usr \
+             --docdir=/usr/share/doc/clisp-&clisp-version; &amp;&amp;
+make</userinput></screen>
 
     <para>
       For å teste resultatene, kjør: <command>make check</command>.
@@ -159,29 +166,15 @@ make -j1</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>ulimit -S -s 16384</command>: dette øker den maksimale stabelstørrelsen.
-      som anbefalt av <command>configure</command>.
-    </para>
-
-    <para>
       <parameter>--docdir=/usr/share/doc/clisp-&clisp-version;</parameter>:
       denne bryteren tvinger HTML dokumentasjonen til å bli installert i en
-      versjonert mappe, i stedet for inn i <filename
-      class="directory">/usr/share/html/</filename>.
-    </para>
-
-    <para>
-      <parameter>--with-libsigsegv-prefix=/usr</parameter>: bruk dette til å fortelle
-      <command>configure</command> at du har installert
-      <package>libsigsegv</package> i /usr, ellers blir den ikke
-      funnet.
+      versjonert mappe.
     </para>
 
     <para>
       <option>--with-libffcall-prefix=/usr</option>: bruk dette til å fortelle
       <command>configure</command> at du har installert valgfrie
-      <package>libffcall</package> pakken i /usr, ellers blir den som
-      <package>libsigsegv</package> ikke funnet.
+      <package>libffcall</package> pakken.
     </para>
 
   </sect2>
@@ -200,10 +193,10 @@ make -j1</userinput></screen>
         </seg>
         <seg>
           ulike statiske biblioteker i
-          <filename class="directory">/usr/lib/clisp-&clisp-version;/base/</filename>
+          <filename class="directory">/usr/lib/clisp-&clisp-version;+/base/</filename>
         </seg>
         <seg>
-          /usr/lib/clisp-&clisp-version;,
+          /usr/lib/clisp-&clisp-version;+,
           /usr/share/doc/clisp-&clisp-version;, og
           /usr/share/emacs/site-lisp
         </seg>
