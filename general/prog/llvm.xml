@@ -205,6 +205,7 @@
       <xref linkend="doxygen"/>,
       <xref linkend="git"/>,
       <xref linkend="graphviz"/>,
+      <xref linkend="libunwind"/>,
       <xref linkend="libxml2"/>,
       <xref linkend="psutil"/> (for tester),
       <xref linkend="pygments"/>,
@@ -404,6 +405,17 @@ systemd-run --user --pty -d -G -p LimitCORE=0 ninja check-all</userinput></scree
       23 cfi tester er kjent for å mislykkes fordi deres antagelse om
       linker er ikke sant med BFD linkeren, og vi har måttet stoppe dem
       fra å bruke den fjernede Gold linkeren.
+
+      <!-- https://github.com/llvm/llvm-project/commit/6beb6f34bc8e -->
+      En test navngitt
+      <literal>DataFlowSanitizer-x86_64 :: atomic.cpp</literal> er kjent for å 
+      mislykkes med gcc-15.1 eller nyere.
+
+      En test navngitt
+      <filename>SanitizerCommon-asan-x86_64-Linux :: onprint.cpp</filename>
+      er kjent for å feile fordi unwinderen i sanitizeren er avhengig 
+      av rammepekeren som standardkonfigurasjonen til Glibc ikke 
+      aktiverer.
 
       En test navngitt <filename>Linux/clone_setns.cpp</filename> vil mislykkes
       hvis <option>CONFIG_USER_NS</option> ikke er aktivert i
