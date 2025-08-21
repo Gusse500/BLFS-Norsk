@@ -7,7 +7,7 @@
   <!ENTITY spidermonkey-download-http "&mozilla-http;/firefox/releases/&spidermonkey-version;esr/source/firefox-&spidermonkey-version;esr.source.tar.xz">
   <!ENTITY spidermonkey-download-ftp  " ">
   <!-- size and md5sum are in packages.ent -->
-  <!ENTITY spidermonkey-buildsize     "4.4 GB (48 MB installert etter fjerning av 38 MB statisk lib; legg til 30 MB for hovedtestene og 27 MB for jit testene)">
+  <!ENTITY spidermonkey-buildsize     "4.7 GB (48 MB installert etter fjerning av 38 MB statisk lib; legg til 30 MB for hovedtestene og 27 MB for jit testene)">
   <!ENTITY spidermonkey-time          "1.8 SBU (med parallellitet=4; legg til 0.5 SBU for hovedtestene og 2.1 SBU for jit testene)">
 ]>
 
@@ -30,7 +30,7 @@
       I BLFS er kildekoden til SpiderMonkey hentet fra Firefox.
     </para>
 
-    &lfs123_checked;
+    &lfs124_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -275,14 +275,12 @@ make</userinput></screen>
 rm -v /usr/lib/libjs_static.ajs &amp;&amp;
 sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></screen>
 
-    <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=1973993
-         https://bugzilla.mozilla.org/show_bug.cgi?id=1973994 -->
+    <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=1973994 -->
     <para>
-      Fortsatt som &root; bruker, fiks to problemer med de installerte deklarasjonene:
+      Fortsatt som &root; bruker, fiks et problem med ett av de installerte deklarasjonene:
     </para>
 
-<screen role='root'><userinput>ln -sfv js/ProfilingCategoryList.h /usr/include/mozjs-140 &amp;&amp;
-sed '$i#define XP_UNIX' -i /usr/include/mozjs-140/js-config.h</userinput></screen>
+<screen role='root'><userinput>sed '$i#define XP_UNIX' -i /usr/include/mozjs-140/js-config.h</userinput></screen>
 
   </sect2>
 
