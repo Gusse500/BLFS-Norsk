@@ -130,7 +130,11 @@ ninja</userinput></screen>
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+meson setup --prefix=/usr              \
+            --buildtype=release        \
+            -D man=false               \
+            -D docbook=false           \
+            ..                         &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -142,11 +146,9 @@ ninja</userinput></screen>
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
-<!-- For some reason, there are I/O errors with the DTD @ freedesktop
-     that causes error messages to flood stdin. -->
 
     <para>
-      Flytt dokumentasjonen til en versjonert mappe:
+      Hvis du genererte dokumentasjonen, flytt den til en versjonsbasert mappe:
     </para>
 
 <screen role="root"><userinput>mv -v /usr/share/doc/gnome-session{,-&gnome-session-version;}</userinput></screen>
@@ -219,10 +221,15 @@ by systemd-user.-->
     <para>
       Det er også mulig å starte <application>GNOME</application> fra
       kommandolinjen. Du må imidlertid fortsatt ha <xref linkend="gdm"/> installert
-      for at noen deler av skrivebordet skal fungere. En grunn til å starte fra
-      kommandolinjen er hvis du vil ha Wayland støtte på et system som har
-      proprietær NVIDIA driver installert, siden GDM ikke vil vise Wayland
-      økttype på et slikt system.
+      for at skrivebordet skal fungere. I tidligere utgaver av GNOME ville 
+      gnome-shell starte uten at det var installert, men dette endret seg i 48.0. 
+      GDM trenger ikke å være aktivert for å starte gnome-shell fra kommandolinjen.
+      <!-- Bruce discovered the above regarding gdm/gnome-session. The GDM page
+      now covers using Wayland on systems with NVIDIA cards as well, so I've
+      commented the text below.-->
+      <!--En grunn til å starte fra kommandolinjen er hvis du vil ha Wayland 
+      støtte på et system som har den proprietære NVIDIA-driveren installert, 
+      siden GDM ikke vil vise Wayland økttypen på et slikt system..-->
     </para>
 
     <para>
