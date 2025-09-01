@@ -6,10 +6,10 @@
 
   <!ENTITY mitkrb-download-http "https://kerberos.org/dist/krb5/&mitkrb-major-version;/krb5-&mitkrb-version;.tar.gz">
   <!ENTITY mitkrb-download-ftp  " ">
-  <!ENTITY mitkrb-md5sum        "aedd6f13c11480091af51cdc1555099b">
+  <!ENTITY mitkrb-md5sum        "8f841cea186ef6856ea6c2a063091861">
   <!ENTITY mitkrb-size          "8.3 MB">
-  <!ENTITY mitkrb-buildsize     "96 MB (legg til 16 MB for tester)">
-  <!ENTITY mitkrb-time          "0.3 SBU (Bruker parallellisme=4; legg til 0.8 SBU for tester)">
+  <!ENTITY mitkrb-buildsize     "135 MB (legg til 15 MB for tester)">
+  <!ENTITY mitkrb-time          "0.4 SBU (Bruker parallellisme=4; legg til 3.8 SBU for tester)">
 ]>
 
 <sect1 id="mitkrb" xreflabel="MIT Kerberos V5-&mitkrb-version;">
@@ -87,7 +87,7 @@
       <xref linkend="bind-utils"/>,
       <xref linkend='cracklib'/> (<filename>/usr/share/dict/words</filename>
       referert av noen tester),
-      <xref linkend="gnupg2"/> (for å autentisere pakken),
+      <!--<xref linkend="gnupg2"/> (for å autentisere pakken),-->
       <xref linkend="keyutils"/>,
       <xref linkend="openldap"/>,<!-- Seems so that mit has its own
       implementation of rpc now.
@@ -142,16 +142,10 @@ make</userinput></screen>
 
     <para>
       For å teste bygget, utsted <command>make -j1 -k check</command>.
-      <!-- Du trenger i det minste <xref link end="tcl"/>, som brukes til å drive
-      testpakken. Dessuten, <xref link end="dejagnu"/> må være tilgjengelig for
-      noen av testene som skal kjøres. Hvis du har en tidligere versjon av MIT Kerberos V5
-      installert, kan det hende at testpakken plukker opp det installerte
-      versjoner av bibliotekene, i stedet for de nybygde. I så fall er det det
-      bedre å kjøre testene etter installasjonen. -->Noen tester kan mislykkes med
-      den nyeste versjonen av dejagnu og glibc. Noen tester kan henge for en
-      lang tid og mislykkes hvis systemet ikke er koblet til et nettverk.
-      En test, <filename>t_kadm5srv</filename>, er kjent for å mislykkes.
-      Hvis <xref linkend='keyutils'/> er installert men
+      Noen tester kan mislykkes med den nyeste versjonen av dejagnu og glibc. 
+      Noen tester kan henge seg lenge og mislykkes hvis systemet ikke er koblet 
+      til et nettverk. Én test, <filename>t_kadm5srv</filename>, er kjent for å 
+      mislykkes. Hvis <xref linkend='keyutils'/> er installert, men
       <xref linkend='keyutils-test-kernel'/> ikke er
       fornøyd, noen tester vil mislykkes ved å klage
       <computeroutput>keyctl failed with code 1</computeroutput>.
@@ -208,11 +202,12 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
     </para>
 
     <para>
-      <parameter>--with-system-verto=no</parameter>: Denne bryteren fikser en feil i
-      pakken: den gjenkjenner ikke sitt eget tidligere installerte verto bibliotek.
-      Dette er ikke et problem, hvis du installerer samme versjon på nytt,
-      men hvis du oppdaterer, brukes det gamle biblioteket som systemets bibliotek,
-      i stedet for å installere den nye versjonen.
+      <parameter>--with-system-verto=no</parameter>: Denne bryteren fikser en 
+      feil i pakken der byggesystemet ikke gjenkjenner sitt eget Verto bibliotek 
+      hvis denne pakken har blitt installert før. Dette er ikke et problem hvis 
+      du installerer den samme versjonen på nytt, men kan være problematisk hvis 
+      du oppdaterer fordi den gamle versjonen av Verto biblioteket vil bli brukt 
+      i stedet for å installere den nyere versjonen.
     </para>
 
     <para>
@@ -268,8 +263,8 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
           <para>
             Du bør vurdere å installere en slags passordkontroll
             ordbok slik at du kan konfigurere installasjonen til kun
-            å godta sterke passord. En passende ordbok å bruke vises i
-            <xref linkend="cracklib"/> bruksanvisning. Merk at kun en
+            å godta sterke passord. En passende ordbok å bruke installeres
+            i <xref linkend="cracklib"/> bruksanvisninger. Merk at kun en
             fil kan brukes, men du kan sette sammen mange filer til en.
             Konfigurasjonsfilen vist nedenfor forutsetter at du har installert en
             ordbok i <filename>/usr/share/dict/words</filename>.
@@ -278,8 +273,7 @@ cp -vfr ../doc -T /usr/share/doc/krb5-&mitkrb-version;</userinput></screen>
 
         <para>
           Opprett Kerberos konfigurasjonsfilen med følgende
-          kommandoer kjørt som <systemitem class="username">root</systemitem>
-          bruker:
+          kommandoer kjørt som &root; bruker:
         </para>
 
 <screen role="root"><userinput>cat &gt; /etc/krb5.conf &lt;&lt; "EOF"
@@ -337,15 +331,14 @@ EOF</userinput></screen>
         </para>
 
         <para>
-          Opprett KDC databasen:
+          Neste, opprett KDC databasen:
        </para>
 
 <screen role="root"><userinput>kdb5_util create -r <replaceable>&lt;EXAMPLE.ORG&gt;</replaceable> -s</userinput></screen>
 
         <para>
-          Nå bør du fylle databasen med fullmakt
-          (brukere). For nå er det bare å bruke ditt vanlige påloggingsnavn eller
-          <systemitem class="username">root</systemitem>.
+          Nå bør du fylle databasen med databaseprinsipper (brukere). For nå er 
+          det bare å bruke ditt vanlige påloggingsnavn eller &root;.
         </para>
 
 <screen role="root"><userinput>kadmin.local
@@ -707,7 +700,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             gir informasjon om hvordan man kobler programmer mot
-            biblioteker
+            <application>Kerberos 5</application> biblioteker
           </para>
           <indexterm zone="mitkrb krb5-config-prog2">
             <primary sortas="b-krb5-config">krb5-config</primary>
@@ -743,9 +736,8 @@ EOF</userinput></screen>
         <term><command>ksu</command></term>
         <listitem>
           <para>
-            er superbrukerprogrammet som bruker Kerberos protokollen.
-            Krever en riktig konfigurert
-            <filename>/etc/shells</filename> og
+            er superbrukerprogrammet som bruker Kerberos protokollen. Det krever
+            en riktig konfigurert <filename>/etc/shells</filename> og
             <filename>~/.k5login</filename> som inneholder fullmakt
             autorisert til å bli superbrukere
           </para>
@@ -798,7 +790,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             brukes til å kontakte en eksempelserver og autentisere til den
-            ved å bruke Kerberos 5 billetter, og vis deretter serverens
+            ved å bruke Kerberos 5 billetter, og viser deretter serverens
             respons
           </para>
           <indexterm zone="mitkrb sclient">
@@ -824,8 +816,8 @@ EOF</userinput></screen>
         <term><command>sim_server</command></term>
         <listitem>
           <para>
-            er en enkel UDP-basert serverapplikasjon, for
-            demonstrasjon
+            er en enkel UDP-basert serverapplikasjon for
+            demonstrasjonsformål
           </para>
           <indexterm zone="mitkrb sim_server">
             <primary sortas="b-sim_server">sim_server</primary>
@@ -837,7 +829,7 @@ EOF</userinput></screen>
         <term><command>sserver</command></term>
         <listitem>
           <para>
-            er eksempelet på Kerberos 5 serveren
+            er en eksempel på Kerberos 5 server
           </para>
           <indexterm zone="mitkrb sserver">
             <primary sortas="b-sserver">sserver</primary>
