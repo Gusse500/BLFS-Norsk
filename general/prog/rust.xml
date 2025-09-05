@@ -181,8 +181,10 @@
 
     <note>
       <para>
-        Hvis en anbefalt avhengighet ikke er installert, en sendt kopi i
-        Rustc kildetarballen blir bygd og brukt.
+        Hvis en anbefalt avhengighet ikke er installert, må du endre 
+        instruksjonene for å bygge og bruke en levert kopi i Rustc 
+        kildetarballen i stedet. Se delen Parameterforklaringer for 
+        detaljer.
       </para>
     </note>
 
@@ -322,8 +324,8 @@ EOF</userinput></screen>
        -e '/^curl-sys /s/0.4.48/0.4.50/' \
        src/tools/cargo/Cargo.toml &amp;&amp; -->
 
-<screen><userinput>[ ! -e /usr/include/libssh2.h ] || export LIBSSH2_SYS_USE_PKG_CONFIG=1
-[ ! -e /usr/include/sqlite3.h ] || export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
+<screen><userinput>export LIBSSH2_SYS_USE_PKG_CONFIG=1
+export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
 ./x.py build</userinput></screen>
 
     <note>
@@ -384,7 +386,8 @@ EOF</userinput></screen>
         SIGSEGV.
       </para>
       <para>
-        Vi undersøker fortsatt etter årsaken til dette problemet, men
+        Det er forårsaket av en Glibc feil som påvirker Glibc-2.42 og flere 
+        tidligere utgivelser, så
         for nå har vi byttet ut <parameter>--strip-unneeded</parameter> med
         <parameter>--strip-debug</parameter> i både LFS boka og i
         <xref linkend='stripping'/> for å omgå det. Hvis du opplever dette
@@ -514,7 +517,8 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
     <!-- https://github.com/alexcrichton/ssh2-rs/issues/173 -->
     <para>
       <command>export LIBSSH2_SYS_USE_PKG_CONFIG=1</command>: tillat
-      <command>cargo</command> å koble til systemets libssh2.
+      <command>cargo</command> for å koble til systemets libssh2. Utelat denne 
+      kommandoen hvis du ikke har installert <xref linkend='libssh2'/>.
     </para>
 
     <!-- src/tools/cargo/Cargo.toml is specifying "bundled" as the
@@ -523,7 +527,8 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
          system sqlite3.  -->
     <para>
       <command>export LIBSQLITE3_SYS_USE_PKG_CONFIG=1</command>: Tillat
-      <command>cargo</command> for å linke til systemets sqlite.
+      <command>cargo</command> for å koble til systemets sqlite. Utelat denne 
+      kommandoen hvis du ikke har installert <xref linkend='sqlite3'/>.
     </para>
 
 <!--<para>
