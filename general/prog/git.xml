@@ -121,7 +121,6 @@
       av dem),
       <xref role="runtime" linkend="openssh"/> (kjøretid, nødvendig for å bruke
       <application>Git</application> over ssh),
-      <xref linkend="pcre2"/>,
       <xref role="runtime" linkend="subversion"/> med Perl bindinger
          (kjøretid, for <command>git svn</command>),
       <xref role="runtime" linkend="tk"/>
@@ -164,9 +163,10 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr \
+<screen><userinput>./configure --prefix=/usr                   \
             --with-gitconfig=/etc/gitconfig \
-            --with-python=python3 &amp;&amp;
+            --with-python=python3           \
+            --with-libpcre2                 &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -301,8 +301,11 @@ sed -i '/^\* link:/s|howto/|&amp;html/|' /usr/share/doc/git-&git-version;/howto-
     </para>
 
     <para>
-      <option>--with-libpcre2</option>: Bruk denne bryteren hvis
-      <application>PCRE2</application> er installert.
+      <parameter>--with-libpcre2</parameter>: Dette sikrer å bygge
+      <command>git grep</command> med
+      <application>PCRE2</application> biblioteket installert i LFS,
+      så <command>git grep</command> vil støtte
+      <option>--perl-regexp</option> alternativet.
     </para>
 
     <para>
