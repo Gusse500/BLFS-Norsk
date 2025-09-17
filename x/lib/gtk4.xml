@@ -132,6 +132,23 @@
 
   </sect2>
 
+  <sect2 role="kernel" id='gtk4-kernel'>
+    <title>Kjernekonfigurasjon</title>
+
+    <para>
+      Noen GTK-4 funksjoner trenger følgende alternativer i 
+      kjernekonfigurasjonen. Det er også nødvendig for testpakken.
+    </para>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="gtk4-kernel.xml"/>
+
+    <indexterm zone="gtk4 gtk4-kernel">
+      <primary sortas="d-gtk4">gtk4</primary>
+    </indexterm>
+
+  </sect2>
+
   <sect2 role="installation">
     <title>Installasjon av GTK 4</title>
 
@@ -176,7 +193,7 @@ ninja</userinput></screen>
     <screen remap='test'><userinput>env -u{GALLIUM_DRIVER,MESA_LOADER_DRIVER_OVERRIDE}          \
     LIBGL_ALWAYS_SOFTWARE=1 VK_LOADER_DRIVERS_SELECT='lvp*' \
     dbus-run-session meson test --setup x11                 \
-                                --no-suite={headless,needs-udmabuf}</userinput></screen>
+                                --no-suite=headless</userinput></screen>
 
     <para>
       Hvis du er i en Wayland økt, bytt ut den ene forekomsten av
@@ -302,13 +319,8 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      <parameter>--no-suite={headless,needs-udmabuf}</parameter>: Deaktiver
-      testene som krever den eksterne avhengigheten pydbus, og testene som
-      krever enhetsnoden
-      <filename class='devicefile'>/dev/udmabuf</filename>.
-      Enhetsnoden eksisterer ikke hvis funksjonen ikke er aktivert i
-      kjernekonfigurasjon<phrase revision='sysv'>, og selv om det eksisterer
-      kan det ikke nås som uprivilegerte brukere</phrase>.
+      <parameter>--no-suite=headless</parameter>: Deaktiver
+      testene som krever den eksterne avhengigheten pydbus.
     </para>
   </sect2>
 
