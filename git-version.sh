@@ -48,7 +48,7 @@ sha="$(git describe --abbrev=1)"
 version=$(echo "$sha" | sed 's/-g[^-]*$//')
 
 if [ "$(git diff HEAD | wc -l)" != "0" ]; then
-    version="$version-wip"
+    version="$version"
 fi
 
 echo "<!ENTITY year              \"$year\">"               >  version.ent
