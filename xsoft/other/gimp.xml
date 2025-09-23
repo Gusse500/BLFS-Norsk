@@ -14,9 +14,9 @@
   <!ENTITY gimp-help-download   "https://download.gimp.org/pub/gimp/help/gimp-help-&gimp-help-version;.tar.bz2">
   <!ENTITY gimp-help-md5sum     "6a45a29097c69d5cf0d86e5c9b6e5f9e">
   <!ENTITY gimp-help-size       "126 MB">
-  <!ENTITY gimp-help-buildsize  "Fra 351 MB (74 MB installert) for bare en til 1.5 GB for alle
-                                 språk">
-  <!ENTITY gimp-help-time       "0.4 SBU (bare en (engelsk)), 5.1 SBU for all språk; bruker parallellisme=4">
+  <!ENTITY gimp-help-buildsize  "351 MB (74 MB installert)"><!-- for en only to 1.5 GB for all
+                                 languages"-->
+  <!ENTITY gimp-help-time       "0.4 SBU"> <!-- (en only), 5.1 SBU for all languages; using parallelism=4"-->
 ]>
 
 <sect1 id="gimp" xreflabel="Gimp-&gimp-version;">
@@ -238,13 +238,22 @@ ninja</userinput></screen>
 <screen><userinput>tar -xf ../../gimp-help-&gimp-help-version;.tar.bz2 &amp;&amp;
 cd gimp-help-&gimp-help-version;
 
-ALL_LINGUAS=&quot;ca cs da de en en_GB es fa fr hr ko lt nl nn pt pt_BR ro sl sv uk zh_CN&quot; \
-./configure --prefix=/usr</userinput></screen>
+sed -i 's/import libxml2//' configure &amp;&amp;
 
+ALL_LINGUAS=&quot;<!--ca cs da de en en_GB es fa fr hr ko lt nl nn pt pt_BR ro sl sv uk zh_CN-->en&quot; \
+./configure --prefix=/usr</userinput></screen>
+<!--
     <para>
       Fjern fra <envar>ALL_LINGUAS</envar> kodene for alle språk som
       du ikke ønsker å installere. Alternativt kan du fjerne linjen som begynner med
       <envar>ALL_LINGUAS</envar>, hvis du ønsker å bygge alle språk.
+    </para>
+-->
+
+    <para>
+      Det er bare mulig å bygge ikke-engelske språk med libxml2 
+      Python 3 modulen, som er utdatert og ikke lenger aktivert 
+      i BLFS libxml2 bygget.
     </para>
 
     <para>
@@ -274,13 +283,13 @@ chown -R root:root /usr/share/gimp/3.0/help</userinput></screen>
       machine?  The upstream CI uses it anyway.  I really don't
       know :(.  -->
     </para>
-
+<!--
     <para>
       <envar>ALL_LINGUAS=&quot;ca cs da de en en_GB es fa...&quot;</envar>: som
       standard vil hjelpefilene gjengis på alle tilgjengelige språk.
       Fjern kodene for alle språk du ikke ønsker å bygge.
     </para>
-
+-->
   </sect2>
 
   <sect2 role="configuration">

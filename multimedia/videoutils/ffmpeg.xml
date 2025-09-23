@@ -87,7 +87,8 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="libaom"/>,
+      <xref linkend="dav1d"/>,
+      <xref linkend="libaom"/> (for chroma undersampling utenfor YUV420),
 	  <xref linkend="libass"/>,
       <xref linkend="fdk-aac"/>,
       <xref linkend="freetype2"/>,
@@ -95,6 +96,7 @@
       <xref linkend="libvorbis"/>,
       <xref linkend="libvpx"/>,
       <xref linkend="opus"/>,
+      <xref linkend="svt-av1"/> (støtter bare YUV420),
       <xref linkend="x264"/>,
       <xref linkend="x265"/>, og
       <xref linkend="nasm"/>
@@ -194,10 +196,12 @@
             --disable-debug      \
             --enable-libaom      \
             --enable-libass      \
+            --enable-libdav1d    \
             --enable-libfdk-aac  \
             --enable-libfreetype \
             --enable-libmp3lame  \
             --enable-libopus     \
+            --enable-libsvtav1   \
             --enable-libvorbis   \
             --enable-libvpx      \
             --enable-libx264     \
@@ -365,13 +369,18 @@ grep ^TEST ../fate.log | wc -l</userinput></screen>
     </para>
 
     <para>
-      <parameter>--enable-libaom</parameter>: Aktiverer AV1 audio og video
+      <parameter>--enable-libaom</parameter>: Aktiverer AV1 koding og 
       dekoding via <filename class="libraryfile">libaom</filename>.
     </para>
 
     <para>
-      <parameter>--enable-libass</parameter>: Aktiverer ASS/SSA undertekstformat
-      gjengivelse via <filename class="libraryfile">libass</filename>.
+      <parameter>--enable-libass</parameter>: Aktiverer ASS/SSA 
+      undertekstformatgjengivelse via <filename class="libraryfile">libass</filename>.
+    </para>
+
+    <para>
+      <parameter>--enable-libdav1d</parameter>: Aktiverer AV1 dekoding 
+      via <filename class="libraryfile">libdav1d</filename>.
     </para>
 
     <para>
@@ -398,6 +407,13 @@ grep ^TEST ../fate.log | wc -l</userinput></screen>
       class="libraryfile">libtheora</filename>.
     </para>
 -->
+
+    <para>
+      <parameter>--enable-libsvtav1</parameter>: Aktiverer AV1 koding 
+      via <filename class="libraryfile">libSvtAv1Enc</filename>. Den støtter 
+      imidlertid bare chroma undersampling av YUV420.
+    </para>
+
     <para>
       <parameter>--enable-libvorbis</parameter>
       <parameter>--enable-libvpx</parameter>: Aktiverer WebM

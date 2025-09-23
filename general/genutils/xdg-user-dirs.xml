@@ -4,27 +4,24 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY xdg-user-dirs-download-http "https://user-dirs.freedesktop.org/releases/xdg-user-dirs-&xdg-user-dirs-version;.tar.gz">
+  <!ENTITY xdg-user-dirs-download-http
+    "https://gitlab.freedesktop.org/xdg/xdg-user-dirs/-/archive/v&xdg-user-dirs-version;/xdg-user-dirs-v&xdg-user-dirs-version;.tar.gz">
   <!ENTITY xdg-user-dirs-download-ftp  " ">
-  <!ENTITY xdg-user-dirs-md5sum        "dc7decea7ffb58cd067eff1fe1798cae">
-  <!ENTITY xdg-user-dirs-size          "267 KB">
-  <!ENTITY xdg-user-dirs-buildsize     "3.0 MB">
+  <!ENTITY xdg-user-dirs-md5sum        "0ca8418840e817fd071321f155926492">
+  <!ENTITY xdg-user-dirs-size          "88 KB">
+  <!ENTITY xdg-user-dirs-buildsize     "5.3 MB">
   <!ENTITY xdg-user-dirs-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="xdg-user-dirs" xreflabel="Xdg-user-dirs-&xdg-user-dirs-version;">
   <?dbhtml filename="xdg-user-dirs.html"?>
 
-
-  <!-- No other tags inside any title.
-       Use Title Case in All Titles -->
   <title>Xdg-user-dirs-&xdg-user-dirs-version;</title>
 
   <indexterm zone="xdg-user-dirs">
     <primary sortas="a-xdg-user-dirs">xdg-user-dirs</primary>
   </indexterm>
 
-  <!--Required section-->
   <sect2 role="package">
     <title>Introduksjon til Xdg-user-dirs</title>
 
@@ -88,27 +85,32 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr           \
-            --sysconfdir=/etc       \
-            --disable-documentation &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -D docs=false       \
+            .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput><userinput revision="sysv"> &amp;&amp;
+rm -rvf /usr/lib/systemd</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--disable-documentation</parameter>: Deaktiver
+      <parameter>-D docs=false</parameter>: Deaktiver
       installasjon av manualsidene. Fjern denne bryteren hvis du har installert
       de valgfrie avhengighetene og du ønsker å installere manualsidene til
       denne pakken.
