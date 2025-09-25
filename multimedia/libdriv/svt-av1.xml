@@ -10,8 +10,8 @@
   <!ENTITY svt-av1-download-ftp  " ">
   <!ENTITY svt-av1-md5sum        "77b9d52e8c26bacf8bca742f8448dbc1">
   <!ENTITY svt-av1-size          "11 MB">
-  <!ENTITY svt-av1-buildsize     "81 MB">
-  <!ENTITY svt-av1-time          "0.7 SBU (bruke parallellisme=4)">
+  <!ENTITY svt-av1-buildsize     "81 MB (legg til 647 MB for tester)">
+  <!ENTITY svt-av1-time          "0.7 SBU (bruke parallellisme=4); legg til 40.9 SBU for tester)">
 ]>
 
 <sect1 id="svt-av1" xreflabel="SVT-AV1-&svt-av1-version;">
@@ -82,6 +82,8 @@
       <xref linkend="valgrind"/>
     </para>
 
+    &test-use-internet;
+
   </sect2>
 
   <sect2 role="installation">
@@ -104,9 +106,25 @@ ninja</userinput></screen>
 
     <para>
       Testpakken er veldig lang og gir ikke meningsfulle resultater. Hvis du 
-      likevel vil teste resultatene, kan du bygge pakken på nytt med
-      <option>-D BUILD_TESTING=ON</option>, kjør deretter
-      <command>ninja test</command>. Det krever en internettforbindelse for å kjøre.
+      likevel vil teste resultatene, utsted:
+    </para>
+
+<screen remap='test'><userinput>cmake .. -D BUILD_TESTING=ON &amp;&amp;
+ninja                        &amp;&amp;
+ninja TestVectors            &amp;&amp;
+SVT_AV1_TEST_VECTOR_PATH=$PWD/../test/vectors \
+ctest -V -O testlog.txt --timeout 10800</userinput></screen>
+
+    <para>
+      På et relativt tregt system er det nødvendig å øke tidsavbruddet (se SBU 
+      verdien for tester øverst på siden). I SvtAv1ApiTests testen, 
+      12 <literal>run_paramter<!--[sic]-->_check</literal> deltester 
+      er kjent for å mislykkes.  <!-- test/Readme.md mentions even more
+      run_paramter_check failures so I guess those tests are just buggy.  -->
+      Testpakken vil laste ned en kopi av libaom (selv om
+      <xref linkend='libaom'/> (allerede er installert, testpakken er fortsatt 
+      ute av stand til å bruke systeminstallasjonen) og noen videoer som test 
+      innganger.
     </para>
 
 <!-- SVT-AV1's test suite clones into libaom and uses that test suite. After
