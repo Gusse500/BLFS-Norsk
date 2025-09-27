@@ -75,8 +75,11 @@
       <bridgehead renderas="sect5">Valgfri (for testing)</bridgehead>
       <para role="optional">
         <xref linkend="pytest"/>,
-        <xref linkend="requests"/>, og
-        <ulink url="https://pypi.org/project/pyinfo/">pypinfo</ulink>
+        <ulink url="https://pypi.org/project/pyperf/">pyperf</ulink>,
+        <ulink url="https://pypi.org/project/pypinfo/">pypinfo</ulink>,
+        <ulink url="https://pypi.org/project/pytest-instafail/">pytest-instafail</ulink>,
+        <ulink url="https://pypi.org/project/pytest-subtests/">pytest-subtests</ulink>, og
+        <ulink url="https://pypi.org/project/pytest-xdist/">pytest-xdist</ulink>
       </para>
     </sect3>
 
@@ -96,28 +99,31 @@
 <screen role="root"><userinput>&install-wheel; psutil</userinput></screen>
 
       <para>
-        For å teste resultatene, utsted: <command>make test</command>.
+        For å teste resultatene, utsted:
       </para>
 
-      <para>
-        To tester, <literal>TestSystemAPIs::test_disk_usage</literal> og
-        <literal>TestNetAPIs::test_net_if_addrs</literal>, er kjent for å feile.
+<screen remap='test'><userinput>python3 -m venv --system-site-packages testenv                            &amp;&amp;
+testenv/bin/pip3 install pytest-{instafail,subtests,xdist} pyperf pypinfo &amp;&amp;
+testenv/bin/python3 -m pytest</userinput></screen>
 
-        En test kalt
+      <para>
+        Testen navngitt <literal>TestSystemAPIs::test_disk_usage</literal>
+        er kjent for å feile.
+
+        Testen kalt
         <literal>TestAvailProcessAPIs::test_io_counters</literal>
         er kjent for å mislykkes hvis kjernen ikke har
         <option>CONFIG_TASK_IO_ACCOUNTING</option> aktivert.
 
-        <literal>TestExampleScripts.test_who</literal>> er kjent for å mislykkes hvis
+        Testen navngitt <literal>TestExampleScripts::test_who</literal> er 
+        kjent for å feile hvis
         login manager ikke skriver inn i <filename>/run/utmp</filename>
         (merk at på grunn av det potensielle år 2037 problemet, har Shadow
         allerede sluttet å skrive inn i det).
 
-        <literal>TestInternalScripts.test_import_all</literal> er kjent for å 
-        mislykkes hvis <xref linkend='requests'/> ikke er installert.
-
-        <literal>TestInternalScripts::test_import_all</literal> er kjent for å
-        mislykkes hvis den eksterne modulen pyinfo ikke er installert.
+        Testen navngitt <literal>TestSystemAPIs::test_users</literal> er 
+        kjent for å feile hvis <filename>/run/utmp</filename> filen inneholder 
+        en oppføring for innloggingsskjermen.
       </para>
 
     </sect3>
