@@ -6,8 +6,8 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "982f087479302e6d91432efc81852b00">
-  <!ENTITY rust-size          "256 MB">
+  <!ENTITY rust-md5sum        "a6e15778947c83cb6cf7b2fcf58a2cd0">
+  <!ENTITY rust-size          "260 MB">
   <!ENTITY rust-buildsize     "9.4 GB (252 MB installert); legg til 7.4 GB hvis du kjører testene">
   <!ENTITY rust-time          "9.0 SBU (inkludert nedlastingstid; legg til 15 SBU for tester, begge med parallellisme=8)">
 ]>
@@ -242,7 +242,7 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
 # Tell x.py the editors have reviewed the content of this file
 # and updated it to follow the major changes of the building system,
 # so x.py will not warn us to do such a review.
-change-id = 142379
+change-id = 144675
 
 [llvm]
 # When using system llvm prefer shared libraries
@@ -274,11 +274,6 @@ channel = "stable"
 # Enable the same optimizations as the official upstream build.
 lto = "thin"
 codegen-units = 1
-
-# Don't build lld which does not belong to this package and seems not
-# so useful for BLFS.  Even if it turns out to be really useful we'd build
-# it as a part of the LLVM package instead.
-lld = false
 
 # Don't build llvm-bitcode-linker which is only useful for the NVPTX
 # backend that we don't enable.
@@ -345,17 +340,9 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
 <screen remap="test"><userinput>./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
 
     <para>
-      <!-- https://github.com/rust-lang/rust/issues/145079 -->
-      Åtte tester i UI testpakken er kjent for å mislykkes med
-      <literal>description</literal> satt i <literal>build</literal>
-      seksjonen av <filename>bootstrap.toml</filename> filen.
-      Fire tester i bootstrap testpakken er kjent for å mislykkes fordi de 
-      forventer å kjøre i Rust Git repositoriet. Testen med navnet 
-      <filename>tests/run-make/musl-default-linking</filename>
+      Test navngitt <filename>tests/run-make/rustdoc-target-modifiers</filename>
       er kjent for å mislykkes fordi vi ikke har aktivert AArch64 målet i
-      <xref linkend='llvm'/>.  Testen med navnet
-      <filename>tests/run-make/linker-warning</filename> er kjent for å 
-      mislykkes av en eller annen ukjent årsak.
+      <xref linkend='llvm'/>.
     </para>
 
 <!-- Let's just comment this out.  Nobody has tested on a system w/o
