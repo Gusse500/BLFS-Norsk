@@ -6,10 +6,10 @@
 
   <!ENTITY thunderbird-download-http "&mozilla-http;/thunderbird/releases/&thunderbird-version;esr/source/thunderbird-&thunderbird-version;esr.source.tar.xz">
   <!ENTITY thunderbird-download-ftp  " ">
-  <!ENTITY thunderbird-md5sum        "f7a1c4f31b4d4e7ab006090584ac7b0f">
-  <!ENTITY thunderbird-size          "724 MB">
-  <!ENTITY thunderbird-buildsize     "8.9 GB (276 MB installert)">
-  <!ENTITY thunderbird-time          "18 SBU (på en 8 kjernes maskin)">
+  <!ENTITY thunderbird-md5sum        "19f0fe8cc731ce393b4a4a15a226e3ce">
+  <!ENTITY thunderbird-size          "720 MB">
+  <!ENTITY thunderbird-buildsize     "8.9 GB (268 MB installert)">
+  <!ENTITY thunderbird-time          "16 SBU (på en 8 kjernes maskin)">
   <!-- Removed the -j1 time because python and rust do not obey it, although
        the C/C++ code appears to obey it.
 
@@ -173,6 +173,10 @@ ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-system-webp
 
+# Thunderbird provides a copy of dav1d if it has not been installed. If you
+# have not installed nasm and ffmpeg, uncomment the following line:
+#ac_add_options --disable-av1
+
 # The BLFS editors recommend not changing anything below this line:
 ac_add_options --prefix=/usr
 ac_add_options --enable-application=comm/mail
@@ -205,7 +209,7 @@ ac_add_options --with-system-zlib
 ac_add_options --without-wasm-sandboxed-libraries</literal>
 EOF</userinput></screen>
 
-
+<!--
     <para>
       Endre en Rust fil for å tillate implisitt autoreferanse for å forhindre en 
       byggefeil. Den etterfølgende <literal>\r</literal> sørger for at MS-DOS 
@@ -215,6 +219,7 @@ EOF</userinput></screen>
 
 <screen><userinput>sed -e '1i\#![warn(dangerous_implicit_autorefs)]\r' \
     -i third_party/rust/allocator-api2/src/stable/vec/mod.rs</userinput></screen>
+-->
 
     <para>
       Påkall nå Python <command>mach</command> skriptet for å kompilere

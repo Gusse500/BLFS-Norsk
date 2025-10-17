@@ -123,7 +123,10 @@ sed -e '/PACKAGE_INIT/i set(SAVE_PACKAGE_PREFIX_DIR "${PACKAGE_PREFIX_DIR}")' \
 mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -D CMAKE_INSTALL_PREFIX=/usr -D BUILD_WITH_QT6=ON .. &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D BUILD_WITH_QT6=ON         \
+      -D DOC_INSTALL_DIR=/usr/share/doc/extra-cmake-modules-&kf6-version; \
+      .. &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -162,6 +165,12 @@ make</userinput></screen>
       <filename class="directory">/usr</filename>, mens de fleste KDE pakker
       forventer at den blir satt til <filename class="directory">/opt/kf6</filename>
       og ville mislykkes i å bygge hvis den er satt til noe annet.
+    </para>
+
+    <para>
+      <parameter>-D DOC_INSTALL-DIR=/usr/share/doc/extra...</parameter>:
+      Denne bryteren tillater installasjon av dokumentasjonen (som er bygget 
+      hvis <xref linkend="sphinx"/> er installert) i en versjonsmappe.
     </para>
   </sect2>
 
