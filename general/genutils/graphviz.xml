@@ -194,6 +194,20 @@
 
 <screen><userinput>sed -i '/ldflags/ s/ $.*&amp;&amp;//' cmake/FindPHP.cmake</userinput></screen>
 
+    <!-- Fortunately we don't run the test suite of this package.  If we
+         start to run the test suite this hack may break tests.  -->
+    <para>
+      Nå unngå hardkoding av biblioteksøkestier (rpath) inn i de delte 
+      bibliotekene. Bibliotekene trenger ikke rpath for en installasjon på 
+      standardplasseringen, og rpath kan noen ganger forårsake uønskede effekter 
+      eller til og med sikkerhetsproblemer. Vi kan ikke bruke
+      <option>-D CMAKE_SKIP_INSTALL_RPATH=ON</option> for denne pakken fordi 
+      rpath virkelig er nødvendig for programmene som installeres av denne 
+      pakken, så vi må redigere byggesystemet:
+    </para>
+
+<screen><userinput>sed '/ORIGIN/d' -i lib/CMakeLists.txt</userinput></screen>
+
     <para>
       Installer <application>Graphviz</application> ved å kjøre følgende
       kommandoer:
@@ -202,10 +216,9 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -D CMAKE_INSTALL_PREFIX=/usr   \
-      -D CMAKE_BUILD_TYPE=Release    \
-      -D CMAKE_SKIP_INSTALL_RPATH=ON \
-      ..                             &amp;&amp;
+cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D CMAKE_BUILD_TYPE=Release  \
+      ..                           &amp;&amp;
 
 sed -i '/GZIP/s/:.*$/=/' CMakeCache.txt &amp;&amp;
 
@@ -226,9 +239,6 @@ make</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/cmake-skip-install-rpath.xml"/>
 
     <para>
       <command>sed ... CMakeCache.txt</command>: Denne kommandoen er nødvendig 

@@ -177,6 +177,19 @@ ninja</userinput></screen>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
 
+    <para>
+      <command>xml2-config</command> kan returnere flagg som trengs for å lenke 
+      mot det statiske biblioteket for prosjektet, inkludert referansene til 
+      <xref linkend='icu'/> biblioteker. Det ville være meningsløst fordi vi 
+      bare installerer det delte biblioteket. For å gjøre vondt verre, kan det 
+      føre til at noen pakker bruker <application>libxml2</application>
+      å være unødvendig knyttet til noen <xref linkend='icu'/> biblioteker,
+      da må disse pakkene gjenoppbygges hvis ICU oppgraderes til en ny 
+      hovedversjon. Fiks dette ved å utstede, som &root;:
+    </para>
+
+<screen role="root"><userinput>sed "s/--static/--shared/" -i /usr/bin/xml2-config</userinput></screen>
+
   </sect2>
 
   <sect2 role="commands">
