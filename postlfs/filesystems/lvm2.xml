@@ -6,26 +6,15 @@
 
   <!ENTITY lvm2-download-http "https://sourceware.org/ftp/lvm2/LVM2.&lvm2-version;.tgz">
   <!ENTITY lvm2-download-ftp  " ">
-  <!ENTITY lvm2-md5sum        "d1527944d496d602f479e8fe9138c94a">
+  <!ENTITY lvm2-md5sum        "62a7c701fe07a5c30ff9fcb624cd3437">
   <!ENTITY lvm2-size          "2.8 MB">
-  <!ENTITY lvm2-buildsize     "39 MB (legg til 20 MB for tester; midlertidige filer kan vokse opp til rundt 300 MB i /tmp mappen under tester)">
-  <!-- My build size was 124 MB with tests, but I'll leave this here. -renodr
-       The files in /tmp are transient. I monitor /tmp with a loop during
-       tests. -pierre, August 2020
-
-       Build size with tests was 58M.  The largest size of /tmp I saw was 289 MB.
-       ### 412 tests: 245 passed, 155 skipped, 0 timed out, 1 warned, 11 failed
-       Aug 2023 LVM2.2.03.22 - bdubbs
-
-       ### 424 tests: 261 passed, 153 skipped, 0 timed out, 1 warned, 9 failed
-       Nov 2023 LVM2.2.03.23 - bdubbs
-       -->
-  <!ENTITY lvm2-time          "0.4 SBU (legg til 9 til 48 SBU for tester, avhengig av diskhastighet og om ram-blokkeringsenhet er aktivert i kjernen)">
+  <!ENTITY lvm2-buildsize     "39 MB (legg til opptil 300 MB for midlertidige filer for tester i /tmp mappen)">
+  <!ENTITY lvm2-time          "0.4 SBU (legg til 9 til 48 SBU for tester, avhengig av diskhastighet 
+  og alternativer aktivert i kjernen)">
 ]>
 
 <sect1 id="lvm2" xreflabel="LVM2-&lvm2-version;">
   <?dbhtml filename="lvm2.html"?>
-
 
   <title>LVM2-&lvm2-version;</title>
 
@@ -87,14 +76,16 @@
       <xref linkend='libaio'/>
      </para>
 
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <bridgehead renderas="sect4">Valgfri for tester</bridgehead>
     <para role="optional">
-      <xref linkend='libnvme'/>,
+      <xref linkend='btrfs-progs'/>,
+      <xref linkend='dosfstools'/>,
+      <xref linkend='jfsutils'/>,
       <xref linkend='mdadm'/>,
+      <xref linkend='parted'/>,
       <xref linkend='valgrind'/>,
       <xref linkend='which'/>,
-      <xref linkend='xfsprogs'/> (sistnevnte fire kan brukes, men er ikke nødvendig,
-        for tester),
+      <xref linkend='xfsprogs'/>,
       <ulink 
         url='https://mirrors.edge.kernel.org/pub/linux/kernel/people/jeffm/reiserfsprogs/'>
         reiserfsprogs</ulink>,
@@ -113,12 +104,21 @@
       og kompiler kjernen på nytt:
     </para>
 
-    <note><para>
-      Det er flere andre Device Mapper alternativer i kjernen utover disse
-      oppført nedenfor. For å få rimelige resultater hvis du kjører
-      regresjonstester, må alle være aktivert enten internt eller som en modul.
-      Testene vil alltid stoppe hvis Magic SysRq nøkkelen ikke er aktivert.
-    </para></note>
+    <note>
+      <para>
+        Det finnes flere andre alternativer for enhetstilordning i kjernen utover 
+        de som er oppført nedenfor. For å få rimelige resultater hvis du kjører 
+        regresjonstestene, må alle være aktivert enten internt eller som en modul. 
+        Alle testene vil få tidsavbrudd hvis Magic SysRq nøkkelen ikke er aktivert.
+      </para>
+
+      <para>
+        I tillegg krever de fleste valgfrie pakkene for tester kjernealternativer 
+        som er nødvendige. Hvis de valgfrie pakkene eller kjernealternativene 
+        ikke er installert, vil testene bli flagget som enten mislykket eller 
+        hoppet over på en inkonsekvent måte.
+      </para>
+    </note>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="lvm2-kernel.xml"/>
@@ -176,7 +176,13 @@ make -C libdm install</userinput></screen>
       av hastigheten til disken(e), og på antall aktiverte kjernealternativer.
     </para>
 
-    <!-- Results for LVM2.2.02.176:
+    <!-- 
+    My build size was 124 MB with tests, but I'll leave this here. -renodr
+       
+    The files in /tmp are transient. I monitor /tmp with a loop during
+    tests. -pierre, August 2020
+
+    Results for LVM2.2.02.176:
     ### 292 tests: 177 passed, 46 skipped, 0 timed out, 60 warned, 9 failed
 
     Results for LVM2.2.03.01:
@@ -202,21 +208,49 @@ make -C libdm install</userinput></screen>
 
     Results for LVM2.2.03.20 [pierre]:
     ### 407 tests: 324 passed, 75 skipped, 0 timed out, 3 warned, 5 failed
+    
+    Build size with tests was 58M.  The largest size of /tmp I saw was 289 MB.
+    ### 412 tests: 245 passed, 155 skipped, 0 timed out, 1 warned, 11 failed
+    Aug 2023 LVM2.2.03.22 - bdubbs
+
+    ### 424 tests: 261 passed, 153 skipped, 0 timed out, 1 warned, 9 failed
+    Nov 2023 LVM2.2.03.23 - bdubbs   
     -->
 
     <para>
-      Testene implementerer ikke <quote>expected fail</quote> mulighet,
-      og et lite antall testfeil forventes oppstrøms.
-      <!-- 1 -->Flere feil kan skje fordi noen kjernealternativer mangler.
-      For eksempel mangelen på <emphasis>dm-delay</emphasis> enhets
-      kartleggermålet forklarer noen feil.
-      <!-- 2 -->Noen tester kan mislykkes hvis det ikke er nok ledig plass
-       i partisjonen med /tmp mappen. Minst én test mislykkes hvis 16 TB
-       ikke er tilgjengelig.
-      <!-- 3 -->Noen tester er flagget  <quote>warned</quote> hvis
-      <ulink url='https://github.com/jthornber/thin-provisioning-tools'>
-      thin-provisioning-tools</ulink> ikke er installert. En løsning er å
-      legge til følgende flagg i <command>configure</command>:
+      Testene implementerer ikke <quote>expected fail</quote> mulighet og noen 
+      testfeil forventes av oppstrømsleverandører.
+    
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>
+            De fleste tester vil mislykkes hvis kjernen ikke har alle 
+            enhetsdriverne som er oppført ovenfor.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Flere feil kan oppstå fordi noen kjernealternativer mangler. 
+            For eksempel mangelen på <emphasis>dm-delay</emphasis> 
+            enhetskartleggermålet forklarer noen feil.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Noen tester kan mislykkes hvis det ikke er nok ledig plass i 
+            partisjonen med /tmp mappen. Minst én test mislykkes hvis 16 TB 
+            ikke er tilgjengelig.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Noen tester er flagget  <quote>warned</quote> hvis
+            <ulink url='https://github.com/jthornber/thin-provisioning-tools'>
+            thin-provisioning-tools</ulink> ikke er installert. En løsning er å 
+            legge til følgende flagg til <command>configure</command>:
+          </para>
+        </listitem>
+      </itemizedlist>
     </para>
 
 <screen role="nodump"><userinput>     --with-thin-check=    \
