@@ -6,8 +6,8 @@
 
   <!ENTITY brotli-download-http "https://github.com/google/brotli/archive/v&brotli-version;/brotli-&brotli-version;.tar.gz">
   <!ENTITY brotli-download-ftp  " ">
-  <!ENTITY brotli-md5sum        "3a6a3dba82a3604792d3cb0bd41bca60">
-  <!ENTITY brotli-size          "500 KB">
+  <!ENTITY brotli-md5sum        "8fbfae9a5ecbc278ae7f761ecb6d1285">
+  <!ENTITY brotli-size          "632 KB">
   <!ENTITY brotli-buildsize     "33 MB (med python3 bindinger)">
   <!-- The python tests for this package are broken.  The tarball is missing a lot of test files -->
   <!ENTITY brotli-time          "0,3 SBU (med python3 bindinger; parallellisme=4)">
@@ -99,26 +99,18 @@ cd    build &amp;&amp;
 
 cmake -D CMAKE_INSTALL_PREFIX=/usr \
       -D CMAKE_BUILD_TYPE=Release  \
-      ..  &amp;&amp;
-make</userinput></screen>
+      -G Ninja .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>make test</command>.
+      For å teste resultatene, utsted: <command>ninja test</command>.
     </para>
 
-<!--  These are broken
-    <para>
-      Python testene mangler de fleste nødvendige testdatafiler og
-      derfor mislykkes 240 av 311 tester.
-      Hvis du likevel ønsker å teste bindingene, gå tilbake til mappen på øverste nivå og
-      utsted: <command>python3 setup.py test</command>.
-    </para>
--->
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
       Bygg om ønskelig <application>Python3</application>
@@ -126,10 +118,13 @@ make</userinput></screen>
     </para>
 
 <screen><userinput>cd .. &amp;&amp;
-sed "/c\/.*\.[ch]'/d;\
-     /include_dirs=\[/\
-     i libraries=['brotlicommon','brotlidec','brotlienc']," \
-    -i setup.py &amp;&amp;
+
+sed -e '/libraries +=/s/=.*/= [required_system_library[3:]]/' \
+    -e '/package_configuration/d'                             \
+    -e '/pkgconfig/d'                                         \
+    -i setup.py                                               &amp;&amp;
+
+USE_SYSTEM_BROTLI=1 \
 &build-wheel-cmd; $PWD</userinput></screen>
 
     <para>
@@ -139,7 +134,7 @@ sed "/c\/.*\.[ch]'/d;\
 
 <screen role="root"><userinput>&install-wheel; Brotli</userinput></screen>
 
-    <!-- "131 passed in 2.76s" for me with 1.1.0 -->
+    <!-- "135 passed in 4.26s" for me with 1.2.0 -->
     <para>
       For å teste <application>Python3</application> binding, utsted:
       <command>pytest</command>.
@@ -149,14 +144,21 @@ sed "/c\/.*\.[ch]'/d;\
  <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
-    <!-- https://github.com/google/brotli/issues/933 -->
+    <!-- TODO: would it be easier to just add the pkgconfig module into the
+         book?  -->
     <para>
-      <command>sed ... -i setup.py</command>: Stopp
+      <command>sed ... -i setup.py</command>: Tillat å bygge
+      <application>Python3</application> bindinger med
+      <envar>USE_SYSTEM_BROTLI=1</envar> men uten Python 3 pkgconfig modulen 
+      (som BLFS ikke tilbyr) installert.
+    </para>
+
+    <para>
+      <envar>USE_SYSTEM_BROTLI=1</envar>: Stoppe
       <filename>setup.py</filename> fra å gjenoppbygge hele pakken
       igjen, bruk de allerede installerte bibliotekene for
       <application>Python3</application> binding i stedet.
     </para>
-
   </sect2>
 
   <sect2 role="content">
