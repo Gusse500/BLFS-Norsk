@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libheif-download-http "https://github.com/strukturag/libheif/releases/download/v&libheif-version;/libheif-&libheif-version;.tar.gz">
+  <!ENTITY libheif-md5sum        "5d0442f7197a34b7aaf95bdffabb51e9">
+  <!ENTITY libheif-size          "1.8 MB">
+  <!ENTITY libheif-buildsize     "31 MB">
+  <!ENTITY libheif-time          "1.0 SBU">
+]>
+
+<!-- Try to keep the indentation used in this file-->
+<sect1 id="libheif" xreflabel="libheif-&libheif-version;">
+  <?dbhtml filename="libheif.html"?>
+
+  <title>libheif-&libheif-version;</title>
+
+  <indexterm zone="libheif">
+    <primary sortas="a-libheif">libheif</primary>
+  </indexterm>
+
+  <!--Required section-->
+  <sect2 role="package">
+    <title>Introduksjon til libheif</title>
+
+    <para>
+      <application>libheif</application> Pakken er en dekoder og koder for 
+      HEIF og AVIF filformater.
+    </para>
+
+    &lfs124_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&libheif-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &libheif-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &libheif-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &libheif-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &libheif-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libheif Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para>
+      <xref linkend='libaom'/>,
+      <xref linkend='libde265'/>, og
+      <xref linkend='x265'/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend='brotli'/>,
+      <xref linkend='dav1d'/>,
+      <xref linkend='doxygen'/>,
+      <xref linkend='ffmpeg'/>,
+      <xref linkend='gdk-pixbuf'/>,
+      <xref linkend='libjpeg'/>,
+      <xref linkend='libpng'/>,
+      <xref linkend='libtiff'/>,
+      <xref linkend='libwebp'/>,
+      <xref linkend='openjpeg2'/>,
+      <xref linkend='sdl2'/>,
+      <xref linkend='svt-av1'/>,
+      <ulink url="https://github.com/ultravideo/kvazaar">kvaaar</ulink>,
+      <ulink url="https://www.openh264.org/">openh264</ulink>,
+      <ulink url="https://github.com/aous72/OpenJPH">openjph</ulink>,
+      <ulink url="https://github.com/ultravideo/uvg266">uvg266</ulink>,
+      <ulink url="https://github.com/fraunhoferhhi/vvdec">vvdec</ulink>,
+      <ulink url="https://github.com/fraunhoferhhi/vvenc">vvenc</ulink>, og
+      <ulink url="https://github.com/xiph/rav1e">rav1e</ulink>
+    </para>
+
+    <!--  Only use this if you want to note something in the wiki
+    <para condition="html" role="usernotes">
+      Redaktørens merknader: <ulink url="&blfs-wiki;/libheif"/>
+    </para>
+    -->
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av libheif</title>
+
+    <para>
+      Installer <application>libheif</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D CMAKE_BUILD_TYPE=Release  \
+      -G Ninja ..
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja test</command>.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <!-- The intention is only listing an option if the dependency is
+         in BLFS and it's not enabled by default even if the dependency is
+         installed.  -->
+
+    <para>
+      <option>-D DAV1D=ON</option>: Dette alternativet tillater bruk av
+      <xref linkend='dav1d'/> for å dekode AV1 data i AVIF filer.
+    </para>
+
+    <para>
+      <option>-D FFMPEG_DECODER=ON</option>: Dette alternativet tillater bruk av
+      <xref linkend='ffmpeg'/> for å dekode H.265 data i HEIC filer.
+    </para>
+
+    <para>
+      <option>-D JPEG_DECODER=ON -D JPEG_ENCODER=ON</option>: Dette alternativet 
+      tillater bruk av <xref linkend='libjpeg'/> for å kode og dekode
+      HEIF filer med JPEG data.
+    </para>
+
+    <para>
+      <option>-D OpenJPEG_ENCODER=ON -D OpenJPEG_DECODER=ON</option>:
+      Dette alternativet tillater bruk av <xref linkend='openjpeg2'/> for å kode 
+      og dekode HEIF filer med JPEG 2000 data.
+    </para>
+
+    <para>
+      <option>-D SvtEnc=ON</option>: Dette alternativet tillater bruk av
+      <xref linkend='svt-av1'/> for å kode AV1 data for AVIF filer.
+    </para>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          heif-convert (symbolsk lenke til heif-dec), heif-dec, heif-enc, 
+          heif-info, heif-thumbnailer (hvis libpng er tilgjengelig), og 
+          heif-view (hvis SDL2 er tilgjengelig)
+        </seg>
+        <seg>
+          libheif.so
+        </seg>
+        <seg>
+          /usr/include/libheif, /usr/lib/cmake/libheif, og
+          /usr/lib/cmake/libheif
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="heif-dec">
+        <term><command>heif-dec</command></term>
+        <listitem>
+          <para>
+            dekoder HEIC/HEIF bilder
+          </para>
+          <indexterm zone="libheif heif-dec">
+            <primary sortas="b-heif-dec">heif-dec</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="heif-enc">
+        <term><command>heif-enc</command></term>
+        <listitem>
+          <para>
+            konverterer bilder til HEIC/HEIF
+          </para>
+          <indexterm zone="libheif heif-enc">
+            <primary sortas="b-heif-enc">heif-enc</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="heif-info">
+        <term><command>heif-info</command></term>
+        <listitem>
+          <para>
+            viser informasjon om HEIC/HEIF filen
+          </para>
+          <indexterm zone="libheif heif-info">
+            <primary sortas="b-heif-info">heif-info</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="heif-thumbnailer">
+        <term><command>heif-thumbnailer</command></term>
+        <listitem>
+          <para>
+            lager miniatyrbilder fra HEIC/HEIF filer
+          </para>
+          <indexterm zone="libheif heif-thumbnailer">
+            <primary sortas="b-heif-thumbnailer">heif-thumbnailer</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="heif-view">
+        <term><command>heif-view</command></term>
+        <listitem>
+          <para>
+            viser bildet i HEIC/HEIF format med SDL2
+          </para>
+          <indexterm zone="libheif heif-view">
+            <primary sortas="b-heif-view">heif-view</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libheif-lib">
+        <term><filename class="libraryfile">libheif.so</filename></term>
+        <listitem>
+          <para>
+            er en ISO/IEC 23008-12:2017 HEIF og AVIF filformatdekoder og 
+            koder (AV1 Bildefilformat)
+          </para>
+          <indexterm zone="libheif libheif-lib">
+            <primary sortas="c-libheif">libheif.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>

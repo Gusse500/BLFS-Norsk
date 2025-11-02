@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY glycin-download-http "https://download.gnome.org/sources/glycin/&glycin-majmin;/glycin-&glycin-version;.tar.xz">
+  <!ENTITY glycin-md5sum        "b86c86d5a7675fac4e97dfb87f78972f">
+  <!ENTITY glycin-size          "6.3 MB">
+  <!ENTITY glycin-buildsize     "1.1 GB (ytterligere 775 MB for tester)">
+  <!ENTITY glycin-time          "6.4 SBU (ytterligere 9.5 SBU for tester)">
+]>
+
+<!-- Try to keep the indentation used in this file-->
+<sect1 id="glycin" xreflabel="glycin-&glycin-version;">
+  <?dbhtml filename="glycin.html"?>
+
+  <title>glycin-&glycin-version;</title>
+
+  <indexterm zone="glycin">
+    <primary sortas="a-glycin">glycin</primary>
+  </indexterm>
+
+  <!--Required section-->
+  <sect2 role="package">
+    <title>Introduksjon til glycin</title>
+
+    <para>
+      <application>glycin</application> Pakken inneholder et sandkassebasert og 
+      utvidbart rammeverk for bildelasting.
+    </para>
+
+    &lfs124_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&glycin-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &glycin-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &glycin-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &glycin-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &glycin-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">glycin Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref role="runtime" linkend="bubblewrap"/> (kjøretid),
+      <xref linkend="fontconfig"/>,
+      <xref linkend="glib2"/> (GObject Introspection anbefalt),
+      <xref linkend="lcms2"/>,
+      <xref linkend="libseccomp"/>, og
+      <xref linkend="rust"/>
+    </para>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref linkend='libheif'/>,
+      <xref linkend='libjxl'/>,
+      <xref linkend='librsvg'/>, og
+      <xref linkend="vala"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="gi-docgen"/>,
+      <xref linkend="gtk4"/>, og
+      <ulink url="https://libopenraw.freedesktop.org/">libopenraw</ulink>
+    </para>
+
+    <!--  Only use this if you want to note something in the wiki
+    <para condition="html" role="usernotes">
+      Redaktørens merknader: <ulink url="&blfs-wiki;/glycin"/>
+    </para>
+    -->
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av glycin</title>
+
+    <para>
+      Installer <application>glycin</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr           \
+            --buildtype=release     \
+            -D libglycin-gtk4=false &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      Hvis du har installert <xref linkend="gi-docgen"/>, kan du bygge 
+      dokumentasjonen ved å utstede:
+    </para>
+
+<screen remap="doc"><userinput>sed "/install_dir:.*doc/s|,$| / 'glycin-' + meson.project_version()&amp;|" \
+    -i ../libglycin/meson.build &amp;&amp;
+
+meson configure -D capi_docs=true &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted: <command>ninja test</command>.
+    </para>
+
+    <para>
+      Nå som &root; bruker:
+    </para>
+
+    <screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-D glycin_gtk4=false</parameter>: Denne parameteren deaktiverer 
+      byggingen av <systemitem class='library'>libglycin-gtk4</systemitem>
+      (som ikke brukes av noen BLFS pakker ennå), så denne pakken kan bygges 
+      uten <xref linkend='gtk4'/> installert.
+    </para>
+
+    <para>
+      <option>-D glycin-loaders=...</option>: Bruk dette alternativet til å 
+      spesifisere bildelasterne som skal bygges. Standardinnstillingen er
+      <literal>glycin-heif,glycin-image-rs,glycin-jxl,glycin-svg</literal>,
+      som dekker støtten for alle vanlige bildeformater. Du kan 
+      fjerne <literal>glycin-heif</literal>,
+      <literal>glycin-jxl</literal>, eller <literal>glycin-svg</literal> lastere 
+      hvis den tilsvarende anbefalte avhengigheten ikke er installert, men dette 
+      vil føre til testfeil og hemme funksjonaliteten til denne pakken. Det 
+      finnes også lastere for JPEG 2000 og RAW formatene, men de er ikke 
+      aktivert som standard.
+    </para>
+
+    <para>
+      <option>-D vapi=false</option>: Dette alternativet tillater bygging av 
+      denne pakken uten <xref linkend='vala'/> installert.
+    </para>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installert Program</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          glycin-thumbnailer
+        </seg>
+        <seg>
+          libglycin-2.so
+        </seg>
+        <seg>
+          /usr/include/glycin-2,
+          /usr/libexec/glycin-loaders, og
+          /usr/share/glycin-loaders
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="glycin-thumbnailer">
+        <term><command>glycin-thumbnailer</command></term>
+        <listitem>
+          <para>
+            lager miniatyrbilder for bilder i et format som støttes av glycin
+          </para>
+          <indexterm zone="glycin glycin-thumbnailer">
+            <primary sortas="b-glycin-thumbnailer">glycin-thumbnailer</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libglycin-2">
+        <term><filename class="libraryfile">libglycin-2.so</filename></term>
+        <listitem>
+          <para>
+            inneholder bildelastingsfunksjoner som fungerer ved å kjøre glycin 
+            lastere i et sandkassemiljø
+          </para>
+          <indexterm zone="glycin libglycin-2">
+            <primary sortas="c-libglycin-2">libglycin-2.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
