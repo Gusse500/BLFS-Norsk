@@ -117,10 +117,10 @@
 
     <note>
       <para>
-        I motsetning til de fleste andre pakker i BLFS, krever instruksjonene nedenfor
-        deg å untare
+        I motsetning til de fleste andre pakker i BLFS, krever instruksjonene 
+        nedenfor at du pakker ut
         <filename>firefox-&spidermonkey-version;esr.tar.xz</filename> og
-        gå inn i <filename>firefox-&spidermonkey-version;</filename>
+        går inn i <filename>firefox-&spidermonkey-version;</filename>
         mappen.
       </para>
 
@@ -176,8 +176,8 @@ make</userinput></screen>
 
 <!-- No longer needed with 128.8.0
     <para>
-      Hvis du ønsker å kjøre testpakken, må du tilpasse den til å være kompatibel med Python
-      3.13.0 eller nyere:
+      Hvis du ønsker å kjøre testpakken, må du tilpasse den til å være 
+      kompatibel med Python 3.13.0 eller nyere:
     </para>
 
     <screen remap='test'><userinput>sed 's/pipes/shlex/' -i ../js/src/tests/lib/results.py</userinput></screen>
@@ -191,8 +191,8 @@ make</userinput></screen>
      JSTESTS_EXTRA_ARGS="--timeout 300 --wpt=disabled" | tee jstest.log</userinput></screen>
 
     <para>
-      Fordi vi bygger med systemets ICU, 24 tester
-      (av totalt mer enn 50 000) er kjent for å mislykkes.
+      Fordi vi bygger med system ICU, litt over 100 tester, avhengig av ICU 
+      versjon, (av totalt mer enn 50 000) er kjent for å mislykkes.
       Listen over mislykkede tester kan hentes ut via
       <command>grep 'UNEXPECTED-FAIL' jstest.log</command>.
       Send <option>-c</option> alternativet til <command>grep</command> hvis
@@ -203,8 +203,8 @@ make</userinput></screen>
       Testpakken kjøres med alle CPU kjerner tilgjengelig: selv i en
       cgroup med færre kjerner tildelt, prøver den fortsatt å skape like mange
       testjobber som <emphasis>alle</emphasis> kjerner i
-      systemet; Heldigvis vil kjernen fortsatt ikke kjøre disse jobbene på kjerner
-      som ikke er tildelt cgroup, så CPU bruken er fortsatt kontrollert.
+      systemet; Heldigvis vil kjernen fortsatt ikke kjøre disse jobbene på 
+      kjerner som ikke er tildelt cgroup, så CPU bruken er fortsatt kontrollert.
     </para>
 
     <para>
@@ -223,10 +223,10 @@ make</userinput></screen>
       problemer. Hvis du ikke har nok systemminne tilgjengelig, legg til
       <option>JITTEST_EXTRA_ARGS=-j<replaceable>N</replaceable></option> til
       kommandoen og erstatt <replaceable>N</replaceable> med nummeret
-      av testjobber det tilgjengelige systemminnet kan inneholde. For eksempel hvis
-      du har 15 GB systemminne tilgjengelig og 4 CPU kjerner,
-      legg til <option>JITTEST_EXTRA_ARGS=-j3</option> for å kjøre
-      testpakken med 3 parallelle jobber slik at minnebruken ikke overskrider 12 GB.
+      av testjobber det tilgjengelige systemminnet kan inneholde. For eksempel 
+      hvis du har 15 GB systemminne tilgjengelig og 4 CPU kjerner, legg til 
+      <option>JITTEST_EXTRA_ARGS=-j3</option> for å kjøre testpakken med 3 
+      parallelle jobber slik at minnebruken ikke overskrider 12 GB.
       <!-- TL;DR: DO NOT REMOVE MEMORY USAGE NOTE W/O MY CONFIRMATION!
 
            "six tests": large-arraybuffers/arraybuffer-transfer.js, it's ran
@@ -255,10 +255,10 @@ make</userinput></screen>
 
     <caution>
       <para>
-        Et problem i installasjonsprosessen forårsaker at ethvert program som kjører
-        og lenker til SpiderMonkey delte bibliotek (for eksempel GNOME Shell) til å
-        krasje hvis SpiderMonkey installeres på nytt, eller oppgraderes eller nedgraderes
-        uten endring av hovedversjonsnummeret
+        Et problem i installasjonsprosessen forårsaker at ethvert program som 
+        kjører og lenker til SpiderMonkey delte bibliotek (for eksempel GNOME 
+        Shell) til å krasje hvis SpiderMonkey installeres på nytt, eller 
+        oppgraderes eller nedgraderes uten endring av hovedversjonsnummeret
         (&spidermonkey-major; in &spidermonkey-version;).  For å omgå
         dette problemet, fjern den gamle versjonen av SpiderMonkey delte
         bibliotek før installasjonen:
@@ -289,21 +289,21 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></sc
 
     <para>
       <parameter>--disable-debug-symbols</parameter>: Ikke generer feilsøking
-      symboler siden de er veldig store og de fleste brukere ikke trenger det. Fjern
-      det hvis du vil feilsøke SpiderMonkey.
+      symboler siden de er veldig store og de fleste brukere ikke trenger det. 
+      Fjern det hvis du vil feilsøke SpiderMonkey.
     </para>
 
     <para>
       <parameter>--disable-jemalloc</parameter>: Denne bryteren deaktiverer
       intern minneallokator brukt i SpiderMonkey. jemalloc er bare
       beregnet for nettlesermiljøet Firefox. For andre applikasjoner
-      som bruker SpiderMonkey, kan applikasjonen krasje siden elementer tildelt i
-      jemalloc allokatoren er frigjort på systemets (glibc) allokatoren.
+      som bruker SpiderMonkey, kan applikasjonen krasje siden elementer tildelt 
+      i jemalloc allokatoren er frigjort på systemets (glibc) allokatoren.
     </para>
 
     <para>
-      <parameter>--enable-readline</parameter>: Denne bryteren aktiverer Readline
-      støtte i SpiderMonkey kommandolinjegrensesnittet.
+      <parameter>--enable-readline</parameter>: Denne bryteren aktiverer 
+      Readline støtte i SpiderMonkey kommandolinjegrensesnittet.
     </para>
 
     <para>
@@ -318,9 +318,9 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></sc
     </para>
 
     <para>
-      <parameter>--with-system-*</parameter>: Disse parameterne tillater byggesystemet
-      å bruke systemversjoner av bibliotekene ovenfor. Disse kreves for
-      stabilitet.
+      <parameter>--with-system-*</parameter>: Disse parameterne tillater 
+      byggesystemet å bruke systemversjoner av bibliotekene ovenfor. Disse 
+      kreves for stabilitet.
     </para>
 
     <para>
@@ -337,13 +337,13 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></sc
 
     <para>
       <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide å
-      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstillinger for
-      <application>clang</application> programmer. Med utgivelsen av
+      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstillinger 
+      for <application>clang</application> programmer. Med utgivelsen av
       gcc-12 bygget tar lengre tid med gcc og g++, først og fremst fordi
       ekstra advarsler, og er større. Send disse miljøvariablene
       til konfigureringsskriptet hvis du ønsker å fortsette å bruke gcc, g++
-      (ved å eksportere dem og deaktivere dem etter installasjonen, eller ganske enkelt
-      forberede dem før
+      (ved å eksportere dem og deaktivere dem etter installasjonen, eller ganske 
+      enkelt forberede dem før
       <command>../js/src/configure</command> kommandoen). Hvis du
       bygger på et 32-bits system, se også nedenfor.
     </para>
@@ -351,15 +351,15 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></sc
     <para>
       <option><envar>CXXFLAGS="-msse2 -mfpmath=sse"</envar></option>:
       Bruk SSE2 i stedet for 387 for flytende komma med dobbel presisjon
-      operasjoner. Det er nødvendig for GCC for å tilfredsstille forventningene til
-      oppstrøms (Mozilla) utviklere med flytende komma aritmetikk.
+      operasjoner. Det er nødvendig for GCC for å tilfredsstille forventningene 
+      til oppstrøms (Mozilla) utviklere med flytende komma aritmetikk.
       Bruk den hvis du bygger denne pakken på et 32-bits system med
       GCC (hvis Clang ikke er installert eller GCC er eksplisitt spesifisert).
       Merk at dette vil føre til at SpiderMonkey krasjer på en prosessor uten
       SSE2 evne. Hvis du kjører systemet på en så gammel
-      prosessor, er Clang strengt tatt nødvendig. Denne innstillingen er ikke nødvendig på
-      64-bits systemer fordi alle 64-bits x86-prosessorer støtter SSE2 og
-      64-bits kompilatorer (både Clang og GCC) bruker SSE2 som standard.
+      prosessor, er Clang strengt tatt nødvendig. Denne innstillingen er ikke 
+      nødvendig på 64-bits systemer fordi alle 64-bits x86-prosessorer støtter 
+      SSE2 og 64-bits kompilatorer (både Clang og GCC) bruker SSE2 som standard.
     </para>
   </sect2>
 
