@@ -5,7 +5,7 @@
   %general-entities;
 
   <!ENTITY glycin-download-http "https://download.gnome.org/sources/glycin/&glycin-majmin;/glycin-&glycin-version;.tar.xz">
-  <!ENTITY glycin-md5sum        "b86c86d5a7675fac4e97dfb87f78972f">
+  <!ENTITY glycin-md5sum        "dd0e7d6612094b0e481ff13a64cd435c">
   <!ENTITY glycin-size          "6.3 MB">
   <!ENTITY glycin-buildsize     "1.1 GB (ytterligere 775 MB for tester)">
   <!ENTITY glycin-time          "6.4 SBU (ytterligere 9.5 SBU for tester)">
@@ -86,7 +86,9 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gi-docgen"/>,
-      <xref linkend="gtk4"/>, og
+      <xref linkend="gtk4"/> (for
+      <systemitem class='library'>libglycin-gtk4</systemitem> og test
+      testpakken), og
       <ulink url="https://libopenraw.freedesktop.org/">libopenraw</ulink>
     </para>
 
@@ -110,7 +112,8 @@ cd    build &amp;&amp;
 
 meson setup --prefix=/usr           \
             --buildtype=release     \
-            -D libglycin-gtk4=false &amp;&amp;
+            -D libglycin-gtk4=false \
+            -D tests=false          &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -125,7 +128,9 @@ meson configure -D capi_docs=true &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>ninja test</command>.
+      For å teste resultatene, sørg for at <xref linkend='gtk4'/> er installert, 
+      så utsted: <command>meson configure -D tests=true &amp;&amp; ninja
+      test</command>.
     </para>
 
     <para>
