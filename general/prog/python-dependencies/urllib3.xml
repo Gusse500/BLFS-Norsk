@@ -130,23 +130,22 @@
 
 <screen remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
 source testenv/bin/activate                    &amp;&amp;
-pip3 install trustme         \
-             tornado         \
-             python-dateutil \
-             mock            \
-             pysocks         \
-             pytest-timeout  \
-             trio            \
-             hypercorn       \
-             quart           \
-             quart_trio      \
-             httpx           &amp;&amp;
-python3 /usr/bin/pytest<!-- no && because of a possible error -->
+pip3 install --group dev                       &amp;&amp;
+python3 /usr/bin/pytest --timeout 10<!-- no && because of a possible error -->
 deactivate</userinput></screen>
 
     <para>
-      Så mange som 34 feil er kjent for å oppstå på grunn av små atferdsendringer i
-      de eksterne Python-modulene ovenfor, når de kombineres med Python 3.13.7.
+      Mer enn 50 feil forventes med instruksjonene ovenfor. Det er flere 
+      grunner. For det første bruker oppstrøms en oppdatert versjon av hypercorn 
+      modulen til sin egen testing, som bare kan fås gjennom
+      <command>git</command> på <ulink
+      url="https://github.com/urllib3/hypercorn.git">https://github.com/urllib3/hypercorn.git</ulink>,
+      ved revisjon <quote>urllib3-changes</quote>, og bør installeres først i 
+      det virtuelle miljøet. For det andre ser det ut til at testpakken ikke har 
+      blitt tilpasset nyere versjoner av Python og de eksterne Python modulene. 
+      Spesielt henger noen tester seg, slik at
+      <command>pytest</command> trenger <parameter>--timeout</parameter>
+      bryteren.
     </para>
 
     </sect3>

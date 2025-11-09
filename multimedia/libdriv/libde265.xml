@@ -26,8 +26,8 @@
     <title>Introduksjon til libde265</title>
 
     <para>
-      <application>libde265</application> pakken inneholder en åpen H.265 
-      videokodek implementering.
+      <application>libde265</application> pakken inneholder en åpen kildekode 
+      H.265 videokodek implementering.
     </para>
 
     &lfs124_checked;
@@ -97,7 +97,9 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+<screen><userinput>./configure --prefix=/usr         \
+            --disable-sherlock265 \
+            --disable-static      &amp;&amp;
 make</userinput></screen>
 
     <!-- The README.md file mentions a "testdata" directory but I cannot
@@ -115,6 +117,13 @@ make</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>--disable-sherlock265</parameter>: Denne bryteren deaktiverer 
+      sherlock265 programmet fordi det krever Qt5, som ikke lenger finnes i 
+      BLFS. Sherlock265 programmet er mest nyttig for brukere som redigerer 
+      H.265 videoer.
+    </para>
 
     <para>
       <option>--enable-encoder</option>: Dette alternativet aktiverer H.265 
@@ -153,7 +162,7 @@ make</userinput></screen>
         <term><command>dec265</command></term>
         <listitem>
           <para>
-            dekoder H.265-data (rå bitstrøm av en strøm med NAL enheter)
+            en dekoder H.265-data (rå bitstrøm av en strøm med NAL enheter)
           </para>
           <indexterm zone="libde265 dec265">
             <primary sortas="b-dec265">dec265</primary>

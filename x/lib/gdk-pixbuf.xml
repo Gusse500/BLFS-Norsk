@@ -83,8 +83,8 @@
     <para role="recommended">
       <xref linkend="docutils"/> og
       <xref linkend="glycin"/> (sirkulær: bygg gdk-pixbuf uten glycin først, 
-      bygg deretter glycin med alle anbefalte avhengigheter, og gjenoppbygg til 
-      slutt gdk-pixbuf)
+      bygg deretter glycin med alle anbefalte avhengigheter, og gjenoppbygg  
+      gdk-pixbuf igjen)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -119,7 +119,8 @@ meson setup ..                \
       -D jpeg=disabled        \
       -D tiff=disabled        \
       -D thumbnailer=disabled \
-      --wrap-mode=nofallback  &amp;&amp;
+      --wrap-mode=nofallback  \
+      $(pkgconf glycin-2 || echo -D glycin=disabled) &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -176,9 +177,9 @@ ninja</userinput></screen>
     <para>
       <parameter>-D *=disabled</parameter>: Ikke bygg komponentene som er 
       foreldet til fordel for glycin. Disse komponentene blir automatisk 
-      deaktivert når du bygger denne pakken med glycin installert. Spesifiser 
-      disse alternativene eksplisitt for å gjøre konfigurasjonen av den første 
-      byggingen (uten glycin) konsistent.
+      deaktivert når du bygger denne pakken med glycin installert, men 
+      spesifiser disse alternativene eksplisitt for å gjøre konfigurasjonen av 
+      den første byggingen (uten glycin) konsistent.
     </para>
   </sect2>
 
