@@ -6,15 +6,24 @@
 
   <!ENTITY ffmpeg-download-http "https://ffmpeg.org/releases/ffmpeg-&ffmpeg-version;.tar.xz">
   <!ENTITY ffmpeg-download-ftp  " ">
-  <!ENTITY ffmpeg-md5sum        "02fad5aa6db43488f748c397baccc326 ">
+  <!ENTITY ffmpeg-md5sum        "2c91c725fb1b393618554ff429e4ae43 ">
   <!ENTITY ffmpeg-size          "11 MB">
-  <!ENTITY ffmpeg-buildsize     "209 MB (legg til 1.7 GB for FATE pakken/tester,
+  <!ENTITY ffmpeg-buildsize     "226 MB (legg til 1.7 GB for FATE pakken/tester,
                                  legg til 869 MB for dokumentasjon)">
   <!ENTITY ffmpeg-time          "1.6 SBU (bruker parallellisme=4;
                                  legg til 3.2 SBU (med THREADS=4) for å kjøre FATE 
                                  pakken etter at eksempelfilene er lastet ned;
                                  legg til 0.2 SBU for doxygen dokumentasjon)">
 ]>
+
+<!--  bdubbs ffmpeg 8.0 
+
+      time doxygen doc/Doxyfile -> real    0m16.788s  868 MB 
+           ps/pdf docs                     0m17.770s   15 MB 
+
+      FATE download: 1m48.124s sent 49,665 bytes  received 1,325,495,982 bytes
+           tests:    5m40.417s  - 5295 tests
+-->
 
 <sect1 id="ffmpeg" xreflabel="FFmpeg-&ffmpeg-version;">
   <?dbhtml filename="ffmpeg.html"?>
@@ -315,7 +324,7 @@ find /usr/share/doc/ffmpeg-&ffmpeg-version;/api -type d -exec chmod -c 0755 \{} 
       rsync://fate-suite.ffmpeg.org/fate-suite/ fate-suite/</userinput></screen>
 
     <para>
-      Deretter utfører du FATE med følgende kommandoer (det er mer enn 3800
+      Deretter utfører du FATE med følgende kommandoer (det er mer enn 5200
       tester i pakken):
     </para>
 
@@ -328,8 +337,7 @@ grep ^TEST ../fate.log | wc -l</userinput></screen>
    </para>
 
    <para>
-     En vellykket kjøring skal ikke returnere noen feil eller advarsler, bare en liste over tester
-     og totalt antall på slutten.
+     En vellykket kjøring skal ikke returnere noen feil eller advarsler, bare en liste over tester.
    </para>
 
   </sect2>

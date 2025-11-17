@@ -66,6 +66,16 @@
         </listitem>
       </itemizedlist>
 
+      <bridgehead renderas="sect4">Ytterligere Nedlastinger</bridgehead>
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>
+            Påkrevd oppdatering:
+            <ulink url="&patch-root;/html5lib-&html5lib-version;-python_3.14_buildfix-1.patch"/>
+          </para>
+        </listitem>
+      </itemizedlist>
+
       <bridgehead renderas="sect4">html5lib Avhengigheter</bridgehead>
 
       <bridgehead renderas="sect5">Påkrevd</bridgehead>
@@ -80,6 +90,13 @@
       <title>Installasjon av html5lib</title>
 
       <para>
+        Først, fiks en byggefeil med Python 3.14 forårsaket av fjerning av 
+        flere metoder fra 'ast' modulen:
+      </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../html5lib-&html5lib-version;-python_3.14_buildfix-1.patch</userinput></screen>
+
+      <para>
         For å bygge <application>Python 3</application> modulen, kjør:
       </para>
 
@@ -90,6 +107,12 @@
       </para>
 
 <screen role="root"><userinput>&install-wheel; html5lib</userinput></screen>
+
+      <para>
+        Denne pakken har en testpakke, men den fungerer ikke fordi den er 
+        avhengig av flere hardkodede versjoner av pakker som bare kan brukes 
+        med Python 3.6.
+      </para>
 
     </sect3>
 

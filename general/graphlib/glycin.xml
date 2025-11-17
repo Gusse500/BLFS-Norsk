@@ -5,7 +5,7 @@
   %general-entities;
 
   <!ENTITY glycin-download-http "https://download.gnome.org/sources/glycin/&glycin-majmin;/glycin-&glycin-version;.tar.xz">
-  <!ENTITY glycin-md5sum        "dd0e7d6612094b0e481ff13a64cd435c">
+  <!ENTITY glycin-md5sum        "14ea548305203fc0ab09d7a39ba303ec">
   <!ENTITY glycin-size          "6.3 MB">
   <!ENTITY glycin-buildsize     "1.1 GB (ytterligere 775 MB for tester)">
   <!ENTITY glycin-time          "6.4 SBU (ytterligere 9.5 SBU for tester)">
@@ -61,6 +61,17 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Anbefalt oppdatering (påkrevd hvis du installerer Xorg i
+          <filename class='directory'>/opt</filename>):
+          <ulink url="&patch-root;/glycin-&glycin-version;-xorg_prefix-1.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
     <bridgehead renderas="sect3">glycin Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -101,6 +112,18 @@
 
   <sect2 role="installation">
     <title>Installasjon av glycin</title>
+
+    <para>
+      Hvis du installerer Xorg i <filename class='directory'>/opt</filename>,
+      last ned de nødvendige rustkassene nå og installer en oppdatering for å gi 
+      tilgang til <filename class='directory'>$XORG_PREFIX/lib</filename> fra 
+      sandkassen (merk at oppdateringen krever at <envar>XORG_PREFIX</envar>
+      er riktig innstilt for gjeldende bruker og &root; følg
+      <xref linkend='xorg-env'/> før bygging av glycin):
+    </para>
+
+<screen><userinput>cargo vendor &amp;&amp;
+patch -Np1 -i ../glycin-&glycin-version;-xorg_prefix-1.patch</userinput></screen>
 
     <para>
       Installer <application>glycin</application> ved å kjøre følgende
