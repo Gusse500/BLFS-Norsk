@@ -4,11 +4,11 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libdvdnav-download-http "https://get.videolan.org/libdvdnav/&libdvdnav-version;/libdvdnav-&libdvdnav-version;.tar.bz2">
+  <!ENTITY libdvdnav-download-http "https://get.videolan.org/libdvdnav/&libdvdnav-version;/libdvdnav-&libdvdnav-version;.tar.xz">
   <!ENTITY libdvdnav-download-ftp  " ">
-  <!ENTITY libdvdnav-md5sum        "46c46cb0294fbd1fcb8a0181818dad15">
-  <!ENTITY libdvdnav-size          "360 KB">
-  <!ENTITY libdvdnav-buildsize     "3.7 MB">
+  <!ENTITY libdvdnav-md5sum        "e9e9f137cdd52828abc0c61b727ea579">
+  <!ENTITY libdvdnav-size          "84 KB">
+  <!ENTITY libdvdnav-buildsize     "1.4 MB">
   <!ENTITY libdvdnav-time          "mindre enn 0.1 SBU">
 ]>
 
@@ -16,7 +16,7 @@
   <?dbhtml filename="libdvdnav.html"?>
 
 
-  <title>Libdvdnav-&libdvdnav-version;</title>
+  <title>libdvdnav-&libdvdnav-version;</title>
 
   <indexterm zone="libdvdnav">
     <primary sortas="a-Libdvdnav">Libdvdnav</primary>
@@ -77,17 +77,24 @@
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av Libdvdnav</title>
+    <title>Installasjon av libdvdnav</title>
+
+    <para>
+      Først installerer du dokumentasjonen i en versjonsbasert mappe:
+    </para>
+
+<screen><userinput>sed -i "/get_option/s/libdvdnav/&amp;-&libdvdnav-version;/" meson.build</userinput></screen>
 
     <para>
       Installer <application>libdvdnav</application> ved å kjøre
       følgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr    \
-            --disable-static \
-            --docdir=/usr/share/doc/libdvdnav-&libdvdnav-version; &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -97,9 +104,10 @@ make</userinput></screen>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install &amp;&amp;
+rm -fv /usr/lib/libdvdnav.a</userinput></screen>
   </sect2>
-
+<!--
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
@@ -107,7 +115,7 @@ make</userinput></screen>
       href="../../xincludes/static-libraries.xml"/>
 
   </sect2>
-
+-->
   <sect2 role="content">
     <title>Innhold</title>
 
