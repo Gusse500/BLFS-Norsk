@@ -7,10 +7,10 @@
 
   <!ENTITY mariadb-download-http "https://downloads.mariadb.org/interstitial/mariadb-&mariadb-version;/source/mariadb-&mariadb-version;.tar.gz">
   <!ENTITY mariadb-download-ftp  " ">
-  <!ENTITY mariadb-md5sum        "3c81bc728598f5b53067220c7b729747">
+  <!ENTITY mariadb-md5sum        "00cae9ff1a3f828c737eacc167479873">
   <!ENTITY mariadb-size          "114 MB">
   <!ENTITY mariadb-buildsize     "2.2 GB (761 MB installert)">
-  <!ENTITY mariadb-time          "3.6 SBU (med parallellitet=8, legg til 0.4 SBU for tester)">
+  <!ENTITY mariadb-time          "3.7 SBU (med parallellitet=8, legg til 2.8 SBU for tester)">
 ]>
 
 <sect1 id="mariadb" xreflabel="MariaDB-&mariadb-version;">
@@ -70,8 +70,8 @@
 
     <note>
       <para>
-        Den installerte størrelsen på MariaDB er 761 MB, men den kan bli
-        redusert med ca. 268 MB, hvis ønskelig, ved å fjerne <filename
+        Den installerte størrelsen på MariaDB er 763 MB, men den kan bli
+        redusert med ca. 269 MB, hvis ønskelig, ved å fjerne <filename
         class="directory">/usr/share/mariadb/test</filename>
         mappen etter installasjonen.
       </para>
@@ -191,11 +191,23 @@ make</userinput></screen>
       To tester, my_tzinfo og test-connect, er kjent for å mislykkes.
     </para>
 
+<!--
+    Leaving this for upstream developers.  When I tried to run it the 
+    procedure failed after 10 failures.  To fix that, the option
+    - -max-test-fail 0 is needed.
+
+    My error message was:
+    Too many tests(10) failed! Terminating...
+       Only  2616  of 8178 completed.
+       The servers were restarted 890 times
+       Spent 1966.864 of 648 seconds executing testcases
+       Too many failed: Failed 10/1620 tests, 99.38% were successful.
+
     <note><para>
       Et mer omfattende sett med tester kan kjøres med følgende:</para>
 
 <screen remap="test"><userinput>pushd mysql-test
-./mtr --parallel <replaceable>&lt;N&gt;</replaceable> --mem --force
+./mtr - -parallel <replaceable>&lt;N&gt;</replaceable> - -mem - -force
 popd</userinput></screen>
 
     <para>
@@ -203,7 +215,7 @@ popd</userinput></screen>
       Over 5400 tester kjøres i ca 24 SBU med N=4. Noen få tester
       kan mislykkes, hovedsakelig på grunn av tegnsettproblemer.
     </para></note>
-
+-->
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
