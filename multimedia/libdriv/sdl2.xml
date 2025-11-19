@@ -4,31 +4,29 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY sdl2-download-http "https://www.libsdl.org/release/SDL2-&sdl2-version;.tar.gz">
+  <!ENTITY sdl2-download-http "https://www.libsdl.org/release/sdl2-compat-&sdl2-version;.tar.gz">
   <!ENTITY sdl2-download-ftp  " ">
-  <!ENTITY sdl2-md5sum        "7b234751c91737168d88c83041ca5aa9">
-  <!ENTITY sdl2-size          "7.3 MB">
-  <!ENTITY sdl2-buildsize     "187 MB (med dokumenter)">
-  <!ENTITY sdl2-time          "0.5 SBU (bruker parallellisme=4; med dokumenter)">
+  <!ENTITY sdl2-md5sum        "ce17260dfcf7a7548747d09882974bef">
+  <!ENTITY sdl2-size          "2.7 MB">
+  <!ENTITY sdl2-buildsize     "63 MB (legg til 29 MB for tester)">
+  <!ENTITY sdl2-time          "mindre enn 0.1 SBU (bruk parallellisme=4; legg til 0.3 SBU for tester)">
 ]>
 
-<sect1 id="sdl2" xreflabel="SDL2-&sdl2-version;">
+<sect1 id="sdl2" xreflabel="sdl2-compat-&sdl2-version;">
   <?dbhtml filename="sdl2.html"?>
 
-
-  <title>SDL2-&sdl2-version;</title>
+  <title>sdl2-compat-&sdl2-version;</title>
 
   <indexterm zone="sdl2">
-    <primary sortas="a-SDL2">SDL2</primary>
+    <primary sortas="a-SDL2">sdl2-compat</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduksjon til SDL2</title>
+    <title>Introduksjon til sdl2-compat</title>
 
     <para>
-      The Simple DirectMedia Layer Version 2 (<application>SDL2</application>
-      for kort) er et bibliotek på tvers av plattformer designet for å gjøre det enkelt å skrive
-      multimedieprogramvare, som spill og emulatorer.
+      Pakken sdl2-compat tilbyr et kompatibilitetslag for pakker som krever 
+      SDL2, og bruker SDL3 som bakstykke.
     </para>
 
     &lfs124_checked;
@@ -67,110 +65,72 @@
       </listitem>
     </itemizedlist>
 
-<!--
-    <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nødvendig oppdatering (for i686 systemer):
-           <ulink url="&patch-root;/SDL2-&sdl2-version;-opengl_include_fix-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
--->
-    <bridgehead renderas="sect3">SDL2 Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">sdl2-compat Avhengigheter</bridgehead>
 
-    <bridgehead renderas="sect4">Anbefalt</bridgehead>
-    <para role="recommended">
-      <xref linkend="libxkbcommon"/>,
-      <xref linkend="wayland-protocols"/>, og
-      <xref linkend="xorg7-lib"/> (hvis disse ikke er til stede, bygges ikke de tilsvarende modulene)
-    </para>
-
-    <bridgehead renderas="sect4">Valgfri</bridgehead>
-    <para role="optional">
-      <xref linkend="alsa-lib"/>,
-      <xref linkend="doxygen"/> (å lage dokumentasjon),
-      <xref linkend="ibus"/>,
-	  <xref linkend="libsamplerate"/>,
-      <xref linkend="libunwind"/>,
-      <xref linkend="nasm"/>,
-	  <xref linkend="pipewire"/>,
-      <xref linkend="pulseaudio"/>,
-      <xref linkend="x-window-system"/>,
-      <ulink url="https://pkgs.fedoraproject.org/repo/pkgs/directfb/">DirectFB</ulink>,
-      <ulink url="https://fcitx-im.org/">fcitx</ulink>,
-      <ulink url="https://jackaudio.org/">jack</ulink>, og
-      <ulink url="https://sndio.org/">sndio</ulink>
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="cmake"/> og
+      <xref linkend="sdl3"/>
     </para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av SDL2</title>
+    <title>Installasjon av sdl2-compat</title>
 
     <para>
       Installer <application>SDL2</application> ved å kjøre
       følgende kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr   \
+      -D CMAKE_BUILD_TYPE=Release    \
+      -D CMAKE_SKIP_INSTALL_RPATH=ON \
+      -D SDL2COMPAT_STATIC=OFF       \
+      -D SDL2COMPAT_TESTS=OFF        \
+      -W no-dev -G Ninja ..         &amp;&amp;
+
+ninja</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend="doxygen"/> installert og ønsker å bygge
-      html dokumentasjon, kjør følgende kommandoer:
+      Nå, som &root; bruker:
     </para>
 
-<screen remap="doc"><userinput>pushd docs  &amp;&amp;
-  doxygen   &amp;&amp;
-popd</userinput></screen>
-
-    <note>
-      <para>
-        Hvis du ønsker å bygge og kjøre pakkeregresjon
-        tester, ikke slett de statiske bibliotekene nedenfor før etter
-        at testene er bygget.
-      </para>
-    </note>
-
-    <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"><userinput>make install              &amp;&amp;
-rm -v /usr/lib/libSDL2*.a</userinput></screen>
-
-    <para>
-      Hvis du har laget dokumentasjonen, installer den som <systemitem
-      class="username">root</systemitem> bruker:
-    </para>
-
-<screen role="root"
-        remap="doc"><userinput>install -v -m755 -d        /usr/share/doc/SDL2-&sdl2-version;/html &amp;&amp;
-cp -Rv  docs/output/html/* /usr/share/doc/SDL2-&sdl2-version;/html</userinput></screen>
+<screen role="root"><userinput>ninja install &amp;&amp;
+rm -vf /usr/lib/libSDL2_test.a</userinput></screen>
 
   </sect2>
 
   <sect2 role="testing">
-    <title>Teste SDL2</title>
+    <title>Teste sdl2-compat</title>
 
     <para>
-      Hvis du ønsker det, test installasjonen av <application>SDL2</application>
-      ved hjelp av de inkluderte testprogrammene. Ingen av de resulterende binære filene trenger
-      å installeres. Utfør følgende kommandoer for å bygge test
-      programmer:
+      Hvis du vil bygge testene, utsted følgende kommandoer:
     </para>
 
-<screen><userinput>cd test &amp;&amp;
-./configure &amp;&amp;
-make</userinput></screen>
+<screen><literal>mkdir ../build-tests &amp;&amp;
+cd    ../build-tests &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr   \
+      -D CMAKE_BUILD_TYPE=Release    \
+      -D CMAKE_SKIP_INSTALL_RPATH=ON \
+      -D SDL2COMPAT_INSTALL_TESTS=ON \
+      -D SDL2COMPAT_STATIC=OFF       \
+      -D SDL2COMPAT_TESTS=ON         \
+      -W no-dev -G Ninja ..         &amp;&amp;
+
+ninja &amp;&amp;
+DESTDIR=$PWD/TESTS ninja install</literal></screen>
 
     <para>
-      Hvert av testprogrammene (de er oppført i
-      <filename>README</filename> filen i denne mappen) må kjøres
-      individuelt. Mange av dem må stoppes manuelt. I tillegg,
-      høyttalere må være på med volumet på et passende nivå.
+      Nå vil du kunne kjøre testene i <filename
+      class="directory">TESTS/usr/libexec/installed-tests/SDL2_compat</filename>.
+      Du må kjøre testene individuelt. Noen av dem må kanskje 
+      deaktiveres manuelt, og lyden må fungere slik at du kan 
+      høre fra standard lydutgang.
     </para>
 
   </sect2>
@@ -178,42 +138,25 @@ make</userinput></screen>
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="../../xincludes/cmake-skip-install-rpath.xml"/>
+
     <para>
-      <command>rm -v /usr/lib/libSDL2*.a</command>: Normalt
-      statiske biblioteker kan deaktiveres med en <option>--disable-static</option>
-      alternativet til configure, men det bryter bygningen i denne pakken.
+      <parameter>-D SDL2COMPAT_STATIC=OFF</parameter>: Denne parameteren 
+      deaktiverer bygging av statiske biblioteker.
     </para>
 
-<!--
     <para>
-      <option>- -disable-alsa-shared</option>: Denne bryteren deaktiverer
-      at ALSA laster delte biblioteker dynamisk.
+      <parameter>-D SDL2COMPAT_TESTS=OFF</parameter>: Denne parameteren 
+      deaktiverer bygging av testene.
     </para>
--->
 
-<!--
     <para>
-      <option>- -disable-x11-shared</option>: Denne bryteren deaktiverer
-      dynamisk lasting av X11 delte biblioteker.
+      <command>rm -vf /usr/lib/libSDL2_test.a</command>: Denne kommandoen 
+      fjerner et ubrukelig statisk bibliotek.
     </para>
--->
 
   </sect2>
-
-<!--
-  <sect2 role="configuration">
-    <title>Konfigurere SDL2</title>
-
-    <sect3>
-      <title>Konfigurasjonsinformasjon</title>
-
-      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/lib-config.xml"/>
-
-    </sect3>
-
-  </sect2>
--->
 
   <sect2 role="content">
     <title>Innhold</title>
@@ -226,9 +169,8 @@ make</userinput></screen>
       <seglistitem>
         <seg>sdl2-config</seg>
         <seg>libSDL2.so</seg>
-        <seg>/usr/include/SDL2,
-             /usr/lib/cmake/SDL2, og
-             /usr/share/doc/SDL-&sdl2-version;</seg>
+        <seg>/usr/include/SDL2 og
+             /usr/lib/cmake/SDL2</seg>
       </seglistitem>
     </segmentedlist>
 
@@ -255,9 +197,7 @@ make</userinput></screen>
         <term><filename class="libraryfile">libSDL2.so</filename></term>
         <listitem>
           <para>
-            inneholder funksjoner som gir lavnivå tilgang til lyd,
-            tastatur, mus, joystick, 3D-maskinvare via OpenGL, og
-            2D rammebuffer på tvers av flere plattformer
+            tilbyr kompatibilitetsfunksjoner for SDL2 applikasjoner som bruker SDL3
           </para>
           <indexterm zone="sdl2 libsdl2">
             <primary sortas="c-libsdl2">libSDL2.so</primary>
