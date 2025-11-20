@@ -80,8 +80,15 @@
 <screen role="root"><userinput>&install-wheel; ply</userinput></screen>
 
     <para>
-      Denne pakken kommer ikke med en fungerende testpakke.
+      For å kjøre testene, utsted:
     </para>
+
+<screen><userinput>pushd test                                                 &amp;&amp;
+sed -i 's/self.assert_/self.assertTrue/' test{lex,yacc}.py &amp;&amp;
+sed -i 's/"ERROR:/r"ERROR:/' testlex.py                    &amp;&amp;
+python3 testlex.py                                         &amp;&amp;
+python3 testyacc.py                                        &amp;&amp;
+popd</userinput></screen>
 
     </sect3>
 
