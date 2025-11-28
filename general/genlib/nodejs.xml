@@ -6,10 +6,10 @@
 
   <!ENTITY nodejs-download-http "https://nodejs.org/dist/v&nodejs-version;/node-v&nodejs-version;.tar.xz">
   <!ENTITY nodejs-download-ftp  " ">
-  <!ENTITY nodejs-md5sum        "749c5219b26f9961ddf62e0f02e222a1">
+  <!ENTITY nodejs-md5sum        "216555727f4d52f3ae436dac96e92b07">
   <!ENTITY nodejs-size          "48 MB">
   <!ENTITY nodejs-buildsize     "1.4 GB (legg til 45 MB for tester)">
-  <!ENTITY nodejs-time          "14 SBU (legg til 2.4 SBU for tester: begge bruker
+  <!ENTITY nodejs-time          "14 SBU (legg til 4.3 SBU for tester: begge bruker
                                  parallellisme=8 og 8 CPUer, deler av
                                  testene vil bruke alle tilgjengelige CPUer)">
 ]>
@@ -152,6 +152,19 @@ test/parallel/test-fs-cp-async-socket.mjs
 test/parallel/test-fs-cp-sync-copy-socket-error.mjs
 test/parallel/test-http2-client-set-priority.js
 test/parallel/test-http2-priority-event.js
+
+node.js-22.21.1 (+ 4619|-  11):
+test/parallel/test-datetime-change-notify.js
+test/parallel/test-http2-client-set-priority.js
+test/parallel/test-http2-client-unescaped-path.js
+test/parallel/test-http2-multi-content-length.js
+test/parallel/test-http2-priority-event.js
+test/parallel/test-icu-env.js
+test/parallel/test-http2-reset-flood.js
+test/parallel/test-tls-ocsp-callback.js
+test/parallel/test-http2-max-invalid-frames.js
+test/parallel/test-http2-misbehaving-flow-control.js
+test/parallel/test-http2-misbehaving-flow-control-paused.js
 -->
     </para>
 
@@ -167,27 +180,29 @@ ln -sf node /usr/share/doc/node-&nodejs-version;</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--with-intl=system-icu</parameter>: bruk systemversjonen
-      av <application>icu</application>. Andre verdier er
+      <parameter>--with-intl=system-icu</parameter>: Denne parameteren bruker 
+      systemversjonen av <application>ICU</application>. Andre verdier er
       <option>full-icu</option> (for å bygge en lokal, full
       <application>icu</application> bibliotek) og <option>small-icu</option>
-      (for å bygge en lokal, minimal <application>icu</application> bibliotek).
+      (for å bygge en lokal, minimal <application>ICU</application> bibliotek).
     </para>
 
     <para>
       <parameter>--shared-{brotli,cares,libuv,nghttp2,openssl,zlib}</parameter>:
-      bruk de systeminstallerte bibliotekene i stedet for lokale kopier.
+      Denne parameteren bruker de systeminstallerte bibliotekene i stedet for 
+      lokale kopier.
     </para>
 
     <para>
-      <option>--without-npm</option>: ikke bygg
-      <application>npm</application> (bruk hvis du vil bygge en separat
-      <application>npm</application> senere).
+      <option>--without-npm</option>: Dette alternativet forteller byggesystemet 
+      at det ikke skal bygge <application>npm</application> (bruk hvis du vil 
+      bygge en separat <application>npm</application> senere).
     </para>
 
     <para>
-      <option>--shared-http-parser</option>: bruk det system
-      installert biblioteket i stedet for en lokal kopi.
+      <option>--shared-http-parser</option>: Dette alternativet bruker systemets 
+      installerte <application>http-parser</application> bibliotek i stedet for 
+      en lokal kopi hvis du har installert det.
     </para>
 
   </sect2>
