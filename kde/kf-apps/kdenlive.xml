@@ -15,7 +15,6 @@
 <sect1 id="kdenlive" xreflabel="kdenlive-&kf6apps-version;">
   <?dbhtml filename="kdenlive.html"?>
 
-
   <title>kdenlive-&kf6apps-version;</title>
 
   <indexterm zone="kdenlive">
@@ -70,6 +69,7 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
+      <xref linkend="git"/>,
       <xref linkend="kf6-frameworks"/>,
       <xref linkend="mlt"/>, og
       <xref role="runtime" linkend="v4l-utils"/> (kjøretid)
@@ -79,6 +79,17 @@
     <para role="recommended">
       <xref linkend="breeze-icons"/>
     </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <ulink
+        url="https://glfs-book.github.io/slfs/general/ladspa-sdk.html">LADSPA-SDK</ulink>
+      og
+      <ulink
+        url="https://glfs-book.github.io/slfs/general/noise-suppression.html">Noise-Suppression</ulink>
+    </para>
+
+    &build-use-internet;
 
   </sect2>
 
@@ -99,12 +110,21 @@ cmake -D CMAKE_INSTALL_PREFIX=$KF6_PREFIX \
       -W no-dev .. &amp;&amp;
 make</userinput></screen>
 
+    <note><para>
+      Byggeprosessen vil laste ned et Git depot av
+      <application>OpenTimelineIO</application>, totalt rundt 100 MB. 
+      Konfigurasjonen vil tilsynelatende henge seg opp rett etter at
+      <command>cmake</command> begynner å kjøre. Dette er normalt, den henter 
+      det Git depotet. Hvis det henger seg en stund, skyldes det mest sannsynlig 
+      dårlig nedlastingshastighet under nedlastingsprosessen.
+    </para></note>
+
     <para>
       Denne pakken kommer ikke med en testpakke.
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>

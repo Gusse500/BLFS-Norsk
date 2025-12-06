@@ -4,11 +4,11 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY localsearch-download-http "&gnome-download-http;/localsearch/3.9/localsearch-&localsearch-version;.tar.xz">
+  <!ENTITY localsearch-download-http "&gnome-download-http;/localsearch/3.10/localsearch-&localsearch-version;.tar.xz">
   <!ENTITY localsearch-download-ftp  " ">
-  <!ENTITY localsearch-md5sum        "6d29c941a4e10eb7fcc6e84d0d90053a">
+  <!ENTITY localsearch-md5sum        "d8022c33b89fda3c207999b6ad9b09f6">
   <!ENTITY localsearch-size          "4.3 MB">
-  <!ENTITY localsearch-buildsize     "35 MB (med tester)">
+  <!ENTITY localsearch-buildsize     "63 MB (med tester)">
   <!ENTITY localsearch-time          "0.2 SBU (med parallellitet=4; legg til så mye som 1.0 SBU for tester, avhengig av diskhastighet)">
 ]>
 
@@ -66,6 +66,7 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -75,6 +76,7 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <bridgehead renderas="sect3">Localsearch Avhengigheter</bridgehead>
 
@@ -94,6 +96,7 @@
       <xref linkend="libexif"/>,
       <xref linkend="libgxps"/>,
       <xref linkend="libseccomp"/>,
+      <xref linkend="libwebp"/>,
       <xref linkend="poppler"/>, og
       <xref linkend="upower"/>
     </para>
@@ -102,10 +105,7 @@
     <para role="optional">
       <xref linkend="asciidoc"/>,
       <xref linkend="cmake"/>,
-      <xref linkend="dconf"/>,
       <xref linkend="libgsf"/>,
-      <xref linkend="NetworkManager"/>,
-      <xref linkend="taglib"/>,
       <xref linkend="totem-pl-parser"/>,
       <ulink url="https://github.com/lipnitsk/libcue">libcue</ulink>,
       <ulink url="https://libiptcdata.sourceforge.net/">libitpcdata</ulink>,
@@ -168,12 +168,14 @@ rm -fv /usr/share/dbus-1/services/org.freedesktop.Tracker3.Miner.Files.Control.s
 <screen remap="test"><userinput>sed -i s/120/<replaceable>200</replaceable>/ tests/functional-tests/meson.build</userinput></screen>
     </note>
 
+<!--
     <para>
       Først bruk en oppdatering for å gjøre HTML ekstraktoren kompatibel med 
       libxml2-2.14 og senere:
     </para>
 
     <screen><userinput remap="pre">patch -Np1 -i ../localsearch-&localsearch-version;-libxml2_2_14-1.patch</userinput></screen>
+-->
 
     <para>
       Installer <application>Localsearch</application> ved å kjøre følgende
@@ -201,8 +203,10 @@ meson setup --prefix=/usr                  \
 ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted (juster den individuelle testtidsavbruddet til en
-      verdi som passer for din maskin, se merknaden ovenfor):
+      For å teste resultatene, utfør følgende kommandoer. Sørg for at du 
+      justerer den individuelle testtidsavbruddet til en verdi som passer for 
+      maskinen din, les merknaden ovenfor for mer informasjon. Én test,
+      <filename>test_cli_inhibit</filename>, er kjent for å mislykkes.
     </para>
 
 <screen remap="test"><userinput>dbus-run-session env LC_ALL=C.UTF-8 TRACKER_TESTS_AWAIT_TIMEOUT=<replaceable>20</replaceable> \
@@ -221,6 +225,7 @@ rm -rf ~/tracker-tests</userinput></screen>
         de må fjernes etterpå.
       </para>
     </note>
+
   </sect2>
 
   <sect2 role="commands">
@@ -244,12 +249,12 @@ rm -rf ~/tracker-tests</userinput></screen>
 
     <para>
       <option>-D seccomp=false</option>: Dette alternativet deaktiverer seccomp systemet
-      anropsfilter. På noen arkitekturer, som i686 og ARM, funksjonene
-      som tracker-miners bruker ikke er bevoktet ordentlig, og tracker-miners
-      vil bli drept med en SIGSYS som resultat. Merk at deaktivering
+      anropsfilter. På noen arkitekturer, som ARM, funksjonene som localsearch 
+      bruker er ikke beskyttet ordentlig, og localsearch vil bli drept med et 
+      SIGSYS signal som følge av dette. Merk at deaktivering
       secomp kan føre til at systemet blir kompromittert verre i tilfelle en
       sikkerhetssårbarhet i lokalt søk eller dets avhengigheter er
-      utnyttet.
+      utnyttet, og det er <emphasis>IKKE</emphasis> anbefalt.
     </para>
 
     <para>
@@ -257,7 +262,8 @@ rm -rf ~/tracker-tests</userinput></screen>
       Sandkasse for filtilgang til landlås. Bruk den hvis du ikke vil bygge
       kjerne med Landlock støtte. Merk at deaktivering av Landlock kan
       føre til at systemet blir kompromittert verre i tilfelle en sikkerhetssårbarhet
-      i lokalt søk eller dets avhengigheter utnyttes.
+      i lokalt søk eller dets avhengigheter utnyttes, og dette
+      er <emphasis>IKKE</emphasis> anbefalt.
     </para>
 
     <para>

@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-48;/mutter-&mutter-version;.tar.xz">
+  <!ENTITY mutter-download-http "&gnome-download-http;/mutter/&gnome-49;/mutter-&mutter-version;.tar.xz">
   <!ENTITY mutter-download-ftp  " ">
-  <!ENTITY mutter-md5sum        "e03c4eb4d9df60ec46bcc74fd632cb1e">
-  <!ENTITY mutter-size          "8.0 MB">
+  <!ENTITY mutter-md5sum        "2bad5493570e526c987f52cf6fee56ff">
+  <!ENTITY mutter-size          "8.1 MB">
   <!ENTITY mutter-buildsize     "103 MB (med tester)">
-  <!ENTITY mutter-time          "0.4 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
+  <!ENTITY mutter-time          "0.5 SBU (Bruk parallellisme=4, legg til 1,4 SBU for tester)">
 ]>
 
 <sect1 id="mutter" xreflabel="Mutter-&mutter-version;">
@@ -68,18 +68,6 @@
       </listitem>
     </itemizedlist>
 
-<!--
-    <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-          Nødvendig oppdatering:
-          <ulink url="&patch-root;/mutter-&mutter-version;-upstream_fixes-1.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
--->
-
     <bridgehead renderas="sect3">Mutter Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -121,7 +109,7 @@
       <!-- sorted as "d" instead of "p" -->
       <xref linkend="python-dbusmock"/> (påkrevd for tester),
 	  <!--<xref linkend="sysprof"/>,-->
-      <xref linkend="xorg-server"/> (for X11 økter),
+      <xref linkend="xorg-server"/> (for X11 økter, utdatert),
       <ulink url="https://github.com/scop/bash-completion/">bash-completion</ulink>,
       <ulink url="&sysprof-url;">sysprof</ulink>,
       <command>Xvfb</command> (fra <xref linkend='xorg-server'/> eller
@@ -142,14 +130,6 @@
 
   <sect2 role="installation">
     <title>Installasjon av Mutter</title>
-
-<!--
-    <para>
-      Først bruker du en oppdatering for å fikse krasjer og frysinger under kjøring:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../mutter-&mutter-version;-upstream_fixes-1.patch</userinput></screen>
--->
 
     <para>
       Løs et problem med testene som ellers ville kreve at
@@ -175,25 +155,6 @@ meson setup --prefix=/usr            \
             ..                       &amp;&amp;
 ninja</userinput></screen>
 
-<!--
-    <para>
-      For å teste resultatene, kjør:
-      <command>dbus-run-session ninja test</command>. Testene
-      krever en aktiv X økt for å kjøre riktig. Det er ikke nødvendig å
-      kjøre en egen D-bus økt hvis ikke i en GNOME økt, men det
-      gir et rent miljø i alle fall. En test,
-      <filename>native-headless</filename>, er kjent for å mislykkes.
-    </para>
-    -->
-    <!-- there are no added problems in sysv, AFAICT. Running the tests is
-    not easy whatever the init system. But using the instructions below in
-    a gnome session on sysv works (no test failure)...
-    <para revision='sysv'>
-       Denne pakken kommer ikke med en testpakke som kjører riktig i
-       SystemV miljø.
-    </para>
-    -->
-
     <para>
       Hvis du vil kjøre testpakken, sørg for at
       <xref linkend='python-dbusmock'/> er installert og utsted:
@@ -203,17 +164,17 @@ ninja</userinput></screen>
 ninja test</userinput></screen>
 
     <para>
-      Testene krever en aktiv X eller wayland økt.
-      Noen tester er ustabile (spesielt under høy systembelastning), så hvis
-      en test mislykkes kan du prøve å kjøre den på nytt alene med
-      <command>meson test <replaceable>&lt;test name&gt;</replaceable></command>
+      Testene krever en aktiv Wayland økt. Noen tester er ustabile (spesielt 
+      hvis systemet ditt er under høy belastning), så hvis en test mislykkes kan 
+      du prøve å kjøre en spesifikk test på nytt ved å bruke
+      <command>meson test <replaceable>&lt;testnavn&gt;</replaceable></command>
       kommandoen.
       Noen få tester kan mislykkes avhengig av noen systemkonfigurasjoner.
       Ikke gjør noen mus eller tastatur inndata mens testpakken
       kjører ellers kan noen tester mislykkes.
       Du kan også teste grunnleggende funksjoner til <application>Mutter</application>
       med å følge <xref linkend='mutter-starting' role=','/> etter installering
-      av den.
+      av denne pakken.
     </para>
 
     <para>
@@ -232,7 +193,7 @@ ninja test</userinput></screen>
 
     <para>
       <parameter>-D bash_completion=false</parameter>: Gjør det mulig å bygge
-      pakken uten
+      denne pakken uten
       <ulink url="https://github.com/scop/bash-completion/">bash-completion</ulink>
       pakken installert.
     </para>
@@ -251,12 +212,10 @@ ninja test</userinput></screen>
       analysere gjengivelsesytelsen til <application>Mutter</application>.
     </para>
 
-    <!-- No longer in meson.options in 48.2
     <para>
-      <option>-D libdisplay_info=disabled</option>: Dette tillater bygging av
-      denne pakken uten <xref linkend='libdisplay-info'/> installert.
+      <option>-D x11=true</option>: Tillater bygging av denne pakken med X11 
+      støtte. X11 støtte er utdatert og vil bli fjernet i GNOME 50.
     </para>
-    -->
 
   </sect2>
 
@@ -308,13 +267,15 @@ ninja test</userinput></screen>
 
       <seglistitem>
         <seg>
-          gdctl og mutter
+          gdctl,
+          gnome-service-client, og
+          mutter
         </seg>
         <seg>
-          libmutter-16.so og libmutter-test-16.so (valgfri)
+          libmutter-17.so and libmutter-test-17.so (valgfri)
         </seg>
         <seg>
-          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-16
+          /usr/{lib,include,libexec/installed-tests,share/{,installed-tests}}/mutter-17
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -333,6 +294,18 @@ ninja test</userinput></screen>
           </para>
           <indexterm zone="mutter gdctl">
             <primary sortas="b-gdctl">gdctl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="gnome-service-client">
+        <term><command>gnome-service-client</command></term>
+        <listitem>
+          <para>
+            starter en Wayland klient med en valgfri tagg
+          </para>
+          <indexterm zone="mutter gnome-service-client">
+            <primary sortas="b-gnome-service-client">gnome-service-client</primary>
           </indexterm>
         </listitem>
       </varlistentry>
