@@ -103,9 +103,11 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="asciidoc"/>,
+      <xref linkend="asciidoc"/> (for å bygge manuelsider; merk at manuelsider er nødvendige for noen tester),
       <xref linkend="cmake"/>,
+      <xref linkend="gst10-plugins-good"/> (for en test),
       <xref linkend="libgsf"/>,
+      <xref linkend="python-dbusmock"/> (for funksjonstester),
       <xref linkend="totem-pl-parser"/>,
       <ulink url="https://github.com/lipnitsk/libcue">libcue</ulink>,
       <ulink url="https://libiptcdata.sourceforge.net/">libitpcdata</ulink>,
@@ -186,10 +188,11 @@ rm -fv /usr/share/dbus-1/services/org.freedesktop.Tracker3.Miner.Files.Control.s
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr       \
-            --buildtype=release \
-            -D man=false        \
-            ..                  &amp;&amp;
+meson setup --prefix=/usr             \
+            --buildtype=release       \
+            -D man=false              \
+            -D functional_tests=false \
+            ..                        &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
@@ -199,33 +202,37 @@ meson setup --prefix=/usr                  \
             --buildtype=release            \
             -D systemd_user_services=false \
             -D man=false                   \
+            -D functional_tests=false      \
             ..                             &amp;&amp;
 ninja</userinput></screen>
 
     <para>
       For å teste resultatene, utfør følgende kommandoer. Sørg for at du 
       justerer den individuelle testtidsavbruddet til en verdi som passer for 
-      maskinen din, les merknaden ovenfor for mer informasjon. Én test,
+      maskinen din, les merknaden ovenfor for mer informasjon.<!--Én test,
       <filename>test_cli_inhibit</filename>, er kjent for å mislykkes.
+      Seem to pass if man pages are built (pierre)-->
     </para>
 
-<screen remap="test"><userinput>dbus-run-session env LC_ALL=C.UTF-8 TRACKER_TESTS_AWAIT_TIMEOUT=<replaceable>20</replaceable> \
-                 ninja test &amp;&amp;
-rm -rf ~/tracker-tests</userinput></screen>
+    <screen remap="test"><userinput>
+meson configure -D man=true -D functional_tests=true &amp;&amp;
+ninja                                                &amp;&amp;
+dbus-run-session env LC_ALL=C.UTF-8 TRACKER_TESTS_AWAIT_TIMEOUT=<replaceable>20</replaceable> \
+                 ninja test</userinput></screen>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
     <screen role="root"><userinput>ninja install</userinput></screen>
-
+    <!-- Does not seem to be true anymore (pierre Dec 25)
     <note>
       <para>
         Testene lager filer i user mappen (opptil 24 MB), så
         de må fjernes etterpå.
       </para>
     </note>
-
+    -->
   </sect2>
 
   <sect2 role="commands">
@@ -239,6 +246,12 @@ rm -rf ~/tracker-tests</userinput></screen>
       fra å generere manualsider. Utelat denne bryteren hvis du har
       <xref linkend="asciidoc" role="nodep"/> installert og ønsker å generere og
       installer manualsider.
+    </para>
+
+    <para>
+      <parameter>-D functional_tests=false</parameter>: Denne bryteren hindrer 
+      at installasjonsprosessen krever <xref linkend="python-dbusmock"/> og mislykkes 
+      hvis den ikke er installert. Du kan fjerne denne bryteren hvis den er installert.
     </para>
 
     <para revision="sysv">
