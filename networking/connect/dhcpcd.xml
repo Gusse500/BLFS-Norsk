@@ -406,6 +406,21 @@ EOF</userinput></screen>
         Erstatt <replaceable>eth0</replaceable> med det faktiske grensesnittnavnet.
       </para>
 
+      <para>
+        <command>dhcpcd</command> tjenesten har alternativer, eller mangel på dem, 
+        som kan være utilfredsstillende. Du kan overstyre dem ved å kjøre følgende 
+        kommandoer som <systemitem class="username">root</systemitem> bruker:
+      </para>
+
+<screen role="nodump"><userinput>install -v -dm755 /etc/systemd/system/dhcpcd\@<replaceable>eth0</replaceable>.service.d &amp;&amp;
+cat &gt; /etc/systemd/system/dhcpcd\@<replaceable>eth0</replaceable>.service.d/99-user.conf &lt;&lt; EOF
+<literal>[Service]
+ExecStart=
+ExecStart=/sbin/dhcpcd -q -w <replaceable>&lt;list of parameters&gt;</replaceable> %I
+ExecStop=
+ExecStop=/sbin/dhcpcd -x <replaceable>&lt;list of parameters&gt;</replaceable> %I
+</literal>EOF</userinput></screen>
+
     </sect3>
 
   </sect2>
