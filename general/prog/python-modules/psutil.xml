@@ -7,9 +7,9 @@
   <!ENTITY psutil-download-http "&pymodules-dl;/p/psutil/psutil-&psutil-version;.tar.gz">
   <!ENTITY psutil-download-ftp  " ">
   <!ENTITY psutil-md5sum        "&psutil-md5sum;">
-  <!ENTITY psutil-size          "476 KB">
-  <!ENTITY psutil-buildsize     "6.2 MB (legg til 57 MB for tester)">
-  <!ENTITY psutil-time          "mindre enn 0.1 SBU (legg til 0.1 SBU med tester) ">
+  <!ENTITY psutil-size          "480 KB">
+  <!ENTITY psutil-buildsize     "58 MB (med tester)">
+  <!ENTITY psutil-time          "0.2 SBU (med tester) ">
 ]>
 
   <!-- Begin psutil -->
@@ -76,6 +76,7 @@
       <para role="optional">
         <xref linkend="pytest"/>,
         <ulink url="https://pypi.org/project/colorama/">colorama</ulink>,
+        <ulink url="https://pypi.org/project/pyleak/">pyleak</ulink>,
         <ulink url="https://pypi.org/project/pyperf/">pyperf</ulink>,
         <ulink url="https://pypi.org/project/pypinfo/">pypinfo</ulink>,
         <ulink url="https://pypi.org/project/pytest-instafail/">pytest-instafail</ulink>,
@@ -83,6 +84,11 @@
         <ulink url="https://pypi.org/project/pytest-xdist/">pytest-xdist</ulink>
       </para>
     </sect3>
+
+<!--
+  I'm not sure why the external pypi.org modules are listed here since we 
+  install them explicitly via pip3 in the test instructions. - bdubbs - Dec 2025
+-->
 
     <sect3 role="installation">
       <title>Installasjon av psutil</title>
@@ -114,15 +120,18 @@
         For å teste resultatene, utsted:
       </para>
 
-<screen remap='test'><userinput>python3 -m venv --system-site-packages testenv                            &amp;&amp;
-testenv/bin/pip3 install colorama pytest-{instafail,subtests,xdist} pyperf \
-                         pypinfo &amp;&amp;
+<screen remap='test'><userinput>python3 -m venv --system-site-packages testenv                      &amp;&amp;
+testenv/bin/pip3 install colorama pytest-{instafail,subtests,xdist} \
+                         psleak pyperf pypinfo                      &amp;&amp;
 PSUTIL_DEBUG=1 testenv/bin/python3 -m pytest</userinput></screen>
 
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            Testen navngitt <literal>TestSystemAPIs::test_disk_usage</literal>
+            Testen navngitt
+            <literal>TestSystemAPIs::test_disk_usage</literal>,
+            <literal>TestFetchAllProcesses::test_all</literal>, og
+            <literal>TestNetAPIs::test_net_if_addrs</literal>
             er kjent for å mislykkes.
           </para>
         </listitem>
