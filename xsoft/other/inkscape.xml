@@ -153,13 +153,17 @@
 
   <sect2 role="installation">
     <title>Installasjon av Inkscape</title>
-<!--
+
     <para>
-      Først, fiks byggefeil med nyere versjoner av poppler:
+      Først, fiks byggefeil med versjoner av poppler-26.01.0 og nyere:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../inkscape-&inkscape-version;-poppler_fixes-5.patch</userinput></screen>
--->
+<screen><userinput remap="pre">sed -i 's/gfree/g_free/' src/extension/internal/pdfinput/pdf-input.cpp &amp;&amp;
+
+sed -e '/Stream.h/a#include &lt;poppler/goo/gmem.h&gt;' \
+    -e 's/reset/rewind/'                          \
+    -i src/extension/internal/pdfinput/svg-builder.cpp</userinput></screen>
+
     <para>
       Installer <application>Inkscape</application> ved å kjøre følgende
       kommandoer:
