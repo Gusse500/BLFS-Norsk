@@ -246,6 +246,37 @@ make</userinput></screen>
 
   </sect2>
 
+  <sect2 role="using">
+    <title>Bruke VLC</title>
+
+    <para>
+      En stund, <application>Qt-5</application> var den eneste måten å få et 
+      grafisk grensesnitt som denne pakken er kjent for. Den støtter nå
+      <application>Qt-6</application>, men kommer med mange ulemper ettersom det 
+      er en ny portering av det forrige grensesnittet. Ting er i en ødelagt 
+      tilstand. For eksempel er pausefunksjoner og andre navigasjonsfunksjoner 
+      ødelagte, video plasseringen er feil, blant andre problemer.
+    </para>
+
+    <para>
+      Et annet problem er at videoavspilling, til tross for at lydavspilling med 
+      bildemetadata fungerer fint, er det ødelagt på Wayland uten bruk av
+      <envar>QT_QPA_PLATFORM</envar> variabelen. Hvis du er på Wayland, bør du 
+      kjøre <command>QT_QPA_PLATFORM=xcb vlc -I "qt"</command> for å kjøre Qt 
+      grensesnittet. Dette tvinger <literal>xcb</literal> vindusgrensesnitt til 
+      å brukes i stedet for <literal>wayland</literal>, siden videoavspillingen 
+      vil prøve å bruke <literal>xcb</literal> uansett og mislykkes. På
+      <application>X11</application>, burde ikke dette være et problem.
+    </para>
+
+    <para>
+      Mange problemer vil imidlertid fortsatt vedvare. Det anbefales å fortsatt 
+      bruke <application>VLC</application> på andre måter inntil disse 
+      problemene er løst.
+    </para>
+
+  </sect2>
+
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
