@@ -43,9 +43,9 @@ not ok 2 test-autolaunch
     <para revision="sysv">
       <application>D-Bus</application> er et meldingsbusssystem, en enkel måte
       for applikasjoner å snakke med hverandre.
-      <application>D-Bus</application> leverer både en systemnisse (for
+      <application>D-Bus</application> leverer både en systemdaemon (for
       hendelser som f.eks <quote>ny maskinvareenhet lagt til</quote> eller <quote>skriver
-      kø endret</quote>) og en per-bruker-pålogging-sesjon nisse (for generell
+      kø endret</quote>) og en per-bruker-pålogging-sesjon daemon (for generell
       IPC-behov blant brukerapplikasjoner). Dessuten er meldingsbussen bygget på toppen
       av et generelt rammeverk for en-til-en meldingsoverføring, som kan brukes av
       to applikasjoner for å kommunisere direkte (uten å gå gjennom
@@ -109,7 +109,7 @@ not ok 2 test-autolaunch
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <phrase revision="systemd"><xref role="runtime" linkend="systemd"/>
-      (kjøretid, for registrering av tjenester lansert av D-Bus øktnissen som
+      (kjøretid, for registrering av tjenester lansert av D-Bus øktdaemonen som
        systemd brukertjenester);</phrase>
       For testene:
       <xref linkend="dbus-python"/>,
@@ -167,7 +167,7 @@ chmod -v      4750       /usr/libexec/dbus-daemon-launch-helper</userinput></scr
 
     <para revision="sysv">
       Hvis du fortsatt bygger systemet ditt i chroot eller du ikke har startet
-      nissen ennå, men du vil kompilere noen pakker som krever
+      daemonen ennå, men du vil kompilere noen pakker som krever
       <application>D-Bus</application>, generer
       <application>D-Bus</application> UUID for å unngå advarsler ved kompilering
       av noen pakker med følgende kommando som
@@ -298,11 +298,11 @@ ninja test</userinput></screen>
      </para>
 
       <para>
-        Hvis noen pakker installerer en
+        Hvis noen pakke installerer en
         <application>D-Bus</application> <filename>.service</filename>
         fil utenfor standard <filename
         class="directory">/usr/share/dbus-1/services</filename> mappen,
-        den mappen skal legges til den lokale sesjonskonfigurasjonen.
+        skal den mappen legges til den lokale sesjonskonfigurasjonen.
         For eksempel, <filename
         class="directory">/usr/local/share/dbus-1/services</filename> kan
         legges til ved å utføre følgende kommandoer som
@@ -324,7 +324,7 @@ EOF</userinput></screen>
     </sect3>
 
     <sect3  id="dbus-session">
-      <title>D-Bus Øktnisse</title>
+      <title>D-Bus Øktdaemon</title>
 
       <para revision="sysv">
         For å starte <command>dbus-daemon</command> automatisk når
@@ -351,17 +351,17 @@ EOF</userinput></screen>
 
       <para revision="sysv">
         Merk at dette oppstartsskriptet bare starter system-brede
-        <application>D-Bus</application> nissen. Hver bruker som krever tilgang til
+        <application>D-Bus</application> daemonen. Hver bruker som krever tilgang til
         <application>D-Bus</application> tjenester må også kjøre en
-        sesjonsnisse også. Det er mange metoder du kan bruke for å starte en
-        sesjonsnisse ved hjelp av <command>dbus-launch</command> kommandoen. Gjennomgå
+        sesjonsdaemonen også. Det er mange metoder du kan bruke for å starte en
+        sesjonsdaemonen ved hjelp av <command>dbus-launch</command> kommandoen. Gjennomgå
         <command>dbus-launch</command> manualsiden for detaljer om
         tilgjengelige parametere og alternativer. Her er noen forslag og
         eksempler:
       </para>
 
       <para revision="systemd">
-        Det er mange metoder du kan bruke for å starte en sesjonsnisse
+        Det er mange metoder du kan bruke for å starte en sesjonsdaemon
         ved å bruke <command>dbus-launch</command> kommandoen. Gjennomgå
         <command>dbus-launch</command> manualsiden for detaljer om
         tilgjengelige parametere og alternativer. Her er noen forslag og
@@ -393,8 +393,8 @@ EOF</userinput></screen>
             <command>dbus-launch</command> for å spesifisere et program som skal kjøres. Dette
             har fordelen (når du også bruker
             <parameter>--exit-with-x11</parameter> parameteren) å stoppe
-            sesjonsnissen når det angitte programmet stoppes. Du kan også
-            starte sesjonsnissen i systemet ditt eller personlige oppstartsskript
+            sesjonsdaemonen når det angitte programmet stoppes. Du kan også
+            starte sesjonsdaemonen i systemet ditt eller personlige oppstartsskript
             ved å legge til følgende linjer:
           </para>
 
@@ -468,7 +468,7 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <term><command>dbus-daemon</command></term>
         <listitem>
           <para>
-            er <application>D-Bus</application> meldingsbuss nisse
+            er <application>D-Bus</application> meldingsbuss daemon
           </para>
           <indexterm zone="dbus dbus-daemon">
             <primary sortas="b-dbus-daemon">dbus-daemon</primary>
@@ -576,11 +576,11 @@ kill $DBUS_SESSION_BUS_PID</literal></userinput></screen>
         <listitem>
           <para>
             inneholder API funksjonene som brukes av
-            <application>D-Bus</application> meldingsnisse.
+            <application>D-Bus</application> meldingsdaemonen.
             <application>D-Bus</application> er først et bibliotek som gir
             en-til-en kommunikasjon mellom to applikasjoner;
             <command>dbus-daemon</command> er en applikasjon som bruker dette
-            biblioteket for å implementere en meldingsbuss nisse
+            biblioteket for å implementere en meldingsbuss daemon
           </para>
           <indexterm zone="dbus libdbus-1">
             <primary sortas="c-libdbus-1">libdbus-1.so</primary>
