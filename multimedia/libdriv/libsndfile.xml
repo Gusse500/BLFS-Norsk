@@ -105,6 +105,15 @@
             --docdir=/usr/share/doc/libsndfile-&libsndfile-version; &amp;&amp;
 make</userinput></screen>
 
+    <!-- https://github.com/libsndfile/libsndfile/issues/1107
+         FIXME: not really analyzed yet.  -->
+    <para>
+      Hvis du kjører testpakken, deaktiver Opus testene, da disse ville mislykkes 
+      med den nyeste Opus utgivelsen og føre til at testpakken slutter å virke tidlig:
+    </para>
+
+<screen><userinput>sed '/ogg_opus/,+1s/HAVE_[A-Z_]*/0/' -i tests/lossy_comp_test.c</userinput></screen>
+
     <para>
       For å teste resultatene, kjør: <command>make check</command>.
     </para>
