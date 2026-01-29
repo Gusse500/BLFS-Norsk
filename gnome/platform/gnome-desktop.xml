@@ -73,23 +73,23 @@
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="gsettings-desktop-schemas"/>,
-      <xref linkend="gtk3"/>,
-      <xref linkend="gtk4"/>,
       <xref linkend="iso-codes"/>,
-      <xref linkend="itstool"/>,
       <xref linkend="libseccomp"/>, og
       <xref linkend="xkeyboard-config"/>
     </para>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      <xref linkend="bubblewrap"/> (trengs for thumbnailers i Nautilus) og
+      <xref linkend="gtk3"/>,
+      <xref linkend="gtk4"/>,
+      <xref linkend="bubblewrap"/> (trengs for thumbnailers i Nautilus), og
        &gobject-introspection;
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gtk-doc"/> og
+      <xref linkend="itstool"/>,
+      <xref linkend="gtk-doc"/>, og
       <xref linkend="libxkbcommon"/>
     </para>
 
@@ -106,9 +106,10 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr       \
-            --buildtype=release \
-            ..                  &amp;&amp;
+meson setup --prefix=/usr         \
+            --buildtype=release   \
+            -D desktop_docs=false \
+            ..                    &amp;&amp;
 ninja</userinput></screen>
 
     <!--<para>
@@ -140,13 +141,29 @@ ninja</userinput></screen>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
 
-<!-- no longer valid with 43
     <para>
-      <option>-Dgnome_distributor="Some Name"</option>: Bruk denne
-      parameteren for å angi et tilpasset navn i <quote>Distributor:</quote>
-      felt av <quote>GNOME About</quote> visningsvinduet.
+      <parameter>-D desktop_docs=false</parameter>: Dette 
+      tillater bygging av pakken uten
+      <xref linkend='itstool'/> ved å deaktivere installasjonen av 
+      kopier og oversettelser av GNU FDL, GPL og LGPL 
+      lisensene.
     </para>
--->
+
+    <para>
+      <option>-D build_gtk4=false</option>: Bruk dette alternativet 
+      hvis du ønsker å bygge denne pakken uten
+      <xref linkend='gtk4'/> installert. Merk at det sannsynligvis 
+      vil føre til at GTK-4 applikasjoner som er avhengig av denne pakken 
+      ikke kan bygges.
+    </para>
+
+    <para>
+      <option>-D legacy_library=false</option>: Bruk dette alternativet 
+      hvis du ønsker å bygge denne pakken uten
+      <xref linkend='gtk3'/> installert. Merk at det sannsynligvis 
+      vil føre til at GTK-3 applikasjoner som er avhengig av denne pakken 
+      ikke kan bygges.
+    </para>
 
     <para>
       <option>-Dgtk_doc=true</option>: Bruk denne
@@ -183,7 +200,7 @@ ninja</userinput></screen>
           /usr/include/gnome-desktop-4.0,
           /usr/libexec/gnome-desktop-debug,
           /usr/share/gtk-doc/html/gnome-desktop3 (vakgfri), og
-          /usr/share/help/*/{fdl,gpl,lgpl}
+          /usr/share/help/*/{fdl,gpl,lgpl} (valgfri)
         </seg>
       </seglistitem>
     </segmentedlist>
