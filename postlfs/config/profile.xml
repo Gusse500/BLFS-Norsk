@@ -268,34 +268,6 @@ EOF</userinput></screen>
 
     </sect3>
 
-    <sect3 id="etc-profile.d-dircolors.sh">
-      <title>/etc/profile.d/dircolors.sh</title>
-
-      <indexterm zone="postlfs-config-profile etc-profile.d-dircolors.sh">
-        <primary sortas="e-etc-profile.d-dircolors.sh">/etc/profile.d/dircolors.sh</primary>
-      </indexterm>
-
-      <para>
-        Dette skriptet bruker <filename>~/.dircolors</filename> og
-        <filename>/etc/dircolors</filename> filer for å kontrollere fargene på
-        filnavn i en mappeoppføring. De kontrollerer farget utdata av
-        ting som <command>ls --color</command>.  Forklaringen på hvordan å
-        initialisere disse filene er på slutten av denne delen.
-      </para>
-
-<screen role="root"><userinput>cat &gt; /etc/profile.d/dircolors.sh &lt;&lt; "EOF"
-<literal># Setup for /bin/ls and /bin/grep to support color, the alias is in /etc/bashrc.
-if [ -f "/etc/dircolors" ] ; then
-        eval $(dircolors -b /etc/dircolors)
-fi
-
-if [ -f "$HOME/.dircolors" ] ; then
-        eval $(dircolors -b $HOME/.dircolors)
-fi</literal>
-EOF</userinput></screen>
-
-    </sect3>
-
     <sect3 id="extrapaths.sh">
       <title>/etc/profile.d/extrapaths.sh</title>
 
@@ -509,8 +481,15 @@ EOF</userinput></screen>
 # should go into ~/.bash_profile.  Personal aliases and functions should
 # go into ~/.bashrc
 
-# Provides colored /bin/ls and /bin/grep commands.  Used in conjunction
-# with code in /etc/profile.
+# Provides colored /bin/ls and /bin/grep commands.
+
+if [ -f "/etc/dircolors" ] ; then
+        eval $(dircolors -b /etc/dircolors)
+fi
+
+if [ -f "$HOME/.dircolors" ] ; then
+        eval $(dircolors -b $HOME/.dircolors)
+fi
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
@@ -539,6 +518,16 @@ $(tty &amp;>/dev/null) &amp;&amp; export GPG_TTY=$(tty)
 
 # End /etc/bashrc</literal>
 EOF</userinput></screen>
+
+    <para>
+      Skriptet ovenfor bruker <filename>~/.dircolors</filename> og
+      <filename>/etc/dircolors</filename> filer for å kontrollere fargene på 
+      filnavn i en mappeliste. De kontrollerer fargelagt utdata for ting som 
+      <command>ls --color</command>.  Forklaringen på hvordan man initialiserer 
+      disse filene finner du på slutten av denne delen. Innstillingen avhenger 
+      også av terminalen som brukes, så den må settes for hvert interaktive 
+      skall, i stedet for bare innloggingsskallet.
+    </para>
 
     <para>
       For mer informasjon om escape-sekvensene du kan bruke for prompten
