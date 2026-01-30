@@ -363,6 +363,56 @@ EOF</userinput></screen>
 
     <screen role='root'><userinput>systemctl daemon-reexec</userinput></screen>
 
+    <para>
+      Et skrivebordsmiljø kjører ofte som en gruppe systemd brukertjenester. 
+      Disse tjenestene genereres av systemd per-bruker instans, i stedet for 
+      innloggingsskallet. For å sikre at disse tjenestene får miljøvariablene 
+      vi har satt via
+      <filename class='directory'>/etc/profile.d</filename>, som &root;
+      bruker, installer en systemd miljøgenerator for å dumpe alle relevante 
+      eksporterte miljøvariabler til systemd per-bruker instansen når instansen 
+      begynner å kjøre:
+    </para>
+
+    <screen role='root'><userinput>install -vdm755 /etc/systemd/user-environment-generators &amp;&amp;
+cat &gt; /etc/systemd/user-environment-generators/50-profile.sh &lt;&lt; "EOF"
+<literal>#!/usr/bin/env -S -i /usr/bin/bash
+# SPDX-License-Identifier: MIT
+
+. /etc/profile
+
+# Systemd should have already set a better value for them.
+unset XDG_RUNTIME_DIR
+for i in $(locale); do
+  unset ${i%=*}
+done
+
+# Some shell magic that we don't want to expose.
+unset SHLVL
+
+python3 &lt;&lt; _EOF
+import os
+for var in os.environ:
+  # Simply unsetting them in shell does not work.
+  if var in ['LC_CTYPE', '_']:
+    continue
+
+  print(var + '=' + os.environ[var])
+_EOF</literal>
+EOF</userinput></screen>
+
+    <para>
+      Les <ulink role='man'
+      url='&man;systemd.environment-generator.7'>systemd.environment-generator(7)</ulink>
+      for detaljer om systemd miljøgeneratorene. Merk at hvis du har redigert 
+      innholdet i
+      <filename class='directory'>/etc/profile.d</filename> når et 
+      skrivebordsmiljø kjører, må du kjøre <command>systemctl
+      --user --daemon-reload</command> kommandoen for å synkronisere endringen 
+      inn i systemd per-bruker instansen, og logg deretter ut og inn igjen for 
+      å synkronisere endringen inn i skrivebordsmiljøet.
+    </para>
+
     <important>
       <para>
         Sørg først for at <xref linkend='shadow'/> allerede er ombygd med
