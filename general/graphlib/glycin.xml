@@ -70,6 +70,12 @@
           <ulink url="&patch-root;/glycin-&glycin-version;-xorg_prefix-1.patch"/>
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Anbefalt oppdatering (påkrevd for å laste XBM og XPM bilder):
+          <ulink url="&patch-root;/glycin-&glycin-version;-xbm_xpm-1.patch"/>
+        </para>
+      </listitem>
     </itemizedlist>
 
     <bridgehead renderas="sect3">glycin Avhengigheter</bridgehead>
@@ -124,6 +130,26 @@
 
 <screen><userinput>cargo vendor &amp;&amp;
 patch -Np1 -i ../glycin-&glycin-version;-xorg_prefix-1.patch</userinput></screen>
+
+    <note>
+      <para>
+        Støtteoppdateringen for XBM og XPM nedenfor avhenger implisitt av 
+        oppdateringen og instruksjonene ovenfor, så sørg for at du har gitt 
+        instruksjonene før du installerer støtteoppdateringen for XBM og XPM. 
+        De skader ikke en Xorg-installasjon i
+        <filename class='directory'>/usr</filename> uansett.
+      </para>
+    </note>
+
+    <para>
+      Nå kan du tilbakeportere en oppstrømsendring for å gjøre det mulig for glycin 
+      å laste inn XBM og XPM bilder. Oppstrømsendringen introduserer en ny avhengig 
+      Rustkasse (<literal>image-extras</literal>) som må synkroniseres inn i 
+      leverandørkildene ved å kjøre <command>cargo vendor</command> igjen:
+    </para>
+
+<screen><userinput>patch -Np1 -i ../glycin-&glycin-version;-xbm_xpm-1.patch &amp;&amp;
+cargo vendor</userinput></screen>
 
     <para>
       Installer <application>glycin</application> ved å kjøre følgende
