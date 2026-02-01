@@ -375,7 +375,7 @@ EOF</userinput></screen>
     </para>
 
     <screen role='root'><userinput>install -vdm755 /etc/systemd/user-environment-generators &amp;&amp;
-cat &gt; /etc/systemd/user-environment-generators/50-profile.sh &lt;&lt; "EOF"
+cat &gt; /etc/systemd/user-environment-generators/50-profile.sh &lt;&lt; "EOF" &amp;&amp;
 <literal>#!/usr/bin/env -S -i /usr/bin/bash
 # SPDX-License-Identifier: MIT
 
@@ -399,7 +399,9 @@ for var in os.environ:
 
   print(var + '=' + os.environ[var])
 _EOF</literal>
-EOF</userinput></screen>
+EOF
+
+chmod -v 755 /etc/systemd/user-environment-generators/50-profile.sh</userinput></screen>
 
     <para>
       Les <ulink role='man'
@@ -408,7 +410,7 @@ EOF</userinput></screen>
       innholdet i
       <filename class='directory'>/etc/profile.d</filename> når et 
       skrivebordsmiljø kjører, må du kjøre <command>systemctl
-      --user --daemon-reload</command> kommandoen for å synkronisere endringen 
+      --user daemon-reload</command> kommandoen for å synkronisere endringen 
       inn i systemd per-bruker instansen, og logg deretter ut og inn igjen for 
       å synkronisere endringen inn i skrivebordsmiljøet.
     </para>
