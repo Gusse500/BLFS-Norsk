@@ -115,6 +115,15 @@
     <title>Installasjon av make-ca og Generering av CA sertifikatlager</title>
 
     <para>
+      Fjern først <parameter>-t</parameter> alternativet fra
+      <command>mktemp</command> kommandoer i skriptet. Dette alternativet er 
+      utdatert og kan forårsake uønskede effekter hvis <envar>TMPDIR</envar>
+      er satt i miljøet:
+    </para>
+
+    <screen><userinput>sed '/mktemp/s/-t //' -i make-ca</userinput></screen>
+
+    <para>
       <application>make-ca</application> skriptet vil laste ned og behandle
       sertifikatene som er inkludert i <filename>certdata.txt</filename> filen
       til bruk som tillitsankere for <xref linkend="p11-kit"/> tillitsmodulen.
