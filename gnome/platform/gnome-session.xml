@@ -221,7 +221,7 @@ by systemd-user.-->
 
    </sect2>
 
-  <sect2 role="starting">
+  <sect2 role="starting" revision="systemd">
     <title>Starte GNOME</title>
 
     <para>
@@ -242,7 +242,8 @@ by systemd-user.-->
       støtte på et system som har den proprietære NVIDIA-driveren installert, 
       siden GDM ikke vil vise Wayland økttypen på et slikt system..-->
     </para>
-
+    <!-- we don't build with x11 support. So there is no point in starting
+         with X11
     <warning>
       <para>
         X11 støtte er utdatert og vil bli fjernet i GNOME 50. Vennligst bruk 
@@ -260,13 +261,15 @@ by systemd-user.-->
 EOF
 
 startx</userinput></screen>
-
+-->
     <para>
-      Alternativt, for å starte <application>GNOME</application> med Wayland
-      støtte, kjør følgende kommando:
+      For å starte <application>GNOME</application> uten en skjermbehandler må 
+	  du bestemme økt ID-en din ved hjelp av <command>loginctl</command>.
+      Når det er gjort, utsted (vi antar at økt ID-en er 1):
     </para>
 
-<screen role="nodump"><userinput>XDG_SESSION_TYPE=wayland dbus-run-session gnome-session</userinput></screen>
+    <screen role="nodump"><userinput>systemctl --user set-environment XDG_SESSION_TYPE=wayland XDG_SESSION_ID=<replaceable>1</replaceable> &amp;&amp;
+systemctl --user start gnome-session-wayland@gnome.target</userinput></screen>
 
   </sect2>
 
