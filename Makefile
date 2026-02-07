@@ -64,7 +64,7 @@ help:
 	@echo "                       Standard er"
 	@echo "                       'HOME/public_html/blfs-book' hvis REV=sysv (eller ikke-satt)"
 	@echo "                       eller"
-	@echo "                       'HOME/public_html/blfs-book-systemd' hvis REV=systemd"
+	@echo "                       'HOME/public_html/blfs-systemd' if REV=systemd"
 	@echo ""
 	@echo "  V=<val>              Hvis <val> er en ikke-tom verdi, alle"
 	@echo "                       trinnene for å produsere resultatet vises."
