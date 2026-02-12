@@ -145,7 +145,7 @@
       Selv om det ikke er nødvendig for å laste inn en fastvareblob, kan følgende
       verktøy være nyttige for å bestemme, skaffe eller forberede den nødvendige
       fastvaren for å laste den inn i systemet:
-      <xref linkend="cpio"/>,
+      <xref linkend="cpio"/> (eller <xref linkend='libarchive'/>),
       <xref linkend="git"/>,
       <xref linkend="pciutils"/>, og
       <xref linkend="wget"/>
@@ -339,7 +339,8 @@
       <para>
         Hvis du har etablert at en oppdatert mikrokode er tilgjengelig for
         systemet ditt, er det på tide å forberede det for tidlig lasting. Dette krever
-        en ekstra pakke, <xref linkend='cpio'/> og opprettelsen av en
+        en ekstra pakke, <xref linkend='cpio'/>
+        (eller <xref linkend='libarchive'/>) og opprettelsen av en
         initrd som må legges til grub.cfg.
       </para>
 
@@ -391,10 +392,12 @@ cd initrd</userinput></screen>
       </caution>-->
 
       <para>
-        Forbered nå initrd:
+        Forbered nå initrd (du kan også bruke <command>bsdcpio</command>
+        fra <xref linkend='libarchive'/> i stedet for
+        <command>cpio</command>):
       </para>
 
-<screen><userinput>find . | cpio -o -H newc &gt; /boot/microcode.img</userinput></screen>
+<screen><userinput>find * | cpio -o -H newc &gt; /boot/microcode.img</userinput></screen>
 
       <para>
         Du må nå legge til en ny oppføring i /boot/grub/grub.cfg og
