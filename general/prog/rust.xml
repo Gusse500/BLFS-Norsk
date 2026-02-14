@@ -6,10 +6,10 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "3a8a6c6c9c277077d8345cd31032869b">
+  <!ENTITY rust-md5sum        "65de3c1b0a9304b16ff27433a0dafb95">
   <!ENTITY rust-size          "258 MB">
-  <!ENTITY rust-buildsize     "10 GB (323 MB installert); legg til 11 GB hvis du kjører testene">
-  <!ENTITY rust-time          "10.0 SBU (inkludert nedlastingstid; legg til 15 SBU for tester, begge med parallellisme=8)">
+  <!ENTITY rust-buildsize     "10 GB (324 MB installert); legg til 11 GB hvis du kjører testene">
+  <!ENTITY rust-time          "10 SBU (inkludert nedlastingstid; legg til 15 SBU for tester, begge med parallellisme=8)">
 ]>
 
 <sect1 id="rust" xreflabel="rustc-&rust-version;">
@@ -28,21 +28,12 @@
       <application>Rust</application> programmeringsspråket er utformet
       for å være et trygt, samtidig, praktisk språk.
     </para>
-<!--
-    <para>
-      Denne pakken oppdateres i en seksukers utgivelsessyklus. Fordi den er
-      en så stor og treg pakke å bygge, er for øyeblikket bare nødvendig
-      av noen få pakker i denne boken, og spesielt fordi nyere versjoner
-      har en tendens til å bryte eldre mozilla pakker, mener BLFS redaktørene at
-      den skal bare oppdateres når det er nødvendig (enten for å fikse problemer,
-      eller for å la en ny versjon av en pakke bygges).
-    </para>
--->
+
     <para>
       Som med mange andre programmeringsspråk, rustc (rustkompilatoren)
       trenger en binær for oppstartssekvensen. Den vil laste ned en stage0
-      binær ved starten av bygningen, så du kan ikke kompilere den uten en
-      Internett tilkobling.
+      binær ved starten av bygningen, så du må ha en internettforbindelse for å 
+      bygge denne pakken.
     </para>
 
     <note>
@@ -50,62 +41,62 @@
         Selv om BLFS vanligvis installeres i <filename
         class="directory">/usr</filename>, når du senere oppgraderer til en 
         nyere versjon av <application>rust</application> de gamle bibliotekene i 
-        <filename class="directory">/usr/lib/rustlib</filename> vil forbli, med 
-        diverse hasher i navnene deres, men vil ikke være brukbare og vil kaste 
-        bort plass. Redaktører anbefaler å plassere filene i <filename
-        class="directory">/opt</filename> mappen.  Spesielt hvis du har grunn 
-        til å gjenoppbygge med en modifisert konfigurasjon (f.eks. ved å bruke
-        sendt LLVM etter å ha bygget med delt LLVM, kanskje for å kompilere 
-        crates for arkitekturer som BLFS LLVM bygget ikke støtter)
-        det er mulig for installasjonen å etterlate et ødelagt
-        <command>cargo</command> program. I en slik situasjon, fjern enten
-        den eksisterende installasjonen først, eller bruk et annet prefiks som 
-        f.eks /opt/rustc-&rust-version;-build2.
+        <filename class="directory">/usr/lib/rustlib</filename> vil bestå, med 
+        forskjellige hasher i navnene sine, men de vil ikke være brukbare og vil 
+        kaste bort plass. Redaktørene anbefaler å plassere filene i <filename
+        class="directory">/opt</filename> mappen. Spesielt hvis du må 
+        gjenoppbygge denne pakken med en modifisert konfigurasjon (f.eks. bruke 
+        den leverte LLVM-en etter å ha bygget med delt LLVM, kanskje for å 
+        kompilere crates for arkitekturer som BLFS LLVM bygget ikke støtter), er 
+        det mulig at installasjonen etterlater en ødelagt
+        <command>cargo</command> program. Hvis dette skjer, bør du enten fjerne 
+        den eksisterende installasjonen først, eller bruke et annet prefiks, for 
+        eksempel /opt/rustc-&rust-version;-build2.
       </para>
 
       <para>
-        Hvis du foretrekker det, kan du selvfølgelig endre prefikset til <filename
-        class="directory">/usr</filename>.
+        Hvis du foretrekker det, kan du selvfølgelig endre prefikset til 
+        <filename class="directory">/usr</filename>.
       </para>
     </note>
 
     <para>
-      Det nåværende <application>rustbuild</application> byggesystemet vil bruke
-      alle prosessorer, selv om den ikke skalerer godt og ofte faller tilbake 
-      til bare å bruke én kjerne mens du venter på at et bibliotek skal 
-      kompileres. Imidlertid kan det stort sett begrenses til et spesifisert 
-      antall prosessorer av en kombinasjon av å legge til bryteren 
-      <literal>--jobs &lt;N&gt;</literal> (f.eks. '--jobs 4' for å begrense til 
-      4 prosessorer) på hver påkalling av <command>./x.py</command> <emphasis>og</emphasis> 
-      ved hjelp av en miljøvariabel <envar>CARGO_BUILD_JOBS=&lt;N&gt;</envar>. 
-      For øyeblikket er dette ikke effektivt når noen av rustc testene kjøres.
+      Det nåværende <application>rustbuild</application> byggesystemet vil bruke 
+      alle prosessorer, selv om det ikke skalerer godt og ofte faller tilbake 
+      til å bare bruke én kjerne mens det venter på at et bibliotek skal 
+      kompileres. Det kan imidlertid stort sett begrenses til et spesifisert 
+      antall prosessorer ved en kombinasjon av å legge til bryteren <literal>--jobs &lt;N&gt;</literal>
+      (f.eks. '--jobs 4' for å begrense til 4 prosessorer) ved hver kalling av
+      <command>./x.py</command> <emphasis>og</emphasis> bruke
+      <envar>CARGO_BUILD_JOBS=&lt;N&gt;</envar> miljøvariabel. For øyeblikket er 
+      dette ikke effektivt når noen av rustc-testene kjøres.
     </para>
 
     <para>
-      Den nåværende versjonen av rusts num_cpus crate gjenkjenner nå at cgroups
-      kan brukes til å begrense hvilke prosessorer det er tillatt å bruke. Så 
-      hvis din maskin mangler DRAM (vanligvis mindre enn 2 GB DRAM per kjerne) 
-      som kan være et alternativ til å ta CPUer offline.
-      Les <xref linkend='build-in-cgroup'/> for hvordan du bruker en cgroup.
+      Den nåværende versjonen av rusts num_cpus crate gjenkjenner nå at cgroups 
+      kan brukes til å begrense hvilke prosessorer den har lov til å bruke. Hvis 
+      din maskin mangler DRAM (vanligvis mindre enn 2 GB DRAM per kjerne), kan 
+      det være et alternativ til å koble CPU-er fra. Les 
+      <xref linkend='build-in-cgroup'/> for informasjon om hvordan du bruker 
+      en cgroup.
     </para>
 
     <para>
-      For øyeblikket <application>Rust</application> gir ingen
+      For øyeblikket, <application>Rust</application> gir ingen
       garantier for en stabil ABI.
     </para>
 
     <note>
       <para>
-        Rustc bygger som standard for ALLE støttede arkitekturer, ved å bruke en
-        sendt kopi av LLVM. I BLFS er bygget bare for X86
-        arkitektur.
-        Hvis du har tenkt å utvikle rust crates, kan det hende at denne 
-        konstruksjonen ikke er bra nok til dine formål.
+        Rustc bygger som standard ALLE støttede arkitekturer, ved bruk av en 
+        sendt kopi av LLVM. I BLFS er byggingen kun for X86 arkitekturen. Hvis 
+        du skal utvikle rust crates, er det ikke sikkert at denne byggingen er 
+        tilstrekkelig for dine formål.
       </para>
       <para>
         Byggetidene for denne versjonen når den gjentas på samme maskin er
         ofte rimelig konsekvent, men som med alle kompilatorer som bruker
-        <command>rustc</command> det kan være noen veldig langsomme avvikere.
+        <command>rustc</command>, kan det være noen veldig langsomme avvikere.
       </para>
     </note>
 
@@ -174,8 +165,9 @@
     <para role="recommended">
       <xref linkend="libssh2"/> og
       <xref linkend="llvm"/>
-      (bygget med -D LLVM_LINK_LLVM_DYLIB=ON slik at rust kan lenke til
-      systemets LLVM i stedet for å bygge den sendte versjonen)
+      (bygget med -D LLVM_LINK_LLVM_DYLIB=ON slik at rust kan lenke til den 
+      systeminstallerte versjonen av LLVM i stedet for å bygge den leverte 
+      versjonen)
     </para>
 
     <note>
@@ -183,7 +175,7 @@
         Hvis en anbefalt avhengighet ikke er installert, må du endre 
         instruksjonene for å bygge og bruke en levert kopi i Rustc 
         kildetarballen i stedet. Se delen Parameterforklaringer for 
-        detaljer.
+        flere detaljer.
       </para>
     </note>
 
@@ -193,7 +185,7 @@
       <xref linkend="git"/> (kreves av testpakken),
       <ulink url="https://github.com/bytecodealliance/wasmtime/tree/main/cranelift">cranelift</ulink>,
       <ulink url="https://jemalloc.net/">jemalloc</ulink>,
-      libgccjit (les parameterforklaringer i
+      libgccjit (les Parameterforklaringer i
       <xref role="nodep" linkend="gcc"/>), og
       <ulink url='https://libgit2.org/'>libgit2</ulink>
     </para>
@@ -239,13 +231,13 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
 # automatically set when building from a release tarball
 # (unfortunately, we have to override many of them).
 
-# Tell x.py the editors have reviewed the content of this file
+# Tell x.py that the editors have reviewed the content of this file
 # and updated it to follow the major changes of the building system,
-# so x.py will not warn us to do such a review.
+# so x.py will not warn users to rewiew that information.
 change-id = 148795
 
 [llvm]
-# When using system llvm prefer shared libraries
+# When using the system installed copy of LLVM, prefer the shared libraries
 link-shared = true
 
 # If building the shipped LLVM source, only enable the x86 target
@@ -255,13 +247,13 @@ targets = "X86"
 [build]
 description = "for BLFS &version;"
 
-# Omit docs to save time and space (default is to build them).
+# Omit the documentation to save time and space (the default is to build them).
 docs = false
 
-# Do not query new versions of dependencies online.
+# Do not look for new versions of the dependencies online.
 locked-deps = true
 
-# Only install these extended tools.  Cargo, clippy, rustdoc, and rustfmt
+# Only install these extended tools. Cargo, clippy, rustdoc, and rustfmt
 # are installed by a default rustup installation, and rust-src is needed
 # to build the Rust code in Linux kernel (in case you need such a kernel
 # feature).
@@ -289,21 +281,6 @@ llvm-config = "/usr/bin/llvm-config"
 lvm-config = "/usr/bin/llvm-config"</literal>
 EOF</userinput></screen>
 
-<!-- It seems gone since 1.81.0 but not confirmed upstream
-    <note>
-      <para>
-        <command>python3 x.py</command> kommandoer kan gi en advarselsmelding
-        klagende på <computeroutput>no codegen-backends
-        config matched the requested path to build a codegen
-        backend</computeroutput>.  Og det gitte
-        <quote>forslaget</quote> (<computeroutput>add backend to
-        codegen-backends in config.toml</computeroutput>) vil ikke stilne
-        det.   Denne advarselen er <ulink
-        url='https://github.com/rust-lang/rust/issues/110692'>bogus</ulink>
-        og det bør ignoreres.
-      </para>
-    </note>
--->
 <!-- retain here in case we need a patch
     <para>
       Hvis du kjører testpakken, installer en oppdatering for å gjøre den 
@@ -331,13 +308,13 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
         <phrase revision="sysv">system log</phrase>
         <phrase revision="systemd">systemd journal</phrase>
         for feller på ugyldige opkoder, og for segmenteringsfeil.
-        I seg selv er disse ingenting å bekymre seg for, bare en måte for
-        test å avslutte.
+        I seg selv er disse ingenting å bekymre seg for, det er bare en måte 
+        for en test å avslutte.
       </para>
     </note>
 
     <para>
-      Å kjøre testene (igjen ved å bruke alle tilgjengelige CPUer) utsted:
+      Å kjøre testene, utsted:
     </para>
 
 <screen remap="test"><userinput>./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
@@ -348,20 +325,12 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
       <xref linkend='llvm'/>.
     </para>
 
-<!-- Let's just comment this out.  Nobody has tested on a system w/o
-     FileCheck for a long time.
     <para>
-      Hvis <command>FileCheck</command> fra <application>LLVM</application> ikke
-      har blitt installert, alle 47 tester fra <quote>assembly</quote> pakken
-      vil mislykkes.
-    </para>
--->
-    <para>
-      Som med alle store testserier, kan noen tester mislykkes på noen maskiner -
-      hvis antallet ekstra feil er lavt,
-      sjekk loggen for "failures:" og se gjennom linjene over det, spesielt
-      'stderr:' linjer. Enhver omtale av
-      SIGSEGV eller signal 11 i en sviktende test er en grunn til bekymring.
+      Som med alle store testpakker, kan noen tester mislykkes på noen maskiner 
+      - hvis antallet feil er lavt, sjekk loggen for 'failures:' og 
+      se gjennom linjer over det, spesielt 'stderr:' linjene. Enhver omtale av 
+      en SIGSEGV eller signal 11 i en mislykket test er en grunn til 
+      bekymring.
     </para>
 
     <note>
@@ -376,8 +345,8 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
       </para>
       <para>
         Det er forårsaket av en Glibc feil som påvirker Glibc-2.42 og flere 
-        tidligere utgivelser, så
-        for nå har vi byttet ut <parameter>--strip-unneeded</parameter> med
+        tidligere utgivelser, så for nå har vi byttet ut 
+        <parameter>--strip-unneeded</parameter> med
         <parameter>--strip-debug</parameter> i både LFS boka og i
         <xref linkend='stripping'/> for å omgå det. Hvis du opplever dette
         problemet, gjenoppbygg Glibc og erstatt
@@ -426,7 +395,7 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
  sendte kopier av libssh2 og sqlite.  For <command>sudo</command>,
         bruk
         <option>--preserve-env=LIB{SSH2,SQLITE3}_SYS_USE_PKG_CONFIG</option>
-        alternativet.  For <command>su</command>, <emphasis>ikke</emphasis> bruk
+        alternativet. For <command>su</command>, <emphasis>ikke</emphasis> bruk
         <option>-</option> eller <option>--login</option> alternativene.
       </para>
     </note>
@@ -434,11 +403,10 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
 <screen role='root'><userinput>./x.py install</userinput></screen>
 
     <para>
-      Fortsatt som &root; bruker, fiks installasjonen av dokumentasjonen,
-      symbolkoble en <application>Zsh</application>
-      fullføringsfilen til riktig plassering, og flytt en
-      <application>Bash</application> fullføringsfil til lokasjonen
-      anbefalt av <application>Bash</application> ferdigstillelse
+      Fortsatt som &root; bruker, fiks installasjonen av dokumentasjonen, 
+      symbollenke en <application>Zsh</application> fullføringsfilen til riktig 
+      sted, og flytt en <application>Bash</application> fullføringsfilen til 
+      stedet anbefalt av <application>Bash</application> ferdigstillelse 
       vedlikeholdere:
     </para>
 
@@ -466,22 +434,23 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
     <para>
       <command>ln -svfn rustc-&rust-version; /opt/rustc</command>: hvis dette 
       ikke er den første bruken av <filename class="directory">/opt/rustc</filename>
-      symbolkobling, overskriv den ved å tvinge, og bruk '-n'-flagget for å 
+      symbolkobling, overskriv den ved tvang, og bruk '-n'-flagget for å 
       unngå å få forvirrende resultater fra f.eks. <command>ls -l</command>.
     </para>
 
     <para>
       <literal>tools = ["cargo", "clippy", "rustdoc", "rustfmt"]</literal>:
-      bygg bare verktøyene fra 'standard' profilen i binær kommando
+      bygg bare verktøyene fra 'standard' profilen fra binær kommandoen
       <command>rustup</command> som anbefales for de fleste brukere.
       De andre verktøyene er neppe nyttige med mindre du bruker (gammel) kode
       analysatorer eller redigering av standardbiblioteket.
     </para>
 
     <para>
-      <literal>channel = "stable"</literal>: dette sikrer at kun stabile 
-      funksjoner kan brukes, standard i <filename>bootstrap.toml</filename> er 
-      å bruke utviklingsfunksjoner, som ikke passer for en utgitt versjon.
+      <literal>channel = "stable"</literal>: Dette sikrer at bare stabile 
+      funksjoner brukes. Standardinnstillingen i <filename>bootstrap.toml</filename> 
+      er å bruke utviklingsfunksjoner som ikke er passende for en utgitt versjon 
+      av rust.
     </para>
 
     <!-- comment while using shipped LLVM -->
@@ -506,8 +475,8 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
     <!-- https://github.com/alexcrichton/ssh2-rs/issues/173 -->
     <para>
       <command>export LIBSSH2_SYS_USE_PKG_CONFIG=1</command>: tillat
-      <command>cargo</command> for å koble til systemets libssh2. Utelat denne 
-      kommandoen hvis du ikke har installert <xref linkend='libssh2'/>.
+      <command>cargo</command> for å lenke til den systeminstallerte kopien av libssh2. 
+      Utelat denne kommandoen hvis du ikke har installert <xref linkend='libssh2'/>.
     </para>
 
     <!-- src/tools/cargo/Cargo.toml is specifying "bundled" as the
@@ -516,7 +485,7 @@ mv -v /etc/bash_completion.d/cargo /usr/share/bash-completion/completions</useri
          system sqlite3.  -->
     <para>
       <command>export LIBSQLITE3_SYS_USE_PKG_CONFIG=1</command>: Tillat
-      <command>cargo</command> for å koble til systemets sqlite.
+      <command>cargo</command> for å koble til systemets installerte kopi av sqlite.
     </para>
 
 <!--<para>
@@ -591,9 +560,8 @@ EOF</userinput></screen>
           rust-gdbgui, rust-lldb, rustc, rustdoc, og rustfmt
         </seg>
         <seg>
-          librustc-driver-&lt;16-byte-hash&gt;.so,
-          libstd-&lt;16-byte-hash&gt;.so, og
-          libtest-&lt;16-byte-hash&gt;.so
+          librustc_driver-&lt;16-byte-hash&gt;.so og
+          libstd-&lt;16-byte-hash&gt;.so
         </seg>
         <seg>
           ~/.cargo,
@@ -612,7 +580,7 @@ EOF</userinput></screen>
         <term><command>cargo-clippy</command></term>
         <listitem>
           <para>
-            gir lint sjekker for en cargo pakke
+            utfører lint sjekker for en cargo pakke
           </para>
           <indexterm zone="rust cargo-clippy">
             <primary sortas="b-cargo-clippy">cargo-clippy</primary>
@@ -662,7 +630,7 @@ EOF</userinput></screen>
         <term><command>clippy-driver</command></term>
         <listitem>
           <para>
-            gir lint sjekker for rust
+            utfører lint sjekker for rust
           </para>
           <indexterm zone="rust clippy-driver">
             <primary sortas="b-clippy-driver">clippy-driver</primary>
@@ -755,7 +723,7 @@ EOF</userinput></screen>
         <listitem>
           <para>
             er et innpakningsskript for LLDB (LLVM-feilsøkeren)
-             rekke inn Python pretty-printing modulene
+            som trekke inn Python pretty-printing modulene
           </para>
           <indexterm zone="rust rust-lldb">
             <primary sortas="b-rust-lldb">rust-lldb</primary>
