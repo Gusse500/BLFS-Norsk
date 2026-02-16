@@ -38,7 +38,7 @@
       Dette er nyttig for kryptering av autentisering og påfølgende trafikk over
       et nettverk. <command>ssh</command> og <command>scp</command> kommandoene
       er sikre implementeringer av <command>telnet</command> og
-      <command>rcp</command> henholdsvis.
+      <command>rcp</command>.
     </para>
 
     &lfs130_checked;
@@ -104,9 +104,8 @@
       <ulink url="http://www.citi.umich.edu/projects/smartcard/sectok.html">libsectok</ulink>
     </para>
 
-    <bridgehead renderas="sect4">Valgfri kjøretid (brukes kun for å samle entropi)</bridgehead>
+    <bridgehead renderas="sect4">Valgfri ved kjøretid (brukes kun for å samle entropi)</bridgehead>
     <para role="optional">
-      <!--<xref role="runtime" linkend="openjdk"/>, Not seen in 8.8p1 -->
       <xref role="runtime" linkend="net-tools"/>, og
       <xref role="runtime" linkend="sysstat"/>
     </para>
@@ -242,14 +241,14 @@ install -v -m644    INSTALL LICENCE OVERVIEW README* \
     <para>
       <parameter>--with-default-path=/usr/bin</parameter> og
       <parameter>--with-superuser-path=/usr/sbin:/usr/bin</parameter>:
-      Dette setter <envar>PATH</envar> i samsvar med LFS og BLFS
-      <application>Shadow</application> pakke.
+      Dette setter <envar>PATH</envar> innstillingen til å være i samsvar med 
+      LFS og BLFS <application>Shadow</application> pakken.
     </para>
 
     <para>
       <parameter>--with-pid-dir=/run</parameter>: Dette forhindrer
-      <application>OpenSSH</application> fra å referere til utdaterte
-      <filename class="directory">/var/run</filename>.
+      <application>OpenSSH</application> til å referere til den utdaterte
+      <filename class="directory">/var/run</filename> mappen.
     </para>
 <!--
     <para>
@@ -262,17 +261,19 @@ install -v -m644    INSTALL LICENCE OVERVIEW README* \
     </para>
 -->
     <para>
-      <option>--with-pam</option>: Denne parameteren aktiverer
-      <application>Linux-PAM</application> støtte i bygget.
+      <option>--with-pam</option>: Dette alternativet aktiverer
+      <application>Linux-PAM</application> støtte i byggingen. Hvis du bruker 
+      dette alternativet, må du sørge for at du oppretter PAM konfigurasjonen i 
+      delen Konfigurasjonsinformasjon nedenfor.
     </para>
 
     <para>
-      <option>--with-xauth=$XORG_PREFIX/bin/xauth</option>: Angi standard
-      plassering for <command>xauth</command> binære for X autentisering.
-      Miljøvariabelen <envar>XORG_PREFIX</envar> bør settes
-      ved å følge <xref linkend='xorg-env'/>. Denne kan også styres fra
-      <filename>sshd_config</filename> med nøkkelordet XAuthLocation. Du kan
-      se bort fra denne bryteren hvis <command>xauth</command> (en 
+      <option>--with-xauth=$XORG_PREFIX/bin/xauth</option>: Dette angir 
+      standardplasseringen for <command>xauth</command> binær for X 
+      autentisering. Miljøvariabelen <envar>XORG_PREFIX</envar> bør settes til 
+      følgende <xref linkend='xorg-env'/>. Dette kan også kontrolleres fra 
+      <filename>sshd_config</filename> med XAuthLocation nøkkelordet. Du 
+      kan utelate denne bryteren hvis <command>xauth</command> (en del av
       <xref linkend="xorg7-app"/>) allerede er installert.
     </para>
 
@@ -438,8 +439,8 @@ echo "UsePAM yes" &gt;&gt; /etc/ssh/sshd_config</userinput></screen>
         <term><command>scp</command></term>
         <listitem>
           <para>
-            er et filkopieringsprogram som fungerer som <command>rcp</command> unntatt
-            at den bruker en kryptert protokoll
+            er et filkopieringsprogram som fungerer som <command>rcp</command> 
+            bortsett fra at den bruker en kryptert protokoll
           </para>
           <indexterm zone="openssh scp">
             <primary sortas="b-scp">scp</primary>

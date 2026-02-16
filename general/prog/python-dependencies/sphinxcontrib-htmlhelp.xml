@@ -29,7 +29,7 @@
         hjelpefiler.
       </para>
 
-      &lfs124_checked;
+      &lfs130_checked;
 
       <bridgehead renderas="sect4">Pakkeinformasjon</bridgehead>
       <itemizedlist spacing="compact">
@@ -90,13 +90,18 @@
 <screen role="root"><userinput>&install-wheel; sphinxcontrib-htmlhelp</userinput></screen>
 
     <para>
-      Hvis de valgfrie avhengighetene er installert, kan pakken testes med:
+      Hvis de valgfrie avhengighetene er installert, kan pakken testes med 
+      følgende kommandoer. Den første kommandoen løser et problem med en 
+      fjernet API i Sphinx.
     </para>
 
-<screen remap="test"><userinput>pytest</userinput></screen>
+    <!-- https://github.com/sphinx-doc/sphinxcontrib-htmlhelp/pull/44 -->
+<screen remap="test"><userinput>sed -i 's/keyword/pair: keyword;/' tests/roots/test-chm/index.rst &amp;&amp;
+pytest</userinput></screen>
 
       <para>
-        Testpakken vil skrive ut en advarsel om kommende endringer i docutils.
+      Testene vil sende ut en avskrivningsmelding om kommende endringer i 
+      sphinx-11.x.
       </para>
 
     </sect3>
