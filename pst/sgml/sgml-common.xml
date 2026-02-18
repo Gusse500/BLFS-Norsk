@@ -88,13 +88,14 @@
       i pakken inkluderte vedlikeholderne symbolkoblinger til filene i
       <filename class="directory">/usr/share/automake</filename>. For tidligere
       versjoner av <application>Automake</application> er denne konvensjonen
-      riktig, men nyere versjoner av <application>Automake</application>
-      installer de interne filene i versjonsspesifikke mapper. Dette forårsaker at
-      <command>configure</command> skriptet avbryter. For å fikse denne feilen,
-      autotools regenereres. Siden inkluderte
-      <filename>Makefile.am</filename> filen bruker en syntaks som ikke støttes av
-      gjeldende versjoner av <application>Automake</application>, en oppdatering er
-      nødvendig for å fikse syntaksen.
+      gyldig, men mer nyere versjoner av <application>Automake</application>
+      installer de interne filene i versjonsspesifikke mapper. Dette gjør 
+      at <command>configure</command> skriptet avbrytes fordi det ikke kan 
+      finne disse filene. For å fikse dette problemet må byggesystemet 
+      regenereres. Siden den inkluderte <filename>Makefile.am</filename> filen 
+      bruker syntaks for å installere manualsider som ikke støttes av
+      gjeldende versjoner av <application>Automake</application>, er en 
+      oppdatering nødvendig for å få korrekt syntaks.
     </para>
 
 <screen><userinput>patch -Np1 -i ../sgml-common-0.6.3-manpage-1.patch &amp;&amp;
@@ -199,7 +200,7 @@ install-catalog --remove /etc/sgml/sgml-docbook.cat \
             oppretter en sentralisert katalog som opprettholder referanser til
             kataloger spredt over hele
             <filename class="directory">/usr/share/sgml</filename>
-          mappetreet
+            mappetreet
           </para>
           <indexterm zone="sgml-common install-catalog">
             <primary sortas="b-install-catalog">install-catalog</primary>
@@ -211,7 +212,7 @@ install-catalog --remove /etc/sgml/sgml-docbook.cat \
         <term><command>sgmlwhich</command></term>
         <listitem>
           <para>
-            skriver ut navnet på hovedkonfigurasjonsfilen til standardutgang
+            skriver ut navnet på hovedkonfigurasjonsfilen til standard utdata
           </para>
           <indexterm zone="sgml-common sgmlwhich">
             <primary sortas="b-sgmlwhich">sgmlwhich</primary>
