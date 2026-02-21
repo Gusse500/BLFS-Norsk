@@ -32,7 +32,7 @@
       og rasterskrivere.
     </para>
 
-    &lfs124_checked;
+    &lfs130_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -185,6 +185,16 @@
       Erstatt <command>firefox</command> med nettleseren du
       ønsker å bruke.
     </para>
+
+    <para>
+      <!-- https://github.com/OpenPrinting/cups/commit/dc4407f5187c4d2a530e6595c27c22ca7efeae01 -->
+      <!-- This doesn't occur on glibc-2.42 for me, but does on 2.43. The issue
+           causes a segfault when printing.-->
+      Fiks et kjøretidsproblem forårsaket av korrupsjon av en tidligere peker 
+      ved bruk av IPP:
+    </para>
+
+<screen><userinput remap="pre">sed -i '/&amp; ipp->prev)/s/prev/&amp; \&amp;\&amp; ipp->prev->next == *attr/' cups/ipp.c</userinput></screen>
 
     <para>
       Bygg <application>Cups</application> ved å kjøre følgende kommandoer:
