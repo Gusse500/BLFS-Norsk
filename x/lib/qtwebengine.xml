@@ -65,7 +65,7 @@
       </para>
     </warning>
 
-    &lfs124_checked;
+    &lfs130_checked;
 
     <warning>
       <para>
@@ -183,13 +183,12 @@
   <sect2 role="installation">
     <title>Installasjon av qtwebengine</title>
 
-<!--
     <para>
-      Juster FFMpeg profilene for å støtte FFMPEG 8.0
+      Først, lag en rettelse for å være kompatibel med glibc-2.43 og senere:
     </para>
 
-<screen><userinput>patch -Np1 -i ../qtwebengine-&qtwebengine-version;-ffmpeg_8.0-1.patch</userinput></screen>
--->
+<screen><userinput>sed -e '/ifndef SYS_SECCOMP/,+2 d' \
+    -i src/3rdparty/chromium/sandbox/linux/system_headers/linux_seccomp.h</userinput></screen>
 
     <para>
       Installer <application>qtwebengine</application> ved å kjøre følgende
