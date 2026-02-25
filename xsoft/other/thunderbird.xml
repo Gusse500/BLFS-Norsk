@@ -6,9 +6,9 @@
 
   <!ENTITY thunderbird-download-http "&mozilla-http;/thunderbird/releases/&thunderbird-version;esr/source/thunderbird-&thunderbird-version;esr.source.tar.xz">
   <!ENTITY thunderbird-download-ftp  " ">
-  <!ENTITY thunderbird-md5sum        "9e68bcc19f0e25f908d68009660dfc59">
+  <!ENTITY thunderbird-md5sum        "79736d3b08b8ef66314feb8a29aafc2f">
   <!ENTITY thunderbird-size          "724 MB">
-  <!ENTITY thunderbird-buildsize     "8.8 GB (267 MB installert)">
+  <!ENTITY thunderbird-buildsize     "8.9 GB (267 MB installert)">
   <!ENTITY thunderbird-time          "14 SBU (på en 8 kjernes maskin)">
   <!-- Removed the -j1 time because python and rust do not obey it, although
        the C/C++ code appears to obey it.
@@ -157,6 +157,47 @@
       </para>
     </note>
 
+<!--
+    <para>
+      Endre en Rust fil for å tillate implisitt autoreferanse for å forhindre en 
+      byggefeil. Den etterfølgende <literal>\r</literal> sørger for at MS-DOS 
+      formatet brukes for den innsatte linjen slik at den vil være konsistent 
+      med alle andre linjer i filen:
+    </para>
+
+<screen><userinput>sed -e '1i\#![warn(dangerous_implicit_autorefs)]\r' \
+    -i third_party/rust/allocator-api2/src/stable/vec/mod.rs</userinput></screen>
+-->
+
+    <para>
+      Deretter, fiks byggingen av denne pakken med Python-3.14:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;esr-python_3.14_fixes-1.patch</userinput></screen>
+
+    <para>
+      Fjern sjekksummer fra cargo crates for filer som ikke finnes:
+    </para>
+
+<screen><userinput
+  remap="pre">for crate in {minimal-lexical,lmdb-rkv,cubeb-sys,wasi,glslopt,sfv}; do
+  sed -e 's|,"[^"]*.gitmodules[^,]*[^,]||' \
+      -e '$a\'                             \
+      -i comm/third_party/rust/$crate/.cargo-checksum.json
+done</userinput></screen>
+
+    <para>
+      Retter byggingen av denne pakken med glibc-2.43 og tilpasser sjekksummene:
+    </para>
+
+<screen><userinput
+  remap="pre">GLSL_PTHREAD="comm/third_party/rust/glslopt/glsl-optimizer/include/c11/threads_posix.h"
+OLDSHA=`sha256sum $GLSL_PTHREAD | awk '{ print $1 }'` &amp;&amp;
+patch -Np1 -i ../thunderbird-&thunderbird-version;esr-glibc-2.43.patch &amp;&amp;
+NEWSHA=`sha256sum $GLSL_PTHREAD | awk '{ print $1 }'` &amp;&amp;
+sed "s/$OLDSHA/$NEWSHA/" \
+  -i comm/third_party/rust/glslopt/.cargo-checksum.json</userinput></screen>
+
     <para>
       Konfigurasjonen av <application>Thunderbird</application> 
       oppnås ved å lage en <filename>mozconfig</filename> fil som inneholder
@@ -224,36 +265,6 @@ ac_add_options --with-system-zlib
 # and was reported to seriously slow the build. Disable it.
 ac_add_options --without-wasm-sandboxed-libraries</literal>
 EOF</userinput></screen>
-
-<!--
-    <para>
-      Endre en Rust fil for å tillate implisitt autoreferanse for å forhindre en 
-      byggefeil. Den etterfølgende <literal>\r</literal> sørger for at MS-DOS 
-      formatet brukes for den innsatte linjen, sånn at den blir konsistent med 
-      alle andre linjer i filen:
-    </para>
-
-<screen><userinput>sed -e '1i\#![warn(dangerous_implicit_autorefs)]\r' \
-    -i third_party/rust/allocator-api2/src/stable/vec/mod.rs</userinput></screen>
--->
-
-    <para>
-      Deretter, fiks byggingen av denne pakken med Python-3.14:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;esr-python_3.14_fixes-1.patch</userinput></screen>
-
-    <para>
-      Fiks byggingen av denne pakken med glibc-2.43 og tilpass kontrollsummene:
-    </para>
-
-<screen><userinput
-  remap="pre">GLSL_PTHREAD="comm/third_party/rust/glslopt/glsl-optimizer/include/c11/threads_posix.h"
-OLDSHA=`sha256sum $GLSL_PTHREAD | awk '{ print $1 }'` &amp;&amp;
-patch -Np1 -i ../thunderbird-&thunderbird-version;esr-glibc-2.43.patch &amp;&amp;
-NEWSHA=`sha256sum $GLSL_PTHREAD | awk '{ print $1 }'` &amp;&amp;
-sed "s/$OLDSHA/$NEWSHA/" \
-  -i comm/third_party/rust/glslopt/.cargo-checksum.json</userinput></screen>
 
     <para>
       Påkall nå Python <command>mach</command> skriptet for å kompilere
