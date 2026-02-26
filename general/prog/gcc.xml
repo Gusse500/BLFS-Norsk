@@ -36,9 +36,9 @@
 
     <note>
       <para>
-        Ytterligere språk, blant annet COBOL, D og Ada, er tilgjengelige i
-		samlingen. COBOL støttes for øyeblikket bare på x86-64-systemer. D og Ada
-		har et krav om binær bootstrap for den første
+        Ytterligere språk, inkludert COBOL, D og Ada, er tilgjengelige i
+        samlingen. COBOL støttes for øyeblikket bare på x86-64-systemer. D og Ada
+        har et krav om binær bootstrap for den første
         installasjon, så deres installasjon er ikke beskrevet her. For å installere
         D eller Ada, kan du fortsette på samme måte som nedenfor etter installasjonen
         av den tilsvarende kompilatoren fra en binær pakke, til slutt legg til
@@ -131,7 +131,7 @@
         <command>./configure</command> kommandoen nedenfor, vil
         installasjonsprosessen overskrive din eksisterende
         <application>GCC</application> C og C++ kompilatorer og biblioteker.
-        Det anbefales å kjøre hele pakken med tester.
+        Det anbefales å kjøre hele pakken med tester på grunn av dette.
       </para>
 
       <para>
@@ -146,10 +146,10 @@
     </important>
 
     <para>
-      Instruksjonene nedenfor utfører med vilje en
-      <quote>bootstrap</quote> prosess. Bootstrapping er nødvendig for robusthet
-      og anbefales sterkt når du oppgraderer kompilatorversjonen. For å deaktivere
-      bootstrap uansett, legg til <parameter>--disable-bootstrap</parameter> til
+      Instruksjonene nedenfor utfører med vilje en <quote>bootstrap</quote> 
+      prosess. Bootstrapping er nødvendig for robusthet og anbefales sterkt når 
+      du oppgraderer kompilatorversjonen. For å deaktivere bootstrapping 
+      uansett, legg til <parameter>--disable-bootstrap</parameter> til
       <command>./configure</command> alternativene nedenfor.
     </para>
 
@@ -181,10 +181,9 @@ cd    build               &amp;&amp;
     --enable-host-pie     \
     --disable-fixincludes \
     --enable-languages=c,c++,fortran,go,objc,obj-c++,m2 &amp;&amp;
-make</userinput></screen>
-
-    <para>Hvis du kjører tester, som i LFS, fjern/fiks flere kjente testfeil:</para>
+make</userinput></screen>																		
 <!--
+	    <para>Hvis du kjører tester, som i LFS, fjern/fiks flere kjente testfeil:</para>																	 
 <screen><userinput>sed -e '/cpython/d'               -i ../gcc/testsuite/gcc.dg/plugin/plugin.exp
 sed -e 's/no-pic /&amp;-no-pie /'     -i ../gcc/testsuite/gcc.target/i386/pr113689-1.c
 sed -e 's/300000/(1|300000)/'     -i ../libgomp/testsuite/libgomp.c-c++-common/pr109062.c
@@ -231,12 +230,14 @@ chown -v -R root:root \
 ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/&gcc-version;/liblto_plugin.so \
         /usr/lib/bfd-plugins/</userinput></screen>
 
+<!-- This hasn't been relevant since 12.4, so let's comment this out for now.
     <important>
       <para>
         Nå bør du oppgradere readline til 8.3-rc1 eller nyere i henhold til
 		LFS boken, ellers kan det hende at pakker som bruker readline ikke klarer å bygge.
       </para>
     </important>
+-->
 
   </sect2>
 
@@ -255,8 +256,8 @@ ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/&gcc-version;/liblto_plugin.so \
     </para>
 
     <para>
-      <parameter>--with-system-zlib</parameter>: Bruker systemets
-      <application>zlib</application> i stedet for den medfølgende.
+      <parameter>--with-system-zlib</parameter>: Bruker systemets versjon av
+      <application>zlib</application> i stedet for den medfølgende kopien.
       <application>zlib</application> brukes til komprimering
       og dekomprimering av <application>GCC</application> sin mellomliggende
       språk i LTO (Link Time Optimization) objektfiler.
@@ -266,14 +267,15 @@ ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/&gcc-version;/liblto_plugin.so \
       <parameter>--enable-default-pie</parameter>: Gjør
       <option>-fpie</option> alternativet standard når du kompilerer programmer.
       Sammen med <xref linkend="gASLR"/> funksjonen aktivert i kjernen,
-      beseirer dette en del angrep basert på kjente minneoppsett.
+      beseirer dette noen typer angrep basert på kjente minneoppsett.
     </para>
 
     <para>
       <parameter>--enable-default-ssp</parameter>: Gjør
       <option>-fstack-protector-strong</option> alternativet standard når du
       kompilerer programmer. <xref linkend="gSSP"/> er en teknikk som hindrer
-      endring av programflyten ved å ødelegge parameterstabelen.
+      angrep som endrer flyten i et program ved å ødelegge 
+	  parameterstakken.
     </para>
 
     <para>
@@ -288,7 +290,9 @@ ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/&gcc-version;/liblto_plugin.so \
       Denne kommandoen identifiserer hvilke språk som skal bygges. Du kan endre
       denne kommandoen for å fjerne uønskede språk. GCC støtter også Ada
       og D, men å bygge GCC med Ada (eller D) støtte trenger en eksisterende
-      Ada (eller D) kompilator. Så de er ikke aktivert her
+      Ada (eller D) kompilator. Så de er ikke aktivert her. Du kan også aktivere 
+      COBOL støtte ved å legge til COBOL i kommandoen, men merk at den bare 
+      fungerer som den skal på x86_64 systemer.
     </para>
 
 <!--
@@ -312,38 +316,38 @@ ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/&gcc-version;/liblto_plugin.so \
     </para>
 
     <para>
-      <option>--enable-host-shared --enable-languages=jit</option>:
-      Bygg <systemitem class="library">libgccjit</systemitem>, et bibliotek
-      for å bygge inn GCC i programmer og biblioteker for å generere maskin
-      kode. På tross av <quote>JIT</quote> (just-in-time) i navnet,
-      biblioteket kan også brukes til AOT (ahead-of-time) kompilering.
-      <option>--enable-host-shared</option> er nødvendig for å bygge
-      <systemitem class="library">libgccjit</systemitem>, men det
-      reduserer GCC betydelig. Så
-      <systemitem class="library">libgccjit</systemitem> bør bli bygget og
-      installert separat, ikke som en del av <quote>main</quote> GCC
-      installasjon. Hvis du trenger dette biblioteket, konfigurer GCC med
-      disse to alternativene og installer biblioteket ved å kjøre
-      <!-- from Arch, not tested -->
-      <command>make -C gcc jit.install-common jit.install-info</command>
-      som &root; bruker.  Dette biblioteket brukes ikke av noen BLFS pakker,
-      og er ikke testet av BLFS utviklerne.
-    </para>
-
-    <para>
-      <command>mv -v /usr/lib/*gdb.py ...</command>: Installasjonensteg
-      setter noen filer som brukes av <application>gdb</application> under
-      <filename class="directory">/usr/lib</filename> mappen. Dette genererer
-      falske feilmeldinger når du utfører <command>ldconfig</command>. Dette
+      <command>mv -v /usr/lib/*gdb.py ...</command>: Installasjonsfasen legger 
+      noen filer som brukes av <application>gdb</application> under 
+      <filename class="directory">/usr/lib</filename> mappen. Dette genererer 
+      falske feilmeldinger når du utfører <command>ldconfig</command>. Denne 
       kommandoen flytter filene til et annet sted.
     </para>
 
     <para>
       <command>chown -v -R root:root /usr/lib/gcc/*linux-gnu/...</command>:
-      Hvis pakken er bygget av en annen bruker enn root, vil eierskapet til
-      installerte <filename class="directory">include</filename> mappen (og
-      innholdet) vil være feil. Denne kommandoen endrer eierskapet til
+      Hvis pakken er bygget av en annen bruker enn root, vil eierskapet til den 
+      installerte <filename class="directory">include</filename> mappen (og 
+      innholdet) være feil. Denne kommandoen endrer eierskapet til
       <systemitem class="username">root</systemitem> bruker og gruppe.
+    </para>
+
+    <para>
+      <option>--enable-host-shared --enable-languages=jit</option>:
+      Bygg <systemitem class="library">libgccjit</systemitem>, et bibliotek for 
+      å bygge inn GCC i programmer og biblioteker for å generere maskinkode til 
+      tross for <quote>JIT</quote> (just-in-time) i navnet kan biblioteket også 
+      brukes til AOT kompilering (ahead-of-time).
+      <option>--enable-host-shared</option> er nødvendig for å bygge
+      <systemitem class="library">libgccjit</systemitem>, men det slakker ned 
+      GCC betydelig. Så
+      <systemitem class="library">libgccjit</systemitem> bør bygges og 
+      installeres separat, ikke som en del av <quote>main</quote> GCC
+      installasjon. Hvis du trenger dette biblioteket, konfigurer GCC med disse 
+      to alternativene og installer biblioteket ved å kjøre
+      <!-- from Arch, not tested -->
+      <command>make -C gcc jit.install-common jit.install-info</command>
+      som &root; bruker.  Dette biblioteket brukes ikke av noen BLFS pakke,
+      og er ikke testet av BLFS utviklerne.
     </para>
 
   </sect2>
