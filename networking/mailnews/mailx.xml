@@ -145,14 +145,15 @@ install -v -m644 README /usr/share/doc/heirloom-mailx-&mailx-version;</userinput
 
     <para>
       <command>make SENDMAIL=/usr/sbin/sendmail</command>: Dette endrer
-      standard MTA sti for <command>/usr/lib/sendmail</command>.
+      standard MTA sti for sendmail til <filename>/usr/sbin/sendmail</filename>,
+      i stedet for å bruke <filename>/usr/lib/sendmail</filename>.
     </para>
 
     <para>
       <command>make PREFIX=/usr UCBINSTALL=/usr/bin/install
-      install</command>: Dette endrer standard installasjonssti for
+      install</command>: Dette endrer standard installasjonssti fra
       <filename class='directory'>/usr/local</filename> og standard
-      <command>install</command> kommandostien til
+      <command>install</command> kommandostien fra
       <filename class='directory'>/usr/ucb</filename>.
     </para>
 
@@ -192,21 +193,22 @@ install -v -m644 README /usr/share/doc/heirloom-mailx-&mailx-version;</userinput
       <para>
         For å vise e-post, <application>mailx</application>
         bruker et leseprogram. Siden standard for <command>pg</command>
-        ikke er tilgjengelig på et LFS system, det er påkrevd å
-        spesifiser hvilket leseprogram som skal brukes. Som standard er
+        ikke er tilgjengelig på et LFS system, må du spesifisere hvilken pager
+        <command>mail</command> skal bruke. Som standard er
         <command>more</command> og den mer behagelige
-        <command>less</command> installert. Hvis
-        variabelen PAGER ikke er satt i <filename>/etc/profile</filename>
-        eller <filename>~/.bash_profile</filename>, eller om det
-        skal være et annet leseprogram bare for å lese e-post, det kan bli
-        satt systembredt i <filename>/etc/nail.rc</filename>:
+        <command>less</command> kommandoene er installert. Hvis
+        <envar>PAGER</envar> miljøvariabelen ikke er satt i
+        <filename>/etc/profile</filename> eller <filename>~/.bash_profile</filename>,
+        eller hvis den skal settes til en annen pager spesielt for å lese e-post, 
+        kan den settes systemomfattende i <filename>/etc/nail.rc</filename> som
+        &root; bruker:
       </para>
 
-      <screen role="nodump"><userinput>echo "set PAGER=<replaceable>&lt;more|less&gt;</replaceable>" &gt;&gt; /etc/nail.rc</userinput></screen>
+<screen role="nodump"><userinput>echo "set PAGER=<replaceable>&lt;more|less&gt;</replaceable>" &gt;&gt; /etc/nail.rc</userinput></screen>
 
-      <para>eller individuelt for den aktuelle brukeren i <filename>~/.mailrc</filename>:</para>
+      <para>eller for den nåværende brukeren i <filename>~/.mailrc</filename>:</para>
 
-      <screen role="nodump"><userinput>echo "set PAGER=<replaceable>&lt;more|less&gt;</replaceable>" &gt;&gt; ~/.mailrc</userinput></screen>
+<screen role="nodump"><userinput>echo "set PAGER=<replaceable>&lt;more|less&gt;</replaceable>" &gt;&gt; ~/.mailrc</userinput></screen>
 
       <para>
         Andre interessante alternativer å sette i konfigurasjonsfilene kan
@@ -214,16 +216,17 @@ install -v -m644 README /usr/share/doc/heirloom-mailx-&mailx-version;</userinput
       </para>
 
       <para>
-        Hvis det ikke er satt i miljøet for andre pakker, kan
-        standard skriveprogram angis av:
+        Hvis standardredigeringsprogrammet ikke er angitt i miljøet for andre 
+        pakker, kan det angis ved å kjøre følgende kommando som &root; bruker:
       </para>
 
-      <screen role="nodump"><userinput>echo "set EDITOR=<replaceable>&lt;vim|nano|...&gt;</replaceable>" &gt;&gt; /etc/nail.rc</userinput></screen>
+<screen role="nodump"><userinput>echo "set EDITOR=<replaceable>&lt;vim|nano|...&gt;</replaceable>" &gt;&gt; /etc/nail.rc</userinput></screen>
 
       <para>
         Avhengig av hva slags <xref linkend="server-mail"/> er
-        installert, kan det være nødvendig å angi MAILDIR variabelen
-         så <application>mailx</application> er i stand til å finne e-postene:
+        installert, kan det være nødvendig å sette MAILDIR-variabelen slik at 
+        <application>mailx</application> er i stand til å finne e-post som
+        &root; bruker:
       </para>
 
 <screen role="nodump"><userinput>echo "set MAILDIR=Maildir" &gt;&gt; /etc/nail.rc</userinput></screen>
@@ -257,8 +260,8 @@ install -v -m644 README /usr/share/doc/heirloom-mailx-&mailx-version;</userinput
         <listitem>
           <para>
             er en kommandolinje e-postbrukeragent som er kompatibel med
-            <command>mailx</command> kommandoen funnet på kommersielle Unix
-            versjoner
+            <command>mailx</command> kommandoen funnet på kommersielle UNIX 
+            varianter
           </para>
           <indexterm zone="mailx mailx-prog">
             <primary sortas="b-mailx">mailx</primary>
