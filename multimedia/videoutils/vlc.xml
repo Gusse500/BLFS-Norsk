@@ -235,11 +235,12 @@
       Installer <application>VLC</application> ved å kjøre følgende kommandoer:
     </para>
 
-<screen><userinput>BUILDCC=gcc ./configure --prefix=/usr --disable-libplacebo &amp;&amp;
+<screen><userinput>BUILDCC=gcc ./configure --prefix=/usr &amp;&amp;
 make</userinput></screen>
 
     <para>
-      For å teste resultatene, kjør: <command>make check</command>.
+      For å teste resultatene, kjør: <command>make check</command>. En test vil
+      mislykkes hvis du ikke er i et grafisk miljø.
     </para>
 
     <para>
@@ -260,20 +261,21 @@ make</userinput></screen>
       En stund, <application>Qt-5</application> var den eneste måten å få et 
       grafisk grensesnitt som denne pakken er kjent for. Den støtter nå
       <application>Qt-6</application>, men kommer med mange ulemper ettersom det 
-      er en ny portering av det forrige grensesnittet. Ting er i en ødelagt 
-      tilstand. For eksempel er pausefunksjoner og andre navigasjonsfunksjoner 
-      ødelagte, video plasseringen er feil, blant andre problemer.
+      er en ny portering av det forrige grensesnittet. Flere deler av funksjonaliteten 
+      er ødelagt. For eksempel er pausefunksjoner og andre navigasjonsfunksjoner 
+      ødelagte, videoposisjoneringen er feil, blant andre problemer..
     </para>
 
     <para>
       Et annet problem er at videoavspilling, til tross for at lydavspilling med 
       bildemetadata fungerer fint, er det ødelagt på Wayland uten bruk av
-      <envar>QT_QPA_PLATFORM</envar> variabelen. Hvis du er på Wayland, bør du 
-      kjøre <command>QT_QPA_PLATFORM=xcb vlc -I "qt"</command> for å kjøre Qt 
-      grensesnittet. Dette tvinger <literal>xcb</literal> vindusgrensesnitt til 
-      å brukes i stedet for <literal>wayland</literal>, siden videoavspillingen 
-      vil prøve å bruke <literal>xcb</literal> uansett og mislykkes. På
-      <application>X11</application>, burde ikke dette være et problem.
+      <envar>QT_QPA_PLATFORM</envar> variabelen. Det nøyaktige problemet er at 
+      videoen aldri spilles av, og vinduet beveger seg over hele skjermen. Hvis 
+      du er på Wayland, bør du kjøre <command>QT_QPA_PLATFORM=xcb vlc -I "qt"</command> 
+      for å bruke Qt grensesnittet. Dette tvinger frem <literal>xcb</literal> 
+      vindusgrensesnitt som skal brukes i stedet for <literal>wayland</literal>, 
+      siden videoavspilling vil prøve å bruke <literal>xcb</literal> uansett og 
+      mislykkes. På <application>X11</application>, burde ikke dette være et problem.
     </para>
 
     <para>
@@ -287,15 +289,17 @@ make</userinput></screen>
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
+    <!-- This is the default now, so let's comment this out.
     <para>
-      <parameter>--disable-libplacebo</parameter>: Denne bryteren er nødvendig for å
+      <parameter>- -disable-libplacebo</parameter>: Denne bryteren er nødvendig for å
       deaktive støtte for bruk av libplacebo som en gjengivelsespipeline fordi VLC
       er inkompatibel med den nyeste versjonen av libplacebo.
     </para>
+    -->
 
     <para>
-      <option>--disable-vpx</option>: Bruk denne bryteren for å deaktivere
-      <application>libvpx</application>.
+      <option>--disable-vpx</option>: Bruk denne bryteren hvis du ikke har
+      <application>libvpx</application> installert.
     </para>
 
     <!--<para>
