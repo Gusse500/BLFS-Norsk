@@ -20,14 +20,14 @@
   <title>NFS-Utils-&nfs-utils-version;</title>
 
   <indexterm zone="nfs-utils">
-    <primary sortas="a-Nfs-utils">NFS Utilities</primary>
+    <primary sortas="a-Nfs-utils">NFS Verktøy</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduksjon til NFS Utilities</title>
+    <title>Introduksjon til NFS Verktøy</title>
 
     <para>
-      <application>NFS Utilities</application> pakken inneholder
+      <application>NFS Verktøy</application> pakken inneholder
       brukerrom server og klient verktøy som er nødvendige for å bruke kjernens NFS
       egenskaper. NFS er en protokoll som tillater deling av filsystemer over
       nettverk.
@@ -69,7 +69,7 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">NFS Utilities Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">NFS Verktøy Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
@@ -85,8 +85,6 @@
       <xref linkend="cyrus-sasl"/> (for SASL autentisering),
       <xref linkend="libnsl"/> (for NIS klient støtte),
       <xref linkend="lvm2"/> (libdevmapper for NFSv4 støtte),
-      <!--<xref linkend="libnfsidmap"/> (for NFSv4 support),
-      This is now built in, as of 2.2.1-->
       <xref linkend="openldap"/> (for LDAP autentisering),
       <xref linkend="mitkrb"/> eller
       <ulink url="http://www.citi.umich.edu/projects/nfsv4/linux/">
@@ -132,30 +130,37 @@
 
     <note>
       <para>
-        I BLFS antar vi at nfs v3 vil bli brukt. Hvis
-        <emphasis>serveren</emphasis> tilbyr nfs v4 (for linux, CONFIG_NFSD_V4)
+        I BLFS antar vi at NFSv3 vil bli brukt. Hvis
+        <emphasis>serveren</emphasis> tilbyr NFSv4 (for linux, CONFIG_NFSD_V4)
         da vil auto-forhandling for v3 mislykkes, og du må legge til
         <literal>nfsver=3</literal> til monteringsalternativene. Dette gjelder også
         hvis det alternativet er aktivert i <emphasis>klientens</emphasis> kjerne,
-        for eksempel i en distro som prøver å montere fra en BLFS v3 server.
+        for eksempel i en distro som prøver å montere fra en BLFS NFSv3 server.
       </para>
       <para>
-        Selv om ingen i endene av tilkoblingen støtter nfs v4, å legge til
+        Selv om ingen i endene av tilkoblingen støtter NFSv4, å legge til
         <literal>nfsver=3</literal> er fortsatt gunstig fordi det forhindrer en
         feilmelding "NFS: bad mount option value specified: minorversion=1"
         å bli logget ved hver montering.
       </para>
+      <para>
+        Merk at vi for BLFS kun dekker NFSv3 fordi det er enklere å konfigurere. 
+        Hvis du er avhengig av noen av de mer avanserte konfigurasjons eller 
+        sikkerhetsfunksjonene i NFSv4, kan det være lurt å se gjennom
+        <ulink url="https://bobcares.com/blog/mastering-nfsv4-mount-setup-in-client-and-server/">dette blogginnlegget</ulink>
+        da det kan hjelpe deg med å konfigurere NFSv4.
+      </para>
     </note>
 
     <indexterm zone="nfs-utils nfs-utils-kernel">
-      <primary sortas="d-nfs-utils">NFS Utilities</primary>
+      <primary sortas="d-nfs-utils">NFS Verktøy</primary>
     </indexterm>
 
   </sect2>
 
   <sect2 role="installation" id='nfs-utils-install'
          xreflabel='NFS Utilities Installation'>
-    <title>Installasjon av NFS Utilities</title>
+    <title>Installasjon av NFS Verktøy</title>
 <!--
     <para>
       Før du kompilerer programmet, sørg for at <systemitem
@@ -230,18 +235,13 @@ chown nobody:nogroup /var/lib/nfs</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
-<!--
-    <para>
-      <command>sed ... support/nsm/rpc.c</command>: Dette sed kreves
-      for å fikse et byggeproblem med glibc-2.26 og nyere.
-    </para>
 
     <para>
-      <parameter>- -disable-nfsv4</parameter>: Dette gjør at pakken kan være
-      bygget når libnfsidmap ikke er installert.
+      <parameter>--disable-nfsv4</parameter>: Dette alternativet hindrer at 
+      NFSv4 funksjonaliteten bygges inn i de installerte programmene. Fjern det 
+      hvis du trenger de avanserte funksjonene som tilbys av NFSv4.
     </para>
-    nfs-utils now carries libnfsidmap
--->
+
     <para>
       <parameter>--disable-gss</parameter>: Deaktiverer GSSAPI støtte i denne 
       pakken. Hvis du trenger å bruke den, må du sørge for at <xref linkend="mitkrb"/>
@@ -250,8 +250,8 @@ chown nobody:nogroup /var/lib/nfs</userinput></screen>
     </para>
 
     <para>
-      <parameter>LIBS="-lsqlite3 -levent_core"</parameter>: er påkrevd for
-      fsidd programmet.
+      <parameter>LIBS='-lsqlite3 -levent_core'</parameter>: denne miljøvariabelen 
+      er nødvendig for at fsidd programmet skal kunne kompileres riktig.
     </para>
 
     <para>
@@ -299,15 +299,16 @@ EOF</userinput></screen>
                <phrase revision="systemd">Systemd Enheter</phrase></title>
 
         <para>
-          Installer
+          Hvis du har aktivert bygging av NFSv4 funksjoner, installer
           <phrase revision="sysv">
             <filename>/etc/rc.d/init.d/nfs-server</filename>
             init skriptet
           </phrase>
           <phrase revision="systemd">NFSv4 server enheter</phrase>
-          inkludert i <xref linkend="bootscripts" revision="sysv"/>
-          <xref linkend="systemd-units" revision="systemd"/> pakken
-          for å starte serveren ved oppstart.
+          inkludert i 
+          <xref linkend="bootscripts" revision="sysv"/>
+          <xref linkend="systemd-units" revision="systemd"/> 
+          pakken for å starte serveren ved oppstart.
         </para>
 
 <screen role="root" revision="systemd"><userinput>make install-nfsv4-server</userinput></screen>

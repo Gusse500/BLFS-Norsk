@@ -93,14 +93,13 @@
         brukes hvis de er tilstede. For å bygge kun karchive og ki18n, last ned
         disse pakkene fra mappen spesifisert i
         <xref linkend="kf6-frameworks"/> og bruk byggeinstruksjonene på den
-        side, endre $KF6_PREFIX til /usr.
+        side, endre $KF6_PREFIX variabelen til /usr.
       </para>
     </note>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="gnome-keyring"/>,
-      <ulink url="https://pypi.org/project/PySide2/">PySide2</ulink>, og
+      <ulink url="https://pypi.org/project/PySide2/">PySide2</ulink> og
       <ulink url="https://pypi.org/project/shiboken2/">Shiboken2</ulink>
     </para>
 
@@ -127,7 +126,8 @@ cmake -D CMAKE_INSTALL_PREFIX=/usr \
 make</userinput></screen>
 
     <para>
-      Tester bør kjøres etter installasjon.
+      Testene krever at pakken installeres først, fordi de er avhengige av 
+      funksjonalitet som bare er tilgjengelig etter at pakken er installert.
     </para>
 
     <para>
@@ -147,13 +147,13 @@ ldconfig</userinput></screen>
       <para>
         Når du oppgraderer denne pakken, er det mulig at innholdet
         av applikasjonen vil forbli tom selv om alt annet
-        ser ut til å fungere skikkelig. Prøv i dette tilfellet å fjerne
+        ser ut til å fungere skikkelig. Hvis dette skjer, prøv å fjerne
         <filename>~/.cache/falkon</filename> og starte programmet på nytt.
       </para>
     </note>
 
     <para>
-      Hvis du har installert <application>Pyside2</application> vil du
+      Hvis du har installert <application>Pyside2</application>, vil du
       undersøke <command>hellopython.py</command> som er i <filename
       class="directory">scripts/</filename> mappen, og kanskje kopiere det til
       hjemmemappen din.
@@ -164,7 +164,8 @@ ldconfig</userinput></screen>
         Hvis du er på en ikke-x86_64 arkitektur og får problemer med
         manglende tekst, kan det være lurt å eksportere
         <envar>QTWEBENGINE_CHROMIUM_FLAGS="--no-sandbox"</envar> før du
-        kjører Falkon.
+        kjører Falkon. Merk at dette forsterker alvorlighetsgraden av eventuelle 
+        sikkerhetssårbarheter i QtWebEngine.
       </para>
     </note>
 
@@ -174,8 +175,9 @@ ldconfig</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <option>-D BUILD_TESTING=OFF</option>: Dette vil spare litt tid og plass ved å
-      ikke bygge testprogrammene, bruk denne hvis du ikke ønsker å kjøre testen.
+      <option>-D BUILD_TESTING=OFF</option>: Dette vil spare litt tid og plass 
+      ved å ikke bygge testprogrammene. Bruk denne bryteren hvis du ikke 
+      planlegger å kjøre testene.
     </para>
 
   </sect2>
