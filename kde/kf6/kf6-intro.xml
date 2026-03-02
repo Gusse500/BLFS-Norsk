@@ -214,6 +214,21 @@ ln -sfv /usr/lib/systemd    $KF6_PREFIX/lib</userinput></screen>
 <screen role="root"><userinput>install -v -dm755                $KF6_PREFIX/share/icons &amp;&amp;
 ln -sfv /usr/share/icons/hicolor $KF6_PREFIX/share/icons</userinput></screen>
 
+    <para>
+      I tillegg, hvis <xref linkend="sudo"/> er installert, skal disse 
+      variablene være tilgjengelige for superbrukeren. Kjør følgende kommandoer 
+      som <systemitem class="username">root</systemitem> bruker:
+    </para>
+
+<screen role="root"><userinput>cat &gt;&gt; /etc/sudoers.d/qt &lt;&lt; "EOF"
+<literal>Defaults env_keep += QT_PLUGIN_PATH
+Defaults env_keep += QML2_IMPORT_PATH</literal>
+EOF
+
+cat &gt;&gt; /etc/sudoers.d/kde &lt;&lt; "EOF"
+<literal>Defaults env_keep += KF6_PREFIX</literal>
+EOF</userinput></screen>
+
     <tip>
       <para>
         Noen ganger er installasjonsbanene hardkodet til installerte filer.
