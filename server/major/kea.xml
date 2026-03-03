@@ -27,11 +27,11 @@
 
     <para>
       <application>ISC Kea</application> pakken inneholder
-      serverprogrammer for DHCP. Det er etterfølgeren til
-      den gamle ISC DHCP serveren som er utgått siden desember 2022.
+      serverprogrammer for DHCP. Dette er etterfølgeren til den gamle ISC DHCP 
+      serveren som ble avviklet i desember 2022.
     </para>
 
-    &lfs124_checked;
+    &lfs130_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -80,7 +80,7 @@
       <xref linkend="bind"/>,
       <xref linkend="mitkrb"/>,
       <xref linkend="valgrind"/>,
-      <ulink url="https://botan.randombit.net/">botan</ulink>,
+      <ulink url="https://botan.randombit.net/">Botan</ulink>,
       <ulink url="https://cppcheck.sourceforge.io/">cppcheck</ulink>,
       <ulink url="https://github.com/CESNET/libyang">libyang</ulink>, og
       <ulink url="https://plantuml.com/">plantuml</ulink>
@@ -110,7 +110,8 @@
     <title>Kjernekonfigurasjon</title>
 
     <para>
-      Du må ha Packet Socket støtte. IPv6 støtte er valgfritt.
+      Du må ha Packet Socket støtte. IPv6 støtte er valgfritt. Aktiver følgende 
+      alternativer i kjernen og start på nytt om nødvendig:
     </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -193,16 +194,17 @@ install -dm0750 /var/log/kea</userinput></screen>
     <para>
       <parameter>-D crypto=openssl</parameter>: Tillater bruk av OpenSSL for 
       kommunikasjon med kontrollagenten og for DNS oppdateringer. Bruk 
-      <option>-D crypto=botan</option> hvis du vil bruke botan. 
-      Standardleverandøren er openssl.
+      <option>-D crypto=botan</option> hvis du vil bruke Botan. 
+      Standardleverandøren er OpenSSL.
     </para>
 
     <para>
       <option>-D postgresql=enabled</option> eller <option>-D mysql=enabled</option>:
-      <application>ISC Kea</application> kan lagre leiekontraktene på en
+      <application>ISC Kea</application> kan lagre leiekontraktene i en
       database. Dette kan være nyttig i store miljøer som kjører
       en klynge med DHCP servere. Å bruke <emphasis>memfile</emphasis>
-      bakstykket (som er en CSV fil som er lagret lokalt) er mulig uansett.
+      bakstykket (som er en CSV fil som er lagret lokalt) er mulig, og denne 
+      metoden er hva standardkonfigurasjonen som presenteres her bruker.
     </para>
 
     <para>
