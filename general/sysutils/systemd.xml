@@ -414,10 +414,22 @@ chmod -v 755 /etc/systemd/user-environment-generators/50-profile.sh</userinput><
       for detaljer om systemd miljøgeneratorene. Merk at hvis du har redigert 
       innholdet i
       <filename class='directory'>/etc/profile.d</filename> når et 
-      skrivebordsmiljø kjører, må du kjøre <command>systemctl
-      --user daemon-reload</command> kommandoen for å synkronisere endringen 
-      inn i systemd per-bruker instansen, og logg deretter ut og inn igjen for 
-      å synkronisere endringen inn i skrivebordsmiljøet.
+      skrivebordsmiljø kjører, må du synkronisere endringen inn i systemd 
+      per-bruker instansen:
+    </para>
+
+    <screen role='nodump'><userinput>systemctl --user unset-environment \
+  $(/etc/systemd/user-environment-generators/50-profile.sh | sed 's/=.*//')
+systemctl --user daemon-reload</userinput></screen>
+
+    <para>
+      Og logg deretter ut og inn igjen for å synkronisere endringen med 
+      skrivebordsmiljøet.
+      <command>systemctl --user unset-environment</command> kommandoen er 
+      nødvendig i noen skrivebordsmiljøer som skriver miljøvariablene inn i 
+      variabelpoolen for kjøretidsmiljøet til systemd instansen per bruker fordi 
+      innholdet i den poolen ville overstyre innstillingen fra 
+      generatoren.
     </para>
 
     <important>
