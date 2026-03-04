@@ -141,6 +141,13 @@ useradd -c "Network Time Protocol" -d /var/lib/ntp -u 87 \
 sed -i 's/pthread_detach(NULL)/pthread_detach(0)/' sntp/m4/openldap-thread-check.m4 &amp;&amp;
 autoreconf -fiv</userinput></screen>
 
+    <!--https://bugs.ntp.org/show_bug.cgi?id=3929-->
+    <para>
+      Deretter bruker du en oppstrømsrettelse for å forhindre en segmentfeil:
+    </para>
+
+<screen><userinput>sed -i "/ep.*FAILED/,+4s/ep/ep2/" ntpd/ntp_io.c</userinput></screen>
+
     <para>
       Installer <application>ntp</application> ved å kjøre
       følgende kommandoer:
@@ -160,7 +167,6 @@ make</userinput></screen>
       kjent for å mislykkes på grunn av bruk av OpenSSL 3.5.2 og 
       senere.
     </para>
-
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
@@ -299,6 +305,13 @@ EOF</userinput></screen>
       </indexterm>
 
 <screen role="root"><userinput>make install-ntpd</userinput></screen>
+
+      <para>
+        I tillegg bør du deaktivere en inkompatibel tjeneste. Som
+        &root; bruker:
+      </para>
+
+<screen role="root"><userinput>systemctl disable systemd-timesyncd.service</userinput></screen>
 
       <para>
         Hvis du foretrekker å kjøre <command>ntpd</command> med jevne mellomrom, legg til
