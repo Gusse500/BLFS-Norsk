@@ -94,7 +94,7 @@ EOF</userinput></screen>
       <para>
         Alternativt, hvis du bruker et statisk ip oppsett, opprett følgende
         konfigurasjonsfil ved å kjøre følgende kommando som
-        <systemitem class="username">root</systemitem> bruker:
+        &root; bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt; /etc/systemd/network/60-br0.network &lt;&lt; EOF
@@ -106,6 +106,14 @@ Address=192.168.0.2/24
 Gateway=192.168.0.1
 DNS=192.168.0.1</literal>
 EOF</userinput></screen>
+
+      <para>
+        Hvis du vil kontakte et annet system som er koblet til broen, for 
+		eksempel en qemu instans, må du også aktivere IP videresending. Igjen, 
+		som &root; bruker, gjør: 
+      </para>
+
+<screen role="root"><userinput>echo 'IPForward=ipv4' >> /etc/systemd/network/60-br0.network</userinput></screen>
 
       <para>
         For å få frem brogrensesnittet, ganske enkelt start på nytt
