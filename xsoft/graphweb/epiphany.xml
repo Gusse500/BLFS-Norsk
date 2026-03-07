@@ -109,9 +109,15 @@
         som vil forårsake et krasj under kjøring hvis de er tilstede, som &root;
         bruker:
       </para>
-    </note>
 
 <screen role="nodump"><userinput remap="pre">rm -rf /usr/lib/epiphany</userinput></screen>
+    </note>
+
+    <para>
+      Nå, fiks en fil slik at den er kompatibel med <xref linkend="nettle"/> og senere:
+    </para>
+
+<screen><userinput>sed -i '/hkdf_extract/,/;$/{/DIGEST_SIZE/d}' lib/sync/ephy-sync-crypto.c</userinput></screen>
 
     <para>
       Installer <application>Epiphany</application> ved å kjøre følgende

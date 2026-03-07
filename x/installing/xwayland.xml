@@ -105,6 +105,15 @@
     <title>Installasjon av Xwayland</title>
 
     <para>
+      Nå, fiks pakken slik at den er kompatibel med <xref linkend="nettle"/> og senere:
+    </para>
+
+<screen><userinput>sed -e '/nettle.sha.h/s/sha/sha1/'                  \
+    -e '/nettle.sha1/a #include &lt;nettle/version.h&gt;' \
+    -e '/digest/s/ctx, 20/ctx/'                     \
+    -i os/xsha1.c</userinput></screen>
+
+    <para>
       Installer <application>xwayland</application> ved å kjøre følgende
       kommandoer:
     </para>
