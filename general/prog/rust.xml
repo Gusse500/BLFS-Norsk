@@ -6,8 +6,8 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "65de3c1b0a9304b16ff27433a0dafb95">
-  <!ENTITY rust-size          "258 MB">
+  <!ENTITY rust-md5sum        "cd01d7a97f98940567663652ac9747a0">
+  <!ENTITY rust-size          "262 MB">
   <!ENTITY rust-buildsize     "10 GB (324 MB installert); legg til 11 GB hvis du kjører testene">
   <!ENTITY rust-time          "10 SBU (inkludert nedlastingstid; legg til 15 SBU for tester, begge med parallellisme=8)">
 ]>
@@ -234,7 +234,7 @@ ln -svfn rustc-&rust-version; /opt/rustc</userinput></screen>
 # Tell x.py that the editors have reviewed the content of this file
 # and updated it to follow the major changes of the building system,
 # so x.py will not warn users to review that information.
-change-id = 148795
+change-id = 148671
 
 [llvm]
 # When using the system installed copy of LLVM, prefer the shared libraries
@@ -337,34 +337,11 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
       bekymring.
     </para>
 
-    <note>
-      <para>
-        Hvis du har strippet
-        <filename class='libraryfile'>/usr/lib/libc.a</filename> med
-        <command>strip --strip-unneeded</command>, alt statiske koblete
-        Rustprogrammer vil krasje med SIGSEGV ved oppstart, noe som forårsaker 
-        flere tester (for eksempel
-        <filename>tests/ui/process/nofile-limit.rs</filename>) å mislykkes med
-        SIGSEGV.
-      </para>
-      <para>
-        Det er forårsaket av en Glibc feil som påvirker Glibc-2.42 og flere 
-        tidligere utgivelser, så for nå har vi byttet ut 
-        <parameter>--strip-unneeded</parameter> med
-        <parameter>--strip-debug</parameter> i både LFS boka og i
-        <xref linkend='stripping'/> for å omgå det. Hvis du opplever dette
-        problemet, gjenoppbygg Glibc og erstatt
-        <filename class='libraryfile'>/usr/lib/libc.a</filename> filen
-        med den ustrippede <filename class='libraryfile'>libc.a</filename>
-        fra nybygget.
-      </para>
-    </note>
-
     <para>
       Hvis du får noen <emphasis>andre</emphasis> sviktende tester som 
       rapporterer et utgavenummer, så bør du søke etter det problemet. For 
       eksempel når rustc &gt;= 1.41.1 ble bygget med en versjon av sysllvm før 
-      10.0 testen for problem 69225 mislyktes <ulink
+      10.0, testen for problem 69225 mislyktes <ulink
       url="https://github.com/rust-lang/rust/issues/69225"/> og det burde være
       betraktet som en kritisk feil (de ga ut 1.41.1 på grunn av det).
       De fleste andre feil vil ikke være kritiske.
