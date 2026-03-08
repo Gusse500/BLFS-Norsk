@@ -157,46 +157,35 @@
       </para>
     </note>
 
-<!--
     <para>
-      Endre en Rust fil for å tillate implisitt autoreferanse for å forhindre en 
-      byggefeil. Den etterfølgende <literal>\r</literal> sørger for at MS-DOS 
-      formatet brukes for den innsatte linjen slik at den vil være konsistent 
-      med alle andre linjer i filen:
-    </para>
-
-<screen><userinput>sed -e '1i\#![warn(dangerous_implicit_autorefs)]\r' \
-    -i third_party/rust/allocator-api2/src/stable/vec/mod.rs</userinput></screen>
--->
-
-    <para>
-      Deretter, fiks byggingen av denne pakken med Python-3.14:
+      Først, fiks byggingen av denne pakken med Python-3.14:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;esr-python_3.14_fixes-1.patch</userinput></screen>
 
+    <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=2006630 -->
     <para>
       Fjern sjekksummer fra cargo crates for filer som ikke finnes:
     </para>
 
-<screen><userinput
-  remap="pre">for crate in {minimal-lexical,lmdb-rkv,cubeb-sys,wasi,glslopt,sfv}; do
-  sed -e 's|,"[^"]*.gitmodules[^,]*[^,]||' \
-      -e '$a\'                             \
-      -i comm/third_party/rust/$crate/.cargo-checksum.json
-done</userinput></screen>
+<screen><userinput remap="pre">find -name .cargo-checksum.json | \
+     xargs sed -ri 's|"[^"]*.gitmodules":"[^"]*",?||'</userinput></screen>
 
     <para>
-      Retter byggingen av denne pakken med glibc-2.43 og tilpasser sjekksummene:
+      Rett byggingen av denne pakken med glibc-2.43 og tilpass sjekksummene:
     </para>
 
-<screen><userinput
-  remap="pre">GLSL_PTHREAD="comm/third_party/rust/glslopt/glsl-optimizer/include/c11/threads_posix.h"
-OLDSHA=`sha256sum $GLSL_PTHREAD | awk '{ print $1 }'` &amp;&amp;
-patch -Np1 -i ../thunderbird-&thunderbird-version;esr-glibc-2.43.patch &amp;&amp;
-NEWSHA=`sha256sum $GLSL_PTHREAD | awk '{ print $1 }'` &amp;&amp;
-sed "s/$OLDSHA/$NEWSHA/" \
-  -i comm/third_party/rust/glslopt/.cargo-checksum.json</userinput></screen>
+<screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;esr-glibc-2.43.patch &amp;&amp;
+sed '/patch.crates-io/a glslopt={path="../../third_party/rust/glslopt"}' \
+    -i comm/rust/Cargo.toml &amp;&amp;
+sed '/name = "glslopt"/,/^$/{/source/d;/checksum/d}' \
+    -i comm/rust/Cargo.lock</userinput></screen>
+
+    <para>
+      Deretter, fiks bygging av denne pakken med LLVM-22:
+    </para>
+
+<screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;esr-llvm_22-1.patch</userinput></screen>
 
     <para>
       Konfigurasjonen av <application>Thunderbird</application> 
