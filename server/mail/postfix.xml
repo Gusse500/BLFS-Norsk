@@ -9,9 +9,9 @@
   mirror status, some of the mirrors shown as http are actually https -->
   <!ENTITY postfix-download-http "https://ghostarchive.org/postfix/postfix-release/official/postfix-&postfix-version;.tar.gz">
   <!ENTITY postfix-download-ftp  " ">
-  <!ENTITY postfix-md5sum        "ca4d82e7cabb7fb725ee00599e8b65fd">
-  <!ENTITY postfix-size          "4.8 MB">
-  <!ENTITY postfix-buildsize     "158 MB">
+  <!ENTITY postfix-md5sum        "626eb767c3e501de06be4930f2e184c8">
+  <!ENTITY postfix-size          "5.0 MB">
+  <!ENTITY postfix-buildsize     "169 MB (62 MB installert)">
   <!ENTITY postfix-time          "0.2 SBU (Bruke parallellisme=4)">
 ]>
 
@@ -212,7 +212,7 @@ fi</userinput></screen>
 
 <screen><userinput>if [ -r /usr/lib/liblmdb.so ]; then
   CCARGS="$CCARGS -DHAS_LMDB"
-  AUXLIBS="$AUXLIBS -llmdb"
+  AUXLIBS_LMDB="-llmdb"
 fi</userinput></screen>
       </sect4>
 
@@ -247,11 +247,11 @@ fi</userinput></screen>
       </sect4>
 
       <sect4>
-        <title>MySQL</title>
+        <title>MySQL eller MariaDB</title>
 
         <para>
-          For å bruke <application>MySQL</application> med
-          <application>Postfix</application>, bruk følgende argumenter:
+          For å bruke <application>MySQL</application> eller <application>MariaDB</application> 
+          med <application>Postfix</application>, bruk følgende argumenter:
         </para>
 
 <screen><userinput>if [ -r /usr/lib/libmysqlclient.so ]; then
@@ -324,7 +324,12 @@ fi</userinput></screen>
         kjøre følgende kommandoer:
       </para>
 
-<screen><userinput>make CC="gcc -std=gnu17" CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" makefiles &amp;&amp;
+<screen><userinput>make makefiles                    \
+     CCARGS="$CCARGS"             \
+     AUXLIBS="$AUXLIBS"           \
+     AUXLIBS_LMDB="$AUXLIBS_LMDB" \
+     default_database_type=lmdb   \
+     default_cache_db_type=lmdb   &amp;&amp;
 make</userinput></screen>
 
     <!-- There is a test suite, but it fails a lot. It seems to need
@@ -367,20 +372,28 @@ make</userinput></screen>
       alternativer ikke er angitt, vil ikke dokumentasjonen bli installert.
     </para>
 
-    <!--
-      Next version of postfix still has gcc15 issues
-      Tested at 22 July 25 with RC postfix-3.11-20250621.tar.gz
-    -->
+<!--
     <para>
       <option>CC="gcc -std=gnu17"</option>: Dette brukes til å løse et problem 
       med gcc-15. Denne versjonen av gcc bruker <literal>-std=gnu23</literal> som
       standard som avslører flere problemer i kildekoden.
     </para>
+-->
 
     <para>
-      <option>CCARGS="-DNO_EAI ..."</option>: dette vil slå av SMTPUTF8
+      <option>CCARGS="-DNO_EAI ..."</option>: Dette vil slå av SMTPUTF8
       støtte, for eksempel hvis resten av e-postadressens infrastruktur
       ikke kan håndtere UTF-8-e-postadresser og meldingsdeklarasjonsverdier.
+    </para>
+
+    <para>
+      <option>default_database_type=lmdb</option>: Postfix spesifiserer ikke lenger 
+      en standard databasetype. Den må spesifiseres når du oppretter makefilene.
+    </para>
+
+    <para>
+      <option>default_cache_db_type=lmdb</option>: Postfix spesifiserer ikke lenger 
+      en standard hurtigbuffertype. Den må spesifiseres når du oppretter makefilene.
     </para>
 
   </sect2>
@@ -432,11 +445,11 @@ EOF</userinput></screen>
       <para>
         For å beskytte en eksisterende <filename>/etc/aliases</filename> fil,
         kommandoen ovenfor legger til disse aliasene til den hvis den eksisterer. Denne filen
-        bør kontrolleres og dupliserte aliaser fjernes, hvis de finnes.
+        bør kontrolleres og dupliserte aliaser fjernes hvis de finnes.
       </para>
 
       <para>
-        BLFS redaktørene anbefaler å bruke LMDB i stedet for Berkeley DB for
+        BLFS redaktørene anbefaler å bruke LMDB for
         Postfix tabeller.   Legg til tre linjer i
         <filename>/etc/postfix/main.cf</filename> for å la
         <command>postmap</command> kode oppslagstabellene i LMDB
