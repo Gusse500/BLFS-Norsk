@@ -6,10 +6,10 @@
 
   <!ENTITY mesa-download-http "https://mesa.freedesktop.org/archive/mesa-&mesa-version;.tar.xz">
   <!ENTITY mesa-download-ftp  " ">
-  <!ENTITY mesa-md5sum        "8e699baecbb0a15b5651cc0db2035a4c">
+  <!ENTITY mesa-md5sum        "20a629e63ffe1474b33993684bf9cb75">
   <!ENTITY mesa-size          "42 MB">
-  <!ENTITY mesa-buildsize     "1.1 GB (med dokumenter, legg til 457 MB for tester)">
-  <!ENTITY mesa-time          "3 SBU (med dokumenter; legg til 1.4 SBU for tester; begge med parallellitet=4)">
+  <!ENTITY mesa-buildsize     "1.1 GB (med dokumenter, legg til 541 MB for tester)">
+  <!ENTITY mesa-time          "3.2 SBU (med dokumenter; legg til 1.7 SBU for tester; begge med parallellitet=4)">
 ]>
 
 <sect1 id="mesa" xreflabel="Mesa-&mesa-version;">
@@ -35,8 +35,8 @@
       BLFS, som AppImages, kan ha problemer med både å bygge og kjøre på 
       systemer med OpenGL biblioteker installert fra denne pakken. Hvis du 
       finner ut at du ikke kan bygge eller kjøre en gitt pakke eller binærfil, 
-      må du installere GLFS pakken <ulink url="https://lfs.freding.no/glfs/view/svn/shareddeps/libglvnd.html">libglvnd</ulink> 
-      eller for systemd <ulink url="https://lfs.freding.no/glfs/view/systemd/shareddeps/libglvnd.html">libglvnd</ulink>.
+      må du installere GLFS pakken <ulink 
+      url="https://lfs.freding.no/glfs/view/systemd/shareddeps/libglvnd.html">libglvnd</ulink> 
       Den tilbyr egne OpenGL biblioteker og tillater bruk av drivere utenfor 
       BLFS. Du må gjenoppbygge mange pakker med OpenGL for å tillate at pakker 
       bruker <application>libglvnd</application>. Dette støttes ikke av BLFS 
@@ -237,9 +237,9 @@
       oppdateringen ovenfor),
       <ulink url="https://omxil.sourceforge.net/">Bellagio OpenMAX Integration
       Layer</ulink> (for mobile plattformer),
-      <ulink
-      url="https://lfs.freding.no/glfs/view/svn/shareddeps/libglvnd.html">libglvnd</ulink> eller for systemd 
-      <ulink url="https://lfs.freding.no/glfs/view/systemd/shareddeps/libglvnd.html">libglvnd</ulink>. (tilbyr OpenGL biblioteker), og
+      <ulink 
+	  url="https://lfs.freding.no/glfs/view/systemd/shareddeps/libglvnd.html">libglvnd</ulink>. 
+	  (tilbyr OpenGL biblioteker), og
       <ulink url="https://github.com/tizonia/tizonia-openmax-il/wiki/Tizonia-OpenMAX-IL/">
       libtizonia</ulink>
     </para>
@@ -354,64 +354,7 @@
         For me, libdrm does not mention virgl, but mesa accepts it. AFAICS
         freedreno is for qualcom hardware, libdrm will build for it on suitable
         systems. VC4 is for the Broadcom VC4 used in the raspberry pi - ken -->
-<!--
-    <note>
-      <para>
-        Målene ovenfor, og innholdet nedenfor, er for en fullstendig konstruksjon.
-        Mange vil ikke ønske å installere drivere de ikke kan bruke, så
-        følgende avsnitt forklarer hvordan man begrenser sjåførene, og gir en
-        eksempel som kan reduseres eller endres etter behov.
-      </para>
-    </note>
 
--->
-<!--
-    <para>
-      (ikke-gallium) DRI-driverne tilgjengelig i X86 er auto, <emphasis>eller
-      alternativt et valg fra</emphasis> i915, i965, nouveau, r100, r200,
-      og swrast. Bruk 'auto' for å bygge alle tilgjengelige DRI-drivere, eller bruk en
-      tom streng (DRI_DRIVERS="") hvis du kun ønsker å bygge gallium-drivere.
-    </para>
-
-    <para>
-      Plattformene ("vindussystemene") tilgjengelig for X86 linux er x11, wayland,
-      drm, og uten overflate. Ved ikke å spesifisere noe, mesonen
-      build-system vil bygge for alle disse plattformene hvis du har
-      avhengigheter, identiske med hvis du hadde spesifisert '-Dplatforms=auto'.
-    </para>
-
-    <para>
-      Endre kommandoene nedenfor for dine ønskede drivere. Driverne som er oppført
-      nedenfor vil dekke de fleste moderne skjermkort og virtuelle maskiner. For hjelp i
-      velge sjåfører se <ulink url="https://docs.mesa3d.org/systems.html"/>.
--->
-      <!-- these two don't seem to be mentioned in that mesa link -->
-<!--
-      For Intel-drivere, spesifiser Crocus for i965 gen 4 til Haswell, iris
-      for Broadwell og senere.
-    </para>
-
-    <note>
-      <para>
-        Selv om nouveau-driverne kan bygges for både gallium og dri, er de
-        i915-driveren kan bare bygges for den ene eller den andre.
-      </para>
-    </note>
-
-<screen><userinput>GALLIUM_DRV="crocus,i915,iris,nouveau,r600,radeonsi,svga,swrast,virgl"
-DRI_DRIVERS="i965,nouveau"</userinput></screen>
--->
-
-    <!-- https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/22021 -->
-<!-- No longer needed
-    <para>
-      Remove two unneeded references to LLVM headers to avoid a build
-      failure with LLVM 17 or later:
-    </para>
-
-<screen><userinput>sed '/Scalar.h/d;/Utils.h/d' \
-    -i src/gallium/auxiliary/gallivm/lp_bld_init.c</userinput></screen>
--->
     <para>
       Installer <application>Mesa</application> ved å kjøre følgende
       kommandoer:
@@ -449,12 +392,8 @@ sed '/float rsqrtf/,/^}/d' \
     -i ../src/gallium/drivers/llvmpipe/lp_test_arit.c &amp;&amp;-->
 ninja test</userinput></screen>
 
-<!-- All 98  tests passed for me for 23.3.1 [bdubbs]
-     All 106 tests passed for me for 24.3.1 [zeckma]
-     All 104 tests passed for me for 25.0.1 [zeckma]
-     All 94  tests passed for me for 25.1.2 [zeckma]
-     All 94  tests passed for me for 25.2.2 [zeckma]
-     All 97  tests passed for me for 25.3.1 [zeckma] -->
+<!-- all 97  tests passed for me for 25.3.1 [zeckma]
+     all 100 tests passed for me for 26.0.1 [zeckma] -->
 
     <para>
       Nå, som &root; bruker:
