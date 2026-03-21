@@ -6,10 +6,10 @@
 
   <!ENTITY pipewire-download-http "https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/&pipewire-version;/pipewire-&pipewire-version;.tar.bz2">
   <!ENTITY pipewire-download-ftp  " ">
-  <!ENTITY pipewire-md5sum        "7f5a60e22101a26a828b2b1958c2d10f">
+  <!ENTITY pipewire-md5sum        "df1c9eb17a9e5f3dae1b32cc23a7cbc8">
   <!ENTITY pipewire-size          "2.0 MB">
-  <!ENTITY pipewire-buildsize     "107 MB (med tester)">
-  <!ENTITY pipewire-time          "0.6 SBU (med tester, begge med parallellisme=4)">
+  <!ENTITY pipewire-buildsize     "88 MB (med tester)">
+  <!ENTITY pipewire-time          "0.7 SBU (med tester, begge med parallellisme=4)">
 ]>
 
 <sect1 id="pipewire" xreflabel="pipewire-&pipewire-version;">
@@ -140,24 +140,17 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup ..                 \
-      --prefix=/usr            \
-      --buildtype=release      \
-      -D session-managers="[]" &amp;&amp;
+CFLAGS="-Wno-error=discarded-qualifiers" \
+meson setup ..                           \
+      --prefix=/usr                      \
+      --buildtype=release                \
+      -D session-managers="[]"           &amp;&amp;
 ninja</userinput></screen>
 
     <para>
       For å teste resultatene, kjør: <command>ninja test</command>.
     </para>
-<!--
-    <para>
-      Hvis du oppgraderer fra en tidligere versjon av Pipewire, er det nødvendig
-      å fjerne alle gamle binære kjørbare filer som forstyrrer
-      installasjon. Som &root; bruker:
-    </para>
 
-<screen role='root'><userinput>rm -vf /usr/bin/pipewire-*</userinput></screen>
--->
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
@@ -167,6 +160,13 @@ ninja</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
+
+    <para>
+      <envar>CFLAGS="-Wno-error=discarded-qualifiers"</envar>: 
+      Denne miljøvariabelen forhindrer en byggefeil på grunn av at "const" 
+      kvalifikatorer forkastes fra pekermåltyper.
+      <!-- All in spa/plugins/alsa/acp/compat.h (6 instances) -->
+    </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
