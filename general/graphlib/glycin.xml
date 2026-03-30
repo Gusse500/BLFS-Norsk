@@ -5,10 +5,10 @@
   %general-entities;
 
   <!ENTITY glycin-download-http "https://download.gnome.org/sources/glycin/&glycin-majmin;/glycin-&glycin-version;.tar.xz">
-  <!ENTITY glycin-md5sum        "7f8fac31be0aabd50a44998d9fd4ede2">
-  <!ENTITY glycin-size          "6.3 MB">
-  <!ENTITY glycin-buildsize     "1.1 GB (ytterligere 775 MB for tester)">
-  <!ENTITY glycin-time          "6.4 SBU (ytterligere 9.5 SBU for tester)">
+  <!ENTITY glycin-md5sum        "411550c5da777a952bb6c811fd882156">
+  <!ENTITY glycin-size          "6.8 MB">
+  <!ENTITY glycin-buildsize     "1.4 GB (med dokumentasjon, legg til 1 GB for tester)">
+  <!ENTITY glycin-time          "3.8 SBU (med dokumentasjon, legg til 2.5 SBU for tester)">
 ]>
 
 <!-- Try to keep the indentation used in this file-->
@@ -70,12 +70,14 @@
           <ulink url="&patch-root;/glycin-&glycin-version;-xorg_prefix-1.patch"/>
         </para>
       </listitem>
+<!--
       <listitem>
         <para>
           Anbefalt oppdatering (påkrevd for å laste XBM og XPM bilder):
           <ulink url="&patch-root;/glycin-&glycin-version;-xbm_xpm-1.patch"/>
         </para>
       </listitem>
+-->
     </itemizedlist>
 
     <bridgehead renderas="sect3">glycin Avhengigheter</bridgehead>
@@ -130,26 +132,6 @@
 
 <screen><userinput>cargo vendor &amp;&amp;
 patch -Np1 -i ../glycin-&glycin-version;-xorg_prefix-1.patch</userinput></screen>
-
-    <note>
-      <para>
-        Støtteoppdateringen for XBM og XPM nedenfor avhenger implisitt av 
-        oppdateringen og instruksjonene ovenfor, så sørg for at du har gitt 
-        instruksjonene før du installerer støtteoppdateringen for XBM og XPM. 
-        Instruksjonene lager ikke problemer i en Xorg-installasjon i
-        <filename class='directory'>/usr</filename>.
-      </para>
-    </note>
-
-    <para>
-      Nå kan du tilbakeportere en oppstrømsendring for å gjøre det mulig for glycin 
-      å laste inn XBM og XPM bilder. Oppstrømsendringen introduserer en ny avhengig 
-      Rustkasse (<literal>image-extras</literal>) som må synkroniseres inn i 
-      leverandørkildene ved å kjøre <command>cargo vendor</command> igjen:
-    </para>
-
-<screen><userinput>patch -Np1 -i ../glycin-&glycin-version;-xbm_xpm-1.patch &amp;&amp;
-cargo vendor</userinput></screen>
 
     <para>
       Installer <application>glycin</application> ved å kjøre følgende
