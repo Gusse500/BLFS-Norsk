@@ -7,10 +7,10 @@
   <!ENTITY harfbuzz-download-http
            "https://github.com/harfbuzz/harfbuzz/releases/download/&harfbuzz-version;/harfbuzz-&harfbuzz-version;.tar.xz">
   <!ENTITY harfbuzz-download-ftp  " ">
-  <!ENTITY harfbuzz-md5sum        "de595664aa7213f408d417ea16e8a6be">
+  <!ENTITY harfbuzz-md5sum        "c8f3cf2bab86c2edd662e7beca0240fb">
   <!ENTITY harfbuzz-size          "19 MB">
-  <!ENTITY harfbuzz-buildsize     "169 MB (med tester)">
-  <!ENTITY harfbuzz-time          "0.8 SBU (med tester; begge bruker parallellisme=4)">
+  <!ENTITY harfbuzz-buildsize     "161 MB (med tester)">
+  <!ENTITY harfbuzz-time          "0.9 SBU (med tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="harfbuzz" xreflabel="harfBuzz-&harfbuzz-version;">
@@ -71,13 +71,13 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
+      <xref linkend="freetype2"/>,
       <xref linkend="glib2"/> (påkrevd for Pango; GObject Introspection
       påkrevd for å bygge GNOME),
       <xref role="first" linkend="graphite2"/> (nødvendig for å bygge
         <xref role="nodep" linkend="texlive"/> eller
-        <xref role="nodep" linkend="libreoffice"/> med system harfbuzz),
-      <xref linkend="icu"/>, og
-      <xref linkend="freetype2"/>
+        <xref role="nodep" linkend="libreoffice"/> med system harfbuzz), og
+      <xref linkend="icu"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -87,6 +87,10 @@
       cairo bakstykke er nødvendig),
       <xref linkend="git"/>,
       <xref linkend="gtk-doc"/>,
+      <xref linkend="glew"/>,
+      <xref linkend="mesa"/>, og
+      <ulink url="https://linuxfromscratch.org/slfs/view/dev/graph/glfw.html">glfw</ulink>
+      (alle tre for <application>hb-gpu</application> verktøyet),
       <ulink url="https://pypi.org/project/FontTools/">FontTools</ulink>
       (Python 3 modul, for testpakken),
       <ulink url="https://www.colm.net/open-source/ragel/">ragel</ulink>,
@@ -138,16 +142,7 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-<!--
-    <para>
-      <parameter>-Dcpp_std=c++17</parameter>: Denne bryteren sikrer at kompilering av
-      C++ koden følger C++17-standarden, soom overstyrer standarden for
-      denne pakken (C++11). Det kreves for å bygge denne pakken med
-      <xref linkend='icu'/> installert fordi noen ICU deklarasjoner bruker C++17
-      egenskaper. Det er unødvendig hvis <xref linkend='icu'/> ikke er
-      installert, men skader uansett ikke.
-    </para>
--->
+
     <para>
       <parameter>-D graphite2=enabled</parameter>: Denne bryteren aktiverer
       <application>Graphite2</application> støtte, som er nødvendig for
@@ -174,20 +169,24 @@ ninja</userinput></screen>
       <seglistitem>
         <seg>
           hb-info,
-          hb-ot-shape-closure,
+          hb-raster,
           hb-shape,
-          hb-subset, og
+          hb-subset,
+          hb-vector, og
           hb-view (bare hvis Cairo er installert)
         </seg>
         <seg>
           libharfbuzz.so,
           libharfbuzz-cairo.so (bare hvis Cairo er installert),
           libharfbuzz-gobject.so,
-          libharfbuzz-icu.so, og
-          libharfbuzz-subset.so
+          libharfbuzz-gpu.so,
+          libharfbuzz-icu.so, 
+          libharfbuzz-raster.so,
+          libharfbuzz-subset.so, og
+          libharfbuzz-vector.so
         </seg>
         <seg>
-          /usr/include/harbuzz,
+          /usr/include/harfbuzz,
           /usr/lib/cmake/harfbuzz, og
           /usr/share/gtk-doc/html/harfbuzz (valgfri)
         </seg>
@@ -212,6 +211,7 @@ ninja</userinput></screen>
        </listitem>
      </varlistentry>
 
+<!-- Not seen after 14.0.0
      <varlistentry id="hb-ot-shape-closure">
         <term><command>hb-ot-shape-closure</command></term>
         <listitem>
@@ -223,6 +223,19 @@ ninja</userinput></screen>
           </para>
           <indexterm zone="harfbuzz hb-ot-shape-closure">
             <primary sortas="b-hb-ot-shape-closure">hb-ot-shape-closure</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+-->
+
+      <varlistentry id="hb-raster">
+        <term><command>hb-raster</command></term>
+        <listitem>
+          <para>
+            brukes til å gjengi formet tekst som et rasterbilde ved hjelp av en gitt skrifttype
+          </para>
+          <indexterm zone="harfbuzz hb-raster">
+            <primary sortas="b-hb-raster">hb-raster</primary>
           </indexterm>
         </listitem>
       </varlistentry>
@@ -247,6 +260,18 @@ ninja</userinput></screen>
           </para>
           <indexterm zone="harfbuzz hb-subset">
             <primary sortas="b-hb-subset">hb-subset</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="hb-vector">
+        <term><command>hb-vector</command></term>
+        <listitem>
+          <para>
+            brukes til å tegne tekst i SVG format med en gitt skrifttype
+          </para>
+          <indexterm zone="harfbuzz hb-vector">
+            <primary sortas="b-hb-vector">hb-vector</primary>
           </indexterm>
         </listitem>
       </varlistentry>
@@ -304,6 +329,20 @@ ninja</userinput></screen>
         </listitem>
       </varlistentry>
 
+      <varlistentry id="libharfbuzz-gpu">
+        <term><filename class="libraryfile">libharfbuzz-gpu.so</filename></term>
+        <listitem>
+          <para>
+            tilbyr API funksjoner for koding av tegnkonturer på CPU-en til 
+            kompakte klatter som GPU-en dekoder og rasteriserer direkte til en 
+            fragmentshader
+          </para>
+          <indexterm zone="harfbuzz libharfbuzz-gpu">
+            <primary sortas="c-libharfbuzz-gpu">libharfbuzz-gpu.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
       <varlistentry id="libharfbuzz-icu">
         <term><filename class="libraryfile">libharfbuzz-icu.so</filename></term>
         <listitem>
@@ -316,6 +355,18 @@ ninja</userinput></screen>
         </listitem>
       </varlistentry>
 
+      <varlistentry id="libharfbuzz-raster">
+        <term><filename class="libraryfile">libharfbuzz-raster.so</filename></term>
+        <listitem>
+          <para>
+            tilbyr API funksjoner for rasterisering av tegn til punktgrafikk, 
+            inkludert fargefonter
+          </para>
+          <indexterm zone="harfbuzz libharfbuzz-raster">
+            <primary sortas="c-libharfbuzz-raster">libharfbuzz-raster.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
       <varlistentry id="libharfbuzz-subset">
         <term><filename class="libraryfile">libharfbuzz-subset.so</filename></term>
         <listitem>
@@ -329,6 +380,19 @@ ninja</userinput></screen>
         </listitem>
       </varlistentry>
 
+      <varlistentry id="libharfbuzz-vector">
+        <term><filename class="libraryfile">libharfbuzz-vector.so</filename></term>
+        <listitem>
+          <para>
+            tilbyr API funksjoner for å skrive ut tegn til vektorformater, 
+            inkludert fargefonter. Bare SVG støttes for øyeblikket, men flere 
+            formater kan komme senere.
+          </para>
+          <indexterm zone="harfbuzz libharfbuzz-vector">
+            <primary sortas="c-libharfbuzz-vector">libharfbuzz-vector.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
     </variablelist>
 
   </sect2>
