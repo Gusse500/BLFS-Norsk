@@ -324,11 +324,15 @@
 <!-- keep a commented instruction if no patches are currently required -->
 
 
-<!--    <para>
+    <para>
      Først, fiks byggefeil introdusert av den nyeste versjonen av poppler:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../libreoffice-&libreoffice-dlversion;-poppler_26.02-1.patch</userinput></screen>-->
+<screen><userinput remap="pre">sed -e '/, const GooString/ s/GooString *\*/std::string \&amp;/' \
+    -i sdext/source/pdfimport/xpdfwrapper/pdfioutdev_gpl.cxx \
+       sdext/source/pdfimport/xpdfwrapper/pdfioutdev_gpl.hxx</userinput></screen>
+
+<!--patch -Np1 -i ../libreoffice-&libreoffice-dlversion;-poppler_26.02-1.patch-->
 
     <para>
       Først fiks en feil med kobling til zlib,
