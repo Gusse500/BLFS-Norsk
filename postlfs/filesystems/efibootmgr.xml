@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
-  <!ENTITY % general-entities SYSTEM "../../../general.ent">
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
   <!ENTITY efibootmgr-download-http "https://github.com/rhboot/efibootmgr/archive/&efibootmgr-version;/efibootmgr-&efibootmgr-version;.tar.gz">
@@ -14,7 +14,6 @@
 
 <sect1 id="efibootmgr" xreflabel="efibootmgr-&efibootmgr-version;">
   <?dbhtml filename="efibootmgr.html"?>
-
 
   <title>efibootmgr-&efibootmgr-version;</title>
 
@@ -74,7 +73,6 @@
       <xref linkend="popt"/>
     </para>
 
-
   </sect2>
 
   <sect2 role="installation">
@@ -111,10 +109,49 @@
 
     <para>
       <parameter>EFI_LOADER=grubx64.efi</parameter>:
-      Dette alternativet spesifiserer navnet på standard EFI oppstartslasteren. Det er
-      satt til å samsvare EFI oppstartslasteren levert av GRUB.
-      <!--xref linkend="grub-efi"/-->
+      Dette alternativet spesifiserer navnet på standard EFI oppstartslasteren. 
+      Det er satt til å samsvare med EFI oppstartslasteren levert av GRUB.
     </para>
+
+  </sect2>
+
+  <sect2 role="using">
+    <title>Bruke efibootmgr</title>
+
+    <para>
+      I LFS går instruksjonene gjennom hvordan du installerer GRUB for UEFI. 
+      Prosessen installerer EFI på en hardkodet plassering som søkes etter av de 
+      fleste UEFI fastvare implementeringer. Hvis du installerer GRUB på nytt, 
+      vil GRUB imidlertid bruke denne pakken til å installere EFI på et sted 
+      GRUB foretrekker, noe som gir større kontroll over EFI administrasjon. 
+      <option>--removable</option> alternativet vil ikke lenger være nødvendig 
+      når du kjører <command>grub-install</command>. Denne pakken kan være 
+      nødvendig i tilfeller der UEFI fastvaren ikke ser etter den hardkodede EFI 
+      plasseringen. LFS boken tar for seg denne situasjonen.
+    </para>
+
+    <para>
+      For at <command>efibootmgr</command> skal virke, EFI variabelfilsystemet 
+      må det monteres på forhånd. Hvis du fortsatt er i chroot og ikke har 
+      startet på nytt, monterer du det som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>mountpoint /sys/firmware/efi/efivars ||
+  mount -v -t efivarfs efivarfs /sys/firmware/efi/efivars</userinput></screen>
+
+    <para revision="sysv">
+      EFI variabel filsystemet monteres ikke automatisk ved oppstart for 
+      SysVinit systemer, noe som betyr at når <command>grub-install</command>
+      eller <command>efibootmgr</command> kjøres, vil de mislykkes. For å sikre 
+      at filsystemet monteres ved oppstart, legg til følgende i 
+      <filename>/etc/fstab</filename> som &root; bruker:
+    </para>
+
+<screen revision="sysv"
+  role="root"><userinput>cat &gt;&gt; /etc/fstab &lt;&lt; "EOF"
+<literal>efivarfs /sys/firmware/efi/efivars efivarfs defaults 0 0</literal>
+EOF</userinput></screen>
+
   </sect2>
 
   <sect2 role="content">

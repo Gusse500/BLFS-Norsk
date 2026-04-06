@@ -1175,6 +1175,54 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
         bruk likevel alle tilgjengelige CPUer, i det minste fra og med rustc-1.42.0.
       </para>
 
+      <bridgehead renderas="sect4" id="cargo-offline">Bygge offline med Cargo</bridgehead>
+
+      <para>
+        Et av problemene med <application>Cargo</application> er at de 
+        nødvendige cratene lastes ned på farten, slik at
+        <command>cargo build</command> kan ikke kjøres offline. En annen 
+        irritasjon er at de nødvendige cratene lastes ned til mappen
+        <filename class="directory">~/.cargo</filename>, som kan skade brukerens 
+        eller &root; sitt hjemmemappe. For de som ønsker å ha litt mer kontroll 
+        over nedlastingsstedet, er det mulig å sette variabelen 
+        <envar>CARGO_HOME</envar> til ønsket sted i miljøet, 
+        for eksempel:
+      </para>
+
+<screen role='nodump'><userinput>export CARGO_HOME=<replaceable>/sources/cargo</replaceable></userinput></screen>
+
+      <para>
+        Det er også mulig å laste ned alle nødvendige cratene samtidig før 
+        bygging. Vi gir to metoder, som kanskje må tilpasses til den spesifikke 
+        pakken som bygges. Den enkleste er å laste ned de nødvendige pakkene 
+        ved å kjøre <command>cargo fetch</command>
+        fra mappen som inneholder den øverste <filename>Cargo.toml</filename>
+        filen. Pakkene lastes ned til <envar>$CARGO_HOME</envar> (eller
+        <filename class='directory'>~/.cargo</filename>), og kan brukes offline 
+        i byggeinstruksjonene. Men dette kan mislykkes i noen tilfeller, for 
+        eksempel for pakker som omdefinerer <envar>CARGO_HOME</envar> i 
+        byggesystemet deres. Deretter kjøres følgende instruksjoner (fra 
+        mappen som inneholder den øverste <filename>Cargo.toml</filename>), 
+        som tillater å opprette en <quote>vendor</quote> mappe som inneholder 
+        kildekoden til cratene og bruker den offline. Merk at cratene også 
+        lastes ned til <envar>$CARGO_HOME</envar> av 
+        <command>cargo vendor</command> kommandoen:
+      </para>
+
+<screen role='nodump'><userinput>cargo vendor    &amp;&amp;
+mkdir -v .cargo &amp;&amp;
+cat &gt; .cargo/config.toml &lt;&lt; EOF
+<literal>[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"</literal>
+EOF</userinput></screen>
+
+      <para>
+        Deretter kan instruksjonene kjøres som i boken.
+      </para>
+
   </sect2>
 
   <sect2 id="optimizations">
