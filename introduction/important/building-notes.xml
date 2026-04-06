@@ -1179,32 +1179,32 @@ chmod 744 /usr/sbin/strip-all.sh</userinput></screen>
 
       <para>
         Et av problemene med <application>Cargo</application> er at de 
-        nødvendige cratene lastes ned på farten, slik at
-        <command>cargo build</command> kan ikke kjøres offline. En annen 
+        nødvendige cratene lastes ned på farten, som gjør det slik at
+        <command>cargo build</command> ikke kan kjøres offline. En annen 
         irritasjon er at de nødvendige cratene lastes ned til mappen
-        <filename class="directory">~/.cargo</filename>, som kan skade brukerens 
-        eller &root; sitt hjemmemappe. For de som ønsker å ha litt mer kontroll 
-        over nedlastingsstedet, er det mulig å sette variabelen 
-        <envar>CARGO_HOME</envar> til ønsket sted i miljøet, 
+        <filename class="directory">~/.cargo</filename>, som kan rote til 
+        brukerens eller &root; sitt hjemmemappe. For de som ønsker å ha litt mer 
+        kontroll på nedlastingsstedet for cratene, er det mulig å angi 
+        variabelen <envar>CARGO_HOME</envar> til ønsket sted i miljøet, 
         for eksempel:
       </para>
 
 <screen role='nodump'><userinput>export CARGO_HOME=<replaceable>/sources/cargo</replaceable></userinput></screen>
 
       <para>
-        Det er også mulig å laste ned alle nødvendige cratene samtidig før 
-        bygging. Vi gir to metoder, som kanskje må tilpasses til den spesifikke 
-        pakken som bygges. Den enkleste er å laste ned de nødvendige pakkene 
-        ved å kjøre <command>cargo fetch</command>
-        fra mappen som inneholder den øverste <filename>Cargo.toml</filename>
+        Det er også mulig å laste ned alle de nødvendige cratene samtidig før 
+        bygging av en pakke. Vi gir to metoder, som kanskje må tilpasses den 
+        spesifikke pakken som bygges. Den enkleste er å laste ned de nødvendige 
+        pakkene ved å kjøre <command>cargo fetch</command>
+        fra mappen som inneholder toppnivå <filename>Cargo.toml</filename>
         filen. Pakkene lastes ned til <envar>$CARGO_HOME</envar> (eller
         <filename class='directory'>~/.cargo</filename>), og kan brukes offline 
         i byggeinstruksjonene. Men dette kan mislykkes i noen tilfeller, for 
         eksempel for pakker som omdefinerer <envar>CARGO_HOME</envar> i 
-        byggesystemet deres. Deretter kjøres følgende instruksjoner (fra 
-        mappen som inneholder den øverste <filename>Cargo.toml</filename>), 
-        som tillater å opprette en <quote>vendor</quote> mappe som inneholder 
-        kildekoden til cratene og bruker den offline. Merk at cratene også 
+        byggesystemet deres. I dette tilfellet kjøres følgende instruksjoner 
+        (fra mappen som inneholder toppnivå <filename>Cargo.toml</filename>), 
+        som vil opprette en <quote>vendor</quote> mappe som inneholder 
+        kildekoden til cratene, og vil bruke den offline. Merk at cratene også 
         lastes ned til <envar>$CARGO_HOME</envar> av 
         <command>cargo vendor</command> kommandoen:
       </para>
