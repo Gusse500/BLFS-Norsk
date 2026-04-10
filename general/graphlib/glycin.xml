@@ -123,7 +123,7 @@
 
     <para>
       Hvis du installerer Xorg i <filename class='directory'>/opt</filename>,
-      last ned de nødvendige rustkassene nå og installer en oppdatering for å gi 
+      last ned de nødvendige rustcratene nå og installer en oppdatering for å gi 
       tilgang til <filename class='directory'>$XORG_PREFIX/lib</filename> fra 
       sandkassen (merk at oppdateringen krever at <envar>XORG_PREFIX</envar> er
       satt riktig for gjeldende bruker og for &root; følg
@@ -132,6 +132,14 @@
 
 <screen><userinput>cargo vendor &amp;&amp;
 patch -Np1 -i ../glycin-&glycin-version;-xorg_prefix-1.patch</userinput></screen>
+
+<!--https://gitlab.gnome.org/GNOME/glycin/-/merge_requests/396-->
+    <para>
+      Rett en byggefeil når et system <application>libglycin</application>
+      ikke er installert ennå:
+    </para>
+
+<screen><userinput>sed -i "s/get_option('libglycin-gtk4')/(&amp; or get_option('glycin-thumbnailer'))/" meson.build</userinput></screen>
 
     <para>
       Installer <application>glycin</application> ved å kjøre følgende
