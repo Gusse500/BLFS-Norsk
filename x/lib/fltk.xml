@@ -9,8 +9,8 @@
   <!ENTITY fltk-download-ftp  " ">
   <!ENTITY fltk-md5sum        "83c567727e61c779f6681b0298226d05">
   <!ENTITY fltk-size          "8.9 MB">
-  <!ENTITY fltk-buildsize     "166 MB">
-  <!ENTITY fltk-time          "0.2 SBU (Bruker parallellisme=4)">
+  <!ENTITY fltk-buildsize     "228 MB (legg til 104 MB for dokumentasjon)">
+  <!ENTITY fltk-time          "0.4 SBU (Bruker parallellisme=4)">
 ]>
 
 <sect1 id="fltk" xreflabel="FLTK-&fltk-version;">
@@ -88,6 +88,7 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
+      <xref linkend="glu"/>,
       <xref linkend="hicolor-icon-theme"/>,
       <xref linkend="libjpeg"/>, og
       <xref linkend="libpng"/>
@@ -97,9 +98,7 @@
     <para role="optional">
       <xref linkend="alsa-lib"/>,
       <xref linkend="desktop-file-utils"/>,
-      <xref linkend="doxygen"/>,
-      <xref linkend="glu"/>,
-      <xref linkend="mesa"/>, og
+      <xref linkend="doxygen"/>, og
       <xref linkend="texlive"/> (eller <xref linkend="tl-installer"/>)
     </para>
 
@@ -120,22 +119,27 @@
       kommandoer:
     </para>
 
-<screen><userinput>sed -i -e '/cat./d' documentation/Makefile &amp;&amp;
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
 
-./configure --prefix=/usr --enable-shared  &amp;&amp;
-make</userinput></screen>
+cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D FLTK_BUILD_SHARED_LIBS=ON \
+      -D CMAKE_BUILD_TYPE=Release  \
+      -G "Ninja" ..                &amp;&amp;
+ninja</userinput></screen>
 
     <para>
       Hvis du ønsker å lage API dokumentasjonen, kjør:
     </para>
 
-<screen remap="doc"><userinput>make -C documentation html</userinput></screen>
+<screen remap="doc"><userinput>ninja documentation/html</userinput></screen>
 
     <para>
       Testene for pakken er interaktive. For å utføre testene, kjør
-      <command>test/unittests</command>. I tillegg kommer 70 andre
-      kjørbare testprogrammer i <filename
-      class='directory'>test</filename> mappen som kan kjøres individuelt.
+      <command>bin/test/unittests</command>. I tillegg finnes det omtrent 110 
+      andre kjørbare testprogrammer i <filename
+      class='directory'>bin/test</filename> mappen som kan kjøres 
+      individuelt.
     </para>
 
     <para>
@@ -143,25 +147,24 @@ make</userinput></screen>
       Som &root; bruker:
     </para>
 
-<screen role="root"><userinput>make docdir=/usr/share/doc/fltk-&fltk-version; install &amp;&amp;
+<screen role="root"><userinput>ninja install &amp;&amp;
 rm -vf /usr/lib/libfltk*.a</userinput></screen>
 
     <para>
-      Hvis ønskelig, installer noen eksempelspill bygget som en del av testene,
-      ekstra dokumentasjon og eksempelprogrammer. Som  &root; bruker:
+      Hvis du har bygget dokumentasjonen, installer den som &root; bruker:
     </para>
 
 <screen role="root"
-        remap="doc"><userinput>make -C test          docdir=/usr/share/doc/fltk-&fltk-version; install-linux &amp;&amp;
-make -C documentation docdir=/usr/share/doc/fltk-&fltk-version; install-linux</userinput></screen>
+        remap="doc"><userinput>install -vdm 755          /usr/share/doc/fltk-&fltk-version; &amp;&amp;
+cp -Rv documentation/html /usr/share/doc/fltk-&fltk-version;</userinput></screen>
 
     <para>
-      Hvis du lastet ned den valgfrie html dokumentasjonen, installer den som &root; 
-      bruker:
+      Ellers, hvis du lastet ned den valgfrie HTML dokumentasjonen, 
+      installer den som &root; bruker:
     </para>
 
-<screen role="root"><userinput>tar -C /usr/share/doc/fltk-&fltk-version; --strip-components=4 -xf ../fltk-&fltk-version;-docs-html.tar.gz
-</userinput></screen>
+<screen role="root"><userinput>install -vdm 755 /usr/share/doc/fltk-&fltk-version; &amp;&amp;
+tar -C /usr/share/doc/fltk-&fltk-version; --strip-components=4 -xf ../../fltk-&fltk-version;-docs-html.tar.gz</userinput></screen>
 
   </sect2>
 
@@ -169,8 +172,8 @@ make -C documentation docdir=/usr/share/doc/fltk-&fltk-version; install-linux</u
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed ... documentation/Makefile</command>: Unngå å installere
-      sider i <filename class='directory'>/usr/share/man/cat*</filename>.
+      <parameter>-D FLTK_BUILD_SHARED_LIBS=ON</parameter>: Bygg og installer 
+      delte biblioteker i tillegg til statiske biblioteker.
     </para>
 
   </sect2>
@@ -188,7 +191,11 @@ make -C documentation docdir=/usr/share/doc/fltk-&fltk-version; install-linux</u
           blocks,
           checkers,
           fltk-config,
-          fluid, og
+          fltk-options,
+          fltk-options-shared,
+          fluid,
+          fluid-shared,
+          glpuzzle, og
           sudoku
         </seg>
         <seg>
@@ -198,8 +205,9 @@ make -C documentation docdir=/usr/share/doc/fltk-&fltk-version; install-linux</u
           libfltk_images.so
         </seg>
         <seg>
-          /usr/include/FL og
-          /usr/share/doc/fltk-&fltk-version;
+          /usr/include/FL,
+          /usr/share/fltk, og
+          /usr/share/doc/fltk-&fltk-version; (valgfri)
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -246,6 +254,31 @@ make -C documentation docdir=/usr/share/doc/fltk-&fltk-version; install-linux</u
         </listitem>
       </varlistentry>
 
+      <varlistentry id="fltk-options">
+        <term><command>fltk-options</command></term>
+        <listitem>
+          <para>
+            er et grafisk konfigurasjonsverktøy for FLTK applikasjoner
+          </para>
+          <indexterm zone="fltk fltk-options">
+            <primary sortas="b-fltk-options">fltk-options</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="fltk-options-shared">
+        <term><command>fltk-options-shared</command></term>
+        <listitem>
+          <para>
+            er et grafisk konfigurasjonsverktøy for FLTK applikasjoner
+            (dynamisk koblet til delte libfltk biblioteker)
+          </para>
+          <indexterm zone="fltk fltk-options-shared">
+            <primary sortas="b-fltk-options-shared">fltk-options-shared</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
       <varlistentry id="fluid">
         <term><command>fluid</command></term>
         <listitem>
@@ -254,6 +287,31 @@ make -C documentation docdir=/usr/share/doc/fltk-&fltk-version; install-linux</u
           </para>
           <indexterm zone="fltk fluid">
             <primary sortas="b-fluid">fluid</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="fluid-shared">
+        <term><command>fluid-shared</command></term>
+        <listitem>
+          <para>
+            er en interaktiv GUI designer for FLTK (dynamisk koblet 
+            til delte libfltk biblioteker)
+          </para>
+          <indexterm zone="fltk fluid-shared">
+            <primary sortas="b-fluid-shared">fluid-shared</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+     <varlistentry id="glpuzzle">
+        <term><command>glpuzzle</command></term>
+        <listitem>
+          <para>
+            er en implementering av Klotski spillet
+          </para>
+          <indexterm zone="fltk glpuzzle">
+            <primary sortas="b-glpuzzle">glpuzzle</primary>
           </indexterm>
         </listitem>
       </varlistentry>
