@@ -6,8 +6,8 @@
 
   <!ENTITY rust-download-http "https://static.rust-lang.org/dist/rustc-&rust-version;-src.tar.xz">
   <!ENTITY rust-download-ftp  " ">
-  <!ENTITY rust-md5sum        "cd01d7a97f98940567663652ac9747a0">
-  <!ENTITY rust-size          "262 MB">
+  <!ENTITY rust-md5sum        "c206536bb0e11bbf2ebae91504096e34">
+  <!ENTITY rust-size          "228 MB">
   <!ENTITY rust-buildsize     "10 GB (324 MB installert); legg til 11 GB hvis du kjører testene">
   <!ENTITY rust-time          "10 SBU (inkludert nedlastingstid; legg til 15 SBU for tester, begge med parallellisme=8)">
 ]>
@@ -136,17 +136,25 @@
       </listitem>
     </itemizedlist>
 
-    <!--  keep this here for reuse in case we need a patch
+    <!--  keep this here for reuse in case we need a patch -->
+    <!-- deliberately skipped turning version and md5 into entities:
+         it's unlikely we'd still need this in the next rustc release.  -->
 <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Valgfri oppdatering (nødvendig for testing av pakken):
-          <ulink url="&patch-root;/rustc-&rust-version;-testsuite_fix-1.patch"/>
+          OpenSSL Rust binding oppdatert for å støtte OpenSSL 4:
+          <ulink url="https://github.com/lfs-book/rust-openssl/archive/v0.10.78/rust-openssl-v0.10.78.tar.gz"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: 8bfcc36cba65c98380f7ac1ec07efdb4
         </para>
       </listitem>
     </itemizedlist>
-    -->
+
+    &github-lfs-fork;
 
     <bridgehead renderas="sect3">Rust Avhengigheter</bridgehead>
 
@@ -250,9 +258,6 @@ description = "for BLFS &version;"
 # Omit the documentation to save time and space (the default is to build them).
 docs = false
 
-# Do not look for new versions of the dependencies online.
-locked-deps = true
-
 # Only install these extended tools. Cargo, clippy, rustdoc, and rustfmt
 # are installed by a default rustup installation, and rust-src is needed
 # to build the Rust code in Linux kernel (in case you need such a kernel
@@ -280,6 +285,24 @@ llvm-config = "/usr/bin/llvm-config"
 [target.i686-unknown-linux-gnu]
 lvm-config = "/usr/bin/llvm-config"</literal>
 EOF</userinput></screen>
+
+    <para>
+      Bruk en nyere versjon av OpenSSL Rust bindingen for å tillate bygging av 
+      denne pakken med OpenSSL 4:
+    </para>
+
+<screen><userinput>tar xf ../rust-openssl-0.10.78.tar.gz &amp;&amp;
+
+cat &gt;&gt; src/tools/cargo/Cargo.toml &lt;&lt; EOF &amp;&amp;
+<literal>[patch.crates-io]
+openssl = { path = "../../../rust-openssl-0.10.78/openssl" }
+openssl-sys = { path = "../../../rust-openssl-0.10.78/openssl-sys" }
+</literal>EOF
+
+sed -ri src/tools/cargo/Cargo.lock \
+    -e '/name = "openssl-sys"/,/^$/{/source|checksum/d;s/0.9.111/0.9.114/}' \
+    -e '/name = "openssl"/,/^$/{/source|checksum/d;s/0.10.75/0.10.78/}'     \
+    -e '/name = "openssl-macros"/,/^$/{/source|checksum/d}'</userinput></screen>
 
 <!-- retain here in case we need a patch
     <para>
@@ -320,14 +343,22 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
 <screen remap="test"><userinput>./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
 
     <para>
-      Test navngitt <filename>tests/run-make/rustdoc-target-modifiers</filename>
+      I <filename class='directory'>rustdoc-ui</filename> testene,
+      <!-- https://github.com/rust-lang/rust/issues/154392 -->
+      testen navngitt <filename>track-diagnostics.rs</filename>
+      er kjent for å mislykkes fordi den hardkoder stier som ikke finnes på LFS, 
+      og testen som heter <filename>ice-bug-report-url.rs</filename> er kjent 
+      for å mislykkes av ukjent årsak.
+
+      I <filename class='directory'>run-make</filename> testene,
+      <!-- https://github.com/rust-lang/rust/issues/155606 -->
+      testen navngitt <filename>remap-path-prefix-std</filename> er kjent for å 
+      mislykkes fordi det ikke fungerer med LTO aktivert,
+      testen navngitt <filename>rustdoc-target-modifiers</filename>
       er kjent for å mislykkes fordi vi ikke har aktivert AArch64 målet i
-      <xref linkend='llvm'/>.
-      <!-- https://github.com/rust-lang/rust/pull/151375 -->
-      Testene navngitt <filename>missing_span_in_backtrace.rs</filename>
-      og <filename>trimmed_multiline_suggestion.rs</filename> kan mislykkes 
-      fordi de avhenger av terminalbredden.  Åtte tester relatert til AMDGPU 
-      målet er kjent for å mislykkes med LLVM 22 eller nyere.
+      <xref linkend='llvm'/>, og
+      testen navngitt <filename>short-ice</filename> er kjent for å mislykkes 
+      av ukjent årsak.
     </para>
 
     <para>
