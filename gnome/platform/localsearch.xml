@@ -4,11 +4,11 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY localsearch-download-http "&gnome-download-http;/localsearch/3.10/localsearch-&localsearch-version;.tar.xz">
+  <!ENTITY localsearch-download-http "&gnome-download-http;/localsearch/3.11/localsearch-&localsearch-version;.tar.xz">
   <!ENTITY localsearch-download-ftp  " ">
-  <!ENTITY localsearch-md5sum        "7d625f99a4e9e1ef80d314793ff7b8c7">
+  <!ENTITY localsearch-md5sum        "1406955c072af72776fdcbb9b12dc103">
   <!ENTITY localsearch-size          "4.3 MB">
-  <!ENTITY localsearch-buildsize     "35 MB (med tester)">
+  <!ENTITY localsearch-buildsize     "79 MB">
   <!ENTITY localsearch-time          "0.2 SBU (med parallellitet=4; legg til så mye som 1.3 SBU for tester, avhengig av diskhastighet)">
 ]>
 
@@ -65,7 +65,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -75,7 +75,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <bridgehead renderas="sect3">Localsearch Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -167,14 +167,14 @@ rm -fv /usr/share/dbus-1/services/org.freedesktop.Tracker3.Miner.Files.Control.s
 
 <screen remap="test"><userinput>sed -i s/120/<replaceable>200</replaceable>/ tests/functional-tests/meson.build</userinput></screen>
     </note>
-
+<!--
     <para>
       Først bruk en oppdatering for fikse fem sikkerhetsproblemer i MP3 
       parseren:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../localsearch-&localsearch-version;-security_fixes-1.patch</userinput></screen>
-
+-->
     <para>
       Installer <application>Localsearch</application> ved å kjøre følgende
       kommandoer:
@@ -207,7 +207,11 @@ ninja</userinput></screen>
       justerer den individuelle testtidsavbruddet til en verdi som passer for 
       maskinen din, les merknaden ovenfor for mer informasjon.<!--Én test,
       <filename>test_cli_inhibit</filename>, er kjent for å mislykkes.
-      Seem to pass if man pages are built (pierre)-->
+      Seem to pass if man pages are built (pierre)
+
+      The tests for 3.11.1 need to be revisited.  I had 109 tests pass and
+      12 tests fail.  
+      -->
     </para>
 
 <screen remap="test"><userinput>meson configure -D man=true -D functional_tests=true &amp;&amp;

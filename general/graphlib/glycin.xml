@@ -139,7 +139,8 @@ patch -Np1 -i ../glycin-&glycin-version;-xorg_prefix-1.patch</userinput></screen
       ikke er installert ennå:
     </para>
 
-<screen><userinput>sed -i "s/get_option('libglycin-gtk4')/(&amp; or get_option('glycin-thumbnailer'))/" meson.build</userinput></screen>
+<screen><userinput>sed -e "s/get_option('libglycin-gtk4')/(&amp; or get_option('glycin-thumbnailer'))/" \
+    -i meson.build</userinput></screen>
 
     <para>
       Installer <application>glycin</application> ved å kjøre følgende
@@ -151,7 +152,6 @@ cd    build &amp;&amp;
 
 meson setup --prefix=/usr           \
             --buildtype=release     \
-            -D libglycin-gtk4=false \
             -D tests=false ..       &amp;&amp;
 ninja</userinput></screen>
 
@@ -186,8 +186,8 @@ ninja</userinput></screen>
     <para>
       <parameter>-D glycin_gtk4=false</parameter>: Denne parameteren deaktiverer 
       byggingen av <systemitem class='library'>libglycin-gtk4</systemitem>
-      (som ikke brukes av noen BLFS pakker ennå), så denne pakken kan bygges 
-      uten <xref linkend='gtk4'/> installert.
+      (som trengs av <xref linkend="nautilus"/>). Hvis dette ikke er nødvendig 
+      kan denne pakken bygges uten <xref linkend='gtk4'/> installert.
     </para>
 
     <para>
