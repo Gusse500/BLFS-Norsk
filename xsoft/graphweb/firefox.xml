@@ -330,6 +330,17 @@ sed '/patch.crates-io/a glslopt={path="third_party/rust/glslopt"}' \
 sed '/name = "glslopt"/,/^$/{/source/d;/checksum/d}' -i Cargo.lock</userinput></screen>
 
     <para>
+      Deretter, fiks byggingen av denne pakken med rustc-1.95.0. Igjen trenger 
+      byggesystemet en endring for å hoppe over sjekksum verifiseringen:
+    </para>
+
+<screen><userinput remap="pre">sed '/use super::/a use core::simd::Select;' \
+    -i third_party/rust/encoding_rs/src/x_user_defined.rs &amp;&amp;
+sed '/patch.crates-io/a encoding_rs={path="third_party/rust/encoding_rs"}' \
+    -i Cargo.toml &amp;&amp;
+sed '/name = "encoding_rs"/,/^$/{/source/d;/checksum/d}' -i Cargo.lock</userinput></screen>
+
+    <para>
       Deretter, fiks byggingen av denne pakken med Python-3.14:
     </para>
 
