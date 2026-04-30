@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY gdm-download-http "&gnome-download-http;/gdm/&gnome-49;/gdm-&gdm-version;.tar.xz">
+  <!ENTITY gdm-download-http "&gnome-download-http;/gdm/&gnome-50;/gdm-&gdm-version;.tar.xz">
   <!ENTITY gdm-download-ftp  " ">
-  <!ENTITY gdm-md5sum        "14d92ca52faf7f18ce59a8f3f961a07c">
-  <!ENTITY gdm-size          "948 KB">
+  <!ENTITY gdm-md5sum        "0b7d472c4a38f69cdd6dd1f3a05ede65">
+  <!ENTITY gdm-size          "933 KB">
   <!ENTITY gdm-buildsize     "35 MB">
-  <!ENTITY gdm-time          "0.2 SBU">
+  <!ENTITY gdm-time          "mindre enn 0.1 SBU">
 ]>
 
 <sect1 id="gdm" xreflabel="GDM-&gdm-version;">
@@ -109,24 +109,13 @@
     <title>Installasjon av GDM</title>
 
     <para>
-      Det anbefales å ha en dedikert bruker og gruppe for å ta
-      kontroll over <command>gdm</command> nissen etter at den er
-      startet. Utfør følgende kommandoer som
-      <systemitem class="username">root</systemitem> bruker:
+      GDM må startes som &root;, men slipper raskt privilegiene til dynamiske 
+      brukere opprettet med brukerdatabase. Vi trenger bare å opprette en 
+      dedikert gruppe for disse brukerne. Kjør følgende kommando 
+      som &root; bruker:
     </para>
 
-<screen role="root"><userinput>groupadd -g 21 gdm &amp;&amp;
-useradd -c "GDM Daemon Owner" -d /var/lib/gdm -u 21 \
-        -g gdm -s /bin/false gdm &amp;&amp;
-passwd -ql gdm</userinput></screen>
-
-<!-- Fixed in 49
-    <para>
-      Først, tilpass GDM til å bygge med GCC 15:
-    </para>
-
-<screen><userinput remap="pre">sed -r 's/([(*])bool([) ])/\1boolval\2/' -i common/gdm-settings-utils.*</userinput></screen>
--->
+<screen role="root"><userinput>groupadd -g 21 gdm</userinput></screen>
 
     <para>
       Installer <application>GDM</application> ved å kjøre følgende
@@ -164,8 +153,8 @@ meson setup ..             \
 ninja</userinput></screen>
 
     <para>
-      Testpakken krever <application>Check</application> som er
-      fjernet fra LFS.
+      Testpakken krever <application>Check</application> som ikke er 
+      tilgjengelig.
     </para>
 
     <para>
@@ -321,7 +310,7 @@ ninja</userinput></screen>
 
       <seglistitem>
         <seg>
-          gdm, gdm-config, og gdmflexiserver
+          gdm og gdm-config
         </seg>
         <seg>
           libgdm.so og pam_gdm.so (PAM Modul)
