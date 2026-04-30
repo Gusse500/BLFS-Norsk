@@ -153,6 +153,17 @@ tar: Exiting with failure status due to previous errors
 <screen><userinput remap="pre">patch -Np1 -i ../spidermonkey-&spidermonkey-version;-python_3.14_fixes-1.patch</userinput></screen>
 
     <para>
+      Deretter, fiks byggingen av denne pakken med rustc-1.95.0. Igjen trenger 
+      byggesystemet en endring for å hoppe over sjekksum verifiseringen:
+    </para>
+
+<screen><userinput remap="pre">sed '/use super::/a use core::simd::Select;' \
+    -i third_party/rust/encoding_rs/src/x_user_defined.rs &amp;&amp;
+sed '/patch.crates-io/a encoding_rs={path="third_party/rust/encoding_rs"}' \
+    -i Cargo.toml &amp;&amp;
+sed '/name = "encoding_rs"/,/^$/{/source/d;/checksum/d}' -i Cargo.lock</userinput></screen>
+
+    <para>
       Installer <application>SpiderMonkey</application> ved å kjøre følgende
       kommandoer:
     </para>
