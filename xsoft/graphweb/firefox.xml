@@ -10,7 +10,7 @@
 
   <!-- NB with stylo, much of the build uses rust, and therefore cargo files.
     But the extra cached cargo files, if any, seem to be minimal -->
-  <!ENTITY firefox-buildsize     "7.6 GB (233 MB installert) uten tester">
+  <!ENTITY firefox-buildsize     "7.7 GB (233 MB installert) uten tester">
   <!-- editors: with ff63 and rust-1.29, ./mach build -j4 is probably the
    most practical way to get a timing on a machine with more cores, if taking
    cores offline is not practical. If in doubt, round up -->
@@ -77,12 +77,14 @@
 
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
+<!--
       <listitem>
         <para>
           Påkrevd oppdatering:
           <ulink url="&patch-root;/firefox-&firefox-version;esr-ffmpeg-8.0.patch"/>
         </para>
       </listitem>
+-->
       <listitem>
         <para>
           Påkrevd oppdatering:
@@ -311,11 +313,11 @@ MOZ_APP_REMOTINGNAME=firefox</literal>
 EOF</userinput></screen>
 
     <para>
-      Installer en oppdatering for å fikse videofunksjonaliteten med
+      Installer en sed for å fikse videofunksjonaliteten med
       <xref linkend="ffmpeg"/>:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;esr-ffmpeg-8.0.patch</userinput></screen>
+<screen><userinput remap="pre">sed -i '/so.61/i \  "libavcodec.so.62",' dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp</userinput></screen>
 
     <para>
       En patch er nødvendig for å fikse bygging med glibc-2.43. Denne patchen 
