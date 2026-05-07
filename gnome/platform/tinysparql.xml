@@ -79,9 +79,8 @@
     <para role="recommended">
       &gobject-introspection;,
       <xref linkend="icu"/>,
-      <xref linkend="libsoup3"/>,
-      <xref linkend="localsearch"/> (kjøretid), og
-      <xref linkend="pygobject3"/>
+      <xref linkend="libsoup3"/>, og
+      <xref linkend="localsearch"/> (kjøretid)
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
@@ -93,6 +92,7 @@
       <xref linkend="gi-docgen"/>
 -->
       <xref linkend="graphviz"/>,
+      <xref linkend="pygobject3"/>,
       <ulink url="https://github.com/scop/bash-completion/">bash-completion</ulink>, og
       <ulink url="https://snowballstem.org/">libstemmer</ulink>
     </para>
@@ -131,6 +131,7 @@ cd    build &amp;&amp;
 meson setup --prefix=/usr       \
             --buildtype=release \
             -D man=false        \
+            -D tests=false      \
             ..                  &amp;&amp;
 ninja</userinput></screen>
 
@@ -141,7 +142,8 @@ meson setup --prefix=/usr                  \
             --buildtype=release            \
             -D man=false                   \
             -D systemd_user_services=false \
-            ..                            &amp;&amp;
+            -D tests=false                 \
+            ..                             &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -151,8 +153,9 @@ ninja</userinput></screen>
 <screen role="root"><userinput>ninja install</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>meson configure -D debug=true
-      &amp;&amp; LC_ALL=C.UTF-8 ninja test</command>.
+      For å teste resultatene, sørg for at <xref linkend='pygobject3'/> er 
+      installert og utsted: <command>meson configure -D debug=true
+      -D tests=true &amp;&amp; LC_ALL=C.UTF-8 ninja test</command>.
       Testpakken skal kjøres fra en grafisk sesjon. En test, test_cli, 
       er kjent for å mislykkes fordi manualsidene ikke genereres, men vil bestå 
       hvis "-D man=false" utelates når pakken konfigureres. En annen test, 
