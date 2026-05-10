@@ -6,10 +6,10 @@
 
   <!ENTITY libical-download-http "https://github.com/libical/libical/releases/download/v&libical-version;/libical-&libical-version;.tar.gz">
   <!ENTITY libical-download-ftp  " ">
-  <!ENTITY libical-md5sum        "539a8a293d344e7aa8ccf3740494a46d">
-  <!ENTITY libical-size          "952 KB">
-  <!ENTITY libical-buildsize     "29 MB (med tester)">
-  <!ENTITY libical-time          "0.2 SBU (bruker parallellisme=4; med tester)">
+  <!ENTITY libical-md5sum        "e6b277202deeb1c4b79e25025c59528b">
+  <!ENTITY libical-size          "1.8 MB">
+  <!ENTITY libical-buildsize     "91 MB (med tester og dokumenter)">
+  <!ENTITY libical-time          "0.4 SBU (bruker parallelism=4; med tester og dokumenter)">
 <!-- run at -j1 because it fails at -j4 -->
 ]>
 
@@ -97,38 +97,24 @@
   <sect2 role="installation">
     <title>Installasjon av libical</title>
 
-    <!-- https://github.com/libical/libical/pull/690 -->
-    <!-- Seems fixed in 3.0.19
-    <para>
-      Hvis <xref linkend='icu'/> er installert, fiks en inkompatibilitet
-      med ICU 75 eller senere:
-    </para>
-
-     <screen><userinput>sed -i '/getKeywordValuesForLocale/s/NULL/""/' src/libical/icalrecur.c</userinput></screen>
-    -->
-
     <para>
       Installer <application>libical</application> ved å kjøre
       følgende kommandoer:
     </para>
 
-  <!-- Needs confirmation, but I got a race condition at -j8,
-  -j1 allowed the build to pass. Pierre 2019-12-06
-  I always have it actually. Hence the entity.
+    <!-- Still needed for version 4.0.0 -->
+    &parallel_issues;
 
-  Works at -j8 and -j4 for version 3.0.18
-
-  Hit it again at -j18 for version 3.0.20 - xry111
-  &parallel_issues;-->
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
 cmake -D CMAKE_INSTALL_PREFIX=/usr  \
       -D CMAKE_BUILD_TYPE=Release   \
-      -D SHARED_ONLY=yes            \
-      -D ICAL_BUILD_DOCS=false      \
-      -D GOBJECT_INTROSPECTION=true \
-      -D ICAL_GLIB_VAPI=true        \
+      -D LIBICAL_STATIC=NO          \
+      -D LIBICAL_BUILD_DOCS=false   \
+      -D LIBICAL_GLIB_VAPI=true     \
+      -D LIBICAL_JAVA_BINDINGS=OFF  \
+      -D LIBICAL_GOBJECT_INTROSPECTION=true \
       .. &amp;&amp;
 make -j1</userinput></screen>
 
@@ -136,7 +122,7 @@ make -j1</userinput></screen>
       Hvis du har <xref linkend="doxygen"/>, <xref linkend="graphviz"/>,
       og <xref linkend="gtk-doc"/>
       installert og ønsker å bygge API dokumentasjonen, bør du
-      fjerne <parameter>-D ICAL_BUILD_DOCS=false</parameter> parameteren
+      fjerne <parameter>-D LIBICAL_BUILD_DOCS=false</parameter> parameteren
       og utstede:
     </para>
 
@@ -172,41 +158,30 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
     </para>
 
     <para>
-      <parameter>-D SHARED_ONLY=yes</parameter>: Denne bryteren brukes
+      <parameter>-D LIBICAL_STATIC=NO</parameter>: Denne bryteren brukes
       for kun å bygge de delte bibliotekene.
     </para>
 
     <para>
-      <parameter>-D ICAL_BUILD_DOCS=false</parameter>: Denne bryteren forhindrer
-      bygging av <application>GTK</application> dokumentasjon. Fjern
-      hvis du vil bygge dokumentasjonen.
+      <parameter>-D LIBICAL_BUILD_DOCS=false</parameter>: Denne bryteren 
+	  forhindrer bygging av <application>GTK</application> dokumentasjon. 
+	  Fjern hvis du vil bygge dokumentasjonen.
     </para>
 
     <para>
-      <parameter>-D GOBJECT_INTROSPECTION=true</parameter>: Denne bryteren brukes
-      for å generere GObject metadatabindinger.
+      <parameter>-D LIBICAL_GOBJECT_INTROSPECTION=true</parameter>: Denne 
+	  bryteren brukes for å generere GObject metadatabindinger.
     </para>
 
     <para>
-      <parameter>-D ICAL_GLIB_VAPI=true</parameter>: Denne bryteren brukes
+      <parameter>-D LIBICAL_GLIB_VAPI=true</parameter>: Denne bryteren brukes
       for å bygge bindinger for <xref linkend="vala"/>.
     </para>
 
     <para>
-      <option>-D USE_BUILTIN_TZDATA=yes</option>: Denne bryteren brukes
-      for å bygge med dine egne tidssonedata.
+      <option>-D LIBICAL_ENABLE_BUILTIN_TZDATA=true</option>: Denne bryteren 
+	  brukes til å bruke de inkluderte tidssonedataene.
     </para>
-
-    <!-- No CMake equivalents
-    <para>
-      <parameter>- -enable-cxx</parameter>: Denne bryteren aktiverer
-      <application>libical</application> C++ biblioteket.
-    </para>
-
-    <para>
-      <option>- -enable-python</option>: Denne bryteren aktiverer
-      <application>libical</application> Python bindinger.
-    </para> -->
 
   </sect2>
 
@@ -223,20 +198,21 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
           Ingen
         </seg>
         <seg>
-          libical_cxx.so,
           libical.so,
-          libical-glib.so,
-          libicalss_cxx.so,
           libicalss.so,
-          og libicalvcal.so
+          libicalss_cxx.so,
+          libicalvcal.so,
+          libicalvcard.so (eksperimentell),
+          libical-glib.so, og
+          libical_cxx.so
         </seg>
         <seg>
           /usr/include/libical,
           /usr/include/libical-glib,
           /usr/lib/cmake/LibIcal,
           /usr/libexec/libical,
-          /usr/share/gtk-doc/html/libical-glib (optional),
-          og /usr/share/doc/libical-&libical-version;/html
+          /usr/share/gtk-doc/libical-glib (når dokumenter bygges), og
+          /usr/share/doc/libical-&libical-version;
         </seg>
       </seglistitem>
     </segmentedlist>
