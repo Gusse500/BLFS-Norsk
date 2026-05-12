@@ -88,6 +88,7 @@
       <xref linkend="graphviz"/> (for API dokumentasjon),
       <xref linkend="gtk-doc"/> (for API dokumentasjon),
       <xref linkend="icu"/>,
+      <!-- <xref linkend="java"/> -->
       <xref linkend="pygobject3"/> (for noen tester), og
       &berkeley-db;
     </para>
@@ -129,7 +130,9 @@ make -j1</userinput></screen>
 <screen remap="doc"><userinput>make docs</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>make test</command>.
+      Hvis du ønsker å kjøre testene, legg til
+      <option>-D LIBICAL_BUILD_TESTING=ON</option> alternativ til CMake når 
+      denne pakken konfigureres og deretter utsted: <command>make test</command>.
     </para>
 
     <para>
@@ -175,8 +178,16 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
 
     <para>
       <parameter>-D LIBICAL_GLIB_VAPI=true</parameter>: Denne bryteren brukes
-      for å bygge bindinger for <xref linkend="vala"/>.
+      til å bygge bindinger for <xref linkend="vala"/>.
     </para>
+
+    <!-- Leaving commented until tested against JDK.
+    <para>
+      <parameter>-D LIBICAL_JAVA_BINDINGS=OFF</parameter>: Denne bryteren brukes 
+      til å deaktivere Java bindingene. Fjern den hvis du har <xref linkend="java"/>
+      installert og ønsker å bygge dem for bruk i Java applikasjoner.
+    </para>
+    -->
 
     <para>
       <option>-D LIBICAL_ENABLE_BUILTIN_TZDATA=true</option>: Denne bryteren 
@@ -264,7 +275,7 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         <listitem>
           <para>
             er et bibliotek som lar deg lagre iCal komponentdata
-            til disk på en rekke måter
+            på en disk på en rekke måter
           </para>
           <indexterm zone="libical libicalss">
             <primary sortas="c-libicalss">libicalss.so</primary>
@@ -297,6 +308,17 @@ cp -vr apidocs/html/* /usr/share/doc/libical-&libical-version;/html</userinput><
         </listitem>
       </varlistentry>
 
+      <varlistentry id="libicalvcard">
+        <term><filename class="libraryfile">libicalvcard.so</filename></term>
+        <listitem>
+          <para>
+            er et eksperimentelt bibliotek for håndtering av VCARD formaterte data
+          </para>
+          <indexterm zone="libical libicalvcard">
+            <primary sortas="c-libicalvcard">libicalvcard.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
     </variablelist>
 
   </sect2>
