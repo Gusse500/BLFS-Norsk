@@ -95,6 +95,18 @@
     <title>Installasjon av Wget</title>
 
     <para>
+      Først må du gjøre en fiks for å gjøre pakken kompatibel med OpenSSL 4. 
+      bash variabelen er kun for presentasjonsformål på grunn av den lange linjen.
+    </para>
+
+<screen><userinput>NEW_LINE="#if !defined OPENSSL_NO_SSL3_METHOD "
+NEW_LINE+="&amp;&amp; OPENSSL_VERSION_NUMBER &lt; 0x40000000L"
+
+sed -i "/SSL3/c $NEW_LINE" src/openssl.c
+
+unset NEW_LINE </userinput></screen>
+
+    <para>
       Installer <application>Wget</application> ved å kjøre følgende kommandoer:
     </para>
 
