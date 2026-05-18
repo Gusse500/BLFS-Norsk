@@ -67,17 +67,17 @@
         </para>
       </listitem>
     </itemizedlist>
-<!--
+
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
           Nødvendig oppdatering:
-          <ulink url="&patch-root;/qca-&qca-version;-openssl-1.patch"/>
+          <ulink url="&patch-root;/qca-&qca-version;-openssl4_fixes-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
--->
+
     <bridgehead renderas="sect3">Qca Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -107,7 +107,13 @@
     <title>Installasjon av Qca</title>
 
     <para>
-      Fiks plasseringen av CA sertifikatene:
+      Først må du endre pakken slik at den er kompatibel med OpenSSL4:
+    </para>
+
+<screen><userinput>Patch -Np1 -i ../qca-&qca-version;-openssl4_fixes-1.patch</userinput></screen>
+
+    <para>
+      Nå, fiks plasseringen av CA sertifikatene:
     </para>
 
 <screen><userinput>sed -i 's@cert.pem@certs/ca-bundle.crt@' CMakeLists.txt</userinput></screen>
