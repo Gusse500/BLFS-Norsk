@@ -117,13 +117,21 @@
 <screen role="root" remap="test"><userinput>make -k test</userinput></screen>
 
     <para>
-      Hvis <xref linkend='lsb-tools'/> ikke er installert, vil testpakken
-      gi noen linjer klage på at <command>lsb_release</command>
+      Hvis <xref linkend='lsb-tools'/> ikke er installert, vil testpakken sende 
+      ut noen linjer som klager over at <command>lsb_release</command>
       kommandoen ikke er tilgjengelig, men den vil ikke påvirke testresultatet. 
+      Testene fungerer ikke i et chroot miljø.
+      <!-- Kjernen må noen ganger kalle /sbin/request-key, så å kjøre testpakken 
+      i et chroot miljø vil faktisk teste vertsdistribusjonens request-key 
+      program. Bare ikke gjør det.
+
       Testene er for tiden kjent for å mislykkes når den prøver å legge til 
-      brukergenererte nøkler til nøkkelringen.
-      <!-- I did verify that this occurs on other distros as well, and it seems
-      to be known at Gentoo.-->
+      brukergenererte nøkler til nøkkelringen. Jeg bekreftet at dette skjer i 
+      andre distribusjoner også, og det ser ut til å være kjent hos 
+      Gentoo.
+
+      Er dette fortsatt et problem hvis vi utelukker å kjøre testpakken i 
+      chroot? -->
     </para>
 
   </sect2>
