@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY bolt-download-http "https://gitlab.freedesktop.org/bolt/bolt/-/archive/&bolt-version;/bolt-&bolt-version;.tar.gz">
+  <!ENTITY bolt-download-ftp  " ">
+  <!ENTITY bolt-md5sum        "6fade22d3875b3ff480e26058571b534">
+  <!ENTITY bolt-size          "252 KB">
+  <!ENTITY bolt-buildsize     "9.8 MB (with tests)">
+  <!ENTITY bolt-time          "0.2 SBU (with tests)">
+]>
+
+<sect1 id="bolt" xreflabel="bolt-&bolt-version;">
+  <?dbhtml filename="bolt.html"?>
+
+  <title>bolt-&bolt-version;</title>
+
+  <indexterm zone="bolt">
+    <primary sortas="a-bolt-&bolt-version;">bolt</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til bolt</title>
+
+    <para>
+      <application>bolt</application> pakken er en systemdaemon for å aktivere 
+      sikkerhetsnivåer for Thunderbolt.
+    </para>
+
+    &lfs130_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&bolt-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting (FTP): <ulink url="&bolt-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &bolt-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &bolt-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &bolt-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &bolt-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">bolt Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="glib2"/> og
+      <xref linkend="polkit"/>
+    </para>
+
+    <bridgehead renderas="sect4">Valgfri</bridgehead>
+    <para role="optional">
+      <xref linkend="umockdev"/> (for testing), og
+      <xref linkend="asciidoc"/> (for dokumentasjon)
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av bolt</title>
+
+    <para>
+      Installer <application>bolt</application> ved å kjøre følgende
+      kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      For å teste resultatene, utsted:  <command>ninja test</command>.
+      En test, test_journal_object, er kjent for å feile.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          boltctl og
+          boltd (i /usr/libexec)
+        </seg>
+        <seg>Ingen</seg>
+        <seg>Ingen</seg>
+      </seglistitem>
+    </segmentedlist>
+
+<!--
+    <variablelist>
+      <bridgehead renderas="sect3">Korte beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="imgcmp">
+        <term><command>imgcmp</command></term>
+        <listitem>
+          <para>
+            sammenligner to bilder med samme geometri
+          </para>
+          <indexterm zone="bolt imgcmp">
+            <primary sortas="b-imgcmp">imgcmp</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+-->
+
+  </sect2>
+</sect1>
+
