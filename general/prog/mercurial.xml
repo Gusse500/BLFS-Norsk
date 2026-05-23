@@ -6,10 +6,10 @@
 
   <!ENTITY mercurial-download-http "https://www.mercurial-scm.org/release/mercurial-&mercurial-version;.tar.gz">
   <!ENTITY mercurial-download-ftp  " ">
-  <!ENTITY mercurial-md5sum        "1b7fd8be6664ba24e47c29f31dc1ac26">
+  <!ENTITY mercurial-md5sum        "9a637d4fc411da358cfa341cd18d0a12">
   <!ENTITY mercurial-size          "8.8 MB">
-  <!ENTITY mercurial-buildsize     "127 MB (med dokumenter, legg til 2.5 GB for tester)">
-  <!ENTITY mercurial-time          "0.3 SBU (med dokumenter, legg til 30 SBU for tester; begge bruker parallellisme=4)">
+  <!ENTITY mercurial-buildsize     "124 MB (med dokumenter, legg til 2.5 GB for tester)">
+  <!ENTITY mercurial-time          "0.3 SBU (med dokumenter, legg til 24 SBU for tester; begge bruker parallellisme=4)">
 ]>
 
 <sect1 id="mercurial" xreflabel="mercurial-&mercurial-version;">
@@ -85,7 +85,8 @@
       <xref role="runtime" linkend="openssh"/>
         (kjøretid, for å få tilgang til ssh://... depoter),
       <xref linkend="pygments"/>,
-      <xref linkend="rust"/> (se <filename>rust/README.rst</filename> og <filename>rust/rhg/README.md</filename>),
+      <xref linkend="rust"/> (se <filename>rust/README.rst</filename> og 
+                                  <filename>rust/rhg/README.md</filename>),
       <xref linkend="subversion"/> (med Python bindinger),
       <xref linkend="uv_build"/> (for en alternativ byggemetode),
       <xref linkend="which"/> (brukt i en test),
@@ -98,6 +99,12 @@
 
   <sect2 role="installation">
     <title>Installasjon av Mercurial</title>
+
+    <para>
+      Fjern først noen kommandoer som er i konflikt med openssl4: 
+    </para>
+
+<screen role="root"><userinput>sed -i "15,23 s/^/#/" setup.py</userinput></screen>
 
     <para>
       <application>Mercurial</application> er bygget og installert
@@ -116,20 +123,23 @@
         remap="doc"><userinput>mkdir /usr/share/doc/mercurial-&mercurial-version; &amp;&amp;
 cp -R doc/html /usr/share/doc/mercurial-&mercurial-version;</userinput></screen>
 
+<!--
     <para>
       Hvis du ønsker å kjøre testene, må rust kildekodene må fikses for den 
       nyeste rust versjonen:
     </para>
 
 <screen remap="test"><userinput>pushd rust                           &amp;&amp;
-cargo fix --workspace --allow-no-scm &amp;&amp;
+cargo fix - -workspace - -allow-no-scm &amp;&amp;
 popd</userinput></screen>
+-->
 
     <para>
-      Det er også et problem med tillatelser i byggemappen, siden den 
-      ovenstående <command>install</command> kommandoen har opprettet filer eid 
-      av &root;, som en test prøver å modifisere. For å bøte på dette, utsted, 
-      som &root; bruker:
+      For å kjøre testene, sørg for at alle filene eies av en bruker uten 
+      privilegier. Dette løser et problem med tillatelser i byggemappen siden 
+      ovenstående <command>install</command> 
+      kommandoen har opprettet filer eid av &root;. 
+      For å bøte på dette, som &root; bruker utsted:
     </para>
 
 <screen remap="test"
@@ -137,7 +147,18 @@ popd</userinput></screen>
 
     <para>
       Hvor <replaceable>brukernavn</replaceable> erstattes med brukernavnet til 
-      personen som kjører testene. For å kjøre testpakken, utsted følgende:
+      brukernavnet til personen som kjører testene. 
+    </para>
+
+    <para>
+      Testpakken prøver å kjøre noen tester som er inkompatible 
+      med <xref linkend="rust"/>.  Fjern den med:
+    </para>
+
+<screen remap="test"><userinput>sed -i "177,181 s/^/#/" Makefile</userinput></screen>
+
+    <para>
+      Now, run the test suite with:
     </para>
 
 <screen remap="test"><userinput>TESTFLAGS="-j<replaceable>&lt;N&gt;</replaceable> --with-hg /usr/bin/hg" make check</userinput></screen>
@@ -174,6 +195,7 @@ popd</userinput></screen>
       # Ran 974 tests, 58 skipped, 14 failed. -pierre 22 Nov 25 (mercurial-7.1.2 with python-3.14).
       # Ran 1006 tests, 60 skipped, 3 failed. -renodr 11 Feb 26 (mercurial-7.2 with python-3.14).
       # Ran 1001 tests, 67 skipped, 0 failed. -pierre 7 Apr 26 (mercurial-7.2.1).
+      # Ran 998 tests, 71 skipped, 0 failed.  -bdubbs 21 May 26 (mercurial-7.2.2).
       -->
     <para>
       For å
@@ -277,7 +299,7 @@ EOF</userinput></screen>
           hg
         </seg>
         <seg>
-          flere interne moduler under
+          en rekke interne moduler under
           /usr/lib/python&python3-majorver;/site-packages/mercurial
         </seg>
         <seg>
