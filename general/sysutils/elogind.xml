@@ -4,17 +4,16 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY elogind-download-http "https://github.com/elogind/elogind/archive/V&elogind-version;/elogind-&elogind-version;.tar.gz">
+  <!ENTITY elogind-download-http "https://github.com/elogind/elogind/archive/v&elogind-version;/elogind-&elogind-version;.tar.gz">
   <!ENTITY elogind-download-ftp  " ">
-  <!ENTITY elogind-md5sum        "7fcaf4e1b3d40f69029d2b03402ccef3">
-  <!ENTITY elogind-size          "2.0 MB">
-  <!ENTITY elogind-buildsize     "49 MB (med tester)">
-  <!ENTITY elogind-time          "0.2 SBU (med parallellitet=4; med tester)">
+  <!ENTITY elogind-md5sum        "6d084ff01c3eaf5e1a2f54c93fb279a2">
+  <!ENTITY elogind-size          "2.6 MB">
+  <!ENTITY elogind-buildsize     "67 MB (med tester)">
+  <!ENTITY elogind-time          "0.3 SBU (med parallellitet=4; med tester)">
 ]>
 
 <sect1 id="elogind" revision="sysv" xreflabel="elogind-&elogind-version;">
   <?dbhtml filename="elogind.html"?>
-
 
   <title>elogind-&elogind-version;</title>
 
@@ -173,7 +172,7 @@ ninja</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>ninja install                                           &amp;&amp;
@@ -273,10 +272,9 @@ ln -sfvn elogind /usr/include/systemd</userinput></screen>
 
       <para>
         Den installerte filen <filename>/etc/elogind/logind.conf</filename>
-        inneholder alle mulige alternativer med standardinnstillingene, kommentert
-        ut. Det kan være lurt å deaktivere automatisk drepende brukerprosesser når brukeren logger
-        ut, ved å kjøre, som <systemitem class="username">root</systemitem>
-        bruker:
+        inneholder alle mulige alternativer med standardinnstillingene 
+        kommentert ut. Det kan være lurt å deaktivere automatisk drepende 
+        brukerprosesser når brukeren logger ut, ved å kjøre, som &root; bruker:
       </para>
 
 <screen role="root"><userinput>sed -e '/\[Login\]/a KillUserProcesses=no' \
@@ -288,7 +286,7 @@ ln -sfvn elogind /usr/include/systemd</userinput></screen>
         <filename>/etc/pam.d/system-session</filename> filen må
         endres og en ny fil må opprettes for
         <command>elogind</command> å fungere riktig. Kjør følgende
-        kommandoer som <systemitem class="username">root</systemitem> bruker:
+        kommandoer som &root; bruker:
       </para>
 
 <screen role="root"><userinput>cat &gt;&gt; /etc/pam.d/system-session &lt;&lt; "EOF" &amp;&amp;
@@ -318,6 +316,39 @@ password required    pam_deny.so
 # End /etc/pam.d/elogind-user</literal>
 EOF</userinput></screen>
 
+    <para>
+      Denne pakken inneholder en Name Service Switch (NSS) modul. Tidligere 
+      hadde ikke et Systemd-løst system en dedikert NSS modul som ble brukt for 
+      bedre navneløsning, mens Systemd systemer har en som er tett integrert med 
+      den programvarepakken. Nå leveres en slik modul. For å bruke den, må 
+      <filename>/etc/nsswitch.conf</filename> filen som ble installert i LFS må 
+      endres. Overskriv filen som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>cat &gt; /etc/nsswitch.conf &lt;&lt; "EOF" &amp;&amp;
+<literal># Begin /etc/nsswitch.conf
+
+passwd: files elogind
+group: files elogind
+shadow: files elogind
+
+hosts: files dns
+networks: files
+
+protocols: files
+services: files
+ethers: files
+rpc: files
+
+# End /etc/nsswitch.conf</literal>
+EOF</userinput></screen>
+
+    <note><para>
+      <literal>myhostname</literal>, <literal>mymachines</literal>, og
+      <literal>resolve</literal> NSS moduler er fortsatt ikke tilgjengelige (de 
+      kommer fra Systemd). Den installerte filen kan ikke bruke dem ennå.
+    </para></note>
+
     <note>
       <para>Etter ferdigstillelse av <application>elogind</application>, 
       du bør sjekke at den fungerer som den skal. Sørg først for at
@@ -341,11 +372,13 @@ EOF</userinput></screen>
       <seglistitem>
         <seg>
           busctl,
-          elogind-inhibit, og
-          loginctl
+          elogind-inhibit,
+          loginctl,
+          userdbctl, og
+          varlinkctl
         </seg>
         <seg>
-           libelogind.so
+           libelogind.so og libnss_elogind.so
         </seg>
         <seg>
           /usr/lib/elogind,
@@ -399,6 +432,30 @@ EOF</userinput></screen>
         </listitem>
       </varlistentry>
 
+      <varlistentry id="userdbctl">
+        <term><command>userdbctl</command></term>
+        <listitem>
+          <para>
+            brukes til å inspisere brukere, grupper og gruppemedlemskap
+          </para>
+          <indexterm zone="elogind userdbctl">
+            <primary sortas="b-userdbctl">userdbctl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="varlinkctl">
+        <term><command>varlinkctl</command></term>
+        <listitem>
+          <para>
+            brukes til å samhandle med og aktivere Varlink tjenester
+          </para>
+          <indexterm zone="elogind varlinkctl">
+            <primary sortas="b-varlinkctl">varlinkctl</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
       <varlistentry id="libelogind">
         <term><filename class="libraryfile">libelogind.so</filename></term>
         <listitem>
@@ -407,6 +464,18 @@ EOF</userinput></screen>
           </para>
           <indexterm zone="elogind libelogind">
             <primary sortas="c-libelogind">libelogind.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="libnss_elogind">
+        <term><filename class="libraryfile">libnss_elogind.so</filename></term>
+        <listitem>
+          <para>
+            er NSS modulen (Name Service Switch) for elogind
+          </para>
+          <indexterm zone="elogind libnss_elogind">
+            <primary sortas="c-libnss_elogind">libnss_elogind.so</primary>
           </indexterm>
         </listitem>
       </varlistentry>

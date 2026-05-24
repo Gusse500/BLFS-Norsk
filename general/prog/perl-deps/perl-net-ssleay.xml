@@ -5,7 +5,7 @@
   %general-entities;
 
   <!ENTITY my-download-http "&metacpan_authors;/C/CH/CHRISN/Net-SSLeay-&Net-SSLeay-version;.tar.gz">
-  <!ENTITY my-md5sum "1b22c764e5a094c6261e37a4b1f148ce">
+  <!ENTITY my-md5sum "63772ad94b874b5f0f025c2a4285f82f">
 
 ]>
 
@@ -25,16 +25,6 @@
         Net::SSLeay er en Perl utvidelse for bruk av OpenSSL.
       </para>
 
-      <!--
-      <bridgehead renderas="sect4">Ytterligere Nedlastinger</bridgehead>
-      <itemizedlist spacing="compact">
-        <listitem>
-          <para>
-            Nødvendig oppdatering (for openssl-1.1.1):
-            <ulink url="&patch-root;/Net-SSLeay-&Net-SSLeay-version;-openssl_1.1.1-1.patch"/>
-          </para>
-        </listitem>
-      </itemizedlist>-->
 
       &lfs130_checked;
 
@@ -52,20 +42,26 @@
         </listitem>
       </itemizedlist>
 
+      <bridgehead renderas="sect4">Ytterligere Nedlastinger</bridgehead>
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>
+            Nødvendig oppdatering (for openssl-4):
+            <ulink url="&patch-root;/Net-SSLeay-&Net-SSLeay-version;-openssl4_fixes-1.patch"/>
+          </para>
+        </listitem>
+      </itemizedlist>
+
     </sect3>
 
     <sect3 role="installation">
       <title>Installasjon av Net::SSLeay</title>
 
-      <note>
-        <para>
-          <!-- https://github.com/radiator-software/p5-net-ssleay/issues/511 -->
-          En test navngitt <filename>32_x509_get_cert_info.t</filename> er
-          kjent for å feile med OpenSSL-3.4.0 eller senere.
-          Hvis du aktiverer de eksterne testene, en test i t/external/15_altnames.t
-          kan mislykkes. <!-- https://rt.cpan.org/Public/Bug/Display.html?id=12954 -->
-        </para>
-      </note>
+      <para>
+        Først, bruk en oppdatering for å støtte OpenSSL-4:
+      </para>
+
+<screen><userinput>patch -Np1 -i ../Net-SSLeay-&Net-SSLeay-version;-openssl4_fixes-1.patch</userinput></screen>
 
       <para>
         Denne modulen bruker en variant av standard konstruksjon og installasjon
@@ -73,7 +69,7 @@
 
 <screen><userinput>yes '' | perl Makefile.PL &amp;&amp;
 make                      &amp;&amp;
-make test || true</userinput></screen>
+make test</userinput></screen>
 
         Nå, som <systemitem class="username">root</systemitem> bruker:
 
@@ -91,12 +87,12 @@ make test || true</userinput></screen>
         tester, som vil mislykkes hvis du ikke har nettverkstilkobling.
         Standard er 'n', hvis du spesifiserer dette, kan du skripte bygget.
       </para>
-
+<!--
       <para>
         <command>|| true</command>: Når du kjører et skript som avsluttes ved
         feil, forhindrer dette stopp på grunn av kjente testfeil.
       </para>
-
+-->
     </sect3>
 
   </sect2>
