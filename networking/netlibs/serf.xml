@@ -112,14 +112,12 @@
 <screen><userinput>sed -i "/Append/s:RPATH=libdir,::"          SConstruct &amp;&amp;
 sed -i "/Default/s:lib_static,::"           SConstruct &amp;&amp;
 sed -i "/Alias/s:install_static,::"         SConstruct &amp;&amp;
-sed -i "/  print/{s/print/print(/; s/$/)/}" SConstruct &amp;&amp;
-sed -i "/get_contents()/s/,/.decode()&amp;/"    SConstruct &amp;&amp;
+sed -e 's/nm->d.ia5->length/ASN1_STRING_length(nm->d.ia5)/'                \
+    -e 's/nm->d.ia5->data/(const char *)ASN1_STRING_get0_data(nm->d.ia5)/' \
+    -i buckets/ssl_buckets.c                           &amp;&amp;
+
 
 scons PREFIX=/usr</userinput></screen>
-<!--
-sed -i "/  print/{s/print/print(/; s/$/)/}" SConstruct &amp;&amp;
-sed -i "/get_contents()/s/,/.decode()&amp;/"    SConstruct &amp;&amp;
--->
 
 <!-- I did not find this to be needed as of 1.3.9 -renodr
     <para>
@@ -156,9 +154,8 @@ sed -i "/get_contents()/s/,/.decode()&amp;/"    SConstruct &amp;&amp;
     <para>
       <command>sed -i "..."</command>: Den første kommandoen fjerner kjøretidsbanen
       fra et delt bibliotek og de neste to kommandoene deaktiverer bygging og
-      installasjon av det statiske biblioteket. <!--Den fjerde kommandoen korrigerer for
-      endringer i scons-3.x. Den siste kommandoen lar deg bruke <application>
-      Python 3</application>.-->
+      installasjon av det statiske biblioteket. Den fjerde kommandoen korrigerer 
+      for endringer i OpenSSL-4.
     </para>
 
     <para>
