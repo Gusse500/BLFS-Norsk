@@ -7,10 +7,10 @@
 
   <!ENTITY mariadb-download-http "https://downloads.mariadb.org/interstitial/mariadb-&mariadb-version;/source/mariadb-&mariadb-version;.tar.gz">
   <!ENTITY mariadb-download-ftp  " ">
-  <!ENTITY mariadb-md5sum        "27c6eeeda18e0c298f63b7def5ad8061">
-  <!ENTITY mariadb-size          "114 MB">
-  <!ENTITY mariadb-buildsize     "2.3 GB (778 MB installert)">
-  <!ENTITY mariadb-time          "3.9 SBU (med parallellitet=8, legg til 2.9 SBU for tester)">
+  <!ENTITY mariadb-md5sum        "e6ec06ab51a7afa581562499616624a4">
+  <!ENTITY mariadb-size          "115 MB">
+  <!ENTITY mariadb-buildsize     "2.5 GB (832 MB installert)">
+  <!ENTITY mariadb-time          "4.3 SBU (med parallellitet=8, legg til 2.6 SBU for tester)">
 ]>
 
 <sect1 id="mariadb" xreflabel="MariaDB-&mariadb-version;">
@@ -200,7 +200,6 @@ make</userinput></screen>
       For å teste resultatene, kjør: <command>make test</command>.
       To tester, my_tzinfo og test-connect, er kjent for å mislykkes.
     </para>
-
 <!--
     Leaving this for upstream developers.  When I tried to run it the 
     procedure failed after 10 failures.  To fix that, the option
@@ -443,15 +442,16 @@ mariadbd-safe --user=mariadb 2&gt;&amp;1 &gt;/dev/null &amp;</userinput></screen
 
 <screen role="root" revision="systemd"><userinput>make install-mariadb</userinput></screen>
 
-      <note>
+      <caution>
         <para>
-          Hvis du allerede har en eksisterende database og denne
-          installasjonen av binærfiler bare var en oppgradering til en nyere
-          versjon, sjekk oppstrømsdokumentasjonen for oppgradering. Det
-          anbefales å kjøre:
+          Oppgradering av MariaDB fra versjon 11 til 12 krever en full sikkerhetskopi, 
+		  en ren avslutning, avinstallering av de gamle binærfilene, installasjon 
+		  av versjon 12 binærfilene, omstart av serveren og kjøring av 
           <screen role="nodump"><userinput>mariadb-upgrade</userinput></screen>
+          for å oppdatere systemtabeller. Hvis du hopper over denne 
+		  sikkerhetskopien, kan det føre til uopprettelige data.
         </para>
-      </note>
+      </caution>
     </sect3>
 
   </sect2>
