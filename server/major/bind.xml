@@ -7,9 +7,9 @@
   <!ENTITY bind-download-http "https://ftp.isc.org/isc/bind9/&bind-version;/bind-&bind-version;.tar.xz">
   <!ENTITY bind-download-ftp  " ">
   <!ENTITY bind-md5sum        "&bind-md5;">
-  <!ENTITY bind-size          "5.5 MB">
-  <!ENTITY bind-buildsize     "163 MB (23 MB installert)">
-  <!ENTITY bind-time          "0.4 SBU (med parallellitet=4; ca. 40 minutter noe prosessoruavhengig, for å kjøre hele testpakken)">
+  <!ENTITY bind-size          "5.6 MB">
+  <!ENTITY bind-buildsize     "193 MB (23 MB installert)">
+  <!ENTITY bind-time          "0.4 SBU (med parallellitet=4; ca. 8 minutter noe prosessoruavhengig, for å kjøre hele testpakken)">
 ]>
 
 <sect1 id="bind" xreflabel="BIND-&bind-version;">
@@ -110,8 +110,11 @@
     <bridgehead renderas="sect4">Valgfri (for å kjøre testpakken)</bridgehead>
     <para role="optional">
       <xref linkend="perl-net-dns"/>,
-      <ulink url="https://www.dnspython.org/">dnspython</ulink>, og
-      <ulink url="https://hypothesis.readthedocs.io/en/latest/">hypothesis</ulink>
+      <ulink url="https://pypi.org/project/cryptography/">cryptography</ulink>,
+      <ulink url="https://www.dnspython.org/">dnspython</ulink>,
+      <ulink url="https://pypi.org/project/h2/">h2</ulink>,
+      <ulink url="https://hypothesis.readthedocs.io/en/latest/">hypothesis</ulink>, og
+      <ulink url="https://pypi.org/project/pytest-xdist/">pytest-xdist</ulink>
     </para>
 
     <para condition="html" role="usernotes">
@@ -137,6 +140,16 @@
       </para>
     </note>
 -->
+    <para>
+      Hvis du planlegger å kjøre testene, bør et virtuelt Pythonmiljø settes 
+      opp, slik at <command>configure</command> finner Python binærfilen fra 
+      det miljøet. Dette er nødvendig siden denne binærfilen deretter hardkodes 
+      inn i testrammeverket:
+    </para>
+
+<screen remap='test'><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
+source testenv/bin/activate</userinput></screen>
+
     <para>
       Installer <application>BIND</application> ved å kjøre
       følgende kommandoer:
@@ -170,20 +183,24 @@ make</userinput></screen>
       Testpakken kan indikere at noen tester er hoppet over avhengig av
       hvilke konfigurasjonsalternativer som brukes. Noen tester er merket
       <quote>UNTESTED</quote> eller til og med mislykkes hvis <xref linkend="perl-net-dns"/>
-      ikke er installert. En test, <filename>dnssec</filename>, er kjent for å mislykkes.
-      Testene krever
-      <ulink url="https://hypothesis.readthedocs.org/">hypothesis</ulink> og
-      <ulink url="https://www.dnspython.org/">dnspython</ulink> Python moduler,
-      som ikke er i BLFS. For å omgå dette, oppretter instruksjonene nedenfor 
-      et virtuelt Python miljø og installerer deretter modulene der før 
-      testene kjøres.
+      ikke er installert. Testene krever 
+      <ulink url="https://pypi.org/project/cryptography/">cryptography</ulink>,
+      <ulink url="https://www.dnspython.org/">dnspython</ulink>,
+      <ulink url="https://pypi.org/project/h2/">h2</ulink>,
+      <ulink url="https://hypothesis.readthedocs.org/">hypothesis</ulink>, og
+      <ulink url="https://pypi.org/project/pytest-xdist/">pytest-xdist</ulink>
+      Python modulene,
+      som ikke er i BLFS. Disse modulene er installert i det virtuelle miljøet 
+      som ble opprettet tidligere før testene ble kjørt.
       For å kjøre testene, som en uprivilegert bruker, kjør:
     </para>
 
-<screen remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
-source testenv/bin/activate                    &amp;&amp;
-pip3 install dnspython hypothesis              &amp;&amp;
-make -k check                                  &amp;&amp;
+<screen remap="test"><userinput>pip3 install cryptography \
+             dnspython    \
+             h2           \
+             hypothesis   \
+             pytest-xdist &amp;&amp;
+make -k check             &amp;&amp;
 deactivate</userinput></screen>
 
     <para>
@@ -315,15 +332,15 @@ install doc/dnssec-guide/* /usr/share/doc/bind-&bind-version;/dnssec-guide</user
       </para>
 
 <screen role="root"><userinput>groupadd -g 20 named &amp;&amp;
-useradd -c "BIND Owner" -g named -s /bin/false -u 20 named &amp;&amp;
-install -d -m770 -o named -g named /srv/named</userinput></screen>
+useradd -c "BIND Owner" -g named -s /bin/false -u 20 named</userinput></screen>
+
 
       <para>
         Sett opp noen filer, mapper og enheter som trengs av
         <application>BIND</application>:
       </para>
 
-<screen role="root"><userinput>mkdir -p /srv/named &amp;&amp;
+<screen role="root"><userinput>install -d -m770 -o named -g named /srv/named &amp;&amp;
 cd       /srv/named &amp;&amp;
 mkdir -p dev etc/named/{slave,pz} usr/lib/engines var/run/named &amp;&amp;
 mknod /srv/named/dev/null c 1 3 &amp;&amp;
