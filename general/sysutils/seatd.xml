@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!-- The mirror is used here, since the SourceHut downloads result in
+       &seatd-version;.tar.gz rather than seatd-&seatd-version;.tar.gz, leading
+       to 0.9.3.tar.gz, then extracting to seatd-0.9.3. -->
+  <!ENTITY seatd-download-http
+    "https://github.com/kennylevinsen/seatd/archive/&seatd-version;/seatd-&seatd-version;.tar.gz">
+  <!ENTITY seatd-md5sum        "c1cc200188d31214b88af015b1f19f7b">
+  <!ENTITY seatd-size          "44 KB">
+  <!ENTITY seatd-buildsize     "4 MB (med tester)">
+  <!ENTITY seatd-time          "mindre enn 0.1 SBU (med tester)">
+]>
+
+<sect1 id="seatd" xreflabel="seatd-&seatd-version;">
+  <?dbhtml filename="seatd.html"?>
+
+  <title>seatd-&seatd-version;</title>
+
+  <indexterm zone="seatd">
+    <primary sortas="a-seatd">seatd</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduksjon til seatd</title>
+
+    <para>
+      seatd pakken tilbyr et universelt bibliotek for seat håndtering. Det er 
+      det mange Wayland kompositore bruker for å administrere seater, en økt for 
+      en bruker som applikasjoner kan samhandle med. Den kan eventuelt tilby sin 
+      egen seat håndtering som et alternativ til en logind variant, men 
+      instruksjonene som gis vil bruke den som en shim, som <phrase
+      revision="sysv">e</phrase>logind <phrase revision="systemd"> fra <xref
+      linkend="systemd"/></phrase> vil være den underliggende seat behandleren.
+    </para>
+
+    &lfs130_checked;
+
+    <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Nedlasting (HTTP): <ulink url="&seatd-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlasting MD5 sum: &seatd-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Nedlastingsstørrelse: &seatd-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert diskplass som kreves: &seatd-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimert byggetid: &seatd-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">seatd Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <phrase revision="sysv"><xref linkend="elogind"/></phrase>
+      <phrase revision="systemd"><xref linkend="systemd"/></phrase>
+    </para>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installasjon av seatd</title>
+    <para>
+      Installer seatd ved å kjøre følgende kommandoer:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr             \
+            --buildtype=release       \
+            -D server=disabled        \
+            -D libseat-seatd=disabled \
+            .. &amp;&amp;
+
+ninja</userinput></screen>
+
+    <para>
+      For å kjøre testpakken, utsted: <command>ninja test</command>.
+    </para>
+
+    <para>
+      Nå, som &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ninja install</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="commands">
+    <title>Parameterforklaringer</title>
+
+    <para>
+      <parameter>-D server=disabled</parameter>: Deaktiverer bygging av 
+      seatd daemonen.
+    </para>
+
+    <para>
+      <parameter>-D libseat-seatd=disabled</parameter>: Denne parameteren 
+      deaktiverer å bygge støtte for seatd administrasjonsdaemonen for
+      <filename class="libraryfile">libseat.so</filename> og er i stedet 
+      avhengig av det systeminstallerte <phrase revision="sysv">e</phrase>logind i stedet.
+    </para>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title>Innhold</title>
+
+    <segmentedlist>
+      <segtitle>Installerte Programmer</segtitle>
+      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Mapper</segtitle>
+
+      <seglistitem>
+        <seg>
+          Ingen
+        </seg>
+        <seg>
+          libseat.so
+        </seg>
+        <seg>
+          Ingen
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+    <variablelist>
+      <bridgehead renderas="sect3">Korte Beskrivelser</bridgehead>
+      <?dbfo list-presentation="list"?>
+      <?dbhtml list-presentation="table"?>
+
+      <varlistentry id="libseat">
+        <term><filename class="libraryfile">libseat.so</filename></term>
+        <listitem>
+          <para>
+            inneholder funksjoner for å behandle seat administrasjon
+          </para>
+          <indexterm zone="seatd libseat">
+            <primary sortas="c-libseat">libseat.so</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect2>
+
+</sect1>
