@@ -15,7 +15,6 @@
 <sect1 id="lxqt-wayland-session" xreflabel="lxqt-wayland-session-&lxqt-session-version;">
   <?dbhtml filename="lxqt-wayland-session.html"?>
 
-
   <title>lxqt-wayland-session-&lxqt-wayland-session-version;</title>
 
   <indexterm zone="lxqt-wayland-session">
@@ -26,8 +25,12 @@
     <title>Introduksjon til lxqt-wayland-session</title>
 
     <para>
-      <application>lxqt-wayland-session</application> pakken inneholder den 
-      Wayland baserte sesjonsbehandleren for <application>LXQt</application>.
+      <application>lxqt-wayland-session</application> pakken inneholder et 
+      hjelpeskript for <application>LXQt</application> som starter en Wayland 
+      kompositor fra en gitt liste, deretter hoved 
+      <application>LXQt</application> Wayland økt. Denne pakken tilbyr også 
+      kompositorspesifikke konfigurasjonsfiler for å hjelpe med et problemfri
+      <application>LXQt</application> erfaring.
     </para>
 
     &lfs130_checked;
@@ -75,6 +78,11 @@
       <xref linkend="qtxdg-tools"/>
     </para>
 
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
+      <xref role="runtime" linkend="wayfire"/> (kjøretid)
+    </para>
+
   </sect2>
 
   <sect2 role="installation">
@@ -116,33 +124,27 @@ make</userinput></screen>
     </para>
   </sect2>
 -->
-  <sect2 role="configuration">
+  <sect2 id="lxqt-wls-conf" role="configuration">
     <title>Konfigurere lxqt-wayland-session</title>
 
     <para>
-      Andre vindusbehandlere enn <xref linkend="openbox"/> kan brukes, f.eks.
-      <xref linkend="xfwm4"/>. Vær oppmerksom på at <xref linkend="icewm"/> er 
-      ikke en god erstatning. <application>Fluxbox</application> fungerer, selv 
-      om i denne sammenhengen (med <xref linkend="lxqt-config"/>), <xref
-      linkend="openbox"/> er bedre. Konfigurasjonsfilen
-      <filename>/usr/share/lxqt/windowmanagers.conf</filename> kommer med mange 
-      eksempler på vindusbehandlere, og de som er installert vil vises i en 
-      rullegardinliste med <command>lxqt-config-session</command>. For de som 
-      ikke er inkludert i
-      <filename>/usr/share/lxqt/windowmanagers.conf</filename>, kan du bruke
-      <command>lxqt-config-session</command> sin "søk" knapp, f.eks. for <xref
-      linkend="fluxbox"/>, navigere gjennom filsystemet til du kan velge 
-      <command>fluxbox</command>. <!--Alternativt, hvis du ønsker at 
-      vindusbehandleren du ønsker skal vises i rullegardinlisten, kan du 
-      inkludere den i <filename>/etc/xdg/lxqt/windowmanagers.conf</filename>. 
-      For <xref linkend="fluxbox"/>, inkludere linjen
+      Økten velger fra en eksisterende liste over Wayland kompositorer å bruke. 
+      Selv om kompositorer som Hyprland og Niri kan brukes, bruker følgende den 
+      anbefalte kompositoren <xref linkend="wayfire"/>. Forsøk på å bare starte 
+      økten uten konfigurasjon mislykkes hvis labwc, en annen Wayland 
+      kompositor, ikke er installert. Hver bruker må ha en konfigurasjon. Kopier 
+      og rediger en eksisterende konfigurasjon som en vanlig bruker for å bruke 
+      den anbefalte kompositoren for økten:
     </para>
 
-<screen role="nodump"><userinput><literal>fluxbox/Name=Fluxbox</literal></userinput></screen>
+<screen role="nodump"><userinput>mkdir -pv ~/.config/lxqt &amp;&amp;
+cp -v /usr/share/lxqt/session.conf ~/.config/lxqt &amp;&amp;
+sed -i '/\[Environment\]/a compositor=wayfire' \
+       ~/.config/lxqt/session.conf</userinput></screen>
+
     <para>
-      og det vil vises som et alternativ i rullegardinlisten. For å endre WM, 
-      etter at du har valgt det, må du starte økten på nytt.
--->
+      Fortsett nå til <xref linkend="lxqt-post-install"/> for å fullføre 
+      oppsettet.
     </para>
 
   </sect2>
@@ -179,7 +181,7 @@ make</userinput></screen>
         <term><command>lxqt-qdbus</command></term>
         <listitem>
           <para>
-            er en dbus innpakning for tastebindinger på Wayland kompositorer.
+            er en dbus innpakning for tastebindinger på Wayland kompositorer
           </para>
           <indexterm zone="lxqt-wayland-session lxqt-qdbus">
             <primary sortas="b-lxqt-qdbus">lxqt-qdbus</primary>
