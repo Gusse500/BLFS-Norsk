@@ -84,12 +84,13 @@
     <title>Installasjon av Net-tools</title>
 
     <para id="net-tools-automate-example" xreflabel="Net-tools">
-      Instruksjonene nedenfor automatiserer konfigurasjonsprosessen ved å kanalisere
-      <command>yes</command> til <command>make</command> kommandoen.
-      Hvis du ønsker å kjøre den interaktive konfigurasjonsprosessen (ved å endre
-      instruksen til bare <command>make</command>), men du er
-      ikke sikker på hvordan du skal svare på alle spørsmålene, så er det bare å godta standardinnstillingene.
-      Dette vil være helt greit i de fleste tilfeller. Det du blir spurt om her
+      Instruksjonene nedenfor automatiserer konfigurasjonsprosessen ved å 
+      kanalisere <command>yes</command> til <command>make config</command> 
+      kommandoen. Hvis du ønsker å kjøre den interaktive konfigurasjonsprosessen 
+      (ved å endre instruksjonen til bare <command>make config</command>), men 
+      du er ikke sikker på hvordan du skal svare på alle spørsmålene, så bare 
+      godta standardinnstillingene, bortsett fra alt som berører X25, ROSE og 
+      NETROM, som har blitt deaktivert i Linux 7.1. Hva du blir spurt om her
       er en haug med spørsmål om hvilke nettverksprotokoller du har aktivert
       i kjernen din. Standardsvarene vil aktivere verktøyene fra denne
       pakke til å fungere med de vanligste protokollene: TCP, PPP og flere
@@ -102,10 +103,10 @@
     <note>
       <para>
         Denne pakken har flere unødvendige protokoller og maskinvareenhets
-        spesifikke funksjoner som er foreldet. Å bare bygge det minimum som trengs
-        for systemet ditt, hopp over <command>yes</command> kommandoen og svar
-        hvert spørsmål interaktivt. Minimum nødvendige alternativer er 'UNIX
-        protokollfamilie' og 'INET (TCP/IP) protokollfamilie'.
+        spesifikke funksjoner som er foreldet. Å bare bygge det minimum som 
+        trengs for systemet ditt, hopp over <command>yes</command> kommandoen og 
+        svar hvert spørsmål interaktivt. Minimum nødvendige alternativer er 
+        'UNIX protokollfamilie' og 'INET (TCP/IP) protokollfamilie'.
       </para>
     </note>
 
@@ -124,7 +125,11 @@
     </para>
 
 <screen><userinput>export BINDIR='/usr/bin' SBINDIR='/usr/bin' &amp;&amp;
-yes "" | make -j1                           &amp;&amp;
+yes "" | make config                        &amp;&amp;
+sed -e /ROM/s/0/1/  \
+    -e /X25/s/0/1/  \
+    -e /ROSE/s/0/1/ \
+    -i config.h                             &amp;&amp;
 make DESTDIR=$PWD/install -j1 install       &amp;&amp;
 rm    install/usr/bin/{nis,yp}domainname    &amp;&amp;
 rm    install/usr/bin/{hostname,dnsdomainname,domainname,ifconfig} &amp;&amp;
@@ -155,8 +160,8 @@ cp -a install/* /</userinput></screen>
 
     <para>
       <command>yes "" | make </command>: Kanalisere <command>yes</command>
-      til <command>make config</command> hopper over den interaktive konfigurasjonen og
-      godta standardinnstillingene.
+      til <command>make config</command> hopper over den interaktive 
+      konfigurasjonen og godta standardinnstillingene.
     </para>
 
     <para>
@@ -199,8 +204,8 @@ cp -a install/* /</userinput></screen>
         <term><command>arp</command></term>
         <listitem>
           <para>
-            brukes til å manipulere kjernens ARP hurtigbuffer, vanligvis
-            for å legge til eller slette en oppføring, eller for å dumpe hele hurtigbufferen
+            brukes til å manipulere kjernens ARP hurtigbuffer, vanligvis for å 
+            legge til eller slette en oppføring, eller for å dumpe hele hurtigbufferen
           </para>
           <indexterm zone="net-tools arp">
             <primary sortas="b-arp">arp</primary>
@@ -236,8 +241,8 @@ cp -a install/* /</userinput></screen>
         <term><command>mii-tool</command></term>
         <listitem>
           <para>
-            kontrollerer eller setter statusen til et nettverksgrensesnitts Media
-            Independent Interface (MII) enhet
+            kontrollerer eller setter statusen til et nettverksgrensesnitts 
+            Media Independent Interface (MII) enhet
           </para>
           <indexterm zone="net-tools mii-tool">
             <primary sortas="b-mii-tool">mii-tool</primary>
