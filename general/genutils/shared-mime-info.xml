@@ -7,14 +7,13 @@
   <!ENTITY shared-mime-info-download-http
            "https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/&shared-mime-info-version;/shared-mime-info-&shared-mime-info-version;.tar.gz">
   <!ENTITY shared-mime-info-download-ftp  " ">
-  <!ENTITY shared-mime-info-md5sum        "aac56db912b7b12a04fb0018e28f2f36">
-  <!ENTITY shared-mime-info-size          "7.5 MB">
-  <!ENTITY shared-mime-info-buildsize     "26 MB (med tester)">
+  <!ENTITY shared-mime-info-md5sum        "59fcd24e31d9744f4333f609f6c2ea13">
+  <!ENTITY shared-mime-info-size          "8.4 MB">
+  <!ENTITY shared-mime-info-buildsize     "32 MB (med tester)">
   <!ENTITY shared-mime-info-time          "mindre enn 0.1 SBU (med tester)">
 
   <!ENTITY xdgmime-download-http "&sources-anduin-http;/xdgmime/xdgmime.tar.xz">
   <!ENTITY xdgmime-md5sum        "7dfb4446705d345d3acd672024049e86">
-
 ]>
 
 <sect1 id="shared-mime-info"
@@ -72,7 +71,7 @@ xreflabel="shared-mime-info-&shared-mime-info-version;">
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -85,7 +84,7 @@ xreflabel="shared-mime-info-&shared-mime-info-version;">
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <bridgehead renderas="sect3">Shared Mime Info Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -96,6 +95,7 @@ xreflabel="shared-mime-info-&shared-mime-info-version;">
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
+      <xref linkend="git"/> (for tester), og
       <xref linkend="xmlto"/>
     </para>
 
@@ -106,10 +106,20 @@ xreflabel="shared-mime-info-&shared-mime-info-version;">
     <title>Installasjon av Shared Mime Info</title>
 
     <para>
+      Når du pakker ut tarballen, samsvarer ikke mappen med tarballnavnet. For 
+      enkelhets skyld, gi den nytt navn:
+    </para>
+
+<screen remap="optional"><userinput>cd ..                                           &amp;&amp;
+mv shared-mime-info-2.5* shared-mime-info-2.5.1 &amp;&amp;
+cd shared-mime-info-2.5.1</userinput></screen>
+
+    <para>
       Installer <application>Shared Mime Info</application> ved å kjøre
       følgende kommandoer:
     </para>
 
+<!--
     <para>
       Hvis du ønsker å kjøre testpakken, må du først pakke ut
       <filename>xdgmime</filename> tarballen inn i gjeldende mappe,
@@ -118,28 +128,31 @@ xreflabel="shared-mime-info-&shared-mime-info-version;">
 
 <screen remap="test"><userinput>tar -xf ../xdgmime.tar.xz &amp;&amp;
 make -C xdgmime</userinput></screen>
-
-    <para>
-      Bygg nå pakken:
-    </para>
+-->
 
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr --buildtype=release -D update-mimedb=true .. &amp;&amp;
+meson setup --prefix=/usr         \
+            --buildtype=release   \
+            -D update-mimedb=true \
+            -D build-tests=false  \
+            .. &amp;&amp;
 ninja</userinput></screen>
-
-    <para role="optional">
-      Hvis du har fulgt instruksjonene ovenfor for å bygge
-      <application>xdgmime</application>, for å teste resultatet kjør
-      <command>ninja test</command>.
-    </para>
 
     <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
 <screen role="root"><userinput>ninja install</userinput></screen>
+
+    <para role="test">
+      Hvis du vil kjøre testene, vil støttefiler automatisk lastes ned fra 
+      oppstrømsleverandøren. Bygg og kjør testene med: 
+    </para>
+   
+<screen role="test"><userinput>meson configure -D build-tests=true &amp;&amp;
+ninja test</userinput></screen>
 
   </sect2>
 
