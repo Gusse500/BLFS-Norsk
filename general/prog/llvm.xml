@@ -139,6 +139,29 @@
     <screen><userinput>sed 's/utility/tool/' -i llvm/utils/FileCheck/CMakeLists.txt</userinput></screen>
 
     <para>
+      Som &root; bruker, opprett to konfigurasjonsfiler for å 
+      gjøre <xref linkend='gSSP'/> aktivert som standard for
+      <command>clang</command> og <command>clang++</command>, så 
+      standardkonfigurasjonen av SSP funksjonen deres vil være konsistent 
+      med <xref linkend='gcc'/>:
+    </para>
+
+<screen role='root'><userinput>mkdir -pv /etc/clang &amp;&amp;
+for i in clang clang++; do
+  echo -fstack-protector-strong &gt; /etc/clang/$i.cfg
+done</userinput></screen>
+
+    <note>
+      <para>
+        Vanligvis oppretter vi bare konfigurasjonsfilene etter at vi har 
+        installert pakken i BLFS. I dette tilfellet vil imidlertid byggesystemet 
+        bygge compiler-rt med <command>clang</command> og
+        <command>clang++</command>, så vi lager konfigurasjonsfilene før vi 
+        kompilerer LLVM for å sikre at compiler-rt er bygget med SSP.
+      </para>
+    </note>
+
+    <para>
       Installer <application>LLVM</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -403,27 +426,6 @@ rmdir -v - -ignore-fail-on-non-empty /usr/share/doc/LLVM</userinput></screen>
       på slutten av byggeprosessen.
     </para>
 
-  </sect2>
-
-  <sect2 role="configuration">
-    <title>Konfigurere LLVM</title>
-
-    <sect3 id="llvm-config-info">
-      <title>Konfigurasjonsinformasjon</title>
-
-      <para>
-        Hvis du har bygget Clang, som &root; bruker opprett to 
-        konfigurasjonsfiler å lage <xref linkend='gSSP'/> aktivert som standard 
-        for <command>clang</command> og <command>clang++</command>, sånn at
-        standardkonfigurasjonen av deres SSP funksjon vil bli konsistent
-        med <xref linkend='gcc'/>:
-      </para>
-
-<screen role='root'><userinput>mkdir -pv /etc/clang &amp;&amp;
-for i in clang clang++; do
-  echo -fstack-protector-strong &gt; /etc/clang/$i.cfg
-done</userinput></screen>
-    </sect3>
   </sect2>
 
   <sect2 role="content">
