@@ -10,7 +10,7 @@
 
   <!-- NB with stylo, much of the build uses rust, and therefore cargo files.
     But the extra cached cargo files, if any, seem to be minimal -->
-  <!ENTITY firefox-buildsize     "7.7 GB (233 MB installert) uten tester">
+  <!ENTITY firefox-buildsize     "8.9 GB (268 MB installert) uten tester">
   <!-- editors: with ff63 and rust-1.29, ./mach build -j4 is probably the
    most practical way to get a timing on a machine with more cores, if taking
    cores offline is not practical. If in doubt, round up -->
@@ -75,16 +75,9 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
-<!--
-      <listitem>
-        <para>
-          Påkrevd oppdatering:
-          <ulink url="&patch-root;/firefox-&firefox-version;esr-ffmpeg-8.0.patch"/>
-        </para>
-      </listitem>
--->
       <listitem>
         <para>
           Påkrevd oppdatering:
@@ -104,6 +97,7 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <note>
       <para>
@@ -321,6 +315,7 @@ EOF</userinput></screen>
 <screen><userinput remap="pre">sed -i '/so.61/i \  "libavcodec.so.62",' dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp</userinput></screen>
 -->
 
+<!--
     <para>
       En patch er nødvendig for å fikse bygging med glibc-2.43. Denne patchen 
       endrer den leverte Rust craten, så byggesystemet må endres for å at 
@@ -334,7 +329,7 @@ sed -e '/patch.crates-io/a glslopt={path="third_party/rust/glslopt"}' \
     -i Cargo.toml &amp;&amp;
  
 sed -i '/name = "glslopt"/,/^$/{/source/d;/checksum/d}' Cargo.lock</userinput></screen>
-
+-->
 <!--
     <para>
       Deretter, fiks byggingen av denne pakken med rustc-1.95.0. Igjen trenger 
@@ -347,7 +342,7 @@ sed '/patch.crates-io/a encoding_rs={path="third_party/rust/encoding_rs"}' \
     -i Cargo.toml &amp;&amp;
 sed '/name = "encoding_rs"/,/^$/{/source/d;/checksum/d}' -i Cargo.lock</userinput></screen>
 -->
-
+<!--
     <para>
       Deretter, fiks byggingen av denne pakken med Python-3.14:
     </para>
@@ -359,8 +354,9 @@ sed '/name = "encoding_rs"/,/^$/{/source/d;/checksum/d}' -i Cargo.lock</userinpu
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;esr-llvm_22-1.patch</userinput></screen>
-
+-->
 <!--https://github.com/mozilla-firefox/firefox/commit/c4aab1ba6aad-->
+<!--
     <para>
       Deretter, fiks byggingen av denne pakken med cbindgen-0.29.4:
     </para>
@@ -372,7 +368,7 @@ sed '/name = "encoding_rs"/,/^$/{/source/d;/checksum/d}' -i Cargo.lock</userinpu
     </para>
 
 <screen><userinput remap="pre">sed -i '/VIRAMA = 47/a CLASS_CHARACTER,' intl/lwbrk/LineBreaker.cpp</userinput></screen>
-
+-->
     <para>
       Hvis geolokaliserings APIene er nødvendige:
     </para>
