@@ -170,7 +170,7 @@ $(RENDERTMP)/$(BLFSFULL): general.ent packages.ent $(ALLXML) $(ALLXSL) version
 	@echo "Validerer boken..."
 	$(Q)xmllint --nonet                             \
                --noent                             \
-               --postvalid                         \
+               --postvalid --valid                 \
                --output $(RENDERTMP)/$(BLFSFULL)   \
                $(RENDERTMP)/$(BLFSHTML2)
 
