@@ -113,6 +113,7 @@
       <xref linkend="gtk-doc"/>,
       <xref linkend="jansson"/>,
       <xref linkend="libnvme"/>,
+      <xref linkend="llvm"/> (med Clang og the BPF målet),
       <xref linkend="ModemManager"/>,
 	  <xref linkend="upower"/>,
       <xref linkend="valgrind"/>,
@@ -177,22 +178,23 @@
 <screen revision="sysv"><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup ..                    \
-      --prefix=/usr               \
-      --buildtype=release         \
-      -D libaudit=no              \
-      -D nmtui=true               \
-      -D ovs=false                \
-      -D ppp=false                \
-      -D nbft=false               \
-      -D selinux=false            \
-      -D session_tracking=elogind \
-      -D modem_manager=false      \
-      -D systemdsystemunitdir=no  \
-      -D systemd_journal=false    \
-      -D nm_cloud_setup=false     \
-      -D clat=false               \
-      -D qt=false                 &amp;&amp;
+meson setup ..                        \
+      --prefix=/usr                   \
+      --buildtype=release             \
+      -D libaudit=no                  \
+      -D nmtui=true                   \
+      -D ovs=false                    \
+      -D ppp=false                    \
+      -D nbft=false                   \
+      -D selinux=false                \
+      -D session_tracking=elogind     \
+      -D modem_manager=false          \
+      -D systemdsystemunitdir=no      \
+      -D systemdsystemgeneratordir=no \
+      -D systemd_journal=false        \
+      -D nm_cloud_setup=false         \
+      -D clat=false                   \
+      -D qt=false                     &amp;&amp;
 ninja</userinput></screen>
 
 <screen revision="systemd"><userinput>mkdir build &amp;&amp;
@@ -283,10 +285,11 @@ done</userinput></screen>
     </para>
 
     <para revision="sysv">
-      <parameter>-D systemdsystemunitdir=no</parameter> og
+      <parameter>-D systemdsystemunitdir=no</parameter>,
+      <parameter>-D systemdsystemgeneratordir=no</parameter>, og
       <parameter>-D systemd_journal=false</parameter>: systemd er ikke
-      brukt til sysv init systemer, så unngå å installere enheter og bruke
-      systemd journal.
+      brukt til sysv init systemer, så unngå å installere enheter, 
+      generatorfiler, og bruke systemd journal.
     </para>
 
     <para>
@@ -349,6 +352,13 @@ done</userinput></screen>
     </para>
 
     <para>
+      <parameter>-D clat=false</parameter>: Denne bryteren deaktiverer CLAT 
+      støtte. Fjern den hvis du har installert libbpf, og også installert LLVM 
+      bygget med Clang og BPF målet aktivert (merk at i BLFS
+      <xref linkend='llvm'/> instruksjonene er BPF målet ikke aktivert).
+    </para>
+
+    <para>
       <option>-D crypto=gnutls</option>: Bruk denne bryteren hvis du har GnuTLS
       installert og ønsker å bruke den til sertifikat og nøkkel operasjoner i
       NetworkManager, i stedet for å bruke NSS (standard).
@@ -359,11 +369,6 @@ done</userinput></screen>
       GnuTLS er installert, men du vil uansett bygge NetworkManager. Denne
       bryteren vil få NetworkManager til å mangle noen funksjoner (for eksempel
       802.1X).
-    </para>
-
-    <para>
-      <parameter>-D clat=false</parameter>: Denne bryteren deaktiverer CLAT 
-      støtte. Fjern den hvis den valgfrie libbpf er installert på systemet ditt.
     </para>
 
 <!--
