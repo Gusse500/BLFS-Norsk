@@ -175,7 +175,6 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="gdb"/> (brukes av testpakken hvis den er til stede),
-      <xref linkend="git"/> (kreves av testpakken),
       <ulink url="https://github.com/bytecodealliance/wasmtime/tree/main/cranelift">cranelift</ulink>,
       <ulink url="https://jemalloc.net/">jemalloc</ulink>,
       libgccjit (les Parameterforklaringer i
@@ -300,10 +299,20 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
     </note>
 
     <para>
+      Hvis du kjører testpakken, forfalsk en Git kjørbar fil for å tillate 
+      kjøring av testpakken uten <xref linkend='git'/> installert (vi bygger 
+      fra en utgivelsestarball i stedet for Git repositoriet her, så Git vil 
+      ikke være særlig nyttig selv om det er installert):
+    </para>
+
+<screen remap='test'><userinput>mkdir fake-git &amp;&amp; ln -sv /usr/bin/false fake-git</userinput></screen>
+
+    <para>
       Å kjøre testene, utsted:
     </para>
 
-<screen remap="test"><userinput>./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
+<screen remap="test"><userinput>PATH+=:$PWD/fake-git \
+./x.py test --verbose --no-fail-fast | tee rustc-testlog</userinput></screen>
 
     <para>
       I <filename class='directory'>rustdoc-ui</filename> testene,
@@ -318,8 +327,9 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
       testen navngitt <filename>rustdoc-target-modifiers</filename>
       er kjent for å mislykkes fordi vi ikke har aktivert AArch64 målet i
       <xref linkend='llvm'/>, og
-      testen navngitt <filename>short-ice</filename> er kjent for å mislykkes 
-      av ukjent årsak.
+      <!-- https://github.com/rust-lang/rust/issues/158219 -->
+      testen navngitt <filename>short-ice</filename> er ikke skrevet riktig og 
+      kjent for å feile.
     </para>
 
     <para>
