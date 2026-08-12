@@ -6,9 +6,9 @@
 
   <!ENTITY openldap-download-http "https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-&openldap-version;.tgz">
   <!ENTITY openldap-download-ftp  " ">
-  <!ENTITY openldap-md5sum        "761be850c8ff85dbf5031af7c6c6da44">
+  <!ENTITY openldap-md5sum        "fcb40191baba83c1f237d79f85835283">
   <!ENTITY openldap-size          "6.2 MB">
-  <!ENTITY openldap-buildsize     "100 MB (klient og server)">
+  <!ENTITY openldap-buildsize     "108 MB (klient og server)">
   <!ENTITY openldap-time          "0.3 SBU (klient), 0.8 SBU (server)">
 ]>
 
@@ -65,7 +65,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -75,7 +75,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <bridgehead renderas="sect3">OpenLDAP Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -90,16 +90,15 @@
         <xref linkend="mariadb"/> eller
         <xref linkend="postgresql"/> eller
         <ulink url="https://www.mysql.com/">MySQL</ulink>,
-      <ulink url="http://www.openslp.org/">OpenSLP</ulink>,
-      <ulink url="https://docs.mongodb.com/manual/core/wiredtiger/">WiredTiger</ulink>, og
-      &berkeley-db; (for slapd, også avviklet)
+      <ulink url="http://www.openslp.org/">OpenSLP</ulink>, og
+      <ulink url="https://docs.mongodb.com/manual/core/wiredtiger/">WiredTiger</ulink>
     </para>
 
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av OpenLDAP</title>
-
+<!--
     <para>
       Enten du trenger klienten eller serveren, må du først bruke en rettelse 
       for å bygge med OpenSSL-4:
@@ -108,7 +107,7 @@
 <screen><userinput>sed -e 's/cn->length/ASN1_STRING_length(cn)/g'  \
     -e 's/cn->data/ASN1_STRING_get0_data(cn)/g' \
     -i libraries/libldap/tls_o.c</userinput></screen>
-
+-->
     <note>
       <para>
         Hvis du bare trenger å installere klientsiden <command>ldap*</command>
@@ -117,10 +116,7 @@
         i stedet for de følgende (ingen testpakke tilgjengelig):
       </para>
 
-<screen role="nodump"><userinput>patch -Np1 -i ../openldap-&openldap-version;-consolidated-1.patch &amp;&amp;
-autoconf &amp;&amp;
-
-./configure --prefix=/usr     \
+<screen role="nodump"><userinput>./configure --prefix=/usr     \
             --sysconfdir=/etc \
             --disable-static  \
             --enable-dynamic  \
@@ -155,10 +151,7 @@ useradd  -c "OpenLDAP Daemon Owner" \
       kjøre følgende kommandoer:
     </para>
 
-<screen><userinput>patch -Np1 -i ../openldap-&openldap-version;-consolidated-1.patch &amp;&amp;
-autoconf &amp;&amp;
-
-./configure --prefix=/usr         \
+<screen><userinput>./configure --prefix=/usr         \
             --sysconfdir=/etc     \
             --localstatedir=/var  \
             --libexecdir=/usr/lib \
@@ -256,15 +249,6 @@ cp      -vfr      doc/{drafts,rfc,guide} \
       <parameter>--enable-overlays</parameter>: Denne bryteren aktiverer
       alle tilgjengelige overlegg.
     </para>
-
-<!--
-    <para>
-      <parameter>- -disable-ndb</parameter>: Denne bryteren deaktiverer
-      <application>MySQL</application> NDB Cluster bakstykke
-      som får konfigureringen til å mislykkes hvis
-      <application>MySQL</application> er tilstede.
-    </para>
--->
 
     <para>
       <parameter>--disable-sql</parameter>: Denne bryteren eksplisitt
@@ -390,17 +374,7 @@ cp      -vfr      doc/{drafts,rfc,guide} \
         <filename class="directory">/etc/openldap/slapd.d</filename>
         (anbefalt av OpenLDAP dokumentasjonen).
       </para>
-<!--
-      <para>
-        De sendte konfigurasjonsfilene antar at de lastbare modulene er
-        installert med deres <filename class="extension">.la</filename>
-        filer, som kanskje ikke er sant hvis du fjerner disse filene som instruert
-        i <xref linkend="libtool"/>. Hvis dette er tilfelle, utsted, som
-        <systemitem class="username">root</systemitem> bruker:
-      </para>
 
-<screen role="root"><userinput>sed 's/\.la$/.so/' -i /etc/openldap/slapd.{conf,ldif}{,.default}</userinput></screen>
--->
       <warning>
         <para>
           Instruksjonene ovenfor installerer en tom LDAP struktur og en standard
@@ -450,21 +424,6 @@ cp      -vfr      doc/{drafts,rfc,guide} \
       </itemizedlist>
 
     </sect3>
-
-<!--
-    <sect3>
-      <title>Mozilla Addressemappe</title>
-
-      <para>
-        Som standard, LDAPv2 støtte er deaktivert i
-        <filename>slapd.conf</filename> filen. Når databasen er riktig
-        satt opp og <application>Mozilla</application> er konfigurert til å bruke
-        mappen, må du legge til <option>allow bind_v2</option> til
-        <filename>slapd.conf</filename> filen.
-      </para>
-
-    </sect3>
- -->
 
     <sect3 id="openldap-init">
       <title><phrase revision="sysv">Oppstartsskript</phrase>
