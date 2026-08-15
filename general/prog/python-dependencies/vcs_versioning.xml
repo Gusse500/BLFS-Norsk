@@ -69,7 +69,8 @@
 
       <bridgehead renderas="sect5">Valgfri (for testing)</bridgehead>
       <para role="optional">
-        <xref linkend="pytest"/>
+        <xref linkend="pytest"/> og
+        <ulink url="https://pypi.org/project/pytest-timeout/">pytest-timeout</ulink>
       </para>
     </sect3>
 
@@ -87,8 +88,23 @@
 <screen role="root"><userinput>&install-wheel; vcs_versioning</userinput></screen>
 
     <para>
-      For å teste installasjonen, utsted: <command>pytest</command>.
+      For å teste installasjonen, utsted: (<literal>HOME=</literal> forhindrer
+      <filename>.gitconfig</filename> filen i hjemmemappen å forstyrrer 
+      testene):
     </para>
+
+<screen remap="test"><userinput>python3 -m venv --system-site-packages testenv &amp;&amp;
+testenv/bin/pip3 install pytest-timeout        &amp;&amp;
+HOME= testenv/bin/python3 -m pytest</userinput></screen>
+
+    <note>
+      <para>
+        Testpakken kan føre til at tastaturinndata ikke vises på skjermen i det 
+        hele tatt (men du kan fortsatt kjøre hvilken som helst kommando hvis du 
+        kan skrive den riktig).  Kjør <command>reset</command>
+        kommandoen for å fikse et slikt problem.
+      </para>
+    </note>
 
     </sect3>
 
