@@ -85,7 +85,7 @@
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="asciidoc"/>,
+      <xref linkend="asciidoc"/> (for manualsider),
       <xref linkend="avahi"/>,
 <!--  It looks like not used even if docs=true,
       the pre-built doc is shipped in tarball and will be installed
@@ -147,6 +147,13 @@ meson setup --prefix=/usr                  \
 ninja</userinput></screen>
 
     <para>
+      Hvis den valgfrie avhengigheten <xref linkend='asciidoc'/> er installert, 
+      kan du bygge manualsidene med:
+    </para>
+
+<screen remap='doc'><userinput>meson configure -D man=true &amp;&amp; ninja</userinput></screen>
+
+    <para>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
@@ -157,9 +164,10 @@ ninja</userinput></screen>
       installert og utsted: <command>meson configure -D debug=true
       -D tests=true &amp;&amp; LC_ALL=C.UTF-8 ninja test</command>.
       Testpakken skal kjøres fra en grafisk sesjon. En test, test_cli, 
-      er kjent for å mislykkes fordi manualsidene ikke genereres, men vil bestå 
-      hvis "-D man=false" utelates når pakken konfigureres. En annen test, 
-      resource, er også kjent for å mislykkes.
+      er kjent for å mislykkes hvis manualsidene ikke ble bygget.
+      <!-- https://gitlab.gnome.org/GNOME/tinysparql/-/commit/47d5bf9313d0 -->
+      En test navngitt <literal>tinysparql:sparql</literal> er kjent for å 
+      feile med SQLite 3.53.1 eller nyere.
     </para>
 
   </sect2>
@@ -169,13 +177,6 @@ ninja</userinput></screen>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/meson-buildtype-release.xml"/>
-
-    <para>
-      <parameter>-D man=false</parameter>: Denne bryteren forhindrer byggeprosessen
-      fra å generere manualsider. Utelat denne bryteren hvis du har
-      <xref linkend="asciidoc" role="nodep"/> installert og ønsker å generere
-      og installer manualsidene.
-    </para>
 
     <para revision="sysv">
       <parameter>-D systemd_user_services=false</parameter>: Denne bryteren forhindrer
