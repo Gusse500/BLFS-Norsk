@@ -4,28 +4,29 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY qtkeychain-download-http "https://github.com/frankosterfeld/qtkeychain/archive/&qtkeychain-version;/qtkeychain-&qtkeychain-version;.tar.gz">
-  <!ENTITY qtkeychain-download-ftp  " ">
-  <!ENTITY qtkeychain-md5sum        "f97ec6ec37a465abdea63c2def01f280">
-  <!ENTITY qtkeychain-size          "64 KB">
-  <!ENTITY qtkeychain-buildsize     "3.1 MB">
-  <!ENTITY qtkeychain-time          "less than 0.1 SBU (Using parallelism=4)">
+  <!ENTITY corrosion-download-http "https://github.com/corrosion-rs/corrosion/archive/v&corrosion-version;/corrosion-&corrosion-version;.tar.gz">
+  <!ENTITY corrosion-download-ftp  " ">
+  <!ENTITY corrosion-md5sum        "060ee79a6bf7c5a2e4e810370fbb7b61">
+  <!ENTITY corrosion-size          "104 KB">
+  <!ENTITY corrosion-buildsize     "10 MB">
+  <!ENTITY corrosion-time          "mindre enn 0.1 SBU">
 ]>
 
-<sect1 id="qtkeychain" xreflabel="qtkeychain-&qtkeychain-version;">
-  <?dbhtml filename="qtkeychain.html"?>
+<sect1 id="corrosion" xreflabel="corrosion-&corrosion-version;">
+  <?dbhtml filename="corrosion.html"?>
 
-  <title>qtkeychain-&qtkeychain-version;</title>
+  <title>corrosion-&corrosion-version;</title>
 
-  <indexterm zone="qtkeychain">
-    <primary sortas="g-qtkeychain">qtkeychain</primary>
+  <indexterm zone="corrosion">
+    <primary sortas="a-corrosion-&corrosion-version;">corrosion</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduksjon til qtkeychain</title>
+    <title>Introduksjon til corrosion</title>
 
     <para>
-      Denne pakken tilbyr et Qt API for å lagre passord og andre hemmelige data sikkert.
+      <application>corrosion</application> pakken er et verktøy for å integrere 
+      <xref linkend="rustc"/> inn i et eksisterende CMake prosjekt.
     </para>
 
     &lfs131_checked;
@@ -34,60 +35,60 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Nedlasting (HTTP): <ulink url="&qtkeychain-download-http;"/>
+          Nedlasting (HTTP): <ulink url="&corrosion-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting (FTP): <ulink url="&qtkeychain-download-ftp;"/>
+          Nedlasting (FTP): <ulink url="&corrosion-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlasting MD5 sum: &qtkeychain-md5sum;
+          Nedlasting MD5 sum: &corrosion-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Nedlastningsstørrelse: &qtkeychain-size;
+          Nedlastningsstørrelse: &corrosion-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert diskplass som kreves: &qtkeychain-buildsize;
+          Estimert diskplass som kreves: &corrosion-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimert byggetid: &qtkeychain-time;
+          Estimert byggetid: &corrosion-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">qtkeychain Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">corrosion Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
-      <xref linkend="qt6"/>
+      <xref linkend="rustc"/>
     </para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av qtkeychain</title>
+    <title>Installasjon av corrosion</title>
 
     <para>
-      Installer <application>qtkeychain</application> ved å kjøre følgende
+      Installer <application>corrosion</application> ved å kjøre følgende
       kommandoer:
     </para>
 
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-cmake -D CMAKE_INSTALL_PREFIX=$QT6DIR \
+cmake -D CMAKE_INSTALL_PREFIX=/usr    \
       -D CMAKE_BUILD_TYPE=Release     \
-      -D BUILD_WITH_QT6=ON            \
-      -D BUILD_TESTING=OFF            \
+      -D CMAKE_INSTALL_LIBEXECDIR=lib \
+      -D CORROSION_BUILD_TESTS=OFF    \
       -W no-author ..                 &amp;&amp;
 make</userinput></screen>
 
@@ -108,20 +109,21 @@ make</userinput></screen>
 
     <segmentedlist>
       <segtitle>Installerte Programmer</segtitle>
-      <segtitle>Installert Bibliotek</segtitle>
+      <segtitle>Installerte Biblioteker</segtitle>
       <segtitle>Installerte Mapper</segtitle>
 
       <seglistitem>
-        <seg>Ingen</seg>
-        <seg>libqt6keychain.so</seg>
         <seg>
-          $QT6DIR/include/qt6keychain,
-          $QT6DIR/lib/cmake/Qt6Keychain, og
-          $QT6DIR/share/qt6keychain
+          Ingen
+        </seg>
+        <seg>Ingen</seg>
+        <seg>
+          /usr/lib/cmake/Corrosion og
+          /usr/share/cmake
         </seg>
       </seglistitem>
     </segmentedlist>
 
   </sect2>
-
 </sect1>
+

@@ -24,15 +24,15 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduksjon til GNOME Innstillingsnisse</title>
+    <title>Introduksjon til GNOME Innstillingsdaemon</title>
 
     <para>
-      <application>GNOME Innstillingsnisse</application> er ansvarlig
+      <application>GNOME Innstillingsdaemon</application> er ansvarlig
       for å stille inn ulike parametere for en <application>GNOME Økt</application>
       og applikasjonene som kjører under den.
     </para>
 
-    &lfs130_checked;
+    &lfs131_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -68,7 +68,7 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">GNOME Innstillingsnisse Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">GNOME Innstillingsdaemon Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
@@ -109,22 +109,17 @@
     <para role="recommended" revision="sysv">
       <xref linkend="blocaled" role="runtime"/>
     </para>
-<!-- test suite does not work
+
     <bridgehead renderas="sect4">Valgfri (for tester)</bridgehead>
     <para role="optional">
-      <xref linkend="gnome-session"/>,
-      <xref linkend="mutter"/>,
-      <xref linkend="python-dbusmock"/>,
-      <xref linkend="umockdev"/>, og
-      <command>Xvfb</command> (for tester, fra
-      <xref linkend="xorg-server"/> eller
-      <xref role="nodep" linkend="xwayland"/>)
+      <xref linkend="mutter"/>, og
+      <xref linkend="python-dbusmock"/>
     </para>
--->
+
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av GNOME Innstillingsnisse</title>
+    <title>Installasjon av GNOME Innstillingsdaemon</title>
 
     <para revision="sysv">
       Deretter fikser du libelogind deteksjon for tester:
@@ -171,7 +166,9 @@ ninja</userinput></screen>
     <para>
       For å sjekke resultatene, kjør: <command>ninja test</command>. Merk at
       du må ha <application>python-dbusmock</application> installert
-      for at testene skal fullføres.
+      for at testene skal fullføres, og mange testtilfeller vil bli hoppet over 
+      uten både <xref linkend='mutter'/> og
+      <xref linkend='gnome-session'/> installert.
     </para>
 
     <!-- The tests do not work because gnome-session 49 has removed the built-in
@@ -213,8 +210,8 @@ ninja</userinput></screen>
         </seg>
         <seg>
           /etc/xdg/Xwayland-session.d,
-          /usr/include/gnome-settings-daemon-48,
-          /usr/lib/gnome-settings-daemon-48, og
+          /usr/include/gnome-settings-daemon-&gnome-settings-daemon-major;,
+          /usr/lib/gnome-settings-daemon-&gnome-settings-daemon-major;, og
           /usr/share/gnome-settings-daemon
         </seg>
       </seglistitem>
