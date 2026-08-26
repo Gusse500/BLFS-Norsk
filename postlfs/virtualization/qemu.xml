@@ -143,6 +143,8 @@
       <ulink url="https://github.com/lzfse/lzfse">lzfse</ulink>,
       <ulink url="https://github.com/luigirizzo/netmap">netmap</ulink>,
       <ulink url="https://github.com/numactl/numactl">numactl</ulink>,
+      <ulink url="https://pypi.org/project/pygdbmi/">pygdbmi</ulink>
+      (for tester),
       <ulink url="https://github.com/linux-rdma/rdma-core">rdma-core</ulink>,
       <ulink url="https://github.com/SELinuxProject/selinux">SELinux</ulink>,
       <ulink url="https://google.github.io/snappy/">snappy</ulink>,
@@ -150,6 +152,8 @@
       <ulink url="https://gitlab.freedesktop.org/spice/usbredir">usbredir</ulink>,
       og <ulink url="https://github.com/virtualsquare/vde-2">VDE</ulink>
     </para>
+
+    &test-use-internet;
 
     <bridgehead renderas="sect4">Valgfri (Kjøretid)</bridgehead>
     <para role="optional">
@@ -274,6 +278,7 @@ cd        build &amp;&amp;
              --localstatedir=/var     \
              --target-list=$QEMU_ARCH \
              --audio-drv-list=alsa    \
+             --disable-download       \
              --disable-pa             \
              --enable-slirp           \
              --docdir=/usr/share/doc/qemu-&qemu-version; &amp;&amp;
@@ -285,9 +290,8 @@ make</userinput></screen>
     <para>
       <application>qemu</application> bruker <command>ninja</command> som
       en delprosess ved byggingen. For å kjøre testene, kjør:
-      <command>ninja test</command>. <!--Tre tester er kjent for å mislykkes på 
-      grunn av en innrykksendring i skallutdatameldingen med bash-5.3 eller 
-      nyere.-->
+      <command>ninja test</command>.  Testpakken vil laste ned den eksterne
+      Python modulen pygdbmi for å tilfredstille noen tester.
     </para>
 
     <para>
@@ -331,6 +335,13 @@ chmod 4750 /usr/libexec/qemu-bridge-helper</userinput></screen>
     <para>
       <parameter>--audio-drv-list=alsa</parameter>: Denne bryteren
       setter lyddriveren til ALSA. Se nedenfor for å aktivere andre lyddrivere.
+    </para>
+
+    <para>
+      <parameter>--disable-download</parameter>: Denne bryteren hindrer
+      skriptet <command>configure</command> fra å laste ned Python moduler
+      via Internett (kopiene som leveres i tarballen vil bli brukt i
+      stedet).
     </para>
 
     <para>
