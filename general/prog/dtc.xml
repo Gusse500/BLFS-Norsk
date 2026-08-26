@@ -139,10 +139,21 @@ popd</userinput></screen>
 
     <screen role="root"><userinput>cp -R ../Documentation -T /usr/share/doc/dtc-&dtc-version;</userinput></screen>
 
+    <!-- https://github.com/dgibson/dtc/pull/192 -->
     <para>
       Hvis du har installert
       <xref linkend='swig'/> og du ønsker å installere Python 3 bindinger
-      av denne pakken, bygg Python 3 modulen:
+      av denne pakken, først fiks koden for kompatibilitet med SWIG 4.5.0 eller
+      nyere:
+    </para>
+
+    <screen role="nodump"><userinput>sed -e 's/PyString_FromString/PyUnicode_FromString/' \
+        -e 's/PyString_AsString/PyBytes_AsString/'       \
+        -e 's/PyInt_AsLong/PyLong_AsLong/'               \
+        -i pylibfdt/libfdt.i</userinput></screen>
+
+    <para>
+      Bygg Python 3 modulen:
     </para>
 
     <screen role="nodump"><userinput>&build-wheel-cmd; ..</userinput></screen>
