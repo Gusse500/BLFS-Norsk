@@ -125,10 +125,10 @@
 <screen revision='sysv'><userinput>find man -name Makefile.in -exec sed -i 's/getspnam\.3 / /' {} \; &amp;&amp;
 find man -name Makefile.in -exec sed -i 's/passwd\.5 / /'   {} \; &amp;&amp;
 
-sed -e 's@#ENCRYPT_METHOD DES@ENCRYPT_METHOD YESCRYPT@' \
-    -e 's@/var/spool/mail@/var/mail@'                   \
-    -e '/PATH=/{s@/sbin:@@;s@/bin:@@}'                  \
-    -i etc/login.defs                                   &amp;&amp;
+sed -e 's@#ENCRYPT_METHOD SHA512@ENCRYPT_METHOD YESCRYPT@' \
+-e 's@/var/spool/mail@/var/mail@'                      \
+-e '/PATH=/{s@/sbin:@@;s@/bin:@@}'                     \
+-i etc/login.defs                                      &amp;&amp;
 
 ./configure --sysconfdir=/etc   \
             --disable-static    \
@@ -174,26 +174,16 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>sed -i 's/groups$(EXEEXT) //' src/Makefile.in</command>: Denne sed
-      brukes til å undertrykke installasjonen av <command>groups</command>
-      programmet ettersom versjonen fra <application>Coreutils</application>
-      pakken installert under LFS foretrekkes.
-    </para>
-
-    <para>
-      <command>find man -name Makefile.in -exec ... {} \;</command>: Den
-      første kommandoen brukes til å undertrykke installasjonen av
-      <command>groups</command> mansider slik at de eksisterende installert fra
-      <application>Coreutils</application> pakken ikke blir erstattet.
-      De to andre kommandoene forhindrer installasjon av manual sider som
+      <command>find man -name Makefile.in -exec ... {} \;</command>: Disse
+      to kommandoer forhindrer installasjon av manualsider som
       allerede er installert av <application>Man-pages</application> i LFS.
     </para>
 
     <para>
-      <command>sed -e 's@#ENCRYPT_METHOD DES@ENCRYPT_METHOD YESCRYPT@' -e
+      <command>sed -e 's@#ENCRYPT_METHOD SHA512@ENCRYPT_METHOD YESCRYPT@' -e
         's@/var/spool/mail@/var/mail@' -e '/PATH=/{s@/sbin:@@;s@/bin:@@}'
-        -i etc/login.defs</command>: I stedet for å bruke standard 'DES'
-       metoden, endrer denne kommandoen installasjonen til å bruke den mye mer
+        -i etc/login.defs</command>: I stedet for å bruke standard 'SHA512'
+       metoden, endrer denne kommandoen installasjonen til å bruke den mer
       sikre 'YESCRYPT' metode for hashing passord, som også tillater
       passord lengre enn åtte tegn. Kommandoen endrer også
       utdaterte <filename class="directory">/var/spool/mail</filename> plasseringen
