@@ -6,12 +6,12 @@
 
   <!ENTITY asymptote-download-http "&sourceforge-dl;/asymptote/asymptote-&asymptote-version;.src.tgz">
   <!ENTITY asymptote-download-ftp  " ">
-  <!ENTITY asymptote-md5sum        "b89cc85a4621fa4afedcb5e988c625c7">
-  <!ENTITY asymptote-size          "25 MB">
+  <!ENTITY asymptote-md5sum        "158921966b8be1049e933b5154774c66">
+  <!ENTITY asymptote-size          "27 MB">
   <!-- for asymptote-2.88 on top of TL2024, 75 MB for programs,
        the docs overwrite texmf-dist (5.2 MB) -->
-  <!ENTITY asymptote-buildsize     "335 MB (62 MB installert etter å ha overskrevet filer i $TEXLIVE_PREFIX/texmf-dist/, med alle avhengighetene som er i BLFS)">
-  <!ENTITY asymptote-time          "0.8 SBU (bruke parallellisme=4)">
+  <!ENTITY asymptote-buildsize     "338 MB (55 MB installert etter å ha overskrevet filer i $TEXLIVE_PREFIX/texmf-dist/, med alle avhengighetene som er i BLFS)">
+  <!ENTITY asymptote-time          "0.9 SBU (bruke parallellisme=4)">
 ]>
 
 <sect1 id="asymptote" xreflabel="asymptote-&asymptote-version;">
@@ -35,7 +35,7 @@
       og (ved hjelp av <application>dvisvgm</application>) SVG utdata.
     </para>
 
-    &lfs130_checked;
+    &lfs131_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -109,6 +109,12 @@
       <xref linkend="fftw"/>,
       <xref linkend="gsl"/>,
       <xref linkend="libsigsegv"/>,
+      <!-- I have not been able to build this against vulkan, although
+      vulkan support has been added in recent versions. It seems to require
+      glfw, and weird libraries like "-lMachineIndependent -lOSDependent" etc.
+      Disabling for 13.1 release, because I am in a hurry.
+      Pierre August 30, 2026-->
+      <xref linkend="vulkan"/>,
       <ulink url="https://github.com/Tencent/rapidjson/releases/">rapidjson</ulink>
       for å bruke
       <ulink url="https://microsoft.github.io/language-server-protocol/implementors/tools/">LSP</ulink>
@@ -160,6 +166,12 @@
 <screen><userinput>patch -Np1 -i ../asymptote-&asymptote-version;-build_fix-1.patch</userinput></screen>-->
 
     <para>
+      Først, fiks en byggefeil når både GL og Vulkan er deaktivert:
+    </para>
+
+<screen><userinput>sed -i "/SHIMLIB.*asydir/d" Makefile.in</userinput></screen>
+
+    <para>
       Installer <application>asymptote</application> ved å kjøre følgende
       kommandoer:
     </para>
@@ -173,7 +185,8 @@
             --libdir=$TEXLIVE_PREFIX/texmf-dist               \
             --mandir=$TEXLIVE_PREFIX/texmf-dist/doc/man       \
             --disable-lsp                                     \
-            --enable-gc=system                                \
+            --disable-vulkan                                  \
+            --disable-gl                                      \
             --with-latex=$TEXLIVE_PREFIX/texmf-dist/tex/latex \
             --with-context=$TEXLIVE_PREFIX/texmf-dist/tex/context/third &amp;&amp;
 
@@ -210,10 +223,24 @@ make</userinput></screen>
        bygger ikke med mindre boost og rapidjson er installert.
      </para>
 
+     <para>
+       <parameter>--disable-vulkan --disable-gl</parameter>: Å bygge Vulkan
+       eller GL backend krever GLFW pakken og flere andre eksterne biblioteker
+       som ikke er i BLFS.
+     </para>
+
+     <para>
+       <parameter>--disable-lsp</parameter>: Språkserverprotokollen er aktivert
+       som standard, med flere tredjepartskilder inkludert, men den bygger ikke
+       med mindre boost og rapidjson er installert.
+     </para>
+
     <para>
-      <parameter>--enable-gc=system</parameter>: dette sikrer at 
-      systemversjonen av <filename class="libraryfile">libgc.so</filename> vil bli brukt
-      i stedet for versjonen som ble levert med denne pakken.
+      <option>--disable-gc</option>: det ser ikke ut til å være noen måte å
+      bygge asymptote mot systemets
+      <filename class="libraryfile">libgc.so</filename>. Søppelsamling kan
+      enten deaktiveres med dette alternativet, eller bygges ved hjelp av
+      versjonen som følger med denne pakken.
     </para>
 
     <para>
