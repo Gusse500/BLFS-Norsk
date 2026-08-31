@@ -6,21 +6,21 @@
   <!-- utah -->
   <!ENTITY texlive-download-http "https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/&texlive-year;/texlive-&texlive-version;-source.tar.xz">
   <!ENTITY texlive-download-ftp  " ">
-  <!ENTITY texlive-md5sum        "699b3a9871885e54f35c155332d69da4">
-  <!ENTITY texlive-size          "106 MB">
+  <!ENTITY texlive-md5sum        "734e2521173e8ef6a4c04f70d1285124">
+  <!ENTITY texlive-size          "95 MB">
 
-  <!ENTITY texlive-buildsize      "9.8 GB inkludert tilleggsnedlastingen og testene, 8.7 GB installert">
+  <!ENTITY texlive-buildsize      "10.3 GB inkludert tilleggsnedlastingen og testene, 9.2 GB installert">
   <!ENTITY texlive-time           "4.0  SBU inkludert tilleggsnedlastingen og testene, bygget med parallellitet=4">
 
   <!-- utah -->
   <!ENTITY texlive-texmf-download-http "https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/&texlive-year;/texlive-&texlive-version;-texmf.tar.xz">
   <!ENTITY texlive-texmf-download-ftp  " ">
-  <!ENTITY texlive-texmf-md5sum        "9b3093da81e6eacf98fde86589471a22">
-  <!ENTITY texlive-texmf-size          "4.4 GB">
+  <!ENTITY texlive-texmf-md5sum        "0a953c929116392047950b93a8bb96d1">
+  <!ENTITY texlive-texmf-size          "4.6 GB">
 
   <!ENTITY texlive-extra-download-http "https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/&texlive-year;/texlive-&texlive-version;-extra.tar.xz">
   <!ENTITY texlive-extra-download-ftp  " ">
-  <!ENTITY texlive-extra-md5sum        "8aabf4273a001d79c3c8de347f028145">
+  <!ENTITY texlive-extra-md5sum        "e4103c7087dd5cd11edb62028a7fafba">
   <!ENTITY texlive-extra-size          "2.0 MB">
 
 <!-- The following commit will change future installs so that the scripts in
@@ -61,13 +61,10 @@
     <note>
       <para>
         I følge <ulink url="https://www.tug.org/historic/"/> master
-        nettstedet i Frankrike støtter bare ftp og rsync. Nå som ftp generelt
-        er utdatert, den siden har lenker til speil, hvorav noen støtter https,
-        f.eks. i Utah og Chemntiz samt i Kina. Hvis du foretrekker å bruke et
+        nettsted i Tyskland støtter bare rsync, men den siden har lenker til
+        speil, som støtter https. Hvis du foretrekker å bruke et
         annet speil fra eksempelkoblingene her, må du navigere
-        til systems/historic/texlive/&texlive-year; eller systems/texlive/&texlive-year;
-        som tilfellet kan være.
-        <!-- the Chinese mirrors do not use a 'historic' subdirectory. -->
+        til systems/texlive/&texlive-year;.
       </para>
     </note>
 
@@ -85,8 +82,6 @@
       hvis delte systembiblioteker brukes.
     </para>
 
-      <para>
-      </para>
     <para>
       Alle disse pakkene behandles på deres egne sider og kan bli
       bygget etter installasjon av denne pakken. Hvis du ikke allerede har gjort det,
@@ -94,7 +89,7 @@
       å initialisere den nye installasjonen vil bli funnet.
     </para>
 
-    &lfs130_checked;
+    &lfs131_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -144,7 +139,8 @@
       <para>
         På grunn av størrelsen på denne pakken er det usannsynlig at den speiles av
         BLFS speil. Hvis du ikke kan laste ned filene for denne pakken,
-        gå til https://www.ctan.org/mirrors/ for å finne et mer tilgjengelig speil.
+        gå til <ulink url="https://www.tug.org/historic/"/> for å finne et mer
+        tilgjengelig speil (se merknaden ovenfor).
       </para>
 
     <itemizedlist spacing="compact">
@@ -197,14 +193,15 @@
           Nedlastingsstørrelse: &texlive-extra-size;
         </para>
       </listitem>
-  <listitem>
+<!--
+      <listitem>
         <para>
           Nødvendig oppdatering: <ulink url=
           "&patch-root;/texlive-&texlive-version;-source-upstream_fixes-1.patch"/>
         </para>
       </listitem>
+-->
     </itemizedlist>
-
     <bridgehead renderas="sect3">TeX Live fra kilden Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
@@ -266,33 +263,20 @@
       </para>
     </note>
 
-<!-- Applied in TL2025 -renodr
-    <para>
-      Rett opp en byggefeil som oppstår på noen plattformer på grunn av mer strenge
-      kompilator advarsler:
-    </para>
-
-<screen><userinput remap="pre">sed -e '182 s/internal_font_number/boolean/' \
-    -e '301 s/internal_font_number/boolean/' \
-    -i texk/web2c/pdftexdir/pdftex.ch</userinput></screen>
--->
-
     <para>
       Nå, som en vanlig bruker:
     </para>
 
 <!-- if a patch for the source is needed, this should go between the export
-	ande configure. But keeping it there as a commented line adds too much vertical space.
-    patch -Np1 -i ../texlive-&texlive-version;-source-security_fix-1.patch &amp;&amp;-->
-<screen><userinput>export TEXARCH=$(uname -m | sed -e 's/i.86/i386/' -e 's/$/-linux/') &amp;&amp;
-
+	and mkdir. But keeping it there as a commented line adds too much vertical space.
 patch -Np1 -i ../texlive-&texlive-version;-source-upstream_fixes-1.patch &amp;&amp;
+-->
+<screen><userinput>export TEXARCH=$(uname -m | sed -e 's/i.86/i386/' -e 's/$/-linux/') &amp;&amp;
 
 mkdir texlive-build &amp;&amp;
 cd    texlive-build &amp;&amp;
 
-../configure CC="gcc -std=gnu17" -C               \
-    CXX="g++ -std=gnu++17"                        \
+../configure CXX="g++ -std=gnu++17" -C            \
     --prefix=$TEXLIVE_PREFIX                      \
     --bindir=$TEXLIVE_PREFIX/bin/$TEXARCH         \
     --datarootdir=$TEXLIVE_PREFIX                 \
@@ -327,10 +311,8 @@ make</userinput></screen>
       både <application>psutils</application> og <application>libpaper</application>
       som resulterer i en forskjell i de siste desimalene til psresize
       testen. <application>libpaper</application> utvikler tror ikke
-      dette er av betydning. En annen test, <filename>xdvipdfm-pdf.test</filename>,
-      er kjent for å feile på grunn av en manglende binærfil fra fiksen i 
-      oppstrøms sin oppdatering. Dette påvirker ikke programmets funksjonalitet.
-      <!-- Still true with TL 2025 -->
+      dette er av betydning.
+      <!-- Still true with TL 2026 -->
     </para>
 
     <para>
@@ -385,6 +367,15 @@ fmtutil-sys --all</userinput></screen>
 
 <screen role="root"><userinput>ln -svf $TEXLIVE_PREFIX/lib/libkpathsea.so{,.6} /usr/lib</userinput></screen>
 
+    <para>
+      For å tillate <command>xdvi</command> å vises i skrivebordsmenyen, er det
+      nødvendig å opprette en symbolsk lenke fra
+      <filename class="directory">/usr/share/applications</filename>. Som
+      &root; bruker:
+    </para>
+
+<screen role="root"><userinput>ln -svf $TEXLIVE_PREFIX/applications/* /usr/share/applications</userinput></screen>
+
     <note>
       <para>
         TeX Live inkluderer ikke kilden for ConTeXt, bare elementene som
@@ -422,7 +413,13 @@ fmtutil-sys --all</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <command>-C</command>: oppretter config.cache, som sparer betydelig
+      <parameter>CXX="g++ -std=gnu++17"</parameter>: texlive byggesystemet
+      bruker standarden C++11 for C++, men noen systempakker krever C++17
+      standarden. Denne bryteren tillater bruk av denne standarden.
+    </para>
+
+    <para>
+      <parameter>-C</parameter>: oppretter config.cache, som sparer betydelig
       tid i et parallellbygg.
     </para>
 
@@ -510,10 +507,13 @@ fmtutil-sys --all</userinput></screen>
              libtexlua53.so,
              libtexluajit.so
         </seg>
-        <seg>$TEXLIVE_PREFIX/bin,
+        <seg>$TEXLIVE_PREFIX/applications,
+          $TEXLIVE_PREFIX/bin,
              $TEXLIVE_PREFIX/include,
              $TEXLIVE_PREFIX/lib,
-             $TEXLIVE_PREFIX/texmf-dist
+             $TEXLIVE_PREFIX/texmf-dist,
+             $TEXLIVE_PREFIX/texmf-var, og
+             $TEXLIVE_PREFIX/tlpkg
         </seg>
       </seglistitem>
     </segmentedlist>
