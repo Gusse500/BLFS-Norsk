@@ -73,6 +73,7 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="git"/>,
+      <xref linkend="llvm"/> (med Clang),
       <xref linkend="sphinx"/> og
       <xref linkend="sphinx_rtd_theme"/> (for dokumentasjon),
       <ulink url="https://www.docker.com/">docker</ulink>,
@@ -93,7 +94,7 @@
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr --disable-static &amp;&amp;
+<screen><userinput>./configure --prefix=/usr --disable-static --without-libclang &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -112,6 +113,18 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="../../xincludes/static-libraries.xml"/>
+
+    <!-- libfyaml.pc has Clang libraries in Libs instead of Libs.private,
+         so the dependency is "infective."  When libclang really starts to
+         provides a functionality we may remove this option and reassess the
+         issue.  -->
+    <para>
+      <parameter>--without-libclang</parameter>: Dette alternativet deaktiverer
+      bruken av Clang biblioteket. Per nå tilbyr ikke Clang biblioteket noen
+      nyttig funksjonalitet for denne pakken, og å aktivere det ville føre til
+      at alle pakker som bruker libfyaml blir unødvendig koblet mot Clang
+      biblioteket.
+    </para>
   </sect2>
 
   <sect2 role="content">
