@@ -6,10 +6,10 @@
 
   <!ENTITY kea-download-http "https://downloads.isc.org/isc/kea/&kea-dhcp-version;/kea-&kea-dhcp-version;.tar.xz">
   <!ENTITY kea-download-ftp  " ">
-  <!ENTITY kea-md5sum        "a673e95637b708b3b1926c696cdf168b">
-  <!ENTITY kea-size          "6.3 MB">
-  <!ENTITY kea-buildsize     "231 MB (47 MB installert; legg til 425 MB for tester)">
-  <!ENTITY kea-time          "6.4 SBU (med parallellitet=4; legge til 17 SBU for tester)">
+  <!ENTITY kea-md5sum        "84f88fb0a9897e993ac7d414e1efb2bc">
+  <!ENTITY kea-size          "6.5 MB">
+  <!ENTITY kea-buildsize     "254 MB (49 MB installert; legg til 535 MB for tester)">
+  <!ENTITY kea-time          "3.8 SBU (med parallellitet=4; legge til 17 SBU for tester)">
   <!ENTITY kea-arm-vers      "&kea-dhcp-version;">
 ]>
 
@@ -31,7 +31,18 @@
       serveren som ble avviklet i desember 2022.
     </para>
 
-    &lfs131_built;
+    <important>
+      <para>
+        Denne pakken bygger på et nåværende LFS system, men den har
+        <emphasis role='bold'>ikke</emphasis> blitt testet av LFS redaktører.
+        For å teste den ordentlig, må pakken installeres på en server i et
+        nettverk der den er den eneste dhcp serveren. Deretter må et annet
+        system på det uavhengige nettverket be om en DHCP IP-adresse fra den
+        serveren.
+      </para>
+    </important>
+
+    &lfs131_checked;
 
     <bridgehead renderas="sect3">Pakkeinformasjon</bridgehead>
     <itemizedlist spacing="compact">
@@ -125,7 +136,7 @@
 
   <sect2 role="installation">
     <title>Installasjon av ISC Kea DHCP Server</title>
-
+<!--
     <para>
       Først, bruk noen nødvendige rettelser for boost-&boost-version;:
     </para>
@@ -137,13 +148,13 @@
 sed -e "/lexical_cast.hpp/a #include &lt;boost/static_assert.hpp&gt;"  \
     -i src/lib/log/logger_level_impl.cc                          \
        src/lib/dns/rdataclass.cc</userinput></screen>
-
+-->
     <para>
-      Bruk også en rettelse for bygging med OpenSSL-4:
+      Først bruk en rettelse for bygging med OpenSSL-4:
     </para>
 
-<screen><userinput>sed -e 's/^[ ]*\(::X509_NAME\)/const \1/' \
-    -i src/lib/asiolink/openssl_tls.h</userinput></screen>
+<screen role="root"><userinput>sed -i "s:\${prefix}//etc:/etc:" /etc/kea/keactrl.conf &amp;&amp;
+sed -i "s:\${prefix}/::"         /usr/sbin/keactrl</userinput></screen>
 
     <para>
       Nå, installer <application>ISC Kea DHCP Server</application> ved å kjøre
@@ -703,13 +714,13 @@ EOF</userinput></screen>
         <seg>
           keactrl,
           kea-admin,
-          kea-ctrl-agent,
           kea-dhcp4,
           kea-dhcp6,
           kea-dhcp-ddns,
           kea-lfc,
-          kea-msg-compiler, og
-          kea-shell
+          kea-msg-compiler,
+          kea-shell, og
+          perfdhcp
         </seg>
         <seg>
           libkea-asiodns.so,
