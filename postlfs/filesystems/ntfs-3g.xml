@@ -28,15 +28,32 @@
 
     <note>
       <para id='ntfs3-kernel'>
-        En ny lese-skrive driver for NTFS, kalt NTFS3, er lagt til
-        inn i Linux kjernen siden 5.15 utgivelsen. Ytelsen til NTFS3
-        er mye bedre enn ntfs-3g. For å aktivere NTFS3, aktiver følgende
-        alternativer i kjernekonfigurasjonen og kompiler kjernen på nytt hvis
-        nødvendig:
+        I Linux 7.1 finnes det to konkurrerende NTFS lese-skrivedrivere i
+        kjernen, kalt NTFS og NTFS3. Ytelsen deres er mye bedre enn ntfs-3g.
+        Ettersom noen applikasjoner påkaller <command>mount</command> med
+        <option>-t ntfs</option>, men andre kan bruke <option>-t ntfs3</option>
+        i stedet (sistnevnte er også standard hvis ingen <option>-t</option>
+        alternativer sendes), må du aktivere begge driverne for å få begge
+        alternativene til å fungere.:
       </para>
 
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
       href="ntfs3-kernel.xml"/>
+
+    <para>
+      Hvis du har valgt NTFS3 som en del av hovedkjerneavbildningen
+      (<literal>*</literal> i stedet for <literal>M</literal>), vil aktivering
+      av NTFS (uansett som en modul eller som en del av hovedkjerneavbildningen)
+      umiddelbart degradere NTFS3 til en modul.
+    </para>
+
+    <para>
+      På grunn av <ulink url='https://git.kernel.org/torvalds/c/35e4b60792cd'>a
+      bug in the kernel configuration system</ulink>, som i Linux 7.1 NTFS3
+      gjengis i undermenyen til NTFS (forskjellig fra demonstrasjonen ovenfor).
+      Vær oppmerksom på at det ikke betyr at NTFS3 var en utvidelse av NTFS: de
+      er to separate drivere.
+    </para>
 
     <indexterm zone="ntfs-3g ntfs3-kernel">
       <primary sortas="d-ntfs3">NTFS read-write support in kernel</primary>
