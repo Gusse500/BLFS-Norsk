@@ -8,7 +8,8 @@
 
   <!ENTITY llvm-download-http "&llvm-url;/llvm-project-&llvm-version;.src.tar.xz">
   <!ENTITY llvm-download-ftp  " ">
-  <!-- md5sum and size in packages.ent to be shared with libclc -->
+  <!ENTITY llvm-md5sum        "3159f9d5d76f74e54e083582d660b08d">
+  <!ENTITY llvm-size          "171 MB">
   <!ENTITY llvm-buildsize     "4.7 GB (1.1 GB installert; legg til 23 GB for tester og 2.3 GB for dokumentasjon)">
   <!ENTITY llvm-time          "13 SBU (Legg til 19 SBU for tester; begge bruker parallellisme=8)">
 ]>
@@ -85,7 +86,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere nedlastinger</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
@@ -95,7 +96,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+ -->
     <bridgehead renderas="sect3">LLVM Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
@@ -130,12 +131,6 @@
 
   <sect2 role="installation">
     <title>Installasjon av LLVM</title>
-
-    <para>
-      Først, fiks en feil som forårsaker feil kode under visse betingelser:
-    </para>
-
-    <screen><userinput>patch -Np1 -i ../llvm-&llvm-version;-upstream_fix-1.patch</userinput></screen>
 
     <para>
      Det er mange Python skript i denne pakken som bruker
@@ -272,15 +267,15 @@ systemd-run --user --pty -d -G -p LimitCORE=0 ninja check-all</userinput></scree
       les <xref linkend='build-in-cgroup'/> for detaljer) for å begrense
       antall logiske kjerner for å kjøre testene.
 
-      <!-- https://github.com/llvm/llvm-project/issues/184961 -->
-      Fire tester navngitt <filename>Linux/pthread_join.cpp</filename>
-      er kjent for å feile.
+      <!-- https://github.com/llvm/llvm-project/issues/216004 -->
+      Åtte ThreadSanitizer tester er kjent for å mislykkes med glibc 2.44 eller
+      nyere.
 
       En test navngitt <filename>Linux/clone_setns.cpp</filename> vil mislykkes
       hvis <option>CONFIG_USER_NS</option> ikke er aktivert i
       kjernekonfigurasjonen.
-      <!-- 22.1.0: 92579 Passed, 34885 Unsupported, 420 Skipped,
-                   136 Expectedly Failed, 4 Failed -->
+      <!-- 23.1.0: 99128 Passed, 37444 Unsupported, 436 Skipped,
+      133 Expectedly Failed, 8 Failed -->
 
       <!-- To editors: it seems there is a more thorough test suite named
            "test-suite-x.y.z.src.tar.xz" on the GitHub release download
