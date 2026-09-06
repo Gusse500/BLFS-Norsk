@@ -75,29 +75,15 @@
       </listitem>
     </itemizedlist>
 
-<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
           Påkrevd oppdatering:
-          <ulink url="&patch-root;/thunderbird-&thunderbird-version;esr-python_3.14_fixes-1.patch"/>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Påkrevd oppdatering:
-          <ulink url="&patch-root;/thunderbird-&thunderbird-version;esr-glibc-2.43.patch"/>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Påkrevd oppdatering:
-          <ulink url="&patch-root;/thunderbird-&thunderbird-version;esr-llvm_22-1.patch"/>
+          <ulink url="&patch-root;/thunderbird-&thunderbird-version;-clang_23_rust_1_98-1.patch"/>
         </para>
       </listitem>
     </itemizedlist>
--->
 
     <bridgehead renderas="sect3">Thunderbird Avhengigheter</bridgehead>
 
@@ -165,59 +151,12 @@
       </para>
     </note>
 
-<!--
     <para>
-      Først, fiks byggingen av denne pakken med Python-3.14:
+      Fiks byggingen av denne pakken med clang 23 eller nyere, eller rustc 1.98
+      eller nyere:
     </para>
 
-<screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;esr-python_3.14_fixes-1.patch</userinput></screen>
--->
-    <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=2006630 -->
-<!--
-    <para>
-      Fjern sjekksummer fra cargo crates for filer som ikke finnes:
-    </para>
-
-<screen><userinput remap="pre">find -name .cargo-checksum.json | \
-     xargs sed -ri 's|"[^"]*.gitmodules":"[^"]*",?||'</userinput></screen>
-
-    <para>
-      Rett byggingen av denne pakken med glibc-2.43 og tilpass sjekksummene:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;esr-glibc-2.43.patch &amp;&amp;
-sed '/patch.crates-io/a glslopt={path="../third_party/rust/glslopt"}' \
-    -i comm/rust/Cargo.toml &amp;&amp;
-sed '/name = "glslopt"/,/^$/{/source/d;/checksum/d}' \
-    -i comm/rust/Cargo.lock</userinput></screen>
--->
-<!--
-    <para>
-      Deretter, fiks byggingen av denne pakken med rustc-1.95.0. Igjen trenger 
-      byggesystemet en endring for å hoppe over sjekksumverifiseringen:
-    </para>
-
-<screen><userinput remap="pre">sed '/use super::/a use core::simd::Select;' \
-    -i comm/third_party/rust/encoding_rs/src/x_user_defined.rs &amp;&amp;
-sed '/patch.crates-io/a encoding_rs={path="../third_party/rust/encoding_rs"}' \
-    -i comm/rust/Cargo.toml &amp;&amp;
-sed '/name = "encoding_rs"/,/^$/{/source/d;/checksum/d}' -i comm/rust/Cargo.lock</userinput></screen>
--->
-<!--
-    <para>
-      Deretter, fiks bygging av denne pakken med LLVM-22:
-    </para>
-
-<screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;esr-llvm_22-1.patch</userinput></screen>
--->
-<!--https://github.com/mozilla-firefox/firefox/commit/c4aab1ba6aad-->
-<!--
-    <para>
-      Deretter, fiks byggingen av denne pakken med cbindgen-0.29.4:
-    </para>
-
-<screen><userinput remap="pre">sed -i '/const [CVP]/s/pub //' gfx/wr/webrender/src/texture_cache.rs</userinput></screen>
--->
+<screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;-clang_23_rust_1_98-1.patch</userinput></screen>
 
     <para>
       Konfigurasjonen av <application>Thunderbird</application> 
