@@ -177,56 +177,50 @@ sed '/name = "encoding_rs"/,/^$/{/source/d;/checksum/d}' -i Cargo.lock</userinpu
 -->
 
     <para>
-      Installer <application>SpiderMonkey</application> ved å kjøre følgende
-      kommandoer:
+      Konfigurasjonen av <application>SpiderMonkey</application> oppnås ved å
+      opprette en <filename>mozconfig</filename> fil som inneholder de ønskede
+      konfigurasjonsalternativene. En standard
+      <filename>mozconfig</filename> opprettes nedenfor. For å se hele listen
+      over tilgjengelige konfigurasjonsalternativer (og en kort beskrivelse av
+      hvert), utsted <command>./mach configure -- --help | less</command>.
+      Opprett filen med følgende kommando:
+    </para>
+
+<screen><userinput>cat &gt; mozconfig &lt;&lt; "EOF"
+<literal>ac_add_options --prefix=/usr
+ac_add_options --enable-project=js
+ac_add_options --disable-debug-symbols
+ac_add_options --disable-jemalloc
+ac_add_options --enable-readline
+ac_add_options --enable-rust-simd
+ac_add_options --with-intl-api
+ac_add_options --with-system-icu
+ac_add_options --with-system-zlib</literal>
+EOF</userinput></screen>
+
+    <para>
+      Nå kan du kalle Python skriptet <command>mach</command> for å kompilere
+      <application>SpiderMonkey</application>:
     </para>
 
     <note>
       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-         href="../../xincludes/mozshm.xml"/>
-      <para>
-        Å kompilere C++ koden respekterer $MAKEFLAGS og er standard til 'j1',
-        rust koden vil bruke alle prosessorer.
-      </para>
+       href="../../xincludes/mozshm.xml"/>
     </note>
 
-<screen><userinput>mkdir obj &amp;&amp;
-cd    obj &amp;&amp;
-
-MOZBUILD_STATE_PATH=${PWD}/mozbuild          \
-../js/src/configure --prefix=/usr            \
-                    --disable-debug-symbols  \
-                    --disable-jemalloc       \
-                    --enable-readline        \
-                    --enable-rust-simd       \
-                    --with-intl-api          \
-                    --with-system-icu        \
-                    --with-system-zlib       &amp;&amp;
-make</userinput></screen>
-
-<!-- No longer needed with 128.8.0
-    <para>
-      Hvis du ønsker å kjøre testpakken, må du tilpasse den til å være 
-      kompatibel med Python 3.13.0 eller nyere:
-    </para>
-
-    <screen remap='test'><userinput>sed 's/pipes/shlex/' -i ../js/src/tests/lib/results.py</userinput></screen>
--->
+<screen><userinput>export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none &amp;&amp;
+export MOZBUILD_STATE_PATH=$(pwd)/mozbuild          &amp;&amp;
+./mach build</userinput></screen>
 
     <para>
       For å kjøre SpiderMonkey testpakken, utsted:
     </para>
 
-    <screen remap='test'><userinput>make -C js/src check-jstests \
-     JSTESTS_EXTRA_ARGS="--timeout 300 --wpt=disabled" | tee jstest.log</userinput></screen>
+    <screen remap='test'><userinput>./mach jstests</userinput></screen>
 
     <para>
       Fordi vi bygger med system ICU, litt over 100 tester, avhengig av ICU 
       versjon, (av totalt mer enn 50 000) er kjent for å mislykkes.
-      Listen over mislykkede tester kan hentes ut via
-      <command>grep 'UNEXPECTED-FAIL' jstest.log</command>.
-      Send <option>-c</option> alternativet til <command>grep</command> hvis
-      du vil bare ha det totale antallet mislykkede tester.
     </para>
 
     <para>
@@ -241,7 +235,7 @@ make</userinput></screen>
       For å kjøre JIT testpakken, utsted følgende kommando:
     </para>
 
-    <screen remap='test'><userinput>make -C js/src check-jit-test</userinput></screen>
+    <screen remap='test'><userinput>./mach jit-test</userinput></screen>
 
     <para>
       I likhet med SpiderMonkey testpakken er antallet testjobber det samme som
@@ -251,11 +245,11 @@ make</userinput></screen>
       har flere CPU kjerner. Å kjøre JIT testpakken uten
       nok minne kan påkalle kjernens OOM-killer og forårsake stabilitets
       problemer. Hvis du ikke har nok systemminne tilgjengelig, legg til
-      <option>JITTEST_EXTRA_ARGS=-j<replaceable>N</replaceable></option> til
+      <option>-j<replaceable>N</replaceable></option> til
       kommandoen og erstatt <replaceable>N</replaceable> med nummeret
       av testjobber det tilgjengelige systemminnet kan inneholde. For eksempel 
       hvis du har 15 GB systemminne tilgjengelig og 4 CPU kjerner, legg til 
-      <option>JITTEST_EXTRA_ARGS=-j3</option> for å kjøre testpakken med 3 
+      <option>-j3</option> for å kjøre testpakken med 3
       parallelle jobber slik at minnebruken ikke overskrider 12 GB.
       <!-- TL;DR: DO NOT REMOVE MEMORY USAGE NOTE W/O MY CONFIRMATION!
 
@@ -283,6 +277,7 @@ make</userinput></screen>
       -->
     </para>
 
+
     <caution>
       <para>
         Et problem i installasjonsprosessen forårsaker at ethvert program som 
@@ -298,11 +293,20 @@ make</userinput></screen>
     </caution>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Installer <application>SpiderMonkey</application> ved å kjøre følgende
+      kommandoer som &root; bruker:
     </para>
 
-<screen role="root"><userinput>make install &amp;&amp;
-rm -v /usr/lib/libjs_static.ajs &amp;&amp;
+    <screen role="root"><userinput>MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none ./mach install</userinput></screen>
+    <!-- devs: For DESTDIR install, prepend DESTDIR=<dest> to the above -->
+
+    <para>
+      Fortsatt som &root; bruker, fjern et ubrukelig og veldig stort statisk
+      bibliotek, og fjern en feilaktig utdata fra
+      <command>js&spidermonkey-major;-config</command> script:
+    </para>
+
+<screen role="root"><userinput>rm -v /usr/lib/libjs_static.ajs &amp;&amp;
 sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></screen>
 
     <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=1973994 -->
@@ -312,6 +316,12 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></sc
 
 <screen role='root'><userinput>sed '$i#define XP_UNIX' -i /usr/include/mozjs-140/js-config.h</userinput></screen>
 
+    <para>
+      Tøm miljøvariablene som ble angitt ovenfor:
+    </para>
+
+<screen><userinput>unset MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE &amp;&amp;
+    unset MOZBUILD_STATE_PATH</userinput></screen>
   </sect2>
 
   <sect2 role="commands">
@@ -362,42 +372,26 @@ sed -i '/@NSPR_CFLAGS@/d' /usr/bin/js&spidermonkey-major;-config</userinput></sc
     </para>
 
     <para>
-      <command>rm -v /usr/lib/libjs_static.ajs</command>: Fjern et stort
-      statisk bibliotek som ikke brukes av noen BLFS pakke.
-    </para>
-
-    <para>
-      <command>sed -i '/@NSPR_CFLAGS@/d'
-      /usr/bin/js&spidermonkey-major;-config</command>:
-      Forhindrer <command>js&spidermonkey-major;-config</command> fra å bruke
-      buggy CFLAGS.
-    </para>
-
-    <para>
-      <option><envar>CC=gcc CXX=g++</envar></option>: BLFS pleide å
-      foretrekke å bruke gcc og g++ i stedet for oppstrøms standardinnstillinger 
+      <command>export CC=gcc</command>
+      og <command>export CXX=g++</command>: BLFS
+      brukte å foretrekke å bruke gcc og g++ i stedet for upstreams standardinnstillinger
       for <application>clang</application> programmer. Med utgivelsen av
       gcc-12 bygget tar lengre tid med gcc og g++, først og fremst fordi
-      ekstra advarsler, og er større. Send disse miljøvariablene
-      til konfigureringsskriptet hvis du ønsker å fortsette å bruke gcc, g++
-      (ved å eksportere dem og deaktivere dem etter installasjonen, eller ganske 
-      enkelt forberede dem før
-      <command>../js/src/configure</command> kommandoen). Hvis du
-      bygger på et 32-bits system, se også nedenfor.
+      ekstra advarsler, og er større. Sett disse to kommandoene inn i
+      <filename>mozconfig</filename> filen hvis du ønsker å fortsette å bruke
+      gcc og g++. Hvis du bygger på et 32-bits system, se også nedenfor.
     </para>
 
     <para>
-      <option><envar>CXXFLAGS="-msse2 -mfpmath=sse"</envar></option>:
+      <command>export CXXFLAGS="$CXXFLAGS -msse2 -mfpmath=sse"</command>:
       Bruk SSE2 i stedet for 387 for flytende komma med dobbel presisjon
-      operasjoner. Det er nødvendig for GCC for å tilfredsstille forventningene 
-      til oppstrøms (Mozilla) utviklere med flytende komma aritmetikk.
-      Bruk den hvis du bygger denne pakken på et 32-bits system med
-      GCC (hvis Clang ikke er installert eller GCC er eksplisitt spesifisert).
-      Merk at dette vil føre til at SpiderMonkey krasjer på en prosessor uten
-      SSE2 evne. Hvis du kjører systemet på en så gammel
-      prosessor, er Clang strengt tatt nødvendig. Denne innstillingen er ikke 
-      nødvendig på 64-bits systemer fordi alle 64-bits x86-prosessorer støtter 
-      SSE2 og 64-bits kompilatorer (både Clang og GCC) bruker SSE2 som standard.
+      operasjoner. Det er nødvendig for å tilfredsstille forventningene til
+      oppstrøms (Mozilla) utviklere med flyttall (som betyr at en 32-bits
+      prosessor som mangler SSE2 ikke er i stand til å kjøre denne pakken). Legg
+      den til i <filename>mozconfig</filename> hvis du bygger denne pakken på et
+      32-bits system med GCC. Denne innstillingen er ikke nødvendig med Clang,
+      og heller ikke med GCC på et 64-bits system fordi disse konfigurasjonene
+      har SSE2 aktivert som standard.
     </para>
   </sect2>
 
