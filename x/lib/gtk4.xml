@@ -6,10 +6,10 @@
 
   <!ENTITY gtk4-download-http "&gnome-download-http;/gtk/&gtk4-minor;/gtk-&gtk4-version;.tar.xz">
   <!ENTITY gtk4-download-ftp  " ">
-  <!ENTITY gtk4-md5sum        "5428262efe87473d802a83421eee4218">
+  <!ENTITY gtk4-md5sum        "096b120180814d56c5ae82a8aec0b1f0">
   <!ENTITY gtk4-size          "17 MB">
-  <!ENTITY gtk4-buildsize     "1.5 GB (med dokumenter og tester)">
-  <!ENTITY gtk4-time          "1.5 SBU (bruker parallellisme=4; med dokumenter; legg til 2.1 SBU for tester)">
+  <!ENTITY gtk4-buildsize     "1.2 GB (med dokumenter)">
+  <!ENTITY gtk4-time          "1.7 SBU (bruker parallellisme=4; med dokumenter)">
 ]>
 
 <sect1 id="gtk4" xreflabel="GTK-&gtk4-version;">
@@ -185,10 +185,16 @@ meson configure -D documentation=true                            &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      For å kjøre testene, utsted:
+      BLFS redaktørene anbefaler ikke å kjøre testene. Resultatene er
+      svært avhengig av installerte drivere og maskinvare sammenlignet med hva
+      oppstrøms utviklere har. Av over 9000 tester antallet for feil
+      kan variere fra 50 til over 5000. For å teste funksjonen til pakken,
+      anbefales <command>gtk4-demo</command> programmet i stedet.
     </para>
 
-    <screen remap='test'><userinput>env -u{GALLIUM_DRIVER,MESA_LOADER_DRIVER_OVERRIDE}          \
+    <para>For å kjøre testene uansett, utsted:</para>
+
+    <screen role='nodump'><userinput>env -u{GALLIUM_DRIVER,MESA_LOADER_DRIVER_OVERRIDE}          \
     LIBGL_ALWAYS_SOFTWARE=1 VK_LOADER_DRIVERS_SELECT='lvp*' \
     dbus-run-session meson test --setup x11                 \
                                 --no-suite=headless</userinput></screen>
@@ -200,7 +206,7 @@ ninja</userinput></screen>
       Mange tester vil mislykkes hvis <filename>~/.config/gtk-4.0/settings.ini</filename> 
       eksisterer og gtk-modules linjen er ikke kommentert.
 
-      Flere andre tester kan mislykkes av ukjente årsaker.
+      <!--Flere andre tester kan mislykkes av ukjente årsaker.-->
   
       På systemer med NVIDIA grafikkort kan testene ta betydelig
       lengre tid.
