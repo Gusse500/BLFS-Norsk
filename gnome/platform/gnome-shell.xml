@@ -5,12 +5,12 @@
   %general-entities;
 
   <!ENTITY gnome-shell-download-http
-           "&gnome-download-http;/gnome-shell/&gnome-50;/gnome-shell-&gnome-shell-version;.tar.xz">
+           "&gnome-download-http;/gnome-shell/&gnome-51;/gnome-shell-&gnome-shell-version;.tar.xz">
   <!ENTITY gnome-shell-download-ftp  " ">
-  <!ENTITY gnome-shell-md5sum        "4ab5141867b8639e793aa66fb38dc066">
-  <!ENTITY gnome-shell-size          "2.2 MB">
-  <!ENTITY gnome-shell-buildsize     "63 MB (med tester)">
-  <!ENTITY gnome-shell-time          "0.5 SBU (Bruke parallellisme=4; med tester)">
+  <!ENTITY gnome-shell-md5sum        "9a86b2061aa8fc6df5f7991f81b28ee9">
+  <!ENTITY gnome-shell-size          "2.3 MB">
+  <!ENTITY gnome-shell-buildsize     "70 MB (med tester)">
+  <!ENTITY gnome-shell-time          "0.3 SBU (Bruke parallellisme=4; med tester)">
 ]>
 
 <sect1 id="gnome-shell" xreflabel="gnome-shell-&gnome-shell-version;">
@@ -124,14 +124,14 @@
   <sect2 role="installation">
     <title>Installasjon av GNOME Skallet</title>
 
-    <!-- Still needed for version 50.4 -->
+    <!-- Fixed on version 51.0
     <para>
       Først, fiks et byggeproblem når du bruker gcc-16 eller nyere:
     </para>
 
 <screen><userinput>sed -e '/(ICalProperty/s/ICalProperty/const &amp;/' \
     -i src/calendar-server/gnome-shell-calendar-server.c</userinput></screen>
-
+-->
     <para>
       Installer <application>GNOME Skallet</application> ved å kjøre
       følgende kommandoer:
@@ -179,9 +179,13 @@ ninja test</userinput></screen>
            in a separate namespace, but it's too overkill IMO.
            DO NOT REMOVE unless you've tested with a "complex multi-monitor
            configuration" (with mixed scaling settings and "strange"
-           positions of monitors). -->
-      En test navngitt <filename>CSS styling support</filename> er kjent for
-      mislykkes med noen flerskjermskonfigurasjoner.
+            positions of monitors).
+
+           51.0 diid not have this problem, but I only had one monitor.
+           Error registering session with GDM.  Was not currently running GDM
+           but gdm-50.3 was installed. bdubbs 2026-09-18.
+           -->
+      En test, closeWithActiveWindows er kjent for å mislykkes.
     </para>
 
     <para>
