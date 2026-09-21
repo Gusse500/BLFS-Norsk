@@ -5,12 +5,12 @@
   %general-entities;
 
   <!ENTITY gnome-system-monitor-download-http
-           "&gnome-download-http;/gnome-system-monitor/&gnome-50;/gnome-system-monitor-&gnome-system-monitor-version;.tar.xz">
+           "&gnome-download-http;/gnome-system-monitor/&gnome-51;/gnome-system-monitor-&gnome-system-monitor-version;.tar.xz">
   <!ENTITY gnome-system-monitor-download-ftp  " ">
-  <!ENTITY gnome-system-monitor-md5sum        "24c73cd65f22e53bc82bef32a79a3ce3">
+  <!ENTITY gnome-system-monitor-md5sum        "17dc50d9794dd21417c67621ba422103">
   <!ENTITY gnome-system-monitor-size          "1.1 MB">
-  <!ENTITY gnome-system-monitor-buildsize     "24 MB">
-  <!ENTITY gnome-system-monitor-time          "0.1 SBU (med parallellisme=4)">
+  <!ENTITY gnome-system-monitor-buildsize     "25 MB">
+  <!ENTITY gnome-system-monitor-time          "0.3 SBU (med tester)">
 ]>
 
 <sect1 id="gnome-system-monitor" xreflabel="gnome-system-monitor-&gnome-system-monitor-version;">
@@ -83,8 +83,7 @@
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
       <xref linkend="appstream-glib"/>,
-      <xref linkend="desktop-file-utils"/>,
-      <ulink url="https://github.com/catchorg/Catch2">Catch2</ulink>, og
+      <xref linkend="desktop-file-utils"/>, og
       <ulink url="https://github.com/uncrustify/uncrustify">uncrustify</ulink>
     </para>
 
@@ -92,7 +91,7 @@
 
   <sect2 role="installation">
     <title>Installasjon av GNOME Systemovervåking</title>
-
+<!--
     <para>
       Fjern først en hard avhengighet av Catch2, som bare brukes hvis du
       kjører enhetstestene:
@@ -100,7 +99,7 @@
 
 <screen><userinput remap="pre">find . -name meson.build | xargs sed -i -e '/catch2/d' &amp;&amp;
 sed -i '141,151d' src/meson.build</userinput></screen>
-
+-->
     <para>
       Installer <application>GNOME Systemovervåking</application> ved å kjøre
       følgende kommandoer:
@@ -122,9 +121,7 @@ meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
 ninja</userinput></screen>
 
     <para>
-      Denne pakken kommer med en testpakke, men den er avhengigh av den eksterne
-      Catch2. Hvis du har Catch2 installert, kan du utelate seden
-      ovenfor og kjør deretter testene med <command>ninja test</command>.
+      For å teste pakken, kjør: <command>ninja test</command>.
     </para>
 
     <para>
