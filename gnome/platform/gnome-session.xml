@@ -190,19 +190,6 @@ by systemd-user.-->
       avhengighetene.
     </para>
 
-<!-- This option was removed in 46
-    <para revision="sysv">
-      <parameter>-D systemd_journal=false</parameter>
-      og <parameter>-D systemduserunitdir=/tmp</parameter>: Tillat bygging
-      med elogind støtte på et SysV basert system.
-    </para>
--->
-
-    <para>
-      <option>-D x11=true</option>: Dette alternativet aktiverer støtte for X11 
-      økter. X11 støtte er utdatert og vil bli fjernet i GNOME 50.
-    </para>
-
    </sect2>
 
   <sect2 role="starting" revision="systemd">
@@ -226,34 +213,35 @@ by systemd-user.-->
       støtte på et system som har den proprietære NVIDIA-driveren installert, 
       siden GDM ikke vil vise Wayland økttypen på et slikt system..-->
     </para>
-    <!-- we don't build with x11 support. So there is no point in starting
-         with X11
-    <warning>
-      <para>
-        X11 støtte er utdatert og vil bli fjernet i GNOME 50. Vennligst bruk 
-        Wayland økten der det er mulig.
-      </para>
-    </warning>
 
-    <para>
-      For å starte <application>GNOME</application> ved hjelp av
-      <xref role="nodep" linkend="xinit"/>, kjør følgende kommandoer:
-    </para>
-
-<screen role="nodump"><userinput>cat &gt; ~/.xinitrc &lt;&lt; "EOF"
-<literal>dbus-run-session gnome-session</literal>
-EOF
-
-startx</userinput></screen>
--->
     <para>
       For å starte <application>GNOME</application> uten en skjermbehandler må 
 	  du bestemme økt ID-en din ved hjelp av <command>loginctl</command>.
       Når det er gjort, utsted (vi antar at økt ID-en er 1):
     </para>
 
-    <screen role="nodump"><userinput>systemctl --user set-environment XDG_SESSION_TYPE=wayland XDG_SESSION_ID=<replaceable>1</replaceable> &amp;&amp;
+    <screen role="nodump"><userinput>systemctl --user set-environment    \
+          XDG_CURRENT_DESKTOP=GNOME \
+          XDG_SESSION_DESKTOP=gnome \
+          XDG_SESSION_TYPE=wayland  \
+          XDG_SESSION_ID=<replaceable>1</replaceable> &amp;&amp;
 systemctl --user start gnome-session@gnome.target</userinput></screen>
+
+    <note>
+      <para>
+        Kommandoene ovenfor starter <application>GNOME</application> fra
+        kommandolinjen, men aktiver ikke fullstendig funksjonalitet. For
+        eksempel <application>GNOME</application> sin automatiske tidsavbrudd
+        for tom skjerm/tomgang fungerer ikke på grunn av en kompleks interaksjon
+        mellom kommandolinjen sin innloggingsøkt og komponenten som er ansvarlig
+        for både skjermlåsing og tomgangsutløst blanking.
+      </para>
+
+      <para>
+        For full <application>GNOME</application> funksjonalitet, må du
+        starte den fra en skjermbehandler.
+      </para>
+    </note>
 
   </sect2>
 
