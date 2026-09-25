@@ -6,12 +6,12 @@
 
   <!ENTITY asymptote-download-http "&sourceforge-dl;/asymptote/asymptote-&asymptote-version;.src.tgz">
   <!ENTITY asymptote-download-ftp  " ">
-  <!ENTITY asymptote-md5sum        "158921966b8be1049e933b5154774c66">
+  <!ENTITY asymptote-md5sum        "829f01a698f77ac8018d3b732ae18190">
   <!ENTITY asymptote-size          "27 MB">
   <!-- for asymptote-2.88 on top of TL2024, 75 MB for programs,
        the docs overwrite texmf-dist (5.2 MB) -->
-  <!ENTITY asymptote-buildsize     "338 MB (55 MB installert etter å ha overskrevet filer i $TEXLIVE_PREFIX/texmf-dist/, med alle avhengighetene som er i BLFS)">
-  <!ENTITY asymptote-time          "0.9 SBU (bruke parallellisme=4)">
+  <!ENTITY asymptote-buildsize     "347 MB (55 MB installert etter å ha overskrevet filer i $TEXLIVE_PREFIX/texmf-dist/, med alle avhengighetene som er i BLFS)">
+  <!ENTITY asymptote-time          "0.9 SBU (med tester, bruke parallellisme=4)">
 ]>
 
 <sect1 id="asymptote" xreflabel="asymptote-&asymptote-version;">
@@ -129,8 +129,8 @@
       <xref role='runtime' linkend="imagemagick"/> å konvertere utdata til andre 
       formater som f.eks JPEG eller for å lage animerte GIFer,
       <!-- dependency is in GUI/xasy.py -->
-      <ulink url="https://pypi.org/project/PyQt5/">PyQt5</ulink> (ikke testet,
-      har en byggeavhengighet av Qt5) for å bruke xasy
+      <ulink url="https://pypi.org/project/PySide6/">PySide6</ulink> (ikke
+      testet, har en byggeavhengighet av Qt6) for å bruke xasy
     </para>
 
     <para condition="html" role="usernotes">
@@ -229,25 +229,19 @@ make</userinput></screen>
        som ikke er i BLFS.
      </para>
 
-     <para>
-       <parameter>--disable-lsp</parameter>: Språkserverprotokollen er aktivert
-       som standard, med flere tredjepartskilder inkludert, men den bygger ikke
-       med mindre boost og rapidjson er installert.
-     </para>
-
-    <para>
-      <option>--disable-gc</option>: Det ser ikke ut til å være en enkel måte å
-      bygge asymptote mot systemets GC. Hvis du ikke vil bruke den leverte
-      kopien av GC, kan du bruke dette alternativet til å deaktivere
-      søppeltømming fullstendig, noe som kan ha en viss innvirkning på ytelsen.
-    </para>
-
     <para>
       <parameter>--with-latex=</parameter>
       <parameter>--with-context=</parameter>: Disse bryterne
       sørger for at stilfiler og en tex fil vil bli installert i
       <application>texlive</application> mappen i stedet for å lage en
       <filename class="directory">texmf-local</filename> mappe for dem.
+    </para>
+
+    <para>
+      <option>--disable-gc</option>: Det ser ikke ut til å være en enkel måte
+      å bygge asymptote mot systemets GC. Hvis du ikke vil bruke den sendte
+      kopien av GC, kan du bruke dette alternativet til å deaktivere fullstendig
+      søppelinnsamling, noe som kan ha en viss innvirkning på ytelsen.
     </para>
 
     <!-- commenting for now: 2.44 installs asymptote.info in both places
@@ -284,9 +278,8 @@ make</userinput></screen>
           Ingen
         </seg>
         <seg>
-          $TEXLIVE_PREFIX/texmf-dist/asymptote,
-          $TEXLIVE_PREFIX/doc/asymptote, og
-          $TEXLIVE_PREFIX/info/asymptote
+          $TEXLIVE_PREFIX/texmf-dist/asymptote og
+          $TEXLIVE_PREFIX/doc/asymptote
         </seg>
       </seglistitem>
     </segmentedlist>
@@ -312,7 +305,7 @@ make</userinput></screen>
         <term><command>xasy</command></term>
         <listitem>
           <para>
-            er et Python3 skript som gir et Qt5 GUI for asy
+            er et Python3 skript som gir et Qt6 GUI for asy
           </para>
           <indexterm zone="asymptote xasy">
             <primary sortas="b-xasy">xasy</primary>
