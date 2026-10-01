@@ -5,11 +5,12 @@
   %general-entities;
 
   <!ENTITY ntfs-3g-download-http
-    "https://github.com/tuxera/ntfs-3g/archive/&ntfs-3g-version;/ntfs-3g-&ntfs-3g-version;.tar.gz">
+    "https://tuxera.com/opensource/ntfs-3g_ntfsprogs-&ntfs-3g-version;.tgz">
+
   <!ENTITY ntfs-3g-download-ftp  " ">
-  <!ENTITY ntfs-3g-md5sum        "b8c4b04d20aa9217ebbd170613ac2a8d">
-  <!ENTITY ntfs-3g-size          "888 KB">
-  <!ENTITY ntfs-3g-buildsize     "26 MB">
+  <!ENTITY ntfs-3g-md5sum        "e46c76e3c19e2eb138b62884b1348482">
+  <!ENTITY ntfs-3g-size          "1.3 MB">
+  <!ENTITY ntfs-3g-buildsize     "23 MB">
   <!ENTITY ntfs-3g-time          "0.2 SBU">
 ]>
 
@@ -24,16 +25,16 @@
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduksjon til Ntfs-3g</title>
+    <title>Introduksjon til ntfs-3g</title>
 
     <note>
       <para id='ntfs3-kernel'>
-        I Linux 7.1 finnes det to konkurrerende NTFS lese-skrivedrivere i
+        Fra Linux 7.1 finnes det to konkurrerende NTFS lese-skrivedrivere i
         kjernen, kalt NTFS og NTFS3. Ytelsen deres er mye bedre enn ntfs-3g.
         Ettersom noen applikasjoner påkaller <command>mount</command> med
         <option>-t ntfs</option>, men andre kan bruke <option>-t ntfs3</option>
         i stedet (sistnevnte er også standard hvis ingen <option>-t</option>
-        alternativer sendes), må du aktivere begge driverne for å få begge
+        alternativet sendes), må du aktivere begge driverne for å få begge
         alternativene til å fungere.:
       </para>
 
@@ -41,17 +42,17 @@
       href="ntfs3-kernel.xml"/>
 
     <para>
-      Hvis du har valgt NTFS3 som en del av hovedkjerneavbildningen
+      Hvis du velger NTFS3 som en del av hovedkjerneavbildningen
       (<literal>*</literal> i stedet for <literal>M</literal>), vil aktivering
-      av NTFS (uansett som en modul eller som en del av hovedkjerneavbildningen)
+      av NTFS (som en modul eller som en del av hovedkjerneavbildningen)
       umiddelbart degradere NTFS3 til en modul.
     </para>
 
     <para>
       På grunn av <ulink url='https://git.kernel.org/torvalds/c/35e4b60792cd'>a
-      bug in the kernel configuration system</ulink>, som i Linux 7.1 NTFS3
-      gjengis i undermenyen til NTFS (forskjellig fra demonstrasjonen ovenfor).
-      Vær oppmerksom på at det ikke betyr at NTFS3 var en utvidelse av NTFS: de
+      bug in the kernel configuration system</ulink> fra Linux 7.1 NTFS3
+      gjengis i undermenyen til NTFS (forskjellig fra eksempelet ovenfor).
+      Vær oppmerksom på at det ikke betyr at NTFS3 er en utvidelse av NTFS; de
       er to separate drivere.
     </para>
 
@@ -67,7 +68,7 @@
     </note>
 
     <para>
-      <application>Ntfs-3g</application> pakken inneholder en stabil,
+      <application>ntfs-3g</application> pakken inneholder en stabil,
       lese-skrive åpen kildekodedriver for NTFS partisjoner. NTFS partisjoner
       brukes av de fleste Microsoft operativsystemer. Ntfs-3g lar deg montere
       NTFS partisjoner i lese-skrivemodus fra Linux systemet. Den bruker
@@ -112,7 +113,12 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Ntfs-3g Avhengigheter</bridgehead>
+    <bridgehead renderas="sect3">ntfs-3g Avhengigheter</bridgehead>
+
+    <bridgehead renderas="sect4">Påkrevd</bridgehead>
+    <para role="required">
+      <xref linkend="libgcrypt"/>
+    </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
@@ -146,17 +152,24 @@
   </sect2>
 
   <sect2 role="installation">
-    <title>Installasjon av Ntfs-3g</title>
+    <title>Installasjon av ntfs-3g</title>
+
+    <note>
+      <para>
+        Denne pakken pakker ut til ntfs-3g-&ntfs-3g-version;.
+      </para>
+    </note>
 
     <para>
-      Installer <application>Ntfs-3g</application> ved å kjøre følgende
+      Installer <application>ntfs-3g</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>./autogen.sh &amp;&amp;
+<!-- <screen><userinput>./autogen.sh &amp;&amp; -->
 
-./configure --prefix=/usr        \
+<screen><userinput>./configure --prefix=/usr        \
             --disable-static     \
+            --enable-crypto      \
             --with-fuse=internal \
             --docdir=/usr/share/doc/ntfs-3g-&ntfs-3g-version; &amp;&amp;
 make</userinput></screen>
@@ -210,7 +223,7 @@ ln -svf ntfs-3g.8 /usr/share/man/man8/mount.ntfs.8</userinput></screen>
   </sect2>
 
   <sect2 role="configuration">
-    <title>Bruke Ntfs-3g</title>
+    <title>Bruke ntfs-3g</title>
 
     <para>
       For å montere en Windows partisjon ved oppstart, legg inn en linje som denne i
@@ -507,7 +520,7 @@ ln -svf ntfs-3g.8 /usr/share/man/man8/mount.ntfs.8</userinput></screen>
         <term><filename class="libraryfile">libntfs-3g.so</filename></term>
         <listitem>
           <para>
-            inneholder Ntfs-3g API funksjoner
+            inneholder ntfs-3g API funksjoner
           </para>
           <indexterm zone="ntfs-3g libntfs-3g">
             <primary sortas="c-libntfs-3g">libntfs-3g.so</primary>
