@@ -7,10 +7,10 @@
   <!ENTITY brasero-download-http
        "&gnome-download-http;/brasero/3.12/brasero-&brasero-version;.tar.xz">
   <!ENTITY brasero-download-ftp  " ">
-  <!ENTITY brasero-md5sum        "ae48248dd36f89282d573eb7a0a1391f">
-  <!ENTITY brasero-size          "3.0 MB">
-  <!ENTITY brasero-buildsize     "105 MB">
-  <!ENTITY brasero-time          "1.0 SBU">
+  <!ENTITY brasero-md5sum        "633d3869a408bc212f9a96d0f87a22d5">
+  <!ENTITY brasero-size          "3.9 MB">
+  <!ENTITY brasero-buildsize     "49 MB">
+  <!ENTITY brasero-time          "0.1 SBU (Bruk av parallellisme=4)">
 ]>
 
 <sect1 id="brasero" xreflabel="Brasero-&brasero-version;">
@@ -68,7 +68,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -78,13 +78,12 @@
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <bridgehead renderas="sect3">Brasero Avhengigheter</bridgehead>
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
       <xref linkend="gst10-plugins-base"/>,
-      <xref linkend='intltool'/>,
       <xref linkend="itstool"/>,
       <xref linkend="libcanberra"/>, og
       <xref linkend="libnotify"/>
@@ -92,11 +91,10 @@
 
     <bridgehead renderas="sect4">Anbefalt</bridgehead>
     <para role="recommended">
-      &gobject-introspection;,
+      <xref linkend="glib2"/>,
       <xref linkend="libburn"/>,
       <xref linkend="libisoburn"/>, og
       <xref linkend="libisofs"/>,
-      <xref linkend="nautilus"/>,
       <xref linkend="tinysparql"/>, og
       <xref linkend="totem-pl-parser"/>
     </para>
@@ -124,23 +122,24 @@
 
   <sect2 role="installation">
     <title>Installasjon av Brasero</title>
-
+<!--
     <para>
       Først, fiks et byggeproblem som oppstår med GCC-14:
     </para>
 
 <screen><userinput remap="pre">patch -Np1 -i ../brasero-&brasero-version;-upstream_fixes-1.patch</userinput></screen>
-
+-->
     <para>
       Installer <application>Brasero</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr                \
-            --enable-compile-warnings=no \
-            --enable-cxx-warnings=no     \
-            --disable-nautilus           &amp;&amp;
-make</userinput></screen>
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr --buildtype=release .. &amp;&amp;
+
+ninja</userinput></screen>
 
     <para>
       Denne pakken kommer ikke med en testpakke.
@@ -150,7 +149,7 @@ make</userinput></screen>
       Nå, som <systemitem class="username">root</systemitem> bruker:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>ninja install</userinput></screen>
 
   </sect2>
 
@@ -158,18 +157,10 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--enable-*-warnings=no</parameter>: Disse bryterne fikser
-      byggeproblemer under GCC-6.x kompilatorer.
+      <option>-D gtk-doc=true</option>: Bruk dette alternativet hvis
+      <application>GTK-Doc</application> er installert og du ønsker å
+      gjenoppbygge og installer API-dokumentasjonen.
     </para>
-
-    <para>
-      <parameter>--disable-nautilus</parameter>: Denne bryteren deaktiverer bygging
-      av Nautilus utvidelsen siden den er inkompatibel med gtk4 versjonen av
-      Nautilus.
-    </para>
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/gtk-doc-rebuild.xml"/>
 
   </sect2>
 
@@ -187,7 +178,6 @@ make</userinput></screen>
         </seg>
         <seg>
           libbrasero-{burn,media,utils}3.so
-          <!--/usr/lib/nautilus/extensions-3.0/libnautilus-brasero-extension.so-->
         </seg>
         <seg>
           /usr/include/brasero3,
