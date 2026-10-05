@@ -4,12 +4,12 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY paps-download-http "https://github.com/dov/paps/releases/download/v&paps-version;/paps-&paps-version;.tar.gz">
+  <!ENTITY paps-download-http "https://github.com/dov/paps/releases/download/v&paps-version;/paps-&paps-version;.tar.xz">
   <!ENTITY paps-download-ftp  " ">
-  <!ENTITY paps-md5sum        "6bd661b8fd224adc3343a91e6521a4f2">
-  <!ENTITY paps-size          "220 KB">
-  <!ENTITY paps-buildsize     "4.0 MB">
-  <!ENTITY paps-time          "mindre enn 0.1 SBU">
+  <!ENTITY paps-md5sum        "dcc3208e8414562607d51107ea2b69a6">
+  <!ENTITY paps-size          "72 KB">
+  <!ENTITY paps-buildsize     "12 MB">
+  <!ENTITY paps-time          "0.1 SBU">
 ]>
 
 <sect1 id="paps" xreflabel="paps-&paps-version;">
@@ -68,7 +68,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing='compact'>
       <listitem>
@@ -77,7 +77,7 @@
         </para>
       </listitem>
     </itemizedlist>
-
+-->
     <bridgehead renderas="sect3">paps Avhengigheter</bridgehead>
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
@@ -91,29 +91,23 @@
       <xref linkend="doxygen"/>
     </para>
 
-
   </sect2>
 
   <sect2 role="installation">
     <title>Installasjon av paps</title>
 
-
     <para>
-      Først rett problemer med glib-2.81.0 og fmt-12.1.0 eller nyere:
+      Først fiks et problem med et skript som skal installeres:
     </para>
 
-<screen><userinput>sed -i -r 's/g_utf8_(next|offset)/(char*) &amp;/' src/paps.cc &amp;&amp;
-patch -Np1 -i ../paps-0.8.0-fmt_fix-1.patch</userinput></screen>
+<screen><userinput>sed -i 's|/usr/local/share|/usr/share|' scripts/src-to-paps</userinput></screen>
 
     <para>
-      Installer <application>paps</application> ved å kjøre følgende
+      Nå installer <application>paps</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen><userinput>./configure --prefix=/usr           \
-            --disable-Werror        \
-            --mandir=/usr/share/man \
-            CXX="g++ -std=gnu++17"  &amp;&amp;
+<screen><userinput>./configure --prefix=/usr &amp;&amp;
 make</userinput></screen>
 
     <para>
@@ -121,13 +115,13 @@ make</userinput></screen>
     </para>
 
     <para>
-      Nå, som <systemitem class="username">root</systemitem> bruker:
+      Nå, som &root; bruker:
     </para>
 
 <screen role="root"><userinput>make install</userinput></screen>
 
   </sect2>
-
+<!--
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
 
@@ -138,7 +132,7 @@ make</userinput></screen>
     </para>
 
   </sect2>
-
+-->
   <sect2 role="content">
     <title>Innhold</title>
 
@@ -148,7 +142,7 @@ make</userinput></screen>
       <segtitle>Installert Mappe</segtitle>
 
       <seglistitem>
-        <seg>paps</seg>
+        <seg>paps og src-to-paps</seg>
         <seg>Ingen</seg>
         <seg>Ingen</seg>
       </seglistitem>
@@ -168,6 +162,18 @@ make</userinput></screen>
           </para>
           <indexterm zone="paps paps-prog">
             <primary sortas="b-paps">paps</primary>
+          </indexterm>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="paps-to-src">
+        <term><command>srd-to-paps</command></term>
+        <listitem>
+          <para>
+            er en liten innpakning som skriver ut kildekode med syntaksutheving
+          </para>
+          <indexterm zone="paps paps-to-src">
+            <primary sortas="b-paps-to-src">paps-to-src</primary>
           </indexterm>
         </listitem>
       </varlistentry>
