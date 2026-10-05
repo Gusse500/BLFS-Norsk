@@ -8,7 +8,7 @@
 
   <!ENTITY git-download-http "&git-root;/git-&git-version;.tar.xz">
   <!ENTITY git-download-ftp  " ">
-  <!ENTITY git-md5sum        "758c02a1b621cc0868ee0a0d99573e6b">
+  <!ENTITY git-md5sum        "d6ab87e82d6c76f9a31bfb5ab4e402dc">
 
   <!ENTITY git-size          "7.8 MB">
   <!-- but people keep forgetting that an install not only needs the net build
@@ -193,13 +193,17 @@ make</userinput></screen>
 
     <para>
       Testpakken kan kjøres i parallell modus. For å kjøre testpakken, kjør:
-     <command>GIT_UNZIP=nonexist make test -k</command>.
+      <command>GIT_UNZIP=nonexist QUOTING_STYLE=literal make test -k</command>.
       <envar>GIT_UNZIP</envar> innstillingen forhindrer testpakken fra å
       bruke <command>unzip</command>, vi trenger det fordi i BLFS
       <command>unzip</command> er en symbolkobling til <command>bsdunzip</command>
-      som ikke tilfredsstiller forutsetningen i enkelte testtilfeller. Hvis noen
-      testtilfeller mislykkes, kan listen over mislykkede tester vises via
-      <command>make -C t aggregate-results</command>.
+      som ikke tilfredsstiller forutsetningen i enkelte testtilfeller.
+      <envar>QUOTING_STYLE</envar> innstillingen forhindrer en testfeil
+      med Coreutils 9.12. <!-- No "or later" here: see
+      https://github.com/coreutils/coreutils/issues/355, remove this
+      workaround when we update coreutils to 9.13.  -->
+      Hvis noen testtilfelle mislykkes, kan listen over mislykkede tester vises
+      via <command>make -C t aggregate-results</command>.
     </para>
 
     <para>
