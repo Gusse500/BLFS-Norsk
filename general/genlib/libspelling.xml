@@ -69,20 +69,21 @@
 
     <bridgehead renderas="sect4">Påkrevd</bridgehead>
     <para role="required">
+      <xref linkend="gtksourceview5"/>
+    </para>
+
+
+    <bridgehead renderas="sect4">Anbefalt</bridgehead>
+    <para role="recommended">
       <xref linkend="enchant"/>,
-      <xref linkend="icu"/>, 
-      <xref linkend="gtk4"/>, 
-      <xref linkend="gtksourceview5"/>, og
+      <xref linkend="icu"/>,  og
       <xref linkend="vala"/>
     </para>
 
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="enchant"/>,
-      <xref linkend="icu"/>, 
-      <xref linkend="gtk4"/>, 
-      <xref linkend="gtksourceview5"/>, og
-      <xref linkend="vala"/>
+      <xref linkend="gi-docgen"/> og
+      <ulink url="www.sysprof.com">sysprof</ulink>
     </para>
 
   </sect2>
@@ -98,7 +99,11 @@
 <screen><userinput>mkdir build &amp;&amp;
 cd    build &amp;&amp;
 
-meson setup --prefix=/usr --buildtype=release -D gtk_doc=false -D sysprof=false .. &amp;&amp;
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -D docs=false       \
+            -D sysprof=false    \
+            ..                  &amp;&amp;
 ninja</userinput></screen>
 
     <para>
@@ -117,9 +122,17 @@ ninja</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>-D gtk_doc=false</parameter>: Forhindrer bygging av
-      dokumentasjonen. Fjern denne hvis du har <application>GTK-Doc</application>
+      <parameter>-D docs=false</parameter>: Hindrer bygging av
+      dokumentasjonen. Fjern denne hvis du har
+      <application>gi-docgen</application>
       installert og ønsker å bygge dokumentasjonen.
+    </para>
+
+    <para>
+      <parameter>-D sysprof=false</parameter>: Hindrer bygging med
+      profileringsdata. Fjern denne hvis du har
+      <application>sysprof</application>
+      installert og ønsker å generere data for ytelsesprofilering.
     </para>
   </sect2>
 
