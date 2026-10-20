@@ -119,38 +119,11 @@
     <title>Bruke efibootmgr</title>
 
     <para>
-      I LFS går instruksjonene gjennom hvordan du installerer GRUB for UEFI. 
-      Prosessen installerer EFI på en hardkodet plassering som søkes etter av de 
-      fleste UEFI fastvare implementeringer. Hvis du installerer GRUB på nytt, 
-      vil GRUB imidlertid bruke denne pakken til å installere EFI på et sted 
-      GRUB foretrekker, noe som gir større kontroll over EFI administrasjon. 
-      <option>--removable</option> alternativet vil ikke lenger være nødvendig 
-      når du kjører <command>grub-install</command>. Denne pakken kan være 
-      nødvendig i tilfeller der UEFI fastvaren ikke ser etter den hardkodede EFI 
-      plasseringen. LFS boken tar for seg denne situasjonen.
+      Les <ulink url='&lfs-root;/chapter10/grub.html'>Bruke GRUB til å sette opp
+      oppstartsprosessen</ulink> for hvordan man bruker efibootmgr via grub.
+      Hvis du bruker efibootmgr direkte, les manualsiden
+      <ulink role='man' url='&man;efibootmgr.8'>efibootmgr(8)</ulink>.
     </para>
-
-    <para>
-      For at <command>efibootmgr</command> skal virke, EFI variabelfilsystemet 
-      må det monteres på forhånd. Hvis du fortsatt er i chroot og ikke har 
-      startet på nytt, monterer du det som &root; bruker:
-    </para>
-
-<screen role="root"><userinput>mountpoint /sys/firmware/efi/efivars ||
-  mount -v -t efivarfs efivarfs /sys/firmware/efi/efivars</userinput></screen>
-
-    <para revision="sysv">
-      EFI variabel filsystemet monteres ikke automatisk ved oppstart for 
-      SysVinit systemer, noe som betyr at når <command>grub-install</command>
-      eller <command>efibootmgr</command> kjøres, vil de mislykkes. For å sikre 
-      at filsystemet monteres ved oppstart, legg til følgende i 
-      <filename>/etc/fstab</filename> som &root; bruker:
-    </para>
-
-<screen revision="sysv"
-  role="root"><userinput>cat &gt;&gt; /etc/fstab &lt;&lt; "EOF"
-<literal>efivarfs /sys/firmware/efi/efivars efivarfs defaults 0 0</literal>
-EOF</userinput></screen>
 
   </sect2>
 
