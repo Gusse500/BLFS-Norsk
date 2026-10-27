@@ -8,9 +8,13 @@
   <!ENTITY unbound-download-ftp  " ">
   <!ENTITY unbound-md5sum        "e387641957ace96c83c9e150c124b449">
   <!ENTITY unbound-size          "6.6 MB">
-  <!ENTITY unbound-buildsize     "96 MB (med dokumenter og tester)">
+  <!ENTITY unbound-buildsize     "230 MB (med dokumenter og tester)">
   <!ENTITY unbound-time          "0.4 SBU (Bruker parallellisme=4; med dokumenter og tester)">
 ]>
+
+<!-- Docs will get a separate build size eventually since it shoots up the
+size by quite a bit. The build time however is negligable and makes
+little difference. -->
 
 <sect1 id="unbound" xreflabel="Unbound-&unbound-version;" revision='sysv'>
   <?dbhtml filename="unbound.html"?>
@@ -125,11 +129,25 @@ useradd -c "Unbound DNS Resolver" -d /var/lib/unbound -u 88 \
 make</userinput></screen>
 
     <para>
-      Hvis du har <xref linkend="doxygen"/> pakken er installert og du ønsker å bygge
-      html dokumentasjon, kjør følgende kommando:
+      Hvis du har <xref linkend="doxygen"/> og <xref linkend="sphinx"/>
+      installert, kan HTML dokumentasjonen bygges med følgende kommandoer
+      <footnote><para>
+          Dokumentasjon er bygget på denne måten siden byggesystemet vil
+          generer feilkommandoer som bygger dokumentasjonen. Dette
+          kan føre til situasjoner hvor <command>doxygen</command> blir blank
+          og <command>sphinx-build</command> kan bli enten
+          <command>sphinx-build-</command> eller
+          <command>sphinx-build-&python3-major;</command>, avhengig av hva som
+          blir sendt til <command>./configure</command>.
+          </para></footnote>:
     </para>
 
-<screen remap="doc"><userinput>make doc</userinput></screen>
+<screen
+  remap="doc"><userinput>doxygen doc/unbound.doxygen               &amp;&amp;
+sphinx-build -b html pythonmod/doc         \
+                     doc/html/pythonmod   &amp;&amp;
+sphinx-build -b html libunbound/python/doc \
+                     doc/html/pyunbound</userinput></screen>
 
     <para>
       For å teste resultatene, kjør <command>make check</command>.
@@ -148,8 +166,11 @@ mv -v /usr/sbin/unbound-host /usr/bin/</userinput></screen>
     </para>
 
 <screen role="root"
-        remap="doc"><userinput>install -v -m755 -d /usr/share/doc/unbound-&unbound-version; &amp;&amp;
-install -v -m644 doc/html/* /usr/share/doc/unbound-&unbound-version;</userinput></screen>
+  remap="doc"><userinput>install -v -m755 -d /usr/share/doc/unbound-&unbound-version; &amp;&amp;
+cp -vR doc/html/*   /usr/share/doc/unbound-&unbound-version;</userinput></screen>
+
+    <!-- install for actually installing the HTML gave a non-zero error since
+         it omits directories within doc/html. So cp -vR is used instead. -->
 
   </sect2>
 
