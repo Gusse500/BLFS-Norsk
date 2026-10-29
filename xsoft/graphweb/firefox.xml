@@ -10,7 +10,7 @@
 
   <!-- NB with stylo, much of the build uses rust, and therefore cargo files.
     But the extra cached cargo files, if any, seem to be minimal -->
-  <!ENTITY firefox-buildsize     "9.0 GB (268 MB installert) uten tester">
+  <!ENTITY firefox-buildsize     "9.0 GB (269 MB installert) uten tester">
   <!-- editors: with ff63 and rust-1.29, ./mach build -j4 is probably the
    most practical way to get a timing on a machine with more cores, if taking
    cores offline is not practical. If in doubt, round up -->
@@ -75,6 +75,7 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -84,6 +85,7 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <note>
       <para>
@@ -296,7 +298,10 @@ EOF</userinput></screen>
       Fiks byggingen av denne pakken med clang 23 eller nyere:
     </para>
 
+<!--
 <screen><userinput remap="pre">patch -Np1 -i ../firefox-&firefox-version;-clang_23-1.patch</userinput></screen>
+-->
+<screen><userinput remap="pre">sed '/type-limits/a #pragma GCC diagnostic ignored "-Wunused-template"' -i gfx/harfbuzz/src/hb.hh</userinput></screen>
 
     <para>
       Hvis geolokaliserings APIene er nødvendige:

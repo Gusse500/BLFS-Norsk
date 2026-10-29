@@ -6,9 +6,9 @@
 
   <!ENTITY thunderbird-download-http "&mozilla-http;/thunderbird/releases/&thunderbird-version;esr/source/thunderbird-&thunderbird-version;esr.source.tar.xz">
   <!ENTITY thunderbird-download-ftp  " ">
-  <!ENTITY thunderbird-md5sum        "ef050f29fd16513a7e03f60d2a6eba67">
-  <!ENTITY thunderbird-size          "892 MB">
-  <!ENTITY thunderbird-buildsize     "11.0 GB (296 MB installert)">
+  <!ENTITY thunderbird-md5sum        "564a03fbaa157414ab593406c31e9989">
+  <!ENTITY thunderbird-size          "897 MB">
+  <!ENTITY thunderbird-buildsize     "11.0 GB (297 MB installert)">
   <!ENTITY thunderbird-time          "16 SBU (på en 8 kjernes maskin)">
   <!-- Removed the -j1 time because python and rust do not obey it, although
        the C/C++ code appears to obey it.
@@ -75,6 +75,7 @@
       </listitem>
     </itemizedlist>
 
+<!--
     <bridgehead renderas="sect3">Ytterligere Nedlastinger</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
@@ -84,6 +85,7 @@
         </para>
       </listitem>
     </itemizedlist>
+-->
 
     <bridgehead renderas="sect3">Thunderbird Avhengigheter</bridgehead>
 
@@ -154,8 +156,10 @@
     <para>
       Fiks byggingen av denne pakken med clang 23 eller nyere:
     </para>
-
+<!--
 <screen><userinput remap="pre">patch -Np1 -i ../thunderbird-&thunderbird-version;-clang_23-1.patch</userinput></screen>
+-->
+<screen><userinput remap="pre">sed '/type-limits/a #pragma GCC diagnostic ignored "-Wunused-template"' -i gfx/harfbuzz/src/hb.hh</userinput></screen>
 
     <para>
       Konfigurasjonen av <application>Thunderbird</application> 
