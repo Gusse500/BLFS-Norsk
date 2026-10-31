@@ -188,6 +188,51 @@ EOF
 
 startx</userinput></screen>
 
+    <note revision="systemd">
+      <para>
+        Hvis <xref linkend="xdg-desktop-portal"/> er installert, dens systemd
+        brukertjeneste vil bare starte når
+        systemd enhet <emphasis role="bold">graphical-session.target</emphasis>
+        er aktiv.  <command>startx</command> aktiverer ikke det målet,
+        så enhver applikasjon som spør portalen (for eksempel
+        <application>LibreOffice</application> eller andre GTK applikasjoner)
+        venter på en D-Bus tidsavbrudd 25 sekunder, noen ganger mer, før den
+        vises. For å unngå dette, opprett et brukermål som binder
+        til <emphasis role="bold">graphical-session.target</emphasis> som
+        &root; bruker:
+      </para>
+
+<screen role="root"><userinput>cat &gt; /etc/systemd/user/xfce-session.target &lt;&lt; "EOF"
+<literal>[Unit]
+Description=Xfce session
+BindsTo=graphical-session.target
+Wants=graphical-session-pre.target
+After=graphical-session-pre.target</literal>
+EOF</userinput></screen>
+
+      <para>
+        Deretter start <application>Xfce</application> med dette
+        <filename>~/.xinitrc</filename> i stedet for den som vises over:
+      </para>
+
+<screen><userinput>cat &gt; ~/.xinitrc &lt;&lt; "EOF"
+<literal>export XDG_CURRENT_DESKTOP=XFCE
+dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
+systemctl --user start xfce-session.target
+startxfce4
+systemctl --user stop xfce-session.target</literal>
+EOF</userinput></screen>
+
+      <para>
+        Miljøvariablene blir sendt til systemd brukerforekomsten slik at
+        portalen og dens backends kan koble til X-serveren. Ikke legg til
+        prefiks <command>startxfce4</command> med
+        <command>exec</command>; den siste linjen må kjøre når økten avsluttes
+        slik at <emphasis role="bold">graphical-session.target</emphasis>
+        og tjenestene knyttet til det stoppes.
+      </para>
+    </note>
+
     <para>
       X økten starter på den første ubrukte virtuelle terminalen, normalt vt7.
       Du kan bytte til en annen vt<emphasis>n</emphasis> ved å samtidig
