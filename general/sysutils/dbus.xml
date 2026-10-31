@@ -402,10 +402,27 @@ EOF</userinput></screen>
 eval `dbus-launch`
 export DBUS_SESSION_BUS_ADDRESS</literal></userinput></screen>
 
+          <note revision="systemd">
+            <para>
+              Ikke bruk <command>dbus-update-activation-environment --systemd
+              --all</command> på et BLFS system. <filename>/etc/profile</filename>
+              opprettet i <xref linkend="postlfs-config-profile"/> eksporterer
+              skallfunksjoner, som vises i miljøet som variabler som
+              <envar>BASH_FUNC_pathappend%%</envar>. systemd avviser de navnene
+              og nekter hele oppdateringen med meldingen
+              <computeroutput>Invalid environment assignments</computeroutput>,
+              så ingen av variablene er satt, inkludert
+              <envar>DISPLAY</envar>. List variablene eksplisitt i stedet,
+              for eksempel:
+            </para>
+
+<screen><userinput>dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP</userinput></screen>
+          </note>
+
           <para>
-            This method will not stop the session daemon when you exit
-            your shell, therefore you should add the following line to your
-            <filename>~/.bash_logout</filename> file:
+            Denne metoden vil ikke stoppe sesjonsdaemonen når du avslutter
+            skallet ditt, derfor bør du legge til følgende linje i din
+            <filename>~/.bash_logout</filename> fil:
           </para>
 
 <screen role="nodump"><userinput><literal># Kill the D-Bus session daemon

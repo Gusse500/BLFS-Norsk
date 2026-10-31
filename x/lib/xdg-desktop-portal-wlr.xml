@@ -125,6 +125,34 @@ ninja</userinput></screen>
 default=wlr</literal>
 EOF</userinput></screen>
 
+    <note>
+      <para>
+        Hvis <application>xdg-desktop-portal-wlr</application> er installert
+        og <application>Xfce</application> kjøres under X11,
+        <filename>xfce-portals.conf</filename> filen i
+        <filename class="directory">/usr/share/xdg-desktop-portal</filename>
+        forteller <application>xdg-desktop-portal</application> å prøve
+        <literal>wlr</literal> backend først for skjermcasting.
+        <literal>wlr</literal> backendens brukertjeneste blir hoppet over når
+        <envar>WAYLAND_DISPLAY</envar> ikke er satt, men portalen får ikke
+        beskjed om det og venter 25 sekunder på en D-Bus tidsavbrudd hver gang
+        den starter. Applikasjoner som spør portalen stopper opp i samme
+        tidsrom. For å unngå dette, overstyr innstillingen for brukeren din:
+      </para>
+
+<screen><userinput>mkdir -pv ~/.config/xdg-desktop-portal &amp;&amp;
+sed 's/^org.*.ScreenCast=.*/org.freedesktop.impl.portal.ScreenCast=none/' \
+    /usr/share/xdg-desktop-portal/xfce-portals.conf \
+    &gt; ~/.config/xdg-desktop-portal/xfce-portals.conf</userinput></screen>
+
+      <para>
+        Dette deaktiverer skjermcastingsportalen i alle
+        <application>Xfce</application> økter for den brukeren, inkludert
+        Wayland økter. Ikke gjør denne endringen hvis du kjører
+        <application>Xfce</application> under Wayland.
+      </para>
+    </note>
+
   </sect2>
 
   <sect2 role="content">
