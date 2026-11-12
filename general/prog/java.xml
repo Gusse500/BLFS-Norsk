@@ -8,19 +8,20 @@
      the directory: this saves more than 70 MB. In addition, do NOT remove the
      ct.sym file as it causes backwards compatibility breakages.-->
   <!ENTITY anduin-download             "&sources-anduin-http;/OpenJDK/OpenJDK-&javabin-version;">
+<!-- i686 support discontinued in jdk 25
   <!ENTITY javabin-download-binary-x86 "&sources-anduin-http;/OpenJDK/OpenJDK-&javabin-version;/OpenJDK-&javabin-version;+&javabin-build;-i686-bin.tar.xz">
   <!ENTITY javabin-bin-md5sum-x86      "20655a4bb45cc42543a65a2ff4a29c4c">
   <!ENTITY javabin-bin-size-x86        "164 MB">
   <!ENTITY javabin-bin-buildsize-x86   "346 MB">
-
+-->
 <!-- Not uploaded to anduin, since this file is now available under GNU GPLv2
      licence.-->
 <!-- Reuploaded to anduin due to the complexity of the download URL, per Bruce's
      request. - Doug -->
   <!ENTITY javabin-download-binary-x64 "&sources-anduin-http;/OpenJDK/OpenJDK-&javabin-version;/OpenJDK-&javabin-version;+&javabin-build;-x86_64-bin.tar.xz">
-  <!ENTITY javabin-bin-md5sum-x64      "cc63ae1058c567dc7bcc10659e56d068">
-  <!ENTITY javabin-bin-size-x64        "170 MB">
-  <!ENTITY javabin-bin-buildsize-x64   "345 MB">
+  <!ENTITY javabin-bin-md5sum-x64      "c65199251a4da20bc5cff7e26bd9691e">
+  <!ENTITY javabin-bin-size-x64        "186 MB">
+  <!ENTITY javabin-bin-buildsize-x64   "388 MB">
 ]>
 
 <sect1 id="java" xreflabel="Java-&javabin-version;">
@@ -100,6 +101,7 @@
     &lfs131_checked;
 
     <bridgehead renderas="sect3">Binær Pakkeinformasjon</bridgehead>
+    <!-- No i696 support starting with jdk 25
     <itemizedlist spacing="compact">
       <listitem>
         <para>
@@ -122,6 +124,7 @@
         </para>
       </listitem>
     </itemizedlist>
+    -->
     <itemizedlist spacing="compact">
       <listitem>
         <para>
@@ -144,6 +147,21 @@
         </para>
       </listitem>
     </itemizedlist>
+    <note>
+      <para>
+        Fra og med OpenJDK-25, støtten for 32-biters server og
+        klient JVM er fjernet. OpenJDK kan fortsatt bygges for
+        <quote>null</quote> JVM variant, som ikke bruker noen
+        sammenstillingskode og har ytelsesproblemer. BLFS utviklerne har derfor
+        bestemte seg for ikke å gi 32-bits binære bygg lenger. Hvis 32-bit
+        er nødvendig, bør du bruke OpenJDK-21, som er godt vedlikeholdt. En
+        java binær finner du på
+        <ulink url="&sources-anduin-http;/OpenJDK/"/> og brukt
+        for å bygge den nyeste versjonen av OpenJDK-21. Denne binære kan være
+        utdatert og lide av sårbarheter, men er god nok til å bygge
+        fra kilden.
+      </para>
+    </note>
 
     <bridgehead renderas="sect3">Java Binary Kjøretidsavhengigheter</bridgehead>
     <para role="required">
@@ -167,8 +185,7 @@
     </warning>
 -->
     <para>
-      Begynn med å pakke ut den passende binære tarballen for din
-      arkitektur og endre til den utpakkede mappen. Installer binæren
+      Installer binæren
       <application>OpenJDK</application> med følgende kommandoer som
       <systemitem class="username">root</systemitem> bruker:
     </para>
