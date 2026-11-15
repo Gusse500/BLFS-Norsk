@@ -6,10 +6,10 @@
 
   <!ENTITY fop-download-http "https://archive.apache.org/dist/xmlgraphics/fop/source/fop-&fop-version;-src.tar.gz">
   <!ENTITY fop-download-ftp  " ">
-  <!ENTITY fop-md5sum        "b202dcd7c6dcaf3ec5d14bb193d7bf01">
-  <!ENTITY fop-size          "21 MB">
-  <!ENTITY fop-buildsize     "343 MB (inkludert filer lastet ned til brukermappen)">
-  <!ENTITY fop-time          "0.9 SBU">
+  <!ENTITY fop-md5sum        "489d8d34cff84217f59d94041a4206ab">
+  <!ENTITY fop-size          "20 MB">
+  <!ENTITY fop-buildsize     "563 MB (inkludert filer lastet ned til brukermappen, legg til 73 MB for tester)">
+  <!ENTITY fop-time          "0.3 SBU (legg til 0.7 SBU for tester) avhenger av nedlastingstid">
 <!--
   <!ENTITY pdfbox-version    "2.0.27">
   <!ENTITY pdfbox-download   "https://archive.apache.org/dist/pdfbox/&pdfbox-version;/pdfbox-&pdfbox-version;.jar">
@@ -21,10 +21,10 @@
   <!ENTITY fontbox-size      "1.5 MB">
 
   <!ENTITY maven-major        "3">
-  <!ENTITY maven-version      "3.9.12">
+  <!ENTITY maven-version      "3.10.0">
   <!ENTITY maven-download     "https://archive.apache.org/dist/maven/maven-&maven-major;/&maven-version;/binaries/apache-maven-&maven-version;-bin.tar.gz">
-  <!ENTITY maven-md5sum       "bcd2fb0a7f3f27047b693c2a2818c965">
-  <!ENTITY maven-size         "11 MB (i tillegg lastes ca. 90 MB ned til byggingsbrukerens mappe)">
+  <!ENTITY maven-md5sum       "c0ad4bb59dbd99bcdbde758c9afcc0ee">
+  <!ENTITY maven-size         "9.5 MB (i tillegg lastes ca. 90 MB ned til byggingsbrukerens mappe)">
 
   <!ENTITY offo-download     "&sourceforge-dl;/offo/2.2/offo-hyphenation.zip">
   <!ENTITY offo-md5sum       "bf9c09bf05108ef9661b8f08d91c2336">
@@ -156,9 +156,11 @@
       <xref linkend="apache-ant"/>
     </para>
 
+    &build-use-internet;
+
     <bridgehead renderas="sect4">Valgfri</bridgehead>
     <para role="optional">
-      <xref linkend="x-window-system"/> (for å kjøre testene),
+<!-- tests seem to work without X      <xref linkend="x-window-system"/> (for å kjøre testene), -->
       <ulink url="https://jai-tools.blogspot.com/">JAI Image I/O Tools</ulink>, og
       <ulink url="https://jeuclid.sourceforge.net/">JEuclid</ulink>
 <!-- [pierre 2017-04-29] Note to devs: there are a lot of bundled dependencies.
@@ -175,10 +177,11 @@
 
     <para>
       Forsikre deg om at <envar>$JAVA_HOME</envar> er riktig innstilt før du begynner
-      byggingen. For å bygge <application>JIMI SDK</application> og/eller
+      byggingen.  <!-- Those are now downloaded through maven
+      To build the <application>JIMI SDK</application> and/or
       <application>XMLUnit</application> utvidelsesklasser, sørg for at
       tilsvarende <filename class='extension'>.jar</filename> filer kan bli
-      funnet via <envar>CLASSPATH</envar> miljøvariabelen.
+      funnet via <envar>CLASSPATH</envar> miljøvariabelen.-->
     </para>
 
     <sect3>
@@ -210,14 +213,7 @@ rm -rf offo-hyphenation</userinput></screen>
     <sect3>
       <title>Installere fop Komponenter</title>
 
-<!-- Applied in fop-2.11
-      <para>
-        Først, fiks en byggefeil forårsaket av Java-23:
-      </para>
-
-<screen><userinput>patch -Np1 -i ../fop-&fop-version;-upstream_fixes-1.patch</userinput></screen>
--->
-
+<!-- seems ok with fop-2.12
       <para>
         <command>javadoc</command> kommandoer som leveres med OpenJDK 10 og
         senere har
@@ -232,7 +228,7 @@ rm -rf offo-hyphenation</userinput></screen>
 &lt;arg value="--allow-script-in-comments"/&gt;\
 &lt;arg value="--ignore-source-errors"/&gt;' \
     fop/build.xml</userinput></screen>
-
+-->
 <!--
       <para>
         <filename>build.xml</filename> filen kaller for en gammel versjon av
@@ -256,9 +252,12 @@ ant package javadocs &amp;&amp;
 mv build/javadocs .</userinput></screen>
 
       <para>
-        Denne pakken kommer med en testpakke, men java infrastrukturen
-        installert i denne boken tillater ikke å kjøre den.
+        For å teste resultatet, utsted:
       </para>
+
+<screen remap="test"><userinput>LC_ALL=en_US.UTF-8                      \
+PATH=$PATH:/tmp/apache-maven-&maven-version;/bin \
+ant junit</userinput></screen>
 
       <para>
         Nå, installer <application>Fop</application> som
@@ -282,13 +281,13 @@ ln -v -sfn fop-&fop-version; /opt/fop</userinput></screen>
 
   <sect2 role="commands">
     <title>Parameterforklaringer</title>
-
+<!--
     <para>
       <command>sed -i ... build.xml</command>: Dette legger til tre brytere til
       <command>javadoc</command> kommandoen, forhindrer at noen feil oppstår
       når du bygger dokumentasjonen.
     </para>
-
+-->
     <para>
       <command>export LC_ALL=en_US.UTF-8</command>: kompilatoren mislykkes hvis du bruker
       en ASCII lokalitet.
