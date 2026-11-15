@@ -143,7 +143,6 @@
     </para>
 
 <screen><userinput>patch -Np1 -i ../ibus-1.5.34-upstream_fix-1.patch</userinput></screen>
--->
 
     <para>
       Hvis <xref linkend='gtk-doc'/> ikke er installert, fjern referansene
@@ -153,44 +152,42 @@
 <screen><userinput>if ! [ -e /usr/bin/gtkdocize ]; then
   sed '/docs/d;/GTK_DOC/d' -i Makefile.am configure.ac
 fi</userinput></screen>
+-->
 
     <para>
       Installer <application>ibus</application> ved å kjøre følgende
       kommandoer:
     </para>
 
-<screen revision='sysv'><userinput>SAVE_DIST_FILES=1 NOCONFIGURE=1 ./autogen.sh &amp;&amp;
+<screen><userinput>mkdir build &amp;&amp;
+cd    build &amp;&amp;
 
-./configure --prefix=/usr          \
-            --sysconfdir=/etc      \
-            --disable-python2      \
-            --disable-appindicator \
-            --disable-emoji-dict   \
-            --disable-gtk2         \
-            --disable-systemd-services &amp;&amp;
-make</userinput></screen>
-
-<screen revision='systemd'><userinput>SAVE_DIST_FILES=1 NOCONFIGURE=1 ./autogen.sh &amp;&amp;
-
-./configure --prefix=/usr          \
-            --sysconfdir=/etc      \
-            --disable-python2      \
-            --disable-appindicator \
-            --disable-gtk2         \
-            --disable-emoji-dict   &amp;&amp;
-make</userinput></screen>
+meson setup ..                    \
+            --prefix=/usr         \
+            --buildtype=release   \
+            -D appindicator=false \
+            -D emoji-dict=false   \
+            -D gtk-doc=false      \
+            -D tests=false        &amp;&amp;
+ninja</userinput></screen>
 
     <para>
-      For å teste resultatene, utsted: <command>sed 's/python$/&amp;3/' -i
-      engine/test-gnome.py &amp;&amp; make -k check</command>.
+      For og teste resultatet, utsted:
+    </para>
+
+<screen remap='test'><userinput>meson configure -D tests=true -D distro-tests=true &amp;&amp;
+sed 's/python$/&amp;3/' -i ../engine/test-gnome.py     &amp;&amp;
+ninja test</userinput></screen>
+
+    <para>
       Testen kalt ibus-compose mislykkes fordi den bruker noen lokaliteter som
       ikke er installert i LFS.
       Testen kalt ibus-keypress krever
       <literal>CONFIG_INPUT_UINPUT</literal> aktivert i kjernekonfigurasjonen, 
       ellers vil testen feile.
-      <!-- https://github.com/ibus/ibus/commit/ac3a9177ac11 -->
+      <!-- https://github.com/ibus/ibus/issues/2987 -->
       Testen navngitt <literal>test_gnome.py</literal> er kjent for å feile
-      med xkeyboard-config 2.48 eller nyere.
+      med xkeyboard-config 2.49 eller nyere.
       xkb-latin-layouts testen er også kjent for å mislykkes på
       noen systemer.
     </para>
@@ -207,75 +204,43 @@ make</userinput></screen>
     <title>Parameterforklaringer</title>
 
     <para>
-      <parameter>--disable-appindicator</parameter>: Denne bryteren deaktiverer
+      <parameter>-D appindicator=false</parameter>: Denne bryteren deaktiverer
       bruk av libdbusmenu. Utelat hvis du installerte den valgfrie avhengigheten.
     </para>
 
     <para>
-      <parameter>--disable-emoji-dict</parameter>: Denne bryteren deaktiverer
+      <parameter>-D emoji-dict=false</parameter>: Denne bryteren deaktiverer
       bruk av uttrykksikonordbøker. Utelat hvis du installerte valgfrie
       pakker.
     </para>
 
     <para>
-      <parameter>--disable-gtk2</parameter>: Denne bryteren fjerner avhengigheten
-      av <application>GTK+-2</application>.
+      <parameter>-D gtk-doc=false</parameter>: Denne bryteren fjerner
+      avhengighet av <application>Gtk-Doc</application>.  Fjern den hvis
+      du har installert avhengigheten og du ønsker å bygge og installere
+      API dokumentasjonen for denne pakken.
     </para>
 
     <para>
-      <option>--disable-gtk4</option>: Denne bryteren deaktiverer bygging av
+      <option>-D gtk4=false</option>: Denne bryteren deaktiverer bygging av
       <application>GTK 4</application> immodul. Bruk den hvis
       du ikke vil installere <application>GTK 4</application>.
     </para>
 
-
     <para>
-      <option>--enable-wayland</option>: Denne bryteren aktiverer bygging av
+      <option>-D wayland=enabled</option>: Denne bryteren aktiverer bygging av
       <application>Wayland</application> støtteprogrammer.
       Den aktiveres automatisk hvis både <xref linkend='libxkbcommon'/> og
       <xref linkend='wayland'/> er installert.
     </para>
-
-    <para>
-      <envar>NOCONFIGURE=1</envar>: Forhindrer <command>autogen.sh</command>
-      fra å kjøre det genererte <command>configure</command> skriptet.   Vi vil
-      kjøre skriptet manuelt i stedet for å stole på
-      <command>autogen.sh</command> å kjøre det, fordi
-      <command>autogen.sh</command> vil sette <option>-fsanitize=address
-      -fsanitize=leak</option> i <envar>CFLAGS</envar> når den kjører
-      <command>configure</command>, men de kompilatoralternativene er ikke
-      egnet for produktiv bruk, og de kan også forårsake byggefeil.
-      <!-- GCC security policy: "Libraries like libvtv and the sanitizers
-           are intended to be used in diagnostic cases and not intended for
-           use in sensitive environments."  In my build it also causes
-           "compose/sequences-little-endian" bail out with a sanitizer
-           warning and the package to FTBFS.  -->
-    </para>
-
-    <para>
-      <envar>SAVE_DIST_FILES=1</envar>: Denne miljøvariabelen gjør at
-      <command>autogen.sh</command> skriptet lagrer noen forhåndsgenererte
-      deklarasjonsfiler i stedet for å overskrive dem når den kjøres. Dette forhindrer
-      byggefeil ved generering av <filename>ibusemojigen.h</filename>.
-      <!-- This is needed because we do not have the Emoji dictionary.-->
-    </para>
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-      href="../../xincludes/gtk-doc-rebuild.xml"/>
-<!--
-    <para>
-      <command>gzip -dfv ...</command>: Dekomprimer installerte mansider
-      i samsvar med andre mansider.
-    </para>
--->
   </sect2>
 
   <sect2 role="configuration">
     <title>Konfigurere Ibus</title>
 
     <para>
-      Hvis GTK+-3 er installert og <option>--disable-gtk3</option> ikke er brukt,
-      ibus IM-modulen for GTK+-3 vil bli installert. Som &root; bruker,
+      Hvis GTK+-3 er installert og <option>-D gtk3=false</option> ikke er brukt,
+      vil ibus IM-modulen for GTK+-3 bli installert. Som &root; bruker,
       oppdater en hurtigbufferfil av GTK+-3 slik at de GTK baserte applikasjonene kan finne
       den nyinstallert IM modulen og bruk ibus som inndatametode:
     </para>
