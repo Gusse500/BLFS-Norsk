@@ -8,7 +8,7 @@
   <!ENTITY bind-download-ftp  " ">
   <!ENTITY bind-md5sum        "&bind-md5;">
   <!ENTITY bind-size          "5.7 MB">
-  <!ENTITY bind-buildsize     "124 MB (legg til 88 MB for tester; 23 MB installert)">
+  <!ENTITY bind-buildsize     "125 MB (legg til 68 MB for tester; 23 MB installert)">
   <!ENTITY bind-time          "0.4 SBU (med parallellitet=4; ca. 58 minutter noe prosessoruavhengig, for å kjøre hele testpakken)">
 ]>
 
@@ -125,21 +125,7 @@
 
   <sect2 role="installation">
     <title>Installasjon av BIND</title>
-<!-- Its now (Oct'24) about a year ago
-     Btw, if the root file is a bit out of sync, it doesn't break the
-     installation. named queries one of the servers in that list (and
-     is that doesn't work another) to retrieve the actual list and keep
-     it in cache. We do not even be required to create the root.hint
-     as named has a list builtin. As long as at least one of the servers
-     is valid, named will be able to retrieve the actual list (they call
-     it "re-prime") and thus it will be operational.
-    <note>
-      <para>
-         Fra og med bind-9.18.20, IP adressene for B.ROOT-SERVERS.NET
-         er forandret.
-      </para>
-    </note>
--->
+
     <para>
       Hvis du planlegger å kjøre testene, bør et virtuelt Pythonmiljø settes 
       opp, slik at <command>configure</command> finner Python binærfilen fra 
@@ -254,14 +240,6 @@ install doc/dnssec-guide/* /usr/share/doc/bind-&bind-version;/dnssec-guide</user
       begrense frekvensen av rekursive klientforespørsler. Dette kan være
       nyttig på servere som mottar et stort antall forespørsler.
     </para>
-
-<!-- Removed in 9.20.0 (and support has been in LFS for years)
-    <para>
-      <option>- -disable-linux-caps</option>: BIND kan også bygges uten
-      kapasitetsstøtte ved å bruke dette alternativet, på bekostning av noe tap av
-      sikkerhet.
-    </para>
--->
 
     <para>
       <option>--disable-doh</option>: Bruk dette alternativet hvis du ikke har
